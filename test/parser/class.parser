@@ -1,0 +1,83 @@
+Test class parser
+--PASS @todo handle interfaces --
+class titi { }
+class toto extends titi implements tata {}
+--PASS--
+class titi { }
+class /** aa **/ toto 
+  extends titi 
+  implements tata, coincoin {
+  /**
+   * Hi
+   */
+}
+--PASS--
+abstract class aa { }
+--PASS--
+final class aa { }
+--FAIL--
+class { }
+--FAIL--
+class zz;
+--FAIL--
+abstract final class zz { }
+--FAIL--
+class a extends implements { }
+--FAIL--
+class extends { }
+--FAIL--
+class implements { }
+--FAIL--
+class a implements { }
+--FAIL--
+class a { 
+  const B;
+}
+--PASS--
+final class aa {
+  const AAAA = 1;
+  const MY_CONST = 'azerty';
+  /**
+   * azerty
+   */
+  const ZZZ = 3, YYY = 4;
+}
+--PASS--
+abstract class aa {
+  public $a;
+  private $b;
+  protected $d;
+  /**
+   * azerty
+   */
+  static public $e, $z;
+  
+  // doc
+  public static $f;
+  var $g;
+  var $h , $i;
+}
+--PASS--
+class foo {
+  public function aa() {
+    /** code here **/
+  }
+  public static function bb($arg1, $arg2 = 123) {
+    /** code here **/
+  }
+  /**
+   * @return void
+   */
+  final static protected function bb() {
+    /** code here **/
+  }
+  function aa($b) {
+    // aaa
+  }
+}
+--PASS--
+class foo {
+  static public $a = 123;
+  protected static  $b, $c;
+  private static  $d = array();
+}
