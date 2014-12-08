@@ -12,6 +12,8 @@ TOKENS              [;:,.\[\]()|^&+-\/*=%!~$<>?@]
 ANY_CHAR            [^]
 NEWLINE             (\r\n|\n|\r)
 
+@import 'token.l'
+
 %x ST_IN_SCRIPTING
 %x ST_VAR_OFFSET
 %x ST_VAR_OFFSET
@@ -27,13 +29,13 @@ NEWLINE             (\r\n|\n|\r)
 
 %%
 
-@import 'lexer/initial.l'
-@import 'lexer/php_strings.l'
-@import 'lexer/php_main.l'
-@import 'lexer/php_constants.l'
-@import 'lexer/php_mixed.l'
-@import 'lexer/php_numbers.l'
-@import 'lexer/php_comments.l'
+@import 'initial.l'
+@import 'php_strings.l'
+@import 'php_main.l'
+@import 'php_constants.l'
+@import 'php_mixed.l'
+@import 'php_numbers.l'
+@import 'php_comments.l'
 
 <ST_IN_SCRIPTING>{TOKENS} {
 	return yytext;

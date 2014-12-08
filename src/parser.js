@@ -1,25 +1,53 @@
-var lex = require('./lexer');
-var tokens = require('./tokens').names;
-var names = require('./tokens').values;
+/**
+ * Glayzzle : the PHP engine on NodeJS
+ *
+ * Copyright (C) 2014 Glayzzle
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * @url http://glayzzle.com
+ * @license GNU-2
+ */
 
-function isNumber(n) {
-  return n != '.' && n != ',' && !isNaN(parseFloat(n)) && isFinite(n);
-}
+/**
+ * Expose the parser constructor
+ */
+module.exports = function(engine) {
 
-function getTokenName(token) {
-  if (!isNumber(token)) {
-    return "'" + token + "'";
-  } else {
-    if (token == 1) return 'the end of file (EOF)';
-    return names[token];
+  var tokens = engine.tokens.names;
+  var names = engine.tokens.values;
+  var EOF = engine.lexer.EOF;
+
+  // check if argument is a number
+  function isNumber(n) {
+    return n != '.' && n != ',' && !isNaN(parseFloat(n)) && isFinite(n);
   }
-}
 
+  // private helper : gets a token name
+  function getTokenName(token) {
+    if (!isNumber(token)) {
+      return "'" + token + "'";
+    } else {
+      if (token == 1) return 'the end of file (EOF)';
+      return names[token];
+    }
+  }
 
-module.exports = {
-  parser: {
+  // parser api
+  return {
     // le lexer
-    lexer: lex,
+    lexer: engine.lexer,
     token: null,
     entries: {
       'T_SCALAR': [
@@ -52,9 +80,9 @@ module.exports = {
     /** main entry point : converts a source code to AST **/
     ,parse: function(code) {
       this.lexer.setInput(code);
-      this.token = this.lexer.lex() || lex.EOF;
+      this.token = this.lexer.lex() || EOF;
       var ast = [];
-      while(this.token != lex.EOF) {
+      while(this.token != EOF) {
         ast.push(this.read_start(this.token));
       }
       return ast;
@@ -88,7 +116,7 @@ module.exports = {
     }
     /** consume the next token **/
     ,next: function(token) {
-      this.token = this.lexer.lex() || this.error(lex.EOF);
+      this.token = this.lexer.lex() || this.error(EOF);
       if (token ) this.expect(token);
       return this.token;
     }
@@ -125,7 +153,7 @@ module.exports = {
             token = this.next();           // trim separator
 
         if (typeof (item) === "function") {
-            while (this.token != lex.EOF) {
+            while (this.token != EOF) {
                 result.push(item.apply(this, [token]));
                 if (this.token != separator) break;
                 this.next();
@@ -135,15 +163,15 @@ module.exports = {
                 this.error(token, [item, separator]);
             }
             result.push(this.lexer.yytext);
-            this.token = this.lexer.lex() || lex.EOF;
-            while (this.token != lex.EOF) {
+            this.token = this.lexer.lex() || EOF;
+            while (this.token != EOF) {
                 if (this.token != separator)
                     break;
-                this.token = this.lexer.lex() || lex.EOF;     // trim separator
+                this.token = this.lexer.lex() || EOF;     // trim separator
                 if (this.token != item)
                     break;
                 result.push(this.lexer.yytext);
-                this.token = this.lexer.lex() || lex.EOF;
+                this.token = this.lexer.lex() || EOF;
             }
         }
         return result;
@@ -181,7 +209,7 @@ module.exports = {
         var name = this.read_namespace_name(token);
         if (this.token == ';') {
           var body = this.read_top_statements(this.next());
-          if (this.token != lex.EOF) this.error(this.token, lex.EOF);
+          if (this.token != EOF) this.error(this.token, EOF);
           return ['namespace', name, body];
         } else if (this.token == '{') {
           var body = this.read_top_statements(this.next());
@@ -210,9 +238,9 @@ module.exports = {
     ,read_top_statements: function(token) {
       var result = [];
       if (token) this.token = token;
-      while(this.token !== lex.EOF && this.token !== '}') {
+      while(this.token !== EOF && this.token !== '}') {
         result.push(this.read_top_statement(this.token));
-        this.token = this.lexer.lex() || lex.EOF;
+        this.token = this.lexer.lex() || EOF;
       }
       return result;
     }
@@ -259,11 +287,11 @@ module.exports = {
     ,read_use_statements: function(token) {
         var result = [];
         if (token) this.token = token;
-        while(this.token !== lex.EOF) {
+        while(this.token !== EOF) {
             if (token != tokens.T_USE) this.error(token, tokens.T_USE);
             result.push(this.read_list(this.next(), this.read_use_statement, ','));
             if(this.token !== tokens.T_USE) break;
-            this.token = this.lexer.lex() || lex.EOF;
+            this.token = this.lexer.lex() || EOF;
         }
         return result;
     }
@@ -303,9 +331,9 @@ module.exports = {
     ,read_inner_statements: function(token) {
       var result = [];
       if (token) this.token = token;
-      while(this.token != lex.EOF && this.token !== '}') {
+      while(this.token != EOF && this.token !== '}') {
         result.push(this.read_inner_statement(this.token));
-        this.token = this.lexer.lex() || lex.EOF;
+        this.token = this.lexer.lex() || EOF;
       }
       return result;
     }
@@ -384,10 +412,10 @@ module.exports = {
     ,read_parameter_list: function(token) {
       var result = [];
       if (this.token != ')') {
-        while(this.token != lex.EOF) {
+        while(this.token != EOF) {
           result.push(this.read_parameter(this.token));
           if (this.token == ',') {
-            this.token = this.lexer.lex() || lex.EOF;
+            this.token = this.lexer.lex() || EOF;
           } else if (this.token == ')') {
             break;
           } else {
@@ -500,7 +528,7 @@ module.exports = {
         this.error(token, [tokens.T_ARRAY, '[']);
       }
       if (this.next() != expect) {
-        while(this.token != lex.EOF) {
+        while(this.token != EOF) {
           var entry = this.read_scalar(this.token);
           if (this.token == tokens.T_DOUBLE_ARROW) {
             items.push([entry, this.read_scalar(this.next())]);
@@ -572,9 +600,9 @@ module.exports = {
         ,'properties': []
         ,'methods': []
       };
-      while(this.token !== lex.EOF && this.token !== '}') {
+      while(this.token !== EOF && this.token !== '}') {
         result.push(this.read_top_statement(this.token));
-        this.token = this.lexer.lex() || lex.EOF;
+        this.token = this.lexer.lex() || EOF;
       }
       return result;
     }
@@ -604,5 +632,5 @@ module.exports = {
       this.expect(tokens.T_TRAIT);
       return ['trait', flag];
     }
-  }
+  };
 };
