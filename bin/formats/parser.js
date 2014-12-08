@@ -5,13 +5,15 @@
  * @license BSD-3-Clause
  */
 
+var util = require('util');
+
 module.exports = {
   explode: true
   ,handles: function(filename, ext) {
     return ext == '.parser';
   }
   // runs a parser file : test parsing behaviours
-  ,run: function(data, filename, PHP) {
+  ,run: function(data, filename, engine) {
     try {
       console.log('   >> Start test : ' + data.shift());
       var test = {
@@ -34,18 +36,21 @@ module.exports = {
       var ok;
       for(var i = 0; i < tests.length; i++) {
         test=tests[i];
-        writer = {
-          buffer: '',
-          write: function(output) {
-            this.buffer += output;
-          }
-        };
         console.log('   mode : ' + test.mode);
         if (test.mode.substring(0, 4) == 'FAIL') {
           ok = false;
-          try {
-            PHP.clean().eval(test.buffer, false, writer);
+          try { 
+            var ast = engine.parse(test.buffer);
             ok = true;
+            console.log(
+              util.inspect(
+                ast, { 
+                  showHidden: false, 
+                  depth: 10, 
+                  colors: true 
+                }
+              )
+            );
           } catch(e) {
             ok = false;
           }
@@ -54,8 +59,16 @@ module.exports = {
           }
         } else {
           try {
-            PHP.clean().eval(test.buffer, false, writer);
-            console.log('Output :' + writer.buffer);
+            var ast = engine.parse(test.buffer);
+            console.log(
+              util.inspect(
+                ast, { 
+                  showHidden: false, 
+                  depth: 10, 
+                  colors: true 
+                }
+              )
+            );
           } catch(e) {
             e.source = test.buffer;
             throw e;
@@ -64,7 +77,9 @@ module.exports = {
       }
       return true;
     } catch(e) {
-      PHP.context.parseError(e, e.source);
+      // @fixme - this function does not exists, should be declared in parser.js ?
+      console.error(e);
+      // engine.parseError(e, e.source);
       return false;
     }
   }
