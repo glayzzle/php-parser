@@ -92,7 +92,8 @@ for(var i = 0; i < buffer.length; i++) {
 util.puts('...Building tokens.js');
 fs.writeFileSync(
   GLAYZZLE_PATH + '../tokens.js',
-  '// exports token index\n'
+  fs.readFileSync(GLAYZZLE_PATH + 'license.txt', "utf8")
+  +'\n// exports token index\n'
   +'module.exports = {\n'
   +'  values: {\n'
   +'    '+tokenValues.join(',\n    ')
@@ -114,7 +115,8 @@ lexerGrammar.options.moduleType = 'js';
 util.puts('...Building lexer.js');
 fs.writeFileSync(
   GLAYZZLE_PATH + '../lexer.js',
-  'var ' + tokenVars.join(',\n  ') + ';\n'
+  fs.readFileSync(GLAYZZLE_PATH + 'license.txt', "utf8")
+  +'\nvar ' + tokenVars.join(',\n  ') + ';\n'
   + fs.readFileSync(GLAYZZLE_PATH + 'header.js') + '\n'
   + Lexer.generate(lexerGrammar) 
   + '\n\n' + fs.readFileSync(GLAYZZLE_PATH + 'footer.js') 

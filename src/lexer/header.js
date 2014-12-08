@@ -1,3 +1,4 @@
+
 // DEFINE LONG SIZE
 if (process.arch == 'x64') {
   var SIZEOF_LONG = 8;

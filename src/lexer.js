@@ -1,3 +1,26 @@
+/**
+ * Glayzzle : the PHP engine on NodeJS
+ *
+ * Copyright (C) 2014 Glayzzle
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * @url http://glayzzle.com
+ * @license GNU-2
+ */
+
+
 var T_HALT_COMPILER = 101,
   T_USE = 102,
   T_ENCAPSED_AND_WHITESPACE = 103,
@@ -125,6 +148,7 @@ var T_HALT_COMPILER = 101,
   T_WHITESPACE = 225,
   T_COMMENT = 226,
   T_DOC_COMMENT = 227;
+
 // DEFINE LONG SIZE
 if (process.arch == 'x64') {
   var SIZEOF_LONG = 8;
