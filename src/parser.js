@@ -75,6 +75,14 @@ module.exports = function(engine) {
           tokens.T_FILE,
           tokens.T_DIR,
           tokens.T_NS_C
+      ],
+      'T_MEMBER_FLAGS': [
+        tokens.T_PUBLIC,
+        tokens.T_PRIVATE,
+        tokens.T_PROTECTED,
+        tokens.T_STATIC,
+        tokens.T_ABSTRACT,
+        tokens.T_FINAL
       ]
     }
     /** main entry point : converts a source code to AST **/
@@ -255,19 +263,19 @@ module.exports = function(engine) {
         token = this.read();
         if ( token == tokens.T_CLASS) {
           return this.read_class(token, flag);
-        } else if ( token == tokens.T_INTERFACE, flag ) {
-          return this.read_interface(token);
-        } else if ( token == tokens.T_TRAIT, flag ) {
-          return this.read_trait(token);
+        } else if ( token == tokens.T_INTERFACE ) {
+          return this.read_interface(token, flag);
+        } else if ( token == tokens.T_TRAIT ) {
+          return this.read_trait(token, flag);
         } else {
           this.error(this.token, [tokens.T_CLASS, tokens.T_INTERFACE, tokens.T_TRAIT]);
         }
       } else if ( token == tokens.T_CLASS) {
-        return this.read_class(token);
+        return this.read_class(token, 0);
       } else if ( token == tokens.T_INTERFACE ) {
-        return this.read_interface(token);
+        return this.read_interface(token, 0);
       } else if ( token == tokens.T_TRAIT ) {
-        return this.read_trait(token);
+        return this.read_trait(token, 0);
       } else if( token == tokens.T_USE ) {
         return this.read_use_statements(token);
       } else {
@@ -319,7 +327,7 @@ module.exports = function(engine) {
         }
         this.expect(';') && this.next();
         return result;
-	}
+    }
     /**
      * reads a list of simple inner statements (helper for inner_statement*)
      * <ebnf>
@@ -565,11 +573,15 @@ module.exports = function(engine) {
       if (this.token == tokens.T_IMPLEMENTS) {
         propImplements = this.read_namespace_name( this.next() );
       }
-      if ( this.token != '{') this.error(this.token, '{');
-      var body = this.read_class_body();
-      if ( this.token != '}') this.error(this.token, '}');
-      this.next();
-      return ['class', propName, flag, propExtends, propImplements, body];
+      this.expect('{') && this.next();
+      return [
+        'class', 
+        propName, 
+        flag, 
+        propExtends, 
+        propImplements, 
+        this.read_class_body()
+      ];
     }
     /**
      * Read the class visibility
@@ -597,16 +609,75 @@ module.exports = function(engine) {
         ,'methods': []
       };
       while(this.token !== EOF && this.token !== '}') {
-        result.push(this.read_top_statement(this.token));
-        this.token = this.lexer.lex() || EOF;
+        if (this.token == tokens.T_CONST) {
+          result.constants.push(
+            this.read_constant_declaration()
+          );
+        } else {
+          var flag = this.read_member_flags();
+          if (this.token == tokens.T_VARIABLE) {
+            var varName = this.lexer.yytext;
+            var varValue = null;
+            this.next();
+            if (this.token != ';') {
+              this.expect('=');
+              varValue = this.read_scalar(this.next());
+            }
+            this.expect(';') && this.next();
+            result.properties.push([flag, varName, varValue]);
+          } else {
+            console.log(flag);
+            console.log(getTokenName(this.token));
+            result.push(this.read_top_statement(this.token));
+          }
+        }
       }
+      this.expect('}') && this.next();
       return result;
     }
     /**
-     *
+     * Reads a constant declaration
+     * <ebnf>
+     *  constant_declaration ::= T_CONST T_STRING '=' scalar ';'
+     * </ebnf>
      */
-    ,read_member_flags: function(token) {
-
+    ,read_constant_declaration: function() {
+      this.expect(tokens.T_CONST);
+      this.next(tokens.T_STRING);
+      var name = this.lexer.yytext;
+      this.next('=');
+      var value = this.read_scalar(this.next());
+      this.expect(';') && this.next();
+      return [name, value];
+    }
+    /**
+     * Read member flags
+     * @return array 
+     *  1st index : 0 => public, 1 => protected, 2 => private
+     *  2nd index : 0 => instance member, 1 => static member
+     *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
+     */
+    ,read_member_flags: function() {
+      var result = [-1, -1, -1];
+      if (this.is('T_MEMBER_FLAGS')) {
+        var idx = 0, val = 0;
+        do {
+          switch(this.token) {
+            case tokens.T_PUBLIC:     idx = 0; val = 0; break;
+            case tokens.T_PROTECTED:  idx = 0; val = 1; break;
+            case tokens.T_PRIVATE:    idx = 0; val = 2; break;
+            case tokens.T_STATIC:     idx = 1; val = 1; break;
+            case tokens.T_ABSTRACT:   idx = 2; val = 1; break;
+            case tokens.T_FINAL:      idx = 2; val = 2; break;
+          }
+          if (result[idx] != -1) this.error(this.token);
+          result[idx] = val;
+        } while(this.next() && this.is('T_MEMBER_FLAGS'));
+      }
+      if (result[0] == -1) result[0] = 0;
+      if (result[1] == -1) result[1] = 0;
+      if (result[2] == -1) result[2] = 0;
+      return result;
     }
     /**
      * reading an interface
