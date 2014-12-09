@@ -45,7 +45,8 @@ module.exports = function(engine) {
   }
 
   // parser api
-  return {
+  var api = null;
+  return api = {
     // le lexer
     lexer: engine.lexer,
     token: null,
@@ -325,7 +326,6 @@ module.exports = function(engine) {
         } else {
             result = ['use', name, name[name.length - 1]];
         }
-        this.expect(';') && this.next();
         return result;
     }
     /**
@@ -575,11 +575,11 @@ module.exports = function(engine) {
       }
       this.expect('{') && this.next();
       return [
-        'class', 
-        propName, 
-        flag, 
-        propExtends, 
-        propImplements, 
+        'class',
+        propName,
+        flag,
+        propExtends,
+        propImplements,
         this.read_class_body()
       ];
     }
@@ -652,7 +652,7 @@ module.exports = function(engine) {
     }
     /**
      * Read member flags
-     * @return array 
+     * @return array
      *  1st index : 0 => public, 1 => protected, 2 => private
      *  2nd index : 0 => instance member, 1 => static member
      *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
