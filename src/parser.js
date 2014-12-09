@@ -212,9 +212,7 @@ module.exports = function(engine) {
           if (this.token != EOF) this.error(this.token, EOF);
           return ['namespace', name, body];
         } else if (this.token == '{') {
-          var body = this.read_top_statements(this.next());
-          if (this.token != '}') this.error(this.token, '}');
-          return ['namespace', name, body];
+          return ['namespace', name, this.read_code_block(this.token, true)];
         } else {
           this.error(this.token, ['{', ';']);
         }
@@ -297,9 +295,10 @@ module.exports = function(engine) {
     }
     /**
      * <ebnf>
-     * use_statement ::=
-     *		(T_FUNCTION | T_CONST)? namespace_name
-     *      | (T_FUNCTION | T_CONST)? namespace_name T_AS T_STRING
+     * use_statement ::= (
+     *  (T_FUNCTION | T_CONST)? namespace_name
+     *  | (T_FUNCTION | T_CONST)? namespace_name T_AS T_STRING
+     *  ) ';'
      * </ebnf>
      */
     ,read_use_statement: function(token) {
@@ -318,8 +317,9 @@ module.exports = function(engine) {
             result = ['use', name, this.lexer.yytext];
             this.next();
         } else {
-            result = ['use', name];
+            result = ['use', name, name[name.length - 1]];
         }
+        this.expect(';') && this.next();
         return result;
 	}
     /**
@@ -368,14 +368,13 @@ module.exports = function(engine) {
     ,read_code_block: function(token, top) {
       if (token == '{') {
         var body = top ?
-          this.read_inner_statements(this.next())
-          : this.read_top_statements(this.next())
+          this.read_inner_statements(token)
+          : this.read_top_statements(token)
         ;
-        if (this.token != '}') this.error(this.token, '}');
-        this.next();
+        this.expect('}') && this.next();
         return body;
       } else {
-        this.error(this.token, '{');
+        this.expect('{');
       }
     }
     /**
