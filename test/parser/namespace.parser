@@ -3,14 +3,6 @@ Test namespaces
 namespace MyNameSpace\SubNameSpace;
 echo true;
 --PASS--
-use \com\org\name;
-use framework\ClassName as Alias;
-use function \framework\ClassName\functionName;
-use function framework\ClassName\functionName;
-use function framework\ClassName\functionName as functionAlias;
-use const framework\ClassName\CONSTANT;
-use const framework\ClassName\CONSTANT as constantAlias;
---PASS--
 echo 'before';
 namespace {
     echo 'inside';
@@ -22,3 +14,17 @@ namespace MyNameSpace\SubNameSpace {
 }
 --FAIL--
 namespace \MyNameSpace\SubNameSpace;
+--PASS--
+use My\Full\NSname;
+--PASS--
+use My\Full\Classname as Another;
+--PASS--
+use function My\Full\functionName;
+--PASS--
+use function My\Full\functionName as func;
+--PASSpp
+use const My\Full\CONSTANT;
+use const framework\ClassName\CONSTANT as constantAlias;
+--PASS--
+use My\Full\Classname, My\Full\NSname;
+use My\Full\Classname as Another, My\Full\NSname;
