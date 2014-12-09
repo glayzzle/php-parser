@@ -261,7 +261,7 @@ module.exports = function(engine) {
         return this.read_function(token);
       } else if (token == tokens.T_FINAL || token == tokens.T_ABSTRACT) {
         var flag = this.read_class_scope(token);
-        token = this.read();
+        token = this.next();
         if ( token == tokens.T_CLASS) {
           return this.read_class(token, flag);
         } else if ( token == tokens.T_INTERFACE ) {
@@ -571,7 +571,11 @@ module.exports = function(engine) {
         propExtends = this.read_namespace_name( this.next() );
       }
       if (this.token == tokens.T_IMPLEMENTS) {
-        propImplements = this.read_namespace_name( this.next() );
+        propImplements = this.read_list(
+          this.next(),
+          this.read_namespace_name,
+          ','
+        );
       }
       this.expect('{') && this.next();
       return [
@@ -591,7 +595,6 @@ module.exports = function(engine) {
      */
     ,read_class_scope: function(token) {
       if (token == tokens.T_FINAL || token == tokens.T_ABSTRACT) {
-        this.next();
         return token;
       }
       return 0;
