@@ -1,7 +1,14 @@
 Test class parser
 --PASS @todo handle interfaces --
-class titi { }
+class titi { 
+  const FOO = 123;
+  static protected $var;
+}
 class toto extends titi implements tata {}
+--PASS--
+abstract class aa { }
+--PASS--
+final class aa { }
 --PASS--
 class titi { }
 class /** aa **/ toto 
@@ -11,10 +18,6 @@ class /** aa **/ toto
    * Hi
    */
 }
---PASS--
-abstract class aa { }
---PASS--
-final class aa { }
 --FAIL--
 class { }
 --FAIL--
