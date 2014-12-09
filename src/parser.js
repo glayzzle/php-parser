@@ -116,7 +116,7 @@ module.exports = function(engine) {
     }
     /** consume the next token **/
     ,next: function(token) {
-      this.token = this.lexer.lex() || this.error(EOF);
+      this.token = this.lexer.lex() || EOF;
       if (token ) this.expect(token);
       return this.token;
     }
@@ -203,13 +203,13 @@ module.exports = function(engine) {
             , this.read_code_block(token, true)
         ];
       } else {
+        // @fixme should expect {, T_STRING even if not NS_SEP
         if(this.token === tokens.T_NS_SEPARATOR)
             this.error(this.token, ['{', tokens.T_STRING]);
-
         var name = this.read_namespace_name(token);
         if (this.token == ';') {
           var body = this.read_top_statements(this.next());
-          if (this.token != EOF) this.error(this.token, EOF);
+          this.expect(EOF);
           return ['namespace', name, body];
         } else if (this.token == '{') {
           return ['namespace', name, this.read_code_block(this.token, true)];
@@ -238,7 +238,6 @@ module.exports = function(engine) {
       if (token) this.token = token;
       while(this.token !== EOF && this.token !== '}') {
         result.push(this.read_top_statement(this.token));
-        this.token = this.lexer.lex() || EOF;
       }
       return result;
     }
@@ -289,7 +288,6 @@ module.exports = function(engine) {
             if (token != tokens.T_USE) this.error(token, tokens.T_USE);
             result.push(this.read_list(this.next(), this.read_use_statement, ','));
             if(this.token !== tokens.T_USE) break;
-            this.token = this.lexer.lex() || EOF;
         }
         return result;
     }
@@ -333,7 +331,6 @@ module.exports = function(engine) {
       if (token) this.token = token;
       while(this.token != EOF && this.token !== '}') {
         result.push(this.read_inner_statement(this.token));
-        this.token = this.lexer.lex() || EOF;
       }
       return result;
     }
@@ -368,8 +365,8 @@ module.exports = function(engine) {
     ,read_code_block: function(token, top) {
       if (token == '{') {
         var body = top ?
-          this.read_inner_statements(token)
-          : this.read_top_statements(token)
+          this.read_top_statements(this.next())
+          : this.read_inner_statements(this.next())
         ;
         this.expect('}') && this.next();
         return body;
