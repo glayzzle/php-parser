@@ -156,34 +156,38 @@ module.exports = function(engine) {
      * list ::= separator? ( item separator )* item
      * </ebnf>
      */
-    , read_list: function(token, item, separator) {
-        var result = [];
-        if (token == separator)
-            token = this.next();           // trim separator
+    ,read_list: function(token, item, separator) {
+      var result = [];
 
-        if (typeof (item) === "function") {
-            while (this.token != EOF) {
-                result.push(item.apply(this, [token]));
-                if (this.token != separator) break;
-                this.next();
-            }
-        } else {
-            if (token != item) {
-                this.error(token, [item, separator]);
-            }
-            result.push(this.lexer.yytext);
-            this.token = this.lexer.lex() || EOF;
-            while (this.token != EOF) {
-                if (this.token != separator)
-                    break;
-                this.token = this.lexer.lex() || EOF;     // trim separator
-                if (this.token != item)
-                    break;
-                result.push(this.lexer.yytext);
-                this.token = this.lexer.lex() || EOF;
-            }
+      if (token == separator) {
+        token = this.next();           // trim separator
+      }
+
+      if (typeof (item) === "function") {
+        while (this.token != EOF) {
+          result.push(item.apply(this, [this.token]));
+          if (this.token != separator) {
+            break;
+          }
+          this.next();
         }
-        return result;
+      } else {
+        if (token != item) {
+          this.error(token, [item, separator]);
+        }
+        result.push(this.lexer.yytext);
+        this.token = this.lexer.lex() || EOF;
+        while (this.token != EOF) {
+          if (this.token != separator)
+            break;
+          this.token = this.lexer.lex() || EOF;     // trim separator
+          if (this.token != item)
+            break;
+          result.push(this.lexer.yytext);
+          this.token = this.lexer.lex() || EOF;
+        }
+      }
+      return result;
     }
     /**
      * <ebnf>
@@ -261,7 +265,7 @@ module.exports = function(engine) {
         return this.read_function(token);
       } else if (token == tokens.T_FINAL || token == tokens.T_ABSTRACT) {
         var flag = this.read_class_scope(token);
-        token = this.next();
+        token = this.token;
         if ( token == tokens.T_CLASS) {
           return this.read_class(token, flag);
         } else if ( token == tokens.T_INTERFACE ) {
@@ -308,7 +312,7 @@ module.exports = function(engine) {
      *  ) ';'
      * </ebnf>
      */
-    ,read_use_statement: function(token) {
+    ,read_use_statement: function() {
         var result = null;
         if(
             this.token === tokens.T_FUNCTION
@@ -595,6 +599,7 @@ module.exports = function(engine) {
      */
     ,read_class_scope: function(token) {
       if (token == tokens.T_FINAL || token == tokens.T_ABSTRACT) {
+        this.next();
         return token;
       }
       return 0;
@@ -613,9 +618,7 @@ module.exports = function(engine) {
       };
       while(this.token !== EOF && this.token !== '}') {
         if (this.token == tokens.T_CONST) {
-          result.constants.push(
-            this.read_constant_declaration()
-          );
+          result.constants.push(this.read_constant_declarations());
         } else {
           var flag = this.read_member_flags();
           if (this.token == tokens.T_VARIABLE) {
@@ -639,18 +642,28 @@ module.exports = function(engine) {
       return result;
     }
     /**
-     * Reads a constant declaration
+     * Reads constant declarations
      * <ebnf>
-     *  constant_declaration ::= T_CONST T_STRING '=' scalar ';'
+     *  constant_declaration ::= T_CONST (constant_declaration ',')* constant_declaration
      * </ebnf>
      */
-    ,read_constant_declaration: function() {
+    ,read_constant_declarations: function() {
       this.expect(tokens.T_CONST);
-      this.next(tokens.T_STRING);
+      var result = this.read_list(this.next(), this.read_constant_declaration, ',');
+      this.expect(';') && this.next();
+      return result;
+    }
+    /**
+     * Reads a constant declaration
+     * <ebnf>
+     *  constant_declaration ::= T_STRING '=' scalar ';'
+     * </ebnf>
+     */
+    ,read_constant_declaration: function(token) {
+      this.expect(tokens.T_STRING);
       var name = this.lexer.yytext;
       this.next('=');
       var value = this.read_scalar(this.next());
-      this.expect(';') && this.next();
       return [name, value];
     }
     /**
