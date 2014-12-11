@@ -618,23 +618,23 @@ module.exports = function(engine) {
       };
       while(this.token !== EOF && this.token !== '}') {
         if (this.token == tokens.T_CONST) {
-          result.constants.push(this.read_constant_declarations());
+          result.constants.push(this.read_constant_list());
+          this.expect(';') && this.next();
         } else {
-          var flag = this.read_member_flags();
-          if (this.token == tokens.T_VARIABLE) {
-            var varName = this.lexer.yytext;
-            var varValue = null;
+          var flags = this.read_member_flags();
+
+          // jump over T_VAR then land on T_VARIABLE
+          if (this.token === tokens.T_VAR) {
             this.next();
-            if (this.token != ';') {
-              this.expect('=');
-              varValue = this.read_scalar(this.next());
-            }
+          }
+          if (this.token === tokens.T_VARIABLE) {
+            var variables = this.read_variable_list();
             this.expect(';') && this.next();
-            result.properties.push([flag, varName, varValue]);
-          } else {
-            console.log(flag);
-            console.log(getTokenName(this.token));
-            result.push(this.read_top_statement(this.token));
+            result.properties.push([flags].concat(variables));
+          }
+
+          if (this.token === tokens.T_FUNCTION) {
+            result.methods.push(this.read_top_statement(this.token));
           }
         }
       }
@@ -642,21 +642,53 @@ module.exports = function(engine) {
       return result;
     }
     /**
-     * Reads constant declarations
+     * Reads variable list
      * <ebnf>
-     *  constant_declaration ::= T_CONST (constant_declaration ',')* constant_declaration
+     *  variable_list ::= (variable_declaration ',')* variable_declaration
      * </ebnf>
      */
-    ,read_constant_declarations: function() {
+    ,read_variable_list: function() {
+      return this.read_list(
+        this.token,
+        this.read_variable_declaration,
+        ','
+      );
+    }
+    /**
+     * Reads a variable declaration
+     * <ebnf>
+     *  variable_declaration ::= T_VARIABLE '=' scalar
+     * </ebnf>
+     */
+    ,read_variable_declaration: function(token) {
+      this.expect(tokens.T_VARIABLE);
+      var varName = this.lexer.yytext,
+          varValue = null;
+      this.next();
+      if (this.token === ';' || this.token === ',') {
+        return [varName, null];
+      }
+      if(this.token === '=') {
+        varValue = this.read_scalar(this.next());
+        return [varName, varValue];
+      }
+      this.expect([',', ';', '=']);
+    }
+    /**
+     * Reads constant list
+     * <ebnf>
+     *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
+     * </ebnf>
+     */
+    ,read_constant_list: function() {
       this.expect(tokens.T_CONST);
       var result = this.read_list(this.next(), this.read_constant_declaration, ',');
-      this.expect(';') && this.next();
       return result;
     }
     /**
      * Reads a constant declaration
      * <ebnf>
-     *  constant_declaration ::= T_STRING '=' scalar ';'
+     *  constant_declaration ::= T_STRING '=' scalar
      * </ebnf>
      */
     ,read_constant_declaration: function(token) {
@@ -690,6 +722,7 @@ module.exports = function(engine) {
           result[idx] = val;
         } while(this.next() && this.is('T_MEMBER_FLAGS'));
       }
+
       if (result[0] == -1) result[0] = 0;
       if (result[1] == -1) result[1] = 0;
       if (result[2] == -1) result[2] = 0;
