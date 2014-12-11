@@ -1,6 +1,6 @@
 Test class parser
 --PASS @todo handle interfaces --
-class titi { 
+class titi {
   const FOO = 123;
   static protected $var;
 }
@@ -11,8 +11,8 @@ abstract class aa { }
 final class aa { }
 --PASS--
 class titi { }
-class /** aa **/ toto 
-  extends titi 
+class /** aa **/ toto
+  extends titi
   implements tata, coincoin {
   /**
    * Hi
@@ -33,7 +33,7 @@ class implements { }
 --FAIL--
 class a implements { }
 --FAIL--
-class a { 
+class a {
   const B;
 }
 --PASS--
@@ -50,12 +50,13 @@ abstract class aa {
   public $a;
   private $b;
   protected $d;
+
+  public $a = 'foo';
   /**
    * azerty
    */
-  static public $e, $z;
-  
-  // doc
+  static public $e, $z = 777;
+
   public static $f;
   var $g;
   var $h , $i;
@@ -75,7 +76,6 @@ class foo {
     /** code here **/
   }
   function aa($b) {
-    // aaa
   }
 }
 --PASS--
@@ -83,4 +83,5 @@ class foo {
   static public $a = 123;
   protected static  $b, $c;
   private static  $d = array();
+  // aaa
 }
