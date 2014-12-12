@@ -16,7 +16,7 @@
       this.unput(char);
       break;
     } else if (
-      conf.asp_tags
+      this.asp_tags
       && char == '%'
       && this._input[0] == '>'
     ) {

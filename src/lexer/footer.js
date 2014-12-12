@@ -3,6 +3,10 @@
 lexer.all_tokens = true;
 // enables the evald mode (ignore opening tags)
 lexer.mode_eval = false;
+// disables by default asp tags mode
+lexer.asp_tags = false;
+// enables by default short tags mode
+lexer.short_tags = true;
 // change lexer algorithm
 var lex = lexer.lex;
 lexer.lex = function() {

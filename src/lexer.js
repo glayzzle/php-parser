@@ -534,7 +534,7 @@ performAction: function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
 var YYSTATE=YY_START;
 switch($avoiding_name_collisions) {
 case 0:
-  if (conf.asp_tags) {
+  if (this.asp_tags) {
     this.begin("ST_IN_SCRIPTING");
     return T_OPEN_TAG_WITH_ECHO;
   } else {
@@ -548,7 +548,7 @@ case 1:
 
 break;
 case 2:
-  if (conf.asp_tags) {
+  if (this.asp_tags) {
     this.begin("ST_IN_SCRIPTING");
     return T_OPEN_TAG;
   } else {
@@ -562,7 +562,7 @@ case 3:
 
 break;
 case 4:
-  if (conf.short_tags) {
+  if (this.short_tags) {
     this.begin("ST_IN_SCRIPTING");
     return T_OPEN_TAG;
   } else {
@@ -587,7 +587,7 @@ case 5:
           i --;
           break;
         }
-      } else if(conf.asp_tags && char == '%') {
+      } else if(this.asp_tags && char == '%') {
         i --;
         break;
       }
@@ -604,7 +604,7 @@ case 6:
 
 break;
 case 7:
-  if (conf.asp_tags) {
+  if (this.asp_tags) {
     this.popState();
     return T_CLOSE_TAG;  /* implicit ';' at php-end tag */
   } else {
@@ -1402,7 +1402,7 @@ case 151:
       this.unput(char);
       break;
     } else if (
-      conf.asp_tags
+      this.asp_tags
       && char == '%'
       && this._input[0] == '>'
     ) {
@@ -1453,6 +1453,10 @@ return lexer;
 lexer.all_tokens = true;
 // enables the evald mode (ignore opening tags)
 lexer.mode_eval = false;
+// disables by default asp tags mode
+lexer.asp_tags = false;
+// enables by default short tags mode
+lexer.short_tags = true;
 // change lexer algorithm
 var lex = lexer.lex;
 lexer.lex = function() {

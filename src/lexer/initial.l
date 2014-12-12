@@ -1,6 +1,6 @@
 
 <INITIAL>"<%=" {
-  if (conf.asp_tags) {
+  if (this.asp_tags) {
     this.begin("ST_IN_SCRIPTING");
     return T_OPEN_TAG_WITH_ECHO;
   } else {
@@ -16,7 +16,7 @@
 
 
 <INITIAL>"<%" {
-  if (conf.asp_tags) {
+  if (this.asp_tags) {
     this.begin("ST_IN_SCRIPTING");
     return T_OPEN_TAG;
   } else {
@@ -32,7 +32,7 @@
 
 
 <INITIAL>"<?" {
-  if (conf.short_tags) {
+  if (this.short_tags) {
     this.begin("ST_IN_SCRIPTING");
     return T_OPEN_TAG;
   } else {
@@ -57,7 +57,7 @@
           i --;
           break;
         }
-      } else if(conf.asp_tags && char == '%') {
+      } else if(this.asp_tags && char == '%') {
         i --;
         break;
       }
@@ -75,7 +75,7 @@
 
 
 <ST_IN_SCRIPTING>"%>"{NEWLINE}? {
-  if (conf.asp_tags) {
+  if (this.asp_tags) {
     this.popState();
     return T_CLOSE_TAG;  /* implicit ';' at php-end tag */
   } else {
