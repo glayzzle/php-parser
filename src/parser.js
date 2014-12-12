@@ -621,21 +621,26 @@ module.exports = function(engine) {
           result.constants.push(this.read_constant_list());
           this.expect(';') && this.next();
         } else {
+          // read member flags
           var flags = this.read_member_flags();
 
           // jump over T_VAR then land on T_VARIABLE
           if (this.token === tokens.T_VAR) {
-            this.next();
+            this.next() && this.expect(tokens.T_VARIABLE);
           }
+
+          // reads a variable
           if (this.token === tokens.T_VARIABLE) {
             var variables = this.read_variable_list();
             this.expect(';') && this.next();
             result.properties.push([flags].concat(variables));
           }
 
+          // reads a function
           if (this.token === tokens.T_FUNCTION) {
-            result.methods.push(this.read_top_statement(this.token));
+            result.methods.push([flags].concat(this.read_function(this.token)));
           }
+
         }
       }
       this.expect('}') && this.next();
