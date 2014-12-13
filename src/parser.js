@@ -130,6 +130,13 @@ module.exports = function(engine) {
       return this.token;
     }
     /**
+     * Consumes the next token, check it and prepares the next
+     */
+    ,consumeNext: function(token) {
+      this.next(token);
+      return this.next();
+    }
+    /**
      * Check if token is of specified type
      */
     ,is: function(token, type) {
@@ -213,7 +220,7 @@ module.exports = function(engine) {
         return [
             'namespace'
             , []
-            , this.read_code_block(token, true)
+            , this.read_code_block(true)
         ];
       } else {
         // @fixme should expect {, T_STRING even if not NS_SEP
@@ -225,7 +232,7 @@ module.exports = function(engine) {
           this.expect(EOF);
           return ['namespace', name, body];
         } else if (this.token == '{') {
-          return ['namespace', name, this.read_code_block(this.token, true)];
+          return ['namespace', name, this.read_code_block(true)];
         } else {
           this.error(this.token, ['{', ';']);
         }
@@ -246,11 +253,10 @@ module.exports = function(engine) {
      *  top_statements ::= top_statement*
      * </ebnf>
      */
-    ,read_top_statements: function(token) {
+    ,read_top_statements: function() {
       var result = [];
-      if (token) this.token = token;
       while(this.token !== EOF && this.token !== '}') {
-        result.push(this.read_top_statement(this.token));
+        result.push(this.read_top_statement());
       }
       return result;
     }
@@ -260,31 +266,30 @@ module.exports = function(engine) {
      *  top_statement ::= function | class | interface | trait | inner_statement
      * </ebnf>
      */
-    ,read_top_statement: function(token) {
-      if (token == tokens.T_FUNCTION ) {
-        return this.read_function(token);
-      } else if (token == tokens.T_FINAL || token == tokens.T_ABSTRACT) {
-        var flag = this.read_class_scope(token);
-        token = this.token;
-        if ( token == tokens.T_CLASS) {
-          return this.read_class(token, flag);
-        } else if ( token == tokens.T_INTERFACE ) {
-          return this.read_interface(token, flag);
-        } else if ( token == tokens.T_TRAIT ) {
-          return this.read_trait(token, flag);
+    ,read_top_statement: function() {
+      if (this.token == tokens.T_FUNCTION ) {
+        return this.read_function();
+      } else if (this.token == tokens.T_FINAL || this.token == tokens.T_ABSTRACT) {
+        var flag = this.read_class_scope();
+        if ( this.token == tokens.T_CLASS) {
+          return this.read_class(flag);
+        } else if ( this.token == tokens.T_INTERFACE ) {
+          return this.read_interface(flag);
+        } else if ( this.token == tokens.T_TRAIT ) {
+          return this.read_trait(flag);
         } else {
           this.error(this.token, [tokens.T_CLASS, tokens.T_INTERFACE, tokens.T_TRAIT]);
         }
-      } else if ( token == tokens.T_CLASS) {
-        return this.read_class(token, 0);
-      } else if ( token == tokens.T_INTERFACE ) {
-        return this.read_interface(token, 0);
-      } else if ( token == tokens.T_TRAIT ) {
-        return this.read_trait(token, 0);
-      } else if( token == tokens.T_USE ) {
-        return this.read_use_statements(token);
+      } else if ( this.token == tokens.T_CLASS) {
+        return this.read_class(0);
+      } else if ( this.token == tokens.T_INTERFACE ) {
+        return this.read_interface(0);
+      } else if ( this.token == tokens.T_TRAIT ) {
+        return this.read_trait(0);
+      } else if( this.token == tokens.T_USE ) {
+        return this.read_use_statements();
       } else {
-        return this.read_inner_statement(token);
+        return this.read_inner_statement();
       }
     }
     /**
@@ -355,7 +360,7 @@ module.exports = function(engine) {
     ,read_inner_statement: function(token) {
       switch(token) {
         case '{':
-          return this.read_code_block(token, false);
+          return this.read_code_block(false);
         case tokens.T_IF:
           return this.read_if(token);
         default:
@@ -374,17 +379,14 @@ module.exports = function(engine) {
      *  code_block ::= '{' (inner_statements | top_statements) '}'
      * </ebnf>
      */
-    ,read_code_block: function(token, top) {
-      if (token == '{') {
-        var body = top ?
-          this.read_top_statements(this.next())
-          : this.read_inner_statements(this.next())
-        ;
-        this.expect('}') && this.next();
-        return body;
-      } else {
-        this.expect('{');
-      }
+    ,read_code_block: function(top) {
+      this.expect('{') && this.next();
+      var body = top ?
+        this.read_top_statements()
+        : this.read_inner_statements()
+      ;
+      this.consumeNext('}');
+      return body;
     }
     /**
      * checks if current token is a reference keyword
@@ -395,21 +397,32 @@ module.exports = function(engine) {
     /**
      * reading a function
      * <ebnf>
-     * function ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')' code_block
+     * function ::= function_declaration code_block
      * </ebnf>
      */
     ,read_function: function(token) {
-      if (token != tokens.T_FUNCTION) this.error(token, tokens.T_FUNCTION);
+      var result = this.read_function_declaration();
+      this.expect('{');
+      var body = this.read_code_block(this.token, false);
+      
+      return ['function', name, params, body, isRef];
+    }
+    /**
+     * reads a function declaration (without his body)
+     * <ebnf>
+     * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
+     * </ebnf>
+     */
+    ,read_function_declaration: function() {
+      this.expect(tokens.T_FUNCTION);
       var isRef = this.is_reference(this.next());
       if (isRef) this.next();
-      if (this.token != tokens.T_STRING) this.error(this.token, tokens.T_STRING);
+      this.expect(tokens.T_STRING);
       var name = this.lexer.yytext;
-      if (this.next() != '(') this.error(this.token, '(');
-      var params = this.read_parameter_list(this.next());
-      if (this.token != ')') this.error(this.token, ')');
-      if (this.next() != '{') this.error(this.token, '{');
-      var body = this.read_code_block(this.token, false);
-      return ['function', name, params, body, isRef];
+      this.consumeNext('(');;
+      var params = this.read_parameter_list();
+      this.expect(')') && this.next();
+      return ['function', name, params, isRef];
     }
     /**
      * reads a list of parameters
