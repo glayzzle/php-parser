@@ -517,25 +517,21 @@ module.exports = function(engine) {
     /**
      * Parse an array
      */
-    ,read_array: function(token, vars) {
+    ,read_array: function(vars) {
       var expect = null;
       var items = [];
-      if (token == tokens.T_ARRAY) {
-        token = this.next();
-        if (token != '(') {
-          this.error(token, '(');
-        }
+      
+      if (this.expect([tokens.T_ARRAY, '[']) == tokens.T_ARRAY) {
+        this.next().expect('(');
         expect = ')';
-      } else if (token == '[') {
-        expect = ']';
       } else {
-        this.error(token, [tokens.T_ARRAY, '[']);
+        expect = ']';
       }
-      if (this.next() != expect) {
+      if (this.next().token != expect) {
         while(this.token != EOF) {
-          var entry = this.read_scalar(this.token);
+          var entry = this.read_scalar();
           if (this.token == tokens.T_DOUBLE_ARROW) {
-            items.push([entry, this.read_scalar(this.next())]);
+            items.push([entry, this.next().read_scalar()]);
           } else {
             items.push([null, entry]);
           }
@@ -544,8 +540,7 @@ module.exports = function(engine) {
           } else break;
         }
       }
-      if (this.token != expect) this.error(this.token, expect);
-      this.next();
+      this.expect(expect).next();
       return ['array', items];
     }
     /**
@@ -561,23 +556,24 @@ module.exports = function(engine) {
      * </ebnf>
      */
     ,read_class: function(token, flag) {
-      this.expect(tokens.T_CLASS);
-      this.next().expect(tokens.T_STRING);
-      var propName = this.lexer.yytext;
-
-      this.next();
-      var propExtends = false, propImplements = false;
-      if (this.token == tokens.T_EXTENDS) {
-        propExtends = this.read_namespace_name( this.next() );
+      this.expect(tokens.T_CLASS)
+        .next()
+        .expect(tokens.T_STRING)
+      ;
+      var propName = this.lexer.yytext
+        , propExtends = false
+        , propImplements = false
+      ;
+      if (this.next().token == tokens.T_EXTENDS) {
+        propExtends = this.next().read_namespace_name();
       }
       if (this.token == tokens.T_IMPLEMENTS) {
-        propImplements = this.read_list(
-          this.next(),
+        propImplements = this.next().read_list(
           this.read_namespace_name,
           ','
         );
       }
-      this.expect('{') && this.next();
+      this.expect('{').next();
       return [
         'class',
         propName,
@@ -593,10 +589,11 @@ module.exports = function(engine) {
      *   class_scope ::= (T_FINAL | T_ABSTRACT)?
      * </ebnf>
      */
-    ,read_class_scope: function(token) {
-      if (token == tokens.T_FINAL || token == tokens.T_ABSTRACT) {
+    ,read_class_scope: function() {
+      var result = this.token;
+      if (result == tokens.T_FINAL || result == tokens.T_ABSTRACT) {
         this.next();
-        return token;
+        return result;
       }
       return 0;
     }
@@ -617,7 +614,7 @@ module.exports = function(engine) {
         // check constant
         if (this.token == tokens.T_CONST) {
           result.constants.push(this.read_constant_list());
-          this.expect(';') && this.next();
+          this.expect(';').next();
           continue;
         }
 
@@ -639,13 +636,11 @@ module.exports = function(engine) {
           result.methods.push([flags].concat(this.read_function(this.token)));
         } else {
           // raise an error
-          this.error(
-            this.token, [
-              tokens.T_CONST, 
-              tokens.T_VARIABLE, 
-              tokens.T_FUNCTION
-            ]
-          );
+          this.error([
+            tokens.T_CONST, 
+            tokens.T_VARIABLE, 
+            tokens.T_FUNCTION
+          ]);
         }
       }
       this.expect('}').next();
@@ -659,7 +654,6 @@ module.exports = function(engine) {
      */
     ,read_variable_list: function() {
       return this.read_list(
-        this.token,
         this.read_variable_declaration,
         ','
       );
@@ -670,19 +664,15 @@ module.exports = function(engine) {
      *  variable_declaration ::= T_VARIABLE '=' scalar
      * </ebnf>
      */
-    ,read_variable_declaration: function(token) {
-      this.expect(tokens.T_VARIABLE);
+    ,read_variable_declaration: function() {
       var varName = this.lexer.yytext,
-          varValue = null;
-      this.next();
+      this.expect(tokens.T_VARIABLE).next().expect([',', ';', '=']);
       if (this.token === ';' || this.token === ',') {
         return [varName, null];
       }
       if(this.token === '=') {
-        varValue = this.read_scalar(this.next());
-        return [varName, varValue];
+        return [varName, this.next().read_scalar()];
       }
-      this.expect([',', ';', '=']);
     }
     /**
      * Reads constant list
@@ -691,9 +681,12 @@ module.exports = function(engine) {
      * </ebnf>
      */
     ,read_constant_list: function() {
-      this.expect(tokens.T_CONST);
-      var result = this.read_list(this.next(), this.read_constant_declaration, ',');
-      return result;
+      return this.expect(tokens.T_CONST)
+        .next()
+        .read_list(
+          this.read_constant_declaration, ','
+        )
+      ;
     }
     /**
      * Reads a constant declaration
@@ -701,11 +694,14 @@ module.exports = function(engine) {
      *  constant_declaration ::= T_STRING '=' scalar
      * </ebnf>
      */
-    ,read_constant_declaration: function(token) {
-      this.expect(tokens.T_STRING);
+    ,read_constant_declaration: function() {
       var name = this.lexer.yytext;
-      this.next().expect('=');
-      var value = this.read_scalar(this.next());
+      var value = this.expect(tokens.T_STRING)
+        .next()
+        .expect('=')
+        .next()
+        .read_scalar()
+      ;
       return [name, value];
     }
     /**
@@ -728,9 +724,9 @@ module.exports = function(engine) {
             case tokens.T_ABSTRACT:   idx = 2; val = 1; break;
             case tokens.T_FINAL:      idx = 2; val = 2; break;
           }
-          if (result[idx] != -1) this.error(this.token);
+          if (result[idx] != -1) this.error();
           result[idx] = val;
-        } while(this.next() && this.is('T_MEMBER_FLAGS'));
+        } while(this.next().is('T_MEMBER_FLAGS'));
       }
 
       if (result[0] == -1) result[0] = 0;
@@ -744,7 +740,7 @@ module.exports = function(engine) {
      * interface ::= class_scope? T_INTERFACE '@todo'
      * </ebnf>
      */
-    ,read_interface: function(token, flag) {
+    ,read_interface: function(flag) {
       this.expect(tokens.T_INTERFACE);
       return ['interface', flag];
     }
@@ -754,7 +750,7 @@ module.exports = function(engine) {
      * trait ::= class_scope? T_TRAIT '@todo'
      * </ebnf>
      */
-    ,read_trait: function(token, flag) {
+    ,read_trait: function(flag) {
       this.expect(tokens.T_TRAIT);
       return ['trait', flag];
     }
