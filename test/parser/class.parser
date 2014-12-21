@@ -1,5 +1,25 @@
 Test class parser
 --PASS--
+interface a1 extends i1, i2 {
+  const A1 = 123;
+  public function a1();
+  protected function a1();
+}
+--FAIL--
+interface a1 extends i1, i2 {
+  private const A1 = 123;
+}
+--FAIL--
+interface a1 extends i1, i2 {
+  private function A();
+}
+--FAIL--
+interface a1 {
+  public function A() {
+    // non-sense
+  }
+}
+--PASS--
 class a1 {
   public function b1() {
     // nothing

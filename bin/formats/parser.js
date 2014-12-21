@@ -52,6 +52,7 @@ module.exports = {
               )
             );
           } catch(e) {
+            console.log(e);
             ok = false;
           }
           if (ok) {
@@ -78,7 +79,7 @@ module.exports = {
       return true;
     } catch(e) {
       // @fixme - this function does not exists, should be declared in parser.js ?
-      console.error(e);
+      throw e;
       // engine.parseError(e, e.source);
       return false;
     }

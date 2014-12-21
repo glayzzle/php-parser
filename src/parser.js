@@ -576,14 +576,13 @@ module.exports = function(engine) {
           ','
         );
       }
-      this.expect('{').next();
       return [
-        'class',
-        propName,
-        flag,
-        propExtends,
-        propImplements,
-        this.read_class_body()
+        'class'
+        ,propName
+        ,flag
+        ,propExtends
+        ,propImplements
+        ,this.expect('{').next().read_class_body()
       ];
     }
     /**
@@ -622,7 +621,7 @@ module.exports = function(engine) {
         }
 
         // read member flags
-        var flags = this.read_member_flags();
+        var flags = this.read_member_flags(false);
 
         // jump over T_VAR then land on T_VARIABLE
         if (this.token === tokens.T_VAR) {
@@ -714,11 +713,12 @@ module.exports = function(engine) {
      *  2nd index : 0 => instance member, 1 => static member
      *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
      */
-    ,read_member_flags: function() {
+    ,read_member_flags: function(asInterface) {
       var result = [-1, -1, -1];
       if (this.is('T_MEMBER_FLAGS')) {
         var idx = 0, val = 0;
         do {
+          
           switch(this.token) {
             case tokens.T_PUBLIC:     idx = 0; val = 0; break;
             case tokens.T_PROTECTED:  idx = 0; val = 1; break;
@@ -726,6 +726,13 @@ module.exports = function(engine) {
             case tokens.T_STATIC:     idx = 1; val = 1; break;
             case tokens.T_ABSTRACT:   idx = 2; val = 1; break;
             case tokens.T_FINAL:      idx = 2; val = 2; break;
+          }
+          if (asInterface) {
+            if (idx == 0 && val == 2) {
+              this.expect([tokens.T_PUBLIC, tokens.T_PROTECTED]);
+            } else if (idx == 2 && val == 1) {
+              this.error();
+            }
           }
           if (result[idx] != -1) this.error();
           result[idx] = val;
@@ -740,12 +747,65 @@ module.exports = function(engine) {
     /**
      * reading an interface
      * <ebnf>
-     * interface ::= class_scope? T_INTERFACE '@todo'
+     * interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
      * </ebnf>
      */
     ,read_interface: function(flag) {
-      this.expect(tokens.T_INTERFACE);
-      return ['interface', flag];
+      var name = this.expect(tokens.T_INTERFACE)
+        .next()
+        .expect(tokens.T_STRING)
+        .text()
+      ;
+      var propExtends = false;
+      if (this.next().token == tokens.T_EXTENDS) {
+        propExtends =  this.next().read_list(
+          this.read_namespace_name,
+          ','
+        );
+      }
+      return [
+        'interface'
+        , name
+        , flag
+        , propExtends
+        , this.expect('{').next().read_interface_body()
+      ];
+    }
+    /**
+     * Reads an interface body
+     * <ebnf>
+     *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
+     * </ebnf>
+     */
+    ,read_interface_body: function() {
+      var result = {
+        'constants': []
+        ,'methods': []
+      };
+      while(this.token !== EOF && this.token !== '}') {
+        // check constant
+        if (this.token == tokens.T_CONST) {
+          result.constants.push(this.read_constant_list());
+          this.expect(';').next();
+          continue;
+        }
+        // read member flags
+        var flags = this.read_member_flags(true);
+
+        // reads a function
+        if (this.token === tokens.T_FUNCTION) {
+          result.methods.push([flags].concat(this.read_function_declaration()));
+          this.expect(';').next();
+        } else {
+          // raise an error
+          this.error([
+            tokens.T_CONST,
+            tokens.T_FUNCTION
+          ]);
+        }
+      }
+      this.expect('}').next();
+      return result;
     }
     /**
      * reading a trait
@@ -755,6 +815,7 @@ module.exports = function(engine) {
      */
     ,read_trait: function(flag) {
       this.expect(tokens.T_TRAIT);
+
       return ['trait', flag];
     }
   };
