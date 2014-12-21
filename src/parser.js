@@ -92,13 +92,13 @@ module.exports = function(engine) {
       this.token = this.lexer.lex() || EOF;
       var ast = [];
       while(this.token != EOF) {
-        ast.push(this.read_start(this.token));
+        ast.push(this.read_start());
       }
       return ast;
     }
     /** handling errors **/
-    ,error: function(token, expect) {
-      token = getTokenName(token);
+    ,error: function(expect) {
+      token = getTokenName(this.token);
       var msgExpect = '';
       if (expect) {
         msgExpect = ', expecting ';
@@ -121,41 +121,33 @@ module.exports = function(engine) {
       if (this.token != token) {
         this.error(this.token, token);
       }
-      return true;
+      return this;
     }
     /** consume the next token **/
     ,next: function(token) {
       this.token = this.lexer.lex() || EOF;
-      if (token ) this.expect(token);
-      return this.token;
+      return this;
     }
     /**
      * Consumes the next token, check it and prepares the next
      */
     ,consumeNext: function(token) {
-      this.next(token);
-      return this.next();
+      return this.next().expect(token).next();
     }
     /**
      * Check if token is of specified type
      */
-    ,is: function(token, type) {
-      if (!type) {
-        type = token;
-        token = this.token;
-      }
-      return this.entries[type].indexOf(token) != -1;
+    ,is: function(type) {
+      return this.entries[type].indexOf(this.token) != -1;
     }
     /** convert an token to ast **/
-    ,read_token: function(token) {
-      if (isNumber(token)) {
-        var result = [token, this.lexer.yytext, this.lexer.yylloc.first_line];
-        this.next();
-        return result;
-      } else {
-        this.next();
-        return token;
+    ,read_token: function() {
+      var result = this.token;
+      if (isNumber(result)) {
+        result = [result, this.lexer.yytext, this.lexer.yylloc.first_line];
       }
+      this.next();
+      return result;
     }
     /**
      * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
@@ -163,12 +155,11 @@ module.exports = function(engine) {
      * list ::= separator? ( item separator )* item
      * </ebnf>
      */
-    ,read_list: function(token, item, separator) {
+    ,read_list: function(item, separator) {
       var result = [];
 
-      if (token == separator) {
-        token = this.next();           // trim separator
-      }
+      // trim first separator (? not sure ?)
+      if (this.token == separator) this.next();
 
       if (typeof (item) === "function") {
         while (this.token != EOF) {
@@ -179,19 +170,17 @@ module.exports = function(engine) {
           this.next();
         }
       } else {
-        if (token != item) {
-          this.error(token, [item, separator]);
-        }
+        this.expect(item);
         result.push(this.lexer.yytext);
         this.token = this.lexer.lex() || EOF;
         while (this.token != EOF) {
           if (this.token != separator)
             break;
-          this.token = this.lexer.lex() || EOF;     // trim separator
+          this.next();     // trim current separator
           if (this.token != item)
             break;
           result.push(this.lexer.yytext);
-          this.token = this.lexer.lex() || EOF;
+          this.next();
         }
       }
       return result;
@@ -278,7 +267,7 @@ module.exports = function(engine) {
         } else if ( this.token == tokens.T_TRAIT ) {
           return this.read_trait(flag);
         } else {
-          this.error(this.token, [tokens.T_CLASS, tokens.T_INTERFACE, tokens.T_TRAIT]);
+          this.error([tokens.T_CLASS, tokens.T_INTERFACE, tokens.T_TRAIT]);
         }
       } else if ( this.token == tokens.T_CLASS) {
         return this.read_class(0);
@@ -392,7 +381,11 @@ module.exports = function(engine) {
      * checks if current token is a reference keyword
      */
     ,is_reference: function(token) {
-      return (token == '&');
+      if (this.token == '&') {
+        this.next();
+        return true;
+      }
+      return false;
     }
     /**
      * reading a function
@@ -416,7 +409,6 @@ module.exports = function(engine) {
     ,read_function_declaration: function() {
       this.expect(tokens.T_FUNCTION);
       var isRef = this.is_reference(this.next());
-      if (isRef) this.next();
       this.expect(tokens.T_STRING);
       var name = this.lexer.yytext;
       this.consumeNext('(');;
@@ -579,7 +571,7 @@ module.exports = function(engine) {
      */
     ,read_class: function(token, flag) {
       this.expect(tokens.T_CLASS);
-      this.next(tokens.T_STRING);
+      this.next().expect(tokens.T_STRING);
       var propName = this.lexer.yytext;
 
       this.next();
@@ -643,13 +635,13 @@ module.exports = function(engine) {
 
         // jump over T_VAR then land on T_VARIABLE
         if (this.token === tokens.T_VAR) {
-          this.next() && this.expect(tokens.T_VARIABLE);
+          this.next().expect(tokens.T_VARIABLE);
         }
 
         // reads a variable
         if (this.token === tokens.T_VARIABLE) {
           var variables = this.read_variable_list();
-          this.expect(';') && this.next();
+          this.expect(';').next();
           result.properties.push([flags].concat(variables));
         } else if (this.token === tokens.T_FUNCTION) {
           // reads a function
@@ -665,7 +657,7 @@ module.exports = function(engine) {
           );
         }
       }
-      this.expect('}') && this.next();
+      this.expect('}').next();
       return result;
     }
     /**
@@ -721,7 +713,7 @@ module.exports = function(engine) {
     ,read_constant_declaration: function(token) {
       this.expect(tokens.T_STRING);
       var name = this.lexer.yytext;
-      this.next('=');
+      this.next().expect('=');
       var value = this.read_scalar(this.next());
       return [name, value];
     }
