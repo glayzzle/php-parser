@@ -143,12 +143,6 @@ module.exports = function(engine) {
       return this;
     }
     /**
-     * Consumes the next token, check it and prepares the next
-     */
-    ,consumeNext: function(token) {
-      return this.next().expect(token).next();
-    }
-    /**
      * Check if token is of specified type
      */
     ,is: function(type) {
@@ -414,12 +408,11 @@ module.exports = function(engine) {
      */
     ,read_function_declaration: function() {
       this.expect(tokens.T_FUNCTION);
-      var isRef = this.is_reference(this.next());
-      this.expect(tokens.T_STRING);
-      var name = this.lexer.yytext;
-      this.consumeNext('(');;
+      var isRef = this.next().is_reference();
+      var name = this.expect(tokens.T_STRING).lexer.yytext;
+      this.next().expect('(').next();
       var params = this.read_parameter_list();
-      this.expect(')') && this.next();
+      this.expect(')').next();
       return ['function', name, params, isRef];
     }
     /**
