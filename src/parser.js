@@ -119,7 +119,7 @@ module.exports = function(engine) {
     /** force to expect specified token **/
     ,expect: function(token) {
       if (this.token != token) {
-        this.error(this.token, token);
+        this.error(token);
       }
       return this;
     }
@@ -203,9 +203,8 @@ module.exports = function(engine) {
      * </ebnf>
      */
     ,read_namespace: function(token) {
-      if (token != tokens.T_NAMESPACE) this.error(token, tokens.T_NAMESPACE);
-      token = this.next();
-      if (token == '{') {
+      this.expect(tokens.T_NAMESPACE).next();
+      if (this.token == '{') {
         return [
             'namespace'
             , []
@@ -214,16 +213,16 @@ module.exports = function(engine) {
       } else {
         // @fixme should expect {, T_STRING even if not NS_SEP
         if(this.token === tokens.T_NS_SEPARATOR)
-            this.error(this.token, ['{', tokens.T_STRING]);
-        var name = this.read_namespace_name(token);
+            this.error(['{', tokens.T_STRING]);
+        var name = this.read_namespace_name();
         if (this.token == ';') {
-          var body = this.read_top_statements(this.next());
+          var body = this.next().read_top_statements();
           this.expect(EOF);
           return ['namespace', name, body];
         } else if (this.token == '{') {
           return ['namespace', name, this.read_code_block(true)];
         } else {
-          this.error(this.token, ['{', ';']);
+          this.error(['{', ';']);
         }
       }
     }
@@ -292,8 +291,8 @@ module.exports = function(engine) {
         var result = [];
         if (token) this.token = token;
         while(this.token !== EOF) {
-            if (token != tokens.T_USE) this.error(token, tokens.T_USE);
-            result.push(this.read_list(this.next(), this.read_use_statement, ','));
+            this.expect(tokens.T_USE).next();
+            result.push(this.read_list(this.read_use_statement, ','));
             if(this.token !== tokens.T_USE) break;
         }
         return result;
@@ -316,9 +315,7 @@ module.exports = function(engine) {
         }
         var name = this.read_namespace_name(this.token);
         if(this.token === tokens.T_AS) {
-            this.next();
-            if(this.token !== tokens.T_STRING)
-                this.error(this.token, tokens.T_STRING);
+            this.next().expect(tokens.T_STRING);
             result = ['use', name, this.lexer.yytext];
             this.next();
         } else {
@@ -432,7 +429,7 @@ module.exports = function(engine) {
           } else if (this.token == ')') {
             break;
           } else {
-            this.error(this.token, [',', ')']);
+            this.error([',', ')']);
           }
         }
       }
@@ -447,7 +444,7 @@ module.exports = function(engine) {
       var type = this.read_type(token);
       var isRef = this.is_reference(this.token);
       if (isRef) this.next();
-      if (this.token != tokens.T_VARIABLE) this.error(this.token, tokens.T_VARIABLE);
+      this.expect(tokens.T_VARIABLE);
       var name = this.lexer.yytext;
       var value = [];
       if (this.next() == '=') {
@@ -476,26 +473,23 @@ module.exports = function(engine) {
     /**
      * @todo reading a scalar value
      */
-    ,read_scalar: function( token ) {
-      if (this.is(token, 'T_MAGIC_CONST')) {
-        return this.get_magic_constant(token);
+    ,read_scalar: function() {
+      if (this.is('T_MAGIC_CONST')) {
+        return this.get_magic_constant();
       } else {
-        switch(token) {
+        switch(this.token) {
           // texts
           case tokens.T_CONSTANT_ENCAPSED_STRING:
             var value = this.lexer.yytext;
             this.next();
             return ['string', value];
           case tokens.T_START_HEREDOC:
-            token = this.next();
             var value = '';
-            if (token == tokens.T_ENCAPSED_AND_WHITESPACE) {
+            if (this.next().token == tokens.T_ENCAPSED_AND_WHITESPACE) {
               value = this.lexer.yytext;
-              token = this.next();
+              this.next();
             }
-            if (token != tokens.T_END_HEREDOC) {
-              this.error(token, tokens.T_END_HEREDOC);
-            } else this.next();
+            this.expect(tokens.T_END_HEREDOC).next();
             return ['string', value];
           // NUMERIC
           case tokens.T_LNUMBER:  // long
@@ -505,21 +499,18 @@ module.exports = function(engine) {
             return ['number', value];
           case tokens.T_STRING:  // CONSTANTS
             var value = this.lexer.yytext;
-            if ( this.next() == tokens.T_DOUBLE_COLON) {
+            if ( this.next().token == tokens.T_DOUBLE_COLON) {
               // class constant
-              if (this.next() != tokens.T_STRING ) {
-                this.error(this.token, tokens.T_STRING);
-              } else {
-                value = [value, this.lexer.yytext];
-              }
+              this.next().expect(tokens.T_STRING);
+              value = [value, this.lexer.yytext];
               this.next();
             }
             return ['const', value];
           case tokens.T_ARRAY:  // array parser
           case '[':             // short array format
-            return this.read_array(token, false);
+            return this.read_array(false);
           default:
-            this.error(token, 'T_SCALAR');
+            this.error('T_SCALAR');
         }
       }
     }
