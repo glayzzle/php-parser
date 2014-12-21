@@ -116,6 +116,16 @@ module.exports = function(engine) {
         '\nat line ' + this.lexer.yylloc.first_line
       );
     }
+    /** outputs some debug information on current token **/
+    ,debug: function() {
+      console.log(
+        'Line ' 
+        + this.lexer.yylloc.first_line
+        + ' : '
+        + getTokenName(this.token)
+      );
+      return this;
+    }
     /** force to expect specified token **/
     ,expect: function(token) {
       if (Array.isArray(token)) {
@@ -372,7 +382,7 @@ module.exports = function(engine) {
         this.read_top_statements()
         : this.read_inner_statements()
       ;
-      this.consumeNext('}');
+      this.expect('}').next();
       return body;
     }
     /**
@@ -631,7 +641,7 @@ module.exports = function(engine) {
           result.properties.push([flags].concat(variables));
         } else if (this.token === tokens.T_FUNCTION) {
           // reads a function
-          result.methods.push([flags].concat(this.read_function(this.token)));
+          result.methods.push([flags].concat(this.read_function()));
         } else {
           // raise an error
           this.error([
