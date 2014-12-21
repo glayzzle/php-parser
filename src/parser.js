@@ -137,8 +137,12 @@ module.exports = function(engine) {
       }
       return this;
     }
+    /**returns the current token contents **/
+    ,text: function() {
+      return this.lexer.yytext;
+    }
     /** consume the next token **/
-    ,next: function(token) {
+    ,next: function() {
       this.token = this.lexer.lex() || EOF;
       return this;
     }
@@ -152,7 +156,7 @@ module.exports = function(engine) {
     ,read_token: function() {
       var result = this.token;
       if (isNumber(result)) {
-        result = [result, this.lexer.yytext, this.lexer.yylloc.first_line];
+        result = [result, this.text(), this.lexer.yylloc.first_line];
       }
       this.next();
       return result;
@@ -177,13 +181,12 @@ module.exports = function(engine) {
           }
         } while(this.next().token != EOF);
       } else {
-        this.expect(item);
-        result.push(this.lexer.yytext);
+        result.push(this.expect(item).text());
         while (this.next().token != EOF) {
           if (this.token != separator) break;
           // trim current separator & check item
           if (this.next().token != item) break;
-          result.push(this.lexer.yytext);
+          result.push(this.text());
         }
       }
       return result;
@@ -322,7 +325,7 @@ module.exports = function(engine) {
         var name = this.read_namespace_name();
         if(this.token === tokens.T_AS) {
           this.next().expect(tokens.T_STRING);
-          result = ['use', name, this.lexer.yytext];
+          result = ['use', name, this.text()];
           this.next();
         } else {
           result = ['use', name, name[name.length - 1]];
@@ -409,7 +412,7 @@ module.exports = function(engine) {
     ,read_function_declaration: function() {
       this.expect(tokens.T_FUNCTION);
       var isRef = this.next().is_reference();
-      var name = this.expect(tokens.T_STRING).lexer.yytext;
+      var name = this.expect(tokens.T_STRING).text();
       this.next().expect('(').next();
       var params = this.read_parameter_list();
       this.expect(')').next();
@@ -445,8 +448,7 @@ module.exports = function(engine) {
     ,read_parameter: function() {
       var type = this.read_type();
       var isRef = this.is_reference();
-      this.expect(tokens.T_VARIABLE);
-      var name = this.lexer.yytext;
+      var name = this.expect(tokens.T_VARIABLE).text();
       var value = [];
       if (this.next().token == '=') {
         value = this.next().read_scalar();
@@ -481,13 +483,13 @@ module.exports = function(engine) {
         switch(this.token) {
           // texts
           case tokens.T_CONSTANT_ENCAPSED_STRING:
-            var value = this.lexer.yytext;
+            var value = this.text();
             this.next();
             return ['string', value];
           case tokens.T_START_HEREDOC:
             var value = '';
             if (this.next().token == tokens.T_ENCAPSED_AND_WHITESPACE) {
-              value = this.lexer.yytext;
+              value = this.text();
               this.next();
             }
             this.expect(tokens.T_END_HEREDOC).next();
@@ -495,15 +497,15 @@ module.exports = function(engine) {
           // NUMERIC
           case tokens.T_LNUMBER:  // long
           case tokens.T_DNUMBER:  // double
-            var value = this.lexer.yytext;
+            var value = this.text();
             this.next();
             return ['number', value];
           case tokens.T_STRING:  // CONSTANTS
-            var value = this.lexer.yytext;
+            var value = this.text();
             if ( this.next().token == tokens.T_DOUBLE_COLON) {
               // class constant
               this.next().expect(tokens.T_STRING);
-              value = [value, this.lexer.yytext];
+              value = [value, this.text()];
               this.next();
             }
             return ['const', value];
@@ -561,7 +563,7 @@ module.exports = function(engine) {
         .next()
         .expect(tokens.T_STRING)
       ;
-      var propName = this.lexer.yytext
+      var propName = this.text()
         , propExtends = false
         , propImplements = false
       ;
@@ -666,7 +668,7 @@ module.exports = function(engine) {
      * </ebnf>
      */
     ,read_variable_declaration: function() {
-      var varName = this.lexer.yytext;
+      var varName = this.text();
       this.expect(tokens.T_VARIABLE).next().expect([',', ';', '=']);
       if (this.token === ';' || this.token === ',') {
         return [varName, null];
@@ -696,7 +698,7 @@ module.exports = function(engine) {
      * </ebnf>
      */
     ,read_constant_declaration: function() {
-      var name = this.lexer.yytext;
+      var name = this.text();
       var value = this.expect(tokens.T_STRING)
         .next()
         .expect('=')
