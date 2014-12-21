@@ -118,7 +118,11 @@ module.exports = function(engine) {
     }
     /** force to expect specified token **/
     ,expect: function(token) {
-      if (this.token != token) {
+      if (Array.isArray(token)) {
+        if (token.indexOf(this.token) === -1) {
+          this.error(token);
+        }
+      } else if (this.token != token) {
         this.error(token);
       }
       return this;
