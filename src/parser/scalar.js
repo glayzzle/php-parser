@@ -45,39 +45,16 @@ module.exports = function(api, tokens, EOF) {
       }
     }
     /**
-     * Parse an array
-     */
-    ,read_array: function(vars) {
-      var expect = null;
-      var items = [];
-      
-      if (this.expect([tokens.T_ARRAY, '[']).token == tokens.T_ARRAY) {
-        this.next().expect('(');
-        expect = ')';
-      } else {
-        expect = ']';
-      }
-      if (this.next().token != expect) {
-        while(this.token != EOF) {
-          var entry = this.read_scalar();
-          if (this.token == tokens.T_DOUBLE_ARROW) {
-            items.push([entry, this.next().read_scalar()]);
-          } else {
-            items.push([null, entry]);
-          }
-          if (this.token == ',') {
-            this.next();
-          } else break;
-        }
-      }
-      this.expect(expect).next();
-      return ['array', items];
-    }
-    /**
      * Converts the constant token to it's scallar value
      */
-    ,get_magic_constant: function(token) {
+    ,get_magic_constant: function() {
       return ['string', '@todo'];
+    }
+    /**
+     * @todo
+     */
+    ,read_encaps_list: function() {
+      return this.next().token;
     }
   };
 };

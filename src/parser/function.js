@@ -74,6 +74,36 @@ module.exports = function(api, tokens, EOF) {
       return [name, type, value, isRef];
     }
     /**
+     * <ebnf>
+     *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
+     * </ebnf>
+     */
+    ,read_function_argument_list: function() {
+      var result = [];
+      this.expect('(').next();
+      if (this.token !== ')') {
+        while(this.token != EOF) {
+          result.push(this.read_argument_list());
+          if (this.token === ',') {
+            this.next();
+          } else break;
+        }
+      }
+      this.expect(')').next();
+      return result;
+    }
+    /**
+     * <ebnf>
+     *    argument_list ::= T_ELLIPSIS? expr
+     * </ebnf>
+     */
+    ,read_argument_list: function() {
+      if (this.token === tokens.T_ELLIPSIS ) {
+        return ['...', this.read_expr()];
+      }
+      return this.read_expr();
+    }
+    /**
      * read type hinting
      * <ebnf>
      *  type ::= T_ARRAY | namespace_name
