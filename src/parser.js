@@ -87,6 +87,59 @@ module.exports = function(engine) {
         tokens.T_STATIC,
         tokens.T_ABSTRACT,
         tokens.T_FINAL
+      ],
+      'VARIABLE': [
+        tokens.T_VARIABLE, 
+        '$',
+        tokens.T_NS_SEPARATOR, 
+        tokens.T_STRING
+      ],
+      'EXPR': [
+        '@','-','+','!','~','(','`',
+        tokens.T_LIST,
+        tokens.T_CLONE,
+        tokens.T_INC,
+        tokens.T_DEC,
+        tokens.T_NEW,
+        tokens.T_ISSET,
+        tokens.T_EMPTY,
+        tokens.T_INCLUDE,
+        tokens.T_INCLUDE_ONCE,
+        tokens.T_REQUIRE,
+        tokens.T_REQUIRE_ONCE,
+        tokens.T_EVAL,
+        tokens.T_INT_CAST,
+        tokens.T_DOUBLE_CAST,
+        tokens.T_STRING_CAST,
+        tokens.T_ARRAY_CAST,
+        tokens.T_OBJECT_CAST,
+        tokens.T_BOOL_CAST,
+        tokens.T_UNSET_CAST,
+        tokens.T_EXIT,
+        tokens.T_PRINT,
+        tokens.T_YIELD,
+        tokens.T_STATIC,
+        tokens.T_FUNCTION,
+        // using VARIABLES :
+        tokens.T_VARIABLE, 
+        '$',
+        tokens.T_NS_SEPARATOR, 
+        tokens.T_STRING,
+        // using SCALAR :
+        tokens.T_CONSTANT_ENCAPSED_STRING,
+        tokens.T_START_HEREDOC,
+        tokens.T_LNUMBER,
+        tokens.T_DNUMBER,
+        tokens.T_STRING, // @fixme > conflict with variable = shift/reduce :)
+        tokens.T_ARRAY,'[',
+        tokens.T_CLASS_C,
+        tokens.T_TRAIT_C,
+        tokens.T_FUNC_C,
+        tokens.T_METHOD_C,
+        tokens.T_LINE,
+        tokens.T_FILE,
+        tokens.T_DIR,
+        tokens.T_NS_C
       ]
     }
     /** main entry point : converts a source code to AST **/
@@ -153,7 +206,11 @@ module.exports = function(engine) {
      * Check if token is of specified type
      */
     ,is: function(type) {
-      return this.entries[type].indexOf(this.token) != -1;
+      if (Array.isArray(type)) {
+        return type.indexOf(this.token) !== -1;
+      } else {
+        return this.entries[type].indexOf(this.token) != -1;
+      }
     }
     /** convert an token to ast **/
     ,read_token: function() {
