@@ -34,6 +34,7 @@ function printHelp() {
   util.puts('  -f <file>                      Parse and test the specified file');
   util.puts('  -d <path>                      Parse each file in the specified path');
   util.puts('  -r                             Use recursivity with the specified path');
+  util.puts('  -e                             Eval the specified input and shows AST');
   util.puts('  -h, --help                     Print help and exit');
 }
 
@@ -49,7 +50,8 @@ var options = {
   debug: 0,
   filename: null,
   path: null,
-  recursive: false
+  recursive: false,
+  evalCode: false
 };
 
 var args = process.argv.slice(2); // Trim 'node' and the script path.
@@ -69,6 +71,11 @@ while (args.length > 0 && isOption(args[0])) {
     case '-f':
       nextArg();
       options.filename = args[0];
+      break;
+
+    case '-e':
+      nextArg();
+      options.evalCode = args[0];
       break;
 
     case '--debug':
@@ -105,7 +112,7 @@ if ( args.length > 0 ) {
     abort('Too many arguments.');
   }
 }
-if ( !options.filename && !options.path ) {
+if ( !options.filename && !options.path && !options.evalCode ) {
   abort('Expecting a filename or a path.');
 }
 
@@ -164,7 +171,38 @@ function test(filename) {
 
 // run tests
 console.log('\n*** START TESTING ***\n');
-if (options.filename) {
+if (options.evalCode) {
+  var EOF = engine.lexer.EOF;
+  engine.lexer.mode_eval = true;
+  engine.lexer.all_tokens = false;
+  engine.lexer.setInput(options.evalCode);
+  var token = engine.lexer.lex() || EOF;
+  var names = engine.tokens.values;
+  var tokens = [];
+  while(token != EOF) {
+    if (names[token]) {
+      tokens.push(names[token]);
+    } else {
+      tokens.push(token);
+    }
+    token = engine.lexer.lex() || EOF;
+  }  
+  console.log('-- TOKENS : ');
+  console.log(tokens.join(' '));
+  
+  var ast = engine.parser.parse(options.evalCode);
+  console.log('-- AST : ');
+  console.log(
+    util.inspect(
+      ast, { 
+        showHidden: false, 
+        depth: 20, 
+        colors: true 
+      }
+    )
+  );
+
+} else if (options.filename) {
   if (!test(options.filename)) {
     abort('Error: test FAILED !!!');
   } else {
