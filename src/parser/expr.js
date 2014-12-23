@@ -1,26 +1,77 @@
 module.exports = function(api, tokens, EOF) {
   return {
+
+    read_expr: function() {
+      var expr = this.read_expr_item();
+      switch(this.token) {
+        // binary operations
+        case '|': return ['bin', '|', expr, this.next().read_expr()];
+        case '&': return ['bin', '&', expr, this.next().read_expr()];
+        case '^': return ['bin', '^', expr, this.next().read_expr()];
+        case '.': return ['bin', '.', expr, this.next().read_expr()];
+        case '+': return ['bin', '+', expr, this.next().read_expr()];
+        case '-': return ['bin', '-', expr, this.next().read_expr()];
+        case '*': return ['bin', '*', expr, this.next().read_expr()];
+        case '/': return ['bin', '/', expr, this.next().read_expr()];
+        case '%': return ['bin', '%', expr, this.next().read_expr()];
+        case tokens.T_POW:  return ['bin', '**', expr, this.next().read_expr()];
+        case tokens.T_SL:   return ['bin', '<<', expr, this.next().read_expr()];
+        case tokens.T_SR:   return ['bin', '>>', expr, this.next().read_expr()];
+
+        // boolean operations
+        case tokens.T_BOOLEAN_OR:
+        case tokens.T_LOGICAL_OR:   return ['bool', '|', expr, this.next().read_expr()];
+
+        case tokens.T_BOOLEAN_AND:
+        case tokens.T_LOGICAL_AND:  return ['bool', '&', expr, this.next().read_expr()];
+
+        case tokens.T_LOGICAL_XOR:      return ['bool', '^', expr, this.next().read_expr()];
+        case tokens.T_IS_IDENTICAL:     return ['bool', '=', expr, this.next().read_expr()];
+        case tokens.T_IS_NOT_IDENTICAL: return ['bool', '!=', expr, this.next().read_expr()];
+        case tokens.T_IS_EQUAL:         return ['bool', '~', expr, this.next().read_expr()];
+        case tokens.T_IS_NOT_EQUAL:     return ['bool', '!~', expr, this.next().read_expr()];
+        case '<':                       return ['bool', '<', expr, this.next().read_expr()];
+        case '>':                       return ['bool', '>', expr, this.next().read_expr()];
+
+        case tokens.T_IS_SMALLER_OR_EQUAL:  return ['bool', '<=', expr, this.next().read_expr()];
+        case tokens.T_IS_GREATER_OR_EQUAL:  return ['bool', '>=', expr, this.next().read_expr()];
+        case tokens.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
+        
+        // extra operations : 
+        case tokens.T_COALESCE: // php7 : $username = $_GET['user'] ?? 'nobody';
+          return ['retif', ['sys', 'isset', expr], expr, this.next().read_expr()];
+        case '?':
+          var trueArg = null;
+          if (this.next().token !== ':') {
+            trueArg = this.read_expr();
+          }
+          this.expect(':').next();
+          return ['retif', expr, trueArg, this.read_expr()];
+      }
+      return expr;
+    }
+
     /**
      * <ebnf>
-     *  expr ::=
-     *  '&'? variable 
+     * Reads an expression
+     *  expr ::= @todo
      * </ebnf>
      */
-    read_expr: function() {
+    ,read_expr_item: function() {
 
       switch(this.token) {
 
         case '@':
-          return ['silence', this.read_expr()];
+          return ['silence', this.next().read_expr()];
 
         case '-':
         case '+':
         case '!':
         case '~':
-          return ['unary', this.token, this.read_expr()];
+          return ['unary', this.token, this.next().read_expr()];
 
         case '(':
-          var expr = this.read_expr();
+          var expr = this.next().read_expr();
           this.expect(')').next();
           return expr;
 
@@ -41,18 +92,20 @@ module.exports = function(api, tokens, EOF) {
           return ['sys', 'clone', this.next().read_expr()];
 
         case tokens.T_INC:
-          return ['preop', '+', this.read_variable()];
+          var name = this.next().read_variable();
+          return ['set', name, ['bin', '+', name, ['number', 1]]];
 
         case tokens.T_DEC:
-          return ['preop', '-', this.read_variable()];
+          var name = this.next().read_variable();
+          return ['set', name, ['bin', '-', name, ['number', 1]]];
 
         case tokens.T_NEW:
-          return this.read_new_expr();
+          return this.next().read_new_expr();
 
         case tokens.T_ISSET:
           this.next().expect('(').next();
           // '(' isset_variables ')' { $$ = $3; }
-          return null;  // @todo
+          return ['sys', 'isset'];  // @todo
 
         case tokens.T_EMPTY:
           this.next().expect('(').next();
@@ -104,12 +157,13 @@ module.exports = function(api, tokens, EOF) {
           if ( this.next().token === '(' ) {
             if (this.next().token !== ')') {
               expr = this.read_expr();
+              this.expect(')').next();
             }
           }
           return ['sys', 'exit', expr];
 
         case tokens.T_PRINT:
-          return ['sys', 'print', this.read_expr()];
+          return ['sys', 'print', this.next().read_expr()];
 
         case tokens.T_YIELD:
           var result = ['yield', null, null];
@@ -133,97 +187,66 @@ module.exports = function(api, tokens, EOF) {
           }
           return this.read_function_declaration();
 
-        // T_SCALAR | VARIABLE
-        default: 
-          if (this.is('VARIABLE')) {
-            return this.read_variable_expr();
-          } else if (this.is('SCALAR')) {
-            return this.read_scalar();
-          } else {
-            this.error('EXPR');
-          }
       }
-    }
-    /**
-     * <ebnf>
-     *  variable_expr ::= variable (
-     *    ('=' '&' (new_expr | variable)) | ((
-     *      T_PLUS_EQUAL | T_CONCAT_EQUAL | T_MINUS_EQUAL ...
-     *    ) EXPR)
-     *  )
-     * </ebnf>
-     */
-    ,read_variable_expr: function() {
-      var variable = this.read_variable();
-      switch(this.token) {
-        case '=':
-          var ref = this.is_reference();
-          if (ref) { // set byref
-            if (this.token === tokens.T_NEW) {
-              return ['set', 'ref', variable, this.read_new_expr()];
+
+      // SCALAR | VARIABLE
+      var expr;
+      if (this.is('VARIABLE')) {
+        expr = this.read_variable();
+        // VARIABLES SPECIFIC OPERATIONS
+        switch(this.token) {
+          case '=':
+            if (this.next().token == '&') {
+              if (this.next().token === tokens.T_NEW) {
+                return ['link', expr, this.next().read_new_expr()];
+              } else {
+                return ['link', expr, this.read_variable()];
+              }
             } else {
-              return ['set', 'ref', variable, this.read_variable()];
+              return ['set', expr, this.read_expr()];
             }
-          } else {
-            return ['set', false, variable, this.read_expr()];
-          }
-
-        case tokens.T_PLUS_EQUAL:
-        case tokens.T_CONCAT_EQUAL:
-          return ['set', '+', variable, this.read_expr()];
-
-        case tokens.T_MINUS_EQUAL:
-          return ['set', '-', variable, this.read_expr()];
-
-        case tokens.T_MUL_EQUAL:
-          return ['set', '*', variable, this.read_expr()];
-
-        case tokens.T_POW_EQUAL:
-          return ['set', '**', variable, this.read_expr()];
-
-        case tokens.T_DIV_EQUAL:
-          return ['set', '/', variable, this.read_expr()];
-
-        case tokens.T_MOD_EQUAL:
-          return ['set', '%', variable, this.read_expr()];
-
-        case tokens.T_OR_EQUAL:
-          return ['set', '|', variable, this.read_expr()];
-
-        case tokens.T_AND_EQUAL:
-          return ['set', '&', variable, this.read_expr()];
-
-        case tokens.T_SL_EQUAL:
-          return ['set', '<<', variable, this.read_expr()];
-
-        case tokens.T_SR_EQUAL :
-          return ['set', '>>', variable, this.read_expr()];
-
-        case tokens.T_INC:
-           return ['set', '++', variable];
-
-        case tokens.T_DEC:
-           return ['set', '--', variable];
-
-        default:
-          // @fixme ugly error message
-          this.expect([
-            '=',
-            tokens.T_PLUS_EQUAL,
-            tokens.T_CONCAT_EQUAL,
-            tokens.T_MINUS_EQUAL,
-            tokens.T_MUL_EQUAL,
-            tokens.T_POW_EQUAL,
-            tokens.T_DIV_EQUAL,
-            tokens.T_MOD_EQUAL,
-            tokens.T_OR_EQUAL,
-            tokens.T_AND_EQUAL,
-            tokens.T_SL_EQUAL,
-            tokens.T_SR_EQUAL ,
-            tokens.T_INC,
-            tokens.T_DEC
-          ]);
+          // operations :
+          case tokens.T_PLUS_EQUAL:
+            return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];
+          case tokens.T_MINUS_EQUAL:
+            return ['set', expr, ['bin', '-', expr, this.next().read_expr()]];
+          case tokens.T_MUL_EQUAL:
+            return ['set', expr, ['bin', '*', expr, this.next().read_expr()]];
+          case tokens.T_POW_EQUAL:
+            return ['set', expr, ['bin', '**', expr, this.next().read_expr()]];
+          case tokens.T_DIV_EQUAL:
+            return ['set', expr, ['bin', '/', expr, this.next().read_expr()]];
+          case tokens.T_CONCAT_EQUAL: 
+            // NB : convert as string and add
+            return ['set', expr, ['bin', '.', expr, this.next().read_expr()]];
+          case tokens.T_MOD_EQUAL:
+            return ['set', expr, ['bin', '%', expr, this.next().read_expr()]];
+          case tokens.T_AND_EQUAL:
+            return ['set', expr, ['bin', '&', expr, this.next().read_expr()]];
+          case tokens.T_OR_EQUAL:
+            return ['set', expr, ['bin', '|', expr, this.next().read_expr()]];
+          case tokens.T_XOR_EQUAL:
+            return ['set', expr, ['bin', '^', expr, this.next().read_expr()]];
+          case tokens.T_SL_EQUAL:
+            return ['set', expr, ['bin', '<<', expr, this.next().read_expr()]];
+          case tokens.T_SR_EQUAL:
+            return ['set', expr, ['bin', '>>', expr, this.next().read_expr()]];
+          case tokens.T_INC:
+            this.next();
+            return ['post', '+', expr];
+          case tokens.T_DEC:
+            this.next();
+            return ['post', '-', expr];
+        } 
+      } else if (this.is('SCALAR')) {
+        expr = this.read_scalar();
+      } else {
+        this.error('EXPR');
       }
+
+      // returns variable | scalar
+      return expr;
+
     }
     /**
      * <ebnf>
@@ -232,7 +255,6 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_new_expr: function() {
       // @todo
-      this.expect(tokens.T_NEW).next();
       return ['new', this.token];
     }
     /**
@@ -254,94 +276,6 @@ module.exports = function(api, tokens, EOF) {
       }
       this.expect(')').next();
       return ['list', assignList, innerList ? false : this.read_expr()];
-    },
-    /**
-     * <ebnf>
-     *   variable ::= (reference_variable | namespace_name) (T_DOUBLE_COLON reference_variable)?
-     * </ebnf>
-     * <code>
-     *  $var                      // simple var
-     *  var::CONST_NAME           // dynamic class name with const retrieval
-     *  $var->func()->property    // chained calls
-     * </code>
-     */
-    read_variable: function(read_only) {
-      var result;
-
-      // reads the entry point
-      if (this.is([tokens.T_VARIABLE, '$'])) {
-        result = this.read_reference_variable();
-      } else if (this.is([tokens.T_NS_SEPARATOR, tokens.T_STRING])) {
-        result = this.read_namespace_name();
-        this.expect(tokens.T_DOUBLE_COLON);
-      } else {
-        this.expect('VARIABLE');
-      }
-
-      // static call
-      if (this.token === tokens.T_DOUBLE_COLON) {
-        var getter = null;
-        if (this.is([tokens.T_VARIABLE, '$'])) {
-          getter = this.read_reference_variable();
-        } else if (this.token === tokens.T_STRING) {
-          getter = this.text();
-          this.next();
-        } else {
-          this.error([tokens.T_VARIABLE, tokens.T_STRING]);
-        }
-        if (this.token === '(') {
-          var args = this.next().read_parameter_list();
-          this.expect(')').next();
-          result = ['static.call', result, getter, args ];
-        } else {
-          result = ['static.get', result, getter];
-        }
-      }
-
-      // @todo
-      // if (this.token === ) {
-      // }
-
-      return result;
-    },
-    /**
-     * <ebnf>
-     *  reference_variable ::=  (T_VARIABLE | '${' EXPR '}') ( '[' OFFSET ']' | '{' EXPR '}' )*
-     * </ebnf>
-     * <code>
-     *  $foo[123];      // foo is an array ==> gets its entry
-     *  $foo{1};        // foo is a string ==> get the 2nd char offset
-     *  ${'foo'};       // get the dynamic var $foo
-     *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
-     * </code>
-     */
-    read_reference_variable: function() {
-      var result;
-      if (this.expect([tokens.T_VARIABLE, '$']).token === tokens.T_VARIABLE) {
-        // plain variable name
-        result = this.text();
-        this.next();
-      } else {
-        // dynamic variable name
-        this.next();
-        if (this.expect(['{', '$']).token == '$') {
-          result = this.next().read_reference_variable();
-        } else {
-          result = this.next().read_expr();
-          this.expect('}').next();
-        }
-      }
-      while(this.token != EOF) {
-        if (this.token == '[') {
-          result = ['offset', result, this.next().read_dim_offset()];
-          this.expect(']').next();
-        }
-        if (this.token == '{') {
-          result = ['offset', result, this.next().read_expr()];
-          this.expect('}').next();
-        }
-      }
-      return result;
     }
   };
 };

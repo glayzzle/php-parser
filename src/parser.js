@@ -53,8 +53,9 @@ module.exports = function(engine) {
     // le lexer
     lexer: engine.lexer,
     token: null,
+    debug: false,
     entries: {
-      'T_SCALAR': [
+      'SCALAR': [
           tokens.T_CONSTANT_ENCAPSED_STRING,
           tokens.T_START_HEREDOC,
           tokens.T_LNUMBER,
@@ -126,11 +127,11 @@ module.exports = function(engine) {
         tokens.T_NS_SEPARATOR, 
         tokens.T_STRING,
         // using SCALAR :
+        tokens.T_STRING, // @see variable.js line 45 > conflict with variable = shift/reduce :)
         tokens.T_CONSTANT_ENCAPSED_STRING,
         tokens.T_START_HEREDOC,
         tokens.T_LNUMBER,
         tokens.T_DNUMBER,
-        tokens.T_STRING, // @fixme > conflict with variable = shift/reduce :)
         tokens.T_ARRAY,'[',
         tokens.T_CLASS_C,
         tokens.T_TRAIT_C,
@@ -145,7 +146,7 @@ module.exports = function(engine) {
     /** main entry point : converts a source code to AST **/
     ,parse: function(code) {
       this.lexer.setInput(code);
-      this.token = this.lexer.lex() || EOF;
+      this.next();
       var ast = [];
       while(this.token != EOF) {
         ast.push(this.read_start());
@@ -173,12 +174,14 @@ module.exports = function(engine) {
       );
     }
     /** outputs some debug information on current token **/
-    ,debug: function() {
+    ,showlog: function() {
+      var stack = (new Error()).stack.split('\n');
       console.log(
         'Line ' 
         + this.lexer.yylloc.first_line
         + ' : '
         + getTokenName(this.token)
+        + ' @' + stack[3].trim()
       );
       return this;
     }
@@ -200,6 +203,7 @@ module.exports = function(engine) {
     /** consume the next token **/
     ,next: function() {
       this.token = this.lexer.lex() || EOF;
+      if (this.debug) this.showlog();
       return this;
     }
     /**

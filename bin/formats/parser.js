@@ -42,15 +42,17 @@ module.exports = {
           try { 
             var ast = engine.parse(test.buffer);
             ok = true;
-            console.log(
-              util.inspect(
-                ast, { 
-                  showHidden: false, 
-                  depth: 10, 
-                  colors: true 
-                }
-              )
-            );
+            if (engine.parser.debug) {
+              console.log(
+                util.inspect(
+                  ast, { 
+                    showHidden: false, 
+                    depth: 10, 
+                    colors: true 
+                  }
+                )
+              );
+            }
           } catch(e) {
             console.log(e);
             ok = false;
@@ -61,15 +63,17 @@ module.exports = {
         } else {
           try {
             var ast = engine.parse(test.buffer);
-            console.log(
-              util.inspect(
-                ast, { 
-                  showHidden: false, 
-                  depth: 10, 
-                  colors: true 
-                }
-              )
-            );
+            if (engine.parser.debug) {
+              console.log(
+                util.inspect(
+                  ast, { 
+                    showHidden: false, 
+                    depth: 10, 
+                    colors: true 
+                  }
+                )
+              );
+            }
           } catch(e) {
             e.source = test.buffer;
             throw e;

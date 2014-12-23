@@ -40,7 +40,7 @@ module.exports = function(api, tokens, EOF) {
           case '[':             // short array format
             return this.read_array(false);
           default:
-            this.error('T_SCALAR');
+            this.error('SCALAR');
         }
       }
     }
@@ -48,7 +48,9 @@ module.exports = function(api, tokens, EOF) {
      * Converts the constant token to it's scallar value
      */
     ,get_magic_constant: function() {
-      return ['string', '@todo'];
+      var name = this.text();
+      this.next();
+      return ['magic', '@todo:' + name];
     }
     /**
      * @todo

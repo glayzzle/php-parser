@@ -35,6 +35,7 @@ function printHelp() {
   util.puts('  -d <path>                      Parse each file in the specified path');
   util.puts('  -r                             Use recursivity with the specified path');
   util.puts('  -e                             Eval the specified input and shows AST');
+  util.puts('  -v                             Enable verbose mode and show debug');
   util.puts('  -h, --help                     Print help and exit');
 }
 
@@ -47,7 +48,6 @@ function abort(message) {
 
 /* Arguments */
 var options = {
-  debug: 0,
   filename: null,
   path: null,
   recursive: false,
@@ -79,8 +79,8 @@ while (args.length > 0 && isOption(args[0])) {
       break;
 
     case '--debug':
-      nextArg();
-      options.debug = args[0];
+    case '-v':
+      engine.parser.debug = true;
       break;
 
     case '-d':
