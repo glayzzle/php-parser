@@ -97,10 +97,10 @@ module.exports = function(api, tokens, EOF) {
             this.expect('}').next();
             break;
           case '$': // @todo $$$var 
-            result = ['lookup', null];
+            result = ['lookup', this.read_simple_variable()];
             break;
           case tokens.T_VARIABLE: // $$var
-            result = this.text();
+            result = this.read_simple_variable();
             break;
           default:
             this.error(['{', '$', tokens.T_VARIABLE]);
