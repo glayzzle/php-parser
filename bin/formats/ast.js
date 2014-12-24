@@ -1,8 +1,7 @@
 /**
- * Glayzzle : PHP on NodeJS
+ * Copyright (C) 2014 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/glayzzle-parser/graphs/contributors
  * @url http://glayzzle.com
- * @author Ioan CHIRIAC
- * @license BSD-3-Clause
  */
 var fs = require('fs');
 var util = require('util');

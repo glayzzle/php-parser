@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2014 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/glayzzle-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
 var child_process = require('child_process');
 var fs = require('fs');
 

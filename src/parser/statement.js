@@ -1,3 +1,8 @@
+/**
+ * Copyright (C) 2014 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/glayzzle-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
 module.exports = function(api, tokens, EOF) {
   return {
     /**
@@ -93,14 +98,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_inner_statement: function() {
-      switch(this.token) {
-        case '{':
-          return this.read_code_block(false);
-        case tokens.T_IF:
-          return this.read_if();
-        default:
-          return this.read_token();
-      }
+      return this.read_statement();
     }
     /**
      * Reads statements
