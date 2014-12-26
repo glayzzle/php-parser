@@ -7,11 +7,12 @@ module.exports = function(api, tokens, EOF) {
   return {
     /**
      * <ebnf>
-     *   variable ::= (reference_variable | namespace_name) (T_DOUBLE_COLON reference_variable)?
+     *   variable ::= ...complex @todo
      * </ebnf>
      * <code>
      *  $var                      // simple var
-     *  var::CONST_NAME           // dynamic class name with const retrieval
+     *  classname::CONST_NAME     // dynamic class name with const retrieval
+     *  foo()                     // function call
      *  $var->func()->property    // chained calls
      * </code>
      */
@@ -23,18 +24,23 @@ module.exports = function(api, tokens, EOF) {
         result = this.read_reference_variable();
       } else if (this.is([tokens.T_NS_SEPARATOR, tokens.T_STRING])) {
         result = this.read_namespace_name();
-        if (this.token != tokens.T_DOUBLE_COLON) {
+        if (
+          this.token != tokens.T_DOUBLE_COLON
+          && this.token != '('
+        ) {
           // @see parser.js line 130 : resolves a conflict with scalar
           return ['const', result.length == 1 ? result[0] : result];
+        } else {
+          result = ['ns', result];
         }
       } else {
         this.expect('VARIABLE');
       }
 
-      // static call
+      // static mode
       if (this.token === tokens.T_DOUBLE_COLON) {
         var getter = null;
-        if (this.is([tokens.T_VARIABLE, '$'])) {
+        if (this.next().is([tokens.T_VARIABLE, '$'])) {   
           getter = this.read_reference_variable();
         } else if (this.token === tokens.T_STRING) {
           getter = this.text();
@@ -42,29 +48,54 @@ module.exports = function(api, tokens, EOF) {
         } else {
           this.error([tokens.T_VARIABLE, tokens.T_STRING]);
         }
-        if (this.token === '(') {
-          var args = this.next().read_parameter_list();
-          this.expect(')').next();
-          result = ['static.call', result, getter, args ];
-        } else {
-          result = ['static.get', result, getter];
+        if (result[0] != 'ns') {
+          result = ['lookup', 'class', result];
         }
+        result = ['static', 'get', result, getter];
       }
 
-      // @todo
-      // if (this.token === ) {
-      // }
+      recursive_scan_loop:
+      while(this.token != EOF) {
+        switch(this.token) {
+          case '(':
+            result = ['call', result,  this.read_function_argument_list()];
+            break;
+          case '[':
+            var offset = this.next().read_expr();
+            this.expect(']').next();
+            result = ['offset', result, offset];
+            break;
+          case tokens.T_OBJECT_OPERATOR:
+            var what;
+            switch(this.next().token) {
+              case tokens.T_STRING:
+                what = this.text();
+                this.next();
+                break;
+              case tokens.T_VARIABLE:
+                what = ['var', this.text()];
+                this.next();
+                break;
+              default:
+                this.error([tokens.T_STRING, tokens.T_VARIABLE]);
+            }
+            result = ['prop', result, what];
+            break;
+          default:
+            break recursive_scan_loop;
+        }
+      }
 
       return result;
     }
     /**
      * <ebnf>
-     *  reference_variable ::=  (T_VARIABLE | '${' EXPR '}') ( '[' OFFSET ']' | '{' EXPR '}' )*
+     *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
      * </ebnf>
      * <code>
      *  $foo[123];      // foo is an array ==> gets its entry
      *  $foo{1};        // foo is a string ==> get the 2nd char offset
-     *  ${'foo'};       // get the dynamic var $foo
+     *  ${'foo'}[123];  // get the dynamic var $foo
      *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
      * </code>
      */
@@ -77,9 +108,8 @@ module.exports = function(api, tokens, EOF) {
         } else if (this.token == '{') {
           result = ['offset', result, this.next().read_expr()];
           this.expect('}').next();
-        } else {
           break;
-        }
+        } else break;
       }
       return result;
     }
@@ -101,16 +131,17 @@ module.exports = function(api, tokens, EOF) {
             result = this.next().read_expr();
             this.expect('}').next();
             break;
-          case '$': // @todo $$$var 
-            result = ['lookup', this.read_simple_variable()];
+          case '$': // $$$var 
+            result = ['lookup', 'var', this.read_simple_variable()];
             break;
           case tokens.T_VARIABLE: // $$var
-            result = this.read_simple_variable();
+            result = ['var', this.text()];
+            this.next();
             break;
           default:
             this.error(['{', '$', tokens.T_VARIABLE]);
         }
-        result = ['lookup', result]; 
+        result = ['lookup', 'var', result]; 
       }
       return result; 
     }
