@@ -135,7 +135,7 @@ module.exports = function(engine) {
       while(this.token != EOF) {
         ast.push(this.read_start());
       }
-      return ast;
+      return ['program', ast];
     }
     /** handling errors **/
     ,error: function(expect) {
