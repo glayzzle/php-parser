@@ -64,11 +64,24 @@ module.exports = function(api, tokens, EOF) {
         'constants': []
         ,'properties': []
         ,'methods': []
+        ,'use': {
+          // list of traits
+          traits: [],
+          // list of alias
+          adaptations: []
+        }
       };
+
       while(this.token !== EOF && this.token !== '}') {
 
+        // check T_USE trait
+        if (this.token === tokens.T_USE) {
+          this.next().read_trait_use_statement(result['use']);
+          continue;
+        }
+
         // check constant
-        if (this.token == tokens.T_CONST) {
+        if (this.token === tokens.T_CONST) {
           result.constants.push(this.read_constant_list());
           this.expect(';').next();
           continue;
@@ -264,13 +277,95 @@ module.exports = function(api, tokens, EOF) {
     /**
      * reading a trait
      * <ebnf>
-     * trait ::= class_scope? T_TRAIT '@todo'
+     * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
      * </ebnf>
      */
     ,read_trait: function(flag) {
-      this.expect(tokens.T_TRAIT);
+      this.expect(tokens.T_TRAIT)
+        .next()
+        .expect(tokens.T_STRING)
+      ;
+      var propName = this.text(), 
+        propExtends = false, 
+        propImplements = false;
+      if (this.next().token == tokens.T_EXTENDS) {
+        propExtends = this.next().read_namespace_name();
+      }
+      if (this.token == tokens.T_IMPLEMENTS) {
+        propImplements = this.next().read_list(
+          this.read_namespace_name,
+          ','
+        );
+      }
+      return [
+        'trait', 
+        propName, 
+        propExtends, 
+        propImplements, 
+        this.expect('{').next().read_class_body()
+      ];
+    }
+    /**
+     * reading a use statement
+     * <ebnf>
+     * trait_use_statement ::= T_STRING (',' T_STRING)* ('{' trait_use_alias '}')?
+     * </ebnf>
+     */
+    ,read_trait_use_statement: function(result) {
+      result.traits.push(this.expect(tokens.T_STRING).text());
+      while(this.next()) {
+        if (this.token === ',') {
+          result.traits.push(
+            this.next().expect(tokens.T_STRING).text()
+          );
+        } else break;
+      }
+      if (this.token === '{') {
+        while(this.next()) {
+          if (this.token === '}') break;
+          result.adaptations.push(this.read_trait_use_alias());
+          this.expect(';');
+        }
+        this.expect('}').next();
+      } else {
+        this.expect(';').next();
+      }
+    }
+    /**
+     * Reading trait alias
+     * <ebnf>
+     * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
+     * </ebnf>
+     */
+    ,read_trait_use_alias: function() {
+      var result = {
+        origin: this.read_namespace_name(),
+        act: false,
+        target: false
+      };
+      if (this.token === tokens.T_DOUBLE_COLON) {
+        result.origin = [
+          result.origin,
+          this.next().expect(tokens.T_STRING).text()
+        ];
+        this.next();
+      }
 
-      return ['trait', flag];
+      if (this.token === tokens.T_INSTEADOF) {
+        result.act = 'instead';
+        result.target = this.next().read_namespace_name();    
+      } else if (this.token === tokens.T_AS) {
+        result.act = 'as';
+        result.flags = this.next().read_member_flags();
+        result.target = this.expect(tokens.T_STRING).text();
+        this.next();
+      } else {
+        this.expect([
+          tokens.T_AS,
+          tokens.T_INSTEADOF
+        ]);
+      }
+      return result;
     }
   };
 };

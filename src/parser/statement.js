@@ -41,17 +41,15 @@ module.exports = function(api, tokens, EOF) {
               return this.read_class(flag);
             case tokens.T_INTERFACE:
               return this.read_interface(flag);
-            case tokens.T_TRAIT:
-              return this.read_trait(flag);
             default:
-              this.error([tokens.T_CLASS, tokens.T_INTERFACE, tokens.T_TRAIT]);
+              this.error([tokens.T_CLASS, tokens.T_INTERFACE]);
           }
         case tokens.T_CLASS:
           return this.read_class(0);
         case tokens.T_INTERFACE:
           return this.read_interface(0);
         case tokens.T_TRAIT:
-          return this.read_trait(0);
+          return this.read_trait();
         case tokens.T_USE:
           return this.read_use_statements(0);
         case tokens.T_CONST:
