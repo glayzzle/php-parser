@@ -127,14 +127,13 @@ function test(filename) {
           , engine
       );
     }
-    var extension = getExtension(filename),
-        isWin = /^win/.test(process.platform);
+    var extension = getExtension(filename);
     for(var i = 0; i<engines.length; i++) {
       if (engines[i].handles(filename, extension)) {
         if (engines[i].explode) {
           return engines[i].run(
             fs.readFileSync(filename).toString().split(
-              isWin ? '\r\n' : '\n'
+              /[\r\n]/
             )
             , filename
             , engine
