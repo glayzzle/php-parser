@@ -209,7 +209,12 @@ module.exports = function(api, tokens, EOF) {
                 return ['link', expr, this.read_variable()];
               }
             } else {
-              return ['set', expr, this.read_expr()];
+              return [
+                'set', 
+                expr, 
+                this.token === tokens.T_NEW ? 
+                  this.next().read_new_expr() : this.read_expr()
+              ];
             }
           // operations :
           case tokens.T_PLUS_EQUAL:
@@ -256,12 +261,13 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *    new_expr ::= T_NEW
+     *    new_expr ::= T_NEW namespace_name function_argument_list
      * </ebnf>
      */
     ,read_new_expr: function() {
-      // @todo
-      return ['new', this.token];
+      var name = this.read_namespace_name();
+      var args = this.read_function_argument_list();
+      return ['new', name, args];
     }
     /**
      * <ebnf>
