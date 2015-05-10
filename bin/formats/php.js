@@ -9,7 +9,7 @@ var util 	= require('util');
 
 module.exports = {
   handles: function(filename, ext) {
-    return ext == '.php';
+    return ext == '.php' || ext === '.phtml';
   }
   // runs the specified filename
   ,run: function(filename, engine) {
@@ -27,7 +27,7 @@ module.exports = {
         )
       );
   	}
-    if (ast[0] === 'program' && ast[1].length > 0) {
+    if (ast[0] === 'program') {
       console.log('v - Passed AST parsing');
       return true;
     } else {
