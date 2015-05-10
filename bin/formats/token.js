@@ -12,30 +12,38 @@ module.exports = {
       fs.unlink(filename);
       return false;
     }
-    return filename.substring(0, 9) == '../token/' && (
+    return filename.indexOf("/token/") > -1 && (
       ext == '.php'
       || ext == '.phtml'
       || ext == '.html'
     );
   }
-  ,run: function(filename, PHP) {
-    var jsTok = PHP.globals.__call(
-      'token_get_all',
-      fs.readFileSync(filename).toString()
-    );
-    for(var i = 0; i < jsTok.length; i++) {
-      if (jsTok[i] instanceof Array) {
-        jsTok[i][0] = PHP.globals.__call(
-          'token_name', jsTok[i][0]
-        );
+  ,run: function(filename, engine) {
+
+    // USING THE LEXER TO PARSE THE FILE :
+    var EOF = engine.lexer.EOF;
+    engine.lexer.mode_eval = false;
+    engine.lexer.all_tokens = true;
+    engine.lexer.setInput(fs.readFileSync(filename).toString());
+    var token = engine.lexer.lex() || EOF;
+    var names = engine.tokens.values;
+    var jsTok = [];
+    while(token != EOF) {
+      var entry = engine.lexer.yytext;
+      if (names[token]) {
+        entry = [names[token], entry, engine.lexer.yylloc.first_line];
       }
-    }
+      jsTok.push(entry);
+      token = engine.lexer.lex() || EOF;
+    }  
 
+    // USING THE PHP ENGINE TO PARSE
     var result = cmd.exec('php ' + __dirname + '/token.php ' + filename);
-
     var phpTok = JSON.parse(result.stdout);
     var fail = false;
     var error = [[], []];
+
+    // CHECK ALL TOKENS
     for(var i = 0; i < phpTok.length; i++) {
       var p = phpTok[i];
       var j = jsTok[i];
@@ -76,6 +84,8 @@ module.exports = {
         break;
       }
     }
+
+    // OUTPUT ERRORS IF FOUND
     if (phpTok.length != jsTok.length) {
       console.log('FAIL : Token arrays have not the same length !');
       fail = true;
@@ -84,6 +94,7 @@ module.exports = {
       console.log('\nError at : ' + filename);
       console.log('\nJS Tokens', error[0]);
       console.log('PHP Tokens', error[1]);
+      // ADD A LOG FILE (FOR ANALYSIS)
       fs.writeFileSync(
         filename + '.out',
         JSON.stringify(jsTok)
@@ -91,7 +102,7 @@ module.exports = {
       );
       return false;
     } else {
-      console.log('PASSED ' + jsTok.length + ' tokens');
+      console.log('v - Passed ' + jsTok.length + ' tokens');
       return true;
     }
   }

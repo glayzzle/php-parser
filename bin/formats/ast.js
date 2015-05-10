@@ -8,14 +8,20 @@ var util = require('util');
 
 module.exports = {
   handles: function(filename, ext) {
-    return false;
+    return filename.indexOf("/ast/") > -1 && (
+      ext == '.php'
+      || ext == '.phtml'
+      || ext == '.html'
+    );
   }
   ,run: function(filename, php) {
     var parser = php.parser();
     parser.lexer.all_tokens = false;
     parser.lexer.mode_eval = false;
     try {
-      var AST = parser.parse( fs.readFileSync(filename).toString() );
+      var AST = parser.parseCode( 
+        fs.readFileSync(filename).toString() 
+      );
       console.log(
         util.inspect(
           AST, { 

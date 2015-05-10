@@ -27,6 +27,12 @@ module.exports = {
         )
       );
   	}
-    return ast[0] === 'program' && ast[1].length > 0;
+    if (ast[0] === 'program' && ast[1].length > 0) {
+      console.log('v - Passed AST parsing');
+      return true;
+    } else {
+      console.error('x - Warning : the AST tree is empty');
+      return false;
+    }
   }
 };

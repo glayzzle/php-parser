@@ -105,7 +105,6 @@ process.env.DEBUG = options.debug;
 // Load tests handlers
 var engines = [
     require('./formats/parser')
-  , require('./formats/phpt')
   , require('./formats/token')
   , require('./formats/php')
   , require('./formats/ast')
@@ -128,10 +127,12 @@ function test(filename) {
       );
     }
     var extension = getExtension(filename);
-    for(var i = 0; i<engines.length; i++) {
+    var result = false, found = false;
+    for(var i = 0; i < engines.length; i++) {
       if (engines[i].handles(filename, extension)) {
+        found = true;
         if (engines[i].explode) {
-          return engines[i].run(
+          result = engines[i].run(
             fs.readFileSync(filename).toString().split(
               /[\r\n]/
             )
@@ -139,12 +140,20 @@ function test(filename) {
             , engine
           );
         } else {
-          return engines[i].run(filename, engine);
+          result = engines[i].run(filename, engine);
+        }
+        if (!result) {
+          abort('Test "' + filename + '" does not pass !');
+          break;
         }
       }
     }
-    console.info('\n(i) IGNORED : unrecognized extension "'+getExtension(filename)+'" for ' + filename);
-    return false;
+    if (!found) {
+      console.info('\n(i) IGNORED : unrecognized extension "'+getExtension(filename)+'" for ' + filename);
+      return false;      
+    } else {
+      return result;
+    }
   } catch(e) {
     util.error( (e.stack || e) + '\n' );
     throw e;
