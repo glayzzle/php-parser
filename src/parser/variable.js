@@ -61,8 +61,14 @@ module.exports = function(api, tokens, EOF) {
             result = ['call', result,  this.read_function_argument_list()];
             break;
           case '[':
-            var offset = this.next().read_expr();
-            this.expect(']').next();
+            this.next();
+            var offset = false;
+            if (this.token !== ']') {
+              offset = this.read_expr();
+              this.expect(']').next();              
+            } else {
+              this.next();
+            }
             result = ['offset', result, offset];
             break;
           case tokens.T_OBJECT_OPERATOR:
