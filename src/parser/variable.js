@@ -58,7 +58,11 @@ module.exports = function(api, tokens, EOF) {
       while(this.token != EOF) {
         switch(this.token) {
           case '(':
-            result = ['call', result,  this.read_function_argument_list()];
+            if (read_only) {
+              return result;
+            } else {
+              result = ['call', result,  this.read_function_argument_list()];
+            }
             break;
           case '[':
             this.next();

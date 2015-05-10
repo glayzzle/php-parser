@@ -266,9 +266,24 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_new_expr: function() {
-      var name = this.read_namespace_name();
+      var name = this.read_class_name_reference();
       var args = this.read_function_argument_list();
       return ['new', name, args];
+    }
+    /**
+     * Reads a class name
+     * <ebnf>
+     * class_name_reference ::= namespace_name | variable
+     * </ebnf>
+     */
+    ,read_class_name_reference: function() {
+      if (this.token === '\\' || this.token === tokens.T_STRING) {
+        return this.read_namespace_name();
+      } else if (this.is('VARIABLE')) {
+        return this.read_variable(true);
+      } else {
+        this.expect([T_STRING, 'VARIABLE']);
+      }
     }
     /**
      * <ebnf>
