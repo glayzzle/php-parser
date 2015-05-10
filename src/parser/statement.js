@@ -164,7 +164,7 @@ module.exports = function(api, tokens, EOF) {
           return ['sys', 'echo', text];
 
         case tokens.T_UNSET:
-          this.next().expect('(');
+          this.next().expect('(').next();
           var items = this.read_list(this.read_variable, ',');
           this.expect(')').next().expect(';').next();
           return ['sys', 'unset', items];
