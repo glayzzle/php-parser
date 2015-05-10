@@ -159,7 +159,7 @@ module.exports = function(api, tokens, EOF) {
           return ['sys', 'echo', items];
 
         case tokens.T_INLINE_HTML:
-          var text = [this.text()];
+          var text = ['string', this.text()];
           this.next();
           return ['sys', 'echo', text];
 
