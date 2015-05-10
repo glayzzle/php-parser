@@ -184,14 +184,8 @@ module.exports = function(api, tokens, EOF) {
           }
           return result;
 
-        case tokens.T_STATIC:
         case tokens.T_FUNCTION:
-          // @wtf
-          var isStatic = false;
-          if (this.token === tokens.T_STATIC) {
-            this.next();
-            isStatic = true;
-          }
+          // @fixme later - removed static lambda function declarations (colides with static keyword usage)
           return this.read_function(true);
 
       }
