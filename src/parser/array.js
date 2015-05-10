@@ -27,6 +27,9 @@ module.exports = function(api, tokens, EOF) {
           items.push(this.read_array_pair_list());
           if (this.token == ',') {
             this.next();
+            if (this.token === expect) {
+              break;
+            }
           } else break;
         }
       }
