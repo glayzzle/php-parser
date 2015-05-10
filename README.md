@@ -19,11 +19,24 @@ $ cd bin
 $ node test.js -e "echo 'Hello World';"
 ```
 
+Will output :
+```
+*** START TESTING ***
+
+-- TOKENS :
+T_ECHO T_CONSTANT_ENCAPSED_STRING ;
+-- AST :
+[ 'program',
+  [ [ 'sys',
+      'echo',
+      [ [ 'string', '"Hello World"' ] ] ] ] ]
+```
+
 # Use it
 
 ```
 var parser = require('php-parser');
-var AST = parser.parse('echo "Hello World";');
+var AST = parser.parseEval('echo "Hello World";');
 console.log(AST);
 ```
 
@@ -48,6 +61,13 @@ Usage: test [options] [-f] <file>
 
 If you run into problems with a test, run it with the cli and add the `--debug` flag.
 
-#Misc
+# Releases
+
+Current version is under developpement, all tokens are not yet implemented, but consider that the lexer sucessfully pass the parsing of ZF2 and Laravel, and many aspects of php are implemented. 
+
+* 0.0.6 : Improve tests, implements arrays & new statements
+* 0.0.5 : Implement traits
+
+# Misc
 
 This library is released under BSD-3 license clause.
