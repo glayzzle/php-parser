@@ -118,3 +118,15 @@ class foo {
   private static  $d = array();
   // aaa
 }
+--PASS--
+class singleton {
+  static protected $instance;
+  final private function __constuct() { }
+  static public function getInstance() {
+    if (!self::$instance) {
+      self::$instance = new static();
+    }
+    return self::$instance;
+  }
+}
+$var = singleton::getInstance();

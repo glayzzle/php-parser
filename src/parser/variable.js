@@ -33,6 +33,9 @@ module.exports = function(api, tokens, EOF) {
         } else {
           result = ['ns', result];
         }
+      } else if (this.token === tokens.T_STATIC) {
+        this.next();
+        result = ['ns', ['static']];
       } else {
         this.expect('VARIABLE');
       }

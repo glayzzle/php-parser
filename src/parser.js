@@ -77,7 +77,8 @@ module.exports = function(engine) {
         tokens.T_VARIABLE, 
         '$',
         tokens.T_NS_SEPARATOR, 
-        tokens.T_STRING
+        tokens.T_STRING,
+        tokens.T_STATIC
       ],
       'EXPR': [
         '@','-','+','!','~','(','`',
