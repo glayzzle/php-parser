@@ -8,6 +8,9 @@ module.exports = function(api, tokens, EOF) {
   return {
     /**
      * Parse an array
+     * <ebnf>
+     * array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
+     * </ebnf>
      */
     read_array: function(vars) {
       var expect = null;
@@ -21,12 +24,7 @@ module.exports = function(api, tokens, EOF) {
       }
       if (this.next().token != expect) {
         while(this.token != EOF) {
-          var entry = this.read_scalar();
-          if (this.token == tokens.T_DOUBLE_ARROW) {
-            items.push([entry, this.next().read_scalar()]);
-          } else {
-            items.push([null, entry]);
-          }
+          items.push(this.read_array_pair_list());
           if (this.token == ',') {
             this.next();
           } else break;
@@ -34,6 +32,28 @@ module.exports = function(api, tokens, EOF) {
       }
       this.expect(expect).next();
       return ['array', items];
+    },
+    /**
+     * Reads an array entry item
+     * <ebnf>
+     * array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
+     * </ebnf>
+     */
+    read_array_pair_list: function() {
+      if (this.token === '&') {
+        return { key: false, value: ['ref', this.next().read_variable(true)] };
+      } else {
+        var expr = this.read_expr();
+        if (this.token === tokens.T_DOUBLE_ARROW) {
+          if (this.next().token === '&') {
+            return { key: expr, value: ['ref', this.next().read_variable(true)] };
+          } else {
+            return { key: expr, value: this.read_expr() };
+          }
+        } else {
+          return { key: false, value: expr };
+        }
+      }
     },
     /**
      * <ebnf>
