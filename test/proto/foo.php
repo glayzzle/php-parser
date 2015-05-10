@@ -7,7 +7,7 @@ function foo($bar) {
 class bar {
   public $foo = 123;
   private $a;
-  function function __construct($a) {
+  public function __construct($a) {
     $this->a = $a;
   } 
 }
