@@ -30,3 +30,4 @@ EXPECTED
 EOF
       . $lines;
 */
+  echo 'Hello World';
