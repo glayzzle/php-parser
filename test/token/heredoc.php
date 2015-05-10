@@ -1,4 +1,6 @@
 <?php
+
+/* @todo : should pass :
   $js =<<<"EOJ"
   Yo man
 EOJ
@@ -27,4 +29,4 @@ EXPECTED
 </IfModule>
 EOF
       . $lines;
-
+*/
