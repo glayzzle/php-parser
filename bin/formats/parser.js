@@ -38,7 +38,7 @@ module.exports = {
         if (test.mode.substring(0, 4) == 'FAIL') {
           ok = false;
           try { 
-            var ast = engine.parse(test.buffer);
+            var ast = engine.parseEval(test.buffer);
             ok = true;
             if (engine.parser.debug) {
               console.log(
@@ -60,7 +60,7 @@ module.exports = {
           }
         } else {
           try {
-            var ast = engine.parse(test.buffer);
+            var ast = engine.parseEval(test.buffer);
             if (engine.parser.debug) {
               console.log(
                 util.inspect(
