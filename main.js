@@ -4,9 +4,15 @@
  * @url http://glayzzle.com
  */
 var engine = {
-  // parsing helper
-  parse: function(buffer) {
+  // parsing eval string as '$x = 1;'
+  parseEval: function(buffer) {
     this.lexer.mode_eval = true;
+    this.lexer.all_tokens = false;
+    return this.parser.parse(buffer);
+  }
+  // parse php code with '<?php $x = 1;'
+  ,parseCode: function(buffer) {
+    this.lexer.mode_eval = false;
     this.lexer.all_tokens = false;
     return this.parser.parse(buffer);
   }
