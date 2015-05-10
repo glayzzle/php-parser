@@ -110,8 +110,9 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_ISSET:
           this.next().expect('(').next();
-          // '(' isset_variables ')' { $$ = $3; }
-          return ['sys', 'isset'];  // @todo
+          var expr = this.read_variable(true);
+          this.expect(')').next();
+          return ['sys', 'isset', expr];
 
         case tokens.T_EMPTY:
           this.next().expect('(').next();
