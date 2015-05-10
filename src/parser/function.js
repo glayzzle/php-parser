@@ -22,8 +22,8 @@ module.exports = function(api, tokens, EOF) {
      * function ::= function_declaration code_block
      * </ebnf>
      */
-    ,read_function: function() {
-      var result = this.read_function_declaration();
+    ,read_function: function(annonymous) {
+      var result = this.read_function_declaration(annonymous);
       result.push(this.expect('{').read_code_block(false));
       return result;
     }
@@ -33,11 +33,15 @@ module.exports = function(api, tokens, EOF) {
      * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
      * </ebnf>
      */
-    ,read_function_declaration: function() {
+    ,read_function_declaration: function(annonymous) {
       this.expect(tokens.T_FUNCTION);
       var isRef = this.next().is_reference();
-      var name = this.expect(tokens.T_STRING).text();
-      this.next().expect('(').next();
+      var name = false;
+      if (!annonymous) {
+        name = this.expect(tokens.T_STRING).text();
+        this.next();
+      }
+      this.expect('(').next();
       var params = this.read_parameter_list();
       this.expect(')').next();
       return ['function', name, params, isRef];

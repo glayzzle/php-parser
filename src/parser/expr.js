@@ -191,7 +191,7 @@ module.exports = function(api, tokens, EOF) {
             this.next();
             isStatic = true;
           }
-          return this.read_function_declaration();
+          return this.read_function(true);
 
       }
 
