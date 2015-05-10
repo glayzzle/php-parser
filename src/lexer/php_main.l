@@ -423,13 +423,13 @@
 }
 
 <ST_IN_SCRIPTING>"{" {
-	this.begin("ST_IN_SCRIPTING");
+	// @fixme : why ? this.begin("ST_IN_SCRIPTING");
 	return '{';
 }
 
 
 <ST_IN_SCRIPTING>"}" {
   // @todo : RESET_DOC_COMMENT();
-  this.popState();
+  // @fixme : re-enable this if needed : this.popState();
   return '}';
 }

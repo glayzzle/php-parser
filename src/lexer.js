@@ -1262,13 +1262,13 @@ case 128:
 
 break;
 case 129:
-	this.begin("ST_IN_SCRIPTING");
+	// @fixme : why ? this.begin("ST_IN_SCRIPTING");
 	return '{';
 
 break;
 case 130:
   // @todo : RESET_DOC_COMMENT();
-  this.popState();
+  // @fixme : re-enable this if needed : this.popState();
   return '}';
 
 break;
@@ -1452,8 +1452,8 @@ lexer.lex = function() {
       || (
         !this.mode_eval // ignore open/close tags
         && (
-          token == T_OPEN_TAG
-          || token == T_CLOSE_TAG
+          token === T_OPEN_TAG
+          || token === T_CLOSE_TAG
         )
       )
     ) {
