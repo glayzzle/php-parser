@@ -142,7 +142,14 @@ module.exports = function(api, tokens, EOF) {
           return ['global', items];
 
         case tokens.T_STATIC:
-          var items = this.next().read_list(function() {
+          if (this.next().token === tokens.T_DOUBLE_COLON) {
+            // static keyword for a class 
+            this.lexer.unput('static::');
+            var expr = this.next().read_expr();
+            this.expect(';').next();
+            return expr;
+          }
+          var items = this.read_list(function() {
             var name = this.expect(tokens.T_VARIABLE).text();
             var value = null;
             if (this.next().token === '=') {
