@@ -23,12 +23,25 @@ module.exports = function(api, tokens, EOF) {
     }
     ,read_for: function() {
       this.expect('(').next();
-      var expr1 = this.read_list(this.read_expr, ',');
-      this.expect(';').next();
-      var expr2 = this.read_list(this.read_expr, ',');
-      this.expect(';').next();
-      var expr3 = this.read_list(this.read_expr, ',');
-      this.expect(')').next();
+      var expr1 = null, expr2 = null, expr3 = null;
+      if (this.token !== ';') {
+        expr1 = this.read_list(this.read_expr, ',');
+        this.expect(';').next();
+      } else {
+        this.next();
+      }
+      if (this.token !== ';') {
+        expr2 = this.read_list(this.read_expr, ',');
+        this.expect(';').next();
+      } else {
+        this.next();
+      }
+      if (this.token !== ')') {
+        expr3 = this.read_list(this.read_expr, ',');
+        this.expect(')').next();
+      } else {
+        this.next();
+      } 
       var body = this.read_statement();
       // @todo ':' inner_statement_list T_ENDFOR ';'
       return ['for', expr1, expr2, expr3, body];
