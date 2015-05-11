@@ -82,12 +82,16 @@ module.exports = function(api, tokens, EOF) {
             var what;
             switch(this.next().token) {
               case tokens.T_STRING:
-                what = this.text();
+                what = ['string', this.text()];
                 this.next();
                 break;
               case tokens.T_VARIABLE:
                 what = ['var', this.text()];
                 this.next();
+                break;
+              case '{':
+                what = this.next().read_expr();
+                this.expect('}').next();
                 break;
               default:
                 this.error([tokens.T_STRING, tokens.T_VARIABLE]);
