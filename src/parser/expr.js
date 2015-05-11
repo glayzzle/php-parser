@@ -286,7 +286,7 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *   assignment_list ::= T_LIST '(' ((variable | assignment_list) (',' (variable | assignment_list))*)? ')'
+     *   assignment_list ::= T_LIST '(' ((variable? | assignment_list) (',' (variable? | assignment_list))*)? ')'
      * </ebnf>
      */
     ,read_assignment_list: function(innerList) {
@@ -296,7 +296,11 @@ module.exports = function(api, tokens, EOF) {
         if (this.token === tokens.T_LIST) {
           assignList.push(this.read_assignment_list(true));
         } else {
-          assignList.push(this.read_variable());
+          if (this.token !== ',') {
+            assignList.push(this.read_variable());
+          } else {
+            assignList.push(null);
+          }
         }
         if (this.token !== ',') break;
         this.next();
