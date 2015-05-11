@@ -5,6 +5,18 @@
  */
 
 module.exports = function(api, tokens, EOF) {
+  var specialChar = {
+    '\\r': "\r",
+    '\\n': "\n",
+    '\\t': "\t",
+    '\\v': String.fromCharCode(11),
+    '\\e': String.fromCharCode(27),
+    '\\f': String.fromCharCode(12),
+    "\\\\": "\\",
+    '\\$': "$",
+    '\\"': '"',
+    '\\\'': "'"
+  };
   return {
     /**
      * @todo reading a scalar value
@@ -14,26 +26,35 @@ module.exports = function(api, tokens, EOF) {
         return this.get_magic_constant();
       } else {
         switch(this.token) {
-          // texts
+          
+          // TEXTS
           case tokens.T_CONSTANT_ENCAPSED_STRING:
             var value = this.text();
             this.next();
-            return ['string', value];
+            return [
+              'string', 
+              value
+                .substring(1, value.length - 1)
+                .replace(/\\[rntvef"'\\\$]/g, function(seq) {
+                  return specialChar[seq];
+                })
+            ];
           case tokens.T_START_HEREDOC:
-            var value = '';
-            if (this.next().token == tokens.T_ENCAPSED_AND_WHITESPACE) {
-              value = this.text();
-              this.next();
-            }
-            this.expect(tokens.T_END_HEREDOC).next();
-            return ['string', value];
+            return this.next().read_encapsed_string(
+              tokens.T_END_HEREDOC
+            );
+          case '"':
+            return this.next().read_encapsed_string('"');
+
           // NUMERIC
           case tokens.T_LNUMBER:  // long
           case tokens.T_DNUMBER:  // double
             var value = this.text();
             this.next();
             return ['number', value];
-          case tokens.T_STRING:  // CONSTANTS
+          
+          // CONSTANTS
+          case tokens.T_STRING:
             var value = this.text();
             if ( this.next().token == tokens.T_DOUBLE_COLON) {
               // class constant
@@ -42,6 +63,8 @@ module.exports = function(api, tokens, EOF) {
               this.next();
             }
             return ['const', value];
+          
+          // ARRAYS
           case tokens.T_ARRAY:  // array parser
           case '[':             // short array format
             return this.read_array(false);
@@ -49,6 +72,87 @@ module.exports = function(api, tokens, EOF) {
             this.error('SCALAR');
         }
       }
+    }
+    /**
+     * <ebnf>
+     * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | variable  | T_CURLY_OPEN expr '}'
+     * </ebnf>
+     */
+    ,read_encapsed_string_item: function() {
+      var result = null;
+      if (this.token === tokens.T_ENCAPSED_AND_WHITESPACE) {
+        result = ['string', this.text()];
+        this.next();
+      } else if (this.token === tokens.T_DOLLAR_OPEN_CURLY_BRACES) {
+        if (this.next().token === tokens.T_STRING_VARNAME) {
+          result = ['var', this.text()];
+          if (this.next().token === '[') {
+            result = ['offset', result, this.next().read_expr()];
+            this.expect(']').next();
+          }
+        } else {
+          result = this.next().read_expr();
+        }
+        this.expect('}').next();
+      } else if (this.token === tokens.T_CURLY_OPEN) {
+        result = this.next().read_variable(false);
+        this.expect('}').next();
+      } else if (this.token === tokens.T_VARIABLE) {
+        result = ['var', this.text()];
+        this.next();
+        if (this.token === tokens.T_OBJECT_OPERATOR) {
+          if (this.next().expect(tokens.T_STRING)) {
+            result = ['prop', result, ['string', this.text()]];
+            this.next();
+          }
+        } else if (this.token === '[') {
+          this.next();
+          if (this.token === tokens.T_STRING) {
+            result = ['offset', result, ['string', this.text()]];
+          } else if (this.token === tokens.T_NUM_STRING) {
+            result = ['offset', result, ['number', this.text()]];
+          } else if (this.token === tokens.T_VARIABLE) {
+            result = ['offset', result, ['var', this.text()]];
+          } else {
+            this.expect([
+              tokens.T_STRING, 
+              tokens.T_NUM_STRING, 
+              tokens.T_VARIABLE
+            ]);
+          }
+          this.next().expect(']').next();
+        }
+      } else {
+        this.expect([
+          tokens.T_VARIABLE,
+          tokens.T_CURLY_OPEN,
+          tokens.T_DOLLAR_OPEN_CURLY_BRACES,
+          tokens.T_ENCAPSED_AND_WHITESPACE
+        ])
+      }
+      return result;
+    }
+    /**
+     * Reads an encapsed string
+     */
+    ,read_encapsed_string: function(expect) {
+      var first = this.read_encapsed_string_item();
+      if (this.token === expect) {
+        this.next();
+        return first;
+      }
+      var result = [
+        'bin', '.'
+        , first
+        , this.read_encapsed_string_item()
+      ];
+      while(this.token !== expect) {
+        result[3] = [
+          'bin', '.', result[3], this.read_encapsed_string_item()
+        ];
+      }
+      this.expect(expect).next();
+      return result;
     }
     /**
      * Converts the constant token to it's scallar value

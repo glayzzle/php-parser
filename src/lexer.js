@@ -1262,13 +1262,17 @@ case 128:
 
 break;
 case 129:
-	// @fixme : why ? this.begin("ST_IN_SCRIPTING");
 	return '{';
 
 break;
 case 130:
   // @todo : RESET_DOC_COMMENT();
-  // @fixme : re-enable this if needed : this.popState();
+  if (
+    this.conditionStack.length > 2
+    && this.conditionStack[this.conditionStack.length - 2] !== 'ST_IN_SCRIPTING'
+  ) {
+    this.popState();
+  }
   return '}';
 
 break;

@@ -53,7 +53,8 @@ module.exports = function(engine) {
           tokens.T_LINE,
           tokens.T_FILE,
           tokens.T_DIR,
-          tokens.T_NS_C
+          tokens.T_NS_C,
+          '"'
       ],
       'T_MAGIC_CONST': [
           tokens.T_CLASS_C,

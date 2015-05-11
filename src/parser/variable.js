@@ -72,7 +72,7 @@ module.exports = function(api, tokens, EOF) {
             var offset = false;
             if (this.token !== ']') {
               offset = this.read_expr();
-              this.expect(']').next();              
+              this.expect(']').next();
             } else {
               this.next();
             }
