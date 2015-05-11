@@ -165,6 +165,8 @@ module.exports = function(api, tokens, EOF) {
             if (this.next().token !== ')') {
               expr = this.read_expr();
               this.expect(')').next();
+            } else {
+              this.next();
             }
           }
           return ['sys', 'exit', expr];
