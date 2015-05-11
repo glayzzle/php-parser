@@ -286,7 +286,7 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *   assignment_list ::= T_LIST '(' ((variable? | assignment_list) (',' (variable? | assignment_list))*)? ')'
+     *   assignment_list ::= T_LIST '(' ((variable? | assignment_list) (',' (variable? | assignment_list))*)? ')' '=' expr
      * </ebnf>
      */
     ,read_assignment_list: function(innerList) {
@@ -306,7 +306,12 @@ module.exports = function(api, tokens, EOF) {
         this.next();
       }
       this.expect(')').next();
-      return ['list', assignList, innerList ? false : this.read_expr()];
+      return [
+        'list', assignList, 
+          innerList ? 
+            false : 
+            this.expect('=').next().read_expr()
+      ];
     }
   };
 };
