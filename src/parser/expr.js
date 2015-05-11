@@ -263,7 +263,10 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_new_expr: function() {
       var name = this.read_class_name_reference();
-      var args = this.read_function_argument_list();
+      var args = [];
+      if (this.token === '(') {
+        args = this.read_function_argument_list();
+      }
       return ['new', name, args];
     }
     /**
