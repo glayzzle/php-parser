@@ -22,9 +22,13 @@ module.exports = function(api, tokens, EOF) {
      * function ::= function_declaration code_block
      * </ebnf>
      */
-    ,read_function: function(annonymous) {
+    ,read_function: function(annonymous, isAbstract) {
       var result = this.read_function_declaration(annonymous);
-      result.push(this.expect('{').read_code_block(false));
+      if (isAbstract) {
+        this.expect(';').next();
+      } else {
+        result.push(this.expect('{').read_code_block(false));
+      }
       return result;
     }
     /**

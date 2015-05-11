@@ -102,7 +102,7 @@ module.exports = function(api, tokens, EOF) {
           result.properties.push([flags].concat(variables));
         } else if (this.token === tokens.T_FUNCTION) {
           // reads a function
-          result.methods.push([flags].concat(this.read_function()));
+          result.methods.push([flags].concat(this.read_function(false, flags[2] === 1)));
         } else {
           // raise an error
           this.error([
