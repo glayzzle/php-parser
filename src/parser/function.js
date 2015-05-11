@@ -36,7 +36,7 @@ module.exports = function(api, tokens, EOF) {
     ,read_function_declaration: function(annonymous) {
       this.expect(tokens.T_FUNCTION);
       var isRef = this.next().is_reference();
-      var name = false;
+      var name = false, use = [];
       if (!annonymous) {
         name = this.expect(tokens.T_STRING).text();
         this.next();
@@ -44,7 +44,30 @@ module.exports = function(api, tokens, EOF) {
       this.expect('(').next();
       var params = this.read_parameter_list();
       this.expect(')').next();
-      return ['function', name, params, isRef];
+      if (this.token === tokens.T_USE) {
+        use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
+        this.expect(')').next();
+      }
+      return ['function', name, params, isRef, use];
+    }
+    /**
+     * <ebnf>
+     * lexical_var ::= '&'? T_VARIABLE
+     * </ebnf>
+     */
+    ,read_lexical_var: function() {
+      var result = [false, null];
+      if (this.token === '&') {
+        result[0] = true;
+        this.next();
+      }
+      if (this.token === tokens.T_VARIABLE) {
+        result[1] = this.text();
+        this.next();
+      } else {
+        this.expect(['&', tokens.T_VARIABLE]);
+      }
+      return result;
     }
     /**
      * reads a list of parameters
