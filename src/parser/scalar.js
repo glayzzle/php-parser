@@ -19,7 +19,14 @@ module.exports = function(api, tokens, EOF) {
   };
   return {
     /**
-     * @todo reading a scalar value
+     * <ebnf>
+     *  scalar ::= T_MAGIC_CONST 
+     *       | T_LNUMBER | T_DNUMBER 
+     *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC 
+     *       | '"' encaps_list '"'
+     *       | T_START_HEREDOC encaps_list T_END_HEREDOC
+     *       | namespace_name (T_DOUBLE_COLON T_STRING)?
+     * </ebnf>
      */
     read_scalar: function() {
       if (this.is('T_MAGIC_CONST')) {
@@ -47,16 +54,25 @@ module.exports = function(api, tokens, EOF) {
             return this.next().read_encapsed_string('"');
 
           // NUMERIC
+          case '-':  // long
           case tokens.T_LNUMBER:  // long
           case tokens.T_DNUMBER:  // double
-            var value = this.text();
+            var sign = 1;
+            if (this.token === '-') {
+              sign = -1;
+              this.next().expect([
+                tokens.T_LNUMBER, tokens.T_DNUMBER
+              ]);
+            }
+            var value = parseFloat(this.text());
             this.next();
-            return ['number', value];
+            return ['number', value * sign];
           
           // CONSTANTS
+          case tokens.T_NS_SEPARATOR:
           case tokens.T_STRING:
-            var value = this.text();
-            if ( this.next().token == tokens.T_DOUBLE_COLON) {
+            var value = this.read_namespace_name();
+            if ( this.token == tokens.T_DOUBLE_COLON) {
               // class constant
               this.next().expect(tokens.T_STRING);
               value = [value, this.text()];
