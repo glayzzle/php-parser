@@ -770,12 +770,15 @@ case 22:
   var char;
   var lblLen = this.heredoc_label.length;
   var found = false;
+  if (yy_.yytext == '\\') i++;
   while(i < eot) {
     char = this._input[i];
     if (char == '\n' || char == '\r') {
       if (char == '\r') {
         char = ++i < eot && this._input[i];
-        if (!char == '\n') i--;
+        if (char !== '\n') {
+          i--;
+        }
       }
       // @fixme : check if out of text limits
       if (this._input.substring(i + 1, i + lblLen + 1) == this.heredoc_label) {
@@ -786,9 +789,12 @@ case 22:
         }
       }
     }
-    else if (char == '\\') {
+    else if (char === '\\') {
       char = ++i < eot && this._input[i];
-      if (char == '\n' || char == '\r') i--;
+      if (char == '\n' || char == '\r') {
+        i--;
+        
+      }
     }
     else if (char == '$') {
       char = ++i < eot && this._input[i];
@@ -821,7 +827,7 @@ case 23:
     if (char == '\n' || char == '\r') {
       if (char == '\r') {
         char = ++i < eot && this._input[i];
-        if (!char == '\n') i--;
+        if (char !== '\n') i--;
       }
       // @fixme : check if out of text limits
       if (this._input.substring(i + 1, i + lblLen + 1) == this.heredoc_label) {
