@@ -196,10 +196,23 @@ module.exports = function(api, tokens, EOF) {
           this.next()
           return null;
 
-        /**
-         * @dontfixme DONT WANNA IMPLEMENT GOTO !
-         * T_GOTO T_STRING ';' | T_STRING ':'
-         */
+        case tokens.T_STRING:
+          var label = this.text();
+          if (this.next().token === ':') {
+            this.next();
+            return ['label', label];
+          } else {
+            // default fallback expr
+            this.lexer.unput(label + this.text());
+            var expr = this.next().read_expr();
+            this.expect(';').next();
+            return expr;
+          }
+
+        case tokens.T_GOTO:
+          var label = this.next().expect(tokens.T_STRING).text();
+          this.next().expect(';').next();
+          return ['goto', label];
 
         default: // default fallback expr
           var expr = this.read_expr();
