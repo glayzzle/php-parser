@@ -24,7 +24,9 @@ module.exports = {
     var EOF = engine.lexer.EOF;
     engine.lexer.mode_eval = false;
     engine.lexer.all_tokens = true;
-    engine.lexer.setInput(fs.readFileSync(filename).toString());
+    engine.lexer.setInput(fs.readFileSync(filename, {
+      encoding: 'binary'
+    }).toString());
     var token = engine.lexer.lex() || EOF;
     var names = engine.tokens.values;
     var jsTok = [];
