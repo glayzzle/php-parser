@@ -308,17 +308,15 @@ module.exports = function(api, tokens, EOF) {
     /**
      * reading a use statement
      * <ebnf>
-     * trait_use_statement ::= T_STRING (',' T_STRING)* ('{' trait_use_alias '}')?
+     * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
      * </ebnf>
      */
     ,read_trait_use_statement: function(result) {
-      result.traits.push(this.expect(tokens.T_STRING).text());
-      while(this.next()) {
-        if (this.token === ',') {
-          result.traits.push(
-            this.next().expect(tokens.T_STRING).text()
-          );
-        } else break;
+      result.traits.push(this.read_namespace_name());
+      while(this.token === ',') {
+        result.traits.push(
+          this.next().read_namespace_name()
+        );
       }
       if (this.token === '{') {
         while(this.next()) {
