@@ -14,7 +14,7 @@ var LexerParser     = require('lex-parser');
 var fs              = require('fs');
 
 // global var
-var GLAYZZLE_PATH   = '../src/lexer/';
+var GLAYZZLE_PATH   = __dirname + '/../src/lexer/';
 
 // helper for reading a list of files
 var readParserFiles = function(files) {
