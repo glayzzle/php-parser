@@ -46,21 +46,46 @@ module.exports = function(api, tokens, EOF) {
       // @todo ':' inner_statement_list T_ENDFOR ';'
       return ['for', expr1, expr2, expr3, body];
     }
+    /**
+     * <ebnf>
+     * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
+     * </ebnf>
+     */
     ,read_foreach: function() {
       this.expect('(').next();
       var expr = this.read_expr();
       this.expect(tokens.T_AS).next();
-      // @todo handle list() + & 
-      var item = this.read_variable();
-      var key = false;
+      var item = this.read_foreach_variable(), 
+        key = false;
       if (this.token === tokens.T_DOUBLE_ARROW) {
         key = item;
-        item = this.next().read_variable();
+        item = this.next().read_foreach_variable();
       }
       this.expect(')').next();
       var body = this.read_statement();
       // @todo ':' inner_statement_list T_ENDFOREACH ';'
       return ['foreach', expr, key, item, body];
+    }
+    /**
+     * <ebnf>
+     * foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
+     * </ebnf>
+     */
+    ,read_foreach_variable: function() {
+        if (this.token === '&') {
+          return ['byref', this.next().read_variable()];
+        } else if (this.token === tokens.T_LIST) {
+          this.next().expect('(').next();
+          var assignList = this.read_assignment_list();
+          this.expect(')').next();
+          return [
+            'list', 
+            assignList,
+            false
+          ];
+        } else {
+          return this.read_variable();
+        }
     }
   };
 };
