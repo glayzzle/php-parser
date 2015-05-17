@@ -5,7 +5,8 @@
  */
 
 var fs      = require('fs');
-var util 	= require('util');
+var util    = require('util');
+var cmd     = require('./cmd');
 
 module.exports = {
   handles: function(filename, ext) {
@@ -13,10 +14,30 @@ module.exports = {
   }
   // runs the specified filename
   ,run: function(filename, engine) {
-  	var ast = engine.parseCode(
-  		fs.readFileSync(filename).toString()
-  	);
-  	if (engine.parser.debug) {
+    var ast = false;
+    try {
+      ast = engine.parseCode(
+        fs.readFileSync(filename).toString()
+      );
+    } catch(e) {
+      var hasError = cmd.checkError(filename);
+      var line = engine.lexer.yylloc.first_line;
+      console.log(hasError, e);
+      if (hasError === false) {
+        throw e;
+      } else if (hasError != line) {
+        console.error('Found error at', line, 'but expected at', hasError);
+        throw e;
+      } else {
+        if (engine.parser.debug) {
+          console.log('! - Found error at', line, 'but it\'s ok');
+        } else {
+          console.log('v - Passed AST parsing (with error)');
+        }
+        return true;
+      }
+    }
+    if (engine.parser.debug) {
       console.log(
         util.inspect(
           ast, { 
@@ -26,7 +47,7 @@ module.exports = {
           }
         )
       );
-  	}
+    }
     if (ast[0] === 'program') {
       console.log('v - Passed AST parsing');
       return true;

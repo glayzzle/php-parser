@@ -8,16 +8,31 @@ var fs = require('fs');
 
 module.exports = {
   exec: function(command) {
-    if (fs.existsSync('done')) {
-      fs.unlinkSync('done');
+    if (fs.existsSync('exec.do')) {
+      fs.unlinkSync('exec.do');
     } 
     // Run the command in a subshell
-    child_process.exec(command + ' 2>&1 1>output && echo done! > done');
+    child_process.exec(command + ' 2>&1 1>exec.out && echo done > exec.do');
     // Block the event loop until the command has executed.
-    while (!fs.existsSync('done')) {
+    while (!fs.existsSync('exec.do')) {
       // Do nothing
     }
     // Output
-    return { stdout: fs.readFileSync('output') };
+    return { stdout: fs.readFileSync('exec.out') };
+  },
+  checkError: function(file) {
+    var cmd = 'php -l ' + file;
+    try {
+      child_process.execSync(cmd);
+      return false;
+    } catch(e) {
+      var error = e.stdout.toString() + e.stderr.toString();
+      error = error.match(/Parse error: syntax error,.*on line ([0-9]+)/i);
+      if (error && error.length === 2) {
+        return parseInt(error[1]);
+      } else {
+        return false;
+      }
+    }
   }
 };
