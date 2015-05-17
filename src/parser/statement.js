@@ -96,7 +96,31 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_inner_statement: function() {
-      return this.read_statement();
+      switch(this.token) {
+        case tokens.T_FUNCTION:
+          return this.read_function();
+        // optional flags
+        case tokens.T_ABSTRACT:
+        case tokens.T_FINAL:
+          var flag = this.read_class_scope();
+          switch(this.token) {
+            case tokens.T_CLASS:
+              return this.read_class(flag);
+            case tokens.T_INTERFACE:
+              return this.read_interface(flag);
+            default:
+              this.error([tokens.T_CLASS, tokens.T_INTERFACE]);
+          }
+        case tokens.T_CLASS:
+          return this.read_class(0);
+        case tokens.T_INTERFACE:
+          return this.read_interface(0);
+        case tokens.T_TRAIT:
+          return this.read_trait();
+        // @todo T_HALT_COMPILER '(' ')' ';'
+        default:
+          return this.read_statement();
+      }
     }
     /**
      * Reads statements
