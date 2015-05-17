@@ -5,6 +5,7 @@
  */
 
 module.exports = function(api, tokens, EOF) {
+
   return {
 
     read_expr: function() {
@@ -92,7 +93,14 @@ module.exports = function(api, tokens, EOF) {
           return ['sys', 'shell', expr];
 
         case tokens.T_LIST:
-          return this.read_assignment_list();
+          this.next().expect('(').next();
+          var assignList = this.read_assignment_list();
+          this.expect(')').next().expect('=').next();
+          return [
+            'list', 
+            assignList,
+            this.read_expr()
+          ];
 
         case tokens.T_CLONE:
           return ['sys', 'clone', this.next().read_expr()];
@@ -110,7 +118,7 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_ISSET:
           this.next().expect('(').next();
-          var expr = this.read_variable(true);
+          var expr = this.read_list(this.read_expr, ',');
           this.expect(')').next();
           return ['sys', 'isset', expr];
 
@@ -286,32 +294,32 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *   assignment_list ::= T_LIST '(' ((variable? | assignment_list) (',' (variable? | assignment_list))*)? ')' '=' expr
+     *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
      * </ebnf>
      */
     ,read_assignment_list: function(innerList) {
-      var assignList = [];
-      this.expect(tokens.T_LIST).next().expect('(').next();
-      while(this.token !== ')' && this.token != EOF) {
-        if (this.token === tokens.T_LIST) {
-          assignList.push(this.read_assignment_list(true));
-        } else {
-          if (this.token !== ',') {
-            assignList.push(this.read_variable());
-          } else {
-            assignList.push(null);
-          }
-        }
-        if (this.token !== ',') break;
-        this.next();
+      return this.read_list(
+        this.read_assignment_list_element, ','
+      );
+    }
+    /**
+     * <ebnf>
+     *  assignment_list_element ::= (variable | (T_LIST '(' assignment_list ')'))?
+     * </ebnf>
+     */
+    ,read_assignment_list_element: function() {
+      var result = null;
+      if (this.token === tokens.T_LIST) {
+        result = [
+          'list', 
+          this.next().expect('(').next().read_assignment_list(),
+          false
+        ];
+        this.expect(')').next();
+      } else if (this.token !== ',') {
+        result = this.read_variable(); 
       }
-      this.expect(')').next();
-      return [
-        'list', assignList, 
-          innerList ? 
-            false : 
-            this.expect('=').next().read_expr()
-      ];
+      return result;
     }
   };
 };
