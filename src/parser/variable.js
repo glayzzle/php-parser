@@ -45,7 +45,10 @@ module.exports = function(api, tokens, EOF) {
         var getter = null;
         if (this.next().is([tokens.T_VARIABLE, '$'])) {   
           getter = this.read_reference_variable();
-        } else if (this.token === tokens.T_STRING) {
+        } else if (
+          this.token === tokens.T_STRING
+          || this.token === tokens.T_CLASS
+        ) {
           getter = this.text();
           this.next();
         } else {
