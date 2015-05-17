@@ -63,6 +63,7 @@ module.exports = {
             }
           }
           if (p[1] != j[1]) { // check the token contents
+            j[1] = JSON.parse( JSON.stringify( j[1] ) );
             console.log('FAIL : Expected "' + p[1] + '" contents, but found "' + j[1] + '"');
             fail = true;
           }
