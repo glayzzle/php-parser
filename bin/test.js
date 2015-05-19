@@ -26,7 +26,7 @@ function printHelp() {
 
 // aborts the execution with the specified error message
 function abort(message) {
-  util.error(message);
+  console.error(message);
   process.exit(1);
 }
 
@@ -155,7 +155,7 @@ function test(filename) {
       return result;
     }
   } catch(e) {
-    util.error( (e.stack || e) + '\n' );
+    console.error( (e.stack || e) + '\n' );
     throw e;
     return false;
   }

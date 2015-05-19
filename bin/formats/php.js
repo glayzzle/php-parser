@@ -22,7 +22,6 @@ module.exports = {
     } catch(e) {
       var hasError = cmd.checkError(filename);
       var line = engine.lexer.yylloc.first_line;
-      console.log(hasError, e);
       if (hasError === false) {
         throw e;
       } else if (hasError != line) {

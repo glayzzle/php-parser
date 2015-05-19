@@ -24,10 +24,11 @@ module.exports = {
     var cmd = 'php -l ' + file;
     var error = false;
     try {
-      error = child_process.execSync(cmd);
+      error = child_process.execSync(cmd).toString();
     } catch(e) {
       error = e.stdout.toString() + e.stderr.toString();
     }
+    if (!error) return false;
     error = error.match(/syntax error.*on line ([0-9]+)/i);
     if (error && error.length === 2) {
       return parseInt(error[1]);
