@@ -86,7 +86,7 @@ module.exports = function(api, tokens, EOF) {
         this.next().expect('=').next();
         return [name, this.read_expr()];
       }, ',');
-      this.expect(';').next();
+      this.expectEndOfStatement();
       return ['const', result];
     }
     /**
@@ -162,7 +162,7 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_GLOBAL:
           var items = this.next().read_list(this.read_simple_variable, ',');
-          this.expect(';').next();
+          this.expectEndOfStatement();
           return ['global', items];
 
         case tokens.T_STATIC:
@@ -181,12 +181,12 @@ module.exports = function(api, tokens, EOF) {
             }
             return [name, value];
           }, ',');
-          this.expect(';').next();
+          this.expectEndOfStatement();
           return ['global', items];
 
         case tokens.T_ECHO:
           var items = this.next().read_list(this.read_expr, ',');
-          this.expect(';').next();
+          this.expectEndOfStatement();
           return ['sys', 'echo', items];
 
         case tokens.T_INLINE_HTML:
@@ -213,11 +213,11 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_THROW:
           var expr = this.next().read_expr();
-          this.expect(';').next();
+          this.expectEndOfStatement();
           return ['throw', expr];
 
         case ';': // ignore this (extra ponctuation)
-          this.next()
+          this.next();
           return null;
 
         case tokens.T_STRING:
@@ -235,12 +235,12 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_GOTO:
           var label = this.next().expect(tokens.T_STRING).text();
-          this.next().expect(';').next();
+          this.next().expectEndOfStatement();
           return ['goto', label];
 
         default: // default fallback expr
           var expr = this.read_expr();
-          this.expect(';').next();
+          this.expectEndOfStatement();
           return expr;
       }
     }

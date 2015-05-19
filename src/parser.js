@@ -161,6 +161,15 @@ module.exports = function(engine) {
         '\nat line ' + this.lexer.yylloc.first_line
       );
     }
+    /** expects an end of statement or end of file **/
+    ,expectEndOfStatement: function() {
+      if (this.token === ';') {
+        this.next();
+      } else if (this.token !== tokens.T_INLINE_HTML && this.token !== EOF) {
+        this.error(';');
+      }
+      return this;
+    }
     /** outputs some debug information on current token **/
     ,showlog: function() {
       var stack = (new Error()).stack.split('\n');
