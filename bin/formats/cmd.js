@@ -22,17 +22,17 @@ module.exports = {
   },
   checkError: function(file) {
     var cmd = 'php -l ' + file;
+    var error = false;
     try {
-      child_process.execSync(cmd);
-      return false;
+      error = child_process.execSync(cmd);
     } catch(e) {
-      var error = e.stdout.toString() + e.stderr.toString();
-      error = error.match(/Parse error: syntax error,.*on line ([0-9]+)/i);
-      if (error && error.length === 2) {
-        return parseInt(error[1]);
-      } else {
-        return false;
-      }
+      error = e.stdout.toString() + e.stderr.toString();
+    }
+    error = error.match(/syntax error.*on line ([0-9]+)/i);
+    if (error && error.length === 2) {
+      return parseInt(error[1]);
+    } else {
+      return false;
     }
   }
 };
