@@ -48,7 +48,7 @@ module.exports = {
       );
     }
     if (ast[0] === 'program') {
-      console.log('v - Passed AST parsing');
+      engine.parser.debug && console.log('v - Passed AST parsing');
       return true;
     } else {
       console.error('x - Warning : the AST tree is empty');

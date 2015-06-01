@@ -120,7 +120,9 @@ module.exports = {
       );
       return false;
     } else {
-      console.log('v - Passed ' + jsTok.length + ' tokens');
+      if (engine.parser.debug) {
+        console.log('v - Passed ' + jsTok.length + ' tokens');
+      }
       return true;
     }
   }

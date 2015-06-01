@@ -13,7 +13,9 @@ module.exports = {
   // runs a parser file : test parsing behaviours
   ,run: function(data, filename, engine) {
     try {
-      console.log('   >> Start test : ' + data.shift());
+      if (engine.parser.debug) {
+        console.log('   >> Start test : ' + data.shift());
+      }
       var test = {
         buffer: '',
         mode: ''
@@ -34,7 +36,7 @@ module.exports = {
       var ok;
       for(var i = 0; i < tests.length; i++) {
         test=tests[i];
-        console.log('   mode : ' + test.mode);
+        engine.parser.debug && console.log('   mode : ' + test.mode);
         if (test.mode.substring(0, 4) == 'FAIL') {
           ok = false;
           try { 
@@ -52,7 +54,7 @@ module.exports = {
               );
             }
           } catch(e) {
-            console.log(e);
+            engine.parser.debug && console.log(e);
             ok = false;
           }
           if (ok) {

@@ -118,7 +118,9 @@ function getExtension(filename) {
 
 // run a test over the specified file
 function test(filename) {
-  console.log(' + ' + filename);
+  if (engine.parser.debug) {
+    console.log(' + ' + filename);
+  }
   try {
     if (options.ast) {
       return engines[4].run(
@@ -143,14 +145,20 @@ function test(filename) {
           result = engines[i].run(filename, engine);
         }
         if (!result) {
-          abort('Test "' + filename + '" does not pass !');
-          break;
+          if (engine.parser.debug) {
+            abort('Test "' + filename + '" does not pass !');
+            break;
+          } else {
+            throw new Error('Test "' + filename + '" does not pass !');
+          }
         }
       }
     }
     if (!found) {
-      console.info('\n(i) IGNORED : unrecognized extension "'+getExtension(filename)+'" for ' + filename);
-      return false;      
+      if (engine.parser.debug) {
+        console.info('\n(i) IGNORED : unrecognized extension "'+getExtension(filename)+'" for ' + filename);
+      }
+      return false;
     } else {
       return result;
     }
@@ -201,21 +209,67 @@ if (options.evalCode) {
     console.log('Success');
   }
 } else if (options.path) {
-  var testFiles = function(path) {
-    fs.readdir(path, function(err, files) {
-      if (err) throw err;
-      for(var i = 0; i < files.length; i ++) {
-        var file = files[i];
-        if (file[0] != '.') {
-          var stat = fs.statSync(path + file);
-          if (!stat.isDirectory()) {
-            test(path + file);
-          } else if (options.recusive) {
-            testFiles(path + file + '/');
-          }
+
+  var files = [];
+  var scanFiles = function(path) {
+    var items = fs.readdirSync(path);
+    for(var i = 0; i < items.length; i ++) {
+      var file = items[i];
+      if (file[0] != '.') {
+        var stat = fs.statSync(path + file);
+        if (!stat.isDirectory()) {
+          files.push(path + file);
+        } else if (options.recusive) {
+          scanFiles(path + file + '/');
         }
       }
-    });
+    }
   };
-  testFiles(options.path);
+
+  console.log('Scan files ' + options.path);
+  scanFiles(options.path);
+  console.log('Found ' + files.length + ' items');
+
+  var stats = {
+    time: process.hrtime(),
+    progress: 0,
+    code: 0
+  };
+  
+  function secondsToTime(secs)
+  {
+      secs = Math.round(secs);
+      var hours = Math.floor(secs / (60 * 60));
+      if (hours < 10) hours = '0' + hours;
+      var divisor_for_minutes = secs % (60 * 60);
+      var minutes = Math.floor(divisor_for_minutes / 60);
+      if (minutes < 10) minutes = '0' + minutes;
+      var divisor_for_seconds = divisor_for_minutes % 60;
+      var seconds = Math.ceil(divisor_for_seconds);
+      if (seconds < 10) seconds = '0' + seconds;
+      return hours + ':' + minutes + ':' + seconds;
+  }
+  // running
+  for(var i = 0; i < files.length; i++) {
+    var file = files[i];  
+    if (i / files.length * 100 > stats.progress + 2) {
+      stats.progress = i / files.length * 100;
+      var now = process.hrtime(stats.time);
+      var remain = (now[0] / stats.progress) * (100 - stats.progress);
+      console.log(
+        'Progress ', 
+        Math.round(stats.progress) + '%', 
+        ' remains ', 
+        secondsToTime(remain)
+      );
+    }
+    try {
+      test(file);
+    } catch(e) {
+      stats.code = 1;
+      console.error('Error on ' + file);
+      console.error(e);
+    }
+  }
+  process.exit(stats.code);
 }
