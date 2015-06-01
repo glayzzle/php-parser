@@ -6,12 +6,31 @@
 
 module.exports = function(api, tokens, EOF) {
   return {
-    read_while: function() {
+    /**
+     * Reads a short form of tokens
+     */
+    read_short_form: function(token) {
+      var body = [];
+      this.expect(':').next;
+      while(this.token != EOF && this.token !== token) {
+        body.push(this.read_inner_statement());
+      }
+      this.expect(token).next().expectEndOfStatement();
+      return body;
+    }
+    /**
+     * Reads a while statement
+     */
+    ,read_while: function() {
       this.expect('(').next();
       var cond = this.read_expr();
       this.expect(')').next();
-      // @todo ':' inner_statement_list T_ENDWHILE ';'
-      var body = this.read_statement();
+      var body = [];
+      if (this.token === ':') {
+        body = this.read_short_form(tokens.T_ENDWHILE);
+      } else {
+        body = this.read_statement();
+      }
       return ['while', cond, body];
     }
     ,read_do: function() {
@@ -44,12 +63,7 @@ module.exports = function(api, tokens, EOF) {
       } 
       var body = null;
       if (this.token === ':') {
-        this.next();
-        body = [];
-        while(this.token != EOF && this.token !== tokens.T_ENDFOR) {
-          body.push(this.read_inner_statement());
-        }
-        this.expect(tokens.T_ENDFOR).next().expectEndOfStatement();
+        body = this.read_short_form(tokens.T_ENDFOR);
       } else  {
         body = this.read_statement();
       }
@@ -71,8 +85,12 @@ module.exports = function(api, tokens, EOF) {
         item = this.next().read_foreach_variable();
       }
       this.expect(')').next();
-      var body = this.read_statement();
-      // @todo ':' inner_statement_list T_ENDFOREACH ';'
+      var body = [];
+      if (this.token === ':') {
+        body = this.read_short_form(tokens.T_ENDFOREACH);
+      } else {
+        body = this.read_statement();
+      }
       return ['foreach', expr, key, item, body];
     }
     /**
