@@ -30,8 +30,6 @@ module.exports = {
       } else {
         if (engine.parser.debug) {
           console.log('! - Found error at', line, 'but it\'s ok');
-        } else {
-          console.log('v - Passed AST parsing (with error)');
         }
         return true;
       }

@@ -83,7 +83,7 @@ module.exports = {
             fail = true;
           }
           if (p[2] != j[2]) { // check the token line
-            console.log('FAIL : Expected line ' + p[2] + ', but found ' + j[2]);
+            engine.parser.debug && console.log('NOTICE : Expected line ' + p[2] + ', but found ' + j[2]);
             // @todo fixme fail = true; 
           }
         } else {
