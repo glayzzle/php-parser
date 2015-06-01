@@ -271,5 +271,8 @@ if (options.evalCode) {
       console.error(e);
     }
   }
+  if (stats.code === 0) {
+    console.log('I AM HAPPY !');
+  }
   process.exit(stats.code);
 }
