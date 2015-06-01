@@ -217,6 +217,7 @@ module.exports = function(api, tokens, EOF) {
           return ['throw', expr];
 
         case ';': // ignore this (extra ponctuation)
+        case  tokens.T_CLOSE_TAG: // empty tag
           this.next();
           return null;
 

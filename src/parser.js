@@ -163,7 +163,7 @@ module.exports = function(engine) {
     }
     /** expects an end of statement or end of file **/
     ,expectEndOfStatement: function() {
-      if (this.token === ';') {
+      if (this.token === ';' || this.token === tokens.T_CLOSE_TAG) {
         this.next();
       } else if (this.token !== tokens.T_INLINE_HTML && this.token !== EOF) {
         this.error(';');
