@@ -34,6 +34,14 @@ module.exports = {
       var entry = engine.lexer.yytext;
       if (names[token]) {
         entry = [names[token], entry, engine.lexer.yylloc.first_line];
+        
+      }
+      if (engine.parser.debug) {
+        if (names[token]) {
+          console.log(names[token], engine.lexer.yylloc.first_line, entry);
+        } else {
+          console.log('--> plain', engine.lexer.yylloc.first_line, token);
+        }
       }
       jsTok.push(entry);
       token = engine.lexer.lex() || EOF;
