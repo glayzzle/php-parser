@@ -8,17 +8,14 @@ var fs = require('fs');
 
 module.exports = {
   exec: function(command) {
-    if (fs.existsSync('exec.do')) {
-      fs.unlinkSync('exec.do');
-    } 
-    // Run the command in a subshell
-    child_process.exec(command + ' 2>&1 1>exec.out && echo done > exec.do');
-    // Block the event loop until the command has executed.
-    while (!fs.existsSync('exec.do')) {
-      // Do nothing
+    var out = "";
+    try {
+      out = child_process.execSync(cmd).toString();
+    } catch(e) {
+      out = e.stdout.toString() + e.stderr.toString();
     }
     // Output
-    return { stdout: fs.readFileSync('exec.out') };
+    return { stdout: out };
   },
   checkError: function(file) {
     var cmd = 'php -l ' + file;
