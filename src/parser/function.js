@@ -143,7 +143,7 @@ module.exports = function(api, tokens, EOF) {
     /**
      * read type hinting
      * <ebnf>
-     *  type ::= T_ARRAY | namespace_name
+     *  type ::= T_ARRAY | T_CALLABLE | namespace_name
      * </ebnf>
      */
     ,read_type: function() {
@@ -154,6 +154,9 @@ module.exports = function(api, tokens, EOF) {
         case tokens.T_NS_SEPARATOR:
         case tokens.T_STRING:
           return this.read_namespace_name();
+        case tokens.T_CALLABLE:
+          this.next();
+          return 'callable';
         default:
           return 'mixed';
       }
