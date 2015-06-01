@@ -10,9 +10,14 @@ module.exports = {
   exec: function(command) {
     var out = "";
     try {
-      out = child_process.execSync(cmd).toString();
+      out = child_process.execSync(command).toString();
     } catch(e) {
-      out = e.stdout.toString() + e.stderr.toString();
+      if (e.stdout) {
+        out += e.stdout.toString();
+      }
+      if (e.stderr) {
+        out += e.stderr.toString();
+      }
     }
     // Output
     return { stdout: out };

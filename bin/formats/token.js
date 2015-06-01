@@ -41,7 +41,14 @@ module.exports = {
 
     // USING THE PHP ENGINE TO PARSE
     var result = cmd.exec('php ' + __dirname + '/token.php ' + filename);
-    var phpTok = JSON.parse(result.stdout);
+    var phpTok = false;
+    try {
+      phpTok = JSON.parse(result.stdout);
+    } catch(e) {
+      console.log('Fail to parse output : ', result.stdout);
+      throw e;
+    }
+    
     var fail = false;
     var error = [[], []];
 
