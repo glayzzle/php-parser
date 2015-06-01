@@ -20,7 +20,6 @@ lexer.lex = function() {
         !this.mode_eval // ignore open/close tags
         && (
           token === T_OPEN_TAG
-          || token === T_CLOSE_TAG
         )
       )
     ) {
