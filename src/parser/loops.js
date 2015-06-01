@@ -11,7 +11,7 @@ module.exports = function(api, tokens, EOF) {
      */
     read_short_form: function(token) {
       var body = [];
-      this.expect(':').next;
+      this.expect(':').next();
       while(this.token != EOF && this.token !== token) {
         body.push(this.read_inner_statement());
       }
