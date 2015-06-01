@@ -42,8 +42,17 @@ module.exports = function(api, tokens, EOF) {
       } else {
         this.next();
       } 
-      var body = this.read_statement();
-      // @todo ':' inner_statement_list T_ENDFOR ';'
+      var body = null;
+      if (this.token === ':') {
+        this.next();
+        body = [];
+        while(this.token != EOF && this.token !== tokens.T_ENDFOR) {
+          body.push(this.read_inner_statement());
+        }
+        this.expect(tokens.T_ENDFOR).next().expectEndOfStatement();
+      } else  {
+        body = this.read_statement();
+      }
       return ['for', expr1, expr2, expr3, body];
     }
     /**
