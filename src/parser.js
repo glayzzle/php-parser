@@ -83,6 +83,12 @@ module.exports = function(engine) {
         tokens.T_STRING,
         tokens.T_STATIC
       ],
+      'EOS': [
+        ';', 
+        tokens.T_CLOSE_TAG, 
+        EOF, 
+        tokens.T_INLINE_HTML
+      ],
       'EXPR': [
         '@','-','+','!','~','(','`',
         tokens.T_LIST,

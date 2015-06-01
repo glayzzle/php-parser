@@ -152,12 +152,11 @@ module.exports = function(api, tokens, EOF) {
             case tokens.T_BREAK:      mode = 'break';     break;
             case tokens.T_CONTINUE:   mode = 'continue';  break;
           }
-          var expr = null;
-          if (this.next().token != ';') {
+          var expr = null;  
+          if (!this.next().is('EOS')) {
             expr = this.read_expr();
-            this.expect(';').next();
           }
-          
+          this.expectEndOfStatement();
           return [mode, expr];
 
         case tokens.T_GLOBAL:
@@ -217,7 +216,7 @@ module.exports = function(api, tokens, EOF) {
           return ['throw', expr];
 
         case ';': // ignore this (extra ponctuation)
-        case  tokens.T_CLOSE_TAG: // empty tag
+        case tokens.T_CLOSE_TAG: // empty tag
           this.next();
           return null;
 
