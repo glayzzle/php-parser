@@ -18,7 +18,12 @@ module.exports = function(api, tokens, EOF) {
       var elseCond = false;
       this.expect(')').next();
       if (this.token === ':') {
-        // @todo
+        this.next();
+        body = [];
+        while(this.token != EOF && this.token !== tokens.T_ENDIF) {
+          body.push(this.read_inner_statement());
+        }
+        this.expect(tokens.T_ENDIF).next().expectEndOfStatement();
       } else {
         body = this.read_statement();
       }
