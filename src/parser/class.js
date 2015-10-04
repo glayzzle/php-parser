@@ -160,7 +160,7 @@ module.exports = function(api, tokens, EOF) {
     /**
      * Reads a constant declaration
      * <ebnf>
-     *  constant_declaration ::= T_STRING '=' scalar
+     *  constant_declaration ::= T_STRING '=' expr
      * </ebnf>
      */
     ,read_constant_declaration: function() {
@@ -169,7 +169,7 @@ module.exports = function(api, tokens, EOF) {
         .next()
         .expect('=')
         .next()
-        .read_scalar()
+        .read_expr()
       ;
       return [name, value];
     }
