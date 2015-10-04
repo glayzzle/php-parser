@@ -65,6 +65,7 @@ If you run into problems with a test, run it with the cli and add the `--debug` 
 
 Current version is under developpement, all tokens are not yet implemented, but consider that the lexer sucessfully pass the parsing of ZF2 and Laravel, and many aspects of php are implemented. 
 
+* 0.0.9 : const (value as expr) bugfix
 * 0.0.8 : all tokens are passed on ZF2 (many fixes)
 * 0.0.7 : isset, unset, try, catch, finally, fix T_STATIC, fix T_NEW with a dynamic var name, improve tests
 * 0.0.6 : Improve tests, implements arrays & new statements
