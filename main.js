@@ -38,7 +38,6 @@ var engine = {
     lexer.mode_eval = false;
     lexer.all_tokens = false;
     return parser.parse(buffer);
-    }
   }
   ,parser: null
   // lexer instance
