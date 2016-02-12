@@ -12,8 +12,8 @@ module.exports = function(api, tokens, EOF) {
       var expr = this.read_expr_item();
       switch(this.token) {
         // binary operations
-        case '|': return ['bin', '|', expr, this.next().read_expr()];
-        case '&': return ['bin', '&', expr, this.next().read_expr()];
+        case '|': return this.node('bin')('|', expr, this.next().read_expr());
+        case '&': return this.node('bin')('&', expr, this.next().read_expr());
         case '^': return ['bin', '^', expr, this.next().read_expr()];
         case '.': return ['bin', '.', expr, this.next().read_expr()];
         case '+': return ['bin', '+', expr, this.next().read_expr()];
@@ -75,7 +75,7 @@ module.exports = function(api, tokens, EOF) {
         case '+':
         case '!':
         case '~':
-          return ['unary', this.token, this.next().read_expr()];
+          return this.node('unary')(this.token, this.next().read_expr());
 
         case '(':
           var expr = this.next().read_expr();
@@ -84,26 +84,24 @@ module.exports = function(api, tokens, EOF) {
 
         case '`':
           var expr = null;
+          var result = this.node('sys');
           if (this.next().token === tokens.T_ENCAPSED_AND_WHITESPACE) {
             expr = this.text();
             this.next().expect('`').next();
           } else if (this.token !== '`' ) {
             expr = this.read_encaps_list();
           }
-          return ['sys', 'shell', expr];
+          return result('shell', expr);
 
         case tokens.T_LIST:
+          var result = this.node('list');
           this.next().expect('(').next();
           var assignList = this.read_assignment_list();
           this.expect(')').next().expect('=').next();
-          return [
-            'list', 
-            assignList,
-            this.read_expr()
-          ];
+          return result(assignList, this.read_expr());
 
         case tokens.T_CLONE:
-          return ['sys', 'clone', this.next().read_expr()];
+          return this.node('sys')('clone', this.next().read_expr());
 
         case tokens.T_INC:
           var name = this.next().read_variable();
@@ -270,12 +268,13 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_new_expr: function() {
+      var result = this.node('new');
       var name = this.read_class_name_reference();
       var args = [];
       if (this.token === '(') {
         args = this.read_function_argument_list();
       }
-      return ['new', name, args];
+      return result(name, args);
     }
     /**
      * Reads a class name
@@ -310,11 +309,11 @@ module.exports = function(api, tokens, EOF) {
     ,read_assignment_list_element: function() {
       var result = null;
       if (this.token === tokens.T_LIST) {
-        result = [
-          'list', 
+        result = this.node('list');
+        result = result(
           this.next().expect('(').next().read_assignment_list(),
           false
-        ];
+        );
         this.expect(')').next();
       } else if (this.token !== ',') {
         result = this.read_variable(); 

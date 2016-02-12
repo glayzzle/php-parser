@@ -13,6 +13,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     read_class: function(flag) {
+      var result = this.node('class');
       this.expect(tokens.T_CLASS)
         .next()
         .expect(tokens.T_STRING)
@@ -30,14 +31,13 @@ module.exports = function(api, tokens, EOF) {
           ','
         );
       }
-      return [
-        'class'
-        ,propName
+      return result(
+        propName
         ,flag
         ,propExtends
         ,propImplements
         ,this.expect('{').next().read_class_body()
-      ];
+      );
     }
     /**
      * Read the class visibility
@@ -134,13 +134,13 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_variable_declaration: function() {
-      var varName = this.text();
+      var varName = this.node(this.text());
       this.expect(tokens.T_VARIABLE).next().expect([',', ';', '=']);
       if (this.token === ';' || this.token === ',') {
-        return [varName, null];
+        return varName(null);
       }
       if(this.token === '=') {
-        return [varName, this.next().read_scalar()];
+        return varName(this.next().read_scalar());
       }
     }
     /**
@@ -164,14 +164,14 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_constant_declaration: function() {
-      var name = this.text();
+      var name = this.node(this.text());
       var value = this.expect(tokens.T_STRING)
         .next()
         .expect('=')
         .next()
         .read_expr()
       ;
-      return [name, value];
+      return name(value);
     }
     /**
      * Read member flags
@@ -218,6 +218,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_interface: function(flag) {
+      var result = this.node('interface');
       var name = this.expect(tokens.T_INTERFACE)
         .next()
         .expect(tokens.T_STRING)
@@ -230,13 +231,12 @@ module.exports = function(api, tokens, EOF) {
           ','
         );
       }
-      return [
-        'interface'
-        , name
+      return result(
+        name
         , flag
         , propExtends
         , this.expect('{').next().read_interface_body()
-      ];
+      );
     }
     /**
      * Reads an interface body
@@ -281,6 +281,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_trait: function(flag) {
+      var result = this.node('trait');
       this.expect(tokens.T_TRAIT)
         .next()
         .expect(tokens.T_STRING)
@@ -297,13 +298,12 @@ module.exports = function(api, tokens, EOF) {
           ','
         );
       }
-      return [
-        'trait', 
+      return result(
         propName, 
         propExtends, 
         propImplements, 
         this.expect('{').next().read_class_body()
-      ];
+      );
     }
     /**
      * reading a use statement

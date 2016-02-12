@@ -38,6 +38,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_function_declaration: function(annonymous) {
+      var result = this.node('function');
       this.expect(tokens.T_FUNCTION);
       var isRef = this.next().is_reference();
       var name = false, use = [];
@@ -52,7 +53,7 @@ module.exports = function(api, tokens, EOF) {
         use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
         this.expect(')').next();
       }
-      return ['function', name, params, isRef, use];
+      return result(name, params, isRef, use);
     }
     /**
      * <ebnf>

@@ -15,6 +15,7 @@ module.exports = function(api, tokens, EOF) {
     read_array: function(vars) {
       var expect = null;
       var items = [];
+      var result = this.node('array');
       
       if (this.expect([tokens.T_ARRAY, '[']).token == tokens.T_ARRAY) {
         this.next().expect('(');
@@ -34,7 +35,7 @@ module.exports = function(api, tokens, EOF) {
         }
       }
       this.expect(expect).next();
-      return ['array', items];
+      return result(items);
     },
     /**
      * Reads an array entry item

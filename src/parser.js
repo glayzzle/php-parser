@@ -38,6 +38,7 @@ module.exports = function(engine) {
     lexer: engine.lexer,
     token: null,
     debug: false,
+    locations: false,
     entries: {
       'SCALAR': [
         tokens.T_CONSTANT_ENCAPSED_STRING,
@@ -140,6 +141,7 @@ module.exports = function(engine) {
     /** main entry point : converts a source code to AST **/
     ,parse: function(code) {
       this.lexer.setInput(code);
+      this.length = this.lexer._input.length;
       this.next();
       var ast = [];
       while(this.token != EOF) {
@@ -166,6 +168,36 @@ module.exports = function(engine) {
         'Parse Error : unexpected ' + token + msgExpect,
         '\nat line ' + this.lexer.yylloc.first_line
       );
+    }
+    /**
+     * Creates a new AST node
+     */
+    ,node: function(name) {
+      var startAt = null;
+      if (this.locations === true) { 
+        startAt = [
+          this.lexer.yylloc.first_line, 
+          this.lexer.yylloc.first_column,
+          this.length - this.lexer._input.length
+        ];
+      }
+      return function() {
+        var result =  Array.prototype.slice.call(arguments);
+        result.unshift(name);
+        if (this.locations === true) {
+           result = [
+            'position', 
+            startAt,
+            [
+              this.lexer.yylloc.first_line, 
+              this.lexer.yylloc.first_column,
+              this.length - this.lexer._input.length + this.lexer.yyleng
+            ],
+            result
+           ];
+        }
+        return result;
+      }.bind(this);
     }
     /** expects an end of statement or end of file **/
     ,expectEndOfStatement: function() {

@@ -13,14 +13,14 @@ var engine  = require('../main');
 
 // help screen
 function printHelp() {
-  util.puts('Usage: test [options] [-f] <file>');
-  util.puts('');
-  util.puts('  -f <file>                      Parse and test the specified file');
-  util.puts('  -d <path>                      Parse each file in the specified path');
-  util.puts('  -r                             Use recursivity with the specified path');
-  util.puts('  -e                             Eval the specified input and shows AST');
-  util.puts('  -v                             Enable verbose mode and show debug');
-  util.puts('  -h, --help                     Print help and exit');
+  console.log('Usage: test [options] [-f] <file>');
+  console.log('');
+  console.log('  -f <file>                      Parse and test the specified file');
+  console.log('  -d <path>                      Parse each file in the specified path');
+  console.log('  -r                             Use recursivity with the specified path');
+  console.log('  -e                             Eval the specified input and shows AST');
+  console.log('  -v                             Enable verbose mode and show debug');
+  console.log('  -h, --help                     Print help and exit');
 }
 
 
@@ -64,6 +64,7 @@ while (args.length > 0 && isOption(args[0])) {
 
     case '--debug':
     case '-v':
+      engine.parser.locations = true;
       engine.parser.debug = true;
       break;
 
