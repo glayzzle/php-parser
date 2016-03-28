@@ -37,6 +37,7 @@ module.exports = function(engine) {
     // le lexer
     lexer: engine.lexer,
     token: null,
+    prev: null,
     debug: false,
     locations: false,
     startAt: [],
@@ -187,9 +188,9 @@ module.exports = function(engine) {
         if (name.constructor === Array) {
           if (this.locations === true) {
             name[2] = [
-              this.lexer.yylloc.first_line, 
-              this.lexer.yylloc.first_column,
-              this.length - this.lexer._input.length
+              this.prev[0], 
+              this.prev[1],
+              this.length - this.prev[2]
             ];
             Array.prototype.push.apply(name[3], result);
           } else {
@@ -201,18 +202,17 @@ module.exports = function(engine) {
             result.unshift(name);
           }
           if (this.locations === true) {
-             result = [
+            result = [
               'position', 
               startAt,
               [
-                this.lexer.yylloc.first_line, 
-                this.lexer.yylloc.first_column,
-                this.length - this.lexer._input.length
+                this.prev[0], 
+                this.prev[1],
+                this.length - this.prev[2]
               ],
               result
-             ];
+            ];
           }
-
         }
         return result;
       }.bind(this);
@@ -255,6 +255,11 @@ module.exports = function(engine) {
     }
     /** consume the next token **/
     ,next: function() {
+      this.prev = [
+        this.lexer.yylloc.first_line, 
+        this.lexer.yylloc.first_column, 
+        this.lexer._input.length
+      ];
       this.token = this.lexer.lex() || EOF;
       if (this.debug) this.showlog();
       return this;
