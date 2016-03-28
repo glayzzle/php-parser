@@ -1,16 +1,16 @@
 <?php
-function foo($bar) {
-  echo $bar . "\n";
-  return true;
-}
+  function foo($bar) {
+    echo $bar . "\n";
+    return true;
+  }
 
-class bar {
-  public $foo = 123;
-  private $a;
-  public function __construct($a) {
-    $this->a = $a;
-  } 
-}
+  class bar {
+    public $foo = 123;
+    private $a;
+    public function __construct($a) {
+      $this->a = $a;
+    }
+  }
 
 /** 
 
@@ -23,7 +23,5 @@ __c: {
     };
   }
 }
-
-
 
 */
