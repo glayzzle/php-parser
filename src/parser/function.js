@@ -23,11 +23,16 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_function: function(annonymous, isAbstract) {
-      var result = this.read_function_declaration(annonymous);
+      var result = this.node(
+        this.read_function_declaration(annonymous)
+      );
       if (isAbstract) {
+        result = result();
         this.expect(';').next();
       } else {
-        result.push(this.expect('{').read_code_block(false));
+        result = result(
+          this.expect('{').read_code_block(false)
+        );
       }
       return result;
     }

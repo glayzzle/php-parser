@@ -39,6 +39,7 @@ module.exports = function(engine) {
     token: null,
     debug: false,
     locations: false,
+    startAt: [],
     entries: {
       'SCALAR': [
         tokens.T_CONSTANT_ENCAPSED_STRING,
@@ -178,23 +179,40 @@ module.exports = function(engine) {
         startAt = [
           this.lexer.yylloc.first_line, 
           this.lexer.yylloc.first_column,
-          this.length - this.lexer._input.length
+          this.length - this.lexer._input.length - this.lexer.yytext.length
         ];
       }
       return function() {
         var result =  Array.prototype.slice.call(arguments);
-        result.unshift(name);
-        if (this.locations === true) {
-           result = [
-            'position', 
-            startAt,
-            [
+        if (name.constructor === Array) {
+          if (this.locations === true) {
+            name[2] = [
               this.lexer.yylloc.first_line, 
               this.lexer.yylloc.first_column,
-              this.length - this.lexer._input.length + this.lexer.yyleng
-            ],
-            result
-           ];
+              this.length - this.lexer._input.length
+            ];
+            Array.prototype.push.apply(name[3], result);
+          } else {
+            Array.prototype.push.apply(name, result);
+          }
+          result = name;
+        } else {
+          if (name) {
+            result.unshift(name);
+          }
+          if (this.locations === true) {
+             result = [
+              'position', 
+              startAt,
+              [
+                this.lexer.yylloc.first_line, 
+                this.lexer.yylloc.first_column,
+                this.length - this.lexer._input.length
+              ],
+              result
+             ];
+          }
+
         }
         return result;
       }.bind(this);

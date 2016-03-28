@@ -5,7 +5,9 @@ console.log(code);
 var AST = reader.parseCode(code);
 console.log('------------------ AST :');
 var func = AST[1][0];
+// the result
+console.log( 'AST : ', func);
 // the function code :
-console.log( 'PHP : ', code.substring( func[1][2], func[2][2]) );
+console.log( 'PHP : >' + code.substring( func[1][2], func[2][2]) + '<' );
 // the function AST
-console.log( 'AST : ', func[3]);
+console.log( 'FUNCTION : ', func[3]);
