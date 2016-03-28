@@ -70,7 +70,7 @@ module.exports = function(api, tokens, EOF) {
           // list of alias
           adaptations: []
         }
-      };
+      }, startAt = null;
 
       while(this.token !== EOF && this.token !== '}') {
 
@@ -87,6 +87,14 @@ module.exports = function(api, tokens, EOF) {
           continue;
         }
 
+        // prepare here position (to avoid bad position on locations) 
+        if (this.locations) {
+          startAt = [
+            this.lexer.yylloc.first_line, 
+            this.lexer.yylloc.first_column,
+            this.length - this.lexer._input.length - this.lexer.yytext.length
+          ];
+        }
         // read member flags
         var flags = this.read_member_flags(false);
 
@@ -97,16 +105,23 @@ module.exports = function(api, tokens, EOF) {
 
         // reads a variable
         if (this.token === tokens.T_VARIABLE) {
+          var node = this.node();
           var variables = this.read_variable_list();
           this.expect(';').next();
-          result.properties.push([flags].concat(variables));
+          variables = node.apply(this, variables).concat([flags]);
+          if (this.locations) {
+            variables[1] = startAt;
+          }
+          result.properties.push(variables);
         } else if (this.token === tokens.T_FUNCTION) {
           // reads a function
-          result.methods.push(
-            this.read_function(false, flags[2] === 1).concat(
-              [flags]
-            )
+          var method = this.read_function(false, flags[2] === 1).concat(
+            [flags]
           );
+          if (this.locations) {
+            method[1] = startAt;
+          }
+          result.methods.push(method);
         } else {
           // raise an error
           this.error([
@@ -139,12 +154,13 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_variable_declaration: function() {
       var varName = this.node(this.text());
-      this.expect(tokens.T_VARIABLE).next().expect([',', ';', '=']);
+      this.expect(tokens.T_VARIABLE).next();
       if (this.token === ';' || this.token === ',') {
         return varName(null);
-      }
-      if(this.token === '=') {
+      } else if(this.token === '=') {
         return varName(this.next().read_scalar());
+      } else {
+        this.expect([',', ';', '=']);
       }
     }
     /**

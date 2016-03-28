@@ -29,3 +29,19 @@ console.log( '\nAST : ', method);
 console.log( '\nPHP : >' + code.substring( method[1][2], method[2][2]) + '<' );
 // the class AST
 console.log( '\nMETHOD : ', method[3]);
+
+var prop =  cls[3][5].properties[0];
+// the result
+console.log( '\nAST : ', prop);
+// the class code :
+console.log( '\nPHP : >' + code.substring( prop[1][2], prop[2][2]) + '<' );
+// the class AST
+console.log( '\nPROPERTY : ', prop[3]); 
+
+var variable =  prop[3][0];
+// the result
+console.log( '\nAST : ', variable);
+// the class code :
+console.log( '\nPHP : >' + code.substring( variable[1][2], variable[2][2]) + '<' );
+// the class AST
+console.log( '\nVARIABLE : ', variable[3]); 
