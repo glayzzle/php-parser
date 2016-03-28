@@ -185,7 +185,7 @@ module.exports = function(engine) {
       }
       return function() {
         var result =  Array.prototype.slice.call(arguments);
-        if (name.constructor === Array) {
+        if (name && name.constructor === Array) {
           if (this.locations === true) {
             name[2] = [
               this.prev[0], 
