@@ -45,3 +45,21 @@ console.log( '\nAST : ', variable);
 console.log( '\nPHP : >' + code.substring( variable[1][2], variable[2][2]) + '<' );
 // the class AST
 console.log( '\nVARIABLE : ', variable[3]); 
+
+
+var itf = AST[1][2];
+// the result
+console.log( '\nAST : ', itf);
+// the class code :
+console.log( '\nPHP : >' + code.substring( itf[1][2], itf[2][2]) + '<' );
+// the class AST
+console.log( '\nINTERFACE : ', itf[3]);
+
+var cst = itf[3][4].constants[0];
+// the result
+console.log( '\nAST : ', cst);
+// the class code :
+console.log( '\nPHP : >' + code.substring( cst[1][2], cst[2][2]) + '<' );
+// the class AST
+console.log( '\nCONSTANT : ', cst[3]);
+

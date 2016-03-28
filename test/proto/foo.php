@@ -12,6 +12,11 @@
     }
   }
 
+  interface FOOBAR {
+    const BAR = 123;
+    function shouldDo(bar $a);
+  }
+
 /** 
 
 __c: {

@@ -70,7 +70,7 @@ module.exports = function(api, tokens, EOF) {
           // list of alias
           adaptations: []
         }
-      }, startAt = null;
+      }, startAt = null, node = null;
 
       while(this.token !== EOF && this.token !== '}') {
 
@@ -82,8 +82,11 @@ module.exports = function(api, tokens, EOF) {
 
         // check constant
         if (this.token === tokens.T_CONST) {
-          result.constants.push(this.read_constant_list());
+          node = this.node();
+          var constants = this.read_constant_list();
           this.expect(';').next();
+          constants = node.apply(this, constants);
+          result.constants.push(constants);
           continue;
         }
 
@@ -105,7 +108,7 @@ module.exports = function(api, tokens, EOF) {
 
         // reads a variable
         if (this.token === tokens.T_VARIABLE) {
-          var node = this.node();
+          node = this.node();
           var variables = this.read_variable_list();
           this.expect(';').next();
           variables = node.apply(this, variables).concat([flags]);
@@ -268,20 +271,40 @@ module.exports = function(api, tokens, EOF) {
       var result = {
         'constants': []
         ,'methods': []
-      };
+      }, startAt = null;
       while(this.token !== EOF && this.token !== '}') {
         // check constant
         if (this.token == tokens.T_CONST) {
-          result.constants.push(this.read_constant_list());
+          var node = this.node();
+          var constants = this.read_constant_list();
           this.expect(';').next();
+          constants = node.apply(this, constants);
+          result.constants.push(constants);
           continue;
         }
+
+        // prepare here position (to avoid bad position on locations) 
+        if (this.locations) {
+          startAt = [
+            this.lexer.yylloc.first_line, 
+            this.lexer.yylloc.first_column,
+            this.length - this.lexer._input.length - this.lexer.yytext.length
+          ];
+        }
+
         // read member flags
         var flags = this.read_member_flags(true);
 
         // reads a function
         if (this.token === tokens.T_FUNCTION) {
-          result.methods.push([flags].concat(this.read_function_declaration()));
+          // reads a function
+          var method = this.read_function_declaration().concat(
+            [flags]
+          );
+          if (this.locations) {
+            method[1] = startAt;
+          }
+          result.methods.push(method);
           this.expect(';').next();
         } else {
           // raise an error
