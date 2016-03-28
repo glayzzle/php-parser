@@ -19,4 +19,13 @@ console.log( '\nAST : ', cls);
 // the class code :
 console.log( '\nPHP : >' + code.substring( cls[1][2], cls[2][2]) + '<' );
 // the class AST
-console.log( '\CLASS : ', cls[3][5]);
+console.log( '\nCLASS : ', cls[3][5]);
+
+
+var method =  cls[3][5].methods[0];
+// the result
+console.log( '\nAST : ', method);
+// the class code :
+console.log( '\nPHP : >' + code.substring( method[1][2], method[2][2]) + '<' );
+// the class AST
+console.log( '\nMETHOD : ', method[3]);
