@@ -7,7 +7,6 @@
  */
 
 // requiring libs
-var util            = require('util');
 var jison           = require('jison');
 var Lexer           = require('jison-lex');
 var LexerParser     = require('lex-parser');
@@ -20,7 +19,7 @@ var GLAYZZLE_PATH   = __dirname + '/../src/lexer/';
 var readParserFiles = function(files) {
   var buffer = '';
   for(var i = 0; i < files.length; i++) {
-    util.puts('Reading ' + GLAYZZLE_PATH + files[i]);
+    console.log('Reading ' + GLAYZZLE_PATH + files[i]);
     buffer += fs.readFileSync(GLAYZZLE_PATH + files[i], "utf8");
   }
   // reading imports
@@ -34,7 +33,7 @@ var readParserFiles = function(files) {
   var imports = {};
   if (files && files.length > 0) {
     for(var i = 0; i < files.length; i++) {
-      util.puts('Imports ' + files[i]);
+      console.log('Imports ' + files[i]);
       imports[files[i]] = fs.readFileSync(
         GLAYZZLE_PATH  + files[i]
       );
@@ -51,7 +50,7 @@ var readParserFiles = function(files) {
 };
 
 // start building
-util.puts('** BUILDING MODE **\n');
+console.log('** BUILDING MODE **\n');
 lexer       = readParserFiles(['lexer.l']);
 
 // reading tokens
@@ -72,7 +71,7 @@ for(var i = 0; i < buffer.length; i++) {
 }
 
 // writing tokens
-util.puts('...Building tokens.js');
+console.log('...Building tokens.js');
 fs.writeFileSync(
   GLAYZZLE_PATH + '../tokens.js',
   fs.readFileSync(GLAYZZLE_PATH + 'license.txt', "utf8")
@@ -95,7 +94,7 @@ lexerGrammar.options.moduleType = 'js';
 
 
 // Generating the lexer
-util.puts('...Building lexer.js');
+console.log('...Building lexer.js');
 fs.writeFileSync(
   GLAYZZLE_PATH + '../lexer.js',
   fs.readFileSync(GLAYZZLE_PATH + 'license.txt', "utf8")
@@ -105,6 +104,6 @@ fs.writeFileSync(
   + '\n\n' + fs.readFileSync(GLAYZZLE_PATH + 'footer.js') 
 );
 
-util.puts('');
-util.puts('DONE - the lexer was rebuilt !');
-util.puts('');
+console.log('');
+console.log('DONE - the lexer was rebuilt !');
+console.log('');
