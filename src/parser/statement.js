@@ -229,7 +229,7 @@ module.exports = function(api, tokens, EOF) {
             // default fallback expr
             this.lexer.unput(label + this.text());
             var expr = this.next().read_expr();
-            this.expect(';').next();
+            this.expect([';', tokens.T_CLOSE_TAG]).next();
             return expr;
           }
 
