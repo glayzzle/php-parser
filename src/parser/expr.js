@@ -182,7 +182,7 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_YIELD:
           var result = ['yield', null, null];
-          if (this.next().is('expr')) {
+          if (this.next().is('EXPR')) {
             // reads the yield return value
             result[1] = this.read_expr();
             if (this.token === tokens.T_DOUBLE_ARROW) {
