@@ -84,57 +84,58 @@ var T_HALT_COMPILER = 101,
   T_EXIT = 178,
   T_PRINT = 179,
   T_YIELD = 180,
-  T_FUNCTION = 181,
-  T_DOUBLE_ARROW = 182,
-  T_DOUBLE_COLON = 183,
-  T_ARRAY = 184,
-  T_CALLABLE = 185,
-  T_CLASS = 186,
-  T_ABSTRACT = 187,
-  T_TRAIT = 188,
-  T_FINAL = 189,
-  T_EXTENDS = 190,
-  T_INTERFACE = 191,
-  T_IMPLEMENTS = 192,
-  T_VAR = 193,
-  T_PUBLIC = 194,
-  T_PROTECTED = 195,
-  T_PRIVATE = 196,
-  T_CONST = 197,
-  T_NEW = 198,
-  T_INSTEADOF = 199,
-  T_ELSEIF = 200,
-  T_ELSE = 201,
-  T_ENDSWITCH = 202,
-  T_CASE = 203,
-  T_DEFAULT = 204,
-  T_ENDFOR = 205,
-  T_ENDFOREACH = 206,
-  T_ENDWHILE = 207,
-  T_CONSTANT_ENCAPSED_STRING = 208,
-  T_LNUMBER = 209,
-  T_DNUMBER = 210,
-  T_LINE = 211,
-  T_FILE = 212,
-  T_DIR = 213,
-  T_TRAIT_C = 214,
-  T_METHOD_C = 215,
-  T_FUNC_C = 216,
-  T_NS_C = 217,
-  T_START_HEREDOC = 218,
-  T_END_HEREDOC = 219,
-  T_CLASS_C = 220,
-  T_VARIABLE = 221,
-  T_OPEN_TAG = 222,
-  T_OPEN_TAG_WITH_ECHO = 223,
-  T_CLOSE_TAG = 224,
-  T_WHITESPACE = 225,
-  T_COMMENT = 226,
-  T_DOC_COMMENT = 227,
-  T_ELLIPSIS = 228,
-  T_COALESCE = 229,
-  T_POW = 230,
-  T_POW_EQUAL = 231;
+  T_YIELD_FROM = 181,
+  T_FUNCTION = 182,
+  T_DOUBLE_ARROW = 183,
+  T_DOUBLE_COLON = 184,
+  T_ARRAY = 185,
+  T_CALLABLE = 186,
+  T_CLASS = 187,
+  T_ABSTRACT = 188,
+  T_TRAIT = 189,
+  T_FINAL = 190,
+  T_EXTENDS = 191,
+  T_INTERFACE = 192,
+  T_IMPLEMENTS = 193,
+  T_VAR = 194,
+  T_PUBLIC = 195,
+  T_PROTECTED = 196,
+  T_PRIVATE = 197,
+  T_CONST = 198,
+  T_NEW = 199,
+  T_INSTEADOF = 200,
+  T_ELSEIF = 201,
+  T_ELSE = 202,
+  T_ENDSWITCH = 203,
+  T_CASE = 204,
+  T_DEFAULT = 205,
+  T_ENDFOR = 206,
+  T_ENDFOREACH = 207,
+  T_ENDWHILE = 208,
+  T_CONSTANT_ENCAPSED_STRING = 209,
+  T_LNUMBER = 210,
+  T_DNUMBER = 211,
+  T_LINE = 212,
+  T_FILE = 213,
+  T_DIR = 214,
+  T_TRAIT_C = 215,
+  T_METHOD_C = 216,
+  T_FUNC_C = 217,
+  T_NS_C = 218,
+  T_START_HEREDOC = 219,
+  T_END_HEREDOC = 220,
+  T_CLASS_C = 221,
+  T_VARIABLE = 222,
+  T_OPEN_TAG = 223,
+  T_OPEN_TAG_WITH_ECHO = 224,
+  T_CLOSE_TAG = 225,
+  T_WHITESPACE = 226,
+  T_COMMENT = 227,
+  T_DOC_COMMENT = 228,
+  T_ELLIPSIS = 229,
+  T_COALESCE = 230,
+  T_POW = 231,
+  T_POW_EQUAL = 232;
 
 // DEFINE LONG SIZE
 if (process.arch == 'x64') {
@@ -869,429 +870,433 @@ case 28:
 
 break;
 case 29:
-	return T_YIELD;
+	return T_YIELD_FROM;
 
 break;
 case 30:
-	return T_TRY;
+	return T_YIELD;
 
 break;
 case 31:
-	return T_CATCH;
+	return T_TRY;
 
 break;
 case 32:
-	return T_FINALLY;
+	return T_CATCH;
 
 break;
 case 33:
-	return T_THROW;
+	return T_FINALLY;
 
 break;
 case 34:
-	return T_IF;
+	return T_THROW;
 
 break;
 case 35:
-	return T_ELSEIF;
+	return T_IF;
 
 break;
 case 36:
-	return T_ENDIF;
+	return T_ELSEIF;
 
 break;
 case 37:
-	return T_ELSE;
+	return T_ENDIF;
 
 break;
 case 38:
-	return T_WHILE;
+	return T_ELSE;
 
 break;
 case 39:
-	return T_ENDWHILE;
+	return T_WHILE;
 
 break;
 case 40:
-	return T_DO;
+	return T_ENDWHILE;
 
 break;
 case 41:
-	return T_FOR;
+	return T_DO;
 
 break;
 case 42:
-	return T_ENDFOR;
+	return T_FOR;
 
 break;
 case 43:
-	return T_FOREACH;
+	return T_ENDFOR;
 
 break;
 case 44:
-	return T_ENDFOREACH;
+	return T_FOREACH;
 
 break;
 case 45:
-	return T_DECLARE;
+	return T_ENDFOREACH;
 
 break;
 case 46:
-  return T_ENDDECLARE;
+	return T_DECLARE;
 
 break;
 case 47:
-  return T_INSTANCEOF;
+  return T_ENDDECLARE;
 
 break;
 case 48:
-  return T_AS;
+  return T_INSTANCEOF;
 
 break;
 case 49:
-	return T_SWITCH;
+  return T_AS;
 
 break;
 case 50:
-	return T_ENDSWITCH;
+	return T_SWITCH;
 
 break;
 case 51:
-	return T_CASE;
+	return T_ENDSWITCH;
 
 break;
 case 52:
-	return T_DEFAULT;
+	return T_CASE;
 
 break;
 case 53:
-	return T_BREAK;
+	return T_DEFAULT;
 
 break;
 case 54:
-	return T_CONTINUE;
+	return T_BREAK;
 
 break;
 case 55:
-	return T_GOTO;
+	return T_CONTINUE;
 
 break;
 case 56:
-	return T_ECHO;
+	return T_GOTO;
 
 break;
 case 57:
-	return T_PRINT;
+	return T_ECHO;
 
 break;
 case 58:
-	return T_CLASS;
+	return T_PRINT;
 
 break;
 case 59:
-	return T_INTERFACE;
+	return T_CLASS;
 
 break;
 case 60:
-	return T_TRAIT;
+	return T_INTERFACE;
 
 break;
 case 61:
-	return T_EXTENDS;
+	return T_TRAIT;
 
 break;
 case 62:
-	return T_IMPLEMENTS;
+	return T_EXTENDS;
 
 break;
 case 63:
+	return T_IMPLEMENTS;
+
+break;
+case 64:
   this.begin('ST_LOOKING_FOR_PROPERTY');
   return T_OBJECT_OPERATOR;
 
 break;
-case 64:
+case 65:
   return T_WHITESPACE;
 
 break;
-case 65:
+case 66:
 	return T_OBJECT_OPERATOR;
 
 break;
-case 66:
+case 67:
   return T_STRING;
 
 break;
-case 67:
+case 68:
   this.popState();
   this.less(0);
   return false;
 
 break;
-case 68:
+case 69:
   return T_DOUBLE_COLON;
 
 break;
-case 69:
+case 70:
 	return T_NS_SEPARATOR;
 
 break;
-case 70:
+case 71:
 	return T_NEW;
 
 break;
-case 71:
+case 72:
 	return T_CLONE;
 
 break;
-case 72:
+case 73:
 	return T_VAR;
 
 break;
-case 73:
+case 74:
 	return T_INT_CAST;
 
 break;
-case 74:
+case 75:
 	return T_DOUBLE_CAST;
 
 break;
-case 75:
+case 76:
 	return T_STRING_CAST;
 
 break;
-case 76:
+case 77:
 	return T_ARRAY_CAST;
 
 break;
-case 77:
+case 78:
 	return T_OBJECT_CAST;
 
 break;
-case 78:
+case 79:
 	return T_BOOL_CAST;
 
 break;
-case 79:
+case 80:
 	return T_UNSET_CAST;
 
 break;
-case 80:
+case 81:
 	return T_EVAL;
 
 break;
-case 81:
+case 82:
 	return T_INCLUDE;
 
 break;
-case 82:
+case 83:
 	return T_INCLUDE_ONCE;
 
 break;
-case 83:
+case 84:
 	return T_REQUIRE;
 
 break;
-case 84:
+case 85:
 	return T_REQUIRE_ONCE;
 
 break;
-case 85:
+case 86:
 	return T_NAMESPACE;
 
 break;
-case 86:
+case 87:
 	return T_USE;
 
 break;
-case 87:
+case 88:
         return T_INSTEADOF;
 
 break;
-case 88:
+case 89:
 	return T_GLOBAL;
 
 break;
-case 89:
+case 90:
 	return T_ISSET;
 
 break;
-case 90:
+case 91:
 	return T_EMPTY;
 
 break;
-case 91:
+case 92:
 	return T_HALT_COMPILER;
 
 break;
-case 92:
+case 93:
 	return T_STATIC;
 
 break;
-case 93:
+case 94:
 	return T_ABSTRACT;
 
 break;
-case 94:
+case 95:
 	return T_FINAL;
 
 break;
-case 95:
+case 96:
 	return T_PRIVATE;
 
 break;
-case 96:
+case 97:
 	return T_PROTECTED;
 
 break;
-case 97:
+case 98:
 	return T_PUBLIC;
 
 break;
-case 98:
+case 99:
 	return T_UNSET;
 
 break;
-case 99:
+case 100:
 	return T_DOUBLE_ARROW;
 
 break;
-case 100:
+case 101:
 	return T_LIST;
 
 break;
-case 101:
+case 102:
 	return T_ARRAY;
 
 break;
-case 102:
+case 103:
  return T_CALLABLE;
 
 break;
-case 103:
+case 104:
 	return T_INC;
 
 break;
-case 104:
+case 105:
 	return T_DEC;
 
 break;
-case 105:
+case 106:
 	return T_IS_IDENTICAL;
 
 break;
-case 106:
+case 107:
 	return T_IS_NOT_IDENTICAL;
 
 break;
-case 107:
+case 108:
 	return T_IS_EQUAL;
 
 break;
-case 108:
+case 109:
 	return T_IS_NOT_EQUAL;
 
 break;
-case 109:
+case 110:
 	return T_IS_SMALLER_OR_EQUAL;
 
 break;
-case 110:
+case 111:
 	return T_IS_GREATER_OR_EQUAL;
 
 break;
-case 111:
+case 112:
 	return T_PLUS_EQUAL;
 
 break;
-case 112:
+case 113:
 	return T_MINUS_EQUAL;
 
 break;
-case 113:
+case 114:
 	return T_MUL_EQUAL;
 
 break;
-case 114:
+case 115:
 	return T_DIV_EQUAL;
 
 break;
-case 115:
+case 116:
 	return T_CONCAT_EQUAL;
 
 break;
-case 116:
+case 117:
 	return T_MOD_EQUAL;
 
 break;
-case 117:
+case 118:
 	return T_SL_EQUAL;
 
 break;
-case 118:
+case 119:
 	return T_SR_EQUAL;
 
 break;
-case 119:
+case 120:
 	return T_AND_EQUAL;
 
 break;
-case 120:
+case 121:
 	return T_OR_EQUAL;
 
 break;
-case 121:
+case 122:
 	return T_XOR_EQUAL;
 
 break;
-case 122:
+case 123:
 	return T_BOOLEAN_OR;
 
 break;
-case 123:
+case 124:
 	return T_BOOLEAN_AND;
 
 break;
-case 124:
+case 125:
 	return T_LOGICAL_OR;
 
 break;
-case 125:
+case 126:
 	return T_LOGICAL_AND;
 
 break;
-case 126:
+case 127:
 	return T_LOGICAL_XOR;
 
 break;
-case 127:
+case 128:
 	return T_SL;
 
 break;
-case 128:
+case 129:
 	return T_SR;
 
 break;
-case 129:
+case 130:
 	return T_ELLIPSIS;
 
 break;
-case 130:
+case 131:
 	return T_COALESCE;
 
 break;
-case 131:
+case 132:
 	return T_POW_EQUAL;
 
 break;
-case 132:
+case 133:
 	return T_POW;
 
 break;
-case 133:
+case 134:
 	return '{';
 
 break;
-case 134:
+case 135:
   // @todo : RESET_DOC_COMMENT();
   if (
     this.conditionStack.length > 2
@@ -1302,89 +1307,89 @@ case 134:
   return '}';
 
 break;
-case 135:
+case 136:
 	return T_CLASS_C;
 
 break;
-case 136:
+case 137:
 	return T_TRAIT_C;
 
 break;
-case 137:
+case 138:
 	return T_FUNC_C;
 
 break;
-case 138:
+case 139:
 	return T_METHOD_C;
 
 break;
-case 139:
+case 140:
 	return T_LINE;
 
 break;
-case 140:
+case 141:
 	return T_FILE;
 
 break;
-case 141:
+case 142:
 	return T_DIR;
 
 break;
-case 142:
+case 143:
 	return T_NS_C;
 
 break;
-case 143:
+case 144:
   this.less(yy_.yyleng - 1);
   this.popState(); 
   this.begin('ST_IN_SCRIPTING');
   return T_STRING_VARNAME;
 
 break;
-case 144:
+case 145:
   this.popState(); 
   this.less(0);
   return false;
 
 break;
-case 145: /* Offset could be treated as a long */
+case 146: /* Offset could be treated as a long */
 	return T_NUM_STRING;
 
 break;
-case 146: /* Offset must be treated as a string */
+case 147: /* Offset must be treated as a string */
 	return T_NUM_STRING;
 
 break;
-case 147:
+case 148:
   this.popState();
   return ']';
 
 break;
-case 148:
+case 149:
 	return yy_.yytext;
 
 break;
-case 149:
+case 150:
   return T_ENCAPSED_AND_WHITESPACE;
 
 break;
-case 150:
+case 151:
 	return T_STRING;
 
 break;
-case 151:
+case 152:
   return T_DNUMBER;
 
 break;
-case 152:
+case 153:
   return T_LNUMBER;
 
 break;
-case 153:
+case 154:
 		return T_LNUMBER;
 
 break;
-case 154:
+case 155:
   if (yy_.yyleng < MAX_LENGTH_OF_LONG - 1) {
     return T_LNUMBER;
   } else {
@@ -1398,7 +1403,7 @@ case 154:
   }
 
 break;
-case 155:
+case 156:
   while(this._input.length > 0) {
     var char = this.input();
     if (
@@ -1427,7 +1432,7 @@ case 155:
   return T_COMMENT;
 
 break;
-case 156:
+case 157:
   var type = T_COMMENT;
   if (yy_.yytext.length > 2) {
     type = T_DOC_COMMENT;
@@ -1445,18 +1450,18 @@ case 156:
   return type;
 
 break;
-case 157:
+case 158:
 	return yy_.yytext;
 
 break;
-case 158:
+case 159:
   this.reject();
 
 break;
 }
 },
-rules: [/^(?:<%=)/i,/^(?:<\?=)/i,/^(?:<%)/i,/^(?:<\?php([ \t]|((\r\n|\n|\r))))/i,/^(?:<\?)/i,/^(?:([^]))/i,/^(?:\?>((\r\n|\n|\r))?)/i,/^(?:%>((\r\n|\n|\r))?)/i,/^(?:\$\{)/i,/^(?:\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)->[a-zA-Z_\x7f-\xff])/i,/^(?:\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\[)/i,/^(?:\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))/i,/^(?:b?['])/i,/^(?:b?["])/i,/^(?:b?<<<([ \t]*)(([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|([']([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)['])|(["]([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)["]))((\r\n|\n|\r)))/i,/^(?:[`])/i,/^(?:([^]))/i,/^(?:\{\$)/i,/^(?:["])/i,/^(?:[`])/i,/^(?:([^]))/i,/^(?:([^]))/i,/^(?:([^]))/i,/^(?:([^]))/i,/^(?:exit\b)/i,/^(?:die\b)/i,/^(?:function\b)/i,/^(?:const\b)/i,/^(?:return\b)/i,/^(?:yield\b)/i,/^(?:try\b)/i,/^(?:catch\b)/i,/^(?:finally\b)/i,/^(?:throw\b)/i,/^(?:if\b)/i,/^(?:elseif\b)/i,/^(?:endif\b)/i,/^(?:else\b)/i,/^(?:while\b)/i,/^(?:endwhile\b)/i,/^(?:do\b)/i,/^(?:for\b)/i,/^(?:endfor\b)/i,/^(?:foreach\b)/i,/^(?:endforeach\b)/i,/^(?:declare\b)/i,/^(?:enddeclare\b)/i,/^(?:instanceof\b)/i,/^(?:as\b)/i,/^(?:switch\b)/i,/^(?:endswitch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:break\b)/i,/^(?:continue\b)/i,/^(?:goto\b)/i,/^(?:echo\b)/i,/^(?:print\b)/i,/^(?:class\b)/i,/^(?:interface\b)/i,/^(?:trait\b)/i,/^(?:extends\b)/i,/^(?:implements\b)/i,/^(?:->)/i,/^(?:([ \n\r\t]+)+)/i,/^(?:->)/i,/^(?:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))/i,/^(?:([^]))/i,/^(?:::)/i,/^(?:\\)/i,/^(?:new\b)/i,/^(?:clone\b)/i,/^(?:var\b)/i,/^(?:\(([ \t]*)(int|integer)([ \t]*)\))/i,/^(?:\(([ \t]*)(real|double|float)([ \t]*)\))/i,/^(?:\(([ \t]*)(string|binary)([ \t]*)\))/i,/^(?:\(([ \t]*)array([ \t]*)\))/i,/^(?:\(([ \t]*)object([ \t]*)\))/i,/^(?:\(([ \t]*)(bool|boolean)([ \t]*)\))/i,/^(?:\(([ \t]*)(unset)([ \t]*)\))/i,/^(?:eval\b)/i,/^(?:include\b)/i,/^(?:include_once\b)/i,/^(?:require\b)/i,/^(?:require_once\b)/i,/^(?:namespace\b)/i,/^(?:use\b)/i,/^(?:insteadof\b)/i,/^(?:global\b)/i,/^(?:isset\b)/i,/^(?:empty\b)/i,/^(?:__halt_compiler\b)/i,/^(?:static\b)/i,/^(?:abstract\b)/i,/^(?:final\b)/i,/^(?:private\b)/i,/^(?:protected\b)/i,/^(?:public\b)/i,/^(?:unset\b)/i,/^(?:=>)/i,/^(?:list\b)/i,/^(?:array\b)/i,/^(?:callable\b)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:===)/i,/^(?:!==)/i,/^(?:==)/i,/^(?:!=|<>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:\/=)/i,/^(?:\.=)/i,/^(?:%=)/i,/^(?:<<=)/i,/^(?:>>=)/i,/^(?:&=)/i,/^(?:\|=)/i,/^(?:\^=)/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:OR\b)/i,/^(?:AND\b)/i,/^(?:XOR\b)/i,/^(?:<<)/i,/^(?:>>)/i,/^(?:\.\.\.)/i,/^(?:\?\?)/i,/^(?:\*\*=)/i,/^(?:\*\*)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:__CLASS__\b)/i,/^(?:__TRAIT__\b)/i,/^(?:__FUNCTION__\b)/i,/^(?:__METHOD__\b)/i,/^(?:__LINE__\b)/i,/^(?:__FILE__\b)/i,/^(?:__DIR__\b)/i,/^(?:__NAMESPACE__\b)/i,/^(?:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)[[}])/i,/^(?:([^]))/i,/^(?:[0]|([1-9][0-9]*))/i,/^(?:([0-9]+)|(0x[0-9a-fA-F]+)|(0b[01]+))/i,/^(?:\])/i,/^(?:([;:,.\[\]()|^&+-\/*=%!~$<>?@])|[{}"`])/i,/^(?:[ \n\r\t\\'#])/i,/^(?:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))/i,/^(?:(((([0-9]+)|(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)))[eE][+-]?([0-9]+)))|(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)))/i,/^(?:(0b[01]+))/i,/^(?:(0x[0-9a-fA-F]+))/i,/^(?:([0-9]+))/i,/^(?:#|\/\/)/i,/^(?:\/\*\*([ \n\r\t]+)|\/\*)/i,/^(?:([;:,.\[\]()|^&+-\/*=%!~$<>?@]))/i,/^(?:([^]))/i],
-conditions: {"ST_LOOKING_FOR_VARNAME":{"rules":[143,144],"inclusive":false},"ST_NOWDOC":{"rules":[23],"inclusive":false},"ST_END_HEREDOC":{"rules":[16],"inclusive":false},"ST_HEREDOC":{"rules":[8,9,10,11,17,22],"inclusive":false},"ST_BACKQUOTE":{"rules":[8,9,10,11,17,19,21],"inclusive":false},"ST_DOUBLE_QUOTES":{"rules":[8,9,10,11,17,18,20],"inclusive":false},"ST_LOOKING_FOR_PROPERTY":{"rules":[65,66,67],"inclusive":false},"ST_VAR_OFFSET":{"rules":[11,145,146,147,148,149,150,158],"inclusive":false},"ST_IN_SCRIPTING":{"rules":[6,7,11,12,13,14,15,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,150,151,152,153,154,155,156,157,158],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}}
+rules: [/^(?:<%=)/i,/^(?:<\?=)/i,/^(?:<%)/i,/^(?:<\?php([ \t]|((\r\n|\n|\r))))/i,/^(?:<\?)/i,/^(?:([^]))/i,/^(?:\?>((\r\n|\n|\r))?)/i,/^(?:%>((\r\n|\n|\r))?)/i,/^(?:\$\{)/i,/^(?:\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)->[a-zA-Z_\x7f-\xff])/i,/^(?:\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\[)/i,/^(?:\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))/i,/^(?:b?['])/i,/^(?:b?["])/i,/^(?:b?<<<([ \t]*)(([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|([']([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)['])|(["]([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)["]))((\r\n|\n|\r)))/i,/^(?:[`])/i,/^(?:([^]))/i,/^(?:\{\$)/i,/^(?:["])/i,/^(?:[`])/i,/^(?:([^]))/i,/^(?:([^]))/i,/^(?:([^]))/i,/^(?:([^]))/i,/^(?:exit\b)/i,/^(?:die\b)/i,/^(?:function\b)/i,/^(?:const\b)/i,/^(?:return\b)/i,/^(?:yield from\b)/i,/^(?:yield\b)/i,/^(?:try\b)/i,/^(?:catch\b)/i,/^(?:finally\b)/i,/^(?:throw\b)/i,/^(?:if\b)/i,/^(?:elseif\b)/i,/^(?:endif\b)/i,/^(?:else\b)/i,/^(?:while\b)/i,/^(?:endwhile\b)/i,/^(?:do\b)/i,/^(?:for\b)/i,/^(?:endfor\b)/i,/^(?:foreach\b)/i,/^(?:endforeach\b)/i,/^(?:declare\b)/i,/^(?:enddeclare\b)/i,/^(?:instanceof\b)/i,/^(?:as\b)/i,/^(?:switch\b)/i,/^(?:endswitch\b)/i,/^(?:case\b)/i,/^(?:default\b)/i,/^(?:break\b)/i,/^(?:continue\b)/i,/^(?:goto\b)/i,/^(?:echo\b)/i,/^(?:print\b)/i,/^(?:class\b)/i,/^(?:interface\b)/i,/^(?:trait\b)/i,/^(?:extends\b)/i,/^(?:implements\b)/i,/^(?:->)/i,/^(?:([ \n\r\t]+)+)/i,/^(?:->)/i,/^(?:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))/i,/^(?:([^]))/i,/^(?:::)/i,/^(?:\\)/i,/^(?:new\b)/i,/^(?:clone\b)/i,/^(?:var\b)/i,/^(?:\(([ \t]*)(int|integer)([ \t]*)\))/i,/^(?:\(([ \t]*)(real|double|float)([ \t]*)\))/i,/^(?:\(([ \t]*)(string|binary)([ \t]*)\))/i,/^(?:\(([ \t]*)array([ \t]*)\))/i,/^(?:\(([ \t]*)object([ \t]*)\))/i,/^(?:\(([ \t]*)(bool|boolean)([ \t]*)\))/i,/^(?:\(([ \t]*)(unset)([ \t]*)\))/i,/^(?:eval\b)/i,/^(?:include\b)/i,/^(?:include_once\b)/i,/^(?:require\b)/i,/^(?:require_once\b)/i,/^(?:namespace\b)/i,/^(?:use\b)/i,/^(?:insteadof\b)/i,/^(?:global\b)/i,/^(?:isset\b)/i,/^(?:empty\b)/i,/^(?:__halt_compiler\b)/i,/^(?:static\b)/i,/^(?:abstract\b)/i,/^(?:final\b)/i,/^(?:private\b)/i,/^(?:protected\b)/i,/^(?:public\b)/i,/^(?:unset\b)/i,/^(?:=>)/i,/^(?:list\b)/i,/^(?:array\b)/i,/^(?:callable\b)/i,/^(?:\+\+)/i,/^(?:--)/i,/^(?:===)/i,/^(?:!==)/i,/^(?:==)/i,/^(?:!=|<>)/i,/^(?:<=)/i,/^(?:>=)/i,/^(?:\+=)/i,/^(?:-=)/i,/^(?:\*=)/i,/^(?:\/=)/i,/^(?:\.=)/i,/^(?:%=)/i,/^(?:<<=)/i,/^(?:>>=)/i,/^(?:&=)/i,/^(?:\|=)/i,/^(?:\^=)/i,/^(?:\|\|)/i,/^(?:&&)/i,/^(?:OR\b)/i,/^(?:AND\b)/i,/^(?:XOR\b)/i,/^(?:<<)/i,/^(?:>>)/i,/^(?:\.\.\.)/i,/^(?:\?\?)/i,/^(?:\*\*=)/i,/^(?:\*\*)/i,/^(?:\{)/i,/^(?:\})/i,/^(?:__CLASS__\b)/i,/^(?:__TRAIT__\b)/i,/^(?:__FUNCTION__\b)/i,/^(?:__METHOD__\b)/i,/^(?:__LINE__\b)/i,/^(?:__FILE__\b)/i,/^(?:__DIR__\b)/i,/^(?:__NAMESPACE__\b)/i,/^(?:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)[[}])/i,/^(?:([^]))/i,/^(?:[0]|([1-9][0-9]*))/i,/^(?:([0-9]+)|(0x[0-9a-fA-F]+)|(0b[01]+))/i,/^(?:\])/i,/^(?:([;:,.\[\]()|^&+-\/*=%!~$<>?@])|[{}"`])/i,/^(?:[ \n\r\t\\'#])/i,/^(?:([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*))/i,/^(?:(((([0-9]+)|(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)))[eE][+-]?([0-9]+)))|(([0-9]*\.[0-9]+)|([0-9]+\.[0-9]*)))/i,/^(?:(0b[01]+))/i,/^(?:(0x[0-9a-fA-F]+))/i,/^(?:([0-9]+))/i,/^(?:#|\/\/)/i,/^(?:\/\*\*([ \n\r\t]+)|\/\*)/i,/^(?:([;:,.\[\]()|^&+-\/*=%!~$<>?@]))/i,/^(?:([^]))/i],
+conditions: {"ST_LOOKING_FOR_VARNAME":{"rules":[144,145],"inclusive":false},"ST_NOWDOC":{"rules":[23],"inclusive":false},"ST_END_HEREDOC":{"rules":[16],"inclusive":false},"ST_HEREDOC":{"rules":[8,9,10,11,17,22],"inclusive":false},"ST_BACKQUOTE":{"rules":[8,9,10,11,17,19,21],"inclusive":false},"ST_DOUBLE_QUOTES":{"rules":[8,9,10,11,17,18,20],"inclusive":false},"ST_LOOKING_FOR_PROPERTY":{"rules":[66,67,68],"inclusive":false},"ST_VAR_OFFSET":{"rules":[11,146,147,148,149,150,151,159],"inclusive":false},"ST_IN_SCRIPTING":{"rules":[6,7,11,12,13,14,15,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,151,152,153,154,155,156,157,158,159],"inclusive":false},"INITIAL":{"rules":[0,1,2,3,4,5],"inclusive":true}}
 });
 return lexer;
 })();

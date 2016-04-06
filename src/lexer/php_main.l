@@ -19,6 +19,10 @@
 	return T_RETURN;
 }
 
+<ST_IN_SCRIPTING>"yield from" {
+	return T_YIELD_FROM;
+}
+
 <ST_IN_SCRIPTING>"yield" {
 	return T_YIELD;
 }

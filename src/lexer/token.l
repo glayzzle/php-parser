@@ -78,6 +78,7 @@
 %token T_EXIT
 %token T_PRINT
 %token T_YIELD
+%token T_YIELD_FROM
 %token T_FUNCTION
 %token T_DOUBLE_ARROW
 %token T_DOUBLE_COLON
