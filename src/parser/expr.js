@@ -180,6 +180,7 @@ module.exports = function(api, tokens, EOF) {
         case tokens.T_PRINT:
           return ['sys', 'print', this.next().read_expr()];
 
+        // T_YIELD (expr (T_DOUBLE_ARROW expr)?)?
         case tokens.T_YIELD:
           var result = ['yield', null, null];
           if (this.next().is('EXPR')) {
@@ -187,10 +188,14 @@ module.exports = function(api, tokens, EOF) {
             result[1] = this.read_expr();
             if (this.token === tokens.T_DOUBLE_ARROW) {
               // reads the yield returned key
-              result[2] = this.read_expr();
+              result[2] = this.next().read_expr();
             }
           }
           return result;
+
+        // T_YIELD_FROM expr
+        case tokens.T_YIELD_FROM:
+          return ['yield-from', this.next().read_expr()];
 
         case tokens.T_FUNCTION:
           // @fixme later - removed static lambda function declarations (colides with static keyword usage)
