@@ -58,6 +58,7 @@ module.exports = function(api, tokens, EOF) {
       var cond = this.read_if_expr();
       this.expect(':').next();
       var body = [];
+      var elseCond = false;
 
       while(this.token != EOF && this.token !== tokens.T_ENDIF) {
         if (this.token === tokens.T_ELSEIF) {
