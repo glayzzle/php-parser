@@ -60,6 +60,10 @@ module.exports = function(api, tokens, EOF) {
         result = ['static', 'get', result, getter];
       }
 
+      return this.recursive_variable_chain_scan(result, read_only);
+    }
+
+    ,recursive_variable_chain_scan: function(result, read_only) {
       recursive_scan_loop:
       while(this.token != EOF) {
         switch(this.token) {
@@ -105,8 +109,7 @@ module.exports = function(api, tokens, EOF) {
             break recursive_scan_loop;
         }
       }
-
-      return result;
+      return result;      
     }
     /**
      * <ebnf>

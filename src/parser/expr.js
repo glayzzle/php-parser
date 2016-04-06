@@ -80,7 +80,16 @@ module.exports = function(api, tokens, EOF) {
         case '(':
           var expr = this.next().read_expr();
           this.expect(')').next();
-          return expr;
+
+          // handle dereferencable
+          if (this.token === tokens.T_OBJECT_OPERATOR) {
+            return this.recursive_variable_chain_scan(expr, false);
+          } else if (this.token === tokens.T_CURLY_OPEN || this.token === '[') {
+            // @fixme - should avoid a new token (could be resolved)
+            return ['deference', expr, this.read_encapsed_string_item()];
+          } else {
+            return expr;            
+          }
 
         case '`':
           var expr = null;
