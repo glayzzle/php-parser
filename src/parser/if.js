@@ -12,6 +12,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     read_if: function() {
+      var result = this.node('if');
       var cond = this.read_if_expr();
       var body = null;
       var elseCond = false;
@@ -38,7 +39,7 @@ module.exports = function(api, tokens, EOF) {
           elseCond = this.next().read_statement();
         }
       }
-      return ['if', cond, body, elseCond];
+      return result(cond, body, elseCond);
     },
     /**
      * reads an if expression : '(' expr ')'

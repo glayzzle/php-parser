@@ -125,3 +125,7 @@
 %token T_WHITESPACE
 %token T_COMMENT
 %token T_DOC_COMMENT
+%token T_ELLIPSIS
+%token T_COALESCE
+%token T_POW
+%token T_POW_EQUAL

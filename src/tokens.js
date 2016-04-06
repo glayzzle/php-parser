@@ -133,7 +133,11 @@ module.exports = {
     224: 'T_CLOSE_TAG',
     225: 'T_WHITESPACE',
     226: 'T_COMMENT',
-    227: 'T_DOC_COMMENT'
+    227: 'T_DOC_COMMENT',
+    228: 'T_ELLIPSIS',
+    229: 'T_COALESCE',
+    230: 'T_POW',
+    231: 'T_POW_EQUAL'
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -262,6 +266,10 @@ module.exports = {
     T_CLOSE_TAG: 224,
     T_WHITESPACE: 225,
     T_COMMENT: 226,
-    T_DOC_COMMENT: 227
+    T_DOC_COMMENT: 227,
+    T_ELLIPSIS: 228,
+    T_COALESCE: 229,
+    T_POW: 230,
+    T_POW_EQUAL: 231
   }
 };

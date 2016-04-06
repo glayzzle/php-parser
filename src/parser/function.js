@@ -17,6 +17,16 @@ module.exports = function(api, tokens, EOF) {
       return false;
     }
     /**
+     * checks if current token is a variadic keyword
+     */
+    ,is_variadic: function() {
+      if (this.token === tokens.T_ELLIPSIS) {
+        this.next();
+        return true;
+      }
+      return false;
+    }    
+    /**
      * reading a function
      * <ebnf>
      * function ::= function_declaration code_block
@@ -103,18 +113,19 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *  parameter ::= type? '&'? T_VARIABLE ('=' scallar)?
+     *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' scallar)?
      * </ebnf>
      */
     ,read_parameter: function() {
       var type = this.read_type();
       var isRef = this.is_reference();
+      var isVariadic = this.is_variadic();
       var name = this.expect(tokens.T_VARIABLE).text();
       var value = [];
       if (this.next().token == '=') {
         value = this.next().read_scalar();
       }
-      return [name, type, value, isRef];
+      return [name, type, value, isRef, isVariadic];
     }
     /**
      * <ebnf>

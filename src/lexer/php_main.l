@@ -422,10 +422,26 @@
 	return T_SR;
 }
 
+<ST_IN_SCRIPTING>"..." {
+	return T_ELLIPSIS;
+}
+
+<ST_IN_SCRIPTING>"??" {
+	return T_COALESCE;
+}
+
+<ST_IN_SCRIPTING>"**=" {
+	return T_POW_EQUAL;
+}
+
+<ST_IN_SCRIPTING>"**" {
+	return T_POW;
+}
+
+
 <ST_IN_SCRIPTING>"{" {
 	return '{';
 }
-
 
 <ST_IN_SCRIPTING>"}" {
   // @todo : RESET_DOC_COMMENT();
