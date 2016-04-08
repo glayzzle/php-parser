@@ -4,7 +4,7 @@ node_js:
 notifications:
   email: false
 before_script:
-  - sudo echo "deb http://packages.dotdeb.org jessie all" > /etc/apt/sources.list.d/dotdeb.list
+  - sudo echo "deb http://packages.dotdeb.org jessie all" | sudo tee -a /etc/apt/sources.list
   - sudo wget -O- https://www.dotdeb.org/dotdeb.gpg | apt-key add -
   - sudo apt-get update -qq
   - sudo apt-get install -y php7.0
