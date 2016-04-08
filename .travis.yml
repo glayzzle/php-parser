@@ -4,9 +4,9 @@ node_js:
 notifications:
   email: false
 before_script:
-  - git clone https://github.com/kasparsd/php-7-debian.git
-  - cd php-7-debian
-  - ./build.sh
-  - sudo ./install.sh
+  - sudo echo "deb http://packages.dotdeb.org jessie all" > /etc/apt/sources.list.d/dotdeb.list
+  - sudo wget -O- https://www.dotdeb.org/dotdeb.gpg | apt-key add -
+  - sudo apt-get update -qq
+  - sudo apt-get install php7.0
   - php -v
 after_success: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
