@@ -32,6 +32,8 @@ T_ECHO T_CONSTANT_ENCAPSED_STRING ;
       [ [ 'string', '"Hello World"' ] ] ] ] ]
 ```
 
+https://tonicdev.com/57082d37ded58c1100e6a6f6/57082d37ded58c1100e6a6f7
+
 # Use it
 
 ```
