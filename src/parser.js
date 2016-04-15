@@ -168,7 +168,8 @@ module.exports = function(engine) {
         }
       }
       var errorMessage = 'Parse Error : unexpected ' + token + msgExpect + ' at line ' + this.lexer.yylloc.first_line;
-      if (suppressErrors) {
+      if (this.suppressErrors) {
+        // TODO -- Send errors back with the AST?
         console.error(errorMessage)
       } else {
         throw new Error(errorMessage);
