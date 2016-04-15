@@ -41,6 +41,7 @@ module.exports = function(engine) {
     debug: false,
     locations: false,
     suppressErrors: false,
+    lastError: false,
     startAt: [],
     entries: {
       'SCALAR': [
@@ -143,6 +144,7 @@ module.exports = function(engine) {
     }
     /** main entry point : converts a source code to AST **/
     ,parse: function(code) {
+      this.lastError = false;
       this.lexer.setInput(code);
       this.length = this.lexer._input.length;
       this.next();
@@ -167,11 +169,18 @@ module.exports = function(engine) {
           msgExpect += getTokenName(expect);
         }
       }
-      var errorMessage = 'Parse Error : unexpected ' + token + msgExpect + ' at line ' + this.lexer.yylloc.first_line;
-      if (suppressErrors) {
-        console.error(errorMessage)
+      this.lastError = {
+        token: this.token,
+        tokenName: token,
+        expected: expect,
+        messageExpected: msgExpect,
+        message: 'Parse Error : unexpected ' + token + msgExpect + ' at line ' + this.lexer.yylloc.first_line,
+        line: this.lexer.yylloc.first_line
+      };
+      if (this.suppressErrors) {
+        this.token = EOF;
       } else {
-        throw new Error(errorMessage);
+        throw new Error(this.lastError.message);
       }
     }
     /**
@@ -243,12 +252,14 @@ module.exports = function(engine) {
     }
     /** force to expect specified token **/
     ,expect: function(token) {
-      if (Array.isArray(token)) {
-        if (token.indexOf(this.token) === -1) {
+      if (!this.lastError) {
+        if (Array.isArray(token)) {
+          if (token.indexOf(this.token) === -1) {
+            this.error(token);
+          }
+        } else if (this.token != token) {
           this.error(token);
         }
-      } else if (this.token != token) {
-        this.error(token);
       }
       return this;
     }
