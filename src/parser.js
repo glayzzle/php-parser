@@ -31,9 +31,44 @@ module.exports = function(engine) {
   }
 
   /**
+   * Gracefull decorator
+   */
+  var _gracefullDecorator = function(fn) {
+    try {
+      this._currentNode = this._gracefullProxy[fn].apply(
+        this,
+        Array.prototype.slice.call(arguments, 1)
+      );
+      return this._currentNode;
+    } catch(e) {
+      if (this.lastError) {
+        this.next(); // ignore token & go next
+        var errorNode = [
+          'error',
+          this.lastError.tokenName,
+          this.lastError.expected,
+          this.lastError.line
+        ];
+        // force to append the error node
+        if (this.ast.length < 3) {
+          this.ast.push([]);
+        }
+        this.ast[2].push(errorNode);
+        // return the node
+        return errorNode;
+      } else {
+        throw e;  // not a parsing error
+      }
+    }
+  };
+
+  /**
    * The basic parser api
    */
   var api = {
+    // Private vars, do not use directly
+    _gracefullProxy: {},
+    _gracefull: false,
     // the lexer
     lexer: engine.lexer,
     token: null,
@@ -148,11 +183,11 @@ module.exports = function(engine) {
       this.lexer.setInput(code);
       this.length = this.lexer._input.length;
       this.next();
-      var ast = [];
+      this.ast = ['program', []];
       while(this.token != EOF) {
-        ast.push(this.read_start());
+        this.ast[1].push(this.read_start());
       }
-      return ['program', ast];
+      return this.ast;
     }
     /** handling errors **/
     ,error: function(expect) {
@@ -177,11 +212,37 @@ module.exports = function(engine) {
         message: 'Parse Error : unexpected ' + token + msgExpect + ' at line ' + this.lexer.yylloc.first_line,
         line: this.lexer.yylloc.first_line
       };
-      if (this.suppressErrors) {
+      if (this.suppressErrors && !this._gracefull) {
         this.token = EOF;
       } else {
         throw new Error(this.lastError.message);
       }
+    }
+    /**
+     * enable / disable the gracefull mode
+     */
+    ,gracefull: function(mode) {
+      if (this._gracefull !== mode) {
+        if (mode) {
+          // enable the gracefull mode
+          this._gracefullProxy = {};
+          for(var i in this) {
+            var cb = this[i];
+            if (typeof cb === 'function') {
+              this._gracefullProxy[i] = cb;
+              this[i] = _gracefullDecorator.bind(this, i);
+            }
+          }
+        } else {
+          // disable the gracefull mode
+          for(var i in this._gracefullProxy) {
+            this[i] = this._gracefullProxy[i];
+          }
+        }
+        this._gracefull = mode;
+      }
+      return this;
+    
     }
     /**
      * Creates a new AST node
