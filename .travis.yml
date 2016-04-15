@@ -8,5 +8,6 @@ before_script:
   - cd php-7-debian
   - sudo ./build.sh
   - sudo ./install.sh
+  - sudo ln -s /usr/local/php7/bin/php /usr/bin/php
   - php -v
 after_success: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
