@@ -34,12 +34,13 @@ module.exports = function(engine) {
    * The basic parser api
    */
   var api = {
-    // le lexer
+    // the lexer
     lexer: engine.lexer,
     token: null,
     prev: null,
     debug: false,
     locations: false,
+    suppressErrors: false,
     startAt: [],
     entries: {
       'SCALAR': [
@@ -166,10 +167,12 @@ module.exports = function(engine) {
           msgExpect += getTokenName(expect);
         }
       }
-      throw new Error(
-        'Parse Error : unexpected ' + token + msgExpect,
-        '\nat line ' + this.lexer.yylloc.first_line
-      );
+      var errorMessage = 'Parse Error : unexpected ' + token + msgExpect + ' at line ' + this.lexer.yylloc.first_line;
+      if (suppressErrors) {
+        console.error(errorMessage)
+      } else {
+        throw new Error(errorMessage);
+      }
     }
     /**
      * Creates a new AST node
