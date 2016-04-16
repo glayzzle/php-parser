@@ -56,7 +56,7 @@ module.exports = function(api, tokens, EOF) {
       var result = this.node('function');
       this.expect(tokens.T_FUNCTION);
       var isRef = this.next().is_reference();
-      var name = false, use = [];
+      var name = false, use = [], returnType = false;
       if (!annonymous) {
         name = this.expect(tokens.T_STRING).text();
         this.next();
@@ -68,7 +68,10 @@ module.exports = function(api, tokens, EOF) {
         use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
         this.expect(')').next();
       }
-      return result(name, params, isRef, use);
+      if (this.token === ':') {
+        returnType = this.next().read_type();
+      }
+      return result(name, params, isRef, use, returnType);
     }
     /**
      * <ebnf>
