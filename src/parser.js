@@ -31,11 +31,11 @@ module.exports = function(engine) {
   }
 
   /**
-   * Gracefull decorator
+   * Graceful decorator
    */
-  var _gracefullDecorator = function(fn) {
+  var _gracefulDecorator = function(fn) {
     try {
-      this._currentNode = this._gracefullProxy[fn].apply(
+      this._currentNode = this._gracefulProxy[fn].apply(
         this,
         Array.prototype.slice.call(arguments, 1)
       );
@@ -67,8 +67,8 @@ module.exports = function(engine) {
    */
   var api = {
     // Private vars, do not use directly
-    _gracefullProxy: {},
-    _gracefull: false,
+    _gracefulProxy: {},
+    _graceful: false,
     // the lexer
     lexer: engine.lexer,
     token: null,
@@ -219,27 +219,27 @@ module.exports = function(engine) {
       }
     }
     /**
-     * enable / disable the gracefull mode
+     * enable / disable the graceful mode
      */
-    ,gracefull: function(mode) {
-      if (this._gracefull !== mode) {
+    ,graceful: function(mode) {
+      if (this._graceful !== mode) {
         if (mode) {
-          // enable the gracefull mode
-          this._gracefullProxy = {};
+          // enable the graceful mode
+          this._gracefulProxy = {};
           for(var i in this) {
             var cb = this[i];
             if (typeof cb === 'function') {
-              this._gracefullProxy[i] = cb;
-              this[i] = _gracefullDecorator.bind(this, i);
+              this._gracefulProxy[i] = cb;
+              this[i] = _gracefulDecorator.bind(this, i);
             }
           }
         } else {
-          // disable the gracefull mode
-          for(var i in this._gracefullProxy) {
-            this[i] = this._gracefullProxy[i];
+          // disable the graceful mode
+          for(var i in this._gracefulProxy) {
+            this[i] = this._gracefulProxy[i];
           }
         }
-        this._gracefull = mode;
+        this._graceful = mode;
       }
       return this;
     

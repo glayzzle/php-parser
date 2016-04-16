@@ -1,13 +1,13 @@
 var should = require("should");
 var parser = require('../../main');
 
-describe('Test gracefull mode', function() {
+describe('Test graceful mode', function() {
 
   describe('to suppress errors', function() {
     
     // init a new parser instance
     var test = parser.create();
-    test.parser.gracefull(true);
+    test.parser.graceful(true);
 
     // Get result from parser
     var ast = test.parseEval([
