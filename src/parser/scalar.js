@@ -152,6 +152,10 @@ module.exports = function(api, tokens, EOF) {
      * Reads an encapsed string
      */
     ,read_encapsed_string: function(expect) {
+      if (this.token === expect) {
+        this.next();
+        return null; // empty
+      }      
       var first = this.read_encapsed_string_item();
       if (this.token === expect) {
         this.next();
