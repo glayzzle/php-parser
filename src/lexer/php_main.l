@@ -453,6 +453,7 @@
     this.conditionStack.length > 2
     && this.conditionStack[this.conditionStack.length - 2] !== 'ST_IN_SCRIPTING'
   ) {
+  	// Return to HEREDOC/ST_DOUBLE_QUOTES mode
     this.popState();
   }
   return '}';

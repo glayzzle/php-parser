@@ -181,26 +181,38 @@
   return T_ENCAPSED_AND_WHITESPACE;
 }
 
-
 <ST_HEREDOC>{ANY_CHAR} {
-  var eot = this._input.length;
+  var scan = this.matches[0] + this._input;
+  var eot = scan.length;
   var i = 0, eol;
   var char;
   var lblLen = this.heredoc_label.length;
-  var found = false;
-  if (yytext == '\\') i++;
+  var found = false, newLine = 1;
+
+  /** edge case : empty here doc **/
+  if (scan.substring(0, lblLen) == this.heredoc_label) {
+    eol = scan[lblLen];
+    if ( eol == '\n' || eol == '\r' || eol == ';') {
+      consume(this, lblLen - 1);
+      this.popState();
+      return T_END_HEREDOC;
+    }
+  }
+
   while(i < eot) {
-    char = this._input[i];
+    char = scan[i];
     if (char == '\n' || char == '\r') {
       if (char == '\r') {
-        char = ++i < eot && this._input[i];
-        if (char !== '\n') {
-          i--;
+        if (++i < eot) {
+          char = scan[i];
+          if (char !== '\n') {
+            i--;
+          }
         }
       }
       // @fixme : check if out of text limits
-      if (this._input.substring(i + 1, i + lblLen + 1) == this.heredoc_label) {
-        eol = this._input[ i + lblLen + 1];
+      if (scan.substring(i + 1, i + lblLen + 1) == this.heredoc_label) {
+        eol = scan[ i + lblLen + 1];
         if ( eol == '\n' || eol == '\r' || eol == ';') {
           found = true;
           break;
@@ -208,21 +220,20 @@
       }
     }
     else if (char === '\\') {
-      char = ++i < eot && this._input[i];
+      char = ++i < eot && scan[i];
       if (char == '\n' || char == '\r') {
         i--;
-        
       }
     }
     else if (char == '$') {
-      char = ++i < eot && this._input[i];
+      char = ++i < eot && scan[i];
       if (char == '{' || IS_LABEL_START(char)) {
         i -= 2;
         break;
       }  else continue;
     }
     else if (char == '{') {
-      char = ++i < eot && this._input[i];
+      char = ++i < eot && scan[i];
       if (char == '$') {
         i -= 2;
         break;
@@ -230,27 +241,39 @@
     }
     i++;
   }
-  consume(this, i + 1);
+  consume(this, i + 1 - this.matches[0].length);
   if (found) this.begin('ST_END_HEREDOC');
   return T_ENCAPSED_AND_WHITESPACE;
 }
 
 
 <ST_NOWDOC>{ANY_CHAR} {
-  var eot = this._input.length;
+  var scan = this.matches[0] + this._input;
+  var eot = scan.length;
   var i = 0, eol;
   var char;
   var lblLen = this.heredoc_label.length;
+
+  /** edge case : empty now doc **/
+  if (scan.substring(0, lblLen) == this.heredoc_label) {
+    eol = scan[lblLen];
+    if ( eol == '\n' || eol == '\r' || eol == ';') {
+      consume(this, lblLen - 1);
+      this.popState();
+      return T_END_HEREDOC;
+    }
+  }
+
   while(i < eot) {
-    char = this._input[i];
+    char = scan[i];
     if (char == '\n' || char == '\r') {
       if (char == '\r') {
-        char = ++i < eot && this._input[i];
+        char = ++i < eot && scan[i];
         if (char !== '\n') i--;
       }
       // @fixme : check if out of text limits
-      if (this._input.substring(i + 1, i + lblLen + 1) == this.heredoc_label) {
-        eol = this._input[ i + lblLen + 1];
+      if (scan.substring(i + 1, i + lblLen + 1) == this.heredoc_label) {
+        eol = scan[ i + lblLen + 1];
         if ( eol == '\n' || eol == '\r' || eol == ';') {
           break;
         }
@@ -258,7 +281,7 @@
     }
     i++;
   }
-  consume(this, i + 1);
+  consume(this, i + 1 - this.matches[0].length);
   this.begin('ST_END_HEREDOC');
   return T_ENCAPSED_AND_WHITESPACE;
 }
