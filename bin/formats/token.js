@@ -33,15 +33,7 @@ module.exports = {
     while(token != EOF) {
       var entry = engine.lexer.yytext;
       if (names[token]) {
-        entry = [names[token], entry, engine.lexer.yylloc.first_line];
-        
-      }
-      if (engine.parser.debug) {
-        if (names[token]) {
-          console.log(names[token], engine.lexer.yylloc.first_line, entry);
-        } else {
-          console.log('--> plain', engine.lexer.yylloc.first_line, token);
-        }
+        entry = [names[token], entry, engine.lexer.yylloc.first_line];        
       }
       jsTok.push(entry);
       token = engine.lexer.lex() || EOF;
@@ -64,6 +56,14 @@ module.exports = {
     for(var i = 0; i < phpTok.length; i++) {
       var p = phpTok[i];
       var j = jsTok[i];
+      if (engine.parser.debug) {
+        if (j instanceof Array) {
+          console.log('JS('+j[2]+')  : ', j[0], j[1]);
+        }
+        if (p instanceof Array) {
+          console.log('PHP('+p[2]+') : ', p[0], p[1]);
+        }
+      }
       if ( p instanceof Array ) {
         if ( j instanceof Array ) {
           if (p[0] != j[0]) { // check the token type
@@ -84,7 +84,7 @@ module.exports = {
           }
           if (p[2] != j[2]) { // check the token line
             engine.parser.debug && console.log('NOTICE : Expected line ' + p[2] + ', but found ' + j[2]);
-            // @todo fixme fail = true; 
+            fail = true; 
           }
         } else {
           console.log('FAIL : Expected ' + p[0] + ' token, but found "' + j + '" symbol');
