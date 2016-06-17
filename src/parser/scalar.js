@@ -91,7 +91,7 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | variable  | T_CURLY_OPEN expr '}'
+     * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
      * </ebnf>
      */
     ,read_encapsed_string_item: function() {
@@ -100,6 +100,10 @@ module.exports = function(api, tokens, EOF) {
         result = ['string', this.text()];
         this.next();
       } else if (this.token === tokens.T_DOLLAR_OPEN_CURLY_BRACES) {
+        // ebnf :
+        // T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+        // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+        // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
         if (this.next().token === tokens.T_STRING_VARNAME) {
           result = ['var', this.text()];
           if (this.next().token === '[') {
@@ -111,33 +115,10 @@ module.exports = function(api, tokens, EOF) {
         }
         this.expect('}').next();
       } else if (this.token === tokens.T_CURLY_OPEN) {
-        result = this.next().read_variable(false);
+        result = this.next().read_variable(true);
         this.expect('}').next();
       } else if (this.token === tokens.T_VARIABLE) {
-        result = ['var', this.text()];
-        this.next();
-        if (this.token === tokens.T_OBJECT_OPERATOR) {
-          if (this.next().expect(tokens.T_STRING)) {
-            result = ['prop', result, ['string', this.text()]];
-            this.next();
-          }
-        } else if (this.token === '[') {
-          this.next();
-          if (this.token === tokens.T_STRING) {
-            result = ['offset', result, ['string', this.text()]];
-          } else if (this.token === tokens.T_NUM_STRING) {
-            result = ['offset', result, ['number', this.text()]];
-          } else if (this.token === tokens.T_VARIABLE) {
-            result = ['offset', result, ['var', this.text()]];
-          } else {
-            this.expect([
-              tokens.T_STRING, 
-              tokens.T_NUM_STRING, 
-              tokens.T_VARIABLE
-            ]);
-          }
-          this.next().expect(']').next();
-        }
+        result = this.read_variable(true);
       } else {
         this.expect([
           tokens.T_VARIABLE,
