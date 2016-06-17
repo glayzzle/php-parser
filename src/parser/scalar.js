@@ -115,10 +115,10 @@ module.exports = function(api, tokens, EOF) {
         }
         this.expect('}').next();
       } else if (this.token === tokens.T_CURLY_OPEN) {
-        result = this.next().read_variable(false);
+        result = this.next().read_variable(false, false);
         this.expect('}').next();
       } else if (this.token === tokens.T_VARIABLE) {
-        result = this.read_variable(false);
+        result = this.read_variable(false, true);
       } else {
         this.expect([
           tokens.T_VARIABLE,

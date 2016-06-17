@@ -16,12 +16,12 @@ module.exports = function(api, tokens, EOF) {
      *  $var->func()->property    // chained calls
      * </code>
      */
-    read_variable: function(read_only) {
+    read_variable: function(read_only, encapsed) {
       var result;
 
       // reads the entry point
       if (this.is([tokens.T_VARIABLE, '$'])) {
-        result = this.read_reference_variable();
+        result = this.read_reference_variable(encapsed);
       } else if (this.is([tokens.T_NS_SEPARATOR, tokens.T_STRING])) {
         result = this.read_namespace_name();
         if (
@@ -44,7 +44,7 @@ module.exports = function(api, tokens, EOF) {
       if (this.token === tokens.T_DOUBLE_COLON) {
         var getter = null;
         if (this.next().is([tokens.T_VARIABLE, '$'])) {   
-          getter = this.read_reference_variable();
+          getter = this.read_reference_variable(encapsed);
         } else if (
           this.token === tokens.T_STRING
           || this.token === tokens.T_CLASS
@@ -60,10 +60,10 @@ module.exports = function(api, tokens, EOF) {
         result = ['static', 'get', result, getter];
       }
 
-      return this.recursive_variable_chain_scan(result, read_only);
+      return this.recursive_variable_chain_scan(result, read_only, encapsed);
     }
 
-    ,recursive_variable_chain_scan: function(result, read_only) {
+    ,recursive_variable_chain_scan: function(result, read_only, encapsed) {
       recursive_scan_loop:
       while(this.token != EOF) {
         switch(this.token) {
@@ -77,11 +77,17 @@ module.exports = function(api, tokens, EOF) {
           case '[':
             this.next();
             var offset = false;
-            if (this.token !== ']') {
-              offset = this.read_expr();
+            if (encapsed) {
+              offset = this.read_encaps_var_offset();
               this.expect(']').next();
             } else {
-              this.next();
+              // callable_variable : https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1122
+              if (this.token !== ']') {
+                offset = this.read_expr();
+                this.expect(']').next();
+              } else {
+                this.next();
+              }
             }
             result = ['offset', result, offset];
             break;
@@ -112,6 +118,27 @@ module.exports = function(api, tokens, EOF) {
       return result;      
     }
     /**
+     * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231  
+     */
+    ,read_encaps_var_offset: function() {
+      var offset = false;
+      if (this.token === tokens.T_STRING) {
+        offset = ['string', this.text()];
+      } else if (this.token === tokens.T_NUM_STRING) {
+        offset = ['number', this.text()];
+      } else if (this.token === tokens.T_VARIABLE) {
+        offset = ['var', this.text()];
+      } else {
+        this.expect([
+          tokens.T_STRING,
+          tokens.T_NUM_STRING,
+          tokens.T_VARIABLE
+        ]);
+      }
+      this.next();
+      return offset;
+    }
+    /**
      * <ebnf>
      *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
      * </ebnf>
@@ -122,13 +149,17 @@ module.exports = function(api, tokens, EOF) {
      *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
      * </code>
      */
-    ,read_reference_variable: function() {
+    ,read_reference_variable: function(encapsed) {
       var result = this.read_simple_variable();
       while(this.token != EOF) {
         if (this.token == '[') {
-          result = ['offset', result, this.next().read_dim_offset()];
+          if (encapsed) {
+            result = this.next().read_encaps_var_offset();
+          } else {
+            result = ['offset', result, this.next().read_dim_offset()];
+          }
           this.expect(']').next();
-        } else if (this.token == '{') {
+        } else if (this.token == '{' && !encapsed) {
           result = ['offset', result, this.next().read_expr()];
           this.expect('}').next();
           break;

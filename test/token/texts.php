@@ -11,4 +11,5 @@
   echo "Hello {$obj->name} !";
   echo "Hello ${obj}->name !";
   echo "\"$parts[0]\"\n";
+  // @fixme (from lexer) echo "${$parts[$i]}\n";
   echo "yo : {$feeds[0]['title[0][value]']}";
