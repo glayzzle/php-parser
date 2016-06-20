@@ -116,8 +116,9 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' scallar)?
+     *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
      * </ebnf>
+     * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
      */
     ,read_parameter: function() {
       var type = this.read_type();
@@ -126,7 +127,7 @@ module.exports = function(api, tokens, EOF) {
       var name = this.expect(tokens.T_VARIABLE).text();
       var value = [];
       if (this.next().token == '=') {
-        value = this.next().read_scalar();
+        value = this.next().read_expr();
       }
       return [name, type, value, isRef, isVariadic];
     }
