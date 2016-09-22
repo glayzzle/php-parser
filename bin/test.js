@@ -20,6 +20,7 @@ function printHelp() {
   console.log('  -r                             Use recursivity with the specified path');
   console.log('  -e                             Eval the specified input and shows AST');
   console.log('  -v                             Enable verbose mode and show debug');
+  console.log('  -s                             Silent error mode, and try to suppress errors');
   console.log('  -h, --help                     Print help and exit');
 }
 
@@ -66,6 +67,10 @@ while (args.length > 0 && isOption(args[0])) {
     case '-v':
       engine.parser.locations = true;
       engine.parser.debug = true;
+      break;
+
+    case '-s':
+      engine.parser.suppressErrors = true;
       break;
 
     case '-d':
