@@ -1,4 +1,18 @@
 Test class parser
+--PASS:https://github.com/HvyIndustries/crane/issues/153--
+class nette_2_4_PhpReflection {
+	public static function getClassTree(\ReflectionClass $class)
+	{
+		$addTraits = function ($types) use (& $addTraits) {
+			if ($traits = array_merge(...array_map('class_uses', array_values($types)))) {
+				$types += $traits + $addTraits($traits);
+			}
+			return $types;
+		};
+		$class = $class->getName();
+		return array_values($addTraits([$class] + class_parents($class) + class_implements($class)));
+	}
+} 
 --PASS--
 interface a1 extends i1, i2 {
   const A1 = 123;
