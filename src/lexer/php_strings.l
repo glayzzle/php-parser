@@ -167,7 +167,7 @@
     } else if ( char == '$' ) {
       if (
         this._input[0] == '{'
-        || IS_LABEL_START(c)
+        || IS_LABEL_START(char)
       ) {
         this.unput(char);
         break;
