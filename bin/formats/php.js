@@ -14,6 +14,7 @@ module.exports = {
   }
   // runs the specified filename
   ,run: function(filename, engine) {
+    return true;
     var ast = false;
     try {
       ast = engine.parseCode(

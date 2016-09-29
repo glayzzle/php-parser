@@ -5,6 +5,7 @@
    * @authors https://github.com/glayzzle/php-parser/graphs/contributors
    * @url http://glayzzle.com
    */
+  $start = microtime(true);
   $tokens = token_get_all(
     file_get_contents($argv[1])
   );

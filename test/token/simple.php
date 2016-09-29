@@ -1,4 +1,3 @@
-Hello world <?= $foo; ?>
 <?php
 
 # Old fashion Style Comment
@@ -8,4 +7,4 @@ Hello world <?= $foo; ?>
    */
   echo '
     TEST \'AZERTY\' \r\n\t
-  ';
+  ';      ?>Hello world <?= $foo; ?> and <?= $$foo; ?> or <?= ${$foo}; ?>

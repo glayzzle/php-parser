@@ -159,14 +159,6 @@
 	return T_IMPLEMENTS;
 }
 
-<ST_IN_SCRIPTING>"->" {
-  this.begin('ST_LOOKING_FOR_PROPERTY');
-  return T_OBJECT_OPERATOR;
-}
-
-<ST_IN_SCRIPTING>{WHITESPACE}+ {
-  return T_WHITESPACE;
-}
 
 <ST_LOOKING_FOR_PROPERTY>"->" {
 	return T_OBJECT_OPERATOR;
@@ -177,9 +169,9 @@
 }
 
 <ST_LOOKING_FOR_PROPERTY>{ANY_CHAR} {
-  this.popState();
-  this.less(0);
-  return false;
+	this.popState();
+	this.less(0);
+	return false;
 }
 
 <ST_IN_SCRIPTING>"::" {
@@ -440,21 +432,4 @@
 
 <ST_IN_SCRIPTING>"**" {
 	return T_POW;
-}
-
-
-<ST_IN_SCRIPTING>"{" {
-	return '{';
-}
-
-<ST_IN_SCRIPTING>"}" {
-  // @todo : RESET_DOC_COMMENT();
-  if (
-    this.conditionStack.length > 2
-    && this.conditionStack[this.conditionStack.length - 2] !== 'ST_IN_SCRIPTING'
-  ) {
-  	// Return to HEREDOC/ST_DOUBLE_QUOTES mode
-    this.popState();
-  }
-  return '}';
 }

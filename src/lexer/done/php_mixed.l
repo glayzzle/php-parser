@@ -2,6 +2,7 @@
 <ST_LOOKING_FOR_VARNAME>{LABEL}[[}] {
   this.less(yyleng - 1);
   this.popState(); 
+  console.log('---ST_LOOKING_FOR_VARNAME.LABEL');
   this.begin('ST_IN_SCRIPTING');
   return T_STRING_VARNAME;
 }
@@ -10,6 +11,7 @@
 <ST_LOOKING_FOR_VARNAME>{ANY_CHAR} {
   this.popState(); 
   this.less(0);
+  console.log('---ST_LOOKING_FOR_VARNAME.ANY_CHAR');
   return false;
 }
 

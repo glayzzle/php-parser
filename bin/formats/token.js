@@ -19,25 +19,39 @@ module.exports = {
     );
   }
   ,run: function(filename, engine) {
-
+    if (engine.parser.debug) console.log(filename);
     // USING THE LEXER TO PARSE THE FILE :
     var EOF = engine.lexer.EOF;
     engine.lexer.mode_eval = false;
     engine.lexer.all_tokens = true;
     engine.lexer.setInput(fs.readFileSync(filename, {
       encoding: 'binary'
-    }).toString());
+    }));
     var token = engine.lexer.lex() || EOF;
     var names = engine.tokens.values;
     var jsTok = [];
+    var i = 0;
+    var hrstart = process.hrtime();
+    var mem = process.memoryUsage();
     while(token != EOF) {
       var entry = engine.lexer.yytext;
       if (names[token]) {
-        entry = [names[token], entry, engine.lexer.yylloc.first_line];        
+        entry = [names[token], entry, engine.lexer.yylloc.first_line];
       }
       jsTok.push(entry);
       token = engine.lexer.lex() || EOF;
     }  
+    if (engine.parser.debug) {
+      var  hrend = process.hrtime(hrstart);
+      if (hrend[1] > 0)
+      console.log(
+        'Speed : ', 
+        (Math.round(jsTok.length / 1000) / 10) + 'K Tokens parsed at ', 
+        (Math.round(jsTok.length * 60000 / (hrend[1] / 1000000) / 1000 / 100) / 10) + 'M Token/sec - total time ', 
+        Math.round(hrend[1] / 100000) / 10, 'ms'
+      );
+      console.log('Memory : ', Math.round((process.memoryUsage().heapUsed - mem.heapUsed) / 1024), 'kb');
+    }
 
     // USING THE PHP ENGINE TO PARSE
     var result = cmd.exec('php ' + __dirname + '/token.php ' + filename);
@@ -82,8 +96,8 @@ module.exports = {
             console.log('FAIL : Expected "' + p[1] + '" contents, but found "' + j[1] + '"');
             fail = true;
           }
-          if (p[2] != j[2]) { // check the token line
-            engine.parser.debug && console.log('NOTICE : Expected line ' + p[2] + ', but found ' + j[2]);
+          if (engine.parser.debug && p[2] != j[2]) { // check the token line
+            console.log('NOTICE : Expected line ' + p[2] + ', but found ' + j[2]);
             fail = true; 
           }
         } else {

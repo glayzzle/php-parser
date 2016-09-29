@@ -77,11 +77,15 @@ var engine = {
     return parser.parse(buffer);
   }
   ,parser: null
-  // lexer instance
-  ,lexer: require('./src/lexer')
+  ,lexer: null
   // tokens dictionnary
   ,tokens: require('./src/tokens')
 };
+
+// lexer instance
+engine.lexer = require('./src/lexer')(engine);
+
 // parser instance
 engine.parser = require('./src/parser')(engine);
+
 module.exports = engine;

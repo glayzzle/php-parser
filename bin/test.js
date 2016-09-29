@@ -277,8 +277,14 @@ if (options.evalCode) {
       console.error(e);
     }
   }
+
+  var duration = process.hrtime(stats.time);
+  console.log('\n--------------------------------------');
+  console.log('Tests duration : ' + duration[0] +'sec');
+
   if (stats.code === 0) {
     console.log('I AM HAPPY !');
   }
+
   process.exit(stats.code);
 }

@@ -43,6 +43,12 @@ EOJ
 
     $opml = <<<EOF1
    text="{$feeds[0]['title[0][value]']}"
+   foo=$bar
+   baz=${$foo}
+   baz=${foo}
+   zoo=$($zoo)
+   aaa=$${$zoo}
+   aaa={{$zoo->dump}}
 EOF1;
 
   $expected = <<<'EXPECTED'
@@ -51,3 +57,9 @@ $no_index_value_foo['foo']['value'] = NULL; // comment
 EXPECTED
 ;
 
+  $expected = <<<BAR
+\
+BAR;
+
+  $expected = <<<1BAR
+1BAR;
