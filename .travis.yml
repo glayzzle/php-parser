@@ -4,11 +4,10 @@ node_js:
 notifications:
   email: false
 before_script:
-  - git clone https://github.com/kasparsd/php-7-debian.git
-  - cd php-7-debian
-  - sudo ./build.sh > /dev/null
-  - sudo ./install.sh > /dev/null
-  - sudo ln -s /usr/local/php7/bin/php /usr/bin/php
+  - sudo apt-get install python-software-properties -y
+  - sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
+  - sudo apt-get update
+  - sudo apt-get install php7.0 -y
   - php -v
 script: npm run cover
 after_success: cat /home/travis/build/glayzzle/php-parser/coverage/lcov.info | /home/travis/build/glayzzle/php-parser/node_modules/coveralls/bin/coveralls.js
