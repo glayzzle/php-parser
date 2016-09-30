@@ -307,6 +307,7 @@ module.exports = function(engine) {
         + this.lexer.yylloc.first_line
         + ' : '
         + getTokenName(this.token)
+        + ">" + this.lexer.yytext + "<"
         + ' @' + stack[3].trim()
       );
       return this;

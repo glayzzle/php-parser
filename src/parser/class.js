@@ -157,6 +157,7 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_variable_declaration: function() {
       var varName = this.node(this.text());
+      console.log(this.text());
       this.expect(tokens.T_VARIABLE).next();
       if (this.token === ';' || this.token === ',') {
         return varName(null);

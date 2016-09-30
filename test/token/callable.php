@@ -1,5 +1,9 @@
 <?php 
 
+class a0 {
+  protected static $οbject = array();
+}
+
 // Un exemple de fonction de rappel
 function my_callback_function() {
     echo 'hello world!';

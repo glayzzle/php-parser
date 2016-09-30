@@ -19,8 +19,8 @@ module.exports = function() {
       return (ch > 96 && ch < 123) 
         || (ch > 64 && ch < 91) 
         || ch === 95 
-        || (ch > 126 && ch < 256)
         || (ch > 47 && ch < 58)
+        || ch > 126
       ;
     },
 

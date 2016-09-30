@@ -205,7 +205,6 @@ module.exports = function(lexer, tokens) {
             }
             //console.log(this.yytext);
           }
-          this.unput(1);
         } else if (ch === '{') {
           ch = this.input();
           if (ch === '$') {
@@ -219,7 +218,6 @@ module.exports = function(lexer, tokens) {
               return tokens.T_CURLY_OPEN;
             }
           }
-          this.unput(1);
         } else {
           ch = this.input();
         }
