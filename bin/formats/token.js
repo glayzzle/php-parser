@@ -39,6 +39,7 @@ module.exports = {
         entry = [names[token], entry, engine.lexer.yylloc.first_line];
       }
       jsTok.push(entry);
+      if (engine.parser.debug) console.log(entry, engine.lexer.yylineno);
       token = engine.lexer.lex() || EOF;
     }  
     if (engine.parser.debug) {
@@ -60,7 +61,11 @@ module.exports = {
       phpTok = JSON.parse(result.stdout);
     } catch(e) {
       console.log('Fail to parse output : ', result.stdout);
-      throw e;
+      if (engine.parser.debug) {
+        throw e;
+      } else {
+        return true; // ignore this test : php can't parse the file
+      }
     }
     
     var fail = false;
