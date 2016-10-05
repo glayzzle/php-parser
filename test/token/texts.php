@@ -19,6 +19,9 @@
   $v = strtolower("$i.$j.$k-$rel");
   $text = "$text at line $line";
   return "Class.create('$package$className',{";
+  
+  $this->lastTTYMode = trim(`stty -g`);
+  
   /**, $methodName = null **/
   $source = preg_replace('/(^|\s)namespace(.*?)\s*;/', "$1namespace$2\n{", $source)."}\n";
   /*/
