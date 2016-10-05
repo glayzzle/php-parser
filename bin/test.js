@@ -11,7 +11,6 @@ var fs      = require('fs');
 var path    = require('path');
 
 var engine  = require('../main');
-engine.lexer.asp_tags = true;
 engine.lexer.short_tags = true;
 
 // help screen
@@ -24,6 +23,7 @@ function printHelp() {
   console.log('  -e                             Eval the specified input and shows AST');
   console.log('  -v                             Enable verbose mode and show debug');
   console.log('  -s                             Silent error mode, and try to suppress errors');
+  console.log('  --asp_short                    Test with short tags');
   console.log('  -h, --help                     Print help and exit');
 }
 
@@ -39,7 +39,8 @@ var options = {
   filename: null,
   path: null,
   recursive: false,
-  evalCode: false
+  evalCode: false,
+  aspShort: false
 };
 
 var args = process.argv.slice(2); // Trim 'node' and the script path.
@@ -64,6 +65,11 @@ while (args.length > 0 && isOption(args[0])) {
     case '-e':
       nextArg();
       options.evalCode = args[0];
+      break;
+
+    case '--asp_short':
+      engine.lexer.asp_tags = true;
+      options.aspShort = true;
       break;
 
     case '--debug':
