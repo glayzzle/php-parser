@@ -28,6 +28,9 @@ module.exports = function(lexer, tokens) {
           return this.T_CONSTANT_ENCAPSED_STRING();
         case '"':
           return this.ST_DOUBLE_QUOTES();
+        case '`':
+          this.begin('ST_BACKQUOTE');
+          return '`';
         case '?':
           if (!this.aspTagMode && this.tryMatch('>')) {
             this.input();

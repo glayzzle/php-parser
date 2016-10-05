@@ -250,8 +250,85 @@ module.exports = function(lexer, tokens) {
        }
        return tokens.T_VARIABLE;
     },
+    // HANDLES BACKQUOTES
+    matchST_BACKQUOTE: function() {
 
+      var ch = this.input();
+      if (ch === '$') {
+        ch = this.input();
+        if (ch === '{') {
+          this.begin('ST_LOOKING_FOR_VARNAME');
+          return tokens.T_DOLLAR_OPEN_CURLY_BRACES;
+        } else if (this.is_LABEL_START()) {
+          var tok = this.consume_VARIABLE();
+          return tok;
+        }
+      } else if (ch === '{') {
+        if (this._input[this.offset] === '$') {
+          this.begin('ST_IN_SCRIPTING');
+          return tokens.T_CURLY_OPEN;
+        }
+      } else if (ch === '"') {
+        this.popState();
+        return '"';
+      }
+
+      // any char
+      while(this.offset < this.size) {
+        if (ch === '\\') {
+          this.input();
+        } else if (ch === '`') {
+          this.unput(1);
+          this.popState();
+          this.appendToken('`', 1);
+          break;
+        } else if (ch === '$') {
+          ch = this.input();
+          if (ch === '{') {
+            this.begin('ST_LOOKING_FOR_VARNAME');
+            if (this.yytext.length > 2) {
+              this.appendToken(tokens.T_DOLLAR_OPEN_CURLY_BRACES, 2);
+              this.unput(2);
+              return tokens.T_ENCAPSED_AND_WHITESPACE;
+            }else {
+              return tokens.T_DOLLAR_OPEN_CURLY_BRACES;
+            }
+          } else if (this.is_LABEL_START()) {
+            // start of $var...
+            var yyoffset = this.offset;
+            var next = this.consume_VARIABLE();
+            if (this.yytext.length > this.offset - yyoffset + 2) {
+              this.appendToken(next, this.offset - yyoffset + 2);
+              this.unput(this.offset - yyoffset + 2);
+              return tokens.T_ENCAPSED_AND_WHITESPACE;
+            } else {
+              return next;
+            }
+          }
+          this.unput(1);
+        } else if (ch === '{') {
+          ch = this.input();
+          if (ch === '$') {
+            // start of {$...
+            this.begin('ST_IN_SCRIPTING');
+            if (this.yytext.length > 2) {
+              this.appendToken(tokens.T_CURLY_OPEN, 1);
+              this.unput(2);
+              return tokens.T_ENCAPSED_AND_WHITESPACE;
+            } else {
+              return tokens.T_CURLY_OPEN;
+            }
+          }
+          this.unput(1);
+        }
+        ch = this.input();
+      }
+      return tokens.T_ENCAPSED_AND_WHITESPACE;
+
+    },
+    
     matchST_DOUBLE_QUOTES: function() {
+
       var ch = this.input();
       if (ch === '$') {
         ch = this.input();
