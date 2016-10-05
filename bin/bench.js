@@ -155,13 +155,26 @@ function consumeTokens(engine, files) {
   diff = hd.end();  
   var duration = (hrend[0] * 1000000 * 1000) + hrend[1];
   console.log('Tokens extracted      :', tSize);
-  console.log('Tokens by sec (x1000) :', (Math.round(tSize * 60000 / (duration / 1000000) / 1000 / 100) / 10));
+  console.log('Tokens by sec (x1000) :', (Math.round((tSize / (duration / 1000000 / 1000)) / 100) / 10));
   console.log('Total duration        :', Math.round(duration / 100000) / 10, 'ms');
   console.log('Memory                : ', Math.round((diff.after.size_bytes - diff.before.size_bytes) / 1024), 'kb');
   return {
     duration: duration,
     memory: diff.after.size_bytes - diff.before.size_bytes
   };
+}
+
+function compareResults(a, b) {
+  if (a.duration < b.duration) {
+    console.log('Is ' + Math.round(((b.duration / a.duration) - 1) * 100) + '% more rapid');
+  } else {
+    console.log('Is ' + Math.round(((a.duration / b.duration) - 1) * 100) + '% more slower');
+  }
+  if (a.memory < b.memory) {
+    console.log('Use ' + Math.round((1 - (a.memory / b.memory)) * 100) + '% less memory ');
+  } else {
+    console.log('Use ' + Math.round((1 - (b.memory / a.memory)) * 100) + '% more memory ');
+  }
 }
 
 // parsing tests
@@ -180,7 +193,26 @@ engine.lexer.asp_tags = true;
 engine.lexer.short_tags = true;
 var jison = consumeTokens(engine, files);
 
+// original php results
+console.log('\n--- parsing files - plain PHP version :');
+var cmd = require('./formats/cmd');
+var result = cmd.exec('php -d short_open_tag=1 -d asp_tags=1 ' + __dirname + '/bench.php -d ' + path);
+var php = false;
+try {
+  php = JSON.parse(result.stdout);
+  console.log('Tokens extracted      :', php.count);
+  console.log('Tokens by sec (x1000) :', (Math.round((php.count / (php.duration / 1000000 / 1000)) / 100) / 10));
+  console.log('Total duration        :', Math.round(php.duration / 100000) / 10, 'ms');
+  console.log('Memory                : ', Math.round(php.memory / 1024), 'kb');
+} catch(e) {
+  console.log('Fail to parse output : ', result.stdout);
+}
+
+
 // results
-console.log('\n--- results :');
-console.log('Actual version is ' + Math.round(((jison.duration / actual.duration) - 1) * 100) + '% more rapid');
-console.log('Actual version use ' + Math.round((1 - (actual.memory / jison.memory)) * 100) + '% less memory');
+console.log('\n--- results Actual vs Jison :');
+compareResults(actual, jison);
+console.log('\n--- results Actual vs PHP :');
+compareResults(actual, php);
+console.log('\n--- results Jison vs PHP :');
+compareResults(jison, php);
