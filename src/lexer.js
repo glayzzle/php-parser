@@ -38,7 +38,7 @@ module.exports = function(engine) {
       };
       this.tokens = [];
       this.conditionStack = [];
-      this.done = false;
+      this.done = this.offset >= this.size;
       if (!this.all_tokens && this.mode_eval) {
         this.begin('ST_IN_SCRIPTING');
       } else {

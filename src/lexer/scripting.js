@@ -79,7 +79,9 @@ module.exports = function(lexer, tokens) {
             return this.consume_TOKEN();
           }
       }
-      throw new Error('Bad terminal sequence "' + ch + '"');
+      throw new Error(
+        'Bad terminal sequence "' + ch + '" at line ' + this.yylineno + ' (offset ' + this.offset + ')'
+      );
     },
     
     T_WHITESPACE: function() {

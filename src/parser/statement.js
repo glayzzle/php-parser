@@ -167,7 +167,7 @@ module.exports = function(api, tokens, EOF) {
         case tokens.T_STATIC:
           if (this.next().token === tokens.T_DOUBLE_COLON) {
             // static keyword for a class 
-            this.lexer.unput('static::');
+            this.lexer.unput(8);
             var expr = this.next().read_expr();
             this.expect(';').next();
             return expr;
@@ -227,7 +227,7 @@ module.exports = function(api, tokens, EOF) {
             return ['label', label];
           } else {
             // default fallback expr
-            this.lexer.unput(label + this.text());
+            this.lexer.unput(label.length + this.text().length);
             var expr = this.next().read_expr();
             this.expect([';', tokens.T_CLOSE_TAG]).next();
             return expr;
