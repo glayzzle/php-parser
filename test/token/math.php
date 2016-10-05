@@ -1,6 +1,12 @@
 <?php
   use name\space;
-  
+
+  $a = 0xFF00;
+  $bin = 0b010111;
+
+  $funky = 0xZ;
+  $wtf = 0b2;
+
   $a = $b + 5;
   $c = ($a / 5) * 10;
   $c += 5;
