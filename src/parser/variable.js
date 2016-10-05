@@ -96,7 +96,15 @@ module.exports = function(api, tokens, EOF) {
             switch(this.next().token) {
               case tokens.T_STRING:
                 what = ['string', this.text()];
-                this.next();
+                var tok = this.next().token;
+                if (tok === tokens.T_VARIABLE) {
+                  // fix $obj->var_$prop
+                  what = ['bin', '.', what, ['var', this.text()]];
+                } else if (tok === '{') {
+                  // fix $obj->var_{$prop}
+                  what = ['bin', '.', what, this.next().read_expr()];
+                  this.expect('}').next();
+                }
                 break;
               case tokens.T_VARIABLE:
                 what = ['var', this.text()];
