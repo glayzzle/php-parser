@@ -55,7 +55,7 @@ module.exports = {
     }
 
     // USING THE PHP ENGINE TO PARSE
-    var result = cmd.exec('php ' + __dirname + '/token.php ' + filename);
+    var result = cmd.exec('php -d short_open_tag=1 -d asp_tags=1 ' + __dirname + '/token.php ' + filename);
     var phpTok = false;
     try {
       phpTok = JSON.parse(result.stdout);

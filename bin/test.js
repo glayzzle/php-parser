@@ -9,7 +9,10 @@
 var util    = require('util');
 var fs      = require('fs');
 var path    = require('path');
+
 var engine  = require('../main');
+engine.lexer.asp_tags = true;
+engine.lexer.short_tags = true;
 
 // help screen
 function printHelp() {
