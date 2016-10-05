@@ -20,7 +20,8 @@ module.exports = function(lexer, tokens) {
                 this.unput(1).appendToken(tokens.T_OPEN_TAG, 6).begin("ST_IN_SCRIPTING");
                 break;
               }
-            } else if (this.short_tags) {
+            }
+            if (this.short_tags) {
               this.unput(1).appendToken(tokens.T_OPEN_TAG, 2).begin("ST_IN_SCRIPTING");
               break;
             }
