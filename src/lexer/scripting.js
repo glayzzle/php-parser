@@ -38,10 +38,12 @@ module.exports = function(lexer, tokens) {
           }
           return this.consume_TOKEN();
         case '%':
-          if (this.aspTagMode && this.tryMatch('>')) {
-            this.input();
-            var nextCH = this._input[this.offset + 1];
-            if (nextCH === '\n' || nextCH === '\r') this.input();
+          if (this.aspTagMode && this._input[this.offset] === '>') {
+            this.input(); // consume the '>'
+            ch = this._input[this.offset]; // read next
+            if (ch === '\n' || ch === '\r') {
+              this.input(); // consume the newline
+            }
             this.aspTagMode = false;
             this.popState();
             return tokens.T_CLOSE_TAG;
