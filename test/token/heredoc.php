@@ -63,3 +63,15 @@ BAR;
 
   $expected = <<<1BAR
 1BAR;
+
+
+  $expected = <<<'1BAR'
+'1BAR';
+
+  $expected = <<<BAR
+${foo}
+BAR;
+
+  $expected = <<<BAR
+{$foo->test}
+BAR;

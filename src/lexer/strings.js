@@ -215,6 +215,7 @@ module.exports = function(lexer, tokens) {
               this.unput(2);
               return tokens.T_ENCAPSED_AND_WHITESPACE;
             } else {
+              this.unput(1);
               return tokens.T_CURLY_OPEN;
             }
           }
@@ -316,6 +317,7 @@ module.exports = function(lexer, tokens) {
               this.unput(2);
               return tokens.T_ENCAPSED_AND_WHITESPACE;
             } else {
+              this.unput(1);
               return tokens.T_CURLY_OPEN;
             }
           }
@@ -392,6 +394,7 @@ module.exports = function(lexer, tokens) {
               this.unput(2);
               return tokens.T_ENCAPSED_AND_WHITESPACE;
             } else {
+              this.unput(1);
               return tokens.T_CURLY_OPEN;
             }
           }
