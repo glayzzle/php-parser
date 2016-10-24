@@ -37,15 +37,22 @@ module.exports = function(api, tokens, EOF) {
           // TEXTS
           case tokens.T_CONSTANT_ENCAPSED_STRING:
             var value = this.text();
+            value = value.substring(1, value.length - 1).replace(
+              /\\[rntvef"'\\\$]/g,
+              function(seq) {
+                return specialChar[seq];
+              }
+            );
             this.next();
-            return [
-              'string', 
-              value
-                .substring(1, value.length - 1)
-                .replace(/\\[rntvef"'\\\$]/g, function(seq) {
-                  return specialChar[seq];
-                })
-            ];
+            if (this.token === tokens.T_DOUBLE_COLON) {
+              // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
+              return this.read_static_getter(
+                ['string', value]
+              );
+            } else {
+              // dirrect string
+              return ['string', value];
+            }
           case tokens.T_START_HEREDOC:
             return this.next().read_encapsed_string(
               tokens.T_END_HEREDOC

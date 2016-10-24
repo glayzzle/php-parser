@@ -88,8 +88,11 @@ module.exports = function(api, tokens, EOF) {
           } else if (this.token === tokens.T_CURLY_OPEN || this.token === '[') {
             // @fixme - should avoid a new token (could be resolved)
             return ['deference', expr, this.read_encapsed_string_item()];
+          } else if (this.token === '(') {
+            // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
+            return ['call', expr, this.read_function_argument_list()];
           } else {
-            return expr;            
+            return expr;
           }
 
         case '`':
