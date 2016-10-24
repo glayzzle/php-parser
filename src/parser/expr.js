@@ -42,6 +42,7 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_IS_SMALLER_OR_EQUAL:  return ['bool', '<=', expr, this.next().read_expr()];
         case tokens.T_IS_GREATER_OR_EQUAL:  return ['bool', '>=', expr, this.next().read_expr()];
+        case tokens.T_SPACESHIP:            return ['bool', '<=>', expr, this.next().read_expr()];
         case tokens.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
         
         // extra operations : 
@@ -283,12 +284,33 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_new_expr: function() {
       var result = this.node('new');
-      var name = this.read_class_name_reference();
-      var args = [];
-      if (this.token === '(') {
-        args = this.read_function_argument_list();
+      if (this.token === tokens.T_CLASS) {
+        // Annonymous class declaration
+        var propExtends = false, propImplements = false;
+        if (this.next().token == tokens.T_EXTENDS) {
+          propExtends = this.next().read_namespace_name();
+        }
+        if (this.token == tokens.T_IMPLEMENTS) {
+          propImplements = this.next().read_list(
+            this.read_namespace_name,
+            ','
+          );
+        }
+        return result(
+          false           // class name => false : means it's an annonymous class
+          ,propExtends
+          ,propImplements
+          ,this.expect('{').next().read_class_body()
+        );
+      } else {
+        // Already existing class
+        var name = this.read_class_name_reference();
+        var args = [];
+        if (this.token === '(') {
+          args = this.read_function_argument_list();
+        }
+        return result(name, args);
       }
-      return result(name, args);
     }
     /**
      * Reads a class name
@@ -302,7 +324,7 @@ module.exports = function(api, tokens, EOF) {
       } else if (this.is('VARIABLE')) {
         return this.read_variable(true);
       } else {
-        this.expect([T_STRING, 'VARIABLE']);
+        this.expect([tokens.T_STRING, 'VARIABLE']);
       }
     }
     /**
