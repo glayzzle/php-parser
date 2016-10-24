@@ -186,12 +186,14 @@ module.exports = function(engine) {
       this.ast = ['program', []];
       while(this.token != EOF) {
         var node = this.read_start();
-        if (typeof node[0] !== 'string') {
-          node.forEach(function(item) {
-            this.ast[1].push(item);
-          }.bind(this));
-        } else {
-          this.ast[1].push(node);
+        if (node !== null) {
+          if (typeof node[0] !== 'string') {
+            node.forEach(function(item) {
+              this.ast[1].push(item);
+            }.bind(this));
+          } else {
+            this.ast[1].push(node);
+          }
         }
       }
       return this.ast;
