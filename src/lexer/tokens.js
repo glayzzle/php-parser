@@ -258,7 +258,12 @@ module.exports = function(lexer, tokens) {
           return tokens.T_SL;
         } else if (nchar === '=') {
           this.input();
-          return tokens.T_IS_SMALLER_OR_EQUAL;
+          if (this._input[this.offset] === '>') {
+            this.input();
+            return tokens.T_SPACESHIP;
+          } else {
+            return tokens.T_IS_SMALLER_OR_EQUAL;
+          }
         } else if (nchar === '>') {
           this.input();
           return tokens.T_IS_NOT_EQUAL;

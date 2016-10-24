@@ -45,9 +45,10 @@ console.log(AST);
 
 # Join the dev
 
-If you want to change/fix the lexer you will find code to `./src/lexer/`. Do not change dirrectly `./src/lexer.js` or `./src/tokens.js`, they are generated with the command `npm run build`
-
-You can also implement the parser, the code is into `./src/parser/`. To check your changes add tests into `./test/parser/`, and run `npm run test`. Try to keep or improve the coverage levels.
+If you want to change/fix the lexer you will find code to `./src/lexer/`.
+You can also implement the parser, the code is into `./src/parser/`. 
+To check your changes add tests into `./test/parser/`, and run `npm run test`. 
+Try to keep or improve the coverage levels.
 
 The command line options :
 
