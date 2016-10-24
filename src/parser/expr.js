@@ -279,8 +279,9 @@ module.exports = function(api, tokens, EOF) {
     }
     /**
      * <ebnf>
-     *    new_expr ::= T_NEW namespace_name function_argument_list
+     *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
      * </ebnf>
+     * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
      */
     ,read_new_expr: function() {
       var result = this.node('new');

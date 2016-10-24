@@ -51,7 +51,9 @@ module.exports = function(api, tokens, EOF) {
         case tokens.T_TRAIT:
           return this.read_trait();
         case tokens.T_USE:
-          return this.read_use_statements(0);
+          var expr = this.read_use_statements();
+          this.expect(';').next();
+          return expr;
         case tokens.T_CONST:
           return this.next().read_const_list();
         case tokens.T_NAMESPACE:

@@ -58,37 +58,84 @@ module.exports = function(api, tokens, EOF) {
         var result = [];
         while(this.token !== EOF) {
             this.expect(tokens.T_USE).next();
-            result.push(this.read_list(this.read_use_statement, ','));
+            this.read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
+              if (item[0] === 'use') {
+                result.push(item);
+              } else {
+                item.forEach(function(child) {
+                  result.push(child);
+                });
+              }
+            });
             if(this.token !== tokens.T_USE) break;
         }
         return result;
     }
     /**
      * <ebnf>
-     * use_statement ::= (
-     *  (T_FUNCTION | T_CONST)? namespace_name
-     *  | (T_FUNCTION | T_CONST)? namespace_name T_AS T_STRING
-     *  ) ';'
+     *  inline_use_declaration ::= ...
+     * </ebnf>
+     * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L375
+     */
+    ,read_inline_use_declaration: function(prefix) {
+      var result = [];
+      while(this.token !== EOF) {
+        var ns = this.read_use_statement(prefix[3] !== false);
+        if(this.token === tokens.T_AS) {
+          this.next().expect(tokens.T_STRING);
+          ns[2] = this.text();
+          this.next();
+        }
+        Array.prototype.unshift.apply(ns[1], prefix[1]);
+        if (prefix[3] !== false) {
+          ns[3] = prefix[3];
+        }
+        result.push(ns);
+        if(this.token !== ',') {
+          break;
+        } else {
+          this.next();
+        }
+      }
+      return result;
+    }
+    /**
+     * <ebnf>
+     *   use_statement_mixed ::= 
+     *       use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' ) 
+     *       (',' read_use_statement)*
      * </ebnf>
      */
-    ,read_use_statement: function() {
+    ,read_use_statement_mixed: function() {
+      var use = this.read_use_statement();
+      if(this.token === tokens.T_AS) {
+        this.next().expect(tokens.T_STRING);
+        use[2] = this.text();
+        this.next();
+      } else if (this.token === '{') {
+        use = this.next().read_inline_use_declaration(use);
+        this.expect('}').next();
+      }
+      return use;
+    }
+    /**
+     * <ebnf>
+     * use_statement ::= (
+     *  (T_FUNCTION | T_CONST)? namespace_name
+     *  )
+     * </ebnf>
+     */
+    ,read_use_statement: function(ignoreType) {
         var result = null;
+        var type = false;
         if(
-          this.token === tokens.T_FUNCTION
-          || this.token === tokens.T_CONST
+          !ignoreType && (this.token === tokens.T_FUNCTION || this.token === tokens.T_CONST)
         ) {
-          // @todo should preserve this information ?
+          type = this.token === tokens.T_FUNCTION ? 'function' : 'const';
           this.next();
         }
         var name = this.read_namespace_name();
-        if(this.token === tokens.T_AS) {
-          this.next().expect(tokens.T_STRING);
-          result = ['use', name, this.text()];
-          this.next();
-        } else {
-          result = ['use', name, name[name.length - 1]];
-        }
-        return result;
+        return ['use', name, name[name.length - 1], type];
     }
   };
 };
