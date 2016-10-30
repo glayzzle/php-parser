@@ -1,0 +1,35 @@
+Test FOR / FOREACH / WHILE
+--PASS:for--
+for($i = 0; $i < 10; $i++) {
+  echo $i;
+}
+
+--PASS:for short--
+for($i = 0; $i < 10; $i++):
+  echo $i;
+endfor;
+--PASS:while--
+while(++$i < 10) {
+  echo $i;
+}
+--PASS:while short form--
+while(++$i < 10):
+  echo $i;
+endwhile;
+--PASS:do--
+do {
+  echo $i;
+} while(++$i < 10);
+--PASS:foreach--
+foreach($argv as $offset => &$arg) {
+  echo $offset . ' -> ' . $arg;
+}
+--PASS:foreach short form--
+foreach($argv as $offset => &$arg):
+  echo $offset . ' -> ' . $arg;
+endforeach;
+
+--PASS:foreach list--
+foreach($argv as list($a, $b)) {
+  echo $a . ' -> ' . $b;
+}
