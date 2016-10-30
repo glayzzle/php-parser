@@ -70,7 +70,7 @@ module.exports = function(api, tokens, EOF) {
       switch(this.token) {
 
         case '@':
-          return ['silence', this.next().read_expr()];
+          return ['silent', this.next().read_expr()];
 
         case '-':
         case '+':

@@ -1,6 +1,10 @@
 Test expr parser
 --PASS--
 $a = 1 + 2;
+$a++;
+$a--;
+++$a;
+--$a;
 --PASS--
 $b = (3 + 4) * $a / 2;
 --PASS--
@@ -21,7 +25,38 @@ $b = $a <= $b;
 $b = $a == $b;
 $b = $a != $b;
 --PASS--
+@silent_fail();
+--PASS--
+$data = foo()['offset'];
+foo()['offset'] = 'something';
+--PASS--
+list($a, $b) = array(1, 2);
+$b = empty($a);
+--PASS--
+$arg = include($a);
+$arg = @include_once($a);
+$arg = require($a);
+$arg = require_once($a);
+$b = @eval($arg);
+--PASS--
+$a = (int)$b;
+$a = (double)$b;
+$a = (string)$b;
+$a = (array)$b;
+$a = (object)$b;
+print 'done';
+exit(0);
+--PASS--
 echo "test: {$this->test->foo}";
+$var = &new foo();
+--PASS--
+$var += $a;
+$var -= $a;
+$var *= $a;
+$var /= $a;
+$var .= $a;
+$var &= $a;
+$var |= $a;
 --PASS--
 class foo {
 	function aa() {
