@@ -96,14 +96,9 @@ module.exports = function(api, tokens, EOF) {
           }
 
         case '`':
-          var expr = null;
+          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
           var result = this.node('sys');
-          if (this.next().token === tokens.T_ENCAPSED_AND_WHITESPACE) {
-            expr = this.text();
-            this.next().expect('`').next();
-          } else if (this.token !== '`' ) {
-            expr = this.read_encaps_list();
-          }
+          var expr = this.next().read_encapsed_string('`');
           return result('shell', expr);
 
         case tokens.T_LIST:

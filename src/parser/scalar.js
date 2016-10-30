@@ -170,11 +170,5 @@ module.exports = function(api, tokens, EOF) {
       this.next();
       return ['magic', '@todo:' + name];
     }
-    /**
-     * @todo
-     */
-    ,read_encaps_list: function() {
-      return this.next().token;
-    }
   };
 };

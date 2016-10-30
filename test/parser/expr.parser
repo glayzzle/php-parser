@@ -1,5 +1,11 @@
 Test expr parser
 --PASS--
+class foo {
+	function aa() {
+		$parent_resource = " in '$this->parent->template_resource}'";
+	}
+}
+--PASS--
 $a = 1 + 2;
 $a++;
 $a--;
@@ -41,11 +47,20 @@ $b = @eval($arg);
 --PASS--
 $a = (int)$b;
 $a = (double)$b;
+$a = (unset)$b;
+$a = (bool)$b;
 $a = (string)$b;
 $a = (array)$b;
 $a = (object)$b;
 print 'done';
 exit(0);
+exit;
+--PASS--
+$var = new class extends foo {
+};
+list(list($a, $b), $c) = [
+  [1, 2], 3
+];
 --PASS--
 echo "test: {$this->test->foo}";
 $var = &new foo();
@@ -58,8 +73,4 @@ $var .= $a;
 $var &= $a;
 $var |= $a;
 --PASS--
-class foo {
-	function aa() {
-		$parent_resource = " in '$this->parent->template_resource}'";
-	}
-}
+$exec = `pstree -ap $process {$foo->bar}`;
