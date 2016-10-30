@@ -1,5 +1,19 @@
 Test IF / ELSE / ELSEIF statements
 --PASS--
 if ($offset !== false) {
-    unset($this->_packages[$offset]);
+  unset($this->_packages[$offset]);
+} elseif ($elseCond) {
+  echo 'Something else';
+} else {
+  echo 'else';
 }
+--PASS:Short form--
+if ($offset !== false):
+  doSomething();
+  echo 'ok';
+elseif ($var === 'foo'):
+  doSomethingElse();
+  echo 'elseif';
+else:
+  echo 'else';
+endif;
