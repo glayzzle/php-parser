@@ -4,6 +4,23 @@ $a = 1 + 2;
 --PASS--
 $b = (3 + 4) * $a / 2;
 --PASS--
+$b ^= $a | $b;
+$b |= $a ^ $b;
+$b **= $a % $b;
+$b %= $a ** $b;
+$b <<= $a >> $b;
+$b >>= $a << $b;
+--PASS--
+$b = $a OR $b;
+$b = $a AND $b;
+$b = $a XOR $b;
+$b = $a > $b;
+$b = $a instanceof $b;
+$b = $a >= $b;
+$b = $a <= $b;
+$b = $a == $b;
+$b = $a != $b;
+--PASS--
 echo "test: {$this->test->foo}";
 --PASS--
 class foo {
