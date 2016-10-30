@@ -19,6 +19,7 @@ function printHelp() {
   console.log('');
   console.log('  -f <file>                      Parse and test the specified file');
   console.log('  -d <path>                      Parse each file in the specified path');
+  console.log('  -m <path>                      Run mocha tests on the specified path');
   console.log('  -r                             Use recursivity with the specified path');
   console.log('  -e                             Eval the specified input and shows AST');
   console.log('  -v                             Enable verbose mode and show debug');
@@ -40,7 +41,8 @@ var options = {
   path: null,
   recursive: false,
   evalCode: false,
-  aspShort: false
+  aspShort: false,
+  mocha: false
 };
 
 var args = process.argv.slice(2); // Trim 'node' and the script path.
@@ -87,6 +89,11 @@ while (args.length > 0 && isOption(args[0])) {
       options.path = args[0];
       break;
 
+    case '-m':
+      nextArg();
+      options.mocha = args[0];
+      break;
+
     case '-r':
       options.recusive = true;
       break;
@@ -111,7 +118,7 @@ if ( args.length > 0 ) {
     abort('Too many arguments.');
   }
 }
-if ( !options.filename && !options.path && !options.evalCode ) {
+if ( !options.filename && !options.path && !options.evalCode && !options.mocha ) {
   abort('Expecting a filename or a path.');
 }
 
@@ -182,6 +189,32 @@ function test(filename) {
     throw e;
     return false;
   }
+}
+
+if (options.mocha) {
+  var Mocha = require('mocha'), path = require('path');
+  
+  // Instantiate a Mocha instance.
+  var mocha = new Mocha();
+
+  // Add each .js file to the mocha instance
+  fs.readdirSync(options.mocha).filter(function(file){
+      // Only keep the .js files
+      return file.substr(-3) === '.js';
+  }).forEach(function(file){
+      mocha.addFile(
+          path.join(options.mocha, file)
+      );
+  });
+  
+  // Run the tests.
+  mocha.run(function(failures){
+    if (failures) {
+      process.on('exit', function () {
+        process.exit(failures);  // exit with non-zero status if there were failures
+      });
+    }
+  });
 }
 
 // run tests
