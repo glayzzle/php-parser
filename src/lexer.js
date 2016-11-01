@@ -71,15 +71,34 @@ module.exports = function(engine) {
     },
     // revert eating specified size
     unput: function(size) {
+      var line = this.yylineno;
       var firstChar = this._input[this.offset - size];
       if (firstChar === '\n' || firstChar === '\r') {
         if (this._input[this.offset - size - 1] === '\r') {
-          // adds 1 more char for windows returns
+          // adds 1 more char for unresolved windows returns
           size ++;
         }
-        // we assume we never unput text like that : "foo\nbar" or "\n\n"
+        // we assume we never unput text like that : "foo\nbar" or "\n\n\n"
+        this.yylineno--;
         this.yylloc.last_line --;
         this.yylloc.last_column = this.yyprevcol;
+      } else {
+        // we handle special case like that : "foo\n" or "foo\r\n"
+        var lastChar = this._input[this.offset - 1];
+        if (lastChar === '\r') {
+          this.yylineno--;
+          this.yylloc.last_line --;
+          this.yylloc.last_column = this.yyprevcol - size - 1;
+        } else if (lastChar === '\n') {
+          this.yylineno--;
+          this.yylloc.last_line --;
+          this.yylloc.last_column = this.yyprevcol - size - 1;
+          if (this._input[this.offset - 1] === '\r') {
+            this.yylloc.last_column ++; // fix extra \r from window into column
+          }
+        } else { // or simple case  : "a" or "azerty"
+          this.yylloc.last_column -= size;
+        }
       }
       
       this.offset -= size;
