@@ -41,7 +41,11 @@ https://tonicdev.com/ichiriac/php-parser
 var parser = require('php-parser');
 var AST = parser.parseEval('echo "Hello World";');
 console.log(AST);
+var tokens = parser.tokenGetAll('<?php echo "Hello World";');
+console.log(tokens);
 ```
+
+For more details please [visit he wiki](https://github.com/glayzzle/php-parser/wiki).
 
 # Join the dev
 
@@ -67,8 +71,7 @@ If you run into problems with a test, run it with the cli and add the `--debug` 
 
 # Releases
 
-Current version is under developpement, but consider that the lexer sucessfully pass the parsing of ZF2, Laravel, Symfony, and many aspects of php5 and php7 are implemented. 
-
+* 0.1.0  : major release, rewriting of the lexer and many bug fixes
 * 0.0.10 : bugfixes and php7 implementation
 * 0.0.9  : const (value as expr) bugfix
 * 0.0.8  : all tokens are passed on ZF2 (many fixes)
