@@ -196,7 +196,7 @@ var jison = consumeTokens(engine, files);
 // original php results
 console.log('\n--- parsing files - plain PHP version :');
 var cmd = require('./formats/cmd');
-var result = cmd.exec('php -d short_open_tag=1 -d asp_tags=1 ' + __dirname + '/bench.php -d ' + path);
+var result = cmd.exec('php -d short_open_tag=1 ' + __dirname + '/bench.php -d ' + path);
 var php = false;
 try {
   php = JSON.parse(result.stdout);
