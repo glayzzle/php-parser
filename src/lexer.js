@@ -29,6 +29,7 @@ module.exports = function(engine) {
       this.size = input.length;
       this.yylineno = 0;
       this.offset = 0;
+      this.yyprevcol = 0;
       this.yytext = '';
       this.yylloc = {
         first_line: 1,
@@ -59,19 +60,30 @@ module.exports = function(engine) {
       if (ch === '\n' || ch === '\r') {
         this.yylineno++;
         this.yylloc.last_line++;
+        // buffers previous column position 
+        // (assumes we never unput multiple line breaks)
+        this.yyprevcol = this.yylloc.last_column;
+        this.yylloc.last_column = 0;
       } else {
-        // @fixme bad column implementation
         this.yylloc.last_column++;
       }
       return ch;
     },
+    // revert eating specified size
     unput: function(size) {
-      if (this._input[this.offset - size] === '\n' && this._input[this.offset - size - 1] === '\r') {
-        size ++;
+      var firstChar = this._input[this.offset - size];
+      if (firstChar === '\n' || firstChar === '\r') {
+        if (this._input[this.offset - size - 1] === '\r') {
+          // adds 1 more char for windows returns
+          size ++;
+        }
+        // we assume we never unput text like that : "foo\nbar" or "\n\n"
+        this.yylloc.last_line --;
+        this.yylloc.last_column = this.yyprevcol;
       }
+      
       this.offset -= size;
       this.yytext = this.yytext.substring(0, this.yytext.length - size);
-      // @fixme handle columns and lines revert
       return this;
     },
     // check if the text matches

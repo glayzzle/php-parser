@@ -101,7 +101,7 @@ module.exports = {
             console.log('FAIL : Expected "' + p[1] + '" contents, but found "' + j[1] + '"');
             fail = true;
           }
-          if (engine.parser.debug && p[2] != j[2]) { // check the token line
+          if (p[2] != j[2]) { // check the token line
             console.log('NOTICE : Expected line ' + p[2] + ', but found ' + j[2]);
             fail = true; 
           }
