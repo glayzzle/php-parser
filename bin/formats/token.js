@@ -21,27 +21,14 @@ module.exports = {
   ,run: function(filename, engine) {
     if (engine.parser.debug) console.log(filename);
     // USING THE LEXER TO PARSE THE FILE :
-    var EOF = engine.lexer.EOF;
-    engine.lexer.mode_eval = false;
-    engine.lexer.all_tokens = true;
-    engine.lexer.setInput(fs.readFileSync(filename, {
+    var hrstart, mem, jsTok;
+    if (engine.parser.debug) {
+      hrstart = process.hrtime();
+      mem = process.memoryUsage();
+    }
+    jsTok = engine.tokenGetAll(fs.readFileSync(filename, {
       encoding: 'binary'
     }));
-    var token = engine.lexer.lex() || EOF;
-    var names = engine.tokens.values;
-    var jsTok = [];
-    var i = 0;
-    var hrstart = process.hrtime();
-    var mem = process.memoryUsage();
-    while(token != EOF) {
-      var entry = engine.lexer.yytext;
-      if (names[token]) {
-        entry = [names[token], entry, engine.lexer.yylloc.first_line];
-      }
-      jsTok.push(entry);
-      if (engine.parser.debug) console.log(entry, engine.lexer.yylineno);
-      token = engine.lexer.lex() || EOF;
-    }  
     if (engine.parser.debug) {
       var  hrend = process.hrtime(hrstart);
       if (hrend[1] > 0)
