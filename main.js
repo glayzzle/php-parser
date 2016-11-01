@@ -59,6 +59,7 @@ var engine = {
     lexer.all_tokens = false;
     return parser.parse(buffer);
   }
+
   // parse php code with '<?php $x = 1;'
   ,parseCode: function(buffer, options) {
     var lexer = this.lexer;
@@ -75,6 +76,30 @@ var engine = {
     lexer.mode_eval = false;
     lexer.all_tokens = false;
     return parser.parse(buffer);
+  }
+  
+  // split the buffer into tokens
+  ,tokenGetAll: function(buffer, options) {
+    var lexer = this.lexer;
+    lexer.mode_eval = false;
+    lexer.all_tokens = true;
+    if (options) {
+      lexer = extend(lexer, options);
+    }
+    var EOF = lexer.EOF;
+    var names = this.tokens.values;
+    lexer.setInput(buffer);
+    var token = lexer.lex() || EOF;
+    var result = [];
+    while(token != EOF) {
+      var entry = lexer.yytext;
+      if (names.hasOwnProperty(token)) {
+        entry = [names[token], entry, lexer.yylloc.first_line];
+      }
+      result.push(entry);
+      token = lexer.lex() || EOF;
+    }
+    return result;
   }
   ,parser: null
   ,lexer: null
