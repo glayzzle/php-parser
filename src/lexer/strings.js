@@ -93,10 +93,12 @@ module.exports = function(lexer, tokens) {
           }
           this.unput(1);
         } else if (ch == '{') {
-          if (this._input[this.offset] == '$') {
-            this.unput(1);
+          ch = this.input();
+          if (ch == '$') {
+            this.unput(2);
             break;
           }
+          this.unput(1);
         }
       }
       if (ch == '"') {

@@ -143,7 +143,24 @@ module.exports = function(engine) {
     },
     // consume the specified size
     consume: function(size) {
-      for(var i = 0; i < size; i++) this.input();
+      for(var i = 0; i < size; i++) {
+        var ch = this._input[this.offset];
+        if (!ch) break;
+        this.yytext += ch;
+        this.offset ++;
+        if ( ch === '\r' && this._input[this.offset] === '\n' ) {
+          this.yytext += '\n'; 
+          this.offset++;
+          i++;
+        }
+        if (ch === '\n' || ch === '\r') {
+          this.yylloc.last_line = ++this.yylineno;
+          this.yyprevcol = this.yylloc.last_column;
+          this.yylloc.last_column = 0;
+        } else {
+          this.yylloc.last_column++;
+        }
+      }
       return this;
     },
     // prepend next token
