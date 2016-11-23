@@ -88,13 +88,13 @@ module.exports = function(lexer, tokens) {
         } else if (ch == '$') {
           ch = this.input();
           if ( ch == '{' || this.is_LABEL_START()) {
-            this.unput(1);
+            this.unput(2);
             break;
           }
           this.unput(1);
         } else if (ch == '{') {
-          ch = this._input[this.offset];
-          if (ch == '$') {
+          if (this._input[this.offset] == '$') {
+            this.unput(1);
             break;
           }
         }
@@ -105,7 +105,7 @@ module.exports = function(lexer, tokens) {
         if (this.yytext.length > 2) {
           this.appendToken(
             tokens.T_ENCAPSED_AND_WHITESPACE,
-            this.yytext.length - 2
+            this.yytext.length - 1
           );
         }
         this.unput(this.yytext.length - 1);
