@@ -51,12 +51,20 @@ module.exports = function(lexer, tokens) {
       } else if (ch === ']') {
         this.popState();
         return ']';
+      } else if (ch === '$') {
+        this.input();
+        if (this.is_LABEL_START()) {
+          this.consume_LABEL();
+          return tokens.T_VARIABLE;
+        } else {
+          throw new Error('Unexpected terminal');
+        }
       } else if (this.is_LABEL_START()) {
         this.consume_LABEL();
         return tokens.T_STRING;
       } else if (this.is_WHITESPACE() || ch === '\\' || ch === '\'' || ch === '#') {
         return tokens.T_ENCAPSED_AND_WHITESPACE;
-      } else if (this.is_TOKEN() || ch === '{' || ch === '}' || ch === '"' || ch === '`') {
+      } else if (ch === '[' || ch === '{' || ch === '}' || ch === '"' || ch === '`' || this.is_TOKEN()) {
         return ch;
       } else {
         throw new Error('Unexpected terminal');
