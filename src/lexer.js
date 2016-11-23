@@ -23,11 +23,13 @@ module.exports = function(engine) {
     asp_tags: false,
     // enables by default short tags mode
     short_tags: true,
+    // las column
+    yyprevcol: 0,
     // initialize the lexer with the specified input
     setInput: function(input) {
       this._input = input;
       this.size = input.length;
-      this.yylineno = 0;
+      this.yylineno = 1;
       this.offset = 0;
       this.yyprevcol = 0;
       this.yytext = '';
@@ -58,10 +60,7 @@ module.exports = function(engine) {
         this.offset++;
       }
       if (ch === '\n' || ch === '\r') {
-        this.yylineno++;
-        this.yylloc.last_line++;
-        // buffers previous column position 
-        // (assumes we never unput multiple line breaks)
+        this.yylloc.last_line = ++this.yylineno;
         this.yyprevcol = this.yylloc.last_column;
         this.yylloc.last_column = 0;
       } else {
@@ -71,38 +70,63 @@ module.exports = function(engine) {
     },
     // revert eating specified size
     unput: function(size) {
-      var line = this.yylineno;
-      var firstChar = this._input[this.offset - size];
-      if (firstChar === '\n' || firstChar === '\r') {
-        if (this._input[this.offset - size - 1] === '\r') {
-          // adds 1 more char for unresolved windows returns
+      if (size === 1) {
+        // 1 char unput (most cases)
+        this.offset --;
+        if (this._input[this.offset] === '\n' && this._input[this.offset - 1] === '\r') {
+          this.offset --;
           size ++;
         }
-        // we assume we never unput text like that : "foo\nbar" or "\n\n\n"
-        this.yylineno--;
-        this.yylloc.last_line --;
-        this.yylloc.last_column = this.yyprevcol;
-      } else {
-        // we handle special case like that : "foo\n" or "foo\r\n"
-        var lastChar = this._input[this.offset - 1];
-        if (lastChar === '\r') {
-          this.yylineno--;
+        if (this._input[this.offset] === '\r' || this._input[this.offset] === '\n') {
           this.yylloc.last_line --;
-          this.yylloc.last_column = this.yyprevcol - size - 1;
-        } else if (lastChar === '\n') {
-          this.yylineno--;
-          this.yylloc.last_line --;
-          this.yylloc.last_column = this.yyprevcol - size - 1;
-          if (this._input[this.offset - 1] === '\r') {
-            this.yylloc.last_column ++; // fix extra \r from window into column
+          this.yylineno --;
+          this.yylloc.last_column = this.yyprevcol;
+        }
+        this.yytext = this.yytext.substring(0, this.yytext.length - size);
+      } else if (size > 0) {
+        this.offset -= size;
+        var firstChar = this._input[this.offset];
+        if (firstChar === '\n' || this._input[this.offset - 1] === '\r') {
+          // adds 1 more char for unresolved windows returns
+          this.offset --;
+          size ++;
+        }
+        if (size < this.yytext.length) {
+          this.yytext = this.yytext.substring(0, this.yytext.length - size);
+          // re-calculate position
+          this.yylloc.last_line = this.yylloc.first_line;
+          this.yylloc.last_col = this.yyprevcol = this.yylloc.first_col;
+          for(var i = 0; i < this.yytext.length; i++) {
+            var c = this.yytext[i];
+            if (c === '\r') {
+              c = this.yytext[++i];
+              this.yyprevcol = this.yylloc.last_col;
+              this.yylloc.last_line ++;
+              this.yylloc.last_col = 0;
+              if (c !== '\n') {
+                if (c === '\r') {
+                  this.yylloc.last_line ++;
+                } else {
+                  this.yylloc.last_col ++;
+                }
+              }
+            } else if (c === '\n') {
+              this.yyprevcol = this.yylloc.last_col;
+              this.yylloc.last_line ++;
+              this.yylloc.last_col = 0;
+            } else {
+              this.yylloc.last_col ++;
+            }
           }
-        } else { // or simple case  : "a" or "azerty"
-          this.yylloc.last_column -= size;
+          this.yylineno = this.yylloc.last_line;
+        } else {
+          // reset full text
+          this.yytext = "";
+          this.yylloc.last_line = this.yylineno = this.yylloc.first_line;
+          this.yylloc.last_column = this.yylloc.first_column;
         }
       }
       
-      this.offset -= size;
-      this.yytext = this.yytext.substring(0, this.yytext.length - size);
       return this;
     },
     // check if the text matches
