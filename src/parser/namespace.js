@@ -16,12 +16,9 @@ module.exports = function(api, tokens, EOF) {
      */
     read_namespace: function() {
       this.expect(tokens.T_NAMESPACE).next();
+      var result = this.node('namespace');
       if (this.token == '{') {
-        return [
-            'namespace'
-            , []
-            , this.read_code_block(true)
-        ];
+        return result([''], this.read_code_block(true));
       } else {
         // @fixme should expect {, T_STRING even if not NS_SEP
         if(this.token === tokens.T_NS_SEPARATOR)
@@ -30,9 +27,9 @@ module.exports = function(api, tokens, EOF) {
         if (this.token == ';') {
           var body = this.next().read_top_statements();
           this.expect(EOF);
-          return ['namespace', name, body];
+          return result(name, body);
         } else if (this.token == '{') {
-          return ['namespace', name, this.read_code_block(true)];
+          return result(name, this.read_code_block(true));
         } else {
           this.error(['{', ';']);
         }
