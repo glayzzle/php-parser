@@ -374,11 +374,13 @@ module.exports = function(engine) {
      * list ::= separator? ( item separator )* item
      * </ebnf>
      */
-    ,read_list: function(item, separator) {
+    ,read_list: function(item, separator, preserveFirstSeparator) {
       var result = [];
 
-      // trim first separator (@fixme not sure ?)
-      if (this.token == separator) this.next();
+      if (this.token == separator) {
+        if (preserveFirstSeparator) result.push('');
+        this.next();
+      }
 
       if (typeof (item) === "function") {
         do {

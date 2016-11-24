@@ -42,7 +42,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_namespace_name: function() {
-      return this.read_list(tokens.T_STRING, tokens.T_NS_SEPARATOR);
+      return this.read_list(tokens.T_STRING, tokens.T_NS_SEPARATOR, true);
     }
     /**
      * <ebnf>
