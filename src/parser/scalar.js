@@ -64,16 +64,16 @@ module.exports = function(api, tokens, EOF) {
           case '-':  // long
           case tokens.T_LNUMBER:  // long
           case tokens.T_DNUMBER:  // double
-            var sign = 1;
+            var result = this.node('number');
+            var value = this.text();
             if (this.token === '-') {
-              sign = -1;
               this.next().expect([
                 tokens.T_LNUMBER, tokens.T_DNUMBER
               ]);
+              value += this.text();
             }
-            var value = parseFloat(this.text());
             this.next();
-            return ['number', value * sign];
+            return result(value);
           
           // CONSTANTS
           case tokens.T_NS_SEPARATOR:
@@ -163,12 +163,13 @@ module.exports = function(api, tokens, EOF) {
       return result;
     }
     /**
-     * Converts the constant token to it's scallar value
+     * Constant token
      */
     ,get_magic_constant: function() {
+      var result = this.node('magic');
       var name = this.text();
       this.next();
-      return ['magic', '@todo:' + name];
+      return result(name);
     }
   };
 };
