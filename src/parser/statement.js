@@ -14,7 +14,14 @@ module.exports = function(api, tokens, EOF) {
     read_top_statements: function() {
       var result = [];
       while(this.token !== EOF && this.token !== '}') {
-        result.push(this.read_top_statement());
+        var statement = this.read_top_statement();
+        if (statement) {
+          if (typeof statement[0] === 'string') {
+            result.push(statement);
+          } else {
+            result = result.concat(statement);
+          }
+        }
       }
       return result;
     }
@@ -71,7 +78,14 @@ module.exports = function(api, tokens, EOF) {
     ,read_inner_statements: function() {
       var result = [];
       while(this.token != EOF && this.token !== '}') {
-        result.push(this.read_inner_statement());
+        var statement = this.read_inner_statement();
+        if (statement) {
+          if (typeof statement[0] === 'string') {
+            result.push(statement);
+          } else {
+            result = result.concat(statement);
+          }
+        }
       }
       return result;
     }
