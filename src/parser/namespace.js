@@ -59,7 +59,7 @@ module.exports = function(api, tokens, EOF) {
         while(this.token !== EOF) {
             this.expect(tokens.T_USE).next();
             this.read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
-              if (item[0] === 'use') {
+              if (typeof item[0] === 'string') {
                 result.push(item);
               } else {
                 item.forEach(function(child) {
@@ -80,17 +80,18 @@ module.exports = function(api, tokens, EOF) {
     ,read_inline_use_declaration: function(prefix) {
       var result = [];
       while(this.token !== EOF) {
+        var node = this.node('use');
         var ns = this.read_use_statement(prefix[3] !== false);
         if(this.token === tokens.T_AS) {
           this.next().expect(tokens.T_STRING);
-          ns[2] = this.text();
+          ns[1] = this.text();
           this.next();
         }
-        Array.prototype.unshift.apply(ns[1], prefix[1]);
-        if (prefix[3] !== false) {
-          ns[3] = prefix[3];
+        ns[0] = prefix[0].concat(ns[0]);
+        if (prefix[2] !== false) {
+          ns[2] = prefix[2];
         }
-        result.push(ns);
+        result.push(node.apply(this, ns));
         if(this.token !== ',') {
           break;
         } else {
@@ -107,16 +108,18 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_use_statement_mixed: function() {
+      var result = this.node('use');
       var use = this.read_use_statement();
       if(this.token === tokens.T_AS) {
         this.next().expect(tokens.T_STRING);
-        use[2] = this.text();
+        use[1] = this.text();
         this.next();
       } else if (this.token === '{') {
         use = this.next().read_inline_use_declaration(use);
         this.expect('}').next();
+        return use;
       }
-      return use;
+      return result.apply(this, use);
     }
     /**
      * <ebnf>
@@ -126,7 +129,6 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_use_statement: function(ignoreType) {
-        var result = null;
         var type = false;
         if(
           !ignoreType && (this.token === tokens.T_FUNCTION || this.token === tokens.T_CONST)
@@ -135,7 +137,7 @@ module.exports = function(api, tokens, EOF) {
           this.next();
         }
         var name = this.read_namespace_name();
-        return ['use', name, name[name.length - 1], type];
+        return [name, name[name.length - 1], type];
     }
   };
 };
