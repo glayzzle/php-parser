@@ -65,13 +65,13 @@ describe('Array without keys', function() {
 
     it('should have correct item types and values', function () {
       ast[1][0][1][0].value[0].should.be.exactly("number");
-      ast[1][0][1][0].value[1].should.be.exactly(1);
+      ast[1][0][1][0].value[1].should.be.exactly('1');
 
       ast[1][0][1][1].value[0].should.be.exactly("string");
       ast[1][0][1][1].value[1].should.be.exactly("item2");
 
       ast[1][0][1][2].value[0].should.be.exactly("number");
-      ast[1][0][1][2].value[1].should.be.exactly(3);
+      ast[1][0][1][2].value[1].should.be.exactly('3');
 
       ast[1][0][1][3].value[0].should.be.exactly("string");
       ast[1][0][1][3].value[1].should.be.exactly("item4");
@@ -103,29 +103,29 @@ describe('Array without keys', function() {
   });
 
   // TODO -- Check this is valid PHP + check AST output is correct
-  // describe('of objects', function () {
-  //   // Get result from parser
-  //   var ast = parser.parseEval('array(new stdClass(), new stdClass(), new stdClass())');
+  describe('of objects', function () {
+     // Get result from parser
+     var ast = parser.parseEval('[new foo(), new stdClass(), new bar()]');
 
-  //   it('should be of type array', function () {
-  //     ast[1][0][0].should.be.exactly("array");
-  //   });
+     it('should be of type array', function () {
+       ast[1][0][0].should.be.exactly("array");
+     });
 
-  //   it('should have correct number of items', function () {
-  //     ast[1][0][1].length.should.be.exactly(3);
-  //   });
+     it('should have correct number of items', function () {
+       ast[1][0][1].length.should.be.exactly(3);
+     });
 
-  //   it('should have correct item types and values', function () {
-  //     ast[1][0][1][0].value[0].should.be.exactly("object");
-  //     ast[1][0][1][0].value[1].should.be.exactly("stdClass()");
+     it('should have correct item types and values', function () {
+       ast[1][0][1][0].value[0].should.be.exactly("new");
+       ast[1][0][1][0].value[1][0].should.be.exactly("foo");
 
-  //     ast[1][0][1][1].value[0].should.be.exactly("object");
-  //     ast[1][0][1][1].value[1].should.be.exactly("stdClass()");
+       ast[1][0][1][1].value[0].should.be.exactly("new");
+       ast[1][0][1][1].value[1][0].should.be.exactly("stdClass");
 
-  //     ast[1][0][1][2].value[0].should.be.exactly("object");
-  //     ast[1][0][1][2].value[1].should.be.exactly("stdClass()");
-  //   });
-  // });
+       ast[1][0][1][2].value[0].should.be.exactly("new");
+       ast[1][0][1][2].value[1][0].should.be.exactly("bar");
+     });
+   });
 
   describe('of arrays', function () {
     // Get result from parser
