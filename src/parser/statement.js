@@ -195,9 +195,11 @@ module.exports = function(api, tokens, EOF) {
           return ['global', items];
 
         case tokens.T_STATIC:
+          var current = [this.token, this.lexer.getState()];
+          var result = this.node('global');
           if (this.next().token === tokens.T_DOUBLE_COLON) {
             // static keyword for a class 
-            this.lexer.unput(8);
+            this.lexer.tokens.push(current);
             var expr = this.next().read_expr();
             this.expect(';').next();
             return expr;
@@ -211,7 +213,7 @@ module.exports = function(api, tokens, EOF) {
             return [name, value];
           }, ',');
           this.expectEndOfStatement();
-          return ['global', items];
+          return result(items);
 
         case tokens.T_ECHO:
           var items = this.next().read_list(this.read_expr, ',');
@@ -252,6 +254,7 @@ module.exports = function(api, tokens, EOF) {
           return null;
 
         case tokens.T_STRING:
+          var current = [this.token, this.lexer.getState()];
           var label = this.text();
           if (this.next().token === ':') {
             var result = this.node('label');
@@ -259,7 +262,7 @@ module.exports = function(api, tokens, EOF) {
             return result(label);
           } else {
             // default fallback expr
-            this.lexer.unput(label.length + this.text().length);
+            this.lexer.tokens.push(current);
             var expr = this.next().read_expr();
             this.expect([';', tokens.T_CLOSE_TAG]).next();
             return expr;
