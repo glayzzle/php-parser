@@ -272,7 +272,7 @@ module.exports = function(engine) {
             name[2] = [
               this.prev[0], 
               this.prev[1],
-              this.length - this.prev[2]
+              this.prev[2]
             ];
             Array.prototype.push.apply(name[3], result);
           } else {
@@ -290,7 +290,7 @@ module.exports = function(engine) {
               [
                 this.prev[0], 
                 this.prev[1],
-                this.length - this.prev[2]
+                this.prev[2]
               ],
               result
             ];
@@ -343,7 +343,7 @@ module.exports = function(engine) {
       this.prev = [
         this.lexer.yylloc.first_line, 
         this.lexer.yylloc.first_column, 
-        this.lexer._input.length
+        this.lexer.offset
       ];
       this.token = this.lexer.lex() || EOF;
       if (this.debug) this.showlog();
