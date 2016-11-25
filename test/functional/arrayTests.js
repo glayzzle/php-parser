@@ -29,7 +29,7 @@ describe('Array without keys', function() {
 
   describe('of numbers', function () {
     // Get result from parser
-    var ast = parser.parseEval('array(1, 2, 3)');
+    var ast = parser.parseEval('array(1, 2.5, 0x1000)');
 
     it('should be of type array', function () {
       ast[1][0][0].should.be.exactly("array");
@@ -41,13 +41,13 @@ describe('Array without keys', function() {
 
     it('should have correct item types and values', function () {
       ast[1][0][1][0].value[0].should.be.exactly("number");
-      ast[1][0][1][0].value[1].should.be.exactly(1);
+      ast[1][0][1][0].value[1].should.be.exactly('1');
 
       ast[1][0][1][1].value[0].should.be.exactly("number");
-      ast[1][0][1][1].value[1].should.be.exactly(2);
+      ast[1][0][1][1].value[1].should.be.exactly('2.5');
 
       ast[1][0][1][2].value[0].should.be.exactly("number");
-      ast[1][0][1][2].value[1].should.be.exactly(3);
+      ast[1][0][1][2].value[1].should.be.exactly('0x1000');
     });
   });
 
