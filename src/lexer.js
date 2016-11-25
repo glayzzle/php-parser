@@ -163,6 +163,35 @@ module.exports = function(engine) {
       }
       return this;
     },
+    /**
+     * Gets the current state
+     */
+    getState: function() {
+      return {
+        yytext: this.yytext,
+        offset: this.offset,
+        yylineno: this.yylineno,
+        yyprevcol: this.yyprevcol,
+        yylloc: {
+          first_line: this.yylloc.first_line,
+          first_column: this.yylloc.first_column,
+          last_line: this.yylloc.last_line,
+          last_column: this.yylloc.last_column
+        }
+      };
+    },
+    /**
+     * Sets the current lexer state
+     */
+    setState: function(state) {
+      this.yytext = state.yytext;
+      this.offset = state.offset;
+      this.yylineno = state.yylineno;
+      this.yyprevcol = state.yyprevcol;
+      this.yylloc = state.yylloc;
+      return this;
+    },
+    
     // prepend next token
     appendToken: function(value, ahead) {
       this.tokens.push([value, ahead]);
@@ -197,7 +226,6 @@ module.exports = function(engine) {
     begin: function(condition) {
       this.conditionStack.push(condition);
       this.curCondition = condition;
-      // console.log(this.yylineno, '->' + condition);
       this.stateCb = this['match' + condition];
       if (typeof this.stateCb !== 'function') {
         throw new Error('Undefined condition state "'+condition+'"');
@@ -209,7 +237,6 @@ module.exports = function(engine) {
       var n = this.conditionStack.length - 1;
       var condition = (n > 0) ? this.conditionStack.pop() : this.conditionStack[0];
       this.curCondition = this.conditionStack[this.conditionStack.length - 1];
-      // console.log(this.yylineno, '<-' + this.curCondition);
       this.stateCb = this['match' + this.curCondition];
       if (typeof this.stateCb !== 'function') {
         throw new Error('Undefined condition state "'+this.curCondition+'"');
@@ -230,7 +257,11 @@ module.exports = function(engine) {
       this.yytext = '';
       if (this.tokens.length > 0) {
         token = this.tokens.shift();
-        this.consume(token[1]);
+        if (typeof token[1] === 'object') {
+          this.setState(token[1]);
+        } else {
+          this.consume(token[1]);
+        }
         token = token[0];
       } else {
         token = this.stateCb.apply(this, []);
