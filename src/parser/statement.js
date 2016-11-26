@@ -173,6 +173,10 @@ module.exports = function(api, tokens, EOF) {
 
         case tokens.T_DO: return this.next().read_do();
 
+        case tokens.T_COMMENT: return this.read_comment();
+
+        case tokens.T_DOC_COMMENT: return this.read_doc_comment();
+
         case tokens.T_RETURN:
         case tokens.T_BREAK:
         case tokens.T_CONTINUE:

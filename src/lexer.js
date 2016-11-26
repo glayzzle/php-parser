@@ -17,6 +17,8 @@ module.exports = function(engine) {
     EOF:1,
     // defines if all tokens must be retrieved (used by token_get_all only)
     all_tokens: true,
+    // extracts comments tokens
+    comment_tokens: false,
     // enables the evald mode (ignore opening tags)
     mode_eval: false,
     // disables by default asp tags mode
@@ -203,8 +205,12 @@ module.exports = function(engine) {
       if (!this.all_tokens) {
         while(
           token === tokens.T_WHITESPACE      // ignore white space
-          || token === tokens.T_COMMENT      // ignore single lines comments
-          || token === tokens.T_DOC_COMMENT  // ignore doc comments
+          || (
+            !this.comment_tokens && (
+              token === tokens.T_COMMENT      // ignore single lines comments
+              || token === tokens.T_DOC_COMMENT  // ignore doc comments
+            )
+          )
           || (
             !this.mode_eval // ignore open/close tags
             && (

@@ -75,6 +75,7 @@ module.exports = function(engine) {
     prev: null,
     debug: false,
     locations: false,
+    extractDoc: false,
     suppressErrors: false,
     lastError: false,
     startAt: [],
@@ -181,6 +182,7 @@ module.exports = function(engine) {
     ,parse: function(code) {
       this.lastError = false;
       this.lexer.setInput(code);
+      this.lexer.comment_tokens = this.extractDoc;
       this.length = this.lexer._input.length;
       this.next();
       this.ast = ['program', []];
