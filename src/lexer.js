@@ -274,12 +274,18 @@ module.exports = function(engine) {
   };
   
   // extends the lexer with states
-  fs.readdirSync(__dirname + '/lexer').forEach(function(file) {
-    if (file.indexOf('.js', file.length - 3) !== -1) {
-      var ext = require(__dirname + '/lexer/' + file)(api, tokens);
-      for(var k in ext) {
-        api[k] = ext[k];
-      }
+  [
+    require('./lexer/comments.js')(api, tokens),
+    require('./lexer/initial.js')(api, tokens),
+    require('./lexer/numbers.js')(api, tokens),
+    require('./lexer/property.js')(api, tokens),
+    require('./lexer/scripting.js')(api, tokens),
+    require('./lexer/strings.js')(api, tokens),
+    require('./lexer/tokens.js')(api, tokens),
+    require('./lexer/utils.js')(api, tokens)
+  ].forEach(function (ext) {
+    for(var k in ext) {
+      api[k] = ext[k];
     }
   });
   

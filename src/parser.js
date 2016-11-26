@@ -403,12 +403,23 @@ module.exports = function(engine) {
   };
   
   // extends the parser with syntax files
-  fs.readdirSync(__dirname + '/parser').forEach(function(file) {
-    if (file.indexOf('.js', file.length - 3) !== -1) {
-      var ext = require(__dirname + '/parser/' + file)(api, tokens, EOF);
-      for(var k in ext) {
-        api[k] = ext[k];
-      }
+  [
+    require('./parser/array.js')(api, tokens, EOF),
+    require('./parser/class.js')(api, tokens, EOF),
+    require('./parser/expr.js')(api, tokens, EOF),
+    require('./parser/function.js')(api, tokens, EOF),
+    require('./parser/if.js')(api, tokens, EOF),
+    require('./parser/loops.js')(api, tokens, EOF),
+    require('./parser/main.js')(api, tokens, EOF),
+    require('./parser/namespace.js')(api, tokens, EOF),
+    require('./parser/scalar.js')(api, tokens, EOF),
+    require('./parser/statement.js')(api, tokens, EOF),
+    require('./parser/switch.js')(api, tokens, EOF),
+    require('./parser/try.js')(api, tokens, EOF),
+    require('./parser/variable.js')(api, tokens, EOF)
+  ].forEach(function (ext) {
+    for(var k in ext) {
+      api[k] = ext[k];
     }
   });
   
