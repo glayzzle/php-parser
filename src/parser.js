@@ -184,7 +184,7 @@ module.exports = function(engine) {
       this.lexer.setInput(code);
       this.lexer.comment_tokens = this.extractDoc;
       this.length = this.lexer._input.length;
-      this.next();
+      this.nextWithComments();
       this.ast = ['program', []];
       while(this.token != EOF) {
         var node = this.read_start();
@@ -304,7 +304,7 @@ module.exports = function(engine) {
     /** expects an end of statement or end of file **/
     ,expectEndOfStatement: function() {
       if (this.token === ';' || this.token === tokens.T_CLOSE_TAG) {
-        this.next();
+        this.nextWithComments();
       } else if (this.token !== tokens.T_INLINE_HTML && this.token !== EOF) {
         this.error(';');
       }
@@ -342,6 +342,16 @@ module.exports = function(engine) {
     }
     /** consume the next token **/
     ,next: function() {
+      this.nextWithComments();
+      if (this.debug) this.showlog();
+      while(this.token === tokens.T_COMMENT || this.token === tokens.T_DOC_COMMENT) {
+        // IGNORE COMMENTS
+        this.nextWithComments();
+      }
+      return this;
+    }
+    /** consume the next token (including doc) **/
+    ,nextWithComments: function() {
       this.prev = [
         this.lexer.yylloc.first_line, 
         this.lexer.yylloc.first_column, 
@@ -418,6 +428,7 @@ module.exports = function(engine) {
     require('./parser/statement.js')(api, tokens, EOF),
     require('./parser/switch.js')(api, tokens, EOF),
     require('./parser/try.js')(api, tokens, EOF),
+    require('./parser/comment.js')(api, tokens, EOF),
     require('./parser/variable.js')(api, tokens, EOF)
   ].forEach(function (ext) {
     for(var k in ext) {

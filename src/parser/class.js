@@ -36,7 +36,7 @@ module.exports = function(api, tokens, EOF) {
         ,flag
         ,propExtends
         ,propImplements
-        ,this.expect('{').next().read_class_body()
+        ,this.expect('{').nextWithComments().read_class_body()
       );
     }
     /**
@@ -70,12 +70,25 @@ module.exports = function(api, tokens, EOF) {
           // list of alias
           adaptations: []
         }
-      }, startAt = null, node = null;
+      }, startAt = null, node = null, comment = false;
+
+
 
       while(this.token !== EOF && this.token !== '}') {
 
+        if (this.token === tokens.T_COMMENT) {
+          comment = this.read_comment();
+          continue;
+        }
+
+        if (this.token === tokens.T_DOC_COMMENT) {
+          comment = this.read_doc_comment();
+          continue;
+        }
+
         // check T_USE trait
         if (this.token === tokens.T_USE) {
+          comment = false; // flush comments
           this.next().read_trait_use_statement(result['use']);
           continue;
         }
@@ -84,7 +97,12 @@ module.exports = function(api, tokens, EOF) {
         if (this.token === tokens.T_CONST) {
           node = this.node();
           var constants = this.read_constant_list();
-          this.expect(';').next();
+          this.expect(';').nextWithComments();
+          if (comment) {
+            (this.locations ? comment[3] : comment).push(constants);
+            constants = comment;
+            comment = false;
+          }
           constants = node.apply(this, constants);
           result.constants.push(constants);
           continue;
@@ -110,10 +128,15 @@ module.exports = function(api, tokens, EOF) {
         if (this.token === tokens.T_VARIABLE) {
           node = this.node();
           var variables = this.read_variable_list();
-          this.expect(';').next();
+          this.expect(';').nextWithComments();
           variables = node.apply(this, variables).concat([flags]);
           if (this.locations) {
             variables[1] = startAt;
+          }
+          if (comment) {
+            (this.locations ? comment[3] : comment).push(variables);
+            variables = comment;
+            comment = false;
           }
           result.properties.push(variables);
         } else if (this.token === tokens.T_FUNCTION) {
@@ -123,6 +146,11 @@ module.exports = function(api, tokens, EOF) {
           );
           if (this.locations) {
             method[1] = startAt;
+          }
+          if (comment) {
+            (this.locations ? comment[3] : comment).push(method);
+            method = comment;
+            comment = false;
           }
           result.methods.push(method);
         } else {
@@ -134,7 +162,7 @@ module.exports = function(api, tokens, EOF) {
           ]);
         }
       }
-      this.expect('}').next();
+      this.expect('}').nextWithComments();
       return result;
     }
     /**

@@ -205,7 +205,7 @@ module.exports = function(api, tokens, EOF) {
             // static keyword for a class 
             this.lexer.tokens.push(current);
             var expr = this.next().read_expr();
-            this.expect(';').next();
+            this.expect(';').nextWithComments();
             return expr;
           }
           var items = this.read_list(function() {
@@ -239,7 +239,7 @@ module.exports = function(api, tokens, EOF) {
           var result = this.node('declare');
           this.next().expect('(').next();
           var options = this.read_declare_list();
-          this.expect(')').next();
+          this.expect(')').nextWithComments();
           var body = this.read_statement();
           return result(options, body);
           break;
@@ -290,12 +290,12 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_code_block: function(top) {
-      this.expect('{').next();
+      this.expect('{').nextWithComments();
       var body = top ?
         this.read_top_statements()
         : this.read_inner_statements()
       ;
-      this.expect('}').next();
+      this.expect('}').nextWithComments();
       return body;
     }
   };

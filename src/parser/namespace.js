@@ -25,7 +25,7 @@ module.exports = function(api, tokens, EOF) {
             this.error(['{', tokens.T_STRING]);
         var name = this.read_namespace_name();
         if (this.token == ';') {
-          var body = this.next().read_top_statements();
+          var body = this.nextWithComments().read_top_statements();
           this.expect(EOF);
           return result(name, body);
         } else if (this.token == '{') {

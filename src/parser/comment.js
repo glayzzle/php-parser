@@ -15,7 +15,7 @@ module.exports = function(api, tokens, EOF) {
     read_comment: function() {
       var result = this.node('comment');
       var input = [this.text()];
-      while(this.next().token === tokens.T_COMMENT) {
+      while(this.nextWithComments().token === tokens.T_COMMENT) {
         input.push(this.text());
       }
       return result(input);
@@ -25,7 +25,7 @@ module.exports = function(api, tokens, EOF) {
      */
     read_doc_comment: function() {
       var result = this.node('doc')(this.text());
-      this.next();
+      this.nextWithComments();
       return result;
     }
   }
