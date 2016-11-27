@@ -26,9 +26,10 @@ module.exports = {
       hrstart = process.hrtime();
       mem = process.memoryUsage();
     }
-    jsTok = engine.tokenGetAll(fs.readFileSync(filename, {
+    var buffer = fs.readFileSync(filename, {
       encoding: 'binary'
-    }));
+    });
+    jsTok = engine.tokenGetAll(buffer);
     if (engine.parser.debug) {
       var  hrend = process.hrtime(hrstart);
       if (hrend[1] > 0)
@@ -126,6 +127,16 @@ module.exports = {
       );
       return false;
     } else {
+      // test the AST parser to ensure that the struture can be parsed
+      try {
+        var ast = engine.parseCode(buffer);
+        if (ast[0] !== 'program') throw new Error('not a program node');
+      } catch(e) {
+        console.log('v - Passed ' + jsTok.length + ' tokens (but AST warning)');
+        console.log(e);
+        return true;
+      }
+      
       if (engine.parser.debug) {
         console.log('v - Passed ' + jsTok.length + ' tokens');
       }
