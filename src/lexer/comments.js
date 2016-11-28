@@ -20,15 +20,21 @@ module.exports = function(lexer, tokens) {
       }
       return tokens.T_COMMENT;
     },
+    /**
+     * Behaviour : https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927
+     */
     T_DOC_COMMENT: function() {
       var ch = this.input();
       var token = tokens.T_COMMENT; 
-      if (ch === '*') {
+      if (ch === '*') { // started with '/*' , check is next is '*'
         ch = this.input();
-        if (this.is_WHITESPACE()) {
+        if (this.is_WHITESPACE()) { // check if next is WHITESPACE
           token = tokens.T_DOC_COMMENT;
-        } else if (ch === '/') {
+        }
+        if (ch === '/') {
           return token;
+        } else {
+          this.unput(1); // reset
         }
       }
       while(this.offset < this.size) {
