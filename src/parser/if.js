@@ -21,6 +21,7 @@ module.exports = function(api, tokens, EOF) {
         this.next();
         body = [];
         while(this.token != EOF && this.token !== tokens.T_ENDIF) {
+          this.ignoreComments();
           if (this.token === tokens.T_ELSEIF) {
             elseCond = this.next().read_elseif_short();
             break;
@@ -30,9 +31,10 @@ module.exports = function(api, tokens, EOF) {
           }
           body.push(this.read_inner_statement());
         }
-        this.expect(tokens.T_ENDIF).next().expectEndOfStatement();
+        this.ignoreComments().expect(tokens.T_ENDIF).next().expectEndOfStatement();
       } else {
         body = this.read_statement();
+        this.ignoreComments();
         if (this.token === tokens.T_ELSEIF) {
           elseCond = this.next().read_if();
         } else if (this.token === tokens.T_ELSE) {

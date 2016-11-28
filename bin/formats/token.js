@@ -130,7 +130,11 @@ module.exports = {
     } else {
       // test the AST parser to ensure that the struture can be parsed
       try {
-        var ast = engine.parseCode(buffer);
+        var ast = engine.parseCode(buffer, {
+          parser: {
+            extractDoc: true
+          }
+        });
         if (ast[0] !== 'program') throw new Error('not a program node');
         if (engine.parser.debug) {
           console.log(

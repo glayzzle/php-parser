@@ -356,6 +356,15 @@ module.exports = function(engine) {
       }
       return this;
     }
+    /** consume comments (if found) **/
+    ,ignoreComments: function() {
+      if (this.debug) this.showlog();
+      while(this.token === tokens.T_COMMENT || this.token === tokens.T_DOC_COMMENT) {
+        // IGNORE COMMENTS
+        this.nextWithComments();
+      }
+      return this;
+    }    
     /** consume the next token (including doc) **/
     ,nextWithComments: function() {
       this.prev = [
