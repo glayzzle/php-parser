@@ -52,12 +52,11 @@ module.exports = function(lexer, tokens) {
             return tokens.T_CLOSE_TAG;
           }
           return this.consume_TOKEN();
-        case '{': return '{';
+        case '{':
+          this.begin('ST_IN_SCRIPTING'); 
+          return '{';
         case '}':
-          if (
-            this.conditionStack.length > 2
-            && this.conditionStack[this.conditionStack.length - 2] !== 'ST_IN_SCRIPTING'
-          ) {
+          if (this.conditionStack.length > 1) {
             // Return to HEREDOC/ST_DOUBLE_QUOTES mode
             this.popState();
           }
