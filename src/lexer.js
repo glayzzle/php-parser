@@ -135,6 +135,10 @@ module.exports = function(engine) {
     tryMatch: function(text) {
       return text === this.ahead(text.length);
     },
+    // check if the text matches
+    tryMatchCaseless: function(text) {
+      return text === this.ahead(text.length).toLowerCase();
+    },
     // look ahead
     ahead: function(size) {
       var text = this._input.substring(this.offset, this.offset + size);

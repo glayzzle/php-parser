@@ -14,7 +14,7 @@ module.exports = function(lexer, tokens) {
             if (this.tryMatch('?=')) {
               this.unput(1).appendToken(tokens.T_OPEN_TAG_WITH_ECHO, 3).begin("ST_IN_SCRIPTING");
               break;
-            } else if (this.tryMatch('?php')) {
+            } else if (this.tryMatchCaseless('?php')) {
               ch = this._input[this.offset + 4];
               if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
                 this.unput(1).appendToken(tokens.T_OPEN_TAG, 6).begin("ST_IN_SCRIPTING");
