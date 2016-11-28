@@ -303,7 +303,13 @@ module.exports = function(engine) {
     }
     /** expects an end of statement or end of file **/
     ,expectEndOfStatement: function() {
-      if (this.token === ';' || this.token === tokens.T_CLOSE_TAG) {
+      if (this.token === ';') {
+        this.nextWithComments();
+        if (this.token === tokens.T_CLOSE_TAG) {
+          // strip close tag (statement already closed with ';')
+          this.nextWithComments();
+        }
+      } else if (this.token === tokens.T_CLOSE_TAG) {
         this.nextWithComments();
       } else if (this.token !== tokens.T_INLINE_HTML && this.token !== EOF) {
         this.error(';');

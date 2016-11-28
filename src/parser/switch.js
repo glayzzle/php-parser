@@ -39,6 +39,10 @@ module.exports = function(api, tokens, EOF) {
         // why ? it's compliant with spec but why ... wtf ?
         this.next();
       }
+      // IGNORE THE CLOSE TAG TOKEN WITH SHORT MODE
+      if (this.token === tokens.T_CLOSE_TAG) {
+        this.next();
+      }
       // EXTRACTING CASES
       while(this.token !== EOF && this.token !== expect) {
         result.push( this.read_case_list(expect) );
