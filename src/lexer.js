@@ -87,12 +87,6 @@ module.exports = function(engine) {
         this.yytext = this.yytext.substring(0, this.yytext.length - size);
       } else if (size > 0) {
         this.offset -= size;
-        var firstChar = this._input[this.offset];
-        if (firstChar === '\n' || this._input[this.offset - 1] === '\r') {
-          // adds 1 more char for unresolved windows returns
-          this.offset --;
-          size ++;
-        }
         if (size < this.yytext.length) {
           this.yytext = this.yytext.substring(0, this.yytext.length - size);
           // re-calculate position

@@ -36,7 +36,9 @@ module.exports = function(lexer, tokens) {
             this.input();
             var nextCH = this._input[this.offset];
             if (nextCH === '\n' || nextCH === '\r') this.input();
-            this.popState();
+            if (this.conditionStack.length > 1) {
+              this.begin('INITIAL');
+            }
             return tokens.T_CLOSE_TAG;
           }
           return this.consume_TOKEN();
@@ -48,7 +50,9 @@ module.exports = function(lexer, tokens) {
               this.input(); // consume the newline
             }
             this.aspTagMode = false;
-            this.popState();
+            if (this.conditionStack.length > 1) {
+              this.begin('INITIAL');
+            }
             return tokens.T_CLOSE_TAG;
           }
           return this.consume_TOKEN();
