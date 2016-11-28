@@ -213,10 +213,9 @@ module.exports = function(engine) {
           )
           || (
             !this.mode_eval // ignore open/close tags
-            && (
-              token === tokens.T_OPEN_TAG
-              || token === tokens.T_CLOSE_TAG
-            )
+            && token === tokens.T_OPEN_TAG
+            //  || token === tokens.T_CLOSE_TAG
+            //  )
           )
         ) {
           token = this.next() || this.lex();
