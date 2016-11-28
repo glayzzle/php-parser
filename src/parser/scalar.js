@@ -81,7 +81,7 @@ module.exports = function(api, tokens, EOF) {
             var value = this.read_namespace_name();
             if ( this.token == tokens.T_DOUBLE_COLON) {
               // class constant
-              this.next().expect(tokens.T_STRING);
+              this.next().expect([tokens.T_STRING, tokens.T_CLASS]);
               value = [value, this.text()];
               this.next();
             }
