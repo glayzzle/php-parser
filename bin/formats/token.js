@@ -5,6 +5,7 @@
  */
 var fs = require('fs');
 var cmd = require('./cmd');
+var util = require('util');
 
 module.exports = {
   handles: function(filename, ext) {
@@ -131,6 +132,17 @@ module.exports = {
       try {
         var ast = engine.parseCode(buffer);
         if (ast[0] !== 'program') throw new Error('not a program node');
+        if (engine.parser.debug) {
+          console.log(
+            util.inspect(
+              ast[1], { 
+                showHidden: false, 
+                depth: 10, 
+                colors: true 
+              }
+            )
+          );
+        }
       } catch(e) {
         console.log('v - Passed ' + jsTok.length + ' tokens (but AST warning)');
         console.log(filename);
