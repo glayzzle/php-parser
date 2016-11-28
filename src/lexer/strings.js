@@ -110,7 +110,7 @@ module.exports = function(lexer, tokens) {
             this.yytext.length - 1
           );
         }
-        this.unput(this.yytext.length - 1);
+        this.unput(this.yytext.length - 2);
         this.begin("ST_DOUBLE_QUOTES");
         return '"';
       }
