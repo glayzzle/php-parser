@@ -133,6 +133,7 @@ module.exports = {
         if (ast[0] !== 'program') throw new Error('not a program node');
       } catch(e) {
         console.log('v - Passed ' + jsTok.length + ' tokens (but AST warning)');
+        console.log(filename);
         console.log(e);
         return true;
       }
