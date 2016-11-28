@@ -46,7 +46,7 @@ module.exports = function(api, tokens, EOF) {
       // CHECK END TOKEN
       this.expect(expect).next();
       if (expect === tokens.T_ENDSWITCH) {
-        this.expect(';').next();
+        this.expectEndOfStatement();
       }
       return result;
     }
