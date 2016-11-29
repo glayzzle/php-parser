@@ -189,7 +189,8 @@ module.exports = function(api, tokens, EOF) {
       if (this.token === ';' || this.token === ',') {
         return varName(null);
       } else if(this.token === '=') {
-        return varName(this.next().read_scalar());
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
+        return varName(this.next().read_expr());
       } else {
         this.expect([',', ';', '=']);
       }
