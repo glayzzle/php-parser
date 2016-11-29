@@ -350,7 +350,7 @@ module.exports = function(api, tokens, EOF) {
           false
         );
         this.expect(')').next();
-      } else if (this.token !== ',') {
+      } else if (this.token !== ',' && this.token !== ')') {
         result = this.read_variable(); 
       }
       return result;
