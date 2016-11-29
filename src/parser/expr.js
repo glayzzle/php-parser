@@ -319,7 +319,11 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_class_name_reference: function() {
       if (this.token === '\\' || this.token === tokens.T_STRING) {
-        return this.read_namespace_name();
+        var result = this.read_namespace_name();
+        if (this.token === tokens.T_DOUBLE_COLON) {
+          result = this.read_static_getter(result);
+        }
+        return result;
       } else if (this.is('VARIABLE')) {
         return this.read_variable(true);
       } else {
