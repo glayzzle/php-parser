@@ -17,12 +17,13 @@ module.exports = function(api, tokens, EOF) {
     read_try: function() {
 
       // @todo implement the short form of declarations
-      this.expect(tokens.T_TRY).nextWithComments();
+      this.expect(tokens.T_TRY);
 
-      var code = this.read_statement();
+      var code = this.nextWithComments().read_statement();
       var allways = false;
       var catches = [];
-
+      
+      this.ignoreComments();
       while(this.token === tokens.T_CATCH) {
         this.next().expect('(').next();
         var exName = this.read_namespace_name();
@@ -33,6 +34,7 @@ module.exports = function(api, tokens, EOF) {
           as: varName,
           body: this.read_statement()
         });
+        this.ignoreComments();
       }
       if (this.token === tokens.T_FINALLY) {
         allways = this.nextWithComments().read_statement();
