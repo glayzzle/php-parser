@@ -12,7 +12,7 @@ module.exports = function(api, tokens, EOF) {
      * array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
      * </ebnf>
      */
-    read_array: function(vars) {
+    read_array: function() {
       var expect = null;
       var items = [];
       var result = this.node('array');

@@ -90,7 +90,7 @@ module.exports = function(api, tokens, EOF) {
           // ARRAYS
           case tokens.T_ARRAY:  // array parser
           case '[':             // short array format
-            return this.read_array(false);
+            return this.read_array();
           default:
             this.error('SCALAR');
         }
@@ -124,6 +124,9 @@ module.exports = function(api, tokens, EOF) {
       } else if (this.token === tokens.T_CURLY_OPEN) {
         result = this.next().read_variable(false, false);
         this.expect('}').next();
+      } else if (this.token === '[') {
+        result = ['offset', result, this.next().read_expr()];
+        this.expect(']').next();
       } else if (this.token === tokens.T_VARIABLE) {
         result = this.read_variable(false, true);
       } else {
