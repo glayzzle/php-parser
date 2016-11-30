@@ -157,7 +157,7 @@ module.exports = function(api, tokens, EOF) {
      */
     ,read_argument_list: function() {
       if (this.token === tokens.T_ELLIPSIS ) {
-        return ['...', this.next().read_expr()];
+        return this.node('...')(this.next().read_expr());
       }
       return this.read_expr();
     }

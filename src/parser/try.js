@@ -18,7 +18,7 @@ module.exports = function(api, tokens, EOF) {
 
       // @todo implement the short form of declarations
       this.expect(tokens.T_TRY);
-
+      var result = this.node('try');
       var code = this.nextWithComments().read_statement();
       var allways = false;
       var catches = [];
@@ -39,7 +39,7 @@ module.exports = function(api, tokens, EOF) {
       if (this.token === tokens.T_FINALLY) {
         allways = this.nextWithComments().read_statement();
       }
-      return ['try', code, catches, allways];
+      return result(code, catches, allways);
     }
   };
 };

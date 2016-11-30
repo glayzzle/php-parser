@@ -12,11 +12,13 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     read_switch: function() {
-      this.expect(tokens.T_SWITCH).next().expect('(').next();
+      this.expect(tokens.T_SWITCH).next();
+      var result = this.node('switch');
+      this.expect('(').next();
       var expr = this.read_expr();
       this.expect(')').next();
       var cases = this.read_switch_case_list();
-      return ['switch', expr, cases];
+      return result(expr, cases);
     }
     /**
      * <ebnf>

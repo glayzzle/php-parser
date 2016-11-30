@@ -56,7 +56,7 @@ module.exports = function(api, tokens, EOF) {
      * reads an elseif (expr): statements
      */
     read_elseif_short: function() {
-
+      var result = this.node('if');
       var cond = this.read_if_expr();
       this.expect(':').next();
       var body = [];
@@ -73,7 +73,7 @@ module.exports = function(api, tokens, EOF) {
         body.push(this.read_inner_statement());
       }
 
-      return ['if', cond, body, elseCond];
+      return result(cond, body, elseCond);
     },
     /**
      * 

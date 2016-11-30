@@ -248,9 +248,10 @@ module.exports = function(api, tokens, EOF) {
           return this.read_try();
 
         case tokens.T_THROW:
+          var result = this.node('throw');
           var expr = this.next().read_expr();
           this.expectEndOfStatement();
-          return ['throw', expr];
+          return result(expr);
 
         case ';': // ignore this (extra ponctuation)
         case tokens.T_CLOSE_TAG: // empty tag

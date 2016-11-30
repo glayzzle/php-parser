@@ -22,6 +22,7 @@ module.exports = function(api, tokens, EOF) {
      * Reads a while statement
      */
     ,read_while: function() {
+      var result = this.node('while');
       this.expect('(').next();
       var cond = this.read_expr();
       this.expect(')').next();
@@ -31,16 +32,18 @@ module.exports = function(api, tokens, EOF) {
       } else {
         body = this.read_statement();
       }
-      return ['while', cond, body];
+      return result(cond, body);
     }
     ,read_do: function() {
+      var result = this.node('do');
       var body = this.read_statement();
       this.expect(tokens.T_WHILE).next().expect('(').next();
       var cond = this.read_expr();
       this.expect(')').next().expect(';').next();
-      return ['do', cond, body];
+      return result(cond, body);
     }
     ,read_for: function() {
+      var result = this.node('for');
       this.expect('(').next();
       var expr1 = null, expr2 = null, expr3 = null;
       if (this.token !== ';') {
@@ -67,7 +70,7 @@ module.exports = function(api, tokens, EOF) {
       } else  {
         body = this.read_statement();
       }
-      return ['for', expr1, expr2, expr3, body];
+      return result(expr1, expr2, expr3, body);
     }
     /**
      * <ebnf>
@@ -75,6 +78,7 @@ module.exports = function(api, tokens, EOF) {
      * </ebnf>
      */
     ,read_foreach: function() {
+      var result = this.node('foreach');
       this.expect('(').next();
       var expr = this.read_expr();
       this.expect(tokens.T_AS).next();
@@ -91,7 +95,7 @@ module.exports = function(api, tokens, EOF) {
       } else {
         body = this.read_statement();
       }
-      return ['foreach', expr, key, item, body];
+      return result(expr, key, item, body);
     }
     /**
      * <ebnf>
@@ -102,14 +106,11 @@ module.exports = function(api, tokens, EOF) {
         if (this.token === '&') {
           return ['byref', this.next().read_variable()];
         } else if (this.token === tokens.T_LIST) {
+          var result = this.node('list');
           this.next().expect('(').next();
           var assignList = this.read_assignment_list();
           this.expect(')').next();
-          return [
-            'list', 
-            assignList,
-            false
-          ];
+          return result(assignList, false);
         } else {
           return this.read_variable();
         }

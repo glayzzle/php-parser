@@ -87,10 +87,14 @@ module.exports = function(api, tokens, EOF) {
             return this.recursive_variable_chain_scan(expr, false);
           } else if (this.token === tokens.T_CURLY_OPEN || this.token === '[') {
             // @fixme - should avoid a new token (could be resolved)
-            return ['deference', expr, this.read_encapsed_string_item()];
+            return this.node('deference')(
+              expr, this.read_encapsed_string_item()
+            );
           } else if (this.token === '(') {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-            return ['call', expr, this.read_function_argument_list()];
+            return this.node('call')(
+              expr, this.read_function_argument_list()
+            );
           } else {
             return expr;
           }
@@ -109,7 +113,9 @@ module.exports = function(api, tokens, EOF) {
           return result(assignList, this.read_expr());
 
         case tokens.T_CLONE:
-          return this.node('sys')('clone', this.next().read_expr());
+          return this.node('sys')(
+            'clone', this.next().read_expr()
+          );
 
         case tokens.T_INC:
           var name = this.next().read_variable();
@@ -135,22 +141,35 @@ module.exports = function(api, tokens, EOF) {
           return ['sys', 'empty', expr];
 
         case tokens.T_INCLUDE:
-          return ['sys', 'include', this.next().read_expr()];
+          return (this.node('sys'))(
+            'include',
+            this.next().read_expr()
+          );
 
         case tokens.T_INCLUDE_ONCE:
-          return ['sys', 'include_once', this.next().read_expr()];
+          return (this.node('sys'))(
+            'include_once', 
+            this.next().read_expr()
+          );
 
         case tokens.T_REQUIRE:
-          return ['sys', 'require', this.next().read_expr()];
+          return (this.node('sys'))(
+            'require', 
+            this.next().read_expr()
+          );
 
         case tokens.T_REQUIRE_ONCE:
-          return ['sys', 'require', this.next().read_expr()];
+          return (this.node('sys'))(
+            'require_once', 
+            this.next().read_expr()
+          );
 
         case tokens.T_EVAL:
+          var result = this.node('sys');
           this.next().expect('(').next();
           var expr = this.read_expr();
           this.expect(')').next();
-          return ['sys', 'eval', expr];
+          return result('eval', expr);
 
         case tokens.T_INT_CAST:
           return ['cast', 'int', this.next().read_expr()];
@@ -174,6 +193,7 @@ module.exports = function(api, tokens, EOF) {
           return ['sys', 'unset', this.next().read_expr()];
 
         case tokens.T_EXIT:
+          var result = this.node('sys');
           var expr = null;
           if ( this.next().token === '(' ) {
             if (this.next().token !== ')') {
@@ -183,10 +203,13 @@ module.exports = function(api, tokens, EOF) {
               this.next();
             }
           }
-          return ['sys', 'exit', expr];
+          return result('exit', expr);
 
         case tokens.T_PRINT:
-          return ['sys', 'print', this.next().read_expr()];
+          return (this.node('sys'))(
+            'print', 
+            this.next().read_expr()
+          );
 
         // T_YIELD (expr (T_DOUBLE_ARROW expr)?)?
         case tokens.T_YIELD:
@@ -273,10 +296,10 @@ module.exports = function(api, tokens, EOF) {
             expr = this.recursive_variable_chain_scan(expr, false);
           } else if (this.token === tokens.T_CURLY_OPEN || this.token === '[') {
             // @fixme - should avoid a new token (could be resolved)
-            expr = ['deference', expr, this.read_encapsed_string_item()];
+            expr = this.node('deference')(expr, this.read_encapsed_string_item());
           } else if (this.token === '(') {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-            expr = ['call', expr, this.read_function_argument_list()];
+            expr = this.node('call')(expr, this.read_function_argument_list());
           } else {
             return expr;
           }
