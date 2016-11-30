@@ -203,6 +203,13 @@ module.exports = function(engine) {
     /** handling errors **/
     ,error: function(expect) {
       token = getTokenName(this.token);
+      if (isNumber(this.token)) {
+        var symbol = this.text();
+        if (symbol.length > 10) {
+          symbol = symbol.substring(0, 7) + '...';
+        } 
+        token = '\''+symbol+'\' ('+token+')';
+      }
       var msgExpect = '';
       if (expect) {
         msgExpect = ', expecting ';
@@ -220,7 +227,7 @@ module.exports = function(engine) {
         tokenName: token,
         expected: expect,
         messageExpected: msgExpect,
-        message: 'Parse Error : unexpected ' + token + msgExpect + ' at line ' + this.lexer.yylloc.first_line,
+        message: 'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
         line: this.lexer.yylloc.first_line
       };
       if (this.suppressErrors && !this._gracefull) {
