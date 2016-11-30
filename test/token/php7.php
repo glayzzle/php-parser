@@ -109,22 +109,22 @@ echo $getX->call(new A);
 // Group use declarations
 
 // Pre PHP 7 code
-use some\namespace\ClassA;
-use some\namespace\ClassB;
-use some\namespace\ClassC as C;
+use some\ns\ClassA;
+use some\ns\ClassB;
+use some\ns\ClassC as C;
 
-use function some\namespace\fn_a;
-use function some\namespace\fn_b;
-use function some\namespace\fn_c;
+use function some\ns\fn_a;
+use function some\ns\fn_b;
+use function some\ns\fn_c;
 
-use const some\namespace\ConstA;
-use const some\namespace\ConstB;
-use const some\namespace\ConstC;
+use const some\ns\ConstA;
+use const some\ns\ConstB;
+use const some\ns\ConstC;
 
 // PHP 7+ code
-use some\namespace\{ClassA, ClassB, ClassC as C};
-use function some\namespace\{fn_a, fn_b, fn_c};
-use const some\namespace\{ConstA, ConstB, ConstC};
+use some\ns\{ClassA, ClassB, ClassC as C};
+use function some\ns\{fn_a, fn_b, fn_c};
+use const some\ns\{ConstA, ConstB, ConstC};
 
 // Generator Return Expressions
 
