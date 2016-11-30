@@ -4,8 +4,6 @@
  * @url http://glayzzle.com
  */
 
-var fs = require('fs');
-
 /**
  * Expose the parser constructor
  */
