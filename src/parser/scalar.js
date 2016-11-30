@@ -118,7 +118,7 @@ module.exports = function(api, tokens, EOF) {
             this.expect(']').next();
           }
         } else {
-          result = this.next().read_expr();
+          result = this.read_expr();
         }
         this.expect('}').next();
       } else if (this.token === tokens.T_CURLY_OPEN) {
