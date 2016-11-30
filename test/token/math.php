@@ -4,8 +4,8 @@
   $a = 0xFF00;
   $bin = 0b010111;
 
-  $funky = 0xZ;
-  $wtf = 0b2;
+  //$funky = 0xZ;
+  //$wtf = 0b2;
 
   $a = $b + 5;
   $c = ($a / 5) * 10;
@@ -41,7 +41,7 @@
   for($i = 0; $i < 100; $i++) {
     $obj[$i]->${$var . $i} -= (int)$i ^ 5 + ($j--);
   }
-  class::$property .= 'aa'.'bb';
+  MyClass::$property .= 'aa'.'bb';
   $foo %= 2 % 6;
   $foo &= 5;
   
@@ -52,7 +52,7 @@
   $var = $arg ? 0: 5;
 
   foreach(gen_three_nulls() as $key => $value) {
-    $key = $bar ? null : $foo ! $baz ^ (int * $5);
+    $key = $bar ? null : $foo ** $baz ^ (int * $a5);
     if ($key ^= 5) echo '!!';
   }
   
@@ -62,9 +62,9 @@
       yield;
     }
     
-    $doc = <<<  'EOD'
+    $doc = <<<EOT
   Hello World
-'EOD';
+EOT;
     
     // only PHP7 can parse this :
     yield from seven_eight();

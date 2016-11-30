@@ -115,6 +115,18 @@ module.exports = function(api, tokens, EOF) {
                 what = ['var', this.text()];
                 this.next();
                 break;
+              case '$':
+                
+                this.next().expect(['{', tokens.T_VARIABLE]);
+                if (this.token === '{') {
+                  // $obj->${$varname}
+                  what = this.next().read_expr();
+                  this.expect('}').next();
+                } else {
+                  // $obj->$$varname
+                  what = this.read_expr();
+                }
+                break;
               case '{':
                 what = this.next().read_expr();
                 this.expect('}').next();
