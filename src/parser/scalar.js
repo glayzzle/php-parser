@@ -79,13 +79,19 @@ module.exports = function(api, tokens, EOF) {
           case tokens.T_NS_SEPARATOR:
           case tokens.T_STRING:
             var value = this.read_namespace_name();
+            var result = ['const', value];
             if ( this.token == tokens.T_DOUBLE_COLON) {
-              // class constant
+              // class constant  MyClass::CONSTANT
               this.next().expect([tokens.T_STRING, tokens.T_CLASS]);
-              value = [value, this.text()];
+              result[1] = [value, this.text()];
               this.next();
             }
-            return ['const', value];
+            // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
+            while(this.token === '[') {
+              result = ['offset', result, this.next().read_expr()];
+              this.expect(']').next();
+            }
+            return result;
           
           // ARRAYS
           case tokens.T_ARRAY:  // array parser
