@@ -71,6 +71,8 @@ If you run into problems with a test, run it with the cli and add the `--debug` 
 
 # Releases
 
+
+* 0.1.2  : add comments nodes, add a browser version and improved parser stability
 * 0.1.0  : major release, rewriting of the lexer and many bug fixes
 * 0.0.10 : bugfixes and php7 implementation
 * 0.0.9  : const (value as expr) bugfix
