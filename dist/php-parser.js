@@ -962,7 +962,7 @@ module.exports = {
         this.begin('ST_IN_SCRIPTING');
         return '{';
       case '}':
-        if (this.conditionStack.length > 1) {
+        if (this.conditionStack.length > 2) {
           // Return to HEREDOC/ST_DOUBLE_QUOTES mode
           this.popState();
         }
@@ -2135,6 +2135,7 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
+  this.lastDoc = null;
   this.nextWithComments();
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
@@ -2146,6 +2147,7 @@ parser.prototype.next = function() {
 
 /** consume comments (if found) **/
 parser.prototype.ignoreComments = function() {
+  this.lastDoc = null;
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
     // IGNORE COMMENTS
@@ -2162,6 +2164,9 @@ parser.prototype.nextWithComments = function() {
     this.lexer.offset
   ];
   this.token = this.lexer.lex() || this.EOF;
+  if (this.token === this.tok.T_DOC_COMMENT) {
+    this.lastDoc = ['doc', this.text()];
+  }
   if (this.debug) this.showlog();
   return this;
 };
@@ -2193,7 +2198,7 @@ parser.prototype.read_token = function() {
  * list ::= separator? ( item separator )* item
  * </ebnf>
  */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
+parser.prototype.read_list = function(item, separator, preserveFirstSeparator, withDoc) {
   var result = [];
 
   if (this.token == separator) {
@@ -2203,7 +2208,12 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
 
   if (typeof (item) === "function") {
     do {
-      result.push(item.apply(this, []));
+      var doc = withDoc && this.lastDoc ? this.lastDoc : null;
+      var node = item.apply(this, []);
+      if (doc) {
+        node = doc.concat(node);
+      }
+      result.push(node);
       if (this.token != separator) {
         break;
       }
@@ -2219,6 +2229,7 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   }
   return result;
 };
+
 
 // extends the parser with syntax files
 [
@@ -3733,7 +3744,7 @@ module.exports = {
       if(
         !ignoreType && (this.token === this.tok.T_FUNCTION || this.token === this.tok.T_CONST)
       ) {
-        type = this.token === this.tok.T_FUNCTION ? 'function' : 'const';
+        type = this.token === this.tok.T_FUNCTION ? 'function' : 'constant';
         this.next();
       }
       var name = this.read_namespace_name();
@@ -3823,7 +3834,7 @@ module.exports = {
         case this.tok.T_NS_SEPARATOR:
         case this.tok.T_STRING:
           var value = this.read_namespace_name();
-          var result = ['const', value];
+          var result = ['constant', value];
           if ( this.token == this.tok.T_DOUBLE_COLON) {
             // class constant  MyClass::CONSTANT
             this.next().expect([this.tok.T_STRING, this.tok.T_CLASS]);
@@ -4026,10 +4037,10 @@ module.exports = {
   ,read_const_list: function() {
     var result = this.read_list(function() {
       this.expect(this.tok.T_STRING);
-      var name = this.text();
+      var result = this.node(this.text());
       this.next().expect('=').next();
-      return [name, this.read_expr()];
-    }, ',');
+      return result(this.read_expr());
+    }, ',', false, true);
     this.expectEndOfStatement();
     return ['const', result];
   }
@@ -4394,7 +4405,7 @@ module.exports = {
         && this.token != '('
       ) {
         // @see parser.js line 130 : resolves a conflict with scalar
-        result = ['const', result.length == 1 ? result[0] : result];
+        result = ['constant', result.length == 1 ? result[0] : result];
       } else {
         result = ['ns', result];
       }

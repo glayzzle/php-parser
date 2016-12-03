@@ -28,7 +28,7 @@ module.exports = {
         && this.token != '('
       ) {
         // @see parser.js line 130 : resolves a conflict with scalar
-        result = ['const', result.length == 1 ? result[0] : result];
+        result = ['constant', result.length == 1 ? result[0] : result];
       } else {
         result = ['ns', result];
       }

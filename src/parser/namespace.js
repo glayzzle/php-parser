@@ -129,7 +129,7 @@ module.exports = {
       if(
         !ignoreType && (this.token === this.tok.T_FUNCTION || this.token === this.tok.T_CONST)
       ) {
-        type = this.token === this.tok.T_FUNCTION ? 'function' : 'const';
+        type = this.token === this.tok.T_FUNCTION ? 'function' : 'constant';
         this.next();
       }
       var name = this.read_namespace_name();

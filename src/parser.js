@@ -371,6 +371,7 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
+  this.lastDoc = null;
   this.nextWithComments();
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
@@ -382,6 +383,7 @@ parser.prototype.next = function() {
 
 /** consume comments (if found) **/
 parser.prototype.ignoreComments = function() {
+  this.lastDoc = null;
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
     // IGNORE COMMENTS
@@ -398,6 +400,9 @@ parser.prototype.nextWithComments = function() {
     this.lexer.offset
   ];
   this.token = this.lexer.lex() || this.EOF;
+  if (this.token === this.tok.T_DOC_COMMENT) {
+    this.lastDoc = ['doc', this.text()];
+  }
   if (this.debug) this.showlog();
   return this;
 };
@@ -429,7 +434,7 @@ parser.prototype.read_token = function() {
  * list ::= separator? ( item separator )* item
  * </ebnf>
  */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
+parser.prototype.read_list = function(item, separator, preserveFirstSeparator, withDoc) {
   var result = [];
 
   if (this.token == separator) {
@@ -439,7 +444,12 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
 
   if (typeof (item) === "function") {
     do {
-      result.push(item.apply(this, []));
+      var doc = withDoc && this.lastDoc ? this.lastDoc : null;
+      var node = item.apply(this, []);
+      if (doc) {
+        node = doc.concat(node);
+      }
+      result.push(node);
       if (this.token != separator) {
         break;
       }
@@ -455,6 +465,7 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   }
   return result;
 };
+
 
 // extends the parser with syntax files
 [

@@ -97,10 +97,10 @@ module.exports = {
   ,read_const_list: function() {
     var result = this.read_list(function() {
       this.expect(this.tok.T_STRING);
-      var name = this.text();
+      var result = this.node(this.text());
       this.next().expect('=').next();
-      return [name, this.read_expr()];
-    }, ',');
+      return result(this.read_expr());
+    }, ',', false, true);
     this.expectEndOfStatement();
     return ['const', result];
   }

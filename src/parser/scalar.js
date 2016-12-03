@@ -79,7 +79,7 @@ module.exports = {
         case this.tok.T_NS_SEPARATOR:
         case this.tok.T_STRING:
           var value = this.read_namespace_name();
-          var result = ['const', value];
+          var result = ['constant', value];
           if ( this.token == this.tok.T_DOUBLE_COLON) {
             // class constant  MyClass::CONSTANT
             this.next().expect([this.tok.T_STRING, this.tok.T_CLASS]);
