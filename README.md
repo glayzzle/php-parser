@@ -25,11 +25,20 @@ Will output :
 
 -- TOKENS :
 T_ECHO T_CONSTANT_ENCAPSED_STRING ;
+
 -- AST :
-[ 'program',
-  [ [ 'sys',
-      'echo',
-      [ [ 'string', '"Hello World"' ] ] ] ] ]
+
+[
+  'program',  <-- program node
+  [
+    [ 'sys',  <-- first child, typed system call
+      'echo', <-- operation echo
+      [
+        [ 'string', '"Hello World"' ]  <-- first argument
+      ]
+    ]
+  ]
+]
 ```
 
 Try it online (demo) :
@@ -38,11 +47,14 @@ https://tonicdev.com/ichiriac/php-parser
 # Use it
 
 ```
-var parser = require('php-parser');
+// initialize a new parser instance
+var parser = require('php-parser').create();
+
+// how to retrieve the AST
 var AST = parser.parseEval('echo "Hello World";');
-console.log(AST);
+
+// how to list tokens
 var tokens = parser.tokenGetAll('<?php echo "Hello World";');
-console.log(tokens);
 ```
 
 For more details please [visit he wiki](https://github.com/glayzzle/php-parser/wiki).
@@ -50,8 +62,8 @@ For more details please [visit he wiki](https://github.com/glayzzle/php-parser/w
 # Join the dev
 
 If you want to change/fix the lexer you will find code to `./src/lexer/`.
-You can also implement the parser, the code is into `./src/parser/`. 
-To check your changes add tests into `./test/parser/`, and run `npm run test`. 
+You can also implement the parser, the code is into `./src/parser/`.
+To check your changes add tests into `./test/parser/`, and run `npm run test`.
 Try to keep or improve the coverage levels.
 
 The command line options :
@@ -72,7 +84,7 @@ If you run into problems with a test, run it with the cli and add the `--debug` 
 # Releases
 
 
-* 0.1.2  : add comments nodes, add a browser version and improved parser stability
+* 0.1.3  : add comments nodes, add a browser version and improved parser stability
 * 0.1.0  : major release, rewriting of the lexer and many bug fixes
 * 0.0.10 : bugfixes and php7 implementation
 * 0.0.9  : const (value as expr) bugfix
