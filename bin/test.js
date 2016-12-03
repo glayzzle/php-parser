@@ -11,6 +11,8 @@ var fs      = require('fs');
 var path    = require('path');
 
 var engine  = require('../main');
+engine = new engine();
+
 engine.lexer.short_tags = true;
 
 // help screen
@@ -193,7 +195,7 @@ function test(filename) {
 
 if (options.mocha) {
   var Mocha = require('mocha'), path = require('path');
-  
+
   // Instantiate a Mocha instance.
   var mocha = new Mocha();
 
@@ -206,7 +208,7 @@ if (options.mocha) {
           path.join(options.mocha, file)
       );
   });
-  
+
   // Run the tests.
   mocha.run(function(failures){
     if (failures) {
@@ -238,22 +240,22 @@ function runTests() {
         tokens.push(token);
       }
       token = engine.lexer.lex() || EOF;
-    }  
+    }
     console.log('-- TOKENS : ');
     console.log(tokens.join(' '));
-    
+
     var ast = engine.parser.parse(options.evalCode);
     console.log('-- AST : ');
     console.log(
       util.inspect(
-        ast, { 
-          showHidden: false, 
-          depth: 20, 
-          colors: true 
+        ast, {
+          showHidden: false,
+          depth: 20,
+          colors: true
         }
       )
     );
-  
+
   } else if (options.filename) {
     if (!test(options.filename)) {
       abort('Error: test FAILED !!!');
@@ -261,7 +263,7 @@ function runTests() {
       console.log('Success');
     }
   } else if (options.path) {
-  
+
     var files = [];
     var scanFiles = function(path) {
       var items = fs.readdirSync(path);
@@ -277,17 +279,17 @@ function runTests() {
         }
       }
     };
-  
+
     console.log('Scan files ' + options.path);
     scanFiles(options.path);
     console.log('Found ' + files.length + ' items');
-  
+
     var stats = {
       time: process.hrtime(),
       progress: 0,
       code: 0
     };
-    
+
     function secondsToTime(secs)
     {
         secs = Math.round(secs);
@@ -303,15 +305,15 @@ function runTests() {
     }
     // running
     for(var i = 0; i < files.length; i++) {
-      var file = files[i];  
+      var file = files[i];
       if (i / files.length * 100 > stats.progress + 2) {
         stats.progress = i / files.length * 100;
         var now = process.hrtime(stats.time);
         var remain = (now[0] / stats.progress) * (100 - stats.progress);
         console.log(
-          'Progress ', 
-          Math.round(stats.progress) + '%', 
-          ' remains ', 
+          'Progress ',
+          Math.round(stats.progress) + '%',
+          ' remains ',
           secondsToTime(remain)
         );
       }
@@ -323,17 +325,16 @@ function runTests() {
         console.error(e);
       }
     }
-  
+
     var duration = process.hrtime(stats.time);
     console.log('\n--------------------------------------');
     console.log('Tests duration : ' + duration[0] +'sec');
-  
+
     if (stats.code === 0) {
       console.log('I AM HAPPY !');
     }
-  
+
     process.exit(stats.code);
   }
 
 }
-
