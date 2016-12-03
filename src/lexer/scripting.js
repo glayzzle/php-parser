@@ -59,7 +59,7 @@ module.exports = {
         this.begin('ST_IN_SCRIPTING');
         return '{';
       case '}':
-        if (this.conditionStack.length > 1) {
+        if (this.conditionStack.length > 2) {
           // Return to HEREDOC/ST_DOUBLE_QUOTES mode
           this.popState();
         }
