@@ -246,12 +246,10 @@ module.exports = {
               return ['link', expr, this.read_variable()];
             }
           } else {
-            return [
-              'set',
-              expr,
-              this.token === this.tok.T_NEW ?
-                this.next().read_new_expr() : this.read_expr()
-            ];
+            var node = this.node('set');
+            var statement = this.token === this.tok.T_NEW ?
+              this.next().read_new_expr() : this.read_expr();
+            return node(expr, statement);
           }
         // operations :
         case this.tok.T_PLUS_EQUAL:
