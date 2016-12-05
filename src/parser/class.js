@@ -125,19 +125,19 @@ module.exports = {
 
       // reads a variable
       if (this.token === this.tok.T_VARIABLE) {
-        node = this.node();
-        var variables = this.read_variable_list();
+        var variables = this.read_variable_list(flags);
         this.expect(';').nextWithComments();
-        variables = node.apply(this, variables).concat([flags]);
-        if (this.locations) {
-          variables[1] = startAt;
+        for(var i = 0; i < variables.length; i++) {
+          var variable = variables[i];
+          (this.locations ? variable[3] : variable).push(flags);
+          if (comment) {
+            var buffer = comment.slice(0);
+            (this.locations ? buffer[3] : buffer).push(variable);
+            variable = buffer;
+          }
+          result.properties.push(variable);
         }
-        if (comment) {
-          (this.locations ? comment[3] : comment).push(variables);
-          variables = comment;
-          comment = false;
-        }
-        result.properties.push(variables);
+        comment = false;
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         var method = this.read_function(false, flags[2] === 1).concat(
