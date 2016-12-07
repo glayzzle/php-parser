@@ -140,11 +140,12 @@ module.exports = {
         comment = false;
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        var method = this.read_function(false, flags[2] === 1).concat(
-          [flags]
-        );
+        var method = this.read_function(false, flags[2] === 1);
         if (this.locations) {
           method[1] = startAt;
+          method[3].push(flags);
+        } else {
+          method.push(flags);
         }
         if (comment) {
           (this.locations ? comment[3] : comment).push(method);

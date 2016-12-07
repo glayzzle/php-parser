@@ -53,7 +53,7 @@ describe('Test comments', function() {
         ' * Description',
         ' */'
       ].join('\n'));
-      
+
     });
     it('test function', function () {
       ast[1][1][0].should.be.exactly("function");
@@ -96,7 +96,14 @@ describe('Test comments', function() {
       var body = ast[1][1][5];
       body.properties[0][0].should.be.exactly("comment");
       body.properties[0][1][0].should.be.exactly("// @var test\n");
-      body.properties[1][0].should.be.exactly("doc")
+      body.properties[0][2][0].should.be.exactly("$test");
+
+      body.properties[1][0].should.be.exactly("comment");
+      body.properties[1][2][0].should.be.exactly("$toto");
+
+      body.properties[2][0].should.be.exactly("doc")
+      body.properties[2][2][0].should.be.exactly("$foo");
+
       body.methods[0][0].should.be.exactly("doc");
       body.methods[0][1].should.be.exactly("/**\n    * @return void\n    */");
       body.methods[0][2][0].should.be.exactly("function");
