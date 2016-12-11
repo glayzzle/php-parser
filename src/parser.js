@@ -268,9 +268,7 @@ parser.prototype.error = function(expect) {
     message: 'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
     line: this.lexer.yylloc.first_line
   };
-  if (this.suppressErrors) {
-    this.next();
-  } else {
+  if (!this.suppressErrors) {
     throw new Error(this.lastError.message);
   }
 };

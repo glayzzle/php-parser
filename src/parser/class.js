@@ -193,6 +193,7 @@ module.exports = {
       return varName(this.next().read_expr());
     } else {
       this.expect([',', ';', '=']);
+      return varName(null);
     }
   }
   /**
