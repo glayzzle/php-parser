@@ -223,8 +223,7 @@ parser.prototype.parse = function(code) {
   this.ast = ['program', []];
   while(this.token != this.EOF) {
     var node = this.read_start();
-    if (node !== null) {
-      if (node === undefined) console.log(this.ast[1]);
+    if (node !== null && node !== undefined) {
       if (typeof node[0] !== 'string') {
         node.forEach(function(item) {
           this.ast[1].push(item);
@@ -271,7 +270,6 @@ parser.prototype.error = function(expect) {
   };
   if (this.suppressErrors) {
     this.next();
-    // this.token = this.EOF;
   } else {
     throw new Error(this.lastError.message);
   }
@@ -343,15 +341,31 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
+var ignoreStack = ['parser.next', '_gracefulDecorator'];
 parser.prototype.showlog = function() {
   var stack = (new Error()).stack.split('\n');
+  var line;
+  for (var offset = 2; offset < stack.length; offset ++) {
+    line = stack[offset].trim();
+    var found = false;
+    for(var i = 0; i < ignoreStack.length; i++) {
+      if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      break;
+    }
+  }
+
   console.log(
     'Line '
     + this.lexer.yylloc.first_line
     + ' : '
     + this.getTokenName(this.token)
     + ">" + this.lexer.yytext + "<"
-    + ' @' + stack[3].trim()
+    + ' @-->' + line
   );
   return this;
 };
