@@ -58,7 +58,7 @@ module.exports = {
         return this.read_trait();
       case this.tok.T_USE:
         var expr = this.read_use_statements();
-        this.expect(';').next();
+        this.expect(';').nextWithComments();
         return expr;
       case this.tok.T_CONST:
         return this.next().read_const_list();
@@ -231,7 +231,7 @@ module.exports = {
       case this.tok.T_UNSET:
         this.next().expect('(').next();
         var items = this.read_list(this.read_variable, ',');
-        this.expect(')').next().expect(';').next();
+        this.expect(')').next().expect(';').nextWithComments();
         return ['sys', 'unset', items];
 
       case this.tok.T_DECLARE:
@@ -268,7 +268,7 @@ module.exports = {
           // default fallback expr
           this.lexer.tokens.push(current);
           var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]).next();
+          this.expect([';', this.tok.T_CLOSE_TAG]).nextWithComments();
           return expr;
         }
 

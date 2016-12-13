@@ -307,7 +307,7 @@ module.exports = {
       if (this.token == this.tok.T_CONST) {
         var node = this.node();
         var constants = this.read_constant_list();
-        this.expect(';').next();
+        this.expect(';').nextWithComments();
         constants = node.apply(this, constants);
         result.constants.push(constants);
         continue;
@@ -335,7 +335,7 @@ module.exports = {
           method[1] = startAt;
         }
         result.methods.push(method);
-        this.expect(';').next();
+        this.expect(';').nextWithComments();
       } else {
         // raise an error
         this.error([
@@ -397,9 +397,9 @@ module.exports = {
         result.adaptations.push(this.read_trait_use_alias());
         this.expect(';');
       }
-      this.expect('}').next();
+      this.expect('}').nextWithComments();
     } else {
-      this.expect(';').next();
+      this.expect(';').nextWithComments();
     }
   }
   /**

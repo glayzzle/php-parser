@@ -37,7 +37,7 @@ module.exports = {
     );
     if (isAbstract) {
       result = result();
-      this.expect(';').next();
+      this.expect(';').nextWithComments();
     } else {
       result = result(
         this.expect('{').read_code_block(false)
