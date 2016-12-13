@@ -355,6 +355,8 @@ module.exports = {
       var result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
+      } else {
+        result = ['ns', result];
       }
       return result;
     } else if (this.is('VARIABLE')) {
