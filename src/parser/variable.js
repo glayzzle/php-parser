@@ -180,13 +180,13 @@ module.exports = {
         if (encapsed) {
           result = this.next().read_encaps_var_offset();
         } else {
-          result = ['offset', result, this.next().read_dim_offset()];
+          var offset = this.next().token === ']' ? null : this.read_dim_offset();
+          result = ['offset', result, offset];
         }
         this.expect(']').next();
       } else if (this.token == '{' && !encapsed) {
         result = ['offset', result, this.next().read_expr()];
         this.expect('}').next();
-        break;
       } else break;
     }
     return result;
