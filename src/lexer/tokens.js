@@ -17,6 +17,16 @@ module.exports = {
         }
       } else {
         id = this.tok.T_STRING;
+        if (token === 'b' || token === 'B') {
+          var ch = this.input(1);
+          if (ch === '"') {
+            return this.ST_DOUBLE_QUOTES();
+          } else if (ch === '\'') {
+            return this.T_CONSTANT_ENCAPSED_STRING();
+          } else {
+            this.unput(1);
+          }
+        }
       }
     }
     return id;

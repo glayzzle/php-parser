@@ -103,15 +103,19 @@ module.exports = {
     if (ch == '"') {
       return this.tok.T_CONSTANT_ENCAPSED_STRING;
     } else {
+      var prefix = 1;
+      if (this.yytext[0] === 'b' || this.yytext[0] === 'B') {
+        prefix = 2;
+      }
       if (this.yytext.length > 2) {
         this.appendToken(
           this.tok.T_ENCAPSED_AND_WHITESPACE,
-          this.yytext.length - 1
+          this.yytext.length - prefix
         );
       }
-      this.unput(this.yytext.length - 1);
+      this.unput(this.yytext.length - prefix);
       this.begin("ST_DOUBLE_QUOTES");
-      return '"';
+      return this.yytext;
     }
   },
 
