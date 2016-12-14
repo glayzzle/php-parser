@@ -65,11 +65,6 @@ module.exports = {
    */
   ,read_expr_item: function() {
 
-    if (this.token === this.tok.T_STRING) {
-      var tokTxt = this.text();
-      if (tokTxt === 'b' || tokTxt === 'B') this.token = this.tok.T_STRING_CAST;
-    }
-
     switch(this.token) {
 
       case '@':

@@ -37,21 +37,28 @@ module.exports = {
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
           var value = this.text();
-          value = value.substring(1, value.length - 1).replace(
+          var isBinCast = value[0] === 'b' || value[0] === 'B';
+          if (isBinCast) {
+            value = value.substring(2, value.length - 1);
+          } else {
+            value = value.substring(1, value.length - 1);
+          }
+          value = ['string', value.replace(
             /\\[rntvef"'\\\$]/g,
             function(seq) {
               return specialChar[seq];
             }
-          );
+          )];
+          if (isBinCast) {
+            value = ['cast', 'binary', value];
+          }
           this.next();
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
-            return this.read_static_getter(
-              ['string', value]
-            );
+            return this.read_static_getter(value);
           } else {
             // dirrect string
-            return ['string', value];
+            return value;
           }
         case this.tok.T_START_HEREDOC:
           return this.next().read_encapsed_string(
@@ -59,6 +66,9 @@ module.exports = {
           );
         case '"':
           return this.next().read_encapsed_string('"');
+        case 'b"':
+        case 'B"':
+          return ['cast', 'binary', this.next().read_encapsed_string('"')];
 
         // NUMERIC
         case '-':  // long
