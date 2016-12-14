@@ -321,20 +321,6 @@ module.exports = {
         continue;
       }
 
-      // check constant
-      if (this.token == this.tok.T_CONST) {
-        var node = this.node();
-        var constants = this.read_constant_list();
-        this.expect(';').nextWithComments();
-        if (comment) {
-          (this.locations ? comment[3] : comment).push(constants);
-          constants = comment;
-          comment = false;
-        }
-        constants = node.apply(this, constants);
-        result.constants.push(constants);
-        continue;
-      }
 
       // prepare here position (to avoid bad position on locations)
       if (this.locations) {
@@ -348,8 +334,26 @@ module.exports = {
       // read member flags
       var flags = this.read_member_flags(true);
 
+      // check constant
+      if (this.token == this.tok.T_CONST) {
+        var constants = this.read_constant_list();
+        this.expect(';').nextWithComments();
+
+        for(var i = 0; i < constants.length; i++) {
+          var constant = constants[i];
+          (this.locations ? constant[3] : constant).push(flags);
+          if (comment) {
+            var buffer = comment.slice(0);
+            (this.locations ? buffer[3] : buffer).push(constant);
+            constant = buffer;
+          }
+          result.constants.push(constant);
+        }
+
+      }
+
       // reads a function
-      if (this.token === this.tok.T_FUNCTION) {
+      else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         var method = this.read_function_declaration().concat(
           [flags]
