@@ -8,14 +8,11 @@ var util = require('util');
 module.exports = {
   explode: true
   ,handles: function(filename, ext) {
-    return ext == '.parser';
+    return ext == '.phpt';
   }
   // runs a parser file : test parsing behaviours
   ,run: function(data, filename, engine) {
     try {
-      if (engine.parser.debug) {
-        console.log('   >> Start test : ' + data.shift());
-      }
       var test = {
         buffer: '',
         mode: ''
@@ -32,16 +29,17 @@ module.exports = {
         }
       });
       if (test) tests.push(test);
-      var writer;
-      var ok;
+
+      var ok = true;
       for(var i = 0; i < tests.length; i++) {
         test=tests[i];
-        engine.parser.debug && console.log('   mode : ' + test.mode);
-        if (test.mode.substring(0, 4) == 'FAIL') {
-          ok = false;
+        if (test.mode === 'TEST') {
+          engine.parser.debug && console.log('> ' + test.buffer.trim());
+          continue;
+        }
+        if (test.mode === 'FILE') {
           try {
-            var ast = engine.parseEval(test.buffer);
-            ok = true;
+            var ast = engine.parseCode(test.buffer);
             if (engine.parser.debug) {
               console.log(
                 util.inspect(
@@ -54,37 +52,16 @@ module.exports = {
               );
             }
           } catch(e) {
-            engine.parser.debug && console.log(e);
+            console.log(e.stack);
             ok = false;
           }
-          if (ok) {
-            throw new Error('Test should fail to parse : \n>> ' + test.buffer);
-          }
         } else {
-          try {
-            var ast = engine.parseEval(test.buffer);
-            if (engine.parser.debug) {
-              console.log(
-                util.inspect(
-                  ast, {
-                    showHidden: false,
-                    depth: 10,
-                    colors: true
-                  }
-                )
-              );
-            }
-          } catch(e) {
-            e.source = test.buffer;
-            throw e;
-          }
+          engine.parser.debug && console.log('IGNORE ' + test.mode);
         }
       }
-      return true;
+      return ok;
     } catch(e) {
-      // @fixme - this function does not exists, should be declared in parser.js ?
-      throw e;
-      // engine.parseError(e, e.source);
+      console.error(e.stack);
       return false;
     }
   }

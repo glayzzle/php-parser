@@ -131,6 +131,7 @@ var engines = [
     require('./formats/parser')
   , require('./formats/token')
   , require('./formats/php')
+  , require('./formats/phpt')
   , require('./formats/ast')
 ];
 
@@ -287,7 +288,8 @@ function runTests() {
     var stats = {
       time: process.hrtime(),
       progress: 0,
-      code: 0
+      code: 0,
+      errors: 0
     };
 
     function secondsToTime(secs)
@@ -321,6 +323,7 @@ function runTests() {
         test(file);
       } catch(e) {
         stats.code = 1;
+        stats.errors ++;
         console.error('Error on ' + file);
         console.error(e);
       }
@@ -332,6 +335,8 @@ function runTests() {
 
     if (stats.code === 0) {
       console.log('I AM HAPPY !');
+    } else {
+      console.log('Found ' + stats.errors + ' error(s)');
     }
 
     process.exit(stats.code);
