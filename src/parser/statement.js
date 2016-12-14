@@ -244,11 +244,20 @@ module.exports = {
         return ['sys', 'unset', items];
 
       case this.tok.T_DECLARE:
-        var result = this.node('declare');
+        var result = this.node('declare'), options, body;
         this.next().expect('(').next();
-        var options = this.read_declare_list();
+        options = this.read_declare_list();
         this.expect(')').nextWithComments();
-        var body = this.read_statement();
+        if (this.token === ':') {
+          body = [];
+          this.next();
+          while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
+            body.push(this.read_statement());
+          }
+          this.ignoreComments().expect(this.tok.T_ENDDECLARE).next().expectEndOfStatement();
+        } else {
+          body = this.read_statement();
+        }
         return result(options, body);
         break;
 
