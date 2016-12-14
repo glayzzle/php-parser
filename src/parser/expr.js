@@ -106,9 +106,18 @@ module.exports = {
       case this.tok.T_LIST:
         var result = this.node('list');
         this.next().expect('(').next();
+        var isInner = this.innerList;
+        if (!this.innerList) this.innerList = true;
         var assignList = this.read_assignment_list();
-        this.expect(')').next().expect('=').next();
-        return result(assignList, this.read_expr());
+        this.expect(')').next();
+
+        if (!isInner) {
+          this.innerList = false;
+          this.expect('=').next();
+          return result(assignList, this.read_expr());
+        } else {
+          return result(assignList, null);
+        }
 
       case this.tok.T_CLONE:
         return this.node('sys')(
@@ -370,27 +379,25 @@ module.exports = {
    *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
    * </ebnf>
    */
-  ,read_assignment_list: function(innerList) {
+  ,read_assignment_list: function() {
     return this.read_list(
       this.read_assignment_list_element, ','
     );
   }
+
   /**
    * <ebnf>
    *  assignment_list_element ::= (variable | (T_LIST '(' assignment_list ')'))?
    * </ebnf>
    */
   ,read_assignment_list_element: function() {
-    var result = null;
-    if (this.token === this.tok.T_LIST) {
-      result = this.node('list');
-      result = result(
-        this.next().expect('(').next().read_assignment_list(),
-        false
-      );
-      this.expect(')').next();
-    } else if (this.token !== ',' && this.token !== ')') {
-      result = this.read_variable();
+    var result = this.read_expr_item();
+    if (this.token === this.tok.T_DOUBLE_ARROW) {
+      result = [
+        'key',
+        result,
+        this.next().read_expr_item()
+      ];
     }
     return result;
   }
