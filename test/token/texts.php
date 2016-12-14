@@ -1,8 +1,9 @@
 <?php
 
+  $a = b'a';
   $colors = array("red", "white", "blue");
-  echo "\colors contains >$colors<\n";
-  echo "\colors[1] contains >$colors[1]<\n";
+  echo b"\colors contains >$colors<\n";
+  echo B"\colors[1] contains >$colors[1]<\n";
   echo "\colors[1] contains >$colors [1]<\n";		// whitespace permitted, but semantics change
   //echo "\colors[1] contains >$colors[ 1]<\n";	// whitespace not permitted
   //echo "\colors[1] contains >$colors[1 ]<\n";	// whitespace not permitted
