@@ -220,6 +220,7 @@ parser.prototype.parse = function(code) {
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.nextWithComments();
+  this.innerList = false;
   this.ast = ['program', []];
   while(this.token != this.EOF) {
     var node = this.read_start();

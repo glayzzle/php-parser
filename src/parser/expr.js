@@ -107,6 +107,7 @@ module.exports = {
         var result = this.node('list');
         this.next().expect('(').next();
         var isInner = this.innerList;
+
         if (!this.innerList) this.innerList = true;
         var assignList = this.read_assignment_list();
 
