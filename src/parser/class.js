@@ -301,13 +301,29 @@ module.exports = {
     var result = {
       'constants': []
       ,'methods': []
-    }, startAt = null;
+    }, startAt = null, comment = false;
     while(this.token !== this.EOF && this.token !== '}') {
+
+      if (this.token === this.tok.T_COMMENT) {
+        comment = this.read_comment();
+        continue;
+      }
+
+      if (this.token === this.tok.T_DOC_COMMENT) {
+        comment = this.read_doc_comment();
+        continue;
+      }
+
       // check constant
       if (this.token == this.tok.T_CONST) {
         var node = this.node();
         var constants = this.read_constant_list();
         this.expect(';').nextWithComments();
+        if (comment) {
+          (this.locations ? comment[3] : comment).push(constants);
+          constants = comment;
+          comment = false;
+        }
         constants = node.apply(this, constants);
         result.constants.push(constants);
         continue;
@@ -333,6 +349,11 @@ module.exports = {
         );
         if (this.locations) {
           method[1] = startAt;
+        }
+        if (comment) {
+          (this.locations ? comment[3] : comment).push(method);
+          method = comment;
+          comment = false;
         }
         result.methods.push(method);
         this.expect(';').nextWithComments();

@@ -117,13 +117,16 @@ describe('Array without keys', function() {
 
      it('should have correct item types and values', function () {
        ast[1][0][1][0].value[0].should.be.exactly("new");
-       ast[1][0][1][0].value[1][0].should.be.exactly("foo");
+       ast[1][0][1][0].value[1][0].should.be.exactly("ns");
+       ast[1][0][1][0].value[1][1][0].should.be.exactly("foo");
 
        ast[1][0][1][1].value[0].should.be.exactly("new");
-       ast[1][0][1][1].value[1][0].should.be.exactly("stdClass");
+       ast[1][0][1][1].value[1][0].should.be.exactly("ns");
+       ast[1][0][1][1].value[1][1][0].should.be.exactly("stdClass");
 
        ast[1][0][1][2].value[0].should.be.exactly("new");
-       ast[1][0][1][2].value[1][0].should.be.exactly("bar");
+       ast[1][0][1][2].value[1][0].should.be.exactly("ns");
+       ast[1][0][1][2].value[1][1][0].should.be.exactly("bar");
      });
    });
 
