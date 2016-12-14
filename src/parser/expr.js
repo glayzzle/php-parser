@@ -109,6 +109,20 @@ module.exports = {
         var isInner = this.innerList;
         if (!this.innerList) this.innerList = true;
         var assignList = this.read_assignment_list();
+
+        // check if contains at least one assignment statement
+        var hasItem = false;
+        for(var i = 0; i < assignList.length; i++) {
+          if (assignList[i] !== null) {
+            hasItem = true;
+            break;
+          }
+        }
+        if (!hasItem) {
+          this.raiseError(
+            'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
+          );
+        }
         this.expect(')').next();
 
         if (!isInner) {
@@ -387,10 +401,11 @@ module.exports = {
 
   /**
    * <ebnf>
-   *  assignment_list_element ::= (variable | (T_LIST '(' assignment_list ')'))?
+   *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
    * </ebnf>
    */
   ,read_assignment_list_element: function() {
+    if (this.token === ',' || this.token === ')') return null;
     var result = this.read_expr_item();
     if (this.token === this.tok.T_DOUBLE_ARROW) {
       result = [

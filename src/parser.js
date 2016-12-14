@@ -237,6 +237,23 @@ parser.prototype.parse = function(code) {
 };
 
 /**
+ * Raise an error
+ */
+parser.prototype.raiseError = function(message, msgExpect, expect, token) {
+  this.lastError = {
+    token: this.token,
+    tokenName: token,
+    expected: expect,
+    messageExpected: msgExpect,
+    message: message,
+    line: this.lexer.yylloc.first_line
+  };
+  if (!this.suppressErrors) {
+    throw new Error(this.lastError.message);
+  }
+};
+
+/**
  * handling errors
  */
 parser.prototype.error = function(expect) {
@@ -260,17 +277,12 @@ parser.prototype.error = function(expect) {
       msgExpect += this.getTokenName(expect);
     }
   }
-  this.lastError = {
-    token: this.token,
-    tokenName: token,
-    expected: expect,
-    messageExpected: msgExpect,
-    message: 'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
-    line: this.lexer.yylloc.first_line
-  };
-  if (!this.suppressErrors) {
-    throw new Error(this.lastError.message);
-  }
+  return this.raiseError(
+    'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
+    msgExpect,
+    expect,
+    token
+  );
 };
 
 /**
