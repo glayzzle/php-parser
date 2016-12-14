@@ -37,7 +37,8 @@ module.exports = {
           engine.parser.debug && console.log('> ' + test.buffer.trim());
           continue;
         }
-        if (test.mode === 'FILE') {
+        var mode = test.mode.split(':');
+        if (mode[0] === 'FILE') {
           try {
             var ast = engine.parseCode(test.buffer);
             if (engine.parser.debug) {
@@ -51,9 +52,23 @@ module.exports = {
                 )
               );
             }
+            if (mode.length > 1 && mode[1] === 'FAIL') {
+              ok = false;
+              console.log('Should fail at line ' + mode[2]);
+            }
           } catch(e) {
-            console.log(e.stack);
-            ok = false;
+            if (mode.length > 1 && mode[1] === 'FAIL') {
+              if (engine.parser.lastError.line != mode[2]) {
+                ok = false;
+                console.log(
+                  'Expected to fail at line ' + mode[2] +
+                  ' but fail at ' + engine.parser.lastError.line
+                );
+              }
+            } else {
+              console.log(e.stack);
+              ok = false;
+            }
           }
         } else {
           engine.parser.debug && console.log('IGNORE ' + test.mode);
