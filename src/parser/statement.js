@@ -64,6 +64,13 @@ module.exports = {
         return this.next().read_const_list();
       case this.tok.T_NAMESPACE:
         return this.read_namespace();
+      case this.tok.T_HALT_COMPILER:
+        var result = this.node('halt');
+        this.next().expect('(').next().expect(')').next().expect(';');
+        this.lexer.done = true;
+        return result(this.lexer._input.substring(
+          this.lexer.offset
+        ));
       default:
         return this.read_statement();
     }
@@ -146,7 +153,9 @@ module.exports = {
         return this.read_interface(0);
       case this.tok.T_TRAIT:
         return this.read_trait();
-      // @todo T_HALT_COMPILER '(' ')' ';'
+      case this.tok.T_HALT_COMPILER:
+        this.next().expect('(').next().expect(')').next().expect(';').next();
+        this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
       default:
         return this.read_statement();
     }
