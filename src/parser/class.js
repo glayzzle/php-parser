@@ -46,9 +46,12 @@ module.exports = {
    */
   ,read_class_scope: function() {
     var result = this.token;
-    if (result == this.tok.T_FINAL || result == this.tok.T_ABSTRACT) {
+    if (result == this.tok.T_FINAL) {
       this.next();
-      return result;
+      return -1;
+    } else if (result == this.tok.T_ABSTRACT) {
+      this.next();
+      return 1;
     }
     return 0;
   }
