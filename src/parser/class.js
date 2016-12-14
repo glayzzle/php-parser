@@ -459,9 +459,18 @@ module.exports = {
       result.target = this.next().read_namespace_name();
     } else if (this.token === this.tok.T_AS) {
       result.act = 'as';
-      result.flags = this.next().read_member_flags();
-      result.target = this.expect(this.tok.T_STRING).text();
-      this.next();
+      if (this.next().is('T_MEMBER_FLAGS')) {
+        result.flags = this.read_member_flags();
+      } else {
+        result.flags = null;
+      }
+      if (this.token === this.tok.T_STRING) {
+        result.target = this.text();
+        this.next();
+      } else if (result.flags === null) {
+        // no visibility flags and no name => too bad
+        this.expect(this.tok.T_STRING)
+      }
     } else {
       this.expect([
         this.tok.T_AS,
