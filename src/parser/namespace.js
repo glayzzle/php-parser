@@ -17,18 +17,25 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE).next();
     var result = this.node('namespace');
     if (this.token == '{') {
+      this.currentNamespace = [''];
       return result([''], this.read_code_block(true));
     } else {
-      // @fixme should expect {, T_STRING even if not NS_SEP
-      if(this.token === this.tok.T_NS_SEPARATOR)
-          this.error(['{', this.tok.T_STRING]);
+      if(this.token === this.tok.T_NAMESPACE) this.error(['{', this.tok.T_STRING]);
       var name = this.read_namespace_name();
       if (this.token == ';') {
+        this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
         return result(name, body);
       } else if (this.token == '{') {
+        this.currentNamespace = name;
         return result(name, this.read_code_block(true));
+      } else if (this.token === '(') {
+        // resolve ambuiguity between namespace & function call
+        return this.node('call')(
+          ['ns', name.slice(1)]
+          , this.read_function_argument_list()
+        );
       } else {
         this.error(['{', ';']);
       }
@@ -41,6 +48,9 @@ module.exports = {
    * </ebnf>
    */
   ,read_namespace_name: function() {
+    if (this.token === this.tok.T_NAMESPACE) {
+      this.next().expect(this.tok.T_NS_SEPARATOR).next();
+    }
     return this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
   }
   /**

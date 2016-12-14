@@ -76,6 +76,7 @@ module.exports = {
           return result(value);
 
         // CONSTANTS
+        case this.tok.T_NAMESPACE:
         case this.tok.T_NS_SEPARATOR:
         case this.tok.T_STRING:
           var value = this.read_namespace_name();

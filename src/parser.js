@@ -216,6 +216,7 @@ parser.prototype.parse = function(code) {
   if (this.suppressErrors) {
     this.graceful(this.suppressErrors);
   }
+  this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
