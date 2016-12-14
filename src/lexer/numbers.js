@@ -22,14 +22,14 @@ module.exports = {
     if (ch === '0') {
       ch = this.input();
       // check if hexa
-      if (ch === 'x') {
+      if (ch === 'x' || ch === 'X') {
         this.input();
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
           this.unput(2);
         }
-      } else if (ch === 'b') {
+      } else if (ch === 'b' || ch === 'B') {
         ch = this.input();
         if (ch === '0' || ch === '1') {
           return this.consume_BNUM();

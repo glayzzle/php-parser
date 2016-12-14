@@ -1,7 +1,16 @@
 <?php
- /* 
-@todo - should pass
-*/
+
+  $colors = array("red", "white", "blue");
+  echo "\colors contains >$colors<\n";
+  echo "\colors[1] contains >$colors[1]<\n";
+  echo "\colors[1] contains >$colors [1]<\n";		// whitespace permitted, but semantics change
+  //echo "\colors[1] contains >$colors[ 1]<\n";	// whitespace not permitted
+  //echo "\colors[1] contains >$colors[1 ]<\n";	// whitespace not permitted
+  var_dump("$colors[1]");
+  var_dump("$colors[01]");		// invalid index
+  var_dump("$colors[0x1]");		// invalid index
+  var_dump("$colors[0X1]");		// invalid index
+
   echo "~'.{{$expectedLength}}'\$~s";
   $obj = new stdClass();
   $obj->name = 'john';
@@ -19,9 +28,9 @@
   $v = strtolower("$i.$j.$k-$rel");
   $text = "$text at line $line";
   return "Class.create('$package$className',{";
-  
+
   $this->lastTTYMode = trim(`stty -g`);
-  
+
   /**, $methodName = null **/
   $source = preg_replace('/(^|\s)namespace(.*?)\s*;/', "$1namespace$2\n{", $source)."}\n";
   /*/
