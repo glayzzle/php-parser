@@ -84,10 +84,7 @@ module.exports = {
         if (this.token === this.tok.T_OBJECT_OPERATOR) {
           return this.recursive_variable_chain_scan(expr, false);
         } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
-          // @fixme - should avoid a new token (could be resolved)
-          return this.node('deference')(
-            expr, this.read_encapsed_string_item()
-          );
+          return this.read_dereferencable(expr);
         } else if (this.token === '(') {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
           return this.node('call')(
@@ -315,8 +312,7 @@ module.exports = {
         if (this.token === this.tok.T_OBJECT_OPERATOR) {
           expr = this.recursive_variable_chain_scan(expr, false);
         } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
-          // @fixme - should avoid a new token (could be resolved)
-          expr = this.node('deference')(expr, this.read_encapsed_string_item());
+          expr = this.read_dereferencable(expr);
         } else if (this.token === '(') {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
           expr = this.node('call')(expr, this.read_function_argument_list());

@@ -114,6 +114,19 @@ module.exports = {
     }
   }
   /**
+   * Handles the dereferencing
+   */
+  ,read_dereferencable: function(expr) {
+    var result;
+    if (this.token === '[') {
+      result = ['offset', expr, this.next().read_expr()];
+      this.expect(']').next();
+    } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      result = ['offset', expr, this.read_encapsed_string_item()];
+    }
+    return result;
+  }
+  /**
    * <ebnf>
    * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
    * </ebnf>
