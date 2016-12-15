@@ -208,7 +208,7 @@ module.exports = {
 
       case this.tok.T_STATIC:
         var current = [this.token, this.lexer.getState()];
-        var result = this.node('global');
+        var result = this.node('static');
         if (this.next().token === this.tok.T_DOUBLE_COLON) {
           // static keyword for a class
           this.lexer.tokens.push(current);
@@ -225,7 +225,7 @@ module.exports = {
           return [name, value];
         }, ',');
         this.expectEndOfStatement();
-        return result(items);
+        return result('declare', items);
 
       case this.tok.T_ECHO:
         var items = this.next().read_list(this.read_expr, ',');
