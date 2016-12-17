@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2016-12-03 */
+/*! php-parser - BSD3 License - 2016-12-17 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -727,14 +727,14 @@ module.exports = {
     if (ch === '0') {
       ch = this.input();
       // check if hexa
-      if (ch === 'x') {
+      if (ch === 'x' || ch === 'X') {
         this.input();
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
           this.unput(2);
         }
-      } else if (ch === 'b') {
+      } else if (ch === 'b' || ch === 'B') {
         ch = this.input();
         if (ch === '0' || ch === '1') {
           return this.consume_BNUM();
@@ -1108,15 +1108,19 @@ module.exports = {
     if (ch == '"') {
       return this.tok.T_CONSTANT_ENCAPSED_STRING;
     } else {
+      var prefix = 1;
+      if (this.yytext[0] === 'b' || this.yytext[0] === 'B') {
+        prefix = 2;
+      }
       if (this.yytext.length > 2) {
         this.appendToken(
           this.tok.T_ENCAPSED_AND_WHITESPACE,
-          this.yytext.length - 1
+          this.yytext.length - prefix
         );
       }
-      this.unput(this.yytext.length - 1);
+      this.unput(this.yytext.length - prefix);
       this.begin("ST_DOUBLE_QUOTES");
-      return '"';
+      return this.yytext;
     }
   },
 
@@ -1432,6 +1436,16 @@ module.exports = {
         }
       } else {
         id = this.tok.T_STRING;
+        if (token === 'b' || token === 'B') {
+          var ch = this.input(1);
+          if (ch === '"') {
+            return this.ST_DOUBLE_QUOTES();
+          } else if (ch === '\'') {
+            return this.T_CONSTANT_ENCAPSED_STRING();
+          } else {
+            this.unput(1);
+          }
+        }
       }
     }
     return id;
@@ -1850,6 +1864,8 @@ var parser = function(lexer) {
       this.tok.T_DIR,
       this.tok.T_NS_C,
       '"',
+      'b"',
+      'B"',
       '-',
       this.tok.T_NS_SEPARATOR
     ],
@@ -1977,14 +1993,19 @@ parser.prototype.graceful = function(mode) {
  */
 parser.prototype.parse = function(code) {
   this.lastError = false;
+  if (this.suppressErrors) {
+    this.graceful(this.suppressErrors);
+  }
+  this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.nextWithComments();
+  this.innerList = false;
   this.ast = ['program', []];
   while(this.token != this.EOF) {
     var node = this.read_start();
-    if (node !== null) {
+    if (node !== null && node !== undefined) {
       if (typeof node[0] !== 'string') {
         node.forEach(function(item) {
           this.ast[1].push(item);
@@ -1995,6 +2016,23 @@ parser.prototype.parse = function(code) {
     }
   }
   return this.ast;
+};
+
+/**
+ * Raise an error
+ */
+parser.prototype.raiseError = function(message, msgExpect, expect, token) {
+  this.lastError = {
+    token: this.token,
+    tokenName: token,
+    expected: expect,
+    messageExpected: msgExpect,
+    message: message,
+    line: this.lexer.yylloc.first_line
+  };
+  if (!this.suppressErrors) {
+    throw new Error(this.lastError.message);
+  }
 };
 
 /**
@@ -2021,19 +2059,12 @@ parser.prototype.error = function(expect) {
       msgExpect += this.getTokenName(expect);
     }
   }
-  this.lastError = {
-    token: this.token,
-    tokenName: token,
-    expected: expect,
-    messageExpected: msgExpect,
-    message: 'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
-    line: this.lexer.yylloc.first_line
-  };
-  if (this.suppressErrors && !this._gracefull) {
-    this.token = this.EOF;
-  } else {
-    throw new Error(this.lastError.message);
-  }
+  return this.raiseError(
+    'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
+    msgExpect,
+    expect,
+    token
+  );
 };
 
 /**
@@ -2102,15 +2133,31 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
+var ignoreStack = ['parser.next', '_gracefulDecorator'];
 parser.prototype.showlog = function() {
   var stack = (new Error()).stack.split('\n');
+  var line;
+  for (var offset = 2; offset < stack.length; offset ++) {
+    line = stack[offset].trim();
+    var found = false;
+    for(var i = 0; i < ignoreStack.length; i++) {
+      if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      break;
+    }
+  }
+
   console.log(
     'Line '
     + this.lexer.yylloc.first_line
     + ' : '
     + this.getTokenName(this.token)
     + ">" + this.lexer.yytext + "<"
-    + ' @' + stack[3].trim()
+    + ' @-->' + line
   );
   return this;
 };
@@ -2376,9 +2423,12 @@ module.exports = {
    */
   ,read_class_scope: function() {
     var result = this.token;
-    if (result == this.tok.T_FINAL || result == this.tok.T_ABSTRACT) {
+    if (result == this.tok.T_FINAL) {
       this.next();
-      return result;
+      return -1;
+    } else if (result == this.tok.T_ABSTRACT) {
+      this.next();
+      return 1;
     }
     return 0;
   }
@@ -2422,21 +2472,6 @@ module.exports = {
         continue;
       }
 
-      // check constant
-      if (this.token === this.tok.T_CONST) {
-        node = this.node();
-        var constants = this.read_constant_list();
-        this.expect(';').nextWithComments();
-        if (comment) {
-          (this.locations ? comment[3] : comment).push(constants);
-          constants = comment;
-          comment = false;
-        }
-        constants = node.apply(this, constants);
-        result.constants.push(constants);
-        continue;
-      }
-
       // prepare here position (to avoid bad position on locations)
       if (this.locations) {
         startAt = [
@@ -2448,6 +2483,25 @@ module.exports = {
       // read member flags
       var flags = this.read_member_flags(false);
 
+      // check constant
+      if (this.token === this.tok.T_CONST) {
+
+        var constants = this.read_constant_list();
+        this.expect(';').nextWithComments();
+
+        for(var i = 0; i < constants.length; i++) {
+          var constant = constants[i];
+          (this.locations ? constant[3] : constant).push(flags);
+          if (comment) {
+            var buffer = comment.slice(0);
+            (this.locations ? buffer[3] : buffer).push(constant);
+            constant = buffer;
+          }
+          result.constants.push(constant);
+        }
+        continue;
+      }
+
       // jump over T_VAR then land on T_VARIABLE
       if (this.token === this.tok.T_VAR) {
         this.next().expect(this.tok.T_VARIABLE);
@@ -2455,26 +2509,27 @@ module.exports = {
 
       // reads a variable
       if (this.token === this.tok.T_VARIABLE) {
-        node = this.node();
-        var variables = this.read_variable_list();
+        var variables = this.read_variable_list(flags);
         this.expect(';').nextWithComments();
-        variables = node.apply(this, variables).concat([flags]);
-        if (this.locations) {
-          variables[1] = startAt;
+        for(var i = 0; i < variables.length; i++) {
+          var variable = variables[i];
+          (this.locations ? variable[3] : variable).push(flags);
+          if (comment) {
+            var buffer = comment.slice(0);
+            (this.locations ? buffer[3] : buffer).push(variable);
+            variable = buffer;
+          }
+          result.properties.push(variable);
         }
-        if (comment) {
-          (this.locations ? comment[3] : comment).push(variables);
-          variables = comment;
-          comment = false;
-        }
-        result.properties.push(variables);
+        comment = false;
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        var method = this.read_function(false, flags[2] === 1).concat(
-          [flags]
-        );
+        var method = this.read_function(false, flags[2] === 1);
         if (this.locations) {
           method[1] = startAt;
+          method[3].push(flags);
+        } else {
+          method.push(flags);
         }
         if (comment) {
           (this.locations ? comment[3] : comment).push(method);
@@ -2522,6 +2577,7 @@ module.exports = {
       return varName(this.next().read_expr());
     } else {
       this.expect([',', ';', '=']);
+      return varName(null);
     }
   }
   /**
@@ -2629,17 +2685,19 @@ module.exports = {
     var result = {
       'constants': []
       ,'methods': []
-    }, startAt = null;
+    }, startAt = null, comment = false;
     while(this.token !== this.EOF && this.token !== '}') {
-      // check constant
-      if (this.token == this.tok.T_CONST) {
-        var node = this.node();
-        var constants = this.read_constant_list();
-        this.expect(';').next();
-        constants = node.apply(this, constants);
-        result.constants.push(constants);
+
+      if (this.token === this.tok.T_COMMENT) {
+        comment = this.read_comment();
         continue;
       }
+
+      if (this.token === this.tok.T_DOC_COMMENT) {
+        comment = this.read_doc_comment();
+        continue;
+      }
+
 
       // prepare here position (to avoid bad position on locations)
       if (this.locations) {
@@ -2653,8 +2711,26 @@ module.exports = {
       // read member flags
       var flags = this.read_member_flags(true);
 
+      // check constant
+      if (this.token == this.tok.T_CONST) {
+        var constants = this.read_constant_list();
+        this.expect(';').nextWithComments();
+
+        for(var i = 0; i < constants.length; i++) {
+          var constant = constants[i];
+          (this.locations ? constant[3] : constant).push(flags);
+          if (comment) {
+            var buffer = comment.slice(0);
+            (this.locations ? buffer[3] : buffer).push(constant);
+            constant = buffer;
+          }
+          result.constants.push(constant);
+        }
+
+      }
+
       // reads a function
-      if (this.token === this.tok.T_FUNCTION) {
+      else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         var method = this.read_function_declaration().concat(
           [flags]
@@ -2662,8 +2738,13 @@ module.exports = {
         if (this.locations) {
           method[1] = startAt;
         }
+        if (comment) {
+          (this.locations ? comment[3] : comment).push(method);
+          method = comment;
+          comment = false;
+        }
         result.methods.push(method);
-        this.expect(';').next();
+        this.expect(';').nextWithComments();
       } else {
         // raise an error
         this.error([
@@ -2725,9 +2806,9 @@ module.exports = {
         result.adaptations.push(this.read_trait_use_alias());
         this.expect(';');
       }
-      this.expect('}').next();
+      this.expect('}').nextWithComments();
     } else {
-      this.expect(';').next();
+      this.expect(';').nextWithComments();
     }
   }
   /**
@@ -2755,9 +2836,18 @@ module.exports = {
       result.target = this.next().read_namespace_name();
     } else if (this.token === this.tok.T_AS) {
       result.act = 'as';
-      result.flags = this.next().read_member_flags();
-      result.target = this.expect(this.tok.T_STRING).text();
-      this.next();
+      if (this.next().is('T_MEMBER_FLAGS')) {
+        result.flags = this.read_member_flags();
+      } else {
+        result.flags = null;
+      }
+      if (this.token === this.tok.T_STRING) {
+        result.target = this.text();
+        this.next();
+      } else if (result.flags === null) {
+        // no visibility flags and no name => too bad
+        this.expect(this.tok.T_STRING)
+      }
     } else {
       this.expect([
         this.tok.T_AS,
@@ -2883,10 +2973,7 @@ module.exports = {
         if (this.token === this.tok.T_OBJECT_OPERATOR) {
           return this.recursive_variable_chain_scan(expr, false);
         } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
-          // @fixme - should avoid a new token (could be resolved)
-          return this.node('deference')(
-            expr, this.read_encapsed_string_item()
-          );
+          return this.read_dereferencable(expr);
         } else if (this.token === '(') {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
           return this.node('call')(
@@ -2905,9 +2992,33 @@ module.exports = {
       case this.tok.T_LIST:
         var result = this.node('list');
         this.next().expect('(').next();
+        var isInner = this.innerList;
+
+        if (!this.innerList) this.innerList = true;
         var assignList = this.read_assignment_list();
-        this.expect(')').next().expect('=').next();
-        return result(assignList, this.read_expr());
+
+        // check if contains at least one assignment statement
+        var hasItem = false;
+        for(var i = 0; i < assignList.length; i++) {
+          if (assignList[i] !== null) {
+            hasItem = true;
+            break;
+          }
+        }
+        if (!hasItem) {
+          this.raiseError(
+            'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
+          );
+        }
+        this.expect(')').next();
+
+        if (!isInner) {
+          this.innerList = false;
+          this.expect('=').next();
+          return result(assignList, this.read_expr());
+        } else {
+          return result(assignList, null);
+        }
 
       case this.tok.T_CLONE:
         return this.node('sys')(
@@ -3045,12 +3156,10 @@ module.exports = {
               return ['link', expr, this.read_variable()];
             }
           } else {
-            return [
-              'set',
-              expr,
-              this.token === this.tok.T_NEW ?
-                this.next().read_new_expr() : this.read_expr()
-            ];
+            var node = this.node('set');
+            var statement = this.token === this.tok.T_NEW ?
+              this.next().read_new_expr() : this.read_expr();
+            return node(expr, statement);
           }
         // operations :
         case this.tok.T_PLUS_EQUAL:
@@ -3092,8 +3201,7 @@ module.exports = {
         if (this.token === this.tok.T_OBJECT_OPERATOR) {
           expr = this.recursive_variable_chain_scan(expr, false);
         } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
-          // @fixme - should avoid a new token (could be resolved)
-          expr = this.node('deference')(expr, this.read_encapsed_string_item());
+          expr = this.read_dereferencable(expr);
         } else if (this.token === '(') {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
           expr = this.node('call')(expr, this.read_function_argument_list());
@@ -3156,6 +3264,8 @@ module.exports = {
       var result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
+      } else {
+        result = ['ns', result];
       }
       return result;
     } else if (this.is('VARIABLE')) {
@@ -3169,27 +3279,26 @@ module.exports = {
    *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
    * </ebnf>
    */
-  ,read_assignment_list: function(innerList) {
+  ,read_assignment_list: function() {
     return this.read_list(
       this.read_assignment_list_element, ','
     );
   }
+
   /**
    * <ebnf>
-   *  assignment_list_element ::= (variable | (T_LIST '(' assignment_list ')'))?
+   *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
    * </ebnf>
    */
   ,read_assignment_list_element: function() {
-    var result = null;
-    if (this.token === this.tok.T_LIST) {
-      result = this.node('list');
-      result = result(
-        this.next().expect('(').next().read_assignment_list(),
-        false
-      );
-      this.expect(')').next();
-    } else if (this.token !== ',' && this.token !== ')') {
-      result = this.read_variable();
+    if (this.token === ',' || this.token === ')') return null;
+    var result = this.read_expr_item();
+    if (this.token === this.tok.T_DOUBLE_ARROW) {
+      result = [
+        'key',
+        result,
+        this.next().read_expr_item()
+      ];
     }
     return result;
   }
@@ -3235,7 +3344,7 @@ module.exports = {
     );
     if (isAbstract) {
       result = result();
-      this.expect(';').next();
+      this.expect(';').nextWithComments();
     } else {
       result = result(
         this.expect('{').read_code_block(false)
@@ -3632,18 +3741,25 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE).next();
     var result = this.node('namespace');
     if (this.token == '{') {
+      this.currentNamespace = [''];
       return result([''], this.read_code_block(true));
     } else {
-      // @fixme should expect {, T_STRING even if not NS_SEP
-      if(this.token === this.tok.T_NS_SEPARATOR)
-          this.error(['{', this.tok.T_STRING]);
+      if(this.token === this.tok.T_NAMESPACE) this.error(['{', this.tok.T_STRING]);
       var name = this.read_namespace_name();
       if (this.token == ';') {
+        this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
         return result(name, body);
       } else if (this.token == '{') {
+        this.currentNamespace = name;
         return result(name, this.read_code_block(true));
+      } else if (this.token === '(') {
+        // resolve ambuiguity between namespace & function call
+        return this.node('call')(
+          ['ns', name.slice(1)]
+          , this.read_function_argument_list()
+        );
       } else {
         this.error(['{', ';']);
       }
@@ -3656,6 +3772,9 @@ module.exports = {
    * </ebnf>
    */
   ,read_namespace_name: function() {
+    if (this.token === this.tok.T_NAMESPACE) {
+      this.next().expect(this.tok.T_NS_SEPARATOR).next();
+    }
     return this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
   }
   /**
@@ -3792,21 +3911,28 @@ module.exports = {
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
           var value = this.text();
-          value = value.substring(1, value.length - 1).replace(
+          var isBinCast = value[0] === 'b' || value[0] === 'B';
+          if (isBinCast) {
+            value = value.substring(2, value.length - 1);
+          } else {
+            value = value.substring(1, value.length - 1);
+          }
+          value = ['string', value.replace(
             /\\[rntvef"'\\\$]/g,
             function(seq) {
               return specialChar[seq];
             }
-          );
+          )];
+          if (isBinCast) {
+            value = ['cast', 'binary', value];
+          }
           this.next();
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
-            return this.read_static_getter(
-              ['string', value]
-            );
+            return this.read_static_getter(value);
           } else {
             // dirrect string
-            return ['string', value];
+            return value;
           }
         case this.tok.T_START_HEREDOC:
           return this.next().read_encapsed_string(
@@ -3814,6 +3940,9 @@ module.exports = {
           );
         case '"':
           return this.next().read_encapsed_string('"');
+        case 'b"':
+        case 'B"':
+          return ['cast', 'binary', this.next().read_encapsed_string('"')];
 
         // NUMERIC
         case '-':  // long
@@ -3831,6 +3960,7 @@ module.exports = {
           return result(value);
 
         // CONSTANTS
+        case this.tok.T_NAMESPACE:
         case this.tok.T_NS_SEPARATOR:
         case this.tok.T_STRING:
           var value = this.read_namespace_name();
@@ -3856,6 +3986,19 @@ module.exports = {
           this.error('SCALAR');
       }
     }
+  }
+  /**
+   * Handles the dereferencing
+   */
+  ,read_dereferencable: function(expr) {
+    var result;
+    if (this.token === '[') {
+      result = ['offset', expr, this.next().read_expr()];
+      this.expect(']').next();
+    } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      result = ['offset', expr, this.read_encapsed_string_item()];
+    }
+    return result;
   }
   /**
    * <ebnf>
@@ -3998,12 +4141,19 @@ module.exports = {
         return this.read_trait();
       case this.tok.T_USE:
         var expr = this.read_use_statements();
-        this.expect(';').next();
+        this.expect(';').nextWithComments();
         return expr;
       case this.tok.T_CONST:
         return this.next().read_const_list();
       case this.tok.T_NAMESPACE:
         return this.read_namespace();
+      case this.tok.T_HALT_COMPILER:
+        var result = this.node('halt');
+        this.next().expect('(').next().expect(')').next().expect(';');
+        this.lexer.done = true;
+        return result(this.lexer._input.substring(
+          this.lexer.offset
+        ));
       default:
         return this.read_statement();
     }
@@ -4086,7 +4236,9 @@ module.exports = {
         return this.read_interface(0);
       case this.tok.T_TRAIT:
         return this.read_trait();
-      // @todo T_HALT_COMPILER '(' ')' ';'
+      case this.tok.T_HALT_COMPILER:
+        this.next().expect('(').next().expect(')').next().expect(';').next();
+        this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
       default:
         return this.read_statement();
     }
@@ -4139,7 +4291,7 @@ module.exports = {
 
       case this.tok.T_STATIC:
         var current = [this.token, this.lexer.getState()];
-        var result = this.node('global');
+        var result = this.node('static');
         if (this.next().token === this.tok.T_DOUBLE_COLON) {
           // static keyword for a class
           this.lexer.tokens.push(current);
@@ -4156,7 +4308,7 @@ module.exports = {
           return [name, value];
         }, ',');
         this.expectEndOfStatement();
-        return result(items);
+        return result('declare', items);
 
       case this.tok.T_ECHO:
         var items = this.next().read_list(this.read_expr, ',');
@@ -4171,15 +4323,24 @@ module.exports = {
       case this.tok.T_UNSET:
         this.next().expect('(').next();
         var items = this.read_list(this.read_variable, ',');
-        this.expect(')').next().expect(';').next();
+        this.expect(')').next().expect(';').nextWithComments();
         return ['sys', 'unset', items];
 
       case this.tok.T_DECLARE:
-        var result = this.node('declare');
+        var result = this.node('declare'), options, body;
         this.next().expect('(').next();
-        var options = this.read_declare_list();
+        options = this.read_declare_list();
         this.expect(')').nextWithComments();
-        var body = this.read_statement();
+        if (this.token === ':') {
+          body = [];
+          this.next();
+          while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
+            body.push(this.read_statement());
+          }
+          this.ignoreComments().expect(this.tok.T_ENDDECLARE).next().expectEndOfStatement();
+        } else {
+          body = this.read_statement();
+        }
         return result(options, body);
         break;
 
@@ -4208,7 +4369,7 @@ module.exports = {
           // default fallback expr
           this.lexer.tokens.push(current);
           var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]).next();
+          this.expect([';', this.tok.T_CLOSE_TAG]).nextWithComments();
           return expr;
         }
 
@@ -4557,13 +4718,13 @@ module.exports = {
         if (encapsed) {
           result = this.next().read_encaps_var_offset();
         } else {
-          result = ['offset', result, this.next().read_dim_offset()];
+          var offset = this.next().token === ']' ? null : this.read_dim_offset();
+          result = ['offset', result, offset];
         }
         this.expect(']').next();
       } else if (this.token == '{' && !encapsed) {
         result = ['offset', result, this.next().read_expr()];
         this.expect('}').next();
-        break;
       } else break;
     }
     return result;
