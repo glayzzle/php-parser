@@ -45,7 +45,7 @@ T_ECHO T_CONSTANT_ENCAPSED_STRING ;
 ```
 
 Try it online (demo) :
-https://tonicdev.com/ichiriac/php-parser
+http://glayzzle.com/php-parser/#demo
 
 # Use it
 
