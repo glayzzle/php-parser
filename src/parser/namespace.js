@@ -20,7 +20,10 @@ module.exports = {
       this.currentNamespace = [''];
       return result([''], this.read_code_block(true));
     } else {
-      if(this.token === this.tok.T_NAMESPACE) this.error(['{', this.tok.T_STRING]);
+      if(this.token === this.tok.T_NAMESPACE) {
+        this.error(['{', this.tok.T_STRING]);
+        this.next(); // ignore namespace token
+      }
       var name = this.read_namespace_name();
       if (this.token == ';') {
         this.currentNamespace = name;
@@ -38,6 +41,11 @@ module.exports = {
         );
       } else {
         this.error(['{', ';']);
+        // graceful mode :
+        this.currentNamespace = name;
+        var body = this.read_top_statements();
+        this.expect(this.EOF);
+        return result(name, body);
       }
     }
   }

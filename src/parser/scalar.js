@@ -109,7 +109,10 @@ module.exports = {
         case '[':             // short array format
           return this.read_array();
         default:
-          this.error('SCALAR');
+          var err = this.error('SCALAR');
+          // graceful mode : ignore token & return error node
+          this.next();
+          return err;
       }
     }
   }

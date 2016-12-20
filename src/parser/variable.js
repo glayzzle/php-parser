@@ -59,7 +59,9 @@ module.exports = {
       getter = this.text();
       this.next();
     } else {
-      this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
+      getter = this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
+      // graceful mode : set getter as error node and continue
+      this.next();
     }
     if (from[0] != 'ns') {
       from = ['lookup', 'class', from];
@@ -131,7 +133,10 @@ module.exports = {
               this.expect('}').next();
               break;
             default:
-              this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
+              what = this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
+              // graceful mode : set what as error mode & continue
+              this.next();
+              break;
           }
           result = ['prop', result, what];
           break;
@@ -217,7 +222,9 @@ module.exports = {
           this.next();
           break;
         default:
-          this.error(['{', '$', this.tok.T_VARIABLE]);
+          result = this.error(['{', '$', this.tok.T_VARIABLE]);
+          // graceful mode
+          this.next();
       }
       result = ['lookup', 'var', result];
     }

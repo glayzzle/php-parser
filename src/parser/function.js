@@ -108,6 +108,7 @@ module.exports = {
           break;
         } else {
           this.error([',', ')']);
+          break;
         }
       }
     }
