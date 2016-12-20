@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2016-12-17 */
+/*! php-parser - BSD3 License - 2016-12-20 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -1791,38 +1791,6 @@ function isNumber(n) {
 
 
 /**
- * Graceful decorator
- */
-var _gracefulDecorator = function(fn) {
-  try {
-    this._currentNode = this._gracefulProxy[fn].apply(
-      this,
-      Array.prototype.slice.call(arguments, 1)
-    );
-    return this._currentNode;
-  } catch(e) {
-    if (this.lastError) {
-      this.next(); // ignore token & go next
-      var errorNode = [
-        'error',
-        this.lastError.tokenName,
-        this.lastError.expected,
-        this.lastError.line
-      ];
-      // force to append the error node
-      if (this.ast.length < 3) {
-        this.ast.push([]);
-      }
-      this.ast[2].push(errorNode);
-      // return the node
-      return errorNode;
-    } else {
-      throw e;  // not a parsing error
-    }
-  }
-};
-
-/**
  * The PHP Parser class
  *
  * @public @constructor {Parser}
@@ -1963,39 +1931,11 @@ parser.prototype.getTokenName = function(token) {
 };
 
 /**
- * enable / disable the graceful mode
- */
-parser.prototype.graceful = function(mode) {
-  if (this._graceful !== mode) {
-    if (mode) {
-      // enable the graceful mode
-      this._gracefulProxy = {};
-      for(var i in this) {
-        var cb = this[i];
-        if (typeof cb === 'function') {
-          this._gracefulProxy[i] = cb;
-          this[i] = _gracefulDecorator.bind(this, i);
-        }
-      }
-    } else {
-      // disable the graceful mode
-      for(var i in this._gracefulProxy) {
-        this[i] = this._gracefulProxy[i];
-      }
-    }
-    this._graceful = mode;
-  }
-  return this;
-};
-
-/**
  * main entry point : converts a source code to AST
  */
 parser.prototype.parse = function(code) {
+  this.firstError = false;
   this.lastError = false;
-  if (this.suppressErrors) {
-    this.graceful(this.suppressErrors);
-  }
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -2030,9 +1970,24 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     message: message,
     line: this.lexer.yylloc.first_line
   };
-  if (!this.suppressErrors) {
-    throw new Error(this.lastError.message);
+  if (!this.firstError) {
+    this.firstError = this.lastError;
   }
+  if (!this.suppressErrors) {
+    throw new Error(message);
+  }
+  if (this.ast.length === 2) {
+    this.ast.push([]);
+  }
+  // Error node :
+  var node = [
+    'error',
+    this.token,
+    message,
+    this.lexer.yylloc.first_line
+  ];
+  this.ast[2].push(node);
+  return node;
 };
 
 /**
@@ -2133,7 +2088,7 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ['parser.next', '_gracefulDecorator'];
+var ignoreStack = ['parser.next', 'parser.nextWithComments'];
 parser.prototype.showlog = function() {
   var stack = (new Error()).stack.split('\n');
   var line;
@@ -2164,14 +2119,12 @@ parser.prototype.showlog = function() {
 
 /** force to expect specified token **/
 parser.prototype.expect = function(token) {
-  if (!this.lastError) {
-    if (Array.isArray(token)) {
-      if (token.indexOf(this.token) === -1) {
-        this.error(token);
-      }
-    } else if (this.token != token) {
+  if (Array.isArray(token)) {
+    if (token.indexOf(this.token) === -1) {
       this.error(token);
     }
+  } else if (this.token != token) {
+    this.error(token);
   }
   return this;
 };
@@ -2544,6 +2497,7 @@ module.exports = {
           this.tok.T_VARIABLE,
           this.tok.T_FUNCTION
         ]);
+        this.next(); // ignore token
       }
     }
     this.expect('}').nextWithComments();
@@ -2622,7 +2576,6 @@ module.exports = {
     if (this.is('T_MEMBER_FLAGS')) {
       var idx = 0, val = 0;
       do {
-
         switch(this.token) {
           case this.tok.T_PUBLIC:     idx = 0; val = 0; break;
           case this.tok.T_PROTECTED:  idx = 0; val = 1; break;
@@ -2633,13 +2586,21 @@ module.exports = {
         }
         if (asInterface) {
           if (idx == 0 && val == 2) {
+            // an interface can't be private
             this.expect([this.tok.T_PUBLIC, this.tok.T_PROTECTED]);
+            val = -1;
           } else if (idx == 2 && val == 1) {
+            // an interface cant be abstract
             this.error();
+            val = -1;
           }
         }
-        if (result[idx] != -1) this.error();
-        result[idx] = val;
+        if (result[idx] !== -1) {
+          // already defined flag
+          this.error();
+        } else if (val !== -1) {
+          result[idx] = val;
+        }
       } while(this.next().is('T_MEMBER_FLAGS'));
     }
 
@@ -2751,6 +2712,7 @@ module.exports = {
           this.tok.T_CONST,
           this.tok.T_FUNCTION
         ]);
+        this.next();
       }
     }
     this.expect('}').next();
@@ -3210,7 +3172,8 @@ module.exports = {
         }
       }
     } else {
-      this.error('EXPR');
+      expr = this.error('EXPR');
+      this.next();
     }
 
     // returns variable | scalar
@@ -3415,6 +3378,7 @@ module.exports = {
           break;
         } else {
           this.error([',', ')']);
+          break;
         }
       }
     }
@@ -3744,7 +3708,10 @@ module.exports = {
       this.currentNamespace = [''];
       return result([''], this.read_code_block(true));
     } else {
-      if(this.token === this.tok.T_NAMESPACE) this.error(['{', this.tok.T_STRING]);
+      if(this.token === this.tok.T_NAMESPACE) {
+        this.error(['{', this.tok.T_STRING]);
+        this.next(); // ignore namespace token
+      }
       var name = this.read_namespace_name();
       if (this.token == ';') {
         this.currentNamespace = name;
@@ -3762,6 +3729,11 @@ module.exports = {
         );
       } else {
         this.error(['{', ';']);
+        // graceful mode :
+        this.currentNamespace = name;
+        var body = this.read_top_statements();
+        this.expect(this.EOF);
+        return result(name, body);
       }
     }
   }
@@ -3983,7 +3955,10 @@ module.exports = {
         case '[':             // short array format
           return this.read_array();
         default:
-          this.error('SCALAR');
+          var err = this.error('SCALAR');
+          // graceful mode : ignore token & return error node
+          this.next();
+          return err;
       }
     }
   }
@@ -4131,7 +4106,9 @@ module.exports = {
           case this.tok.T_INTERFACE:
             return this.read_interface(flag);
           default:
-            this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
+            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
+            this.next();
+            return err;
         }
       case this.tok.T_CLASS:
         return this.read_class(0);
@@ -4228,7 +4205,10 @@ module.exports = {
           case this.tok.T_INTERFACE:
             return this.read_interface(flag);
           default:
-            this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
+            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
+            // graceful mode : ignore token & go next
+            this.next();
+            return err;
         }
       case this.tok.T_CLASS:
         return this.read_class(0);
@@ -4597,7 +4577,9 @@ module.exports = {
       getter = this.text();
       this.next();
     } else {
-      this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
+      getter = this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
+      // graceful mode : set getter as error node and continue
+      this.next();
     }
     if (from[0] != 'ns') {
       from = ['lookup', 'class', from];
@@ -4669,7 +4651,10 @@ module.exports = {
               this.expect('}').next();
               break;
             default:
-              this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
+              what = this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
+              // graceful mode : set what as error mode & continue
+              this.next();
+              break;
           }
           result = ['prop', result, what];
           break;
@@ -4755,7 +4740,9 @@ module.exports = {
           this.next();
           break;
         default:
-          this.error(['{', '$', this.tok.T_VARIABLE]);
+          result = this.error(['{', '$', this.tok.T_VARIABLE]);
+          // graceful mode
+          this.next();
       }
       result = ['lookup', 'var', result];
     }
