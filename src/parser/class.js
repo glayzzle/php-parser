@@ -192,16 +192,17 @@ module.exports = {
    * </ebnf>
    */
   ,read_variable_declaration: function() {
-    var varName = this.node(this.text());
-    this.expect(this.tok.T_VARIABLE).next();
+    var result = this.node('var');
+    var name = this.expect(this.tok.T_VARIABLE).text();
+    this.next();
     if (this.token === ';' || this.token === ',') {
-      return varName(null);
+      return result(name, null);
     } else if(this.token === '=') {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-      return varName(this.next().read_expr());
+      return result(name, this.next().read_expr());
     } else {
       this.expect([',', ';', '=']);
-      return varName(null);
+      return result(name, null);
     }
   }
   /**
@@ -225,14 +226,10 @@ module.exports = {
    * </ebnf>
    */
   ,read_constant_declaration: function() {
-    var name = this.node(this.text());
-    var value = this.expect(this.tok.T_STRING)
-      .next()
-      .expect('=')
-      .next()
-      .read_expr()
-    ;
-    return name(value);
+    var result = this.node('const');
+    var name = this.expect(this.tok.T_STRING).text();
+    var value =  this.next().expect('=').next().read_expr();
+    return result(name, value);
   }
   /**
    * Read member flags

@@ -49,8 +49,8 @@ describe('Test graceful mode', function() {
       ast[1][0][0].should.be.exactly('class');
       ast[1][0][1].should.be.exactly('foo');
       ast[1][0][5].constants.length.should.be.exactly(1);
-      ast[1][0][5].constants[0][0].should.be.exactly('A');
-      ast[1][0][5].constants[0][1][1].should.be.exactly('1');
+      ast[1][0][5].constants[0][1].should.be.exactly('A');
+      ast[1][0][5].constants[0][2][1].should.be.exactly('1');
 
     });
 
