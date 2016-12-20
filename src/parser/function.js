@@ -31,17 +31,20 @@ module.exports = {
    * function ::= function_declaration code_block
    * </ebnf>
    */
-  ,read_function: function(annonymous, isAbstract) {
+  ,read_function: function(closure, flag) {
     var result = this.node(
-      this.read_function_declaration(annonymous)
+      this.read_function_declaration(closure ? 1 : flag ? 2 : 0)
     );
-    if (isAbstract) {
-      result = result();
+    if (flag && flag[2] == 1) {
+      result = result(flag);
       this.expect(';').nextWithComments();
     } else {
-      result = result(
-        this.expect('{').read_code_block(false)
-      );
+      var body = this.expect('{').read_code_block(false);
+      if (flag) {
+        result = result(body, flag);
+      } else {
+        result = result(body);
+      }
     }
     return result;
   }
@@ -51,19 +54,25 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * </ebnf>
    */
-  ,read_function_declaration: function(closure) {
-    var result = this.node('function');
+  ,read_function_declaration: function(type) {
+    var nodeName = 'function';
+    if (type === 1) {
+      nodeName = 'closure';
+    } else if (type === 2) {
+      nodeName = 'method';
+    }
+    var result = this.node(nodeName);
     this.expect(this.tok.T_FUNCTION);
     var isRef = this.next().is_reference();
     var name = false, use = [], returnType = false;
-    if (!closure) {
+    if (type !== 1) {
       name = this.expect(this.tok.T_STRING).text();
       this.next();
     }
     this.expect('(').next();
     var params = this.read_parameter_list();
     this.expect(')').next();
-    if (closure && this.token === this.tok.T_USE) {
+    if (type === 1 && this.token === this.tok.T_USE) {
       use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
       this.expect(')').next();
     }
