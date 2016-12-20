@@ -94,19 +94,27 @@ describe('Test comments', function() {
     });
     it('test class elements', function () {
       var body = ast[1][1][5];
-      body.properties[0][0].should.be.exactly("comment");
-      body.properties[0][1][0].should.be.exactly("// @var test\n");
-      body.properties[0][2][1].should.be.exactly("$test");
 
-      body.properties[1][0].should.be.exactly("comment");
-      body.properties[1][2][1].should.be.exactly("$toto");
+      body[0][0].should.be.exactly("comment");
+      body[0][1][0].should.be.exactly("// @var test\n");
 
-      body.properties[2][0].should.be.exactly("doc")
-      body.properties[2][2][1].should.be.exactly("$foo");
+      body[1][0].should.be.exactly("var");
+      body[1][1].should.be.exactly("$test");
 
-      body.methods[0][0].should.be.exactly("doc");
-      body.methods[0][1].should.be.exactly("/**\n    * @return void\n    */");
-      body.methods[0][2][1].should.be.exactly("void");
+      body[2][0].should.be.exactly("var");
+      body[2][1].should.be.exactly("$toto");
+
+      body[3][0].should.be.exactly("comment");
+      body[3][1][0].should.be.exactly("// ignored comment\n");
+
+      body[4][0].should.be.exactly("doc");
+      body[4][1].should.be.exactly("/** @var Class */");
+
+      body[5][0].should.be.exactly("var");
+      body[5][1].should.be.exactly("$foo");
+
+      body[8][0].should.be.exactly("method");
+      body[8][1].should.be.exactly("void");
     });
   });
 
