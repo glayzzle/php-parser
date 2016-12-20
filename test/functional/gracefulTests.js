@@ -22,7 +22,7 @@ describe('Test graceful mode', function() {
         '}'                       // 5. <-- extra '}' token here
       ].join('\n'));
       ast[2].length.should.be.exactly(2);
-      ast[1][0][2][6][0][2][0].should.be.exactly('error');
+      ast[1][0][2][5][0][2][0].should.be.exactly('error');
     });
 
     it('test expr', function () {

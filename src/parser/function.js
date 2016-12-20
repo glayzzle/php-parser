@@ -79,7 +79,10 @@ module.exports = {
     if (this.token === ':') {
       returnType = this.next().read_type();
     }
-    return result(name, params, isRef, use, returnType);
+    if (type === 1) {
+      return result(params, isRef, use, returnType);
+    }
+    return result(name, params, isRef, returnType);
   }
   /**
    * <ebnf>

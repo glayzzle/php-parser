@@ -59,7 +59,7 @@ describe('Test comments', function() {
       ast[1][1][0].should.be.exactly("function");
       ast[1][1][1].should.be.exactly("name");
       ast[1][1][2].length.should.be.exactly(1);
-      var body = ast[1][1][6];
+      var body = ast[1][1][5];
       body[0][0].should.be.exactly('comment');
       body[1][0].should.be.exactly('return');
     });
