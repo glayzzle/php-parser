@@ -51,19 +51,19 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * </ebnf>
    */
-  ,read_function_declaration: function(annonymous) {
+  ,read_function_declaration: function(closure) {
     var result = this.node('function');
     this.expect(this.tok.T_FUNCTION);
     var isRef = this.next().is_reference();
     var name = false, use = [], returnType = false;
-    if (!annonymous) {
+    if (!closure) {
       name = this.expect(this.tok.T_STRING).text();
       this.next();
     }
     this.expect('(').next();
     var params = this.read_parameter_list();
     this.expect(')').next();
-    if (this.token === this.tok.T_USE) {
+    if (closure && this.token === this.tok.T_USE) {
       use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
       this.expect(')').next();
     }
