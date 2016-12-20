@@ -13,38 +13,6 @@ function isNumber(n) {
 
 
 /**
- * Graceful decorator
- */
-var _gracefulDecorator = function(fn) {
-  try {
-    this._currentNode = this._gracefulProxy[fn].apply(
-      this,
-      Array.prototype.slice.call(arguments, 1)
-    );
-    return this._currentNode;
-  } catch(e) {
-    if (this.lastError) {
-      this.next(); // ignore token & go next
-      var errorNode = [
-        'error',
-        this.lastError.tokenName,
-        this.lastError.expected,
-        this.lastError.line
-      ];
-      // force to append the error node
-      if (this.ast.length < 3) {
-        this.ast.push([]);
-      }
-      this.ast[2].push(errorNode);
-      // return the node
-      return errorNode;
-    } else {
-      throw e;  // not a parsing error
-    }
-  }
-};
-
-/**
  * The PHP Parser class
  *
  * @public @constructor {Parser}
@@ -185,39 +153,10 @@ parser.prototype.getTokenName = function(token) {
 };
 
 /**
- * enable / disable the graceful mode
- */
-parser.prototype.graceful = function(mode) {
-  if (this._graceful !== mode) {
-    if (mode) {
-      // enable the graceful mode
-      this._gracefulProxy = {};
-      for(var i in this) {
-        var cb = this[i];
-        if (typeof cb === 'function') {
-          this._gracefulProxy[i] = cb;
-          this[i] = _gracefulDecorator.bind(this, i);
-        }
-      }
-    } else {
-      // disable the graceful mode
-      for(var i in this._gracefulProxy) {
-        this[i] = this._gracefulProxy[i];
-      }
-    }
-    this._graceful = mode;
-  }
-  return this;
-};
-
-/**
  * main entry point : converts a source code to AST
  */
 parser.prototype.parse = function(code) {
   this.lastError = false;
-  if (this.suppressErrors) {
-    this.graceful(this.suppressErrors);
-  }
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -244,6 +183,19 @@ parser.prototype.parse = function(code) {
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
+  if (!this.suppressErrors) {
+    throw new Error(message);
+  }
+  if (!this.firstError) {
+    this.firstError = {
+      token: this.token,
+      tokenName: token,
+      expected: expect,
+      messageExpected: msgExpect,
+      message: message,
+      line: this.lexer.yylloc.first_line
+    };
+  }
   this.lastError = {
     token: this.token,
     tokenName: token,
@@ -252,9 +204,18 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     message: message,
     line: this.lexer.yylloc.first_line
   };
-  if (!this.suppressErrors) {
-    throw new Error(this.lastError.message);
+  if (this.ast.length === 2) {
+    this.ast.push([]);
   }
+  // Error node :
+  var node = [
+    'error',
+    this.token,
+    message,
+    this.lexer.yylloc.first_line
+  ];
+  this.ast[2].push(node);
+  return node;
 };
 
 /**
@@ -355,7 +316,7 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ['parser.next', '_gracefulDecorator'];
+var ignoreStack = ['parser.next', 'parser.nextWithComments'];
 parser.prototype.showlog = function() {
   var stack = (new Error()).stack.split('\n');
   var line;
@@ -386,14 +347,12 @@ parser.prototype.showlog = function() {
 
 /** force to expect specified token **/
 parser.prototype.expect = function(token) {
-  if (!this.lastError) {
-    if (Array.isArray(token)) {
-      if (token.indexOf(this.token) === -1) {
-        this.error(token);
-      }
-    } else if (this.token != token) {
+  if (Array.isArray(token)) {
+    if (token.indexOf(this.token) === -1) {
       this.error(token);
     }
+  } else if (this.token != token) {
+    this.error(token);
   }
   return this;
 };

@@ -321,7 +321,8 @@ module.exports = {
         }
       }
     } else {
-      this.error('EXPR');
+      expr = this.error('EXPR');
+      this.next();
     }
 
     // returns variable | scalar

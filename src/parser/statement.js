@@ -48,7 +48,9 @@ module.exports = {
           case this.tok.T_INTERFACE:
             return this.read_interface(flag);
           default:
-            this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
+            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
+            this.next();
+            return err;
         }
       case this.tok.T_CLASS:
         return this.read_class(0);

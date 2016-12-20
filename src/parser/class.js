@@ -167,6 +167,7 @@ module.exports = {
           this.tok.T_VARIABLE,
           this.tok.T_FUNCTION
         ]);
+        this.next(); // ignore token
       }
     }
     this.expect('}').nextWithComments();
@@ -245,7 +246,6 @@ module.exports = {
     if (this.is('T_MEMBER_FLAGS')) {
       var idx = 0, val = 0;
       do {
-
         switch(this.token) {
           case this.tok.T_PUBLIC:     idx = 0; val = 0; break;
           case this.tok.T_PROTECTED:  idx = 0; val = 1; break;
@@ -256,13 +256,21 @@ module.exports = {
         }
         if (asInterface) {
           if (idx == 0 && val == 2) {
+            // an interface can't be private
             this.expect([this.tok.T_PUBLIC, this.tok.T_PROTECTED]);
+            val = -1;
           } else if (idx == 2 && val == 1) {
+            // an interface cant be abstract
             this.error();
+            val = -1;
           }
         }
-        if (result[idx] != -1) this.error();
-        result[idx] = val;
+        if (result[idx] !== -1) {
+          // already defined flag
+          this.error();
+        } else if (val !== -1) {
+          result[idx] = val;
+        }
       } while(this.next().is('T_MEMBER_FLAGS'));
     }
 
@@ -374,6 +382,7 @@ module.exports = {
           this.tok.T_CONST,
           this.tok.T_FUNCTION
         ]);
+        this.next();
       }
     }
     this.expect('}').next();
