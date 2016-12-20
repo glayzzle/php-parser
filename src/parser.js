@@ -156,6 +156,7 @@ parser.prototype.getTokenName = function(token) {
  * main entry point : converts a source code to AST
  */
 parser.prototype.parse = function(code) {
+  this.firstError = false;
   this.lastError = false;
   this.currentNamespace = [''];
   this.lexer.setInput(code);
@@ -183,19 +184,6 @@ parser.prototype.parse = function(code) {
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
-  if (!this.suppressErrors) {
-    throw new Error(message);
-  }
-  if (!this.firstError) {
-    this.firstError = {
-      token: this.token,
-      tokenName: token,
-      expected: expect,
-      messageExpected: msgExpect,
-      message: message,
-      line: this.lexer.yylloc.first_line
-    };
-  }
   this.lastError = {
     token: this.token,
     tokenName: token,
@@ -204,6 +192,12 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     message: message,
     line: this.lexer.yylloc.first_line
   };
+  if (!this.firstError) {
+    this.firstError = this.lastError;
+  }
+  if (!this.suppressErrors) {
+    throw new Error(message);
+  }
   if (this.ast.length === 2) {
     this.ast.push([]);
   }
