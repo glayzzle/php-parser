@@ -169,7 +169,7 @@ module.exports = {
    */
   ,read_argument_list: function() {
     if (this.token === this.tok.T_ELLIPSIS ) {
-      return this.node('...')(this.next().read_expr());
+      return this.node('variadic')(this.next().read_expr());
     }
     return this.read_expr();
   }
