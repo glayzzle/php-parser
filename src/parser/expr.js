@@ -245,7 +245,7 @@ module.exports = {
 
       // T_YIELD_FROM expr
       case this.tok.T_YIELD_FROM:
-        return ['yield-from', this.next().read_expr()];
+        return ['yieldfrom', this.next().read_expr()];
 
       case this.tok.T_FUNCTION:
         // @fixme later - removed static lambda function declarations (colides with static keyword usage)
