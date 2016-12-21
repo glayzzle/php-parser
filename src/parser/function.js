@@ -133,15 +133,16 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   ,read_parameter: function() {
+    var node = this.node('param');
     var type = this.read_type();
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
     var name = this.expect(this.tok.T_VARIABLE).text();
-    var value = [];
+    var value = null;
     if (this.next().token == '=') {
       value = this.next().read_expr();
     }
-    return [name, type, value, isRef, isVariadic];
+    return node(name, type, value, isRef, isVariadic);
   }
   /**
    * <ebnf>
@@ -183,15 +184,15 @@ module.exports = {
     switch(this.token) {
       case this.tok.T_ARRAY:
         this.next();
-        return 'array';
+        return ['array'];
       case this.tok.T_NS_SEPARATOR:
       case this.tok.T_STRING:
         return this.read_namespace_name();
       case this.tok.T_CALLABLE:
         this.next();
-        return 'callable';
+        return ['callable'];
       default:
-        return 'mixed';
+        return null;
     }
   }
 };
