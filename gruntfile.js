@@ -16,6 +16,21 @@ module.exports = function(grunt) {
         }
       }
     },
+    documentation: {
+      ast: {
+        options: {
+          destination: "docs/",
+          format: "md",
+          version: "<%= pkg.version %>",
+          name: "<%= pkg.name %>",
+          filename: "AST.md",
+          shallow: false
+        },
+        files: [{
+          src: ['src/ast']
+        }]
+      }
+    },
     uglify: {
       options: {
         compress: true,
@@ -32,8 +47,10 @@ module.exports = function(grunt) {
   // Load the plugin
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  
+  grunt.loadNpmTasks('grunt-documentation');
+
   // Default task(s).
   grunt.registerTask('default', ['browserify', 'uglify']);
+  grunt.registerTask('doc', ['documentation']);
 
 };
