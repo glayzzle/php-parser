@@ -1,5 +1,5 @@
 var should = require("should");
-var parser = require('../../main');
+var parser = require('../../src/index');
 
 describe('Test graceful mode', function() {
 

@@ -10,7 +10,7 @@ var util    = require('util');
 var fs      = require('fs');
 var path    = require('path');
 
-var engine  = require('../main');
+var engine  = require('../src/index');
 engine = new engine();
 
 engine.lexer.short_tags = true;

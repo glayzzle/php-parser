@@ -1,4 +1,4 @@
-var reader = require('../main');
+var reader = require('../src/index');
 reader.parser.locations = true;
 var code = require('fs').readFileSync(__dirname + '/proto/foo.php').toString();
 console.log(code);
@@ -36,7 +36,7 @@ console.log( '\nAST : ', prop);
 // the class code :
 console.log( '\nPHP : >' + code.substring( prop[1][2], prop[2][2]) + '<' );
 // the class AST
-console.log( '\nPROPERTY : ', prop[3]); 
+console.log( '\nPROPERTY : ', prop[3]);
 
 var variable =  prop[3][0];
 // the result
@@ -44,7 +44,7 @@ console.log( '\nAST : ', variable);
 // the class code :
 console.log( '\nPHP : >' + code.substring( variable[1][2], variable[2][2]) + '<' );
 // the class AST
-console.log( '\nVARIABLE : ', variable[3]); 
+console.log( '\nVARIABLE : ', variable[3]);
 
 
 var itf = AST[1][2];
@@ -62,4 +62,3 @@ console.log( '\nAST : ', cst);
 console.log( '\nPHP : >' + code.substring( cst[1][2], cst[2][2]) + '<' );
 // the class AST
 console.log( '\nCONSTANT : ', cst[3]);
-
