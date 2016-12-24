@@ -29,6 +29,32 @@ module.exports = function(grunt) {
         files: [{
           src: ['src/ast']
         }]
+      },
+      parser: {
+        options: {
+          destination: "docs/",
+          format: "md",
+          version: "<%= pkg.version %>",
+          name: "<%= pkg.name %>",
+          filename: "parser.md",
+          shallow: false
+        },
+        files: [{
+          src: ['src/parser.js','src/parser']
+        }]
+      },
+      lexer: {
+        options: {
+          destination: "docs/",
+          format: "md",
+          version: "<%= pkg.version %>",
+          name: "<%= pkg.name %>",
+          filename: "lexer.md",
+          shallow: false
+        },
+        files: [{
+          src: ['src/lexer.js', 'src/lexer']
+        }]
       }
     },
     uglify: {
