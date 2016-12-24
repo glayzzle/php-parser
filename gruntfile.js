@@ -7,12 +7,12 @@ module.exports = function(grunt) {
       options: {
         banner: '/*! <%= pkg.name %> - BSD3 License - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
         alias: {
-          'php-parser': './main.js'
+          'php-parser': './src/index.js'
         }
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.js': 'main.js' // ['src/*.js', 'src/**/*.js']
+          'dist/<%= pkg.name %>.js': 'index.js' // ['src/*.js', 'src/**/*.js']
         }
       }
     },
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
           shallow: false
         },
         files: [{
-          src: ['src/ast']
+          src: ['src/ast.js', 'src/ast']
         }]
       },
       parser: {
@@ -54,6 +54,19 @@ module.exports = function(grunt) {
         },
         files: [{
           src: ['src/lexer.js', 'src/lexer']
+        }]
+      },
+      main: {
+        options: {
+          destination: "docs/",
+          format: "md",
+          version: "<%= pkg.version %>",
+          name: "<%= pkg.name %>",
+          filename: "README.md",
+          shallow: false
+        },
+        files: [{
+          src: ['src/index.js']
         }]
       }
     },

@@ -1,12 +1,13 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
-var lexer = require('./src/lexer');
-var parser = require('./src/parser');
-var tokens = require('./src/tokens');
+var lexer = require('./lexer');
+var parser = require('./parser');
+var tokens = require('./tokens');
+var AST = require('./ast');
 
 /**
  * @private combine structures
@@ -36,6 +37,7 @@ function combine(src, to) {
  * @constructor {Engine}
  * @property {Lexer} lexer
  * @property {Parser} parser
+ * @property {AST} ast
  * @property {Object} tokens
  */
 var engine = function(options) {
@@ -45,6 +47,7 @@ var engine = function(options) {
   this.tokens = tokens;
   this.lexer = new lexer(this);
   this.parser = new parser(this.lexer);
+  this.AST = new AST();
   if (options && typeof options === 'object') {
     combine(options, this);
   }

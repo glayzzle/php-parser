@@ -4,18 +4,17 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
+var Block = require('./block');
 var KIND = 'program';
 
 /**
  * The main program node
  * @constructor Program
- * @extends {Node}
+ * @extends {Block}
  * @property {Node[]} children
  */
-var Program = Node.extends(function Program(children) {
-  Node.apply(this, [KIND]);
-  this.children = children;
+var Program = Block.extends(function Program(children, location) {
+  Block.apply(this, [KIND, children, location]);
 });
 
 module.exports = Program;
