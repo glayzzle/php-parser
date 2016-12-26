@@ -10,8 +10,8 @@ var Position = require('./ast/position');
 /**
  * The AST builder class
  * @constructor AST
- * @property {Boolean} withPositions
- * @property {Boolean} withSource
+ * @property {Boolean} withPositions - Should locate any node (by default false)
+ * @property {Boolean} withSource - Should extract the node original code (by default false)
  */
 var AST = function(withPositions, withSource) {
   this.withPositions = withPositions;
@@ -27,7 +27,7 @@ AST.prototype.prepare = function(kind, parser) {
     start = new Position(
       parser.lexer.yylloc.first_line,
       parser.lexer.yylloc.first_column,
-      parser.lexer.offset
+      parser.lexer.yylloc.first_offset
     );
   }
   var self = this;
@@ -35,15 +35,15 @@ AST.prototype.prepare = function(kind, parser) {
   return function() {
     var location = null;
     var args = Array.prototype.slice.call(arguments);
-    if (this.withPositions || this.withSource) {
+    if (self.withPositions || self.withSource) {
       var src = null;
-      if (this.withSource) {
+      if (self.withSource) {
         src = parser.lexer._input.substring(
           start.offset,
           parser.lexer.offset
         );
       }
-      if (this.withPositions) {
+      if (self.withPositions) {
         location = new Location(src, start, new Position(
           parser.lexer.yylloc.first_line,
           parser.lexer.yylloc.first_column,
