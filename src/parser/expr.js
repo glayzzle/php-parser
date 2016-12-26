@@ -166,26 +166,26 @@ module.exports = {
         return result([arg]);
 
       case this.tok.T_INCLUDE:
-        return (this.node('sys'))(
-          'include',
+        return this.node('include')(
+          false, false,
           this.next().read_expr()
         );
 
       case this.tok.T_INCLUDE_ONCE:
-        return (this.node('sys'))(
-          'include_once',
+        return this.node('include')(
+          true, false,
           this.next().read_expr()
         );
 
       case this.tok.T_REQUIRE:
-        return (this.node('sys'))(
-          'require',
+        return this.node('include')(
+          false, true
           this.next().read_expr()
         );
 
       case this.tok.T_REQUIRE_ONCE:
-        return (this.node('sys'))(
-          'require_once',
+        return this.node('include')(
+          true, true,
           this.next().read_expr()
         );
 

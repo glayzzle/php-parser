@@ -67,4 +67,14 @@ describe('Test AST structure', function() {
     ast.children[0].right.test.type.should.be.exactly('variable');
     ast.children[0].right.ifnull.type.should.be.exactly('boolean');
   });
+  it('should include', function() {
+    var ast = parser.parseEval([
+      'include "file.php"',
+      'includ_once (PATH . "/file.php")',
+      'require "req.php"',
+      'require_once "file.php"',
+      ''
+    ].join(';\n'));
+    console.log(ast.children);
+  });
 });
