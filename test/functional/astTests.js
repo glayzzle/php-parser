@@ -60,6 +60,15 @@ describe('Test AST structure', function() {
   it('should be assign', function() {
     // @todo
   });
+  it('test literals', function() {
+    // @todo string / numbers / booleans
+  });
+  it('test eval', function() {
+    var ast = parser.parseEval('eval("return true;");');
+    ast.children[0].type.should.be.exactly('eval');
+    ast.children[0].source.type.should.be.exactly('string');
+    ast.children[0].source.value.should.be.exactly('return true;');
+  });
   it('test coalesce', function() {
     var ast = parser.parseEval('$var = $a ?? true;');
     ast.children[0].right.type.should.be.exactly('coalesce');

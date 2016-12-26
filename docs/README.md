@@ -831,8 +831,11 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
             -   [Echo](#echo)
             -   [Isset](#isset)
             -   [Unset](#unset)
+            -   [Empty](#empty)
+        -   [Eval](#eval)
         -   [Clone](#clone)
         -   [Coalesce](#coalesce)
+        -   [Include](#include)
         -   [Assign](#assign)
     -   [Identifier](#identifier)
     -   [Entry](#entry)
@@ -997,6 +1000,12 @@ Defines system based call
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
 
+# Empty
+
+**Extends Sys**
+
+Defines an empty check call
+
 # Entry
 
 **Extends Node**
@@ -1044,6 +1053,28 @@ Defines an error node (used only on silentMode)
 -   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
 -   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+
+# Eval
+
+**Extends Statement**
+
+Defines an eval statement
+
+**Properties**
+
+-   `source` **[Node](#node)** 
+
+# Include
+
+**Extends Statement**
+
+Defines system include call
+
+**Properties**
+
+-   `target` **[Node](#node)** 
+-   `once` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `require` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Inline
 

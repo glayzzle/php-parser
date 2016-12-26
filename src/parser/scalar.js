@@ -41,11 +41,11 @@ module.exports = {
           var isDoubleQuote = false;
           var isBinCast = value[0] === 'b' || value[0] === 'B';
           if (isBinCast) {
-            text = text.substring(2, value.length - 1);
-            isDoubleQuote = value[1] === '"';
+            isDoubleQuote = text[1] === '"';
+            text = text.substring(2, text.length - 1);
           } else {
-            text = text.substring(1, value.length - 1);
-            isDoubleQuote = value[0] === '"';
+            isDoubleQuote = text[0] === '"';
+            text = text.substring(1, text.length - 1);
           }
           value = value(isDoubleQuote, text.replace(
             /\\[rntvef"'\\\$]/g,

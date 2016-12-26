@@ -190,11 +190,11 @@ module.exports = {
         );
 
       case this.tok.T_EVAL:
-        var result = this.node('sys');
+        var result = this.node('eval');
         this.next().expect('(').next();
         var expr = this.read_expr();
         this.expect(')').next();
-        return result('eval', expr);
+        return result(expr);
 
       case this.tok.T_INT_CAST:
         return ['cast', 'int', this.next().read_expr()];
