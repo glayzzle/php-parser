@@ -75,10 +75,24 @@ module.exports = {
         return ['silent', this.next().read_expr()];
 
       case '-':
+        var result = this.node();
+        this.next();
+        if (
+          this.token === this.tok.T_LNUMBER ||
+          this.token === this.tok.T_DNUMBER
+        ) {
+          // negative number
+          result = result('number', '-' + this.text());
+          this.next();
+          return result;
+        } else {
+          return result('unary', '-', this.read_expr());
+        }
+
       case '+':
       case '!':
       case '~':
-        return this.node('unary')(this.token, this.next().read_expr());
+        return this.node('unary')(this.token, this.read_expr());
 
       case '(':
         var expr = this.next().read_expr();
@@ -220,17 +234,17 @@ module.exports = {
         );
 
       case this.tok.T_EXIT:
-        var result = this.node('sys');
-        var expr = null;
+        var result = this.node('exit');
+        var status = null;
         if ( this.next().token === '(' ) {
           if (this.next().token !== ')') {
-            expr = this.read_expr();
+            status = this.read_expr();
             this.expect(')').next();
           } else {
             this.next();
           }
         }
-        return result('exit', expr);
+        return result(status);
 
       case this.tok.T_PRINT:
         return (this.node('sys'))(

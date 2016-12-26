@@ -15,6 +15,7 @@ var Position = require('./ast/position');
  *     - [Literal](#literal)
  *       - [Boolean](#boolean)
  *       - [String](#string)
+ *       - [Number](#number)
  *       - [Inline](#inline)
  *       - [Magic](#magic)
  *       - [Shell](#shell)
@@ -31,6 +32,7 @@ var Position = require('./ast/position');
  *       - [Unset](#unset)
  *       - [Empty](#empty)
  *     - [Eval](#eval)
+ *     - [Exit](#exit)
  *     - [Clone](#clone)
  *     - [Coalesce](#coalesce)
  *     - [Include](#include)
@@ -124,12 +126,14 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/entry'),
   require('./ast/error'),
   require('./ast/eval'),
+  require('./ast/exit'),
   require('./ast/include'),
   require('./ast/inline'),
   require('./ast/isset'),
   require('./ast/literal'),
   require('./ast/magic'),
   require('./ast/namespace'),
+  require('./ast/number'),
   require('./ast/program'),
   require('./ast/shell'),
   require('./ast/string'),
@@ -137,7 +141,6 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/variable')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
-  if (kind[0] === '_') kind = kind.substring(1);
   AST.prototype[kind] = ctor;
 });
 

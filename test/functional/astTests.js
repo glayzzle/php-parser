@@ -69,6 +69,14 @@ describe('Test AST structure', function() {
     ast.children[0].source.type.should.be.exactly('string');
     ast.children[0].source.value.should.be.exactly('return true;');
   });
+  it('test die/exit', function() {
+    var ast = parser.parseEval('die("bye");');
+    ast.children[0].type.should.be.exactly('exit');
+    ast.children[0].status.value.should.be.exactly('bye');
+    ast = parser.parseEval('exit(-1);');
+    ast.children[0].type.should.be.exactly('exit');
+    ast.children[0].status.value.should.be.exactly('-1');
+  });
   it('test coalesce', function() {
     var ast = parser.parseEval('$var = $a ?? true;');
     ast.children[0].right.type.should.be.exactly('coalesce');

@@ -168,13 +168,18 @@ module.exports = {
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   ,read_encaps_var_offset: function() {
-    var offset = false;
+    var offset = this.node();
     if (this.token === this.tok.T_STRING) {
-      offset = ['string', this.text()];
+      var text = this.text();
+      var isDblQuote = text[0] === '"';
+      text = text.substring(1, text.length - 1);
+      offset = offset(
+        'string', isDblQuote, this.resolve_special_chars(text)
+      );
     } else if (this.token === this.tok.T_NUM_STRING) {
-      offset = ['number', this.text()];
+      offset = offset('number', this.text());
     } else if (this.token === this.tok.T_VARIABLE) {
-      offset = ['var', this.text()];
+      offset = offset('variable', this.text());
     } else {
       this.expect([
         this.tok.T_STRING,

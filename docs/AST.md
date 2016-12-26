@@ -9,6 +9,7 @@
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
+            -   [Number](#number)
             -   [Inline](#inline)
             -   [Magic](#magic)
             -   [Shell](#shell)
@@ -25,6 +26,7 @@
             -   [Unset](#unset)
             -   [Empty](#empty)
         -   [Eval](#eval)
+        -   [Exit](#exit)
         -   [Clone](#clone)
         -   [Coalesce](#coalesce)
         -   [Include](#include)
@@ -214,6 +216,16 @@ Defines an eval statement
 
 -   `source` **[Node](#node)** 
 
+# Exit
+
+**Extends Statement**
+
+Defines an exit / die call
+
+**Properties**
+
+-   `status` **([Node](#node) | null)** 
+
 # Expression
 
 **Extends Node**
@@ -323,6 +335,12 @@ Helper for extending the Node class
 
 Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
+# Number
+
+**Extends Literal**
+
+Defines a numeric value
+
 # Position
 
 Each Position object consists of a line number (1-indexed) and a column number (0-indexed):
@@ -335,9 +353,9 @@ Each Position object consists of a line number (1-indexed) and a column number (
 
 **Properties**
 
--   `line` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `column` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `offset` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `line` **[Number](#number)** 
+-   `column` **[Number](#number)** 
+-   `offset` **[Number](#number)** 
 
 # Program
 

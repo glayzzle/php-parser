@@ -230,7 +230,7 @@ be added to the program error stack and this function will return `false`.
 
 **Parameters**
 
--   `token` **([String](#string) \| [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** 
+-   `token` **([String](#string) \| [Number](#number))** 
 
 
 -   Throws **any** Error
@@ -608,6 +608,10 @@ use_statement ::= (
  )
 ```
 
+# resolve_special_chars
+
+Unescape special chars
+
 # read_scalar
 
 ```ebnf
@@ -817,6 +821,7 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
+            -   [Number](#number)
             -   [Inline](#inline)
             -   [Magic](#magic)
             -   [Shell](#shell)
@@ -833,6 +838,7 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
             -   [Unset](#unset)
             -   [Empty](#empty)
         -   [Eval](#eval)
+        -   [Exit](#exit)
         -   [Clone](#clone)
         -   [Coalesce](#coalesce)
         -   [Include](#include)
@@ -891,9 +897,9 @@ Each Position object consists of a line number (1-indexed) and a column number (
 
 **Properties**
 
--   `line` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `column` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `offset` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `line` **[Number](#number)** 
+-   `column` **[Number](#number)** 
+-   `offset` **[Number](#number)** 
 
 # Array
 
@@ -1064,6 +1070,16 @@ Defines an eval statement
 
 -   `source` **[Node](#node)** 
 
+# Exit
+
+**Extends Statement**
+
+Defines an exit / die call
+
+**Properties**
+
+-   `status` **([Node](#node) | null)** 
+
 # Include
 
 **Extends Statement**
@@ -1125,6 +1141,12 @@ Defines an identifier node
 
 -   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Number
+
+**Extends Literal**
+
+Defines a numeric value
 
 # Program
 

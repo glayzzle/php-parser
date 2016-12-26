@@ -462,6 +462,10 @@ use_statement ::= (
  )
 ```
 
+# resolve_special_chars
+
+Unescape special chars
+
 # read_scalar
 
 ```ebnf

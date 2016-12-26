@@ -19,6 +19,17 @@ var specialChar = {
 
 module.exports = {
   /**
+   * Unescape special chars
+   */
+  resolve_special_chars: function(text) {
+    return text.replace(
+      /\\[rntvef"'\\\$]/g,
+      function(seq) {
+        return specialChar[seq];
+      }
+    );
+  },
+  /**
    * ```ebnf
    *  scalar ::= T_MAGIC_CONST
    *       | T_LNUMBER | T_DNUMBER
@@ -47,12 +58,7 @@ module.exports = {
             isDoubleQuote = text[0] === '"';
             text = text.substring(1, text.length - 1);
           }
-          value = value(isDoubleQuote, text.replace(
-            /\\[rntvef"'\\\$]/g,
-            function(seq) {
-              return specialChar[seq];
-            }
-          ));
+          value = value(isDoubleQuote, this.resolve_special_chars(text));
           if (isBinCast) {
             value = ['cast', 'binary', value];
           }
@@ -86,8 +92,9 @@ module.exports = {
             ]);
             value += this.text();
           }
+          result = result(value);
           this.next();
-          return result(value);
+          return result;
 
         // CONSTANTS
         case this.tok.T_NAMESPACE:
