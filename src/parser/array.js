@@ -3,6 +3,8 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+var ArrayExpr = 'array';
+var ArrayEntry = 'entry';
 
 module.exports = {
   /**
@@ -16,7 +18,7 @@ module.exports = {
     var expect = null;
     var shortForm = false;
     var items = [];
-    var result = this.node('array');
+    var result = this.node(ArrayExpr);
 
     if (this.expect([this.tok.T_ARRAY, '[']).token == this.tok.T_ARRAY) {
       this.next().expect('(');
@@ -51,7 +53,7 @@ module.exports = {
    * ```
    */
   read_array_pair_list: function() {
-    var result = this.node('entry');
+    var result = this.node(ArrayEntry);
     var key = null;
     var value = null;
     if (this.token === '&') {

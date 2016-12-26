@@ -7,8 +7,11 @@
    */
   ini_set('memory_limit', '1024M');
   $start = microtime(true);
-  $ast = ast\parse_file($argv[1], 40);
-
+  if (is_file($argv[1])) {
+    $ast = ast\parse_file($argv[1], 40);
+  } else {
+    $ast = ast\parse_code($argv[1], 40);
+  }
   // serialize nodes to associative arrays
   function getNode($node) {
     if (!$node) return false;

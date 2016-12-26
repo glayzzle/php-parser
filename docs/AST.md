@@ -4,10 +4,24 @@
 
 ## Class hierarchy
 
--   Node
-    -   Position
--   Location
--   Position
+-   [Node](#Node)
+    -   [Expression](#Expression)
+        -   [Array](#Array)
+        -   [Literal](#Literal)
+    -   [Statement](#Statement)
+        -   [Block](#Block)
+            -   [Program](#Program)
+            -   [Class](#Class)
+            -   [Namespace](#Namespace)
+        -   [Sys](#Sys)
+            -   [Echo](#Echo)
+            -   [Isset](#Isset)
+    -   [Identifier](#Identifier)
+    -   [Entry](#Entry)
+    -   [Documentation](#Documentation)
+    -   [Error](#Error)
+-   [Location](#Location)
+-   [Position](#Position)
 
 * * *
 
@@ -105,25 +119,11 @@ A comment or documentation
 -   `isDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `text` **[String](#string)** 
 
-# Sys
+# Echo
 
-**Extends Statement**
-
-Defines system based call
-
-**Properties**
-
--   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
-
-# Sys
-
-**Extends Statement**
+**Extends Sys**
 
 Defines system based call
-
-**Properties**
-
--   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
 
 # Entry
 
@@ -172,6 +172,12 @@ Defines an identifier node
 **Extends Literal**
 
 Defines inline html output (treated as echo output)
+
+# Isset
+
+**Extends Sys**
+
+Defines an isset call
 
 # Location
 
@@ -271,3 +277,13 @@ Defines inline html output (treated as echo output)
 **Properties**
 
 -   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Sys
+
+**Extends Statement**
+
+Defines system based call
+
+**Properties**
+
+-   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 

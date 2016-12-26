@@ -36,19 +36,23 @@ module.exports = {
 
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
-          var value = this.text();
+          var value = this.node('string');
+          var text = this.text();
+          var isDoubleQuote = false;
           var isBinCast = value[0] === 'b' || value[0] === 'B';
           if (isBinCast) {
-            value = value.substring(2, value.length - 1);
+            text = text.substring(2, value.length - 1);
+            isDoubleQuote = value[1] === '"';
           } else {
-            value = value.substring(1, value.length - 1);
+            text = text.substring(1, value.length - 1);
+            isDoubleQuote = value[0] === '"';
           }
-          value = ['string', value.replace(
+          value = value(isDoubleQuote, text.replace(
             /\\[rntvef"'\\\$]/g,
             function(seq) {
               return specialChar[seq];
             }
-          )];
+          ));
           if (isBinCast) {
             value = ['cast', 'binary', value];
           }
@@ -131,19 +135,20 @@ module.exports = {
   }
   /**
    * ```ebnf
-   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
+   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+   *  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+   *  | variable
+   *  | T_CURLY_OPEN variable '}'
    * ```
    */
   ,read_encapsed_string_item: function() {
     var result = null;
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
-      result = ['string', this.text()];
+      result = this.node('string')(false, this.text());
       this.next();
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      // ebnf :
-      // T_DOLLAR_OPEN_CURLY_BRACES expr '}'
-      // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
-      // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         result = ['var', this.text()];
         if (this.next().token === '[') {

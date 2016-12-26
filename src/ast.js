@@ -10,10 +10,24 @@ var Position = require('./ast/position');
 /**
  * ## Class hierarchy
  *
- * - Node
- *   - Position
- * - Location
- * - Position
+ * - [Node](#Node)
+ *   - [Expression](#Expression)
+ *     - [Array](#Array)
+ *     - [Literal](#Literal)
+ *   - [Statement](#Statement)
+ *     - [Block](#Block)
+ *       - [Program](#Program)
+ *       - [Class](#Class)
+ *       - [Namespace](#Namespace)
+ *     - [Sys](#Sys)
+ *       - [Echo](#Echo)
+ *       - [Isset](#Isset)
+ *   - [Identifier](#Identifier)
+ *   - [Entry](#Entry)
+ *   - [Documentation](#Documentation)
+ *   - [Error](#Error)
+ * - [Location](#Location)
+ * - [Position](#Position)
  * ---
  */
 
@@ -80,8 +94,10 @@ AST.prototype.prepare = function(kind, parser) {
 [
   require('./ast/array'),
   require('./ast/class'),
+  require('./ast/echo'),
   require('./ast/entry'),
   require('./ast/inline'),
+  require('./ast/isset'),
   require('./ast/error'),
   require('./ast/literal'),
   require('./ast/magic'),

@@ -148,10 +148,11 @@ module.exports = {
         return this.next().read_new_expr();
 
       case this.tok.T_ISSET:
+        var result = this.node('isset');
         this.next().expect('(').next();
-        var expr = this.read_list(this.read_expr, ',');
+        var args = this.read_list(this.read_expr, ',');
         this.expect(')').next();
-        return ['sys', 'isset', expr];
+        return result(args);
 
       case this.tok.T_EMPTY:
         this.next().expect('(').next();

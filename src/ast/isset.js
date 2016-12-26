@@ -5,15 +5,15 @@
  */
 
 var Sys = require('./sys');
-var KIND = 'echo';
+var KIND = 'isset';
 
 /**
- * Defines system based call
- * @constructor Echo
+ * Defines an isset call
+ * @constructor Isset
  * @extends {Sys}
  */
-var Echo = Sys.extends(function Echo(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var Isset = Sys.extends(function Isset(args, location) {
+  Sys.apply(this, [kind, args, location]);
 });
 
-module.exports = Echo;
+module.exports = Isset;

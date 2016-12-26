@@ -233,14 +233,20 @@ module.exports = {
         return result('declare', items);
 
       case this.tok.T_ECHO:
-        var items = this.next().read_list(this.read_expr, ',');
+        var result = this.node('echo');
+        var withParanthesis = (this.next().token === '(');
+        withParanthesis && this.next();
+        var args = this.read_list(this.read_expr, ',');
+        if (withParanthesis) {
+          this.expect(')').next();
+        }
         this.expectEndOfStatement();
-        return ['sys', 'echo', items];
+        return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var text = ['string', this.text()];
+        var result = this.node('inline')(this.text());
         this.next();
-        return ['sys', 'echo', text];
+        return result;
 
       case this.tok.T_UNSET:
         this.next().expect('(').next();

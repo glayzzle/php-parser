@@ -768,17 +768,33 @@ Comments with / \*\* \*\* /
 
 # AST
 
-The AST builder class
+## Class hierarchy
+
+-   [Node](#Node)
+    -   [Expression](#Expression)
+        -   [Array](#Array)
+        -   [Literal](#Literal)
+    -   [Statement](#Statement)
+        -   [Block](#Block)
+            -   [Program](#Program)
+            -   [Class](#Class)
+            -   [Namespace](#Namespace)
+        -   [Sys](#Sys)
+            -   [Echo](#Echo)
+            -   [Isset](#Isset)
+    -   [Identifier](#Identifier)
+    -   [Entry](#Entry)
+    -   [Documentation](#Documentation)
+    -   [Error](#Error)
+-   [Location](#Location)
+-   [Position](#Position)
+
+* * *
 
 **Parameters**
 
 -   `withPositions`  
 -   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -791,19 +807,17 @@ Prepares an AST node
 
 # AST
 
-## Class hierarchy
-
--   Node
-    -   Position
--   Location
--   Position
-
-* * *
+The AST builder class
 
 **Parameters**
 
 -   `withPositions`  
 -   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -905,6 +919,22 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 Any statement.
 
+# Echo
+
+**Extends Sys**
+
+Defines system based call
+
+# Sys
+
+**Extends Statement**
+
+Defines system based call
+
+**Properties**
+
+-   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+
 # Entry
 
 **Extends Node**
@@ -945,6 +975,12 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
 **Extends Literal**
 
 Defines inline html output (treated as echo output)
+
+# Isset
+
+**Extends Sys**
+
+Defines an isset call
 
 # Error
 
