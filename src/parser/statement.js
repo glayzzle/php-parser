@@ -6,9 +6,9 @@
 module.exports = {
   /**
    * reading a list of top statements (helper for top_statement*)
-   * <ebnf>
+   * ```ebnf
    *  top_statements ::= top_statement*
-   * </ebnf>
+   * ```
    */
   read_top_statements: function() {
     var result = [];
@@ -26,13 +26,13 @@ module.exports = {
   }
   /**
    * reading a top statement
-   * <ebnf>
+   * ```ebnf
    *  top_statement ::=
    *       namespace | function | class
    *       | interface | trait
    *       | use_statements | const_list
    *       | statement
-   * </ebnf>
+   * ```
    */
   ,read_top_statement: function() {
     switch(this.token) {
@@ -79,9 +79,9 @@ module.exports = {
   }
   /**
    * reads a list of simple inner statements (helper for inner_statement*)
-   * <ebnf>
+   * ```ebnf
    *  inner_statements ::= inner_statement*
-   * </ebnf>
+   * ```
    */
   ,read_inner_statements: function() {
     var result = [];
@@ -99,9 +99,9 @@ module.exports = {
   }
   /**
    * Reads a list of constants declaration
-   * <ebnf>
+   * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
-   * </ebnf>
+   * ```
    */
   ,read_const_list: function() {
     var result = this.read_list(function() {
@@ -115,9 +115,9 @@ module.exports = {
   }
   /**
    * Reads a list of constants declaration
-   * <ebnf>
+   * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
-   * </ebnf>
+   * ```
    */
   ,read_declare_list: function() {
     return this.read_list(function() {
@@ -129,9 +129,9 @@ module.exports = {
   }
   /**
    * reads a simple inner statement
-   * <ebnf>
+   * ```ebnf
    *  inner_statement ::= '{' inner_statements '}' | token
-   * </ebnf>
+   * ```
    */
   ,read_inner_statement: function() {
     switch(this.token) {
@@ -308,9 +308,9 @@ module.exports = {
     }
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  code_block ::= '{' (inner_statements | top_statements) '}'
-   * </ebnf>
+   * ```
    */
   ,read_code_block: function(top) {
     this.expect('{').nextWithComments();

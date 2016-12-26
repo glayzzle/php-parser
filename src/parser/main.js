@@ -6,9 +6,9 @@
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    * start ::= (namespace | top_statement)*
-   * </ebnf>
+   * ```
    */
   read_start: function() {
     if (this.token == this.tok.T_NAMESPACE) {

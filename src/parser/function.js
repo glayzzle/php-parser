@@ -27,9 +27,9 @@ module.exports = {
   }
   /**
    * reading a function
-   * <ebnf>
+   * ```ebnf
    * function ::= function_declaration code_block
-   * </ebnf>
+   * ```
    */
   ,read_function: function(closure, flag) {
     var result = this.node(
@@ -50,9 +50,9 @@ module.exports = {
   }
   /**
    * reads a function declaration (without his body)
-   * <ebnf>
+   * ```ebnf
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
-   * </ebnf>
+   * ```
    */
   ,read_function_declaration: function(type) {
     var nodeName = 'function';
@@ -85,9 +85,9 @@ module.exports = {
     return result(name, params, isRef, returnType);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * lexical_var ::= '&'? T_VARIABLE
-   * </ebnf>
+   * ```
    */
   ,read_lexical_var: function() {
     var result = [false, null];
@@ -105,9 +105,9 @@ module.exports = {
   }
   /**
    * reads a list of parameters
-   * <ebnf>
+   * ```ebnf
    *  parameter_list ::= (parameter ',')* parameter?
-   * </ebnf>
+   * ```
    */
   ,read_parameter_list: function() {
     var result = [];
@@ -127,9 +127,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
-   * </ebnf>
+   * ```
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   ,read_parameter: function() {
@@ -145,9 +145,9 @@ module.exports = {
     return node(name, type, value, isRef, isVariadic);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
-   * </ebnf>
+   * ```
    */
   ,read_function_argument_list: function() {
     var result = [];
@@ -164,9 +164,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *    argument_list ::= T_ELLIPSIS? expr
-   * </ebnf>
+   * ```
    */
   ,read_argument_list: function() {
     if (this.token === this.tok.T_ELLIPSIS ) {
@@ -176,9 +176,9 @@ module.exports = {
   }
   /**
    * read type hinting
-   * <ebnf>
+   * ```ebnf
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name
-   * </ebnf>
+   * ```
    */
   ,read_type: function() {
     switch(this.token) {

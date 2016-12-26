@@ -257,9 +257,10 @@ convert an token to ast \*
 ## read_list
 
 Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
-<ebnf>
-list ::= separator? ( item separator )\* item
-</ebnf>
+
+```ebnf
+list ::= separator? ( item separator )* item
+```
 
 **Parameters**
 
@@ -275,71 +276,80 @@ outputs some debug information on current token \*
 # read_array
 
 Parse an array
-<ebnf>
+
+```ebnf
 array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
-</ebnf>
+```
 
 # read_array_pair_list
 
 Reads an array entry item
-<ebnf>
+
+```ebnf
 array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
-</ebnf>
+```
 
 # read_dim_offset
 
-<ebnf>
+```ebnf
  dim_offset ::= expr?
-</ebnf>
+```
 
 # read_class
 
 reading a class
-<ebnf>
-class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')\* NAMESPACE_NAME)? '{' CLASS_BODY '}'
-</ebnf>
+
+```ebnf
+class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
+```
 
 # read_class_scope
 
 Read the class visibility
-<ebnf>
+
+```ebnf
   class_scope ::= (T_FINAL | T_ABSTRACT)?
-</ebnf>
+```
 
 # read_class_body
 
 Reads a class body
-<ebnf>
-  class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))\*
-</ebnf>
+
+```ebnf
+  class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
+```
 
 # read_variable_list
 
 Reads variable list
-<ebnf>
- variable_list ::= (variable_declaration ',')\* variable_declaration
-</ebnf>
+
+```ebnf
+ variable_list ::= (variable_declaration ',')* variable_declaration
+```
 
 # read_variable_declaration
 
 Reads a variable declaration
-<ebnf>
+
+```ebnf
  variable_declaration ::= T_VARIABLE '=' scalar
-</ebnf>
+```
 
 # read_constant_list
 
 Reads constant list
-<ebnf>
- constant_list ::= T_CONST (constant_declaration ',')\* constant_declaration
-</ebnf>
+
+```ebnf
+ constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
+```
 
 # read_constant_declaration
 
 Reads a constant declaration
-<ebnf>
+
+```ebnf
  constant_declaration ::= T_STRING '=' expr
-</ebnf>
+```
 
 # read_member_flags
 
@@ -353,70 +363,77 @@ Returns **any** array
 # read_interface
 
 reading an interface
-<ebnf>
-interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')\* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
-</ebnf>
+
+```ebnf
+interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
+```
 
 # read_interface_body
 
 Reads an interface body
-<ebnf>
-  interface_body ::= (member_flags? (T_CONST | T_FUNCTION))\*
-</ebnf>
+
+```ebnf
+  interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
+```
 
 # read_trait
 
 reading a trait
-<ebnf>
-trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')_ NAMESPACE_NAME)? '{' FUNCTION_ '}'
-</ebnf>
+
+```ebnf
+trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
+```
 
 # read_trait_use_statement
 
 reading a use statement
-<ebnf>
-trait_use_statement ::= namespace_name (',' namespace_name)\* ('{' trait_use_alias '}')?
-</ebnf>
+
+```ebnf
+trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
+```
 
 # read_trait_use_alias
 
 Reading trait alias
-<ebnf>
+
+```ebnf
 trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
-</ebnf>
+```
 
 # read_expr_item
 
-<ebnf>
+```ebnf
 Reads an expression
  expr ::= @todo
-</ebnf>
+```
 
 # read_new_expr
 
-<ebnf>
+```ebnf
    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
-</ebnf>
+```
+
 <https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850>
 
 # read_class_name_reference
 
 Reads a class name
-<ebnf>
+
+```ebnf
 class_name_reference ::= namespace_name | variable
-</ebnf>
+```
 
 # read_assignment_list
 
-<ebnf>
-  assignment_list ::= assignment_list_element (',' assignment_list_element?)\*
-</ebnf>
+```ebnf
+  assignment_list ::= assignment_list_element (',' assignment_list_element?)*
+```
 
 # read_assignment_list_element
 
-<ebnf>
+```ebnf
  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
-</ebnf>
+```
 
 # is_reference
 
@@ -429,60 +446,64 @@ checks if current token is a variadic keyword
 # read_function
 
 reading a function
-<ebnf>
+
+```ebnf
 function ::= function_declaration code_block
-</ebnf>
+```
 
 # read_function_declaration
 
 reads a function declaration (without his body)
-<ebnf>
+
+```ebnf
 function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
-</ebnf>
+```
 
 # read_lexical_var
 
-<ebnf>
+```ebnf
 lexical_var ::= '&'? T_VARIABLE
-</ebnf>
+```
 
 # read_parameter_list
 
 reads a list of parameters
-<ebnf>
- parameter_list ::= (parameter ',')\* parameter?
-</ebnf>
+
+```ebnf
+ parameter_list ::= (parameter ',')* parameter?
+```
 
 # read_parameter
 
-<ebnf>
+```ebnf
  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
-</ebnf>
+```
 
 # read_function_argument_list
 
-<ebnf>
- function_argument_list ::= '(' (argument_list (',' argument_list)\*)? ')'
-</ebnf>
+```ebnf
+ function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
+```
 
 # read_argument_list
 
-<ebnf>
+```ebnf
    argument_list ::= T_ELLIPSIS? expr
-</ebnf>
+```
 
 # read_type
 
 read type hinting
-<ebnf>
+
+```ebnf
  type ::= T_ARRAY | T_CALLABLE | namespace_name
-</ebnf>
+```
 
 # read_if
 
-<ebnf>
+```ebnf
  if ::= '(' expr ')' ':' ...
-</ebnf>
+```
 
 # read_if_expr
 
@@ -504,78 +525,79 @@ Reads a while statement
 
 # read_foreach
 
-<ebnf>
+```ebnf
 foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
-</ebnf>
+```
 
 # read_foreach_variable
 
-<ebnf>
+```ebnf
 foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
-</ebnf>
+```
 
 # read_start
 
-<ebnf>
-start ::= (namespace | top_statement)\*
-</ebnf>
+```ebnf
+start ::= (namespace | top_statement)*
+```
 
 # read_namespace
 
-<ebnf>
+```ebnf
 namespace ::= T_NAMESPACE namespace_name? '{'
    top_statements
 '}'
 | T_NAMESPACE namespace_name ';' top_statements
-</ebnf>
+```
 
 # read_namespace_name
 
 reading a namespace name
-<ebnf>
- namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)\* T_STRING
-</ebnf>
+
+```ebnf
+ namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
+```
 
 # read_use_statements
 
-<ebnf>
+```ebnf
 use_statements ::=
      use_statements ',' use_statement
      | use_statement
-</ebnf>
+```
 
 # read_inline_use_declaration
 
-<ebnf>
+```ebnf
  inline_use_declaration ::= ...
-</ebnf>
+```
 
 # read_use_statement_mixed
 
-<ebnf>
+```ebnf
   use_statement_mixed ::=
       use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' )
-      (',' read_use_statement)\*
-</ebnf>
+      (',' read_use_statement)*
+```
 
 # read_use_statement
 
-<ebnf>
+```ebnf
 use_statement ::= (
  (T_FUNCTION | T_CONST)? namespace_name
  )
-</ebnf>
+```
 
 # read_scalar
 
-<ebnf>
+```ebnf
  scalar ::= T_MAGIC_CONST
       | T_LNUMBER | T_DNUMBER
       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
       | '"' encaps_list '"'
       | T_START_HEREDOC encaps_list T_END_HEREDOC
       | namespace_name (T_DOUBLE_COLON T_STRING)?
-</ebnf>
+```
 
 # read_dereferencable
 
@@ -583,9 +605,9 @@ Handles the dereferencing
 
 # read_encapsed_string_item
 
-<ebnf>
+```ebnf
 encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
-</ebnf>
+```
 
 # read_encapsed_string
 
@@ -597,49 +619,55 @@ Constant token
 
 # read_top_statements
 
-reading a list of top statements (helper for top_statement_)
-<ebnf>
- top_statements ::= top_statement_
-</ebnf>
+reading a list of top statements (helper for top_statement\*)
+
+```ebnf
+ top_statements ::= top_statement*
+```
 
 # read_top_statement
 
 reading a top statement
-<ebnf>
+
+```ebnf
  top_statement ::=
       namespace | function | class
       | interface | trait
       | use_statements | const_list
       | statement
-</ebnf>
+```
 
 # read_inner_statements
 
-reads a list of simple inner statements (helper for inner_statement_)
-<ebnf>
- inner_statements ::= inner_statement_
-</ebnf>
+reads a list of simple inner statements (helper for inner_statement\*)
+
+```ebnf
+ inner_statements ::= inner_statement*
+```
 
 # read_const_list
 
 Reads a list of constants declaration
-<ebnf>
-  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)\* ';'
-</ebnf>
+
+```ebnf
+  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
+```
 
 # read_declare_list
 
 Reads a list of constants declaration
-<ebnf>
-  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)\*
-</ebnf>
+
+```ebnf
+  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+```
 
 # read_inner_statement
 
 reads a simple inner statement
-<ebnf>
+
+```ebnf
  inner_statement ::= '{' inner_statements '}' | token
-</ebnf>
+```
 
 # read_statement
 
@@ -647,38 +675,39 @@ Reads statements
 
 # read_code_block
 
-<ebnf>
+```ebnf
  code_block ::= '{' (inner_statements | top_statements) '}'
-</ebnf>
+```
 
 # read_switch
 
 Reads a switch statement
-<ebnf>
+
+```ebnf
  switch ::= T_SWITCH '(' expr ')' switch_case_list
-</ebnf>
+```
 
 # read_switch_case_list
 
-<ebnf>
- switch_case_list ::= '{' ';'? case_list_ '}' | ':' ';'? case_list_ T_ENDSWITCH ';'
-</ebnf>
+```ebnf
+ switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
+```
 
 # read_case_list
 
-<ebnf>
-  case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement\*
-</ebnf>
+```ebnf
+  case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
+```
 
 # read_try
 
-<ebnf>
- try ::= T_TRY '{' inner_statement_ '}'
+```ebnf
+ try ::= T_TRY '{' inner_statement* '}'
          (
-             T_CATCH '(' namespace_name variable ')' '{'  inner_statement_ '}'
-         )_
-         (T_FINALLY '{' inner_statement_ '}')?
-</ebnf>
+             T_CATCH '(' namespace_name variable ')' '{'  inner_statement* '}'
+         )*
+         (T_FINALLY '{' inner_statement* '}')?
+```
 
 # read_comment
 
@@ -690,9 +719,10 @@ Comments with / \*\* \*\* /
 
 # read_variable
 
-<ebnf>
+```ebnf
   variable ::= ...complex @todo
-</ebnf>
+```
+
 <code>
  $var                      // simple var
  classname::CONST_NAME     // dynamic class name with const retrieval
@@ -706,9 +736,10 @@ Comments with / \*\* \*\* /
 
 # read_reference_variable
 
-<ebnf>
- reference_variable ::=  simple_variable ('[' OFFSET ']')\* | '{' EXPR '}'
-</ebnf>
+```ebnf
+ reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
+```
+
 <code>
  $foo[123];      // foo is an array ==> gets its entry
  $foo{1};        // foo is a string ==> get the 2nd char offset
@@ -718,9 +749,9 @@ Comments with / \*\* \*\* /
 
 # read_simple_variable
 
-<ebnf>
+```ebnf
  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
-</ebnf>
+```
 
 # AST
 
@@ -733,8 +764,8 @@ The AST builder class
 
 **Properties**
 
--   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
 
 ## prepare
 

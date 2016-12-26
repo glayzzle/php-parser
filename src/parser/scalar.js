@@ -19,14 +19,14 @@ var specialChar = {
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *  scalar ::= T_MAGIC_CONST
    *       | T_LNUMBER | T_DNUMBER
    *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
    *       | '"' encaps_list '"'
    *       | T_START_HEREDOC encaps_list T_END_HEREDOC
    *       | namespace_name (T_DOUBLE_COLON T_STRING)?
-   * </ebnf>
+   * ```
    */
   read_scalar: function() {
     if (this.is('T_MAGIC_CONST')) {
@@ -130,9 +130,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
-   * </ebnf>
+   * ```
    */
   ,read_encapsed_string_item: function() {
     var result = null;

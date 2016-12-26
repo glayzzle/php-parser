@@ -33,7 +33,6 @@ var parser = function(lexer, ast) {
   this.token = null;
   this.prev = null;
   this.debug = false;
-  this.locations = false;
   this.extractDoc = false;
   this.suppressErrors = false;
   this.lastError = false;
@@ -164,7 +163,7 @@ parser.prototype.parse = function(code) {
   this.length = this.lexer._input.length;
   this.nextWithComments();
   this.innerList = false;
-  var program = this.ast.prepare('program');
+  var program = this.ast.prepare('program', this);
   var childs = [];
   while(this.token != this.EOF) {
     var node = this.read_start();
@@ -189,7 +188,7 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     throw new Error(message);
   }
   // Error node :
-  var node = this.ast.prepare('error')(
+  var node = this.ast.prepare('error', this)(
     message, token, this.lexer.yylloc.first_line, expect
   );
   this._errors.push(node);
@@ -226,47 +225,7 @@ parser.prototype.error = function(expect) {
  * Creates a new AST node
  */
 parser.prototype.node = function(name) {
-  var startAt = null;
-  if (this.locations === true) {
-    startAt = [
-      this.prev[0],
-      this.prev[1],
-      this.prev[2]
-    ];
-  }
-  return function() {
-    var result =  Array.prototype.slice.call(arguments);
-    if (name && name.constructor === Array) {
-      if (this.locations === true) {
-        name[2] = [
-          this.prev[0],
-          this.prev[1],
-          this.prev[2]
-        ];
-        Array.prototype.push.apply(name[3], result);
-      } else {
-        Array.prototype.push.apply(name, result);
-      }
-      result = name;
-    } else {
-      if (name) {
-        result.unshift(name);
-      }
-      if (this.locations === true) {
-        result = [
-          'position',
-          startAt,
-          [
-            this.prev[0],
-            this.prev[1],
-            this.prev[2]
-          ],
-          result
-        ];
-      }
-    }
-    return result;
-  }.bind(this);
+  return this.ast.prepare(name, this);
 };
 
 /**
@@ -394,9 +353,9 @@ parser.prototype.read_token = function() {
 
 /**
  * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
- * <ebnf>
+ * ```ebnf
  * list ::= separator? ( item separator )* item
- * </ebnf>
+ * ```
  */
 parser.prototype.read_list = function(item, separator, preserveFirstSeparator, withDoc) {
   var result = [];

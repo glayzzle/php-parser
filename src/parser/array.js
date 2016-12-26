@@ -7,9 +7,9 @@
 module.exports = {
   /**
    * Parse an array
-   * <ebnf>
+   * ```ebnf
    * array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
-   * </ebnf>
+   * ```
    */
   read_array: function() {
     var expect = null;
@@ -38,9 +38,9 @@ module.exports = {
   },
   /**
    * Reads an array entry item
-   * <ebnf>
+   * ```ebnf
    * array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
-   * </ebnf>
+   * ```
    */
   read_array_pair_list: function() {
     if (this.token === '&') {
@@ -59,9 +59,9 @@ module.exports = {
     }
   },
   /**
-   * <ebnf>
+   * ```ebnf
    *  dim_offset ::= expr?
-   * </ebnf>
+   * ```
    */
   read_dim_offset: function() {
     if (this.token == ']') return false;

@@ -6,9 +6,9 @@
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *  if ::= '(' expr ')' ':' ...
-   * </ebnf>
+   * ```
    */
   read_if: function() {
     var result = this.node('if');

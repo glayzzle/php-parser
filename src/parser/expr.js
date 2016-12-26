@@ -58,10 +58,10 @@ module.exports = {
   }
 
   /**
-   * <ebnf>
+   * ```ebnf
    * Reads an expression
    *  expr ::= @todo
-   * </ebnf>
+   * ```
    */
   ,read_expr_item: function() {
 
@@ -330,9 +330,9 @@ module.exports = {
 
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
-   * </ebnf>
+   * ```
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
   ,read_new_expr: function() {
@@ -367,9 +367,9 @@ module.exports = {
   }
   /**
    * Reads a class name
-   * <ebnf>
+   * ```ebnf
    * class_name_reference ::= namespace_name | variable
-   * </ebnf>
+   * ```
    */
   ,read_class_name_reference: function() {
     if (this.token === '\\' || this.token === this.tok.T_STRING) {
@@ -387,9 +387,9 @@ module.exports = {
     }
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
-   * </ebnf>
+   * ```
    */
   ,read_assignment_list: function() {
     return this.read_list(
@@ -398,9 +398,9 @@ module.exports = {
   }
 
   /**
-   * <ebnf>
+   * ```ebnf
    *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
-   * </ebnf>
+   * ```
    */
   ,read_assignment_list_element: function() {
     if (this.token === ',' || this.token === ')') return null;

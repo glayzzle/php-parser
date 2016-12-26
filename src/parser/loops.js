@@ -72,9 +72,9 @@ module.exports = {
     return result(expr1, expr2, expr3, body);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
-   * </ebnf>
+   * ```
    */
   ,read_foreach: function() {
     var result = this.node('foreach');
@@ -97,9 +97,9 @@ module.exports = {
     return result(expr, key, item, body);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
-   * </ebnf>
+   * ```
    */
   ,read_foreach_variable: function() {
       if (this.token === '&') {

@@ -35,6 +35,7 @@ function combine(src, to) {
 
 /**
  * @constructor {Engine}
+ * @param {Object} options
  * @property {Lexer} lexer
  * @property {Parser} parser
  * @property {AST} ast

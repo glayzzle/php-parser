@@ -5,9 +5,9 @@
  */
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *   variable ::= ...complex @todo
-   * </ebnf>
+   * ```
    * <code>
    *  $var                      // simple var
    *  classname::CONST_NAME     // dynamic class name with const retrieval
@@ -168,9 +168,9 @@ module.exports = {
     return offset;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
-   * </ebnf>
+   * ```
    * <code>
    *  $foo[123];      // foo is an array ==> gets its entry
    *  $foo{1};        // foo is a string ==> get the 2nd char offset
@@ -197,9 +197,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
-   * </ebnf>
+   * ```
    */
   ,read_simple_variable: function() {
     var result;

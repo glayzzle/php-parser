@@ -7,9 +7,9 @@
 module.exports = {
   /**
    * reading a class
-   * <ebnf>
+   * ```ebnf
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
-   * </ebnf>
+   * ```
    */
   read_class: function(flag) {
     var result = this.node('class');
@@ -40,9 +40,9 @@ module.exports = {
   }
   /**
    * Read the class visibility
-   * <ebnf>
+   * ```ebnf
    *   class_scope ::= (T_FINAL | T_ABSTRACT)?
-   * </ebnf>
+   * ```
    */
   ,read_class_scope: function() {
     var result = this.token;
@@ -57,9 +57,9 @@ module.exports = {
   }
   /**
    * Reads a class body
-   * <ebnf>
+   * ```ebnf
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
-   * </ebnf>
+   * ```
    */
   ,read_class_body: function() {
     var result = [];
@@ -144,9 +144,9 @@ module.exports = {
   }
   /**
    * Reads variable list
-   * <ebnf>
+   * ```ebnf
    *  variable_list ::= (variable_declaration ',')* variable_declaration
-   * </ebnf>
+   * ```
    */
   ,read_variable_list: function() {
     return this.read_list(
@@ -156,9 +156,9 @@ module.exports = {
   }
   /**
    * Reads a variable declaration
-   * <ebnf>
+   * ```ebnf
    *  variable_declaration ::= T_VARIABLE '=' scalar
-   * </ebnf>
+   * ```
    */
   ,read_variable_declaration: function() {
     var result = this.node('var');
@@ -176,9 +176,9 @@ module.exports = {
   }
   /**
    * Reads constant list
-   * <ebnf>
+   * ```ebnf
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
-   * </ebnf>
+   * ```
    */
   ,read_constant_list: function() {
     return this.expect(this.tok.T_CONST)
@@ -190,9 +190,9 @@ module.exports = {
   }
   /**
    * Reads a constant declaration
-   * <ebnf>
+   * ```ebnf
    *  constant_declaration ::= T_STRING '=' expr
-   * </ebnf>
+   * ```
    */
   ,read_constant_declaration: function() {
     var result = this.node('const');
@@ -247,9 +247,9 @@ module.exports = {
   }
   /**
    * reading an interface
-   * <ebnf>
+   * ```ebnf
    * interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
-   * </ebnf>
+   * ```
    */
   ,read_interface: function(flag) {
     var result = this.node('interface');
@@ -274,9 +274,9 @@ module.exports = {
   }
   /**
    * Reads an interface body
-   * <ebnf>
+   * ```ebnf
    *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
-   * </ebnf>
+   * ```
    */
   ,read_interface_body: function() {
     var result = [];
@@ -331,9 +331,9 @@ module.exports = {
   }
   /**
    * reading a trait
-   * <ebnf>
+   * ```ebnf
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
-   * </ebnf>
+   * ```
    */
   ,read_trait: function(flag) {
     var result = this.node('trait');
@@ -362,9 +362,9 @@ module.exports = {
   }
   /**
    * reading a use statement
-   * <ebnf>
+   * ```ebnf
    * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
-   * </ebnf>
+   * ```
    */
   ,read_trait_use_statement: function() {
     // defines use statements
@@ -391,9 +391,9 @@ module.exports = {
   }
   /**
    * Reading trait alias
-   * <ebnf>
+   * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
-   * </ebnf>
+   * ```
    */
   ,read_trait_use_alias: function() {
     var node = this.node('alias');

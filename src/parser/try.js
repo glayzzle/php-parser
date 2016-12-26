@@ -5,13 +5,13 @@
  */
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *  try ::= T_TRY '{' inner_statement* '}'
    *          (
    *              T_CATCH '(' namespace_name variable ')' '{'  inner_statement* '}'
    *          )*
    *          (T_FINALLY '{' inner_statement* '}')?
-   * </ebnf>
+   * ```
    */
   read_try: function() {
 
