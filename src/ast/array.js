@@ -9,15 +9,15 @@ var KIND = 'array';
 
 /**
  * Defines an array structure
- * @constructor ArrayExpression
+ * @constructor Array
  * @extends {Expression}
  * @property {Entry[]} items
  * @property {boolean} shortForm
  */
-var ArrayExpression = Expr.extends(function Array(shortForm, items, location) {
+var Array = Expr.extends(function Array(shortForm, items, location) {
   Expr.apply(this, [KIND, location]);
   this.items = items;
   this.shortForm = shortForm;
 });
 
-module.exports = ArrayExpression;
+module.exports = Array;

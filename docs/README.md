@@ -23,7 +23,7 @@ parsing eval string as '$x = 1;'
 
 -   `buffer`  
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
+Returns **[Array](#array)** 
 
 ## parseCode
 
@@ -892,7 +892,7 @@ Each Position object consists of a line number (1-indexed) and a column number (
 -   `column` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `offset` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-# ArrayExpression
+# Array
 
 **Extends Expression**
 
@@ -900,18 +900,8 @@ Defines an array structure
 
 **Properties**
 
--   `items` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Entry](#entry)>** 
+-   `items` **[Array](#array)&lt;[Entry](#entry)>** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-# ArrayExpression
-
-**Extends Expression**
-
-Defines an array structure
-
-**Properties**
-
--   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
 
 # Expression
 
@@ -954,7 +944,7 @@ A class definition
 
 -   `name` **([Identifier](#identifier) | null)** 
 -   `extends` **([Identifier](#identifier) | null)** 
--   `implements` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Identifier](#identifier)>** 
+-   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
@@ -967,7 +957,7 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 **Properties**
 
--   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+-   `children` **[Array](#array)&lt;[Node](#node)>** 
 
 # Clone
 
@@ -1005,7 +995,7 @@ Defines system based call
 
 **Properties**
 
--   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+-   `arguments` **[Array](#array)&lt;[Node](#node)>** 
 
 # Entry
 
@@ -1067,6 +1057,16 @@ Defines inline html output (treated as echo output)
 
 Defines an isset call
 
+# ArrayExpression
+
+**Extends Expression**
+
+Defines an array structure
+
+**Properties**
+
+-   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
+
 # Magic
 
 **Extends Literal**
@@ -1103,7 +1103,7 @@ The main program node
 
 **Properties**
 
--   `errors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Error](#error)>** 
+-   `errors` **[Array](#array)&lt;[Error](#error)>** 
 
 # Shell
 

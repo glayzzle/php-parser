@@ -78,7 +78,7 @@ Prepares an AST node
 
 Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
-# ArrayExpression
+# Array
 
 **Extends Expression**
 
@@ -86,18 +86,8 @@ Defines an array structure
 
 **Properties**
 
--   `items` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Entry](#entry)>** 
+-   `items` **[Array](#array)&lt;[Entry](#entry)>** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-# ArrayExpression
-
-**Extends Expression**
-
-Defines an array structure
-
-**Properties**
-
--   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
 
 # Assign
 
@@ -119,7 +109,7 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 **Properties**
 
--   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+-   `children` **[Array](#array)&lt;[Node](#node)>** 
 
 # Boolean
 
@@ -137,7 +127,7 @@ A class definition
 
 -   `name` **([Identifier](#identifier) | null)** 
 -   `extends` **([Identifier](#identifier) | null)** 
--   `implements` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Identifier](#identifier)>** 
+-   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
@@ -235,6 +225,16 @@ Defines inline html output (treated as echo output)
 
 Defines an isset call
 
+# ArrayExpression
+
+**Extends Expression**
+
+Defines an array structure
+
+**Properties**
+
+-   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
+
 # Location
 
 Defines the location of the node (with it's source contents as string)
@@ -316,7 +316,7 @@ The main program node
 
 **Properties**
 
--   `errors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Error](#error)>** 
+-   `errors` **[Array](#array)&lt;[Error](#error)>** 
 
 # Shell
 
@@ -348,7 +348,7 @@ Defines system based call
 
 **Properties**
 
--   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+-   `arguments` **[Array](#array)&lt;[Node](#node)>** 
 
 # Unset
 
