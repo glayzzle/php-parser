@@ -28,6 +28,7 @@ var Position = require('./ast/position');
  *       - [Namespace](#namespace)
  *     - [Sys](#sys)
  *       - [Echo](#echo)
+ *       - [Print](#print)
  *       - [Isset](#isset)
  *       - [Unset](#unset)
  *       - [Empty](#empty)
@@ -134,6 +135,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/magic'),
   require('./ast/namespace'),
   require('./ast/number'),
+  require('./ast/print'),
   require('./ast/program'),
   require('./ast/shell'),
   require('./ast/string'),

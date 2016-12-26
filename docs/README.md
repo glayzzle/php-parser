@@ -834,6 +834,7 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
+            -   [Print](#print)
             -   [Isset](#isset)
             -   [Unset](#unset)
             -   [Empty](#empty)
@@ -1147,6 +1148,12 @@ Defines an identifier node
 **Extends Literal**
 
 Defines a numeric value
+
+# Print
+
+**Extends Sys**
+
+Outputs
 
 # Program
 

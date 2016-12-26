@@ -22,6 +22,7 @@
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
+            -   [Print](#print)
             -   [Isset](#isset)
             -   [Unset](#unset)
             -   [Empty](#empty)
@@ -356,6 +357,12 @@ Each Position object consists of a line number (1-indexed) and a column number (
 -   `line` **[Number](#number)** 
 -   `column` **[Number](#number)** 
 -   `offset` **[Number](#number)** 
+
+# Print
+
+**Extends Sys**
+
+Outputs
 
 # Program
 

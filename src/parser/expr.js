@@ -247,8 +247,7 @@ module.exports = {
         return result(status);
 
       case this.tok.T_PRINT:
-        return (this.node('sys'))(
-          'print',
+        return this.node('print')(
           this.next().read_expr()
         );
 
