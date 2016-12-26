@@ -46,8 +46,8 @@ var engine = function(options) {
   }
   this.tokens = tokens;
   this.lexer = new lexer(this);
-  this.parser = new parser(this.lexer);
-  this.AST = new AST();
+  this.ast = new AST();
+  this.parser = new parser(this.lexer, this.ast);
   if (options && typeof options === 'object') {
     combine(options, this);
   }

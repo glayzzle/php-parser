@@ -22,8 +22,9 @@ function isNumber(n) {
  * @property {Boolean} extractDoc
  * @property {Boolean} debug
  */
-var parser = function(lexer) {
+var parser = function(lexer, ast) {
   this.lexer = lexer;
+  this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
   // Private vars, do not use directly
@@ -164,20 +165,21 @@ parser.prototype.parse = function(code) {
   this.length = this.lexer._input.length;
   this.nextWithComments();
   this.innerList = false;
-  this.ast = ['program', []];
+  var program = this.ast.prepare('program');
+  var childs = [];
   while(this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
       if (typeof node[0] !== 'string') {
         node.forEach(function(item) {
-          this.ast[1].push(item);
-        }.bind(this));
+          childs.push(item);
+        });
       } else {
-        this.ast[1].push(node);
+        childs.push(node);
       }
     }
   }
-  return this.ast;
+  return program(childs);
 };
 
 /**
