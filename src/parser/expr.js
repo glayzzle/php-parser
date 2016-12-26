@@ -179,7 +179,7 @@ module.exports = {
 
       case this.tok.T_REQUIRE:
         return this.node('include')(
-          false, true
+          false, true,
           this.next().read_expr()
         );
 
