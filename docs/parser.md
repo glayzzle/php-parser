@@ -7,6 +7,7 @@ The PHP Parser class
 **Parameters**
 
 -   `lexer`  
+-   `ast`  
 
 **Properties**
 
