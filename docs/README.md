@@ -220,15 +220,28 @@ expects an end of statement or end of file
 
 ## expect
 
-force to expect specified token \*
+Force the parser to check the current token.
+
+If the current token does not match to expected token,
+the an error will be raised.
+
+If the suppressError mode is activated, then the error will
+be added to the program error stack and this function will return `false`.
 
 **Parameters**
 
--   `token`  
+-   `token` **([String](#string) \| [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** 
+
+
+-   Throws **any** Error
+
+Returns **(Parser | False)** 
 
 ## text
 
-returns the current token contents \*
+Returns the current token contents
+
+Returns **[String](#string)** 
 
 ## next
 
@@ -267,7 +280,6 @@ list ::= separator? ( item separator )* item
 -   `item`  
 -   `separator`  
 -   `preserveFirstSeparator`  
--   `withDoc`  
 
 # ignoreStack
 
@@ -772,29 +784,6 @@ Some samples of parsed code :
 
 # AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind`  
--   `parser`  
-
-# AST
-
 ## Class hierarchy
 
 -   [Node](#Node)
@@ -814,6 +803,7 @@ Prepares an AST node
         -   [Sys](#Sys)
             -   [Echo](#Echo)
             -   [Isset](#Isset)
+            -   [Unset](#Unset)
         -   [Clone](#Clone)
         -   [Assign](#Assign)
     -   [Identifier](#Identifier)
@@ -829,6 +819,29 @@ Prepares an AST node
 
 -   `withPositions`  
 -   `withSource`  
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind`  
+-   `parser`  
+
+# AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -1081,6 +1094,12 @@ Defines inline html output (treated as echo output)
 **Properties**
 
 -   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Unset
+
+**Extends Sys**
+
+Deletes references to a list of variables
 
 # Variable
 

@@ -210,7 +210,9 @@ module.exports = {
         return ['cast', 'boolean', this.next().read_expr()];
 
       case this.tok.T_UNSET_CAST:
-        return ['sys', 'unset', this.next().read_expr()];
+        return this.node('unset')(
+          this.next().read_expr()
+        );
 
       case this.tok.T_EXIT:
         var result = this.node('sys');

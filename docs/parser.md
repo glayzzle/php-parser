@@ -66,15 +66,28 @@ expects an end of statement or end of file
 
 ## expect
 
-force to expect specified token \*
+Force the parser to check the current token.
+
+If the current token does not match to expected token,
+the an error will be raised.
+
+If the suppressError mode is activated, then the error will
+be added to the program error stack and this function will return `false`.
 
 **Parameters**
 
--   `token`  
+-   `token` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** 
+
+
+-   Throws **any** Error
+
+Returns **(Parser | False)** 
 
 ## text
 
-returns the current token contents \*
+Returns the current token contents
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## next
 
@@ -113,7 +126,6 @@ list ::= separator? ( item separator )* item
 -   `item`  
 -   `separator`  
 -   `preserveFirstSeparator`  
--   `withDoc`  
 
 # ignoreStack
 

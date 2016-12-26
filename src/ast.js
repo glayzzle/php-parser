@@ -27,6 +27,7 @@ var Position = require('./ast/position');
  *     - [Sys](#Sys)
  *       - [Echo](#Echo)
  *       - [Isset](#Isset)
+ *       - [Unset](#Unset)
  *     - [Clone](#Clone)
  *     - [Assign](#Assign)
  *   - [Identifier](#Identifier)
@@ -114,6 +115,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/program'),
   require('./ast/shell'),
   require('./ast/string'),
+  require('./ast/unset'),
   require('./ast/variable')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();

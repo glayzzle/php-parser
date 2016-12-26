@@ -109,7 +109,7 @@ module.exports = {
       var result = this.node(this.text());
       this.next().expect('=').next();
       return result(this.read_expr());
-    }, ',', false, true);
+    }, ',', false);
     this.expectEndOfStatement();
     return ['const', result];
   }
@@ -249,10 +249,16 @@ module.exports = {
         return result;
 
       case this.tok.T_UNSET:
+        var result = this.node('unset');
         this.next().expect('(').next();
         var items = this.read_list(this.read_variable, ',');
-        this.expect(')').next().expect(';').nextWithComments();
-        return ['sys', 'unset', items];
+        if (this.expect(')').next().expect(';')) {
+          result = result(items);
+          this.nextWithComments();
+        } else {
+          result = result(items);
+        }
+        return  result;
 
       case this.tok.T_DECLARE:
         var result = this.node('declare'), options, body;

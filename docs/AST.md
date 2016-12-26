@@ -21,6 +21,7 @@
         -   [Sys](#Sys)
             -   [Echo](#Echo)
             -   [Isset](#Isset)
+            -   [Unset](#Unset)
         -   [Clone](#Clone)
         -   [Assign](#Assign)
     -   [Identifier](#Identifier)
@@ -322,6 +323,12 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+
+# Unset
+
+**Extends Sys**
+
+Deletes references to a list of variables
 
 # Variable
 
