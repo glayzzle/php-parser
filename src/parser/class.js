@@ -106,12 +106,7 @@ module.exports = {
         // reads a variable
         var variables = this.read_variable_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < variables.length; i++) {
-          var variable = variables[i];
-          (this.locations ? variable[3] : variable).push(flags);
-          result.push(variable);
-        }
+        result = result.concat(variables);
 
       } else if (this.token === this.tok.T_FUNCTION) {
 
@@ -121,14 +116,13 @@ module.exports = {
       } else {
 
         // raise an error
-        result.push(
-          this.error([
-            this.tok.T_CONST,
-            this.tok.T_VARIABLE,
-            this.tok.T_FUNCTION
-          ])
-        );
-        this.next(); // ignore token
+        this.error([
+          this.tok.T_CONST,
+          this.tok.T_VARIABLE,
+          this.tok.T_FUNCTION
+        ]);
+        // ignore token
+        this.next();
 
       }
     }
@@ -141,31 +135,30 @@ module.exports = {
    *  variable_list ::= (variable_declaration ',')* variable_declaration
    * ```
    */
-  ,read_variable_list: function() {
+  ,read_variable_list: function(flags) {
     return this.read_list(
-      this.read_variable_declaration,
-      ','
+      /**
+       * Reads a variable declaration
+       *
+       * ```ebnf
+       *  variable_declaration ::= T_VARIABLE '=' scalar
+       * ```
+       */
+      function read_variable_declaration() {
+        var result = this.node('property');
+        var name = this.expect(this.tok.T_VARIABLE).text();
+        this.next();
+        if (this.token === ';' || this.token === ',') {
+          return result(name, null, flags);
+        } else if(this.token === '=') {
+          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
+          return result(name, this.next().read_expr(), flags);
+        } else {
+          this.expect([',', ';', '=']);
+          return result(name, null, flags);
+        }
+      }, ','
     );
-  }
-  /**
-   * Reads a variable declaration
-   * ```ebnf
-   *  variable_declaration ::= T_VARIABLE '=' scalar
-   * ```
-   */
-  ,read_variable_declaration: function() {
-    var result = this.node('var');
-    var name = this.expect(this.tok.T_VARIABLE).text();
-    this.next();
-    if (this.token === ';' || this.token === ',') {
-      return result(name, null);
-    } else if(this.token === '=') {
-      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-      return result(name, this.next().read_expr());
-    } else {
-      this.expect([',', ';', '=']);
-      return result(name, null);
-    }
   }
   /**
    * Reads constant list

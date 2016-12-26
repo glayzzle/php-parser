@@ -13,7 +13,6 @@ var IS_PRIVATE    = 'private';
  * Defines a class/interface/trait method
  * @constructor Method
  * @extends {Declaration}
- * @property {string} name
  * @property {Argument[]} arguments
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
@@ -22,8 +21,7 @@ var IS_PRIVATE    = 'private';
  * @property {Node[]} children
  */
 var Method = Declaration.extends(function Method(name, args, children, flags, location) {
-  Declaration.apply(this, [KIND, location]);
-  this.name = name;
+  Declaration.apply(this, [KIND, name, location]);
   this.arguments = args;
   this.children = children;
   this.parseFlags(flags);

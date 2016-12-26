@@ -36,6 +36,7 @@ var Position = require('./ast/position');
  *       - [Constant](#constant)
  *         - [ClassConstant](#classconstant)
  *       - [Method](#method)
+ *       - [Property](#property)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
  *     - [Clone](#clone)
@@ -144,6 +145,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/number'),
   require('./ast/print'),
   require('./ast/program'),
+  require('./ast/property'),
   require('./ast/shell'),
   require('./ast/string'),
   require('./ast/unset'),

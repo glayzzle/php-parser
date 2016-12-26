@@ -5,17 +5,21 @@
  */
 
 var Declaration = require('./declaration');
-var KIND = 'constant';
+var KIND = 'property';
 
 /**
- * Defines a namespace constant
- * @constructor Constant
+ * Defines a class property
+ * @constructor Property
  * @extends {Declaration}
+ * @property {boolean} isFinal
+ * @property {boolean} isStatic
+ * @property {string} visibility
  * @property {Node|null} value
  */
-var Constant = Declaration.extends(function Constant(name, value, location) {
+var Property = Declaration.extends(function Property(name, value, flags, location) {
   Declaration.apply(this, [KIND, name, location]);
   this.value = value;
+  this.parseFlags(flags);
 });
 
-module.exports = Constant;
+module.exports = Property;

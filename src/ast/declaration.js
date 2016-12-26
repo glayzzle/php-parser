@@ -11,9 +11,11 @@ var KIND = 'declaration';
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
  * @extends {Statement}
+ * @property {string} name
  */
-var Declaration = Statement.extends(function Declaration(kind, location) {
+var Declaration = Statement.extends(function Declaration(kind, name, location) {
   Statement.apply(this, [kind || KIND, location]);
+  this.name = name;
 });
 
 /**

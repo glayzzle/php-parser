@@ -11,8 +11,6 @@ var KIND = 'classconstant';
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
  * @extends {Constant}
- * @property {boolean} isAbstract
- * @property {boolean} isFinal
  * @property {boolean} isStatic
  * @property {string} visibility
  */
