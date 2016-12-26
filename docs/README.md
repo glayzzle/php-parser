@@ -768,12 +768,39 @@ Comments with / \*\* \*\* /
 
 # AST
 
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind`  
+-   `parser`  
+
+# AST
+
 ## Class hierarchy
 
 -   [Node](#Node)
     -   [Expression](#Expression)
         -   [Array](#Array)
         -   [Literal](#Literal)
+            -   [String](#String)
+            -   [Inline](#Inline)
+            -   [Magic](#Magic)
+            -   [Shell](#Shell)
     -   [Statement](#Statement)
         -   [Block](#Block)
             -   [Program](#Program)
@@ -795,29 +822,6 @@ Comments with / \*\* \*\* /
 
 -   `withPositions`  
 -   `withSource`  
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind`  
--   `parser`  
-
-# AST
-
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -879,14 +883,7 @@ Defines an array structure
 
 **Properties**
 
--   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
-
-# Expression
-
-**Extends Node**
-
-Any expression node. Since the left-hand side of an assignment may
-be any expression in general, an expression can also be a pattern.
+-   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
 
 # Class
 
@@ -970,18 +967,6 @@ Helper for extending the Node class
 
 Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
-# Inline
-
-**Extends Literal**
-
-Defines inline html output (treated as echo output)
-
-# Isset
-
-**Extends Sys**
-
-Defines an isset call
-
 # Error
 
 **Extends Node**
@@ -994,6 +979,25 @@ Defines an error node (used only on silentMode)
 -   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
 -   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+
+# Inline
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
+
+# Isset
+
+**Extends Sys**
+
+Defines an isset call
+
+# Expression
+
+**Extends Node**
+
+Any expression node. Since the left-hand side of an assignment may
+be any expression in general, an expression can also be a pattern.
 
 # Magic
 
@@ -1032,6 +1036,12 @@ The main program node
 **Properties**
 
 -   `errors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Error](#error)>** 
+
+# Shell
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
 
 # String
 

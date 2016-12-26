@@ -11,7 +11,7 @@ var KIND = 'literal';
  * Defines an array structure
  * @constructor ArrayExpression
  * @extends {Expression}
- * @property {string|number|boolean|null} value
+ * @property {Node|string|number|boolean|null} value
  */
 var Literal = Expr.extends(function Literal(kind, value, location) {
   Expr.apply(this, [kind || KIND, location]);

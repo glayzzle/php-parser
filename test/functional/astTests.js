@@ -33,4 +33,17 @@ describe('Test AST structure', function() {
     ast.children[0].arguments[0].value.should.be.exactly('__FILE__');
     ast.children[0].arguments[1].value.should.be.exactly('__DIR__');
   });
+  it('should be shell', function() {
+    var ast = parser.parseEval('echo `ls -larth`;');
+    ast.children[0].arguments[0].type.should.be.exactly('shell');
+  });
+  it('should be sys', function() {
+    var ast = parser.parseEval([
+      'echo(true)',
+      'isset($var)',
+      'unset($var)',
+      ''
+    ].join(';\n'));
+    console.log(ast.children);
+  });
 });

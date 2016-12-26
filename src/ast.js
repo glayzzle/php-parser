@@ -14,6 +14,10 @@ var Position = require('./ast/position');
  *   - [Expression](#Expression)
  *     - [Array](#Array)
  *     - [Literal](#Literal)
+ *       - [String](#String)
+ *       - [Inline](#Inline)
+ *       - [Magic](#Magic)
+ *       - [Shell](#Shell)
  *   - [Statement](#Statement)
  *     - [Block](#Block)
  *       - [Program](#Program)
@@ -96,13 +100,14 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/class'),
   require('./ast/echo'),
   require('./ast/entry'),
+  require('./ast/error'),
   require('./ast/inline'),
   require('./ast/isset'),
-  require('./ast/error'),
   require('./ast/literal'),
   require('./ast/magic'),
   require('./ast/namespace'),
   require('./ast/program'),
+  require('./ast/shell'),
   require('./ast/string')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();

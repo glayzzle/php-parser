@@ -8,6 +8,10 @@
     -   [Expression](#Expression)
         -   [Array](#Array)
         -   [Literal](#Literal)
+            -   [String](#String)
+            -   [Inline](#Inline)
+            -   [Magic](#Magic)
+            -   [Shell](#Shell)
     -   [Statement](#Statement)
         -   [Block](#Block)
             -   [Program](#Program)
@@ -81,7 +85,7 @@ Defines an array structure
 
 **Properties**
 
--   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
+-   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
 
 # Block
 
@@ -261,6 +265,12 @@ The main program node
 **Properties**
 
 -   `errors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Error](#error)>** 
+
+# Shell
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
 
 # Statement
 

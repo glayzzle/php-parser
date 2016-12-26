@@ -96,9 +96,9 @@ module.exports = {
 
       case '`':
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-        var result = this.node('sys');
+        var result = this.node('shell');
         var expr = this.next().read_encapsed_string('`');
-        return result('shell', expr);
+        return result(expr);
 
       case this.tok.T_LIST:
         var result = this.node('list');

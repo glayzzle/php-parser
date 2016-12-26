@@ -13,7 +13,7 @@ var KIND = 'isset';
  * @extends {Sys}
  */
 var Isset = Sys.extends(function Isset(args, location) {
-  Sys.apply(this, [kind, args, location]);
+  Sys.apply(this, [KIND, args, location]);
 });
 
 module.exports = Isset;
