@@ -6,7 +6,7 @@ Type: Engine
 
 **Parameters**
 
--   `options`  
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 **Properties**
 
@@ -777,53 +777,18 @@ Each Position object consists of a line number (1-indexed) and a column number (
 -   `column` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `offset` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-# Program
-
-**Extends Block**
-
-The main program node
-
-**Properties**
-
--   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
-
-# Block
-
-**Extends Statement**
-
-A block statement, i.e., a sequence of statements surrounded by braces.
-
-**Properties**
-
--   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
-
-# Statement
+# Error
 
 **Extends Node**
 
-Any statement.
-
-# Namespace
-
-**Extends Block**
-
-The main program node
+Defines an error node (used only on silentMode)
 
 **Properties**
 
--   `name` **[Identifier](#identifier)** 
--   `withBrackets` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-# Identifier
-
-**Extends Node**
-
-Defines an identifier node
-
-**Properties**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
+-   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
 
 # Node
 
@@ -848,3 +813,51 @@ Helper for extending the Node class
 -   `constructor` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
 Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+# Namespace
+
+**Extends Block**
+
+The main program node
+
+**Properties**
+
+-   `name` **[Identifier](#identifier)** 
+-   `withBrackets` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Block
+
+**Extends Statement**
+
+A block statement, i.e., a sequence of statements surrounded by braces.
+
+**Properties**
+
+-   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+
+# Statement
+
+**Extends Node**
+
+Any statement.
+
+# Identifier
+
+**Extends Node**
+
+Defines an identifier node
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Program
+
+**Extends Block**
+
+The main program node
+
+**Properties**
+
+-   `errors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Error](#error)>** 
