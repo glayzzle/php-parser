@@ -37,6 +37,10 @@ describe('Test AST structure', function() {
     var ast = parser.parseEval('echo `ls -larth`;');
     ast.children[0].arguments[0].type.should.be.exactly('shell');
   });
+  it('should be clone', function() {
+    var ast = parser.parseEval('$a = clone $var;');
+    console.log(ast.children);
+  });
   it('should be sys', function() {
     var ast = parser.parseEval([
       'echo(true)',

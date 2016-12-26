@@ -132,8 +132,8 @@ module.exports = {
         }
 
       case this.tok.T_CLONE:
-        return this.node('sys')(
-          'clone', this.next().read_expr()
+        return this.node('clone')(
+          this.next().read_expr()
         );
 
       case this.tok.T_INC:

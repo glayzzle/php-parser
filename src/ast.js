@@ -26,6 +26,8 @@ var Position = require('./ast/position');
  *     - [Sys](#Sys)
  *       - [Echo](#Echo)
  *       - [Isset](#Isset)
+ *     - [Clone](#Clone)
+ *     - [Assign](#Assign)
  *   - [Identifier](#Identifier)
  *   - [Entry](#Entry)
  *   - [Documentation](#Documentation)
@@ -98,6 +100,7 @@ AST.prototype.prepare = function(kind, parser) {
 [
   require('./ast/array'),
   require('./ast/class'),
+  require('./ast/clone'),
   require('./ast/echo'),
   require('./ast/entry'),
   require('./ast/error'),
