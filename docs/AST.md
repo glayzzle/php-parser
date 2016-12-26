@@ -6,12 +6,13 @@
 
 -   [Node](#Node)
     -   [Expression](#Expression)
-        -   [Array](#Array)
         -   [Literal](#Literal)
             -   [String](#String)
             -   [Inline](#Inline)
             -   [Magic](#Magic)
             -   [Shell](#Shell)
+        -   [Array](#Array)
+        -   [Variable](#Variable)
     -   [Statement](#Statement)
         -   [Block](#Block)
             -   [Program](#Program)
@@ -20,6 +21,8 @@
         -   [Sys](#Sys)
             -   [Echo](#Echo)
             -   [Isset](#Isset)
+        -   [Clone](#Clone)
+        -   [Assign](#Assign)
     -   [Identifier](#Identifier)
     -   [Entry](#Entry)
     -   [Documentation](#Documentation)
@@ -87,6 +90,18 @@ Defines an array structure
 
 -   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
 
+# Assign
+
+**Extends Statement**
+
+Assigns a value to the specified target
+
+**Properties**
+
+-   `left` **[Expression](#expression)** 
+-   `right` **[Expression](#expression)** 
+-   `operator` **[String](#string)** 
+
 # Block
 
 **Extends Statement**
@@ -111,6 +126,16 @@ A class definition
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Clone
+
+**Extends Statement**
+
+Defines a clone call
+
+**Properties**
+
+-   `what` **[Expression](#expression)** 
 
 # Documentation
 
@@ -297,3 +322,14 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+
+# Variable
+
+**Extends Expression**
+
+Any expression node. Since the left-hand side of an assignment may
+be any expression in general, an expression can also be a pattern.
+
+**Properties**
+
+-   `identifier` **([String](#string) \| [Node](#node))** 

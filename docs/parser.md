@@ -578,16 +578,20 @@ Reads a switch statement
 
 # read_variable
 
+Reads a variable
+
 ```ebnf
   variable ::= ...complex @todo
 ```
 
-<code>
+Some samples of parsed code :
+
+```php
  $var                      // simple var
  classname::CONST_NAME     // dynamic class name with const retrieval
  foo()                     // function call
  $var->func()->property    // chained calls
-</code>
+```
 
 # read_encaps_var_offset
 

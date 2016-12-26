@@ -261,7 +261,10 @@ module.exports = {
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
-          if (this.next().token == '&') {
+          var result = this.node('assign');
+          var right = this.next().read_expr();
+          return result(expr, right, '=');
+          /*if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
               return ['link', expr, this.next().read_new_expr()];
             } else {
@@ -272,7 +275,7 @@ module.exports = {
             var statement = this.token === this.tok.T_NEW ?
               this.next().read_new_expr() : this.read_expr();
             return node(expr, statement);
-          }
+          }*/
         // operations :
         case this.tok.T_PLUS_EQUAL:
           return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];

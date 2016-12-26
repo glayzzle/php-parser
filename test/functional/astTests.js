@@ -39,7 +39,8 @@ describe('Test AST structure', function() {
   });
   it('should be clone', function() {
     var ast = parser.parseEval('$a = clone $var;');
-    console.log(ast.children);
+    ast.children[0].right.type.should.be.exactly('clone');
+    ast.children[0].right.what.type.should.be.exactly('variable');
   });
   it('should be sys', function() {
     var ast = parser.parseEval([
@@ -49,5 +50,9 @@ describe('Test AST structure', function() {
       ''
     ].join(';\n'));
     console.log(ast.children);
+  });
+  it('should be variable', function() {
+  });
+  it('should be assign', function() {
   });
 });

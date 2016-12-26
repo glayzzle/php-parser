@@ -732,16 +732,20 @@ Comments with / \*\* \*\* /
 
 # read_variable
 
+Reads a variable
+
 ```ebnf
   variable ::= ...complex @todo
 ```
 
-<code>
+Some samples of parsed code :
+
+```php
  $var                      // simple var
  classname::CONST_NAME     // dynamic class name with const retrieval
  foo()                     // function call
  $var->func()->property    // chained calls
-</code>
+```
 
 # read_encaps_var_offset
 
@@ -795,12 +799,13 @@ Prepares an AST node
 
 -   [Node](#Node)
     -   [Expression](#Expression)
-        -   [Array](#Array)
         -   [Literal](#Literal)
             -   [String](#String)
             -   [Inline](#Inline)
             -   [Magic](#Magic)
             -   [Shell](#Shell)
+        -   [Array](#Array)
+        -   [Variable](#Variable)
     -   [Statement](#Statement)
         -   [Block](#Block)
             -   [Program](#Program)
@@ -809,6 +814,8 @@ Prepares an AST node
         -   [Sys](#Sys)
             -   [Echo](#Echo)
             -   [Isset](#Isset)
+        -   [Clone](#Clone)
+        -   [Assign](#Assign)
     -   [Identifier](#Identifier)
     -   [Entry](#Entry)
     -   [Documentation](#Documentation)
@@ -885,6 +892,31 @@ Defines an array structure
 
 -   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
 
+# Expression
+
+**Extends Node**
+
+Any expression node. Since the left-hand side of an assignment may
+be any expression in general, an expression can also be a pattern.
+
+# Assign
+
+**Extends Statement**
+
+Assigns a value to the specified target
+
+**Properties**
+
+-   `left` **[Expression](#expression)** 
+-   `right` **[Expression](#expression)** 
+-   `operator` **[String](#string)** 
+
+# Statement
+
+**Extends Node**
+
+Any statement.
+
 # Class
 
 **Extends Block**
@@ -910,11 +942,15 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
 
-# Statement
+# Clone
 
-**Extends Node**
+**Extends Statement**
 
-Any statement.
+Defines a clone call
+
+**Properties**
+
+-   `what` **[Expression](#expression)** 
 
 # Echo
 
@@ -992,13 +1028,6 @@ Defines inline html output (treated as echo output)
 
 Defines an isset call
 
-# Expression
-
-**Extends Node**
-
-Any expression node. Since the left-hand side of an assignment may
-be any expression in general, an expression can also be a pattern.
-
 # Magic
 
 **Extends Literal**
@@ -1052,3 +1081,14 @@ Defines inline html output (treated as echo output)
 **Properties**
 
 -   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Variable
+
+**Extends Expression**
+
+Any expression node. Since the left-hand side of an assignment may
+be any expression in general, an expression can also be a pattern.
+
+**Properties**
+
+-   `identifier` **([String](#string) \| [Node](#node))** 

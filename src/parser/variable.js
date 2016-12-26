@@ -5,15 +5,19 @@
  */
 module.exports = {
   /**
+   * Reads a variable
+   *
    * ```ebnf
    *   variable ::= ...complex @todo
    * ```
-   * <code>
+   *
+   * Some samples of parsed code :
+   * ```php
    *  $var                      // simple var
    *  classname::CONST_NAME     // dynamic class name with const retrieval
    *  foo()                     // function call
    *  $var->func()->property    // chained calls
-   * </code>
+   * ```
    */
   read_variable: function(read_only, encapsed) {
     var result;
@@ -202,10 +206,10 @@ module.exports = {
    * ```
    */
   ,read_simple_variable: function() {
-    var result;
+    var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']).token === this.tok.T_VARIABLE) {
       // plain variable name
-      result = ['var', this.text()];
+      result = result(this.text());
       this.next();
     } else {
       // dynamic variable name
