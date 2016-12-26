@@ -157,8 +157,7 @@ parser.prototype.getTokenName = function(token) {
  * main entry point : converts a source code to AST
  */
 parser.prototype.parse = function(code) {
-  this.firstError = false;
-  this.lastError = false;
+  this._errors = [];
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -179,38 +178,21 @@ parser.prototype.parse = function(code) {
       }
     }
   }
-  return program(childs);
+  return program(childs, this._errors);
 };
 
 /**
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
-  this.lastError = {
-    token: this.token,
-    tokenName: token,
-    expected: expect,
-    messageExpected: msgExpect,
-    message: message,
-    line: this.lexer.yylloc.first_line
-  };
-  if (!this.firstError) {
-    this.firstError = this.lastError;
-  }
   if (!this.suppressErrors) {
     throw new Error(message);
   }
-  if (this.ast.length === 2) {
-    this.ast.push([]);
-  }
   // Error node :
-  var node = [
-    'error',
-    this.token,
-    message,
-    this.lexer.yylloc.first_line
-  ];
-  this.ast[2].push(node);
+  var node = this.ast.prepare('error')(
+    message, token, this.lexer.yylloc.first_line, expect
+  );
+  this._errors.push(node);
   return node;
 };
 
@@ -227,15 +209,9 @@ parser.prototype.error = function(expect) {
     token = '\''+symbol+'\' ('+token+')';
   }
   var msgExpect = '';
-  if (expect) {
-    msgExpect = ', expecting ';
-    if (Array.isArray(expect)) {
-      for(var i = 0; i < expect.length; i++) {
-        expect[i] = this.getTokenName(expect[i]);
-      }
-      msgExpect += expect.join(', ');
-    } else {
-      msgExpect += this.getTokenName(expect);
+  if (expect && !Array.isArray(expect)) {
+    if (isNumber(expect) || expect.length === 1) {
+      msgExpect = ', expecting ' + this.getTokenName(expect);
     }
   }
   return this.raiseError(
