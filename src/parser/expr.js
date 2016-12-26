@@ -44,8 +44,12 @@ module.exports = {
       case this.tok.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
 
       // extra operations :
-      case this.tok.T_COALESCE: // php7 : $username = $_GET['user'] ?? 'nobody';
-        return ['retif', ['sys', 'isset', expr], expr, this.next().read_expr()];
+      case this.tok.T_COALESCE:
+        // $username = $_GET['user'] ?? 'nobody';
+        return this.node('coalesce')(
+          expr, this.next().read_expr()
+        );
+
       case '?':
         var trueArg = null;
         if (this.next().token !== ':') {

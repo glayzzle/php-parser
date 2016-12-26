@@ -90,11 +90,11 @@ parser to build the AST from its grammar.
 **Properties**
 
 -   `EOF` **Integer** 
--   `all_tokens` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** defines if all tokens must be retrieved (used by token_get_all only)
--   `comment_tokens` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** extracts comments tokens
--   `mode_eval` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** enables the evald mode (ignore opening tags)
--   `asp_tags` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** disables by default asp tags mode
--   `short_tags` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** enables by default short tags mode
+-   `all_tokens` **[Boolean](#boolean)** defines if all tokens must be retrieved (used by token_get_all only)
+-   `comment_tokens` **[Boolean](#boolean)** extracts comments tokens
+-   `mode_eval` **[Boolean](#boolean)** enables the evald mode (ignore opening tags)
+-   `asp_tags` **[Boolean](#boolean)** disables by default asp tags mode
+-   `short_tags` **[Boolean](#boolean)** enables by default short tags mode
 -   `keywords` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** List of php keyword
 -   `castKeywords` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** List of php keywords for type casting
 
@@ -168,8 +168,8 @@ The PHP Parser class
 -   `EOF` **Integer** 
 -   `lexer` **Lexer** 
 -   `token` **(Integer | [String](#string))** 
--   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `extractDoc` **[Boolean](#boolean)** 
+-   `debug` **[Boolean](#boolean)** 
 
 ## getTokenName
 
@@ -784,34 +784,62 @@ Some samples of parsed code :
 
 # AST
 
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+# AST
+
 ## Class hierarchy
 
 -   [Node](#Node)
-    -   [Expression](#Expression)
-        -   [Literal](#Literal)
-            -   [String](#String)
-            -   [Inline](#Inline)
-            -   [Magic](#Magic)
-            -   [Shell](#Shell)
-        -   [Array](#Array)
-        -   [Variable](#Variable)
-    -   [Statement](#Statement)
-        -   [Block](#Block)
-            -   [Program](#Program)
-            -   [Class](#Class)
-            -   [Namespace](#Namespace)
-        -   [Sys](#Sys)
-            -   [Echo](#Echo)
-            -   [Isset](#Isset)
-            -   [Unset](#Unset)
-        -   [Clone](#Clone)
-        -   [Assign](#Assign)
-    -   [Identifier](#Identifier)
-    -   [Entry](#Entry)
-    -   [Documentation](#Documentation)
-    -   [Error](#Error)
--   [Location](#Location)
--   [Position](#Position)
+    -   [Expression](#expression)
+        -   [Literal](#literal)
+            -   [Boolean](#boolean)
+            -   [String](#string)
+            -   [Inline](#inline)
+            -   [Magic](#magic)
+            -   [Shell](#shell)
+        -   [Array](#array)
+        -   [Variable](#variable)
+    -   [Statement](#statement)
+        -   [Block](#block)
+            -   [Program](#program)
+            -   [Class](#class)
+            -   [Namespace](#namespace)
+        -   [Sys](#sys)
+            -   [Echo](#echo)
+            -   [Isset](#isset)
+            -   [Unset](#unset)
+        -   [Clone](#clone)
+        -   [Coalesce](#coalesce)
+        -   [Assign](#assign)
+    -   [Identifier](#identifier)
+    -   [Entry](#entry)
+    -   [Documentation](#documentation)
+    -   [Error](#error)
+-   [Location](#location)
+-   [Position](#position)
 
 * * *
 
@@ -826,31 +854,11 @@ Prepares an AST node
 
 **Parameters**
 
--   `kind`  
--   `parser`  
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
 
-# AST
-
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind`  
--   `parser`  
+Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
 # Location
 
@@ -930,6 +938,12 @@ Assigns a value to the specified target
 
 Any statement.
 
+# Boolean
+
+**Extends Literal**
+
+Defines a boolean value (true/false)
+
 # Class
 
 **Extends Block**
@@ -964,6 +978,18 @@ Defines a clone call
 **Properties**
 
 -   `what` **[Expression](#expression)** 
+
+# Coalesce
+
+**Extends Statement**
+
+Verify is the test property is defined and is not null, and returns
+is, otherwise returns the ifnull expression.
+
+**Properties**
+
+-   `test` **[Expression](#expression)** The expression to be testes
+-   `ifnull` **[Expression](#expression)** The returned expression if test is null
 
 # Echo
 
@@ -1056,7 +1082,7 @@ The main program node
 **Properties**
 
 -   `name` **[Identifier](#identifier)** 
--   `withBrackets` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `withBrackets` **[Boolean](#boolean)** 
 
 # Identifier
 

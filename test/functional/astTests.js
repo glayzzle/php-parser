@@ -59,4 +59,10 @@ describe('Test AST structure', function() {
   it('should be assign', function() {
     // @todo
   });
+  it('should coalesce', function() {
+    var ast = parser.parseEval('$var = $a ?? true;');
+    ast.children[0].right.type.should.be.exactly('coalesce');
+    ast.children[0].right.test.type.should.be.exactly('variable');
+    ast.children[0].right.ifnull.type.should.be.exactly('boolean');
+  });
 });

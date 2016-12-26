@@ -11,31 +11,33 @@ var Position = require('./ast/position');
  * ## Class hierarchy
  *
  * - [Node](#Node)
- *   - [Expression](#Expression)
- *     - [Literal](#Literal)
- *       - [String](#String)
- *       - [Inline](#Inline)
- *       - [Magic](#Magic)
- *       - [Shell](#Shell)
- *     - [Array](#Array)
- *     - [Variable](#Variable)
- *   - [Statement](#Statement)
- *     - [Block](#Block)
- *       - [Program](#Program)
- *       - [Class](#Class)
- *       - [Namespace](#Namespace)
- *     - [Sys](#Sys)
- *       - [Echo](#Echo)
- *       - [Isset](#Isset)
- *       - [Unset](#Unset)
- *     - [Clone](#Clone)
- *     - [Assign](#Assign)
- *   - [Identifier](#Identifier)
- *   - [Entry](#Entry)
- *   - [Documentation](#Documentation)
- *   - [Error](#Error)
- * - [Location](#Location)
- * - [Position](#Position)
+ *   - [Expression](#expression)
+ *     - [Literal](#literal)
+ *       - [Boolean](#boolean)
+ *       - [String](#string)
+ *       - [Inline](#inline)
+ *       - [Magic](#magic)
+ *       - [Shell](#shell)
+ *     - [Array](#array)
+ *     - [Variable](#variable)
+ *   - [Statement](#statement)
+ *     - [Block](#block)
+ *       - [Program](#program)
+ *       - [Class](#class)
+ *       - [Namespace](#namespace)
+ *     - [Sys](#sys)
+ *       - [Echo](#echo)
+ *       - [Isset](#isset)
+ *       - [Unset](#unset)
+ *     - [Clone](#clone)
+ *     - [Coalesce](#coalesce)
+ *     - [Assign](#assign)
+ *   - [Identifier](#identifier)
+ *   - [Entry](#entry)
+ *   - [Documentation](#documentation)
+ *   - [Error](#error)
+ * - [Location](#location)
+ * - [Position](#position)
  * ---
  */
 
@@ -52,6 +54,10 @@ var AST = function(withPositions, withSource) {
 
 /**
  * Prepares an AST node
+ * @param {String|null} kind - Defines the node type
+ * (if null, the kind must be passed at the function call)
+ * @param {Parser} parser - The parser instance (use for extracting locations)
+ * @return {Function}
  */
 AST.prototype.prepare = function(kind, parser) {
   var start = null;
@@ -87,6 +93,10 @@ AST.prototype.prepare = function(kind, parser) {
       // last argument is allways the location
       args.push(location);
     }
+    // handle lazy kind definitions
+    if (!kind) {
+      kind = args.shift();
+    }
     // build the object
     var node = self[kind];
     if (typeof node !== 'function') {
@@ -102,8 +112,10 @@ AST.prototype.prepare = function(kind, parser) {
 [
   require('./ast/array'),
   require('./ast/assign'),
+  require('./ast/boolean'),
   require('./ast/class'),
   require('./ast/clone'),
+  require('./ast/coalesce'),
   require('./ast/echo'),
   require('./ast/entry'),
   require('./ast/error'),

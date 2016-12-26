@@ -26,13 +26,27 @@ module.exports = {
     if (this.is([this.tok.T_VARIABLE, '$'])) {
       result = this.read_reference_variable(encapsed);
     } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING])) {
-      result = this.read_namespace_name();
+      result = this.node();
+      var name = this.read_namespace_name();
       if (
         this.token != this.tok.T_DOUBLE_COLON
         && this.token != '('
       ) {
         // @see parser.js line 130 : resolves a conflict with scalar
-        result = ['constant', result.length == 1 ? result[0] : result];
+        if (name.length == 1) {
+          var literal = name[0].toLowerCase();
+          if (literal === 'true') {
+            result = result('boolean', true);
+          } else if (literal === 'false') {
+            result = result('boolean', false);
+          } else {
+            // @todo
+            result = ['constant', name[0]];
+          }
+        } else {
+          // @todo
+          result = ['constant', name];
+        }
       } else {
         result = ['ns', result];
       }

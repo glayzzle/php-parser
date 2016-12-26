@@ -5,31 +5,33 @@
 ## Class hierarchy
 
 -   [Node](#Node)
-    -   [Expression](#Expression)
-        -   [Literal](#Literal)
-            -   [String](#String)
-            -   [Inline](#Inline)
-            -   [Magic](#Magic)
-            -   [Shell](#Shell)
-        -   [Array](#Array)
-        -   [Variable](#Variable)
-    -   [Statement](#Statement)
-        -   [Block](#Block)
-            -   [Program](#Program)
-            -   [Class](#Class)
-            -   [Namespace](#Namespace)
-        -   [Sys](#Sys)
-            -   [Echo](#Echo)
-            -   [Isset](#Isset)
-            -   [Unset](#Unset)
-        -   [Clone](#Clone)
-        -   [Assign](#Assign)
-    -   [Identifier](#Identifier)
-    -   [Entry](#Entry)
-    -   [Documentation](#Documentation)
-    -   [Error](#Error)
--   [Location](#Location)
--   [Position](#Position)
+    -   [Expression](#expression)
+        -   [Literal](#literal)
+            -   [Boolean](#boolean)
+            -   [String](#string)
+            -   [Inline](#inline)
+            -   [Magic](#magic)
+            -   [Shell](#shell)
+        -   [Array](#array)
+        -   [Variable](#variable)
+    -   [Statement](#statement)
+        -   [Block](#block)
+            -   [Program](#program)
+            -   [Class](#class)
+            -   [Namespace](#namespace)
+        -   [Sys](#sys)
+            -   [Echo](#echo)
+            -   [Isset](#isset)
+            -   [Unset](#unset)
+        -   [Clone](#clone)
+        -   [Coalesce](#coalesce)
+        -   [Assign](#assign)
+    -   [Identifier](#identifier)
+    -   [Entry](#entry)
+    -   [Documentation](#documentation)
+    -   [Error](#error)
+-   [Location](#location)
+-   [Position](#position)
 
 * * *
 
@@ -44,8 +46,11 @@ Prepares an AST node
 
 **Parameters**
 
--   `kind`  
--   `parser`  
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
 # AST
 
@@ -58,8 +63,8 @@ The AST builder class
 
 **Properties**
 
--   `withPositions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Should extract the node original code (by default false)
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -67,8 +72,11 @@ Prepares an AST node
 
 **Parameters**
 
--   `kind`  
--   `parser`  
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
 
 # ArrayExpression
 
@@ -113,6 +121,12 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
 
+# Boolean
+
+**Extends Literal**
+
+Defines a boolean value (true/false)
+
 # Class
 
 **Extends Block**
@@ -138,6 +152,18 @@ Defines a clone call
 
 -   `what` **[Expression](#expression)** 
 
+# Coalesce
+
+**Extends Statement**
+
+Verify is the test property is defined and is not null, and returns
+is, otherwise returns the ifnull expression.
+
+**Properties**
+
+-   `test` **[Expression](#expression)** The expression to be testes
+-   `ifnull` **[Expression](#expression)** The returned expression if test is null
+
 # Documentation
 
 **Extends Node**
@@ -146,7 +172,7 @@ A comment or documentation
 
 **Properties**
 
--   `isDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isDoc` **[Boolean](#boolean)** 
 -   `text` **[String](#string)** 
 
 # Echo
@@ -240,7 +266,7 @@ The main program node
 **Properties**
 
 -   `name` **[Identifier](#identifier)** 
--   `withBrackets` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `withBrackets` **[Boolean](#boolean)** 
 
 # Node
 
