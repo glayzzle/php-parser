@@ -103,7 +103,7 @@ module.exports = {
    */
   ,read_foreach_variable: function() {
       if (this.token === '&') {
-        return ['byref', this.next().read_variable()];
+        return this.next().read_variable(false, false, true);
       } else if (this.token === this.tok.T_LIST) {
         var result = this.node('list');
         this.next().expect('(').next();
@@ -111,7 +111,7 @@ module.exports = {
         this.expect(')').next();
         return result(assignList, false);
       } else {
-        return this.read_variable();
+        return this.read_variable(false, false, false);
       }
   }
 };

@@ -13,10 +13,12 @@ var KIND = 'variable';
  * @constructor Variable
  * @extends {Expression}
  * @property {String|Node} identifier
+ * @property {boolean} byref
  */
-var Variable = Expr.extends(function Variable(identifier, location) {
+var Variable = Expr.extends(function Variable(identifier, byref, location) {
   Expr.apply(this, [KIND, location]);
   this.identifier = identifier;
+  this.byref = byref || false;
 });
 
 module.exports = Variable;

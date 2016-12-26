@@ -57,15 +57,13 @@ module.exports = {
     var key = null;
     var value = null;
     if (this.token === '&') {
-      value = this.next().read_variable(true);
-      // @fixme return { key: false, value: ['ref', this.next().read_variable(true)] };
+      value = this.next().read_variable(true, false, true);
     } else {
       var expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         key = expr;
         if (this.next().token === '&') {
-          value = this.next().read_variable(true);
-          // @fixme return { key: expr, value: ['ref', ] };
+          value = this.next().read_variable(true, false, true);
         } else {
           value = this.read_expr();
         }

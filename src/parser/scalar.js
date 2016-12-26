@@ -167,13 +167,13 @@ module.exports = {
       }
       this.expect('}').next();
     } else if (this.token === this.tok.T_CURLY_OPEN) {
-      result = this.next().read_variable(false, false);
+      result = this.next().read_variable(false, false, false);
       this.expect('}').next();
     } else if (this.token === '[') {
       result = ['offset', result, this.next().read_expr()];
       this.expect(']').next();
     } else if (this.token === this.tok.T_VARIABLE) {
-      result = this.read_variable(false, true);
+      result = this.read_variable(false, true, false);
     } else {
       this.expect([
         this.tok.T_VARIABLE,

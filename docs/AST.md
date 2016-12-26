@@ -422,3 +422,4 @@ be any expression in general, an expression can also be a pattern.
 **Properties**
 
 -   `identifier` **([String](#string) \| [Node](#node))** 
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

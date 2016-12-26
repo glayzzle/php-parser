@@ -788,32 +788,6 @@ Some samples of parsed code :
 
 # AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
-
-# AST
-
 ## Class hierarchy
 
 -   [Node](#Node)
@@ -857,6 +831,32 @@ Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Ref
 
 -   `withPositions`  
 -   `withSource`  
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+# AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -997,6 +997,12 @@ is, otherwise returns the ifnull expression.
 
 Defines system based call
 
+# Empty
+
+**Extends Sys**
+
+Defines an empty check call
+
 # Sys
 
 **Extends Statement**
@@ -1006,12 +1012,6 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
-
-# Empty
-
-**Extends Sys**
-
-Defines an empty check call
 
 # Entry
 
@@ -1197,3 +1197,4 @@ be any expression in general, an expression can also be a pattern.
 **Properties**
 
 -   `identifier` **([String](#string) \| [Node](#node))** 
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

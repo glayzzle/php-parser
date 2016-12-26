@@ -26,7 +26,7 @@ module.exports = {
     while(this.token === this.tok.T_CATCH) {
       this.next().expect('(').next();
       var exName = this.read_namespace_name();
-      var varName = this.read_variable(true);
+      var varName = this.read_variable(true, false, false);
       this.expect(')').nextWithComments();
       catches.push({
         exception: exName,

@@ -19,12 +19,12 @@ module.exports = {
    *  $var->func()->property    // chained calls
    * ```
    */
-  read_variable: function(read_only, encapsed) {
+  read_variable: function(read_only, encapsed, byref) {
     var result;
 
     // reads the entry point
     if (this.is([this.tok.T_VARIABLE, '$'])) {
-      result = this.read_reference_variable(encapsed);
+      result = this.read_reference_variable(encapsed, byref);
     } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING])) {
       result = this.node();
       var name = this.read_namespace_name();
@@ -69,7 +69,7 @@ module.exports = {
   ,read_static_getter: function(from, encapsed) {
     var getter = null;
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
-      getter = this.read_reference_variable(encapsed);
+      getter = this.read_reference_variable(encapsed, false);
     } else if (
       this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS
@@ -201,8 +201,8 @@ module.exports = {
    *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
    * </code>
    */
-  ,read_reference_variable: function(encapsed) {
-    var result = this.read_simple_variable();
+  ,read_reference_variable: function(encapsed, byref) {
+    var result = this.read_simple_variable(byref);
     while(this.token != this.EOF) {
       if (this.token == '[') {
         if (encapsed) {
@@ -224,11 +224,11 @@ module.exports = {
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
    * ```
    */
-  ,read_simple_variable: function() {
+  ,read_simple_variable: function(byref) {
     var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']).token === this.tok.T_VARIABLE) {
       // plain variable name
-      result = result(this.text());
+      result = result(this.text(), byref);
       this.next();
     } else {
       // dynamic variable name
@@ -238,7 +238,7 @@ module.exports = {
           this.expect('}').next();
           break;
         case '$': // $$$var
-          result = ['lookup', 'var', this.read_simple_variable()];
+          result = ['lookup', 'var', this.read_simple_variable(false)];
           break;
         case this.tok.T_VARIABLE: // $$var
           result = ['var', this.text()];

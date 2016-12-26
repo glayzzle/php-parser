@@ -155,11 +155,11 @@ module.exports = {
         );
 
       case this.tok.T_INC:
-        var name = this.next().read_variable();
+        var name = this.next().read_variable(false, false, false);
         return ['set', name, ['bin', '+', name, ['number', 1]]];
 
       case this.tok.T_DEC:
-        var name = this.next().read_variable();
+        var name = this.next().read_variable(false, false, false);
         return ['set', name, ['bin', '-', name, ['number', 1]]];
 
       case this.tok.T_NEW:
@@ -277,25 +277,23 @@ module.exports = {
     // SCALAR | VARIABLE
     var expr;
     if (this.is('VARIABLE')) {
-      expr = this.read_variable();
+      expr = this.read_variable(false, false, false);
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
           var result = this.node('assign');
-          var right = this.next().read_expr();
-          return result(expr, right, '=');
-          /*if (this.next().token == '&') {
+          var right;
+          if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
-              return ['link', expr, this.next().read_new_expr()];
+              right = this.next().read_new_expr();
             } else {
-              return ['link', expr, this.read_variable()];
+              right = this.read_variable(false, false, true);
             }
           } else {
-            var node = this.node('set');
-            var statement = this.token === this.tok.T_NEW ?
-              this.next().read_new_expr() : this.read_expr();
-            return node(expr, statement);
-          }*/
+            right = this.read_expr();
+          }
+          return result(expr, right, '=');
+
         // operations :
         case this.tok.T_PLUS_EQUAL:
           return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];
@@ -405,7 +403,7 @@ module.exports = {
       }
       return result;
     } else if (this.is('VARIABLE')) {
-      return this.read_variable(true);
+      return this.read_variable(true, false, false);
     } else {
       this.expect([this.tok.T_STRING, 'VARIABLE']);
     }
