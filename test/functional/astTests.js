@@ -47,11 +47,13 @@ describe('Test AST structure', function() {
       'echo(true)',
       'isset($var)',
       'unset($var)',
+      'empty($var)',
       ''
     ].join(';\n'));
     ast.children[0].type.should.be.exactly('echo');
     ast.children[1].type.should.be.exactly('isset');
     ast.children[2].type.should.be.exactly('unset');
+    ast.children[3].type.should.be.exactly('empty');
   });
   it('should be variable', function() {
     // @todo

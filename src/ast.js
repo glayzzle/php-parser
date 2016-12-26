@@ -29,6 +29,7 @@ var Position = require('./ast/position');
  *       - [Echo](#echo)
  *       - [Isset](#isset)
  *       - [Unset](#unset)
+ *       - [Empty](#empty)
  *     - [Clone](#clone)
  *     - [Coalesce](#coalesce)
  *     - [Assign](#assign)
@@ -117,6 +118,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/clone'),
   require('./ast/coalesce'),
   require('./ast/echo'),
+  require('./ast/empty'),
   require('./ast/entry'),
   require('./ast/error'),
   require('./ast/inline'),

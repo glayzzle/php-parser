@@ -159,10 +159,11 @@ module.exports = {
         return result(args);
 
       case this.tok.T_EMPTY:
+        var result = this.node('empty');
         this.next().expect('(').next();
-        var expr = this.read_expr();
+        var arg = this.read_expr();
         this.expect(')').next();
-        return ['sys', 'empty', expr];
+        return result([arg]);
 
       case this.tok.T_INCLUDE:
         return (this.node('sys'))(
