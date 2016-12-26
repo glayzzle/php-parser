@@ -124,7 +124,8 @@ outputs some debug information on current token \*
 Parse an array
 
 ```ebnf
-array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
+array ::= T_ARRAY '(' array_pair_list ')' |
+  '[' array_pair_list ']'
 ```
 
 # read_array_pair_list
@@ -132,7 +133,14 @@ array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
 Reads an array entry item
 
 ```ebnf
-array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
+array_pair_list ::= '&' w_variable |
+ (
+   expr (
+     T_DOUBLE_ARROW (
+       expr | '&' w_variable
+     )
+   )?
+ )
 ```
 
 # read_dim_offset
@@ -460,7 +468,12 @@ Handles the dereferencing
 # read_encapsed_string_item
 
 ```ebnf
-encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
+encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+ | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+ | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+ | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+ | variable
+ | T_CURLY_OPEN variable '}'
 ```
 
 # read_encapsed_string

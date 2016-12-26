@@ -167,7 +167,7 @@ The PHP Parser class
 
 -   `EOF` **Integer** 
 -   `lexer` **Lexer** 
--   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
+-   `token` **(Integer | [String](#string))** 
 -   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
@@ -278,7 +278,8 @@ outputs some debug information on current token \*
 Parse an array
 
 ```ebnf
-array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
+array ::= T_ARRAY '(' array_pair_list ')' |
+  '[' array_pair_list ']'
 ```
 
 # read_array_pair_list
@@ -286,7 +287,14 @@ array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
 Reads an array entry item
 
 ```ebnf
-array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
+array_pair_list ::= '&' w_variable |
+ (
+   expr (
+     T_DOUBLE_ARROW (
+       expr | '&' w_variable
+     )
+   )?
+ )
 ```
 
 # read_dim_offset
@@ -606,7 +614,12 @@ Handles the dereferencing
 # read_encapsed_string_item
 
 ```ebnf
-encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
+encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+ | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+ | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+ | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+ | variable
+ | T_CURLY_OPEN variable '}'
 ```
 
 # read_encapsed_string
@@ -776,6 +789,31 @@ Prepares an AST node
 -   `kind`  
 -   `parser`  
 
+# AST
+
+## Class hierarchy
+
+-   Node
+    -   Position
+-   Location
+-   Position
+
+* * *
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind`  
+-   `parser`  
+
 # Location
 
 Defines the location of the node (with it's source contents as string)
@@ -788,7 +826,7 @@ Defines the location of the node (with it's source contents as string)
 
 **Properties**
 
--   `source` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+-   `source` **([String](#string) | null)** 
 -   `start` **[Position](#position)** 
 -   `end` **[Position](#position)** 
 
@@ -808,53 +846,48 @@ Each Position object consists of a line number (1-indexed) and a column number (
 -   `column` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `offset` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-# Error
+# ArrayExpression
+
+**Extends Expression**
+
+Defines an array structure
+
+**Properties**
+
+-   `items` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Entry](#entry)>** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# ArrayExpression
+
+**Extends Expression**
+
+Defines an array structure
+
+**Properties**
+
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
+
+# Expression
 
 **Extends Node**
 
-Defines an error node (used only on silentMode)
+Any expression node. Since the left-hand side of an assignment may
+be any expression in general, an expression can also be a pattern.
 
-**Properties**
-
--   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
-
-# Node
-
-A generic AST node
-
-**Parameters**
-
--   `type`  
--   `location`  
-
-**Properties**
-
--   `loc` **([Location](#location) | null)** 
--   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## extends
-
-Helper for extending the Node class
-
-**Parameters**
-
--   `constructor` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
-
-Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
-
-# Namespace
+# Class
 
 **Extends Block**
 
-The main program node
+A class definition
 
 **Properties**
 
--   `name` **[Identifier](#identifier)** 
--   `withBrackets` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `name` **([Identifier](#identifier) | null)** 
+-   `extends` **([Identifier](#identifier) | null)** 
+-   `implements` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Identifier](#identifier)>** 
+-   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Block
 
@@ -871,6 +904,77 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 **Extends Node**
 
 Any statement.
+
+# Entry
+
+**Extends Node**
+
+An array entry
+
+**Properties**
+
+-   `key` **([Node](#node) | null)** 
+-   `value` **[Node](#node)** 
+
+# Node
+
+A generic AST node
+
+**Parameters**
+
+-   `type`  
+-   `location`  
+
+**Properties**
+
+-   `loc` **([Location](#location) | null)** 
+-   `type` **[String](#string)** 
+
+## extends
+
+Helper for extending the Node class
+
+**Parameters**
+
+-   `constructor` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+# Inline
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
+
+# Error
+
+**Extends Node**
+
+Defines an error node (used only on silentMode)
+
+**Properties**
+
+-   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
+-   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+
+# Magic
+
+**Extends Literal**
+
+Defines magic constant
+
+# Namespace
+
+**Extends Block**
+
+The main program node
+
+**Properties**
+
+-   `name` **[Identifier](#identifier)** 
+-   `withBrackets` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Identifier
 
@@ -892,3 +996,13 @@ The main program node
 **Properties**
 
 -   `errors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Error](#error)>** 
+
+# String
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
+
+**Properties**
+
+-   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

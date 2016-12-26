@@ -2,6 +2,31 @@
 
 # AST
 
+## Class hierarchy
+
+-   Node
+    -   Position
+-   Location
+-   Position
+
+* * *
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind`  
+-   `parser`  
+
+# AST
+
 The AST builder class
 
 **Parameters**
@@ -23,6 +48,27 @@ Prepares an AST node
 -   `kind`  
 -   `parser`  
 
+# ArrayExpression
+
+**Extends Expression**
+
+Defines an array structure
+
+**Properties**
+
+-   `items` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Entry](#entry)>** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# ArrayExpression
+
+**Extends Expression**
+
+Defines an array structure
+
+**Properties**
+
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
+
 # Block
 
 **Extends Statement**
@@ -33,6 +79,21 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
 
+# Class
+
+**Extends Block**
+
+A class definition
+
+**Properties**
+
+-   `name` **([Identifier](#identifier) | null)** 
+-   `extends` **([Identifier](#identifier) | null)** 
+-   `implements` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Identifier](#identifier)>** 
+-   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Documentation
 
 **Extends Node**
@@ -42,7 +103,38 @@ A comment or documentation
 **Properties**
 
 -   `isDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `text` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `text` **[String](#string)** 
+
+# Sys
+
+**Extends Statement**
+
+Defines system based call
+
+**Properties**
+
+-   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+
+# Sys
+
+**Extends Statement**
+
+Defines system based call
+
+**Properties**
+
+-   `arguments` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Node](#node)>** 
+
+# Entry
+
+**Extends Node**
+
+An array entry
+
+**Properties**
+
+-   `key` **([Node](#node) | null)** 
+-   `value` **[Node](#node)** 
 
 # Error
 
@@ -57,6 +149,13 @@ Defines an error node (used only on silentMode)
 -   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
 -   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
 
+# Expression
+
+**Extends Node**
+
+Any expression node. Since the left-hand side of an assignment may
+be any expression in general, an expression can also be a pattern.
+
 # Identifier
 
 **Extends Node**
@@ -67,6 +166,12 @@ Defines an identifier node
 
 -   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Inline
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
 
 # Location
 
@@ -80,9 +185,15 @@ Defines the location of the node (with it's source contents as string)
 
 **Properties**
 
--   `source` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+-   `source` **([String](#string) | null)** 
 -   `start` **[Position](#position)** 
 -   `end` **[Position](#position)** 
+
+# Magic
+
+**Extends Literal**
+
+Defines magic constant
 
 # Namespace
 
@@ -107,7 +218,7 @@ A generic AST node
 **Properties**
 
 -   `loc` **([Location](#location) | null)** 
--   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `type` **[String](#string)** 
 
 ## extends
 
@@ -150,3 +261,13 @@ The main program node
 **Extends Node**
 
 Any statement.
+
+# String
+
+**Extends Literal**
+
+Defines inline html output (treated as echo output)
+
+**Properties**
+
+-   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

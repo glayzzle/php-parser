@@ -8,6 +8,16 @@ var Location = require('./ast/location');
 var Position = require('./ast/position');
 
 /**
+ * ## Class hierarchy
+ *
+ * - Node
+ *   - Position
+ * - Location
+ * - Position
+ * ---
+ */
+
+/**
  * The AST builder class
  * @constructor AST
  * @property {Boolean} withPositions - Should locate any node (by default false)
@@ -69,12 +79,18 @@ AST.prototype.prepare = function(kind, parser) {
 // Define all AST nodes
 [
   require('./ast/array'),
+  require('./ast/class'),
   require('./ast/entry'),
+  require('./ast/inline'),
   require('./ast/error'),
+  require('./ast/literal'),
+  require('./ast/magic'),
   require('./ast/namespace'),
-  require('./ast/program')
+  require('./ast/program'),
+  require('./ast/string')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
+  if (kind[0] === '_') kind = kind.substring(1);
   AST.prototype[kind] = ctor;
 });
 

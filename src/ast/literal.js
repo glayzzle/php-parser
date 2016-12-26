@@ -5,19 +5,17 @@
  */
 
 var Expr = require('./expression');
-var KIND = 'array';
+var KIND = 'literal';
 
 /**
  * Defines an array structure
  * @constructor ArrayExpression
  * @extends {Expression}
- * @property {Entry[]} items
- * @property {boolean} shortForm
+ * @property {string|number|boolean|null} value
  */
-var ArrayExpression = Expr.extends(function Array(shortForm, items, location) {
-  Expr.apply(this, [KIND, location]);
-  this.items = items;
-  this.shortForm = shortForm;
+var Literal = Expr.extends(function Literal(kind, value, location) {
+  Expr.apply(this, [kind || KIND, location]);
+  this.value = value;
 });
 
-module.exports = ArrayExpression;
+module.exports = Literal;
