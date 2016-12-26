@@ -131,6 +131,7 @@ lexer.prototype.setInput = function(input) {
   this.yyprevcol = 0;
   this.yytext = '';
   this.yylloc = {
+    first_offset: 0,
     first_line: 1,
     first_column: 0,
     last_line: 1,
@@ -280,6 +281,7 @@ lexer.prototype.getState = function() {
     yylineno: this.yylineno,
     yyprevcol: this.yyprevcol,
     yylloc: {
+      first_offset: this.yylloc.first_offset,
       first_line: this.yylloc.first_line,
       first_column: this.yylloc.first_column,
       last_line: this.yylloc.last_line,
@@ -367,6 +369,7 @@ lexer.prototype.next = function () {
   if (this.done) {
     return this.EOF;
   }
+  this.yylloc.first_offset = this.offset;
   this.yylloc.first_line = this.yylloc.last_line;
   this.yylloc.first_column = this.yylloc.last_column;
   this.yytext = '';
