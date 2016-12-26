@@ -161,20 +161,14 @@ parser.prototype.parse = function(code) {
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
-  this.nextWithComments();
   this.innerList = false;
   var program = this.ast.prepare('program', this);
   var childs = [];
+  this.nextWithComments();
   while(this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
-      if (typeof node[0] !== 'string') {
-        node.forEach(function(item) {
-          childs.push(item);
-        });
-      } else {
-        childs.push(node);
-      }
+      childs.push(node);
     }
   }
   return program(childs, this._errors);

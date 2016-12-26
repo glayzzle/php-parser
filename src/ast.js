@@ -68,6 +68,8 @@ AST.prototype.prepare = function(kind, parser) {
 
 // Define all AST nodes
 [
+  require('./ast/array'),
+  require('./ast/entry'),
   require('./ast/error'),
   require('./ast/namespace'),
   require('./ast/program')

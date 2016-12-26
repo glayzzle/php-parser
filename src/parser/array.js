@@ -8,19 +8,20 @@ module.exports = {
   /**
    * Parse an array
    * ```ebnf
-   * array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
+   * array ::= T_ARRAY '(' array_pair_list ')' |
+   *   '[' array_pair_list ']'
    * ```
    */
   read_array: function() {
     var expect = null;
+    var shortForm = false;
     var items = [];
     var result = this.node('array');
 
     if (this.expect([this.tok.T_ARRAY, '[']).token == this.tok.T_ARRAY) {
       this.next().expect('(');
-      expect = ')';
     } else {
-      expect = ']';
+      shortForm = true;
     }
     if (this.next().token != expect) {
       while(this.token != this.EOF) {
@@ -33,30 +34,44 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(expect).next();
-    return result(items);
+    this.expect(shortForm ? ']' : ')').next();
+    return result(shortForm, items);
   },
   /**
    * Reads an array entry item
    * ```ebnf
-   * array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
+   * array_pair_list ::= '&' w_variable |
+   *  (
+   *    expr (
+   *      T_DOUBLE_ARROW (
+   *        expr | '&' w_variable
+   *      )
+   *    )?
+   *  )
    * ```
    */
   read_array_pair_list: function() {
+    var result = this.node('entry');
+    var key = null;
+    var value = null;
     if (this.token === '&') {
-      return { key: false, value: ['ref', this.next().read_variable(true)] };
+      value = this.next().read_variable(true);
+      // @fixme return { key: false, value: ['ref', this.next().read_variable(true)] };
     } else {
       var expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
+        key = expr;
         if (this.next().token === '&') {
-          return { key: expr, value: ['ref', this.next().read_variable(true)] };
+          value = this.next().read_variable(true);
+          // @fixme return { key: expr, value: ['ref', ] };
         } else {
-          return { key: expr, value: this.read_expr() };
+          value = this.read_expr();
         }
       } else {
-        return { key: false, value: expr };
+        value = expr;
       }
     }
+    return result(key, value);
   },
   /**
    * ```ebnf
