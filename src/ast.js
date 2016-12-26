@@ -68,8 +68,9 @@ AST.prototype.prepare = function(kind, parser) {
 
 // Define all AST nodes
 [
-  require('./ast/program'),
-  require('./ast/namespace')
+  require('./ast/error'),
+  require('./ast/namespace'),
+  require('./ast/program')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
   AST.prototype[kind] = ctor;
