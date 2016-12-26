@@ -49,10 +49,14 @@ describe('Test AST structure', function() {
       'unset($var)',
       ''
     ].join(';\n'));
-    console.log(ast.children);
+    ast.children[0].type.should.be.exactly('echo');
+    ast.children[1].type.should.be.exactly('isset');
+    ast.children[2].type.should.be.exactly('unset');
   });
   it('should be variable', function() {
+    // @todo
   });
   it('should be assign', function() {
+    // @todo
   });
 });
