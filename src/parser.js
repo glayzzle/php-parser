@@ -276,37 +276,55 @@ parser.prototype.showlog = function() {
   return this;
 };
 
-/** force to expect specified token **/
+/**
+ * Force the parser to check the current token.
+ *
+ * If the current token does not match to expected token,
+ * the an error will be raised.
+ *
+ * If the suppressError mode is activated, then the error will
+ * be added to the program error stack and this function will return `false`.
+ *
+ * @param {String|Number} token
+ * @return {Parser|False}
+ * @throws Error
+ */
 parser.prototype.expect = function(token) {
   if (Array.isArray(token)) {
     if (token.indexOf(this.token) === -1) {
       this.error(token);
+      return false;
     }
   } else if (this.token != token) {
     this.error(token);
+    return false;
   }
   return this;
 };
-/**returns the current token contents **/
+
+/**
+ * Returns the current token contents
+ * @return {String}
+ */
 parser.prototype.text = function() {
   return this.lexer.yytext;
 };
 
 /** consume the next token **/
 parser.prototype.next = function() {
-  this.lastDoc = null;
-  this.nextWithComments();
-  if (this.debug) this.showlog();
-  while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
-    // IGNORE COMMENTS
-    this.nextWithComments();
+  if (this.debug) {
+    this.showlog();
+    this.debug = false;
+    this.nextWithComments().ignoreComments();
+    this.debug = true;
+  } else {
+    this.nextWithComments().ignoreComments();
   }
   return this;
 };
 
 /** consume comments (if found) **/
 parser.prototype.ignoreComments = function() {
-  this.lastDoc = null;
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
     // IGNORE COMMENTS
@@ -323,9 +341,6 @@ parser.prototype.nextWithComments = function() {
     this.lexer.offset
   ];
   this.token = this.lexer.lex() || this.EOF;
-  if (this.token === this.tok.T_DOC_COMMENT) {
-    this.lastDoc = ['doc', this.text()];
-  }
   if (this.debug) this.showlog();
   return this;
 };
@@ -357,7 +372,7 @@ parser.prototype.read_token = function() {
  * list ::= separator? ( item separator )* item
  * ```
  */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator, withDoc) {
+parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   var result = [];
 
   if (this.token == separator) {
@@ -367,12 +382,7 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator, w
 
   if (typeof (item) === "function") {
     do {
-      var doc = withDoc && this.lastDoc ? this.lastDoc : null;
-      var node = item.apply(this, []);
-      if (doc) {
-        node = doc.concat(node);
-      }
-      result.push(node);
+      result.push(item.apply(this, []));
       if (this.token != separator) {
         break;
       }
