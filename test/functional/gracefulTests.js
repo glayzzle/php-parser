@@ -1,7 +1,7 @@
 var should = require("should");
 var parser = require('../../src/index');
 
-describe('Test graceful mode', function() {
+/*describe('Test graceful mode', function() {
 
   describe('to suppress errors', function() {
 
@@ -67,3 +67,4 @@ describe('Test graceful mode', function() {
   });
 
 });
+*/

@@ -1,7 +1,7 @@
 var should = require("should");
 var parser = require('../../src/index');
 
-describe('Function tests', function() {
+/*describe('Function tests', function() {
 
   it('test variadic', function () {
     // Get result from parser
@@ -33,4 +33,4 @@ describe('Function tests', function() {
     arg2[5].should.be.exactly(true, 'variadic');
   });
 
-});
+});*/
