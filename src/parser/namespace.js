@@ -73,12 +73,10 @@ module.exports = {
       while(this.token !== this.EOF) {
           this.expect(this.tok.T_USE).next();
           this.read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
-            if (typeof item[0] === 'string') {
-              result.push(item);
+            if (Array.isArray(item)) {
+              result = result.concat(item);
             } else {
-              item.forEach(function(child) {
-                result.push(child);
-              });
+              result.push(item);
             }
           });
           if(this.token !== this.tok.T_USE) break;

@@ -79,6 +79,18 @@ describe('Test AST structure', function() {
   it('test literals', function() {
     // @todo string / numbers / booleans
   });
+  it('test namespace', function() {
+    // @todo
+  });
+
+  it('test constants', function() {
+    var ast = parser.parseEval('const FOO = 3.14;');
+    ast.children[0].type.should.be.exactly('constant');
+    ast.children[0].name.should.be.exactly('FOO');
+    ast.children[0].value.type.should.be.exactly('number');
+    ast.children[0].value.value.should.be.exactly('3.14');
+  });
+
   it('test eval', function() {
     var ast = parser.parseEval('eval("return true;");');
     ast.children[0].type.should.be.exactly('eval');
@@ -93,12 +105,14 @@ describe('Test AST structure', function() {
     ast.children[0].type.should.be.exactly('exit');
     ast.children[0].status.value.should.be.exactly('-1');
   });
+
   it('test coalesce', function() {
     var ast = parser.parseEval('$var = $a ?? true;');
     ast.children[0].right.type.should.be.exactly('coalesce');
     ast.children[0].right.test.type.should.be.exactly('variable');
     ast.children[0].right.ifnull.type.should.be.exactly('boolean');
   });
+
   it('test include / require', function() {
     var ast = parser.parseEval([
       'include "file.php"',
@@ -125,4 +139,25 @@ describe('Test AST structure', function() {
     ast.children[3].require.should.be.exactly(true);
 
   });
+
+  it('test class', function() {
+    var ast = parser.parseEval([
+      'final class foo extends bar implements',
+      '  bim, bam, boum {',
+      '  const FOO = "azerty";',
+      '  public static $var;',
+      '  public function __construct(array $data = null) {',
+      '    $this->data = $data;',
+      '  }',
+      '}',
+      'abstract bar {',
+      '  /**',
+      '   * Some informations',
+      '   */',
+      '  abstract protected function foo();',
+      '}'
+    ].join('\n'));
+    console.log(ast);
+  });
+
 });

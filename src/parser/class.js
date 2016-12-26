@@ -84,21 +84,14 @@ module.exports = {
         continue;
       }
 
-
       // read member flags
       var flags = this.read_member_flags(false);
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-
-        var constants = this.read_constant_list();
+        var constants = this.read_constant_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < constants.length; i++) {
-          var constant = constants[i];
-          (this.locations ? constant[3] : constant).push(flags);
-          result.push(constant);
-        }
+        result = result.concat(constants);
         continue;
       }
 
@@ -180,25 +173,26 @@ module.exports = {
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
    * ```
    */
-  ,read_constant_list: function() {
+  ,read_constant_list: function(flags) {
     return this.expect(this.tok.T_CONST)
       .next()
       .read_list(
-        this.read_constant_declaration, ','
+        /**
+         * Reads a constant declaration
+         *
+         * ```ebnf
+         *  constant_declaration ::= T_STRING '=' expr
+         * ```
+         * @return {Constant} [:link:](AST.md#constant)
+         */
+        function read_constant_declaration() {
+          var result = this.node('classconstant');
+          var name = this.expect(this.tok.T_STRING).text();
+          var value =  this.next().expect('=').next().read_expr();
+          return result(name, value, flags);
+        }, ','
       )
     ;
-  }
-  /**
-   * Reads a constant declaration
-   * ```ebnf
-   *  constant_declaration ::= T_STRING '=' expr
-   * ```
-   */
-  ,read_constant_declaration: function() {
-    var result = this.node('const');
-    var name = this.expect(this.tok.T_STRING).text();
-    var value =  this.next().expect('=').next().read_expr();
-    return result(name, value);
   }
   /**
    * Read member flags
@@ -298,15 +292,9 @@ module.exports = {
 
       // check constant
       if (this.token == this.tok.T_CONST) {
-        var constants = this.read_constant_list();
+        var constants = this.read_constant_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < constants.length; i++) {
-          var constant = constants[i];
-          (this.locations ? constant[3] : constant).push(flags);
-          result.push(constant);
-        }
-
+        result = result.concat(constants);
       }
 
       // reads a function

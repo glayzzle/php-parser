@@ -32,6 +32,10 @@ var Position = require('./ast/position');
  *       - [Isset](#isset)
  *       - [Unset](#unset)
  *       - [Empty](#empty)
+ *     - [Declaration](#declaration)
+ *       - [Constant](#constant)
+ *         - [ClassConstant](#classconstant)
+ *       - [Method](#method)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
  *     - [Clone](#clone)
@@ -120,8 +124,10 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/assign'),
   require('./ast/boolean'),
   require('./ast/class'),
+  require('./ast/classconstant'),
   require('./ast/clone'),
   require('./ast/coalesce'),
+  require('./ast/constant'),
   require('./ast/echo'),
   require('./ast/empty'),
   require('./ast/entry'),
@@ -133,6 +139,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/isset'),
   require('./ast/literal'),
   require('./ast/magic'),
+  require('./ast/method'),
   require('./ast/namespace'),
   require('./ast/number'),
   require('./ast/print'),

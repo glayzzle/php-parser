@@ -15,10 +15,10 @@ module.exports = {
     while(this.token !== this.EOF && this.token !== '}') {
       var statement = this.read_top_statement();
       if (statement) {
-        if (typeof statement[0] === 'string') {
-          result.push(statement);
-        } else {
+        if (Array.isArray(statement)) {
           result = result.concat(statement);
+        } else {
+          result.push(statement);
         }
       }
     }
@@ -88,10 +88,10 @@ module.exports = {
     while(this.token != this.EOF && this.token !== '}') {
       var statement = this.read_inner_statement();
       if (statement) {
-        if (typeof statement[0] === 'string') {
-          result.push(statement);
-        } else {
+        if (Array.isArray(statement)) {
           result = result.concat(statement);
+        } else {
+          result.push(statement);
         }
       }
     }
@@ -106,12 +106,13 @@ module.exports = {
   ,read_const_list: function() {
     var result = this.read_list(function() {
       this.expect(this.tok.T_STRING);
-      var result = this.node(this.text());
+      var result = this.node('constant');
+      var name = this.text();
       this.next().expect('=').next();
-      return result(this.read_expr());
+      return result(name, this.read_expr());
     }, ',', false);
     this.expectEndOfStatement();
-    return ['const', result];
+    return result;
   }
   /**
    * Reads a list of constants declaration

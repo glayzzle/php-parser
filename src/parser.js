@@ -168,7 +168,11 @@ parser.prototype.parse = function(code) {
   while(this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
-      childs.push(node);
+      if (Array.isArray(node)) {
+        childs = childs.concat(node);
+      } else {
+        childs.push(node);
+      }
     }
   }
   return program(childs, this._errors);
