@@ -14,20 +14,22 @@ describe('Test comments', function() {
       }
     });
     it('test cummulative array', function () {
-      ast[1][0][0].should.be.exactly("comment");
-      ast[1][0][1].length.should.be.exactly(2);
-      ast[1][0][1][0].should.be.exactly('# some information\n');
-      ast[1][0][1][1].should.be.exactly('// another line\n');
+      ast.children.length.should.be.exactly(3);
+      ast.children[0].kind.should.be.exactly("doc");
+      ast.children[0].isDoc.should.be.exactly(false);
+      ast.children[0].lines.length.should.be.exactly(2);
+      ast.children[0].lines[0].should.be.exactly('some information');
+      ast.children[0].lines[1].should.be.exactly('another line');
     });
     it('test statements', function () {
-      ast[1][2][0].should.be.exactly("comment");
-      ast[1][2][1].length.should.be.exactly(1);
-      ast[1][2][1][0].should.be.exactly('// done');
+      ast.children[2].kind.should.be.exactly("doc");
+      ast.children[2].isDoc.should.be.exactly(false);
+      ast.children[2].lines[0].should.be.exactly('done');
     });
     it('ignore comments in expression', function () {
-      ast[1][1][0].should.be.exactly("set");
-      ast[1][1][1][0].should.be.exactly('var');
-      ast[1][1][2][0].should.be.exactly('number');
+      ast.children[1].kind.should.be.exactly("assign");
+      ast.children[1].left.kind.should.be.exactly('variable');
+      ast.children[1].right.kind.should.be.exactly('number');
     });
   });
 
@@ -47,21 +49,19 @@ describe('Test comments', function() {
       }
     });
     it('test statements', function () {
-      ast[1][0][0].should.be.exactly("doc");
-      ast[1][0][1].should.be.exactly([
-        '/**',
-        ' * Description',
-        ' */'
-      ].join('\n'));
-
+      ast.children[0].kind.should.be.exactly("doc");
+      ast.children[0].lines.length.should.be.exactly(3);
+      ast.children[0].lines[0].should.be.exactly('');
+      ast.children[0].lines[1].should.be.exactly('Description');
+      ast.children[0].lines[2].should.be.exactly('');
     });
     it('test function', function () {
-      ast[1][1][0].should.be.exactly("function");
-      ast[1][1][1].should.be.exactly("name");
-      ast[1][1][2].length.should.be.exactly(1);
-      var body = ast[1][1][5];
-      body[0][0].should.be.exactly('comment');
-      body[1][0].should.be.exactly('return');
+      ast.children[1].kind.should.be.exactly("function");
+      ast.children[1].name.should.be.exactly("name");
+      ast.children[1].arguments.length.should.be.exactly(1);
+      var body = ast.children[1].body;
+      body[0].kind.should.be.exactly('comment');
+      body[1].kind.should.be.exactly('return');
     });
 
   });

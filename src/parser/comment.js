@@ -11,7 +11,7 @@ module.exports = {
    *  Comments with // or # or / * ... * /
    */
   read_comment: function() {
-    var result = this.node('documentation');
+    var result = this.node('doc');
     var lines = [];
     do {
       var line = this.text();
@@ -31,7 +31,7 @@ module.exports = {
    * Comments with / ** ... * /
    */
   read_doc_comment: function() {
-    var result = this.node('documentation');
+    var result = this.node('doc');
     var text = this.text();
     text = text.substring(2, text.length - 2);
     var lines = [];

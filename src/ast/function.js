@@ -14,13 +14,13 @@ var KIND          = 'method';
  * @property {Parameter[]} arguments
  * @property {Identifier} type
  * @property {boolean} byref
- * @property {Node[]} children
+ * @property {Node[]} body
  */
 var fn = Declaration.extends(function _Function(name, args, byref, type, location) {
   Declaration.apply(this, [KIND, name, location]);
   this.arguments = args;
   this.byref = byref;
   this.type = type;
-  this.children = [];
+  this.body = [];
 });
 module.exports = fn;

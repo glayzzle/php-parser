@@ -18,7 +18,7 @@ var Position = require('./ast/position');
  *   - [TraitAlias](#traitalias)
  *   - [TraitPrecedence](#traitprecedence)
  *   - [Entry](#entry)
- *   - [Documentation](#documentation)
+ *   - [Doc](#doc)
  *   - [Error](#error)
  *   - [Expression](#expression)
  *     - [Array](#array)
@@ -136,7 +136,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/clone'),
   require('./ast/coalesce'),
   require('./ast/constant'),
-  require('./ast/documentation'),
+  require('./ast/doc'),
   require('./ast/echo'),
   require('./ast/empty'),
   require('./ast/entry'),
