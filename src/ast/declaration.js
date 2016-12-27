@@ -7,6 +7,10 @@
 var Statement = require('./statement');
 var KIND = 'declaration';
 
+var IS_PUBLIC     = 'public';
+var IS_PROTECTED  = 'protected';
+var IS_PRIVATE    = 'private';
+
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration

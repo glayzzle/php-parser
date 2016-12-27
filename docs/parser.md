@@ -193,28 +193,12 @@ Reads variable list
  variable_list ::= (variable_declaration ',')* variable_declaration
 ```
 
-# read_variable_declaration
-
-Reads a variable declaration
-
-```ebnf
- variable_declaration ::= T_VARIABLE '=' scalar
-```
-
 # read_constant_list
 
 Reads constant list
 
 ```ebnf
  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
-```
-
-# read_constant_declaration
-
-Reads a constant declaration
-
-```ebnf
- constant_declaration ::= T_STRING '=' expr
 ```
 
 # read_member_flags
@@ -265,6 +249,24 @@ Reading trait alias
 ```ebnf
 trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
 ```
+
+# read_variable_declaration
+
+Reads a variable declaration
+
+```ebnf
+ variable_declaration ::= T_VARIABLE '=' scalar
+```
+
+# read_constant_declaration
+
+Reads a constant declaration
+
+```ebnf
+ constant_declaration ::= T_STRING '=' expr
+```
+
+Returns **Constant** [:link:](AST.md#constant)
 
 # read_comment
 

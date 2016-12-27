@@ -347,28 +347,12 @@ Reads variable list
  variable_list ::= (variable_declaration ',')* variable_declaration
 ```
 
-# read_variable_declaration
-
-Reads a variable declaration
-
-```ebnf
- variable_declaration ::= T_VARIABLE '=' scalar
-```
-
 # read_constant_list
 
 Reads constant list
 
 ```ebnf
  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
-```
-
-# read_constant_declaration
-
-Reads a constant declaration
-
-```ebnf
- constant_declaration ::= T_STRING '=' expr
 ```
 
 # read_member_flags
@@ -419,6 +403,24 @@ Reading trait alias
 ```ebnf
 trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
 ```
+
+# read_variable_declaration
+
+Reads a variable declaration
+
+```ebnf
+ variable_declaration ::= T_VARIABLE '=' scalar
+```
+
+# read_constant_declaration
+
+Reads a constant declaration
+
+```ebnf
+ constant_declaration ::= T_STRING '=' expr
+```
+
+Returns **[Constant](#constant)** [:link:](AST.md#constant)
 
 # read_expr_item
 
@@ -812,6 +814,13 @@ Some samples of parsed code :
             -   [Isset](#isset)
             -   [Unset](#unset)
             -   [Empty](#empty)
+        -   [Declaration](#declaration)
+            -   [Constant](#constant)
+                -   [ClassConstant](#classconstant)
+            -   [Function](#function)
+                -   [Method](#method)
+            -   [Parameter](#parameter)
+            -   [Property](#property)
         -   [Eval](#eval)
         -   [Exit](#exit)
         -   [Clone](#clone)
@@ -842,7 +851,7 @@ Prepares an AST node
     (if null, the kind must be passed at the function call)
 -   `parser` **Parser** The parser instance (use for extracting locations)
 
-Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+Returns **[Function](#function)** 
 
 # AST
 
@@ -868,7 +877,7 @@ Prepares an AST node
     (if null, the kind must be passed at the function call)
 -   `parser` **Parser** The parser instance (use for extracting locations)
 
-Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+Returns **[Function](#function)** 
 
 # Location
 
@@ -969,6 +978,17 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
 
+# ClassConstant
+
+**Extends Constant**
+
+Defines a class/interface/trait constant
+
+**Properties**
+
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
 # Clone
 
 **Extends Statement**
@@ -991,17 +1011,41 @@ is, otherwise returns the ifnull expression.
 -   `test` **[Expression](#expression)** The expression to be testes
 -   `ifnull` **[Expression](#expression)** The returned expression if test is null
 
+# Constant
+
+**Extends Declaration**
+
+Defines a namespace constant
+
+**Properties**
+
+-   `value` **([Node](#node) | null)** 
+
+# Declaration
+
+**Extends Statement**
+
+A declaration statement (function, class, interface...)
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## parseFlags
+
+Generic flags parser
+
+**Parameters**
+
+-   `flags` **[Array](#array)&lt;Integer>** 
+
+Returns **void** 
+
 # Echo
 
 **Extends Sys**
 
 Defines system based call
-
-# Empty
-
-**Extends Sys**
-
-Defines an empty check call
 
 # Sys
 
@@ -1012,6 +1056,12 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
+
+# Empty
+
+**Extends Sys**
+
+Defines an empty check call
 
 # Entry
 
@@ -1030,13 +1080,13 @@ A generic AST node
 
 **Parameters**
 
--   `type`  
+-   `kind`  
 -   `location`  
 
 **Properties**
 
 -   `loc` **([Location](#location) | null)** 
--   `type` **[String](#string)** 
+-   `kind` **[String](#string)** 
 
 ## extends
 
@@ -1044,9 +1094,9 @@ Helper for extending the Node class
 
 **Parameters**
 
--   `constructor` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+-   `constructor` **[Function](#function)** 
 
-Returns **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+Returns **[Function](#function)** 
 
 # Error
 
@@ -1080,6 +1130,19 @@ Defines an exit / die call
 **Properties**
 
 -   `status` **([Node](#node) | null)** 
+
+# Function
+
+**Extends Declaration**
+
+Defines a classic function
+
+**Properties**
+
+-   `arguments` **[Array](#array)&lt;Argument>** 
+-   `type` **[Identifier](#identifier)** 
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `children` **[Array](#array)&lt;[Node](#node)>** 
 
 # Include
 
@@ -1121,6 +1184,19 @@ Defines an array structure
 
 Defines magic constant
 
+# Method
+
+**Extends Function**
+
+Defines a class/interface/trait method
+
+**Properties**
+
+-   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
 # Namespace
 
 **Extends Block**
@@ -1149,6 +1225,19 @@ Defines an identifier node
 
 Defines a numeric value
 
+# Parameter
+
+**Extends Declaration**
+
+Defines a function parameter
+
+**Properties**
+
+-   `type` **([Identifier](#identifier) | null)** 
+-   `value` **([Node](#node) | null)** 
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `variadic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Print
 
 **Extends Sys**
@@ -1164,6 +1253,19 @@ The main program node
 **Properties**
 
 -   `errors` **[Array](#array)&lt;[Error](#error)>** 
+
+# Property
+
+**Extends Declaration**
+
+Defines a class property
+
+**Properties**
+
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `value` **([Node](#node) | null)** 
 
 # Shell
 

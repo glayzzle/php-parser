@@ -32,18 +32,14 @@ module.exports = {
    * ```
    */
   ,read_function: function(closure, flag) {
-    var result = this.node(
-      this.read_function_declaration(closure ? 1 : flag ? 2 : 0)
-    );
+    var result = this.read_function_declaration(closure ? 1 : flag ? 2 : 0)
     if (flag && flag[2] == 1) {
-      result = result(flag);
+      result.parseFlags(flag);
       this.expect(';').nextWithComments();
     } else {
-      var body = this.expect('{').read_code_block(false);
+      result.children = this.expect('{').read_code_block(false);
       if (flag) {
-        result = result(body, flag);
-      } else {
-        result = result(body);
+        result.parseFlags(flag);
       }
     }
     return result;
@@ -133,7 +129,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   ,read_parameter: function() {
-    var node = this.node('param');
+    var node = this.node('parameter');
     var type = this.read_type();
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();

@@ -35,7 +35,9 @@ var Position = require('./ast/position');
  *     - [Declaration](#declaration)
  *       - [Constant](#constant)
  *         - [ClassConstant](#classconstant)
- *       - [Method](#method)
+ *       - [Function](#function)
+ *         - [Method](#method)
+ *       - [Parameter](#parameter)
  *       - [Property](#property)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
@@ -135,6 +137,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/error'),
   require('./ast/eval'),
   require('./ast/exit'),
+  require('./ast/function'),
   require('./ast/include'),
   require('./ast/inline'),
   require('./ast/isset'),
@@ -143,6 +146,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/method'),
   require('./ast/namespace'),
   require('./ast/number'),
+  require('./ast/parameter'),
   require('./ast/print'),
   require('./ast/program'),
   require('./ast/property'),

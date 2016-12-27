@@ -8,11 +8,13 @@
  * A generic AST node
  * @constructor Node
  * @property {Location|null} loc
- * @property {String} type
+ * @property {String} kind
  */
-var Node = function Node(type, location) {
-  this.type = type;
-  this.loc = location ? location : null;
+var Node = function Node(kind, location) {
+  this.kind = kind;
+  if(location) {
+    this.loc = location;
+  }
 };
 
 /**
