@@ -18,8 +18,9 @@ module.exports = {
       .expect(this.tok.T_STRING)
     ;
     var propName = this.text()
-      , propExtends = false
-      , propImplements = false
+      , propExtends = null
+      , propImplements = []
+      , body
     ;
     if (this.next().token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
@@ -30,12 +31,13 @@ module.exports = {
         ','
       );
     }
+    body = this.expect('{').nextWithComments().read_class_body();
     return result(
       propName
-      ,flag
       ,propExtends
       ,propImplements
-      ,this.expect('{').nextWithComments().read_class_body()
+      ,body
+      ,flag
     );
   }
   /**

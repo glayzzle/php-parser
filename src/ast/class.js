@@ -4,32 +4,29 @@
  * @url http://glayzzle.com
  */
 
-var Block = require('./block');
+var Declaration = require('./declaration');
 var KIND = 'class';
 
 
 /**
  * A class definition
  * @constructor Class
- * @extends {Block}
- * @property {Identifier|null} name
+ * @extends {Declaration}
  * @property {Identifier|null} extends
  * @property {Identifier[]} implements
+ * @property {Declaration[]} body
  * @property {boolean} isAnonymous
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
+ * @property {boolean} isFinal
  */
-var Class = Block.extends(function Class(
-  isFinal, isAbstract, name,
-  ext, impl, children, location
-) {
-  Block.apply(this, [KIND, children, location]);
+var Class = Declaration.extends(function Class(name, ext, impl, body, flags, location) {
+  Declaration.apply(this, [KIND, name, location]);
   this.isAnonymous = name ? false : true;
-  this.isAbstract = isAbstract;
-  this.isFinal = isFinal;
-  this.name = name;
   this.extends = ext;
   this.implements = impl;
+  this.body = body;
+  this.parseFlags(flags);
 });
 
 module.exports = Class;

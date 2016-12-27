@@ -33,22 +33,17 @@ module.exports = {
         && this.token != '('
       ) {
         // @see parser.js line 130 : resolves a conflict with scalar
-        if (name.length == 1) {
-          var literal = name[0].toLowerCase();
-          if (literal === 'true') {
-            result = result('boolean', true);
-          } else if (literal === 'false') {
-            result = result('boolean', false);
-          } else {
-            // @todo
-            result = ['constant', name[0]];
-          }
+        var literal = name.name.toLowerCase();
+        if (literal === 'true') {
+          result = result('boolean', true);
+        } else if (literal === 'false') {
+          result = result('boolean', false);
         } else {
-          // @todo
+          // @todo null keyword ?
           result = ['constant', name];
         }
       } else {
-        result = ['ns', result];
+        result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
       this.next();

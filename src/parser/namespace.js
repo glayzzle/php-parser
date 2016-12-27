@@ -56,10 +56,13 @@ module.exports = {
    * ```
    */
   ,read_namespace_name: function() {
+    var result = this.node('identifier');
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR).next();
     }
-    return this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
+    return result(
+      this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true)
+    );
   }
   /**
    * ```ebnf

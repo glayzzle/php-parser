@@ -4,7 +4,7 @@
  * @url http://glayzzle.com
  */
 
-var Function = require('./function');
+var fn = require('./function');
 var KIND = 'method';
 
 /**
@@ -16,8 +16,8 @@ var KIND = 'method';
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-var Method = Function.extends(function Method() {
-  Function.apply(this, arguments);
+var Method = fn.extends(function Method() {
+  fn.apply(this, arguments);
   this.kind = KIND;
 });
 

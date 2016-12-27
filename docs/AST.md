@@ -18,7 +18,6 @@
     -   [Statement](#statement)
         -   [Block](#block)
             -   [Program](#program)
-            -   [Class](#class)
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
@@ -27,6 +26,7 @@
             -   [Unset](#unset)
             -   [Empty](#empty)
         -   [Declaration](#declaration)
+            -   [Class](#class)
             -   [Constant](#constant)
                 -   [ClassConstant](#classconstant)
             -   [Function](#function)
@@ -132,17 +132,18 @@ Defines a boolean value (true/false)
 
 # Class
 
-**Extends Block**
+**Extends Declaration**
 
 A class definition
 
 **Properties**
 
--   `name` **([Identifier](#identifier) | null)** 
 -   `extends` **([Identifier](#identifier) | null)** 
 -   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # ClassConstant

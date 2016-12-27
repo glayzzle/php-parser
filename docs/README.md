@@ -806,7 +806,6 @@ Some samples of parsed code :
     -   [Statement](#statement)
         -   [Block](#block)
             -   [Program](#program)
-            -   [Class](#class)
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
@@ -815,6 +814,7 @@ Some samples of parsed code :
             -   [Unset](#unset)
             -   [Empty](#empty)
         -   [Declaration](#declaration)
+            -   [Class](#class)
             -   [Constant](#constant)
                 -   [ClassConstant](#classconstant)
             -   [Function](#function)
@@ -955,28 +955,39 @@ Defines a boolean value (true/false)
 
 # Class
 
-**Extends Block**
+**Extends Declaration**
 
 A class definition
 
 **Properties**
 
--   `name` **([Identifier](#identifier) | null)** 
 -   `extends` **([Identifier](#identifier) | null)** 
 -   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-# Block
+# Declaration
 
 **Extends Statement**
 
-A block statement, i.e., a sequence of statements surrounded by braces.
+A declaration statement (function, class, interface...)
 
 **Properties**
 
--   `children` **[Array](#array)&lt;[Node](#node)>** 
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## parseFlags
+
+Generic flags parser
+
+**Parameters**
+
+-   `flags` **[Array](#array)&lt;Integer>** 
+
+Returns **void** 
 
 # ClassConstant
 
@@ -1020,26 +1031,6 @@ Defines a namespace constant
 **Properties**
 
 -   `value` **([Node](#node) | null)** 
-
-# Declaration
-
-**Extends Statement**
-
-A declaration statement (function, class, interface...)
-
-**Properties**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## parseFlags
-
-Generic flags parser
-
-**Parameters**
-
--   `flags` **[Array](#array)&lt;Integer>** 
-
-Returns **void** 
 
 # Echo
 
@@ -1144,6 +1135,17 @@ Defines a classic function
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
 
+# Identifier
+
+**Extends Node**
+
+Defines an identifier node
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Include
 
 **Extends Statement**
@@ -1208,16 +1210,15 @@ The main program node
 -   `name` **[Identifier](#identifier)** 
 -   `withBrackets` **[Boolean](#boolean)** 
 
-# Identifier
+# Block
 
-**Extends Node**
+**Extends Statement**
 
-Defines an identifier node
+A block statement, i.e., a sequence of statements surrounded by braces.
 
 **Properties**
 
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `children` **[Array](#array)&lt;[Node](#node)>** 
 
 # Number
 
