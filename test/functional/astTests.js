@@ -140,36 +140,5 @@ describe('Test AST structure', function() {
 
   });
 
-  it('test class', function() {
-    var ast = parser.parseEval([
-      'final class foo extends bar implements',
-      '  bim, bam, boum {',
-      '  const FOO = "azerty";',
-      '  public static $var;',
-      '  public function __construct(array $data = null) {',
-      '    $this->data = $data;',
-      '  }',
-      '}',
-      'abstract class bar {',
-      '  /**',
-      '   * Some informations',
-      '   */',
-      '  abstract protected function foo();',
-      '}'
-    ].join('\n'));
-    ast.children.length.should.be.exactly(2);
-
-    ast.children[0].kind.should.be.exactly('class');
-    ast.children[1].kind.should.be.exactly('class');
-
-    ast.children[0].name.should.be.exactly('foo');
-    ast.children[1].name.should.be.exactly('bar');
-
-    ast.children[0].extends.name.should.be.exactly('bar');
-    should.equal(ast.children[1].extends, null);
-
-    // @todo test members
-    console.log(ast.children[0].body);
-  });
 
 });

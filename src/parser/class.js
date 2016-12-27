@@ -19,7 +19,7 @@ module.exports = {
     ;
     var propName = this.text()
       , propExtends = null
-      , propImplements = []
+      , propImplements = null
       , body
     ;
     if (this.next().token == this.tok.T_EXTENDS) {
@@ -50,12 +50,12 @@ module.exports = {
     var result = this.token;
     if (result == this.tok.T_FINAL) {
       this.next();
-      return -1;
+      return [0, 0, 2];
     } else if (result == this.tok.T_ABSTRACT) {
       this.next();
-      return 1;
+      return [0, 0, 1];
     }
-    return 0;
+    return [0, 0, 0];
   }
   /**
    * Reads a class body
