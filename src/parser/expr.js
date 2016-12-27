@@ -366,10 +366,7 @@ module.exports = {
         propExtends = this.next().read_namespace_name();
       }
       if (this.token == this.tok.T_IMPLEMENTS) {
-        propImplements = this.next().read_list(
-          this.read_namespace_name,
-          ','
-        );
+        propImplements = this.next().read_name_list();
       }
       return result(
         false           // class name => false : means it's an annonymous class

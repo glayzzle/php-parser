@@ -557,7 +557,7 @@ Defines a trait alias
 
 -   `trait` **([Identifier](#identifier) | null)** 
 -   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `instead` **[Identifier](#identifier)** 
+-   `instead` **[Array](#array)&lt;[Identifier](#identifier)>** 
 
 # TraitUse
 

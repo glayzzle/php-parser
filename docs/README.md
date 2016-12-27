@@ -281,6 +281,22 @@ list ::= separator? ( item separator )* item
 -   `separator`  
 -   `preserveFirstSeparator`  
 
+## read_name_list
+
+Reads a list of names separated by a comma
+
+```ebnf
+name_list ::= namespace (',' namespace)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **[Array](#array)&lt;[Identifier](#identifier)>** 
+
 # ignoreStack
 
 outputs some debug information on current token \*
@@ -790,32 +806,6 @@ Some samples of parsed code :
 
 # AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
 ## Class hierarchy
 
 -   [Location](#location)
@@ -871,6 +861,32 @@ Returns **[Function](#function)**
 
 -   `withPositions`  
 -   `withSource`  
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -973,26 +989,6 @@ A class definition
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-# Declaration
-
-**Extends Statement**
-
-A declaration statement (function, class, interface...)
-
-**Properties**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## parseFlags
-
-Generic flags parser
-
-**Parameters**
-
--   `flags` **[Array](#array)&lt;Integer>** 
-
-Returns **void** 
-
 # ClassConstant
 
 **Extends Constant**
@@ -1036,6 +1032,26 @@ Defines a namespace constant
 
 -   `value` **([Node](#node) | null)** 
 
+# Declaration
+
+**Extends Statement**
+
+A declaration statement (function, class, interface...)
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## parseFlags
+
+Generic flags parser
+
+**Parameters**
+
+-   `flags` **[Array](#array)&lt;Integer>** 
+
+Returns **void** 
+
 # Documentation
 
 **Extends Node**
@@ -1077,6 +1093,12 @@ Returns **[Function](#function)**
 
 Defines system based call
 
+# Empty
+
+**Extends Sys**
+
+Defines an empty check call
+
 # Sys
 
 **Extends Statement**
@@ -1086,12 +1108,6 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
-
-# Empty
-
-**Extends Sys**
-
-Defines an empty check call
 
 # Entry
 
@@ -1345,7 +1361,7 @@ Defines a trait alias
 
 -   `trait` **([Identifier](#identifier) | null)** 
 -   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `instead` **[Identifier](#identifier)** 
+-   `instead` **[Array](#array)&lt;[Identifier](#identifier)>** 
 
 # TraitUse
 

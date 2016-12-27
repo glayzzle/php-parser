@@ -127,6 +127,22 @@ list ::= separator? ( item separator )* item
 -   `separator`  
 -   `preserveFirstSeparator`  
 
+## read_name_list
+
+Reads a list of names separated by a comma
+
+```ebnf
+name_list ::= namespace (',' namespace)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Identifier>** 
+
 # ignoreStack
 
 outputs some debug information on current token \*

@@ -392,7 +392,9 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
       }
     } while(this.next().token != this.EOF);
   } else {
-    result.push(this.expect(item).text());
+    if (this.expect(item)) {
+      result.push(this.text());
+    }
     while (this.next().token != this.EOF) {
       if (this.token != separator) break;
       // trim current separator & check item
@@ -403,6 +405,26 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   return result;
 };
 
+/**
+ * Reads a list of names separated by a comma
+ *
+ * ```ebnf
+ * name_list ::= namespace (',' namespace)*
+ * ```
+ *
+ * Sample code :
+ * ```php
+ * <?php class foo extends bar, baz { }
+ * ```
+ *
+ * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L726
+ * @return {Identifier[]}
+ */
+parser.prototype.read_name_list = function() {
+  return this.read_list(
+    this.read_namespace_name, ',', false
+  );
+};
 
 // extends the parser with syntax files
 [

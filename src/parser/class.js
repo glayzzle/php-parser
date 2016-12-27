@@ -26,10 +26,7 @@ module.exports = {
       propExtends = this.next().read_namespace_name();
     }
     if (this.token == this.tok.T_IMPLEMENTS) {
-      propImplements = this.next().read_list(
-        this.read_namespace_name,
-        ','
-      );
+      propImplements = this.next().read_name_list();
     }
     body = this.expect('{').nextWithComments().read_class_body();
     return result(
@@ -249,10 +246,7 @@ module.exports = {
     ;
     var propExtends = null;
     if (this.next().token == this.tok.T_EXTENDS) {
-      propExtends = this.next().read_list(
-        this.read_namespace_name,
-        ','
-      );
+      propExtends = this.next().read_name_list();
     }
     return result(
       name
@@ -299,12 +293,10 @@ module.exports = {
         this.expect(';').nextWithComments();
       } else {
         // raise an error
-        result.push(
-          this.error([
-            this.tok.T_CONST,
-            this.tok.T_FUNCTION
-          ])
-        );
+        this.error([
+          this.tok.T_CONST,
+          this.tok.T_FUNCTION
+        ]);
         this.next();
       }
     }
@@ -330,10 +322,7 @@ module.exports = {
       propExtends = this.next().read_namespace_name();
     }
     if (this.token == this.tok.T_IMPLEMENTS) {
-      propImplements = this.next().read_list(
-        this.read_namespace_name,
-        ','
-      );
+      propImplements = this.next().read_name_list();
     }
     return result(
       propName,
@@ -397,7 +386,7 @@ module.exports = {
       return node(
         'traitprecedence',
         trait, method,
-        this.next().read_namespace_name()
+        this.next().read_name_list()
       );
     }
 
