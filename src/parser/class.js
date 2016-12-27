@@ -324,8 +324,8 @@ module.exports = {
       .expect(this.tok.T_STRING)
     ;
     var propName = this.text(),
-      propExtends = false,
-      propImplements = false;
+      propExtends = null,
+      propImplements = null;
     if (this.next().token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
     }

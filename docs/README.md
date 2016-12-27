@@ -857,6 +857,7 @@ Returns **[Function](#function)**
         -   [Declaration](#declaration)
             -   [Class](#class)
             -   [Interface](#interface)
+            -   [Trait](#trait)
             -   [Constant](#constant)
                 -   [ClassConstant](#classconstant)
             -   [Function](#function)
@@ -1308,6 +1309,18 @@ Defines inline html output (treated as echo output)
 **Properties**
 
 -   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Trait
+
+**Extends Declaration**
+
+A trait definition
+
+**Properties**
+
+-   `extends` **([Identifier](#identifier) | null)** 
+-   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
 
 # TraitAlias
 

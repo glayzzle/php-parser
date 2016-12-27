@@ -49,6 +49,7 @@ var Position = require('./ast/position');
  *     - [Declaration](#declaration)
  *       - [Class](#class)
  *       - [Interface](#interface)
+ *       - [Trait](#trait)
  *       - [Constant](#constant)
  *         - [ClassConstant](#classconstant)
  *       - [Function](#function)
@@ -159,6 +160,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/property'),
   require('./ast/shell'),
   require('./ast/string'),
+  require('./ast/trait'),
   require('./ast/traitalias'),
   require('./ast/traitprecedence'),
   require('./ast/traituse'),
