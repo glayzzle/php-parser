@@ -12,12 +12,12 @@ var KIND = 'doc';
  * @constructor Documentation
  * @extends {Node}
  * @property {Boolean} isDoc
- * @property {String} text
+ * @property {String[]} lines
  */
-var Documentation = Node.extends(function Documentation(text, location) {
+var Documentation = Node.extends(function Documentation(isDoc, lines, location) {
   Node.apply(this, [KIND, location]);
-  this.isDoc = text.substring(0, 2) === '/*';
-  this.text = text;
+  this.isDoc = isDoc;
+  this.lines = lines;
 });
 
-module.exports = Statement;
+module.exports = Documentation;

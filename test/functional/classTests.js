@@ -29,7 +29,11 @@ describe('Test classes', function() {
   var ast2 = parser.parseEval([
     'class foo implements boo {',
     '  // comment',
-    '  /** doc */',
+    '  /* boo */',
+    '  /** doc',
+    '   * data',
+    '     foo',
+    '   */',
     '  var $var = true;',
     '  final function __construct() { }',
     '  private function boo() { }',

@@ -134,6 +134,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/clone'),
   require('./ast/coalesce'),
   require('./ast/constant'),
+  require('./ast/documentation'),
   require('./ast/echo'),
   require('./ast/empty'),
   require('./ast/entry'),
