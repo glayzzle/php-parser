@@ -293,7 +293,7 @@ Defines a classic function
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;Argument>** 
+-   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
@@ -333,7 +333,7 @@ Defines inline html output (treated as echo output)
 
 Defines an isset call
 
-# ArrayExpression
+# Literal
 
 **Extends Expression**
 

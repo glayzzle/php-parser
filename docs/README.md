@@ -1067,6 +1067,19 @@ An array entry
 -   `key` **([Node](#node) | null)** 
 -   `value` **[Node](#node)** 
 
+# Error
+
+**Extends Node**
+
+Defines an error node (used only on silentMode)
+
+**Properties**
+
+-   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
+-   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+
 # Node
 
 A generic AST node
@@ -1090,19 +1103,6 @@ Helper for extending the Node class
 -   `constructor` **[Function](#function)** 
 
 Returns **[Function](#function)** 
-
-# Error
-
-**Extends Node**
-
-Defines an error node (used only on silentMode)
-
-**Properties**
-
--   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
 
 # Eval
 
@@ -1132,7 +1132,7 @@ Defines a classic function
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;Argument>** 
+-   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
@@ -1172,7 +1172,7 @@ Defines inline html output (treated as echo output)
 
 Defines an isset call
 
-# ArrayExpression
+# Literal
 
 **Extends Expression**
 

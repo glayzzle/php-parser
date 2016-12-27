@@ -11,7 +11,7 @@ var KIND          = 'method';
  * Defines a classic function
  * @constructor Function
  * @extends {Declaration}
- * @property {Argument[]} arguments
+ * @property {Parameter[]} arguments
  * @property {Identifier} type
  * @property {boolean} byref
  * @property {Node[]} children
