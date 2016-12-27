@@ -792,8 +792,19 @@ Some samples of parsed code :
 
 ## Class hierarchy
 
+-   [Location](#location)
+-   [Position](#position)
 -   [Node](#Node)
+    -   [Identifier](#identifier)
+    -   [TraitUse](#traituse)
+    -   [TraitAlias](#traitalias)
+    -   [TraitPrecedence](#traitprecedence)
+    -   [Entry](#entry)
+    -   [Documentation](#documentation)
+    -   [Error](#error)
     -   [Expression](#expression)
+        -   [Array](#array)
+        -   [Variable](#variable)
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
@@ -801,9 +812,13 @@ Some samples of parsed code :
             -   [Inline](#inline)
             -   [Magic](#magic)
             -   [Shell](#shell)
-        -   [Array](#array)
-        -   [Variable](#variable)
     -   [Statement](#statement)
+        -   [Eval](#eval)
+        -   [Exit](#exit)
+        -   [Clone](#clone)
+        -   [Coalesce](#coalesce)
+        -   [Include](#include)
+        -   [Assign](#assign)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -821,21 +836,6 @@ Some samples of parsed code :
                 -   [Method](#method)
             -   [Parameter](#parameter)
             -   [Property](#property)
-        -   [Eval](#eval)
-        -   [Exit](#exit)
-        -   [Clone](#clone)
-        -   [Coalesce](#coalesce)
-        -   [Include](#include)
-        -   [Assign](#assign)
-    -   [Identifier](#identifier)
-    -   [TraitUse](#traituse)
-    -   [TraitAlias](#traitalias)
-    -   [TraitPrecedence](#traitprecedence)
-    -   [Entry](#entry)
-    -   [Documentation](#documentation)
-    -   [Error](#error)
--   [Location](#location)
--   [Position](#position)
 
 * * *
 
@@ -1067,19 +1067,6 @@ An array entry
 -   `key` **([Node](#node) | null)** 
 -   `value` **[Node](#node)** 
 
-# Error
-
-**Extends Node**
-
-Defines an error node (used only on silentMode)
-
-**Properties**
-
--   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
-
 # Node
 
 A generic AST node
@@ -1103,6 +1090,19 @@ Helper for extending the Node class
 -   `constructor` **[Function](#function)** 
 
 Returns **[Function](#function)** 
+
+# Error
+
+**Extends Node**
+
+Defines an error node (used only on silentMode)
+
+**Properties**
+
+-   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
+-   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
 
 # Eval
 
