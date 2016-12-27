@@ -28,6 +28,8 @@ var Declaration = Statement.extends(function Declaration(kind, name, location) {
  * @return {void}
  */
 Declaration.prototype.parseFlags = function(flags) {
+  this.isAbstract = flags[2] === 1;
+  this.isFinal = flags[2] === 2;
   if (this.kind !== 'class') {
     if (flags[0] === 0) {
       this.visibility = IS_PUBLIC;
@@ -38,8 +40,6 @@ Declaration.prototype.parseFlags = function(flags) {
     }
     this.isStatic = flags[1] === 1;
   }
-  this.isAbstract = flags[2] === 1;
-  this.isFinal = flags[2] === 2;
 };
 
 module.exports = Declaration;

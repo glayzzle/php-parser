@@ -237,26 +237,25 @@ module.exports = {
   /**
    * reading an interface
    * ```ebnf
-   * interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
+   * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
    * ```
    */
-  ,read_interface: function(flag) {
+  ,read_interface: function() {
     var result = this.node('interface');
     var name = this.expect(this.tok.T_INTERFACE)
       .next()
       .expect(this.tok.T_STRING)
       .text()
     ;
-    var propExtends = false;
+    var propExtends = null;
     if (this.next().token == this.tok.T_EXTENDS) {
-      propExtends =  this.next().read_list(
+      propExtends = this.next().read_list(
         this.read_namespace_name,
         ','
       );
     }
     return result(
       name
-      , flag
       , propExtends
       , this.expect('{').next().read_interface_body()
     );

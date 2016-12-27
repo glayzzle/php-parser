@@ -2,6 +2,32 @@
 
 # AST
 
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
 ## Class hierarchy
 
 -   [Location](#location)
@@ -42,6 +68,7 @@
             -   [Empty](#empty)
         -   [Declaration](#declaration)
             -   [Class](#class)
+            -   [Interface](#interface)
             -   [Constant](#constant)
                 -   [ClassConstant](#classconstant)
             -   [Function](#function)
@@ -55,32 +82,6 @@
 
 -   `withPositions`  
 -   `withSource`  
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -220,7 +221,7 @@ A comment or documentation
 **Properties**
 
 -   `isDoc` **[Boolean](#boolean)** 
--   `text` **[String](#string)** 
+-   `lines` **[Array](#array)&lt;[String](#string)>** 
 
 # Echo
 
@@ -326,6 +327,17 @@ Defines system include call
 **Extends Literal**
 
 Defines inline html output (treated as echo output)
+
+# Interface
+
+**Extends Declaration**
+
+An interface definition
+
+**Properties**
+
+-   `extends` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
 
 # Isset
 

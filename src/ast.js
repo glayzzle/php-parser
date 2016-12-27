@@ -48,6 +48,7 @@ var Position = require('./ast/position');
  *       - [Empty](#empty)
  *     - [Declaration](#declaration)
  *       - [Class](#class)
+ *       - [Interface](#interface)
  *       - [Constant](#constant)
  *         - [ClassConstant](#classconstant)
  *       - [Function](#function)
@@ -145,6 +146,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/identifier'),
   require('./ast/include'),
   require('./ast/inline'),
+  require('./ast/interface'),
   require('./ast/isset'),
   require('./ast/literal'),
   require('./ast/magic'),

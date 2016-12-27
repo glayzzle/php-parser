@@ -215,7 +215,7 @@ Returns **any** array
 reading an interface
 
 ```ebnf
-interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
+interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
 ```
 
 # read_interface_body
@@ -270,11 +270,11 @@ Returns **Constant** [:link:](AST.md#constant)
 
 # read_comment
 
-Comments with // or #
+Comments with // or # or / _ ... _ /
 
 # read_doc_comment
 
-Comments with / \*\* \*\* /
+Comments with / \*_ ... _ /
 
 # read_expr_item
 

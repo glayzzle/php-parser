@@ -42,20 +42,17 @@ module.exports = {
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
         var flag = this.read_class_scope();
-        switch(this.token) {
-          case this.tok.T_CLASS:
-            return this.read_class(flag);
-          case this.tok.T_INTERFACE:
-            return this.read_interface(flag);
-          default:
-            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
-            this.next();
-            return err;
+        if (this.token === this.tok.T_CLASS) {
+          return this.read_class(flag);
+        } else {
+          this.error(this.tok.T_CLASS);
+          this.next();
+          return null;
         }
       case this.tok.T_CLASS:
-        return this.read_class(0);
+        return this.read_class([0, 0, 0]);
       case this.tok.T_INTERFACE:
-        return this.read_interface(0);
+        return this.read_interface();
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_USE:
@@ -142,21 +139,18 @@ module.exports = {
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
         var flag = this.read_class_scope();
-        switch(this.token) {
-          case this.tok.T_CLASS:
-            return this.read_class(flag);
-          case this.tok.T_INTERFACE:
-            return this.read_interface(flag);
-          default:
-            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
-            // graceful mode : ignore token & go next
-            this.next();
-            return err;
+        if (this.token === this.tok.T_CLASS) {
+          return this.read_class(flag);
+        } else {
+          this.error(this.tok.T_CLASS);
+          // graceful mode : ignore token & go next
+          this.next();
+          return null;
         }
       case this.tok.T_CLASS:
-        return this.read_class(0);
+        return this.read_class([0, 0, 0]);
       case this.tok.T_INTERFACE:
-        return this.read_interface(0);
+        return this.read_interface();
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER:
