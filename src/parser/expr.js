@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -44,8 +44,12 @@ module.exports = {
       case this.tok.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
 
       // extra operations :
-      case this.tok.T_COALESCE: // php7 : $username = $_GET['user'] ?? 'nobody';
-        return ['retif', ['sys', 'isset', expr], expr, this.next().read_expr()];
+      case this.tok.T_COALESCE:
+        // $username = $_GET['user'] ?? 'nobody';
+        return this.node('coalesce')(
+          expr, this.next().read_expr()
+        );
+
       case '?':
         var trueArg = null;
         if (this.next().token !== ':') {
@@ -58,10 +62,10 @@ module.exports = {
   }
 
   /**
-   * <ebnf>
+   * ```ebnf
    * Reads an expression
    *  expr ::= @todo
-   * </ebnf>
+   * ```
    */
   ,read_expr_item: function() {
 
@@ -71,10 +75,24 @@ module.exports = {
         return ['silent', this.next().read_expr()];
 
       case '-':
+        var result = this.node();
+        this.next();
+        if (
+          this.token === this.tok.T_LNUMBER ||
+          this.token === this.tok.T_DNUMBER
+        ) {
+          // negative number
+          result = result('number', '-' + this.text());
+          this.next();
+          return result;
+        } else {
+          return result('unary', '-', this.read_expr());
+        }
+
       case '+':
       case '!':
       case '~':
-        return this.node('unary')(this.token, this.next().read_expr());
+        return this.node('unary')(this.token, this.read_expr());
 
       case '(':
         var expr = this.next().read_expr();
@@ -96,9 +114,9 @@ module.exports = {
 
       case '`':
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-        var result = this.node('sys');
+        var result = this.node('shell');
         var expr = this.next().read_encapsed_string('`');
-        return result('shell', expr);
+        return result(expr);
 
       case this.tok.T_LIST:
         var result = this.node('list');
@@ -132,63 +150,65 @@ module.exports = {
         }
 
       case this.tok.T_CLONE:
-        return this.node('sys')(
-          'clone', this.next().read_expr()
+        return this.node('clone')(
+          this.next().read_expr()
         );
 
       case this.tok.T_INC:
-        var name = this.next().read_variable();
+        var name = this.next().read_variable(false, false, false);
         return ['set', name, ['bin', '+', name, ['number', 1]]];
 
       case this.tok.T_DEC:
-        var name = this.next().read_variable();
+        var name = this.next().read_variable(false, false, false);
         return ['set', name, ['bin', '-', name, ['number', 1]]];
 
       case this.tok.T_NEW:
         return this.next().read_new_expr();
 
       case this.tok.T_ISSET:
+        var result = this.node('isset');
         this.next().expect('(').next();
-        var expr = this.read_list(this.read_expr, ',');
+        var args = this.read_list(this.read_expr, ',');
         this.expect(')').next();
-        return ['sys', 'isset', expr];
+        return result(args);
 
       case this.tok.T_EMPTY:
+        var result = this.node('empty');
         this.next().expect('(').next();
-        var expr = this.read_expr();
+        var arg = this.read_expr();
         this.expect(')').next();
-        return ['sys', 'empty', expr];
+        return result([arg]);
 
       case this.tok.T_INCLUDE:
-        return (this.node('sys'))(
-          'include',
+        return this.node('include')(
+          false, false,
           this.next().read_expr()
         );
 
       case this.tok.T_INCLUDE_ONCE:
-        return (this.node('sys'))(
-          'include_once',
+        return this.node('include')(
+          true, false,
           this.next().read_expr()
         );
 
       case this.tok.T_REQUIRE:
-        return (this.node('sys'))(
-          'require',
+        return this.node('include')(
+          false, true,
           this.next().read_expr()
         );
 
       case this.tok.T_REQUIRE_ONCE:
-        return (this.node('sys'))(
-          'require_once',
+        return this.node('include')(
+          true, true,
           this.next().read_expr()
         );
 
       case this.tok.T_EVAL:
-        var result = this.node('sys');
+        var result = this.node('eval');
         this.next().expect('(').next();
         var expr = this.read_expr();
         this.expect(')').next();
-        return result('eval', expr);
+        return result(expr);
 
       case this.tok.T_INT_CAST:
         return ['cast', 'int', this.next().read_expr()];
@@ -209,24 +229,25 @@ module.exports = {
         return ['cast', 'boolean', this.next().read_expr()];
 
       case this.tok.T_UNSET_CAST:
-        return ['sys', 'unset', this.next().read_expr()];
+        return this.node('unset')(
+          this.next().read_expr()
+        );
 
       case this.tok.T_EXIT:
-        var result = this.node('sys');
-        var expr = null;
+        var result = this.node('exit');
+        var status = null;
         if ( this.next().token === '(' ) {
           if (this.next().token !== ')') {
-            expr = this.read_expr();
+            status = this.read_expr();
             this.expect(')').next();
           } else {
             this.next();
           }
         }
-        return result('exit', expr);
+        return result(status);
 
       case this.tok.T_PRINT:
-        return (this.node('sys'))(
-          'print',
+        return this.node('print')(
           this.next().read_expr()
         );
 
@@ -256,22 +277,23 @@ module.exports = {
     // SCALAR | VARIABLE
     var expr;
     if (this.is('VARIABLE')) {
-      expr = this.read_variable();
+      expr = this.read_variable(false, false, false);
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
+          var result = this.node('assign');
+          var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
-              return ['link', expr, this.next().read_new_expr()];
+              right = this.next().read_new_expr();
             } else {
-              return ['link', expr, this.read_variable()];
+              right = this.read_variable(false, false, true);
             }
           } else {
-            var node = this.node('set');
-            var statement = this.token === this.tok.T_NEW ?
-              this.next().read_new_expr() : this.read_expr();
-            return node(expr, statement);
+            right = this.read_expr();
           }
+          return result(expr, right, '=');
+
         // operations :
         case this.tok.T_PLUS_EQUAL:
           return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];
@@ -330,9 +352,9 @@ module.exports = {
 
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
-   * </ebnf>
+   * ```
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
   ,read_new_expr: function() {
@@ -367,9 +389,9 @@ module.exports = {
   }
   /**
    * Reads a class name
-   * <ebnf>
+   * ```ebnf
    * class_name_reference ::= namespace_name | variable
-   * </ebnf>
+   * ```
    */
   ,read_class_name_reference: function() {
     if (this.token === '\\' || this.token === this.tok.T_STRING) {
@@ -381,15 +403,15 @@ module.exports = {
       }
       return result;
     } else if (this.is('VARIABLE')) {
-      return this.read_variable(true);
+      return this.read_variable(true, false, false);
     } else {
       this.expect([this.tok.T_STRING, 'VARIABLE']);
     }
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
-   * </ebnf>
+   * ```
    */
   ,read_assignment_list: function() {
     return this.read_list(
@@ -398,9 +420,9 @@ module.exports = {
   }
 
   /**
-   * <ebnf>
+   * ```ebnf
    *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
-   * </ebnf>
+   * ```
    */
   ,read_assignment_list_element: function() {
     if (this.token === ',' || this.token === ')') return null;

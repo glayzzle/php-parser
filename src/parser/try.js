@@ -1,17 +1,17 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *  try ::= T_TRY '{' inner_statement* '}'
    *          (
    *              T_CATCH '(' namespace_name variable ')' '{'  inner_statement* '}'
    *          )*
    *          (T_FINALLY '{' inner_statement* '}')?
-   * </ebnf>
+   * ```
    */
   read_try: function() {
 
@@ -26,7 +26,7 @@ module.exports = {
     while(this.token === this.tok.T_CATCH) {
       this.next().expect('(').next();
       var exName = this.read_namespace_name();
-      var varName = this.read_variable(true);
+      var varName = this.read_variable(true, false, false);
       this.expect(')').nextWithComments();
       catches.push({
         exception: exName,

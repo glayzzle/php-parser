@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -72,9 +72,9 @@ module.exports = {
     return result(expr1, expr2, expr3, body);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
-   * </ebnf>
+   * ```
    */
   ,read_foreach: function() {
     var result = this.node('foreach');
@@ -97,13 +97,13 @@ module.exports = {
     return result(expr, key, item, body);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
-   * </ebnf>
+   * ```
    */
   ,read_foreach_variable: function() {
       if (this.token === '&') {
-        return ['byref', this.next().read_variable()];
+        return this.next().read_variable(false, false, true);
       } else if (this.token === this.tok.T_LIST) {
         var result = this.node('list');
         this.next().expect('(').next();
@@ -111,7 +111,7 @@ module.exports = {
         this.expect(')').next();
         return result(assignList, false);
       } else {
-        return this.read_variable();
+        return this.read_variable(false, false, false);
       }
   }
 };

@@ -41,7 +41,7 @@ function runWrite(size) {
   result.push(
     duration('Array init time', hrTime)
   );
-  
+
   diff = hd.end();
   result.push(diff.after.size_bytes - diff.before.size_bytes);
 
@@ -70,14 +70,14 @@ function runRead(size) {
     {type: 'class', name: 'foo', meta: []}
   ];
   var ok = false;
-  var hrTime = process.hrtime();  
+  var hrTime = process.hrtime();
   for(var i = 0; i < size; i++) {
     ok = arr[0][0] === 'class' && arr[0][1] === 'foo';
   }
   result.push(
     duration('Array read time', hrTime)
   );
-  hrTime = process.hrtime();  
+  hrTime = process.hrtime();
   for(var i = 0; i < size; i++) {
     ok = obj[0].type === 'class' && arr[0].name === 'foo';
   }
@@ -152,7 +152,7 @@ function consumeTokens(engine, files) {
     }
   }
   var  hrend = process.hrtime(hrstart);
-  diff = hd.end();  
+  diff = hd.end();
   var duration = (hrend[0] * 1000000 * 1000) + hrend[1];
   console.log('Tokens extracted      :', tSize);
   console.log('Tokens by sec (x1000) :', (Math.round((tSize / (duration / 1000000 / 1000)) / 100) / 10));
@@ -180,7 +180,7 @@ function compareResults(a, b) {
 // parsing tests
 if (typeof global.gc === 'function') global.gc();
 console.log('\n--- parsing files - actual lexer version :');
-var engine = require('../main');
+var engine = require('../src/index');
 engine.lexer.asp_tags = true;
 engine.lexer.short_tags = true;
 var actual = consumeTokens(engine, files);

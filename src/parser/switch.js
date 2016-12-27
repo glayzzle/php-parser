@@ -1,14 +1,14 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
    * Reads a switch statement
-   * <ebnf>
+   * ```ebnf
    *  switch ::= T_SWITCH '(' expr ')' switch_case_list
-   * </ebnf>
+   * ```
    */
   read_switch: function() {
     this.expect(this.tok.T_SWITCH).next();
@@ -20,9 +20,9 @@ module.exports = {
     return result(expr, cases);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
-   * </ebnf>
+   * ```
    */
   ,read_switch_case_list: function() {
     // DETECT SWITCH MODE
@@ -56,9 +56,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
-   * </ebnf>
+   * ```
    */
   ,read_case_list: function(stopToken) {
     var result = {

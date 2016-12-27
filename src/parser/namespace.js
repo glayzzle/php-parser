@@ -1,17 +1,17 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    * namespace ::= T_NAMESPACE namespace_name? '{'
    *    top_statements
    * '}'
    * | T_NAMESPACE namespace_name ';' top_statements
-   * </ebnf>
+   * ```
    */
   read_namespace: function() {
     this.expect(this.tok.T_NAMESPACE).next();
@@ -51,34 +51,35 @@ module.exports = {
   }
   /**
    * reading a namespace name
-   * <ebnf>
+   * ```ebnf
    *  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
-   * </ebnf>
+   * ```
    */
   ,read_namespace_name: function() {
+    var result = this.node('identifier');
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR).next();
     }
-    return this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
+    return result(
+      this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true)
+    );
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * use_statements ::=
    *      use_statements ',' use_statement
    *      | use_statement
-   * </ebnf>
+   * ```
    */
   ,read_use_statements: function() {
       var result = [];
       while(this.token !== this.EOF) {
           this.expect(this.tok.T_USE).next();
           this.read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
-            if (typeof item[0] === 'string') {
-              result.push(item);
+            if (Array.isArray(item)) {
+              result = result.concat(item);
             } else {
-              item.forEach(function(child) {
-                result.push(child);
-              });
+              result.push(item);
             }
           });
           if(this.token !== this.tok.T_USE) break;
@@ -86,9 +87,9 @@ module.exports = {
       return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  inline_use_declaration ::= ...
-   * </ebnf>
+   * ```
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L375
    */
   ,read_inline_use_declaration: function(prefix) {
@@ -115,11 +116,11 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   use_statement_mixed ::=
    *       use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' )
    *       (',' read_use_statement)*
-   * </ebnf>
+   * ```
    */
   ,read_use_statement_mixed: function() {
     var result = this.node('use');
@@ -136,11 +137,11 @@ module.exports = {
     return result.apply(this, use);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * use_statement ::= (
    *  (T_FUNCTION | T_CONST)? namespace_name
    *  )
-   * </ebnf>
+   * ```
    */
   ,read_use_statement: function(ignoreType) {
       var type = false;

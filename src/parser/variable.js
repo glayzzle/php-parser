@@ -1,36 +1,49 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
-   * <ebnf>
+   * Reads a variable
+   *
+   * ```ebnf
    *   variable ::= ...complex @todo
-   * </ebnf>
-   * <code>
+   * ```
+   *
+   * Some samples of parsed code :
+   * ```php
    *  $var                      // simple var
    *  classname::CONST_NAME     // dynamic class name with const retrieval
    *  foo()                     // function call
    *  $var->func()->property    // chained calls
-   * </code>
+   * ```
    */
-  read_variable: function(read_only, encapsed) {
+  read_variable: function(read_only, encapsed, byref) {
     var result;
 
     // reads the entry point
     if (this.is([this.tok.T_VARIABLE, '$'])) {
-      result = this.read_reference_variable(encapsed);
+      result = this.read_reference_variable(encapsed, byref);
     } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING])) {
-      result = this.read_namespace_name();
+      result = this.node();
+      var name = this.read_namespace_name();
       if (
         this.token != this.tok.T_DOUBLE_COLON
         && this.token != '('
       ) {
         // @see parser.js line 130 : resolves a conflict with scalar
-        result = ['constant', result.length == 1 ? result[0] : result];
+        var literal = name.name.toLowerCase();
+        if (literal === 'true') {
+          result = result('boolean', true);
+        } else if (literal === 'false') {
+          result = result('boolean', false);
+        } else {
+          // @todo null keyword ?
+          result = ['constant', name];
+        }
       } else {
-        result = ['ns', result];
+        result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
       this.next();
@@ -51,7 +64,7 @@ module.exports = {
   ,read_static_getter: function(from, encapsed) {
     var getter = null;
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
-      getter = this.read_reference_variable(encapsed);
+      getter = this.read_reference_variable(encapsed, false);
     } else if (
       this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS
@@ -150,13 +163,18 @@ module.exports = {
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   ,read_encaps_var_offset: function() {
-    var offset = false;
+    var offset = this.node();
     if (this.token === this.tok.T_STRING) {
-      offset = ['string', this.text()];
+      var text = this.text();
+      var isDblQuote = text[0] === '"';
+      text = text.substring(1, text.length - 1);
+      offset = offset(
+        'string', isDblQuote, this.resolve_special_chars(text)
+      );
     } else if (this.token === this.tok.T_NUM_STRING) {
-      offset = ['number', this.text()];
+      offset = offset('number', this.text());
     } else if (this.token === this.tok.T_VARIABLE) {
-      offset = ['var', this.text()];
+      offset = offset('variable', this.text());
     } else {
       this.expect([
         this.tok.T_STRING,
@@ -168,9 +186,9 @@ module.exports = {
     return offset;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
-   * </ebnf>
+   * ```
    * <code>
    *  $foo[123];      // foo is an array ==> gets its entry
    *  $foo{1};        // foo is a string ==> get the 2nd char offset
@@ -178,8 +196,8 @@ module.exports = {
    *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
    * </code>
    */
-  ,read_reference_variable: function(encapsed) {
-    var result = this.read_simple_variable();
+  ,read_reference_variable: function(encapsed, byref) {
+    var result = this.read_simple_variable(byref);
     while(this.token != this.EOF) {
       if (this.token == '[') {
         if (encapsed) {
@@ -197,15 +215,15 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
-   * </ebnf>
+   * ```
    */
-  ,read_simple_variable: function() {
-    var result;
+  ,read_simple_variable: function(byref) {
+    var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']).token === this.tok.T_VARIABLE) {
       // plain variable name
-      result = ['var', this.text()];
+      result = result(this.text(), byref);
       this.next();
     } else {
       // dynamic variable name
@@ -215,7 +233,7 @@ module.exports = {
           this.expect('}').next();
           break;
         case '$': // $$$var
-          result = ['lookup', 'var', this.read_simple_variable()];
+          result = ['lookup', 'var', this.read_simple_variable(false)];
           break;
         case this.tok.T_VARIABLE: // $$var
           result = ['var', this.text()];

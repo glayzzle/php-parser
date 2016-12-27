@@ -1,24 +1,24 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
    * reading a list of top statements (helper for top_statement*)
-   * <ebnf>
+   * ```ebnf
    *  top_statements ::= top_statement*
-   * </ebnf>
+   * ```
    */
   read_top_statements: function() {
     var result = [];
     while(this.token !== this.EOF && this.token !== '}') {
       var statement = this.read_top_statement();
       if (statement) {
-        if (typeof statement[0] === 'string') {
-          result.push(statement);
-        } else {
+        if (Array.isArray(statement)) {
           result = result.concat(statement);
+        } else {
+          result.push(statement);
         }
       }
     }
@@ -26,13 +26,13 @@ module.exports = {
   }
   /**
    * reading a top statement
-   * <ebnf>
+   * ```ebnf
    *  top_statement ::=
    *       namespace | function | class
    *       | interface | trait
    *       | use_statements | const_list
    *       | statement
-   * </ebnf>
+   * ```
    */
   ,read_top_statement: function() {
     switch(this.token) {
@@ -79,19 +79,19 @@ module.exports = {
   }
   /**
    * reads a list of simple inner statements (helper for inner_statement*)
-   * <ebnf>
+   * ```ebnf
    *  inner_statements ::= inner_statement*
-   * </ebnf>
+   * ```
    */
   ,read_inner_statements: function() {
     var result = [];
     while(this.token != this.EOF && this.token !== '}') {
       var statement = this.read_inner_statement();
       if (statement) {
-        if (typeof statement[0] === 'string') {
-          result.push(statement);
-        } else {
+        if (Array.isArray(statement)) {
           result = result.concat(statement);
+        } else {
+          result.push(statement);
         }
       }
     }
@@ -99,25 +99,26 @@ module.exports = {
   }
   /**
    * Reads a list of constants declaration
-   * <ebnf>
+   * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
-   * </ebnf>
+   * ```
    */
   ,read_const_list: function() {
     var result = this.read_list(function() {
       this.expect(this.tok.T_STRING);
-      var result = this.node(this.text());
+      var result = this.node('constant');
+      var name = this.text();
       this.next().expect('=').next();
-      return result(this.read_expr());
-    }, ',', false, true);
+      return result(name, this.read_expr());
+    }, ',', false);
     this.expectEndOfStatement();
-    return ['const', result];
+    return result;
   }
   /**
    * Reads a list of constants declaration
-   * <ebnf>
+   * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
-   * </ebnf>
+   * ```
    */
   ,read_declare_list: function() {
     return this.read_list(function() {
@@ -129,9 +130,9 @@ module.exports = {
   }
   /**
    * reads a simple inner statement
-   * <ebnf>
+   * ```ebnf
    *  inner_statement ::= '{' inner_statements '}' | token
-   * </ebnf>
+   * ```
    */
   ,read_inner_statement: function() {
     switch(this.token) {
@@ -233,20 +234,32 @@ module.exports = {
         return result('declare', items);
 
       case this.tok.T_ECHO:
-        var items = this.next().read_list(this.read_expr, ',');
+        var result = this.node('echo');
+        var withParanthesis = (this.next().token === '(');
+        withParanthesis && this.next();
+        var args = this.read_list(this.read_expr, ',');
+        if (withParanthesis) {
+          this.expect(')').next();
+        }
         this.expectEndOfStatement();
-        return ['sys', 'echo', items];
+        return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var text = ['string', this.text()];
+        var result = this.node('inline')(this.text());
         this.next();
-        return ['sys', 'echo', text];
+        return result;
 
       case this.tok.T_UNSET:
+        var result = this.node('unset');
         this.next().expect('(').next();
         var items = this.read_list(this.read_variable, ',');
-        this.expect(')').next().expect(';').nextWithComments();
-        return ['sys', 'unset', items];
+        if (this.expect(')').next().expect(';')) {
+          result = result(items);
+          this.nextWithComments();
+        } else {
+          result = result(items);
+        }
+        return  result;
 
       case this.tok.T_DECLARE:
         var result = this.node('declare'), options, body;
@@ -308,9 +321,9 @@ module.exports = {
     }
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  code_block ::= '{' (inner_statements | top_statements) '}'
-   * </ebnf>
+   * ```
    */
   ,read_code_block: function(top) {
     this.expect('{').nextWithComments();

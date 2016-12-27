@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -22,8 +22,9 @@ function isNumber(n) {
  * @property {Boolean} extractDoc
  * @property {Boolean} debug
  */
-var parser = function(lexer) {
+var parser = function(lexer, ast) {
   this.lexer = lexer;
+  this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
   // Private vars, do not use directly
@@ -32,7 +33,6 @@ var parser = function(lexer) {
   this.token = null;
   this.prev = null;
   this.debug = false;
-  this.locations = false;
   this.extractDoc = false;
   this.suppressErrors = false;
   this.lastError = false;
@@ -156,59 +156,40 @@ parser.prototype.getTokenName = function(token) {
  * main entry point : converts a source code to AST
  */
 parser.prototype.parse = function(code) {
-  this.firstError = false;
-  this.lastError = false;
+  this._errors = [];
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
-  this.nextWithComments();
   this.innerList = false;
-  this.ast = ['program', []];
+  var program = this.ast.prepare('program', this);
+  var childs = [];
+  this.nextWithComments();
   while(this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
-      if (typeof node[0] !== 'string') {
-        node.forEach(function(item) {
-          this.ast[1].push(item);
-        }.bind(this));
+      if (Array.isArray(node)) {
+        childs = childs.concat(node);
       } else {
-        this.ast[1].push(node);
+        childs.push(node);
       }
     }
   }
-  return this.ast;
+  return program(childs, this._errors);
 };
 
 /**
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
-  this.lastError = {
-    token: this.token,
-    tokenName: token,
-    expected: expect,
-    messageExpected: msgExpect,
-    message: message,
-    line: this.lexer.yylloc.first_line
-  };
-  if (!this.firstError) {
-    this.firstError = this.lastError;
-  }
   if (!this.suppressErrors) {
     throw new Error(message);
   }
-  if (this.ast.length === 2) {
-    this.ast.push([]);
-  }
   // Error node :
-  var node = [
-    'error',
-    this.token,
-    message,
-    this.lexer.yylloc.first_line
-  ];
-  this.ast[2].push(node);
+  var node = this.ast.prepare('error', this)(
+    message, token, this.lexer.yylloc.first_line, expect
+  );
+  this._errors.push(node);
   return node;
 };
 
@@ -216,28 +197,28 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
  * handling errors
  */
 parser.prototype.error = function(expect) {
+  var msg = 'Parse Error : syntax error';
   token = this.getTokenName(this.token);
-  if (isNumber(this.token)) {
-    var symbol = this.text();
-    if (symbol.length > 10) {
-      symbol = symbol.substring(0, 7) + '...';
+  if (this.token !== this.EOF) {
+    if (isNumber(this.token)) {
+      var symbol = this.text();
+      if (symbol.length > 10) {
+        symbol = symbol.substring(0, 7) + '...';
+      }
+      token = '\''+symbol+'\' ('+token+')';
     }
-    token = '\''+symbol+'\' ('+token+')';
+    msg += ', unexpected ' + token;
   }
   var msgExpect = '';
-  if (expect) {
-    msgExpect = ', expecting ';
-    if (Array.isArray(expect)) {
-      for(var i = 0; i < expect.length; i++) {
-        expect[i] = this.getTokenName(expect[i]);
-      }
-      msgExpect += expect.join(', ');
-    } else {
-      msgExpect += this.getTokenName(expect);
+  if (expect && !Array.isArray(expect)) {
+    if (isNumber(expect) || expect.length === 1) {
+      msgExpect = ', expecting ' + this.getTokenName(expect);
     }
+    msg += msgExpect;
   }
+  this.token !== this.EOF
   return this.raiseError(
-    'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
+    msg + ' on line ' + this.lexer.yylloc.first_line,
     msgExpect,
     expect,
     token
@@ -248,47 +229,7 @@ parser.prototype.error = function(expect) {
  * Creates a new AST node
  */
 parser.prototype.node = function(name) {
-  var startAt = null;
-  if (this.locations === true) {
-    startAt = [
-      this.prev[0],
-      this.prev[1],
-      this.prev[2]
-    ];
-  }
-  return function() {
-    var result =  Array.prototype.slice.call(arguments);
-    if (name && name.constructor === Array) {
-      if (this.locations === true) {
-        name[2] = [
-          this.prev[0],
-          this.prev[1],
-          this.prev[2]
-        ];
-        Array.prototype.push.apply(name[3], result);
-      } else {
-        Array.prototype.push.apply(name, result);
-      }
-      result = name;
-    } else {
-      if (name) {
-        result.unshift(name);
-      }
-      if (this.locations === true) {
-        result = [
-          'position',
-          startAt,
-          [
-            this.prev[0],
-            this.prev[1],
-            this.prev[2]
-          ],
-          result
-        ];
-      }
-    }
-    return result;
-  }.bind(this);
+  return this.ast.prepare(name, this);
 };
 
 /**
@@ -339,37 +280,55 @@ parser.prototype.showlog = function() {
   return this;
 };
 
-/** force to expect specified token **/
+/**
+ * Force the parser to check the current token.
+ *
+ * If the current token does not match to expected token,
+ * the an error will be raised.
+ *
+ * If the suppressError mode is activated, then the error will
+ * be added to the program error stack and this function will return `false`.
+ *
+ * @param {String|Number} token
+ * @return {Parser|False}
+ * @throws Error
+ */
 parser.prototype.expect = function(token) {
   if (Array.isArray(token)) {
     if (token.indexOf(this.token) === -1) {
       this.error(token);
+      return false;
     }
   } else if (this.token != token) {
     this.error(token);
+    return false;
   }
   return this;
 };
-/**returns the current token contents **/
+
+/**
+ * Returns the current token contents
+ * @return {String}
+ */
 parser.prototype.text = function() {
   return this.lexer.yytext;
 };
 
 /** consume the next token **/
 parser.prototype.next = function() {
-  this.lastDoc = null;
-  this.nextWithComments();
-  if (this.debug) this.showlog();
-  while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
-    // IGNORE COMMENTS
-    this.nextWithComments();
+  if (this.debug) {
+    this.showlog();
+    this.debug = false;
+    this.nextWithComments().ignoreComments();
+    this.debug = true;
+  } else {
+    this.nextWithComments().ignoreComments();
   }
   return this;
 };
 
 /** consume comments (if found) **/
 parser.prototype.ignoreComments = function() {
-  this.lastDoc = null;
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
     // IGNORE COMMENTS
@@ -386,9 +345,6 @@ parser.prototype.nextWithComments = function() {
     this.lexer.offset
   ];
   this.token = this.lexer.lex() || this.EOF;
-  if (this.token === this.tok.T_DOC_COMMENT) {
-    this.lastDoc = ['doc', this.text()];
-  }
   if (this.debug) this.showlog();
   return this;
 };
@@ -416,11 +372,11 @@ parser.prototype.read_token = function() {
 
 /**
  * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
- * <ebnf>
+ * ```ebnf
  * list ::= separator? ( item separator )* item
- * </ebnf>
+ * ```
  */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator, withDoc) {
+parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   var result = [];
 
   if (this.token == separator) {
@@ -430,12 +386,7 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator, w
 
   if (typeof (item) === "function") {
     do {
-      var doc = withDoc && this.lastDoc ? this.lastDoc : null;
-      var node = item.apply(this, []);
-      if (doc) {
-        node = doc.concat(node);
-      }
-      result.push(node);
+      result.push(item.apply(this, []));
       if (this.token != separator) {
         break;
       }

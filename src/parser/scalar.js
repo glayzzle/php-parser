@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -19,14 +19,25 @@ var specialChar = {
 
 module.exports = {
   /**
-   * <ebnf>
+   * Unescape special chars
+   */
+  resolve_special_chars: function(text) {
+    return text.replace(
+      /\\[rntvef"'\\\$]/g,
+      function(seq) {
+        return specialChar[seq];
+      }
+    );
+  },
+  /**
+   * ```ebnf
    *  scalar ::= T_MAGIC_CONST
    *       | T_LNUMBER | T_DNUMBER
    *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
    *       | '"' encaps_list '"'
    *       | T_START_HEREDOC encaps_list T_END_HEREDOC
    *       | namespace_name (T_DOUBLE_COLON T_STRING)?
-   * </ebnf>
+   * ```
    */
   read_scalar: function() {
     if (this.is('T_MAGIC_CONST')) {
@@ -36,19 +47,18 @@ module.exports = {
 
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
-          var value = this.text();
+          var value = this.node('string');
+          var text = this.text();
+          var isDoubleQuote = false;
           var isBinCast = value[0] === 'b' || value[0] === 'B';
           if (isBinCast) {
-            value = value.substring(2, value.length - 1);
+            isDoubleQuote = text[1] === '"';
+            text = text.substring(2, text.length - 1);
           } else {
-            value = value.substring(1, value.length - 1);
+            isDoubleQuote = text[0] === '"';
+            text = text.substring(1, text.length - 1);
           }
-          value = ['string', value.replace(
-            /\\[rntvef"'\\\$]/g,
-            function(seq) {
-              return specialChar[seq];
-            }
-          )];
+          value = value(isDoubleQuote, this.resolve_special_chars(text));
           if (isBinCast) {
             value = ['cast', 'binary', value];
           }
@@ -82,8 +92,9 @@ module.exports = {
             ]);
             value += this.text();
           }
+          result = result(value);
           this.next();
-          return result(value);
+          return result;
 
         // CONSTANTS
         case this.tok.T_NAMESPACE:
@@ -130,20 +141,21 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
-   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
-   * </ebnf>
+   * ```ebnf
+   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+   *  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+   *  | variable
+   *  | T_CURLY_OPEN variable '}'
+   * ```
    */
   ,read_encapsed_string_item: function() {
     var result = null;
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
-      result = ['string', this.text()];
+      result = this.node('string')(false, this.text());
       this.next();
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      // ebnf :
-      // T_DOLLAR_OPEN_CURLY_BRACES expr '}'
-      // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
-      // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         result = ['var', this.text()];
         if (this.next().token === '[') {
@@ -155,13 +167,13 @@ module.exports = {
       }
       this.expect('}').next();
     } else if (this.token === this.tok.T_CURLY_OPEN) {
-      result = this.next().read_variable(false, false);
+      result = this.next().read_variable(false, false, false);
       this.expect('}').next();
     } else if (this.token === '[') {
       result = ['offset', result, this.next().read_expr()];
       this.expect(']').next();
     } else if (this.token === this.tok.T_VARIABLE) {
-      result = this.read_variable(false, true);
+      result = this.read_variable(false, true, false);
     } else {
       this.expect([
         this.tok.T_VARIABLE,

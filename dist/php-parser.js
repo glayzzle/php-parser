@@ -183,8 +183,1081 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Location = require('./ast/location');
+var Position = require('./ast/position');
+
 /**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+ * ## Class hierarchy
+ *
+ * - [Node](#Node)
+ *   - [Expression](#expression)
+ *     - [Literal](#literal)
+ *       - [Boolean](#boolean)
+ *       - [String](#string)
+ *       - [Number](#number)
+ *       - [Inline](#inline)
+ *       - [Magic](#magic)
+ *       - [Shell](#shell)
+ *     - [Array](#array)
+ *     - [Variable](#variable)
+ *   - [Statement](#statement)
+ *     - [Block](#block)
+ *       - [Program](#program)
+ *       - [Class](#class)
+ *       - [Namespace](#namespace)
+ *     - [Sys](#sys)
+ *       - [Echo](#echo)
+ *       - [Print](#print)
+ *       - [Isset](#isset)
+ *       - [Unset](#unset)
+ *       - [Empty](#empty)
+ *     - [Declaration](#declaration)
+ *       - [Constant](#constant)
+ *         - [ClassConstant](#classconstant)
+ *       - [Method](#method)
+ *     - [Eval](#eval)
+ *     - [Exit](#exit)
+ *     - [Clone](#clone)
+ *     - [Coalesce](#coalesce)
+ *     - [Include](#include)
+ *     - [Assign](#assign)
+ *   - [Identifier](#identifier)
+ *   - [Entry](#entry)
+ *   - [Documentation](#documentation)
+ *   - [Error](#error)
+ * - [Location](#location)
+ * - [Position](#position)
+ * ---
+ */
+
+/**
+ * The AST builder class
+ * @constructor AST
+ * @property {Boolean} withPositions - Should locate any node (by default false)
+ * @property {Boolean} withSource - Should extract the node original code (by default false)
+ */
+var AST = function(withPositions, withSource) {
+  this.withPositions = withPositions;
+  this.withSource = withSource;
+};
+
+/**
+ * Prepares an AST node
+ * @param {String|null} kind - Defines the node type
+ * (if null, the kind must be passed at the function call)
+ * @param {Parser} parser - The parser instance (use for extracting locations)
+ * @return {Function}
+ */
+AST.prototype.prepare = function(kind, parser) {
+  var start = null;
+  if (this.withPositions || this.withSource) {
+    start = new Position(
+      parser.lexer.yylloc.first_line,
+      parser.lexer.yylloc.first_column,
+      parser.lexer.yylloc.first_offset
+    );
+  }
+  var self = this;
+  // returns the node
+  return function() {
+    var location = null;
+    var args = Array.prototype.slice.call(arguments);
+    if (self.withPositions || self.withSource) {
+      var src = null;
+      if (self.withSource) {
+        src = parser.lexer._input.substring(
+          start.offset,
+          parser.lexer.offset
+        );
+      }
+      if (self.withPositions) {
+        location = new Location(src, start, new Position(
+          parser.lexer.yylloc.first_line,
+          parser.lexer.yylloc.first_column,
+          parser.lexer.offset
+        ));
+      } else {
+        location = new Location(src, null, null);
+      }
+      // last argument is allways the location
+      args.push(location);
+    }
+    // handle lazy kind definitions
+    if (!kind) {
+      kind = args.shift();
+    }
+    // build the object
+    var node = self[kind];
+    if (typeof node !== 'function') {
+      throw new Error('Undefined node "'+kind+'"');
+    }
+    var result = Object.create(node.prototype);
+    node.apply(result, args);
+    return result;
+  };
+};
+
+// Define all AST nodes
+[
+  require('./ast/array'),
+  require('./ast/assign'),
+  require('./ast/boolean'),
+  require('./ast/class'),
+  require('./ast/classconstant'),
+  require('./ast/clone'),
+  require('./ast/coalesce'),
+  require('./ast/constant'),
+  require('./ast/echo'),
+  require('./ast/empty'),
+  require('./ast/entry'),
+  require('./ast/error'),
+  require('./ast/eval'),
+  require('./ast/exit'),
+  require('./ast/include'),
+  require('./ast/inline'),
+  require('./ast/isset'),
+  require('./ast/literal'),
+  require('./ast/magic'),
+  require('./ast/method'),
+  require('./ast/namespace'),
+  require('./ast/number'),
+  require('./ast/print'),
+  require('./ast/program'),
+  require('./ast/shell'),
+  require('./ast/string'),
+  require('./ast/unset'),
+  require('./ast/variable')
+].forEach(function (ctor) {
+  var kind = ctor.prototype.constructor.name.toLowerCase();
+  AST.prototype[kind] = ctor;
+});
+
+module.exports = AST;
+
+},{"./ast/array":3,"./ast/assign":4,"./ast/boolean":6,"./ast/class":7,"./ast/classconstant":8,"./ast/clone":9,"./ast/coalesce":10,"./ast/constant":11,"./ast/echo":13,"./ast/empty":14,"./ast/entry":15,"./ast/error":16,"./ast/eval":17,"./ast/exit":18,"./ast/include":21,"./ast/inline":22,"./ast/isset":23,"./ast/literal":24,"./ast/location":25,"./ast/magic":26,"./ast/method":27,"./ast/namespace":28,"./ast/number":30,"./ast/position":31,"./ast/print":32,"./ast/program":33,"./ast/shell":34,"./ast/string":36,"./ast/unset":38,"./ast/variable":39}],3:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Expr = require('./expression');
+var KIND = 'array';
+
+/**
+ * Defines an array structure
+ * @constructor Array
+ * @extends {Expression}
+ * @property {Entry[]} items
+ * @property {boolean} shortForm
+ */
+var Array = Expr.extends(function Array(shortForm, items, location) {
+  Expr.apply(this, [KIND, location]);
+  this.items = items;
+  this.shortForm = shortForm;
+});
+
+module.exports = Array;
+
+},{"./expression":19}],4:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'assign';
+
+/**
+ * Assigns a value to the specified target
+ * @constructor Assign
+ * @extends {Statement}
+ * @property {Expression} left
+ * @property {Expression} right
+ * @property {String} operator
+ */
+var Assign = Statement.extends(function Assign(left, right, operator, location) {
+  Statement.apply(this, [KIND, location]);
+  this.operator = operator;
+  this.left = left;
+  this.right = right;
+});
+
+module.exports = Assign;
+
+},{"./statement":35}],5:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'block';
+
+/**
+ * A block statement, i.e., a sequence of statements surrounded by braces.
+ * @constructor Block
+ * @extends {Statement}
+ * @property {Node[]} children
+ */
+var Block = Statement.extends(function Block(kind, children, location) {
+  Statement.apply(this, [kind || KIND, location]);
+  this.children = children;
+});
+
+module.exports = Block;
+
+},{"./statement":35}],6:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'boolean';
+
+/**
+ * Defines a boolean value (true/false)
+ * @constructor Boolean
+ * @extends {Literal}
+ */
+var Boolean = Literal.extends(function Boolean(value, location) {
+  Literal.apply(this, [KIND, value, location]);
+});
+
+module.exports = Boolean;
+
+},{"./literal":24}],7:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Block = require('./block');
+var KIND = 'class';
+
+
+/**
+ * A class definition
+ * @constructor Class
+ * @extends {Block}
+ * @property {Identifier|null} name
+ * @property {Identifier|null} extends
+ * @property {Identifier[]} implements
+ * @property {boolean} isAnonymous
+ * @property {boolean} isAbstract
+ * @property {boolean} isFinal
+ */
+var Class = Block.extends(function Class(
+  isFinal, isAbstract, name,
+  ext, impl, children, location
+) {
+  Block.apply(this, [KIND, children, location]);
+  this.isAnonymous = name ? false : true;
+  this.isAbstract = isAbstract;
+  this.isFinal = isFinal;
+  this.name = name;
+  this.extends = ext;
+  this.implements = impl;
+});
+
+module.exports = Class;
+
+},{"./block":5}],8:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Constant = require('./constant');
+var KIND = 'classconstant';
+
+/**
+ * Defines a class/interface/trait constant
+ * @constructor ClassConstant
+ * @extends {Constant}
+ * @property {boolean} isAbstract
+ * @property {boolean} isFinal
+ * @property {boolean} isStatic
+ * @property {string} visibility
+ */
+var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, location) {
+  Constant.apply(this, [name, value, location]);
+  this.type = KIND;
+  this.parseFlags(flags);
+});
+
+module.exports = ClassConstant;
+
+},{"./constant":11}],9:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'clone';
+
+/**
+ * Defines a clone call
+ * @constructor Clone
+ * @extends {Statement}
+ * @property {Expression} what
+ */
+var Clone = Statement.extends(function Clone(what, location) {
+  Statement.apply(this, [KIND, location]);
+  this.what = what;
+});
+
+module.exports = Clone;
+
+},{"./statement":35}],10:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'coalesce';
+
+/**
+ * Verify is the test property is defined and is not null, and returns
+ * is, otherwise returns the ifnull expression.
+ * @constructor Coalesce
+ * @extends {Statement}
+ * @property {Expression} test - The expression to be testes
+ * @property {Expression} ifnull - The returned expression if test is null
+ * @see https://wiki.php.net/rfc/isset_ternary
+ */
+var Coalesce = Statement.extends(function Coalesce(test, ifnull, location) {
+  Statement.apply(this, [KIND, location]);
+  this.test = test;
+  this.ifnull = ifnull;
+});
+
+module.exports = Coalesce;
+
+},{"./statement":35}],11:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Declaration = require('./declaration');
+var KIND = 'constant';
+
+/**
+ * Defines a namespace constant
+ * @constructor Constant
+ * @extends {Declaration}
+ * @property {string} name
+ * @property {Node} value
+ */
+var Constant = Declaration.extends(function Constant(name, value, location) {
+  Declaration.apply(this, [KIND, location]);
+  this.name = name;
+  this.value = value;
+});
+
+module.exports = Constant;
+
+},{"./declaration":12}],12:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'declaration';
+
+/**
+ * A declaration statement (function, class, interface...)
+ * @constructor Declaration
+ * @extends {Statement}
+ */
+var Declaration = Statement.extends(function Declaration(kind, location) {
+  Statement.apply(this, [kind || KIND, location]);
+});
+
+/**
+ * Generic flags parser
+ * @param {Integer[]} flags
+ * @return {void}
+ */
+Declaration.prototype.parseFlags = function(flags) {
+  // @todo
+};
+
+module.exports = Declaration;
+
+},{"./statement":35}],13:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Sys = require('./sys');
+var KIND = 'echo';
+
+/**
+ * Defines system based call
+ * @constructor Echo
+ * @extends {Sys}
+ */
+var Echo = Sys.extends(function Echo(args, location) {
+  Sys.apply(this, [KIND, args, location]);
+});
+
+module.exports = Echo;
+
+},{"./sys":37}],14:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Sys = require('./sys');
+var KIND = 'empty';
+
+/**
+ * Defines an empty check call
+ * @constructor Empty
+ * @extends {Sys}
+ */
+var Empty = Sys.extends(function Empty(args, location) {
+  Sys.apply(this, [KIND, args, location]);
+});
+
+module.exports = Empty;
+
+},{"./sys":37}],15:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Node = require('./node');
+var KIND = 'entry';
+
+/**
+ * An array entry
+ * @constructor Entry
+ * @extends {Node}
+ * @property {Node|null} key
+ * @property {Node} value
+ */
+var Entry = Node.extends(function Entry(key, value, location) {
+  Node.apply(this, [KIND, location]);
+  this.key = key;
+  this.value = value;
+});
+
+module.exports = Entry;
+
+},{"./node":29}],16:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Node = require('./node');
+var KIND = 'error';
+
+
+/**
+ * Defines an error node (used only on silentMode)
+ * @constructor Error
+ * @extends {Node}
+ * @property {string} message
+ * @property {number} line
+ * @property {number|string} token
+ * @property {string|array} expected
+ */
+var Error = Node.extends(function Error(message, token, line, expected, location) {
+  Node.apply(this, [KIND, location]);
+  this.message = message;
+  this.token = token;
+  this.line = line;
+  this.expected = expected;
+});
+
+module.exports = Error;
+
+},{"./node":29}],17:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'eval';
+
+/**
+ * Defines an eval statement
+ * @constructor Eval
+ * @extends {Statement}
+ * @property {Node} source
+ */
+var Eval = Statement.extends(function Eval(source, location) {
+  Statement.apply(this, [KIND, location]);
+  this.source = source;
+});
+
+module.exports = Eval;
+
+},{"./statement":35}],18:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'exit';
+
+/**
+ * Defines an exit / die call
+ * @constructor Exit
+ * @extends {Statement}
+ * @property {Node|null} status
+ */
+var Exit = Statement.extends(function Exit(status, location) {
+  Statement.apply(this, [KIND, location]);
+  this.status = status;
+});
+
+module.exports = Exit;
+
+},{"./statement":35}],19:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Node = require('./node');
+var KIND = 'expression';
+
+/**
+ * Any expression node. Since the left-hand side of an assignment may
+ * be any expression in general, an expression can also be a pattern.
+ * @constructor Expression
+ * @extends {Node}
+ */
+var Expression = Node.extends(function Expression(kind, location) {
+  Node.apply(this, [kind || KIND, location]);
+});
+
+module.exports = Expression;
+
+},{"./node":29}],20:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Node = require('./node');
+var KIND = 'identifier';
+
+
+/**
+ * Defines an identifier node
+ * @constructor Identifier
+ * @extends {Node}
+ * @property {string} name
+ * @property {boolean} fqn
+ */
+var Identifier = Node.extends(function Identifier(name, fqn, location) {
+  Node.apply(this, [KIND, location]);
+  this.name = Array.isArray(name) ? name.join('\\') : name;
+  if (typeof fqn !== 'boolean') {
+    this.fqn = this.name[0] === '\\';
+  } else {
+    this.fqn = fqn;
+  }
+});
+
+module.exports = Identifier;
+
+},{"./node":29}],21:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'include';
+
+/**
+ * Defines system include call
+ * @constructor Include
+ * @extends {Statement}
+ * @property {Node} target
+ * @property {boolean} once
+ * @property {boolean} require
+ */
+var Include = Statement.extends(function Include(once, require, target, location) {
+  Statement.apply(this, [KIND, location]);
+  this.once = once;
+  this.require = require;
+  this.target = target;
+});
+
+module.exports = Include;
+
+},{"./statement":35}],22:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'inline';
+
+/**
+ * Defines inline html output (treated as echo output)
+ * @constructor Inline
+ * @extends {Literal}
+ */
+var Inline = Literal.extends(function Inline(value, location) {
+  Literal.apply(this, [KIND, value, location]);
+});
+
+module.exports = Inline;
+
+},{"./literal":24}],23:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Sys = require('./sys');
+var KIND = 'isset';
+
+/**
+ * Defines an isset call
+ * @constructor Isset
+ * @extends {Sys}
+ */
+var Isset = Sys.extends(function Isset(args, location) {
+  Sys.apply(this, [KIND, args, location]);
+});
+
+module.exports = Isset;
+
+},{"./sys":37}],24:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Expr = require('./expression');
+var KIND = 'literal';
+
+/**
+ * Defines an array structure
+ * @constructor ArrayExpression
+ * @extends {Expression}
+ * @property {Node|string|number|boolean|null} value
+ */
+var Literal = Expr.extends(function Literal(kind, value, location) {
+  Expr.apply(this, [kind || KIND, location]);
+  this.value = value;
+});
+
+module.exports = Literal;
+
+},{"./expression":19}],25:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+/**
+ * Defines the location of the node (with it's source contents as string)
+ * @constructor Location
+ * @property {String|null} source
+ * @property {Position} start
+ * @property {Position} end
+ */
+var Location = function(source, start, end) {
+  this.source = source;
+  this.start = start;
+  this.end = end;
+};
+
+module.exports = Location;
+
+},{}],26:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'magic';
+
+/**
+ * Defines magic constant
+ * @constructor Magic
+ * @extends {Literal}
+ */
+var Magic = Literal.extends(function Magic(value, location) {
+  Literal.apply(this, [KIND, value, location]);
+});
+
+module.exports = Magic;
+
+},{"./literal":24}],27:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Declaration = require('./declaration');
+var KIND          = 'method';
+var IS_PUBLIC     = 'public';
+var IS_PROTECTED  = 'protected';
+var IS_PRIVATE    = 'private';
+/**
+ * Defines a class/interface/trait method
+ * @constructor Method
+ * @extends {Declaration}
+ * @property {string} name
+ * @property {Argument[]} arguments
+ * @property {boolean} isAbstract
+ * @property {boolean} isFinal
+ * @property {boolean} isStatic
+ * @property {string} visibility
+ * @property {Node[]} children
+ */
+var Method = Declaration.extends(function Method(name, args, children, flags, location) {
+  Declaration.apply(this, [KIND, location]);
+  this.name = name;
+  this.arguments = args;
+  this.children = children;
+  this.parseFlags(flags);
+});
+
+module.exports = Method;
+
+},{"./declaration":12}],28:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Block = require('./block');
+var Identifier = require('./identifier');
+var KIND = 'namespace';
+
+/**
+ * The main program node
+ * @constructor Namespace
+ * @extends {Block}
+ * @property {Identifier} name
+ * @property {Boolean} withBrackets
+ */
+var Namespace = Block.extends(function Namespace(name, children, withBrackets, location) {
+  Block.apply(this, [KIND, children, location]);
+  if (name instanceof Identifier) {
+    this.name = name;
+  } else {
+    this.name = new Identifier(name);
+  }
+  this.withBrackets = withBrackets || false;
+});
+
+module.exports = Namespace;
+
+},{"./block":5,"./identifier":20}],29:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+/**
+ * A generic AST node
+ * @constructor Node
+ * @property {Location|null} loc
+ * @property {String} type
+ */
+var Node = function Node(type, location) {
+  this.type = type;
+  this.loc = location ? location : null;
+};
+
+/**
+ * Helper for extending the Node class
+ * @param {Function} constructor
+ * @return {Function}
+ */
+Node.extends = function(constructor) {
+  constructor.prototype = Object.create(this.prototype);
+  constructor.extends = this.extends;
+  constructor.prototype.constructor = constructor;
+  return constructor;
+};
+
+module.exports = Node;
+
+},{}],30:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'number';
+
+/**
+ * Defines a numeric value
+ * @constructor Number
+ * @extends {Literal}
+ */
+var _Number = Literal.extends(function Number(value, location) {
+  Literal.apply(this, [KIND, value, location]);
+});
+
+module.exports = _Number;
+
+},{"./literal":24}],31:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+/**
+ * Each Position object consists of a line number (1-indexed) and a column number (0-indexed):
+ * @constructor Position
+ * @property {Number} line
+ * @property {Number} column
+ * @property {Number} offset
+ */
+var Position = function(line, column, offset) {
+  this.line = line;
+  this.column = column;
+  this.offset = offset;
+};
+
+module.exports = Position;
+
+},{}],32:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Sys = require('./sys');
+var KIND = 'print';
+
+/**
+ * Outputs
+ * @constructor Print
+ * @extends {Sys}
+ */
+var Print = Sys.extends(function Print(args, location) {
+  Sys.apply(this, [KIND, args, location]);
+});
+
+module.exports = Print;
+
+},{"./sys":37}],33:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Block = require('./block');
+var KIND = 'program';
+
+/**
+ * The main program node
+ * @constructor Program
+ * @extends {Block}
+ * @property {Error[]} errors
+ */
+var Program = Block.extends(function Program(children, errors, location) {
+  Block.apply(this, [KIND, children, location]);
+  this.errors = errors;
+});
+
+module.exports = Program;
+
+},{"./block":5}],34:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'shell';
+
+/**
+ * Defines inline html output (treated as echo output)
+ * @constructor Shell
+ * @extends {Literal}
+ * @see http://php.net/manual/fr/language.operators.execution.php
+ */
+var Shell = Literal.extends(function Shell(value, location) {
+  Literal.apply(this, [KIND, value, location]);
+});
+
+module.exports = Shell;
+
+},{"./literal":24}],35:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Node = require('./node');
+var KIND = 'statement';
+
+/**
+ * Any statement.
+ * @constructor Statement
+ * @extends {Node}
+ */
+var Statement = Node.extends(function Statement(kind, location) {
+  Node.apply(this, [kind || KIND, location]);
+});
+
+module.exports = Statement;
+
+},{"./node":29}],36:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'string';
+
+/**
+ * Defines inline html output (treated as echo output)
+ * @constructor String
+ * @extends {Literal}
+ * @property {boolean} isDoubleQuote
+
+ */
+var String = Literal.extends(function String(isDoubleQuote, value, location) {
+  Literal.apply(this, [KIND, value, location]);
+  this.isDoubleQuote = isDoubleQuote;
+});
+
+module.exports = String;
+
+},{"./literal":24}],37:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Statement = require('./statement');
+var KIND = 'sys';
+
+/**
+ * Defines system based call
+ * @constructor Sys
+ * @extends {Statement}
+ * @property {Node[]} arguments
+ */
+var Sys = Statement.extends(function Sys(kind, args, location) {
+  Statement.apply(this, [kind || KIND, location]);
+  this.arguments = args;
+});
+
+module.exports = Sys;
+
+},{"./statement":35}],38:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Sys = require('./sys');
+var KIND = 'unset';
+
+/**
+ * Deletes references to a list of variables
+ * @constructor Unset
+ * @extends {Sys}
+ */
+var Unset = Sys.extends(function Unset(args, location) {
+  Sys.apply(this, [KIND, args, location]);
+});
+
+module.exports = Unset;
+
+},{"./sys":37}],39:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Expr = require('./expression');
+var KIND = 'variable';
+
+/**
+ * Any expression node. Since the left-hand side of an assignment may
+ * be any expression in general, an expression can also be a pattern.
+ * @constructor Variable
+ * @extends {Expression}
+ * @property {String|Node} identifier
+ * @property {boolean} byref
+ */
+var Variable = Expr.extends(function Variable(identifier, byref, location) {
+  Expr.apply(this, [KIND, location]);
+  this.identifier = identifier;
+  this.byref = byref || false;
+});
+
+module.exports = Variable;
+
+},{"./expression":19}],40:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -316,6 +1389,7 @@ lexer.prototype.setInput = function(input) {
   this.yyprevcol = 0;
   this.yytext = '';
   this.yylloc = {
+    first_offset: 0,
     first_line: 1,
     first_column: 0,
     last_line: 1,
@@ -465,6 +1539,7 @@ lexer.prototype.getState = function() {
     yylineno: this.yylineno,
     yyprevcol: this.yyprevcol,
     yylloc: {
+      first_offset: this.yylloc.first_offset,
       first_line: this.yylloc.first_line,
       first_column: this.yylloc.first_column,
       last_line: this.yylloc.last_line,
@@ -552,6 +1627,7 @@ lexer.prototype.next = function () {
   if (this.done) {
     return this.EOF;
   }
+  this.yylloc.first_offset = this.offset;
   this.yylloc.first_line = this.yylloc.last_line;
   this.yylloc.first_column = this.yylloc.last_column;
   this.yytext = '';
@@ -591,9 +1667,9 @@ lexer.prototype.next = function () {
 
 module.exports = lexer;
 
-},{"./lexer/comments.js":3,"./lexer/initial.js":4,"./lexer/numbers.js":5,"./lexer/property.js":6,"./lexer/scripting.js":7,"./lexer/strings.js":8,"./lexer/tokens.js":9,"./lexer/utils.js":10}],3:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{"./lexer/comments.js":41,"./lexer/initial.js":42,"./lexer/numbers.js":43,"./lexer/property.js":44,"./lexer/scripting.js":45,"./lexer/strings.js":46,"./lexer/tokens.js":47,"./lexer/utils.js":48}],41:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -641,9 +1717,9 @@ module.exports = {
   }
 };
 
-},{}],4:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],42:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -701,10 +1777,10 @@ module.exports = {
   }
 };
 
-},{}],5:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function (process){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -826,9 +1902,9 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"_process":1}],6:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{"_process":1}],44:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -900,9 +1976,9 @@ module.exports = {
   }
 };
 
-},{}],7:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],45:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -1002,9 +2078,9 @@ module.exports = {
   }
 };
 
-},{}],8:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],46:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -1416,9 +2492,9 @@ module.exports = {
   }
 };
 
-},{}],9:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],47:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -1687,9 +2763,9 @@ module.exports = {
   }
 };
 
-},{}],10:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],48:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -1775,9 +2851,9 @@ module.exports = {
   }
 };
 
-},{}],11:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],49:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -1800,8 +2876,9 @@ function isNumber(n) {
  * @property {Boolean} extractDoc
  * @property {Boolean} debug
  */
-var parser = function(lexer) {
+var parser = function(lexer, ast) {
   this.lexer = lexer;
+  this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
   // Private vars, do not use directly
@@ -1810,7 +2887,6 @@ var parser = function(lexer) {
   this.token = null;
   this.prev = null;
   this.debug = false;
-  this.locations = false;
   this.extractDoc = false;
   this.suppressErrors = false;
   this.lastError = false;
@@ -1934,59 +3010,40 @@ parser.prototype.getTokenName = function(token) {
  * main entry point : converts a source code to AST
  */
 parser.prototype.parse = function(code) {
-  this.firstError = false;
-  this.lastError = false;
+  this._errors = [];
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
-  this.nextWithComments();
   this.innerList = false;
-  this.ast = ['program', []];
+  var program = this.ast.prepare('program', this);
+  var childs = [];
+  this.nextWithComments();
   while(this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
-      if (typeof node[0] !== 'string') {
-        node.forEach(function(item) {
-          this.ast[1].push(item);
-        }.bind(this));
+      if (Array.isArray(node)) {
+        childs = childs.concat(node);
       } else {
-        this.ast[1].push(node);
+        childs.push(node);
       }
     }
   }
-  return this.ast;
+  return program(childs, this._errors);
 };
 
 /**
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
-  this.lastError = {
-    token: this.token,
-    tokenName: token,
-    expected: expect,
-    messageExpected: msgExpect,
-    message: message,
-    line: this.lexer.yylloc.first_line
-  };
-  if (!this.firstError) {
-    this.firstError = this.lastError;
-  }
   if (!this.suppressErrors) {
     throw new Error(message);
   }
-  if (this.ast.length === 2) {
-    this.ast.push([]);
-  }
   // Error node :
-  var node = [
-    'error',
-    this.token,
-    message,
-    this.lexer.yylloc.first_line
-  ];
-  this.ast[2].push(node);
+  var node = this.ast.prepare('error', this)(
+    message, token, this.lexer.yylloc.first_line, expect
+  );
+  this._errors.push(node);
   return node;
 };
 
@@ -1994,28 +3051,28 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
  * handling errors
  */
 parser.prototype.error = function(expect) {
+  var msg = 'Parse Error : syntax error';
   token = this.getTokenName(this.token);
-  if (isNumber(this.token)) {
-    var symbol = this.text();
-    if (symbol.length > 10) {
-      symbol = symbol.substring(0, 7) + '...';
+  if (this.token !== this.EOF) {
+    if (isNumber(this.token)) {
+      var symbol = this.text();
+      if (symbol.length > 10) {
+        symbol = symbol.substring(0, 7) + '...';
+      }
+      token = '\''+symbol+'\' ('+token+')';
     }
-    token = '\''+symbol+'\' ('+token+')';
+    msg += ', unexpected ' + token;
   }
   var msgExpect = '';
-  if (expect) {
-    msgExpect = ', expecting ';
-    if (Array.isArray(expect)) {
-      for(var i = 0; i < expect.length; i++) {
-        expect[i] = this.getTokenName(expect[i]);
-      }
-      msgExpect += expect.join(', ');
-    } else {
-      msgExpect += this.getTokenName(expect);
+  if (expect && !Array.isArray(expect)) {
+    if (isNumber(expect) || expect.length === 1) {
+      msgExpect = ', expecting ' + this.getTokenName(expect);
     }
+    msg += msgExpect;
   }
+  this.token !== this.EOF
   return this.raiseError(
-    'Parse Error : syntax error, unexpected ' + token + msgExpect + ' on line ' + this.lexer.yylloc.first_line,
+    msg + ' on line ' + this.lexer.yylloc.first_line,
     msgExpect,
     expect,
     token
@@ -2026,47 +3083,7 @@ parser.prototype.error = function(expect) {
  * Creates a new AST node
  */
 parser.prototype.node = function(name) {
-  var startAt = null;
-  if (this.locations === true) {
-    startAt = [
-      this.prev[0],
-      this.prev[1],
-      this.prev[2]
-    ];
-  }
-  return function() {
-    var result =  Array.prototype.slice.call(arguments);
-    if (name && name.constructor === Array) {
-      if (this.locations === true) {
-        name[2] = [
-          this.prev[0],
-          this.prev[1],
-          this.prev[2]
-        ];
-        Array.prototype.push.apply(name[3], result);
-      } else {
-        Array.prototype.push.apply(name, result);
-      }
-      result = name;
-    } else {
-      if (name) {
-        result.unshift(name);
-      }
-      if (this.locations === true) {
-        result = [
-          'position',
-          startAt,
-          [
-            this.prev[0],
-            this.prev[1],
-            this.prev[2]
-          ],
-          result
-        ];
-      }
-    }
-    return result;
-  }.bind(this);
+  return this.ast.prepare(name, this);
 };
 
 /**
@@ -2117,37 +3134,55 @@ parser.prototype.showlog = function() {
   return this;
 };
 
-/** force to expect specified token **/
+/**
+ * Force the parser to check the current token.
+ *
+ * If the current token does not match to expected token,
+ * the an error will be raised.
+ *
+ * If the suppressError mode is activated, then the error will
+ * be added to the program error stack and this function will return `false`.
+ *
+ * @param {String|Number} token
+ * @return {Parser|False}
+ * @throws Error
+ */
 parser.prototype.expect = function(token) {
   if (Array.isArray(token)) {
     if (token.indexOf(this.token) === -1) {
       this.error(token);
+      return false;
     }
   } else if (this.token != token) {
     this.error(token);
+    return false;
   }
   return this;
 };
-/**returns the current token contents **/
+
+/**
+ * Returns the current token contents
+ * @return {String}
+ */
 parser.prototype.text = function() {
   return this.lexer.yytext;
 };
 
 /** consume the next token **/
 parser.prototype.next = function() {
-  this.lastDoc = null;
-  this.nextWithComments();
-  if (this.debug) this.showlog();
-  while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
-    // IGNORE COMMENTS
-    this.nextWithComments();
+  if (this.debug) {
+    this.showlog();
+    this.debug = false;
+    this.nextWithComments().ignoreComments();
+    this.debug = true;
+  } else {
+    this.nextWithComments().ignoreComments();
   }
   return this;
 };
 
 /** consume comments (if found) **/
 parser.prototype.ignoreComments = function() {
-  this.lastDoc = null;
   if (this.debug) this.showlog();
   while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
     // IGNORE COMMENTS
@@ -2164,9 +3199,6 @@ parser.prototype.nextWithComments = function() {
     this.lexer.offset
   ];
   this.token = this.lexer.lex() || this.EOF;
-  if (this.token === this.tok.T_DOC_COMMENT) {
-    this.lastDoc = ['doc', this.text()];
-  }
   if (this.debug) this.showlog();
   return this;
 };
@@ -2194,11 +3226,11 @@ parser.prototype.read_token = function() {
 
 /**
  * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
- * <ebnf>
+ * ```ebnf
  * list ::= separator? ( item separator )* item
- * </ebnf>
+ * ```
  */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator, withDoc) {
+parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   var result = [];
 
   if (this.token == separator) {
@@ -2208,12 +3240,7 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator, w
 
   if (typeof (item) === "function") {
     do {
-      var doc = withDoc && this.lastDoc ? this.lastDoc : null;
-      var node = item.apply(this, []);
-      if (doc) {
-        node = doc.concat(node);
-      }
-      result.push(node);
+      result.push(item.apply(this, []));
       if (this.token != separator) {
         break;
       }
@@ -2255,30 +3282,33 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator, w
 
 module.exports = parser;
 
-},{"./parser/array.js":12,"./parser/class.js":13,"./parser/comment.js":14,"./parser/expr.js":15,"./parser/function.js":16,"./parser/if.js":17,"./parser/loops.js":18,"./parser/main.js":19,"./parser/namespace.js":20,"./parser/scalar.js":21,"./parser/statement.js":22,"./parser/switch.js":23,"./parser/try.js":24,"./parser/variable.js":25}],12:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{"./parser/array.js":50,"./parser/class.js":51,"./parser/comment.js":52,"./parser/expr.js":53,"./parser/function.js":54,"./parser/if.js":55,"./parser/loops.js":56,"./parser/main.js":57,"./parser/namespace.js":58,"./parser/scalar.js":59,"./parser/statement.js":60,"./parser/switch.js":61,"./parser/try.js":62,"./parser/variable.js":63}],50:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+var ArrayExpr = 'array';
+var ArrayEntry = 'entry';
 
 module.exports = {
   /**
    * Parse an array
-   * <ebnf>
-   * array ::= T_ARRAY '(' array_pair_list ')' | '[' array_pair_list ']'
-   * </ebnf>
+   * ```ebnf
+   * array ::= T_ARRAY '(' array_pair_list ')' |
+   *   '[' array_pair_list ']'
+   * ```
    */
   read_array: function() {
     var expect = null;
+    var shortForm = false;
     var items = [];
-    var result = this.node('array');
+    var result = this.node(ArrayExpr);
 
     if (this.expect([this.tok.T_ARRAY, '[']).token == this.tok.T_ARRAY) {
       this.next().expect('(');
-      expect = ')';
     } else {
-      expect = ']';
+      shortForm = true;
     }
     if (this.next().token != expect) {
       while(this.token != this.EOF) {
@@ -2291,35 +3321,47 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(expect).next();
-    return result(items);
+    this.expect(shortForm ? ']' : ')').next();
+    return result(shortForm, items);
   },
   /**
    * Reads an array entry item
-   * <ebnf>
-   * array_pair_list ::= '&' w_variable | (expr (T_DOUBLE_ARROW (expr | '&' w_variable) )?)
-   * </ebnf>
+   * ```ebnf
+   * array_pair_list ::= '&' w_variable |
+   *  (
+   *    expr (
+   *      T_DOUBLE_ARROW (
+   *        expr | '&' w_variable
+   *      )
+   *    )?
+   *  )
+   * ```
    */
   read_array_pair_list: function() {
+    var result = this.node(ArrayEntry);
+    var key = null;
+    var value = null;
     if (this.token === '&') {
-      return { key: false, value: ['ref', this.next().read_variable(true)] };
+      value = this.next().read_variable(true, false, true);
     } else {
       var expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
+        key = expr;
         if (this.next().token === '&') {
-          return { key: expr, value: ['ref', this.next().read_variable(true)] };
+          value = this.next().read_variable(true, false, true);
         } else {
-          return { key: expr, value: this.read_expr() };
+          value = this.read_expr();
         }
       } else {
-        return { key: false, value: expr };
+        value = expr;
       }
     }
+    return result(key, value);
   },
   /**
-   * <ebnf>
+   * ```ebnf
    *  dim_offset ::= expr?
-   * </ebnf>
+   * ```
    */
   read_dim_offset: function() {
     if (this.token == ']') return false;
@@ -2327,9 +3369,9 @@ module.exports = {
   }
 };
 
-},{}],13:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],51:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -2337,9 +3379,9 @@ module.exports = {
 module.exports = {
   /**
    * reading a class
-   * <ebnf>
+   * ```ebnf
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
-   * </ebnf>
+   * ```
    */
   read_class: function(flag) {
     var result = this.node('class');
@@ -2370,9 +3412,9 @@ module.exports = {
   }
   /**
    * Read the class visibility
-   * <ebnf>
+   * ```ebnf
    *   class_scope ::= (T_FINAL | T_ABSTRACT)?
-   * </ebnf>
+   * ```
    */
   ,read_class_scope: function() {
     var result = this.token;
@@ -2387,9 +3429,9 @@ module.exports = {
   }
   /**
    * Reads a class body
-   * <ebnf>
+   * ```ebnf
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
-   * </ebnf>
+   * ```
    */
   ,read_class_body: function() {
     var result = [];
@@ -2414,21 +3456,14 @@ module.exports = {
         continue;
       }
 
-
       // read member flags
       var flags = this.read_member_flags(false);
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-
-        var constants = this.read_constant_list();
+        var constants = this.read_constant_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < constants.length; i++) {
-          var constant = constants[i];
-          (this.locations ? constant[3] : constant).push(flags);
-          result.push(constant);
-        }
+        result = result.concat(constants);
         continue;
       }
 
@@ -2474,9 +3509,9 @@ module.exports = {
   }
   /**
    * Reads variable list
-   * <ebnf>
+   * ```ebnf
    *  variable_list ::= (variable_declaration ',')* variable_declaration
-   * </ebnf>
+   * ```
    */
   ,read_variable_list: function() {
     return this.read_list(
@@ -2486,9 +3521,9 @@ module.exports = {
   }
   /**
    * Reads a variable declaration
-   * <ebnf>
+   * ```ebnf
    *  variable_declaration ::= T_VARIABLE '=' scalar
-   * </ebnf>
+   * ```
    */
   ,read_variable_declaration: function() {
     var result = this.node('var');
@@ -2506,29 +3541,30 @@ module.exports = {
   }
   /**
    * Reads constant list
-   * <ebnf>
+   * ```ebnf
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
-   * </ebnf>
+   * ```
    */
-  ,read_constant_list: function() {
+  ,read_constant_list: function(flags) {
     return this.expect(this.tok.T_CONST)
       .next()
       .read_list(
-        this.read_constant_declaration, ','
+        /**
+         * Reads a constant declaration
+         *
+         * ```ebnf
+         *  constant_declaration ::= T_STRING '=' expr
+         * ```
+         * @return {Constant} [:link:](AST.md#constant)
+         */
+        function read_constant_declaration() {
+          var result = this.node('classconstant');
+          var name = this.expect(this.tok.T_STRING).text();
+          var value =  this.next().expect('=').next().read_expr();
+          return result(name, value, flags);
+        }, ','
       )
     ;
-  }
-  /**
-   * Reads a constant declaration
-   * <ebnf>
-   *  constant_declaration ::= T_STRING '=' expr
-   * </ebnf>
-   */
-  ,read_constant_declaration: function() {
-    var result = this.node('const');
-    var name = this.expect(this.tok.T_STRING).text();
-    var value =  this.next().expect('=').next().read_expr();
-    return result(name, value);
   }
   /**
    * Read member flags
@@ -2577,9 +3613,9 @@ module.exports = {
   }
   /**
    * reading an interface
-   * <ebnf>
+   * ```ebnf
    * interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
-   * </ebnf>
+   * ```
    */
   ,read_interface: function(flag) {
     var result = this.node('interface');
@@ -2604,9 +3640,9 @@ module.exports = {
   }
   /**
    * Reads an interface body
-   * <ebnf>
+   * ```ebnf
    *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
-   * </ebnf>
+   * ```
    */
   ,read_interface_body: function() {
     var result = [];
@@ -2628,15 +3664,9 @@ module.exports = {
 
       // check constant
       if (this.token == this.tok.T_CONST) {
-        var constants = this.read_constant_list();
+        var constants = this.read_constant_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < constants.length; i++) {
-          var constant = constants[i];
-          (this.locations ? constant[3] : constant).push(flags);
-          result.push(constant);
-        }
-
+        result = result.concat(constants);
       }
 
       // reads a function
@@ -2661,9 +3691,9 @@ module.exports = {
   }
   /**
    * reading a trait
-   * <ebnf>
+   * ```ebnf
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
-   * </ebnf>
+   * ```
    */
   ,read_trait: function(flag) {
     var result = this.node('trait');
@@ -2692,9 +3722,9 @@ module.exports = {
   }
   /**
    * reading a use statement
-   * <ebnf>
+   * ```ebnf
    * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
-   * </ebnf>
+   * ```
    */
   ,read_trait_use_statement: function() {
     // defines use statements
@@ -2721,9 +3751,9 @@ module.exports = {
   }
   /**
    * Reading trait alias
-   * <ebnf>
+   * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
-   * </ebnf>
+   * ```
    */
   ,read_trait_use_alias: function() {
     var node = this.node('alias');
@@ -2767,9 +3797,9 @@ module.exports = {
   }
 };
 
-},{}],14:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],52:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -2795,9 +3825,9 @@ module.exports = {
   }
 };
 
-},{}],15:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],53:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -2842,8 +3872,12 @@ module.exports = {
       case this.tok.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
 
       // extra operations :
-      case this.tok.T_COALESCE: // php7 : $username = $_GET['user'] ?? 'nobody';
-        return ['retif', ['sys', 'isset', expr], expr, this.next().read_expr()];
+      case this.tok.T_COALESCE:
+        // $username = $_GET['user'] ?? 'nobody';
+        return this.node('coalesce')(
+          expr, this.next().read_expr()
+        );
+
       case '?':
         var trueArg = null;
         if (this.next().token !== ':') {
@@ -2856,10 +3890,10 @@ module.exports = {
   }
 
   /**
-   * <ebnf>
+   * ```ebnf
    * Reads an expression
    *  expr ::= @todo
-   * </ebnf>
+   * ```
    */
   ,read_expr_item: function() {
 
@@ -2869,10 +3903,24 @@ module.exports = {
         return ['silent', this.next().read_expr()];
 
       case '-':
+        var result = this.node();
+        this.next();
+        if (
+          this.token === this.tok.T_LNUMBER ||
+          this.token === this.tok.T_DNUMBER
+        ) {
+          // negative number
+          result = result('number', '-' + this.text());
+          this.next();
+          return result;
+        } else {
+          return result('unary', '-', this.read_expr());
+        }
+
       case '+':
       case '!':
       case '~':
-        return this.node('unary')(this.token, this.next().read_expr());
+        return this.node('unary')(this.token, this.read_expr());
 
       case '(':
         var expr = this.next().read_expr();
@@ -2894,9 +3942,9 @@ module.exports = {
 
       case '`':
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-        var result = this.node('sys');
+        var result = this.node('shell');
         var expr = this.next().read_encapsed_string('`');
-        return result('shell', expr);
+        return result(expr);
 
       case this.tok.T_LIST:
         var result = this.node('list');
@@ -2930,63 +3978,65 @@ module.exports = {
         }
 
       case this.tok.T_CLONE:
-        return this.node('sys')(
-          'clone', this.next().read_expr()
+        return this.node('clone')(
+          this.next().read_expr()
         );
 
       case this.tok.T_INC:
-        var name = this.next().read_variable();
+        var name = this.next().read_variable(false, false, false);
         return ['set', name, ['bin', '+', name, ['number', 1]]];
 
       case this.tok.T_DEC:
-        var name = this.next().read_variable();
+        var name = this.next().read_variable(false, false, false);
         return ['set', name, ['bin', '-', name, ['number', 1]]];
 
       case this.tok.T_NEW:
         return this.next().read_new_expr();
 
       case this.tok.T_ISSET:
+        var result = this.node('isset');
         this.next().expect('(').next();
-        var expr = this.read_list(this.read_expr, ',');
+        var args = this.read_list(this.read_expr, ',');
         this.expect(')').next();
-        return ['sys', 'isset', expr];
+        return result(args);
 
       case this.tok.T_EMPTY:
+        var result = this.node('empty');
         this.next().expect('(').next();
-        var expr = this.read_expr();
+        var arg = this.read_expr();
         this.expect(')').next();
-        return ['sys', 'empty', expr];
+        return result([arg]);
 
       case this.tok.T_INCLUDE:
-        return (this.node('sys'))(
-          'include',
+        return this.node('include')(
+          false, false,
           this.next().read_expr()
         );
 
       case this.tok.T_INCLUDE_ONCE:
-        return (this.node('sys'))(
-          'include_once',
+        return this.node('include')(
+          true, false,
           this.next().read_expr()
         );
 
       case this.tok.T_REQUIRE:
-        return (this.node('sys'))(
-          'require',
+        return this.node('include')(
+          false, true,
           this.next().read_expr()
         );
 
       case this.tok.T_REQUIRE_ONCE:
-        return (this.node('sys'))(
-          'require_once',
+        return this.node('include')(
+          true, true,
           this.next().read_expr()
         );
 
       case this.tok.T_EVAL:
-        var result = this.node('sys');
+        var result = this.node('eval');
         this.next().expect('(').next();
         var expr = this.read_expr();
         this.expect(')').next();
-        return result('eval', expr);
+        return result(expr);
 
       case this.tok.T_INT_CAST:
         return ['cast', 'int', this.next().read_expr()];
@@ -3007,24 +4057,25 @@ module.exports = {
         return ['cast', 'boolean', this.next().read_expr()];
 
       case this.tok.T_UNSET_CAST:
-        return ['sys', 'unset', this.next().read_expr()];
+        return this.node('unset')(
+          this.next().read_expr()
+        );
 
       case this.tok.T_EXIT:
-        var result = this.node('sys');
-        var expr = null;
+        var result = this.node('exit');
+        var status = null;
         if ( this.next().token === '(' ) {
           if (this.next().token !== ')') {
-            expr = this.read_expr();
+            status = this.read_expr();
             this.expect(')').next();
           } else {
             this.next();
           }
         }
-        return result('exit', expr);
+        return result(status);
 
       case this.tok.T_PRINT:
-        return (this.node('sys'))(
-          'print',
+        return this.node('print')(
           this.next().read_expr()
         );
 
@@ -3054,22 +4105,23 @@ module.exports = {
     // SCALAR | VARIABLE
     var expr;
     if (this.is('VARIABLE')) {
-      expr = this.read_variable();
+      expr = this.read_variable(false, false, false);
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
+          var result = this.node('assign');
+          var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
-              return ['link', expr, this.next().read_new_expr()];
+              right = this.next().read_new_expr();
             } else {
-              return ['link', expr, this.read_variable()];
+              right = this.read_variable(false, false, true);
             }
           } else {
-            var node = this.node('set');
-            var statement = this.token === this.tok.T_NEW ?
-              this.next().read_new_expr() : this.read_expr();
-            return node(expr, statement);
+            right = this.read_expr();
           }
+          return result(expr, right, '=');
+
         // operations :
         case this.tok.T_PLUS_EQUAL:
           return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];
@@ -3128,9 +4180,9 @@ module.exports = {
 
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
-   * </ebnf>
+   * ```
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
   ,read_new_expr: function() {
@@ -3165,9 +4217,9 @@ module.exports = {
   }
   /**
    * Reads a class name
-   * <ebnf>
+   * ```ebnf
    * class_name_reference ::= namespace_name | variable
-   * </ebnf>
+   * ```
    */
   ,read_class_name_reference: function() {
     if (this.token === '\\' || this.token === this.tok.T_STRING) {
@@ -3179,15 +4231,15 @@ module.exports = {
       }
       return result;
     } else if (this.is('VARIABLE')) {
-      return this.read_variable(true);
+      return this.read_variable(true, false, false);
     } else {
       this.expect([this.tok.T_STRING, 'VARIABLE']);
     }
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
-   * </ebnf>
+   * ```
    */
   ,read_assignment_list: function() {
     return this.read_list(
@@ -3196,9 +4248,9 @@ module.exports = {
   }
 
   /**
-   * <ebnf>
+   * ```ebnf
    *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
-   * </ebnf>
+   * ```
    */
   ,read_assignment_list_element: function() {
     if (this.token === ',' || this.token === ')') return null;
@@ -3214,9 +4266,9 @@ module.exports = {
   }
 };
 
-},{}],16:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],54:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -3244,9 +4296,9 @@ module.exports = {
   }
   /**
    * reading a function
-   * <ebnf>
+   * ```ebnf
    * function ::= function_declaration code_block
-   * </ebnf>
+   * ```
    */
   ,read_function: function(closure, flag) {
     var result = this.node(
@@ -3267,9 +4319,9 @@ module.exports = {
   }
   /**
    * reads a function declaration (without his body)
-   * <ebnf>
+   * ```ebnf
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
-   * </ebnf>
+   * ```
    */
   ,read_function_declaration: function(type) {
     var nodeName = 'function';
@@ -3302,9 +4354,9 @@ module.exports = {
     return result(name, params, isRef, returnType);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * lexical_var ::= '&'? T_VARIABLE
-   * </ebnf>
+   * ```
    */
   ,read_lexical_var: function() {
     var result = [false, null];
@@ -3322,9 +4374,9 @@ module.exports = {
   }
   /**
    * reads a list of parameters
-   * <ebnf>
+   * ```ebnf
    *  parameter_list ::= (parameter ',')* parameter?
-   * </ebnf>
+   * ```
    */
   ,read_parameter_list: function() {
     var result = [];
@@ -3344,9 +4396,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
-   * </ebnf>
+   * ```
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   ,read_parameter: function() {
@@ -3362,9 +4414,9 @@ module.exports = {
     return node(name, type, value, isRef, isVariadic);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
-   * </ebnf>
+   * ```
    */
   ,read_function_argument_list: function() {
     var result = [];
@@ -3381,9 +4433,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *    argument_list ::= T_ELLIPSIS? expr
-   * </ebnf>
+   * ```
    */
   ,read_argument_list: function() {
     if (this.token === this.tok.T_ELLIPSIS ) {
@@ -3393,9 +4445,9 @@ module.exports = {
   }
   /**
    * read type hinting
-   * <ebnf>
+   * ```ebnf
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name
-   * </ebnf>
+   * ```
    */
   ,read_type: function() {
     switch(this.token) {
@@ -3414,18 +4466,18 @@ module.exports = {
   }
 };
 
-},{}],17:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],55:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *  if ::= '(' expr ')' ':' ...
-   * </ebnf>
+   * ```
    */
   read_if: function() {
     var result = this.node('if');
@@ -3504,9 +4556,9 @@ module.exports = {
   }
 };
 
-},{}],18:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],56:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -3579,9 +4631,9 @@ module.exports = {
     return result(expr1, expr2, expr3, body);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
-   * </ebnf>
+   * ```
    */
   ,read_foreach: function() {
     var result = this.node('foreach');
@@ -3604,13 +4656,13 @@ module.exports = {
     return result(expr, key, item, body);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
-   * </ebnf>
+   * ```
    */
   ,read_foreach_variable: function() {
       if (this.token === '&') {
-        return ['byref', this.next().read_variable()];
+        return this.next().read_variable(false, false, true);
       } else if (this.token === this.tok.T_LIST) {
         var result = this.node('list');
         this.next().expect('(').next();
@@ -3618,23 +4670,23 @@ module.exports = {
         this.expect(')').next();
         return result(assignList, false);
       } else {
-        return this.read_variable();
+        return this.read_variable(false, false, false);
       }
   }
 };
 
-},{}],19:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],57:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    * start ::= (namespace | top_statement)*
-   * </ebnf>
+   * ```
    */
   read_start: function() {
     if (this.token == this.tok.T_NAMESPACE) {
@@ -3645,21 +4697,21 @@ module.exports = {
   }
 };
 
-},{}],20:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],58:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    * namespace ::= T_NAMESPACE namespace_name? '{'
    *    top_statements
    * '}'
    * | T_NAMESPACE namespace_name ';' top_statements
-   * </ebnf>
+   * ```
    */
   read_namespace: function() {
     this.expect(this.tok.T_NAMESPACE).next();
@@ -3699,9 +4751,9 @@ module.exports = {
   }
   /**
    * reading a namespace name
-   * <ebnf>
+   * ```ebnf
    *  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
-   * </ebnf>
+   * ```
    */
   ,read_namespace_name: function() {
     if (this.token === this.tok.T_NAMESPACE) {
@@ -3710,23 +4762,21 @@ module.exports = {
     return this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * use_statements ::=
    *      use_statements ',' use_statement
    *      | use_statement
-   * </ebnf>
+   * ```
    */
   ,read_use_statements: function() {
       var result = [];
       while(this.token !== this.EOF) {
           this.expect(this.tok.T_USE).next();
           this.read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
-            if (typeof item[0] === 'string') {
-              result.push(item);
+            if (Array.isArray(item)) {
+              result = result.concat(item);
             } else {
-              item.forEach(function(child) {
-                result.push(child);
-              });
+              result.push(item);
             }
           });
           if(this.token !== this.tok.T_USE) break;
@@ -3734,9 +4784,9 @@ module.exports = {
       return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  inline_use_declaration ::= ...
-   * </ebnf>
+   * ```
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L375
    */
   ,read_inline_use_declaration: function(prefix) {
@@ -3763,11 +4813,11 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   use_statement_mixed ::=
    *       use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' )
    *       (',' read_use_statement)*
-   * </ebnf>
+   * ```
    */
   ,read_use_statement_mixed: function() {
     var result = this.node('use');
@@ -3784,11 +4834,11 @@ module.exports = {
     return result.apply(this, use);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    * use_statement ::= (
    *  (T_FUNCTION | T_CONST)? namespace_name
    *  )
-   * </ebnf>
+   * ```
    */
   ,read_use_statement: function(ignoreType) {
       var type = false;
@@ -3803,9 +4853,9 @@ module.exports = {
   }
 };
 
-},{}],21:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],59:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -3825,14 +4875,25 @@ var specialChar = {
 
 module.exports = {
   /**
-   * <ebnf>
+   * Unescape special chars
+   */
+  resolve_special_chars: function(text) {
+    return text.replace(
+      /\\[rntvef"'\\\$]/g,
+      function(seq) {
+        return specialChar[seq];
+      }
+    );
+  },
+  /**
+   * ```ebnf
    *  scalar ::= T_MAGIC_CONST
    *       | T_LNUMBER | T_DNUMBER
    *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
    *       | '"' encaps_list '"'
    *       | T_START_HEREDOC encaps_list T_END_HEREDOC
    *       | namespace_name (T_DOUBLE_COLON T_STRING)?
-   * </ebnf>
+   * ```
    */
   read_scalar: function() {
     if (this.is('T_MAGIC_CONST')) {
@@ -3842,19 +4903,18 @@ module.exports = {
 
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
-          var value = this.text();
+          var value = this.node('string');
+          var text = this.text();
+          var isDoubleQuote = false;
           var isBinCast = value[0] === 'b' || value[0] === 'B';
           if (isBinCast) {
-            value = value.substring(2, value.length - 1);
+            isDoubleQuote = text[1] === '"';
+            text = text.substring(2, text.length - 1);
           } else {
-            value = value.substring(1, value.length - 1);
+            isDoubleQuote = text[0] === '"';
+            text = text.substring(1, text.length - 1);
           }
-          value = ['string', value.replace(
-            /\\[rntvef"'\\\$]/g,
-            function(seq) {
-              return specialChar[seq];
-            }
-          )];
+          value = value(isDoubleQuote, this.resolve_special_chars(text));
           if (isBinCast) {
             value = ['cast', 'binary', value];
           }
@@ -3888,8 +4948,9 @@ module.exports = {
             ]);
             value += this.text();
           }
+          result = result(value);
           this.next();
-          return result(value);
+          return result;
 
         // CONSTANTS
         case this.tok.T_NAMESPACE:
@@ -3936,20 +4997,21 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
-   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE | T_DOLLAR_OPEN_CURLY_BRACES ... | variable  | T_CURLY_OPEN variable '}'
-   * </ebnf>
+   * ```ebnf
+   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+   *  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+   *  | variable
+   *  | T_CURLY_OPEN variable '}'
+   * ```
    */
   ,read_encapsed_string_item: function() {
     var result = null;
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
-      result = ['string', this.text()];
+      result = this.node('string')(false, this.text());
       this.next();
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      // ebnf :
-      // T_DOLLAR_OPEN_CURLY_BRACES expr '}'
-      // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
-      // | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         result = ['var', this.text()];
         if (this.next().token === '[') {
@@ -3961,13 +5023,13 @@ module.exports = {
       }
       this.expect('}').next();
     } else if (this.token === this.tok.T_CURLY_OPEN) {
-      result = this.next().read_variable(false, false);
+      result = this.next().read_variable(false, false, false);
       this.expect('}').next();
     } else if (this.token === '[') {
       result = ['offset', result, this.next().read_expr()];
       this.expect(']').next();
     } else if (this.token === this.tok.T_VARIABLE) {
-      result = this.read_variable(false, true);
+      result = this.read_variable(false, true, false);
     } else {
       this.expect([
         this.tok.T_VARIABLE,
@@ -4015,28 +5077,28 @@ module.exports = {
   }
 };
 
-},{}],22:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],60:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
    * reading a list of top statements (helper for top_statement*)
-   * <ebnf>
+   * ```ebnf
    *  top_statements ::= top_statement*
-   * </ebnf>
+   * ```
    */
   read_top_statements: function() {
     var result = [];
     while(this.token !== this.EOF && this.token !== '}') {
       var statement = this.read_top_statement();
       if (statement) {
-        if (typeof statement[0] === 'string') {
-          result.push(statement);
-        } else {
+        if (Array.isArray(statement)) {
           result = result.concat(statement);
+        } else {
+          result.push(statement);
         }
       }
     }
@@ -4044,13 +5106,13 @@ module.exports = {
   }
   /**
    * reading a top statement
-   * <ebnf>
+   * ```ebnf
    *  top_statement ::=
    *       namespace | function | class
    *       | interface | trait
    *       | use_statements | const_list
    *       | statement
-   * </ebnf>
+   * ```
    */
   ,read_top_statement: function() {
     switch(this.token) {
@@ -4097,19 +5159,19 @@ module.exports = {
   }
   /**
    * reads a list of simple inner statements (helper for inner_statement*)
-   * <ebnf>
+   * ```ebnf
    *  inner_statements ::= inner_statement*
-   * </ebnf>
+   * ```
    */
   ,read_inner_statements: function() {
     var result = [];
     while(this.token != this.EOF && this.token !== '}') {
       var statement = this.read_inner_statement();
       if (statement) {
-        if (typeof statement[0] === 'string') {
-          result.push(statement);
-        } else {
+        if (Array.isArray(statement)) {
           result = result.concat(statement);
+        } else {
+          result.push(statement);
         }
       }
     }
@@ -4117,25 +5179,26 @@ module.exports = {
   }
   /**
    * Reads a list of constants declaration
-   * <ebnf>
+   * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
-   * </ebnf>
+   * ```
    */
   ,read_const_list: function() {
     var result = this.read_list(function() {
       this.expect(this.tok.T_STRING);
-      var result = this.node(this.text());
+      var result = this.node('constant');
+      var name = this.text();
       this.next().expect('=').next();
-      return result(this.read_expr());
-    }, ',', false, true);
+      return result(name, this.read_expr());
+    }, ',', false);
     this.expectEndOfStatement();
-    return ['const', result];
+    return result;
   }
   /**
    * Reads a list of constants declaration
-   * <ebnf>
+   * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
-   * </ebnf>
+   * ```
    */
   ,read_declare_list: function() {
     return this.read_list(function() {
@@ -4147,9 +5210,9 @@ module.exports = {
   }
   /**
    * reads a simple inner statement
-   * <ebnf>
+   * ```ebnf
    *  inner_statement ::= '{' inner_statements '}' | token
-   * </ebnf>
+   * ```
    */
   ,read_inner_statement: function() {
     switch(this.token) {
@@ -4251,20 +5314,32 @@ module.exports = {
         return result('declare', items);
 
       case this.tok.T_ECHO:
-        var items = this.next().read_list(this.read_expr, ',');
+        var result = this.node('echo');
+        var withParanthesis = (this.next().token === '(');
+        withParanthesis && this.next();
+        var args = this.read_list(this.read_expr, ',');
+        if (withParanthesis) {
+          this.expect(')').next();
+        }
         this.expectEndOfStatement();
-        return ['sys', 'echo', items];
+        return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var text = ['string', this.text()];
+        var result = this.node('inline')(this.text());
         this.next();
-        return ['sys', 'echo', text];
+        return result;
 
       case this.tok.T_UNSET:
+        var result = this.node('unset');
         this.next().expect('(').next();
         var items = this.read_list(this.read_variable, ',');
-        this.expect(')').next().expect(';').nextWithComments();
-        return ['sys', 'unset', items];
+        if (this.expect(')').next().expect(';')) {
+          result = result(items);
+          this.nextWithComments();
+        } else {
+          result = result(items);
+        }
+        return  result;
 
       case this.tok.T_DECLARE:
         var result = this.node('declare'), options, body;
@@ -4326,9 +5401,9 @@ module.exports = {
     }
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  code_block ::= '{' (inner_statements | top_statements) '}'
-   * </ebnf>
+   * ```
    */
   ,read_code_block: function(top) {
     this.expect('{').nextWithComments();
@@ -4341,18 +5416,18 @@ module.exports = {
   }
 };
 
-},{}],23:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],61:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
    * Reads a switch statement
-   * <ebnf>
+   * ```ebnf
    *  switch ::= T_SWITCH '(' expr ')' switch_case_list
-   * </ebnf>
+   * ```
    */
   read_switch: function() {
     this.expect(this.tok.T_SWITCH).next();
@@ -4364,9 +5439,9 @@ module.exports = {
     return result(expr, cases);
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
-   * </ebnf>
+   * ```
    */
   ,read_switch_case_list: function() {
     // DETECT SWITCH MODE
@@ -4400,9 +5475,9 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
-   * </ebnf>
+   * ```
    */
   ,read_case_list: function(stopToken) {
     var result = {
@@ -4430,21 +5505,21 @@ module.exports = {
   }
 };
 
-},{}],24:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],62:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
-   * <ebnf>
+   * ```ebnf
    *  try ::= T_TRY '{' inner_statement* '}'
    *          (
    *              T_CATCH '(' namespace_name variable ')' '{'  inner_statement* '}'
    *          )*
    *          (T_FINALLY '{' inner_statement* '}')?
-   * </ebnf>
+   * ```
    */
   read_try: function() {
 
@@ -4459,7 +5534,7 @@ module.exports = {
     while(this.token === this.tok.T_CATCH) {
       this.next().expect('(').next();
       var exName = this.read_namespace_name();
-      var varName = this.read_variable(true);
+      var varName = this.read_variable(true, false, false);
       this.expect(')').nextWithComments();
       catches.push({
         exception: exName,
@@ -4475,38 +5550,56 @@ module.exports = {
   }
 };
 
-},{}],25:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],63:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 module.exports = {
   /**
-   * <ebnf>
+   * Reads a variable
+   *
+   * ```ebnf
    *   variable ::= ...complex @todo
-   * </ebnf>
-   * <code>
+   * ```
+   *
+   * Some samples of parsed code :
+   * ```php
    *  $var                      // simple var
    *  classname::CONST_NAME     // dynamic class name with const retrieval
    *  foo()                     // function call
    *  $var->func()->property    // chained calls
-   * </code>
+   * ```
    */
-  read_variable: function(read_only, encapsed) {
+  read_variable: function(read_only, encapsed, byref) {
     var result;
 
     // reads the entry point
     if (this.is([this.tok.T_VARIABLE, '$'])) {
-      result = this.read_reference_variable(encapsed);
+      result = this.read_reference_variable(encapsed, byref);
     } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING])) {
-      result = this.read_namespace_name();
+      result = this.node();
+      var name = this.read_namespace_name();
       if (
         this.token != this.tok.T_DOUBLE_COLON
         && this.token != '('
       ) {
         // @see parser.js line 130 : resolves a conflict with scalar
-        result = ['constant', result.length == 1 ? result[0] : result];
+        if (name.length == 1) {
+          var literal = name[0].toLowerCase();
+          if (literal === 'true') {
+            result = result('boolean', true);
+          } else if (literal === 'false') {
+            result = result('boolean', false);
+          } else {
+            // @todo
+            result = ['constant', name[0]];
+          }
+        } else {
+          // @todo
+          result = ['constant', name];
+        }
       } else {
         result = ['ns', result];
       }
@@ -4529,7 +5622,7 @@ module.exports = {
   ,read_static_getter: function(from, encapsed) {
     var getter = null;
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
-      getter = this.read_reference_variable(encapsed);
+      getter = this.read_reference_variable(encapsed, false);
     } else if (
       this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS
@@ -4628,13 +5721,18 @@ module.exports = {
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   ,read_encaps_var_offset: function() {
-    var offset = false;
+    var offset = this.node();
     if (this.token === this.tok.T_STRING) {
-      offset = ['string', this.text()];
+      var text = this.text();
+      var isDblQuote = text[0] === '"';
+      text = text.substring(1, text.length - 1);
+      offset = offset(
+        'string', isDblQuote, this.resolve_special_chars(text)
+      );
     } else if (this.token === this.tok.T_NUM_STRING) {
-      offset = ['number', this.text()];
+      offset = offset('number', this.text());
     } else if (this.token === this.tok.T_VARIABLE) {
-      offset = ['var', this.text()];
+      offset = offset('variable', this.text());
     } else {
       this.expect([
         this.tok.T_STRING,
@@ -4646,9 +5744,9 @@ module.exports = {
     return offset;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
-   * </ebnf>
+   * ```
    * <code>
    *  $foo[123];      // foo is an array ==> gets its entry
    *  $foo{1};        // foo is a string ==> get the 2nd char offset
@@ -4656,8 +5754,8 @@ module.exports = {
    *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
    * </code>
    */
-  ,read_reference_variable: function(encapsed) {
-    var result = this.read_simple_variable();
+  ,read_reference_variable: function(encapsed, byref) {
+    var result = this.read_simple_variable(byref);
     while(this.token != this.EOF) {
       if (this.token == '[') {
         if (encapsed) {
@@ -4675,15 +5773,15 @@ module.exports = {
     return result;
   }
   /**
-   * <ebnf>
+   * ```ebnf
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
-   * </ebnf>
+   * ```
    */
-  ,read_simple_variable: function() {
-    var result;
+  ,read_simple_variable: function(byref) {
+    var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']).token === this.tok.T_VARIABLE) {
       // plain variable name
-      result = ['var', this.text()];
+      result = result(this.text(), byref);
       this.next();
     } else {
       // dynamic variable name
@@ -4693,7 +5791,7 @@ module.exports = {
           this.expect('}').next();
           break;
         case '$': // $$$var
-          result = ['lookup', 'var', this.read_simple_variable()];
+          result = ['lookup', 'var', this.read_simple_variable(false)];
           break;
         case this.tok.T_VARIABLE: // $$var
           result = ['var', this.text()];
@@ -4710,9 +5808,9 @@ module.exports = {
   }
 };
 
-},{}],26:[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+},{}],64:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -4990,16 +6088,18 @@ module.exports = {
     T_SPACESHIP: 233
   }
 };
+
 },{}],"php-parser":[function(require,module,exports){
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
-var lexer = require('./src/lexer');
-var parser = require('./src/parser');
-var tokens = require('./src/tokens');
+var lexer = require('./lexer');
+var parser = require('./parser');
+var tokens = require('./tokens');
+var AST = require('./ast');
 
 /**
  * @private combine structures
@@ -5027,8 +6127,10 @@ function combine(src, to) {
 
 /**
  * @constructor {Engine}
+ * @param {Object} options
  * @property {Lexer} lexer
  * @property {Parser} parser
+ * @property {AST} ast
  * @property {Object} tokens
  */
 var engine = function(options) {
@@ -5037,7 +6139,8 @@ var engine = function(options) {
   }
   this.tokens = tokens;
   this.lexer = new lexer(this);
-  this.parser = new parser(this.lexer);
+  this.ast = new AST();
+  this.parser = new parser(this.lexer, this.ast);
   if (options && typeof options === 'object') {
     combine(options, this);
   }
@@ -5120,4 +6223,4 @@ engine.prototype.tokenGetAll = function(buffer) {
 // exports the function
 module.exports = engine;
 
-},{"./src/lexer":2,"./src/parser":11,"./src/tokens":26}]},{},["php-parser"]);
+},{"./ast":2,"./lexer":40,"./parser":49,"./tokens":64}]},{},[]);

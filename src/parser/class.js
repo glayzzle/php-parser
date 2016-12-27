@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2014 Glayzzle (BSD3 License)
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -7,9 +7,9 @@
 module.exports = {
   /**
    * reading a class
-   * <ebnf>
+   * ```ebnf
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
-   * </ebnf>
+   * ```
    */
   read_class: function(flag) {
     var result = this.node('class');
@@ -18,8 +18,9 @@ module.exports = {
       .expect(this.tok.T_STRING)
     ;
     var propName = this.text()
-      , propExtends = false
-      , propImplements = false
+      , propExtends = null
+      , propImplements = []
+      , body
     ;
     if (this.next().token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
@@ -30,19 +31,20 @@ module.exports = {
         ','
       );
     }
+    body = this.expect('{').nextWithComments().read_class_body();
     return result(
       propName
-      ,flag
       ,propExtends
       ,propImplements
-      ,this.expect('{').nextWithComments().read_class_body()
+      ,body
+      ,flag
     );
   }
   /**
    * Read the class visibility
-   * <ebnf>
+   * ```ebnf
    *   class_scope ::= (T_FINAL | T_ABSTRACT)?
-   * </ebnf>
+   * ```
    */
   ,read_class_scope: function() {
     var result = this.token;
@@ -57,9 +59,9 @@ module.exports = {
   }
   /**
    * Reads a class body
-   * <ebnf>
+   * ```ebnf
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
-   * </ebnf>
+   * ```
    */
   ,read_class_body: function() {
     var result = [];
@@ -84,21 +86,14 @@ module.exports = {
         continue;
       }
 
-
       // read member flags
       var flags = this.read_member_flags(false);
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-
-        var constants = this.read_constant_list();
+        var constants = this.read_constant_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < constants.length; i++) {
-          var constant = constants[i];
-          (this.locations ? constant[3] : constant).push(flags);
-          result.push(constant);
-        }
+        result = result.concat(constants);
         continue;
       }
 
@@ -113,12 +108,7 @@ module.exports = {
         // reads a variable
         var variables = this.read_variable_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < variables.length; i++) {
-          var variable = variables[i];
-          (this.locations ? variable[3] : variable).push(flags);
-          result.push(variable);
-        }
+        result = result.concat(variables);
 
       } else if (this.token === this.tok.T_FUNCTION) {
 
@@ -128,14 +118,13 @@ module.exports = {
       } else {
 
         // raise an error
-        result.push(
-          this.error([
-            this.tok.T_CONST,
-            this.tok.T_VARIABLE,
-            this.tok.T_FUNCTION
-          ])
-        );
-        this.next(); // ignore token
+        this.error([
+          this.tok.T_CONST,
+          this.tok.T_VARIABLE,
+          this.tok.T_FUNCTION
+        ]);
+        // ignore token
+        this.next();
 
       }
     }
@@ -144,61 +133,61 @@ module.exports = {
   }
   /**
    * Reads variable list
-   * <ebnf>
+   * ```ebnf
    *  variable_list ::= (variable_declaration ',')* variable_declaration
-   * </ebnf>
+   * ```
    */
-  ,read_variable_list: function() {
+  ,read_variable_list: function(flags) {
     return this.read_list(
-      this.read_variable_declaration,
-      ','
+      /**
+       * Reads a variable declaration
+       *
+       * ```ebnf
+       *  variable_declaration ::= T_VARIABLE '=' scalar
+       * ```
+       */
+      function read_variable_declaration() {
+        var result = this.node('property');
+        var name = this.expect(this.tok.T_VARIABLE).text();
+        this.next();
+        if (this.token === ';' || this.token === ',') {
+          return result(name, null, flags);
+        } else if(this.token === '=') {
+          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
+          return result(name, this.next().read_expr(), flags);
+        } else {
+          this.expect([',', ';', '=']);
+          return result(name, null, flags);
+        }
+      }, ','
     );
   }
   /**
-   * Reads a variable declaration
-   * <ebnf>
-   *  variable_declaration ::= T_VARIABLE '=' scalar
-   * </ebnf>
-   */
-  ,read_variable_declaration: function() {
-    var result = this.node('var');
-    var name = this.expect(this.tok.T_VARIABLE).text();
-    this.next();
-    if (this.token === ';' || this.token === ',') {
-      return result(name, null);
-    } else if(this.token === '=') {
-      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-      return result(name, this.next().read_expr());
-    } else {
-      this.expect([',', ';', '=']);
-      return result(name, null);
-    }
-  }
-  /**
    * Reads constant list
-   * <ebnf>
+   * ```ebnf
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
-   * </ebnf>
+   * ```
    */
-  ,read_constant_list: function() {
+  ,read_constant_list: function(flags) {
     return this.expect(this.tok.T_CONST)
       .next()
       .read_list(
-        this.read_constant_declaration, ','
+        /**
+         * Reads a constant declaration
+         *
+         * ```ebnf
+         *  constant_declaration ::= T_STRING '=' expr
+         * ```
+         * @return {Constant} [:link:](AST.md#constant)
+         */
+        function read_constant_declaration() {
+          var result = this.node('classconstant');
+          var name = this.expect(this.tok.T_STRING).text();
+          var value =  this.next().expect('=').next().read_expr();
+          return result(name, value, flags);
+        }, ','
       )
     ;
-  }
-  /**
-   * Reads a constant declaration
-   * <ebnf>
-   *  constant_declaration ::= T_STRING '=' expr
-   * </ebnf>
-   */
-  ,read_constant_declaration: function() {
-    var result = this.node('const');
-    var name = this.expect(this.tok.T_STRING).text();
-    var value =  this.next().expect('=').next().read_expr();
-    return result(name, value);
   }
   /**
    * Read member flags
@@ -247,9 +236,9 @@ module.exports = {
   }
   /**
    * reading an interface
-   * <ebnf>
+   * ```ebnf
    * interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
-   * </ebnf>
+   * ```
    */
   ,read_interface: function(flag) {
     var result = this.node('interface');
@@ -274,9 +263,9 @@ module.exports = {
   }
   /**
    * Reads an interface body
-   * <ebnf>
+   * ```ebnf
    *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
-   * </ebnf>
+   * ```
    */
   ,read_interface_body: function() {
     var result = [];
@@ -298,15 +287,9 @@ module.exports = {
 
       // check constant
       if (this.token == this.tok.T_CONST) {
-        var constants = this.read_constant_list();
+        var constants = this.read_constant_list(flags);
         this.expect(';').nextWithComments();
-
-        for(var i = 0; i < constants.length; i++) {
-          var constant = constants[i];
-          (this.locations ? constant[3] : constant).push(flags);
-          result.push(constant);
-        }
-
+        result = result.concat(constants);
       }
 
       // reads a function
@@ -331,9 +314,9 @@ module.exports = {
   }
   /**
    * reading a trait
-   * <ebnf>
+   * ```ebnf
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
-   * </ebnf>
+   * ```
    */
   ,read_trait: function(flag) {
     var result = this.node('trait');
@@ -362,9 +345,9 @@ module.exports = {
   }
   /**
    * reading a use statement
-   * <ebnf>
+   * ```ebnf
    * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
-   * </ebnf>
+   * ```
    */
   ,read_trait_use_statement: function() {
     // defines use statements
@@ -391,9 +374,9 @@ module.exports = {
   }
   /**
    * Reading trait alias
-   * <ebnf>
+   * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
-   * </ebnf>
+   * ```
    */
   ,read_trait_use_alias: function() {
     var node = this.node('alias');
