@@ -40,6 +40,9 @@
         -   [Include](#include)
         -   [Assign](#assign)
     -   [Identifier](#identifier)
+    -   [TraitUse](#traituse)
+    -   [TraitAlias](#traitalias)
+    -   [TraitPrecedence](#traitprecedence)
     -   [Entry](#entry)
     -   [Documentation](#documentation)
     -   [Error](#error)
@@ -505,6 +508,42 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
+
+# TraitAlias
+
+**Extends Node**
+
+Defines a trait alias
+
+**Properties**
+
+-   `trait` **([Identifier](#identifier) | null)** 
+-   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `as` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+-   `visibility` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+
+# TraitPrecedence
+
+**Extends Node**
+
+Defines a trait alias
+
+**Properties**
+
+-   `trait` **([Identifier](#identifier) | null)** 
+-   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `instead` **[Identifier](#identifier)** 
+
+# TraitUse
+
+**Extends Node**
+
+Defines a trait usage
+
+**Properties**
+
+-   `traits` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `adaptations` **([Array](#array)&lt;[Node](#node)> | null)** 
 
 # Unset
 

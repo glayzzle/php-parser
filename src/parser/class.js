@@ -351,26 +351,27 @@ module.exports = {
    */
   ,read_trait_use_statement: function() {
     // defines use statements
-    var node = this.node('use');
-    var name = this.read_namespace_name();
-    var result = [node(name)];
+    var node = this.node('traituse');
+    var traits = [this.read_namespace_name()];
+    var adaptations = null;
     while(this.token === ',') {
-      node = this.node('use');
-      name = this.next().read_namespace_name();
-      result.push(node(name));
+      traits.push(
+        this.next().read_namespace_name()
+      );
     }
     if (this.token === '{') {
+      adaptations = [];
       // defines alias statements
       while(this.next()) {
         if (this.token === '}') break;
-        result.push(this.read_trait_use_alias());
+        adaptations.push(this.read_trait_use_alias());
         this.expect(';');
       }
       this.expect('}').nextWithComments();
     } else {
       this.expect(';').nextWithComments();
     }
-    return result;
+    return node(traits, adaptations);
   }
   /**
    * Reading trait alias
@@ -379,43 +380,52 @@ module.exports = {
    * ```
    */
   ,read_trait_use_alias: function() {
-    var node = this.node('alias');
-    var origin = this.read_namespace_name();
-    var act = false;
-    var target = false;
-    var flags = false;
+    var node = this.node();
+    var trait = null;
+    var method = this.read_namespace_name();
 
     if (this.token === this.tok.T_DOUBLE_COLON) {
-      origin = [
-        'static',
-        'get',
-        origin,
-        this.next().expect(this.tok.T_STRING).text()
-      ];
+      trait = method;
+      method = this.next().expect(this.tok.T_STRING).text();
       this.next();
+    } else {
+      // convert identifier as string
+      method = method.name;
     }
 
+    // handle trait precedence
     if (this.token === this.tok.T_INSTEADOF) {
-      act = 'insteadof';
-      target = this.next().read_namespace_name();
-    } else if (this.token === this.tok.T_AS) {
-      act = 'as';
+      return node(
+        'traitprecedence',
+        trait, method,
+        this.next().read_namespace_name()
+      );
+    }
+
+    // handle trait alias
+    else if (this.token === this.tok.T_AS) {
+      var flags = false;
+      var alias = null;
       if (this.next().is('T_MEMBER_FLAGS')) {
         flags = this.read_member_flags();
       }
+
       if (this.token === this.tok.T_STRING) {
-        target = this.text();
+        alias = this.text();
         this.next();
       } else if (flags === false) {
         // no visibility flags and no name => too bad
         this.expect(this.tok.T_STRING);
       }
-    } else {
-      this.expect([
-        this.tok.T_AS,
-        this.tok.T_INSTEADOF
-      ]);
+
+      return node('traitalias', trait, method, alias, flags)
     }
-    return node(origin, act, target, flags);
+
+    // handle errors
+    this.expect([
+      this.tok.T_AS,
+      this.tok.T_INSTEADOF
+    ]);
+    return node('traitalias', trait, method, null, null);
   }
 };

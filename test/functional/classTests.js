@@ -12,15 +12,15 @@ describe('Test classes', function() {
     '  }',
     '}',
     'abstract class bar {',
-/*    '  use A, B {',
+    '  use A, B {',
     '    B::smallTalk insteadof A;',
     '    A::bigTalk insteadof B;',
-    '    B::bigTalk as talk;',
-    '  }',*/
+    '    B::bigTalk as protected talk;',
+    '  }',
     '  /**',
     '   * Some informations',
     '   */',
-    '  abstract protected function foo();',
+    '  abstract protected function &foo() : bar;',
     '}'
   ].join('\n'), {
     parser: { debug: false }
@@ -62,7 +62,58 @@ describe('Test classes', function() {
     should.equal(ast.children[1].implements, null);
   });
 
-  it('test body', function() {
-    console.log(ast.children[1].body);
+  it('test trait usage', function() {
+    var use = ast.children[1].body[0];
+    /**
+    '  use A, B {',
+    '    B::smallTalk insteadof A;',
+    '    A::bigTalk insteadof B;',
+    '    B::bigTalk as protected talk;',
+    '  }',
+    */
+    use.kind.should.be.exactly('traituse');
+    // test traits names
+    use.traits.length.should.be.exactly(2);
+    use.traits[0].name.should.be.exactly('A');
+    use.traits[1].name.should.be.exactly('B');
+    // test adaptations
+    use.adaptations.length.should.be.exactly(3);
+    use.adaptations[0].kind.should.be.exactly('traitprecedence');
+    use.adaptations[1].kind.should.be.exactly('traitprecedence');
+    use.adaptations[2].kind.should.be.exactly('traitalias');
+
+    // test adaptation contents
+    use.adaptations[0].trait.name.should.be.exactly('B');
+    use.adaptations[0].method.should.be.exactly('smallTalk');
+    use.adaptations[0].instead.name.should.be.exactly('A');
+
+    // test adaptation contents
+    use.adaptations[1].trait.name.should.be.exactly('A');
+    use.adaptations[1].method.should.be.exactly('bigTalk');
+    use.adaptations[1].instead.name.should.be.exactly('B');
+
+    // test adaptation contents
+    use.adaptations[2].trait.name.should.be.exactly('B');
+    use.adaptations[2].method.should.be.exactly('bigTalk');
+    use.adaptations[2].visibility.should.be.exactly('protected');
+    use.adaptations[2].as.should.be.exactly('talk');
+
+  });
+
+  it('test methods', function() {
+    var method = ast.children[1].body[1];
+    method.kind.should.be.exactly('method');
+    method.isStatic.should.be.exactly(false);
+    method.isFinal.should.be.exactly(false);
+    method.isAbstract.should.be.exactly(true);
+    method.visibility.should.be.exactly('protected');
+    method.name.should.be.exactly('foo');
+    method.byref.should.be.exactly(true);
+    // no arguments
+    method.arguments.length.should.be.exactly(0);
+    // no body
+    method.children.length.should.be.exactly(0);
+    // check return type
+    method.type.name.should.be.exactly('bar');
   });
 });

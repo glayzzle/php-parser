@@ -46,6 +46,9 @@ var Position = require('./ast/position');
  *     - [Include](#include)
  *     - [Assign](#assign)
  *   - [Identifier](#identifier)
+ *   - [TraitUse](#traituse)
+ *   - [TraitAlias](#traitalias)
+ *   - [TraitPrecedence](#traitprecedence)
  *   - [Entry](#entry)
  *   - [Documentation](#documentation)
  *   - [Error](#error)
@@ -153,6 +156,9 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/property'),
   require('./ast/shell'),
   require('./ast/string'),
+  require('./ast/traitalias'),
+  require('./ast/traitprecedence'),
+  require('./ast/traituse'),
   require('./ast/unset'),
   require('./ast/variable')
 ].forEach(function (ctor) {
