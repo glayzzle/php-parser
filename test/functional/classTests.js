@@ -138,7 +138,7 @@ describe('Test classes', function() {
     // no arguments
     method.arguments.length.should.be.exactly(0);
     // no body
-    method.children.length.should.be.exactly(0);
+    should.equal(method.body, null);
     // check return type
     method.type.name.should.be.exactly('bar');
   });

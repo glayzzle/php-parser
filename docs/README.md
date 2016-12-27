@@ -826,7 +826,7 @@ Returns **[Function](#function)**
     -   [TraitAlias](#traitalias)
     -   [TraitPrecedence](#traitprecedence)
     -   [Entry](#entry)
-    -   [Documentation](#documentation)
+    -   [Doc](#doc)
     -   [Error](#error)
     -   [Expression](#expression)
         -   [Array](#array)
@@ -1148,7 +1148,7 @@ Defines a classic function
 -   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `children` **[Array](#array)&lt;[Node](#node)>** 
+-   `body` **([Array](#array)&lt;[Node](#node)> | null)** 
 
 # Identifier
 

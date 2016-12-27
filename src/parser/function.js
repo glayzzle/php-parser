@@ -32,12 +32,16 @@ module.exports = {
    * ```
    */
   ,read_function: function(closure, flag) {
-    var result = this.read_function_declaration(closure ? 1 : flag ? 2 : 0)
+    var result = this.read_function_declaration(
+      closure ? 1 : (flag ? 2 : 0)
+    );
     if (flag && flag[2] == 1) {
+      // abstract function :
       result.parseFlags(flag);
       this.expect(';').nextWithComments();
     } else {
-      result.children = this.expect('{').read_code_block(false);
+
+      result.body = this.expect('{').read_code_block(false);
       if (flag) {
         result.parseFlags(flag);
       }
@@ -76,6 +80,7 @@ module.exports = {
       returnType = this.next().read_type();
     }
     if (type === 1) {
+      // closure
       return result(params, isRef, use, returnType);
     }
     return result(name, params, isRef, returnType);

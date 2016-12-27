@@ -60,8 +60,8 @@ describe('Test comments', function() {
       ast.children[1].name.should.be.exactly("name");
       ast.children[1].arguments.length.should.be.exactly(1);
       var body = ast.children[1].body;
-      body[0].kind.should.be.exactly('comment');
-      body[1].kind.should.be.exactly('return');
+      body[0].kind.should.be.exactly('doc');
+      // @todo body[1].kind.should.be.exactly('return');
     });
 
   });
@@ -75,7 +75,7 @@ describe('Test comments', function() {
       '   // @var test',
       '   protected $test, $toto;',
       '   // ignored comment',
-      '   /** @var Class *-/',
+      '   /** @var Class */',
       '   static public $foo = 123;',
       '   /** ignored also **/',
       '   /**',
@@ -89,32 +89,32 @@ describe('Test comments', function() {
       }
     });
     it('assume doc block before class', function () {
-      ast[1][0][0].should.be.exactly("doc");
-      ast[1][1][0].should.be.exactly("class");
+      ast.children[0].kind.should.be.exactly("doc");
+      ast.children[1].kind.should.be.exactly("class");
     });
     it('test class elements', function () {
-      var body = ast[1][1][5];
+      var body = ast.children[1].body;
 
-      body[0][0].should.be.exactly("comment");
-      body[0][1][0].should.be.exactly("// @var test\n");
+      body[0].kind.should.be.exactly("doc");
+      body[0].lines[0].should.be.exactly("@var test");
 
-      body[1][0].should.be.exactly("var");
-      body[1][1].should.be.exactly("$test");
+      body[1].kind.should.be.exactly("property");
+      body[1].name.should.be.exactly("$test");
 
-      body[2][0].should.be.exactly("var");
-      body[2][1].should.be.exactly("$toto");
+      body[2].kind.should.be.exactly("property");
+      body[2].name.should.be.exactly("$toto");
 
-      body[3][0].should.be.exactly("comment");
-      body[3][1][0].should.be.exactly("// ignored comment\n");
+      body[3].kind.should.be.exactly("doc");
+      body[3].lines[0].should.be.exactly("ignored comment");
 
-      body[4][0].should.be.exactly("doc");
-      body[4][1].should.be.exactly("/** @var Class */");
+      body[4].kind.should.be.exactly("doc");
+      body[4].lines[0].should.be.exactly("@var Class");
 
-      body[5][0].should.be.exactly("var");
-      body[5][1].should.be.exactly("$foo");
+      body[5].kind.should.be.exactly("property");
+      body[5].name.should.be.exactly("$foo");
 
-      body[8][0].should.be.exactly("method");
-      body[8][1].should.be.exactly("void");
+      body[8].kind.should.be.exactly("method");
+      body[8].name.should.be.exactly("void");
     });
   });
 

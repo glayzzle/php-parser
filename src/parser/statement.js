@@ -37,7 +37,7 @@ module.exports = {
   ,read_top_statement: function() {
     switch(this.token) {
       case this.tok.T_FUNCTION:
-        return this.read_function();
+        return this.read_function(false, false);
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
@@ -134,7 +134,7 @@ module.exports = {
   ,read_inner_statement: function() {
     switch(this.token) {
       case this.tok.T_FUNCTION:
-        return this.read_function();
+        return this.read_function(false, false);
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
