@@ -1,5 +1,15 @@
 # Releases
 
+## 0.1.5 : (2016-12-27)
+
+> The 0.1.x version starts to be deprecated
+
+- Fix closure use token
+- Improve silent errors handler
+- Pass PHP7 tests
+- Update class, traits, interface declarations
+- Many syntax fixes
+
 ## 0.1.4 : (2016-12-12)
 
 - Move from static instances to instanciated objects in order to fully handle
