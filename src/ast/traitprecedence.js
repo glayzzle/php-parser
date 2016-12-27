@@ -13,7 +13,7 @@ var KIND = 'traitprecedence';
  * @extends {Node}
  * @property {Identifier|null} trait
  * @property {string} method
- * @property {Identifier} instead
+ * @property {Identifier[]} instead
  */
 var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, instead, location) {
   Node.apply(this, [KIND, location]);
