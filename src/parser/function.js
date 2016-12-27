@@ -38,10 +38,13 @@ module.exports = {
     if (flag && flag[2] == 1) {
       // abstract function :
       result.parseFlags(flag);
-      this.expect(';').nextWithComments();
+      if (this.expect(';')) {
+        this.nextWithComments();
+      }
     } else {
-
-      result.body = this.expect('{').read_code_block(false);
+      if (this.expect('{')) {
+        result.body = this.read_code_block(false);
+      }
       if (flag) {
         result.parseFlags(flag);
       }
@@ -62,19 +65,24 @@ module.exports = {
       nodeName = 'method';
     }
     var result = this.node(nodeName);
-    this.expect(this.tok.T_FUNCTION);
-    var isRef = this.next().is_reference();
-    var name = false, use = [], returnType = false;
-    if (type !== 1) {
-      name = this.expect(this.tok.T_STRING).text();
+    if (this.expect(this.tok.T_FUNCTION)) {
       this.next();
     }
-    this.expect('(').next();
+    var isRef = this.is_reference();
+    var name = false, use = [], returnType = false;
+    if (type !== 1) {
+      if (this.expect(this.tok.T_STRING)) {
+        name = this.text();
+        this.next();
+      }
+    }
+    if (this.expect('(')) this.next();
     var params = this.read_parameter_list();
-    this.expect(')').next();
+    if (this.expect(')')) this.next();
     if (type === 1 && this.token === this.tok.T_USE) {
-      use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
-      this.expect(')').next();
+      if (this.next().expect('(')) this.next();
+      use = this.read_list(this.read_lexical_var, ',');
+      if (this.expect(')')) this.next();
     }
     if (this.token === ':') {
       returnType = this.next().read_type();
@@ -134,13 +142,17 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   ,read_parameter: function() {
-    var node = this.node('parameter');
+    var node = this.node('parameter'),
+      name = null,
+      value = null;
     var type = this.read_type();
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
-    var name = this.expect(this.tok.T_VARIABLE).text();
-    var value = null;
-    if (this.next().token == '=') {
+    if (this.expect(this.tok.T_VARIABLE)) {
+      name = this.text();
+      this.next();
+    }
+    if (this.token == '=') {
       value = this.next().read_expr();
     }
     return node(name, type, value, isRef, isVariadic);
@@ -152,7 +164,7 @@ module.exports = {
    */
   ,read_function_argument_list: function() {
     var result = [];
-    this.expect('(').next();
+    if (this.expect('(')) this.next();
     if (this.token !== ')') {
       while(this.token != this.EOF) {
         result.push(this.read_argument_list());
@@ -161,7 +173,7 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(')').next();
+    if (this.expect(')')) this.next();
     return result;
   }
   /**

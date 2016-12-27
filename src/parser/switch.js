@@ -11,11 +11,11 @@ module.exports = {
    * ```
    */
   read_switch: function() {
-    this.expect(this.tok.T_SWITCH).next();
+    this.expect(this.tok.T_SWITCH) && this.next();
     var result = this.node('switch');
-    this.expect('(').next();
+    this.expect('(') && this.next();
     var expr = this.read_expr();
-    this.expect(')').next();
+    this.expect(')') && this.next();
     var cases = this.read_switch_case_list();
     return result(expr, cases);
   }
@@ -49,7 +49,7 @@ module.exports = {
       result.push( this.read_case_list(expect) );
     }
     // CHECK END TOKEN
-    this.expect(expect).next();
+    this.expect(expect) && this.next();
     if (expect === this.tok.T_ENDSWITCH) {
       this.expectEndOfStatement();
     }
@@ -73,7 +73,7 @@ module.exports = {
     } else {
       this.expect([this.tok.T_CASE, this.tok.T_DEFAULT]);
     }
-    this.expect([':', ';']).next();
+    this.expect([':', ';']) && this.next();
     while(
       this.token != this.EOF
       && this.token !== stopToken

@@ -20,7 +20,9 @@ module.exports = {
     var items = [];
     var result = this.node(ArrayExpr);
 
-    if (this.expect([this.tok.T_ARRAY, '[']).token == this.tok.T_ARRAY) {
+    this.expect([this.tok.T_ARRAY, '[']);
+
+    if (this.token == this.tok.T_ARRAY) {
       this.next().expect('(');
     } else {
       shortForm = true;
@@ -36,7 +38,8 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(shortForm ? ']' : ')').next();
+    this.expect(shortForm ? ']' : ')');
+    this.next();
     return result(shortForm, items);
   },
   /**

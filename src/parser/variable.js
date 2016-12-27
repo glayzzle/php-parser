@@ -98,12 +98,12 @@ module.exports = {
           var offset = false;
           if (encapsed) {
             offset = this.read_encaps_var_offset();
-            this.expect(']').next();
+            this.expect(']') && this.next();
           } else {
             // callable_variable : https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1122
             if (this.token !== ']') {
               offset = this.read_expr();
-              this.expect(']').next();
+              this.expect(']') && this.next();
             } else {
               this.next();
             }
@@ -122,7 +122,7 @@ module.exports = {
               } else if (tok === '{') {
                 // fix $obj->var_{$prop}
                 what = ['bin', '.', what, this.next().read_expr()];
-                this.expect('}').next();
+                this.expect('}') && this.next();
               }
               break;
             case this.tok.T_VARIABLE:
@@ -135,7 +135,7 @@ module.exports = {
               if (this.token === '{') {
                 // $obj->${$varname}
                 what = this.next().read_expr();
-                this.expect('}').next();
+                this.expect('}') && this.next();
               } else {
                 // $obj->$$varname
                 what = this.read_expr();
@@ -143,7 +143,7 @@ module.exports = {
               break;
             case '{':
               what = this.next().read_expr();
-              this.expect('}').next();
+              this.expect('}') && this.next();
               break;
             default:
               what = this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
@@ -206,10 +206,10 @@ module.exports = {
           var offset = this.next().token === ']' ? null : this.read_dim_offset();
           result = ['offset', result, offset];
         }
-        this.expect(']').next();
+        this.expect(']') && this.next();
       } else if (this.token == '{' && !encapsed) {
         result = ['offset', result, this.next().read_expr()];
-        this.expect('}').next();
+        this.expect('}') && this.next();
       } else break;
     }
     return result;
@@ -221,16 +221,17 @@ module.exports = {
    */
   ,read_simple_variable: function(byref) {
     var result = this.node('variable');
-    if (this.expect([this.tok.T_VARIABLE, '$']).token === this.tok.T_VARIABLE) {
+    if (this.expect([this.tok.T_VARIABLE, '$']) && this.token === this.tok.T_VARIABLE) {
       // plain variable name
       result = result(this.text(), byref);
       this.next();
     } else {
+      if (this.token === '$') this.next();
       // dynamic variable name
-      switch(this.next().token) {
+      switch(this.token) {
         case '{':
           result = this.next().read_expr();
-          this.expect('}').next();
+          this.expect('}') && this.next();
           break;
         case '$': // $$$var
           result = ['lookup', 'var', this.read_simple_variable(false)];

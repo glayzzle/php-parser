@@ -57,7 +57,7 @@ module.exports = {
         return this.read_trait();
       case this.tok.T_USE:
         var expr = this.read_use_statements();
-        this.expect(';').nextWithComments();
+        if (this.expect(';')) this.nextWithComments();
         return expr;
       case this.tok.T_CONST:
         return this.next().read_const_list();
@@ -65,7 +65,9 @@ module.exports = {
         return this.read_namespace();
       case this.tok.T_HALT_COMPILER:
         var result = this.node('halt');
-        this.next().expect('(').next().expect(')').next().expect(';');
+        if (this.next().expect('(')) this.next();
+        if (this.expect(')')) this.next();
+        this.expect(';');
         this.lexer.done = true;
         return result(this.lexer._input.substring(
           this.lexer.offset
@@ -105,8 +107,12 @@ module.exports = {
       this.expect(this.tok.T_STRING);
       var result = this.node('constant');
       var name = this.text();
-      this.next().expect('=').next();
-      return result(name, this.read_expr());
+      if (this.next().expect('=')) {
+        return result(name, this.next().read_expr());
+      } else {
+        // fallback
+        return result(name, null);
+      }
     }, ',', false);
     this.expectEndOfStatement();
     return result;
@@ -121,8 +127,11 @@ module.exports = {
     return this.read_list(function() {
       this.expect(this.tok.T_STRING);
       var name = this.text();
-      this.next().expect('=').next();
-      return [name, this.read_expr()];
+      if (this.next().expect('=')) {
+        return [name, this.next().read_expr()];
+      } else {
+        return [name, null];
+      }
     }, ',');
   }
   /**
@@ -154,7 +163,9 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER:
-        this.next().expect('(').next().expect(')').next().expect(';').next();
+        if (this.next().expect('(')) this.next();
+        if (this.expect(')')) this.next();
+        if (this.expect(';')) this.next();
         this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
       default:
         return this.read_statement();
@@ -213,13 +224,16 @@ module.exports = {
           // static keyword for a class
           this.lexer.tokens.push(current);
           var expr = this.next().read_expr();
-          this.expect(';').nextWithComments();
+          this.expect(';') && this.nextWithComments();
           return expr;
         }
         var items = this.read_list(function() {
-          var name = this.expect(this.tok.T_VARIABLE).text();
-          var value = null;
-          if (this.next().token === '=') {
+          var value = null, name = null;
+          if (this.expect(this.tok.T_VARIABLE)) {
+            name = this.text();
+            this.next();
+          }
+          if (this.token === '=') {
             value = this.next().read_expr();
           }
           return [name, value];
@@ -233,7 +247,7 @@ module.exports = {
         withParanthesis && this.next();
         var args = this.read_list(this.read_expr, ',');
         if (withParanthesis) {
-          this.expect(')').next();
+          this.expect(')') && this.next();
         }
         this.expectEndOfStatement();
         return result(args);
@@ -245,28 +259,25 @@ module.exports = {
 
       case this.tok.T_UNSET:
         var result = this.node('unset');
-        this.next().expect('(').next();
+        this.next().expect('(') && this.next();
         var items = this.read_list(this.read_variable, ',');
-        if (this.expect(')').next().expect(';')) {
-          result = result(items);
-          this.nextWithComments();
-        } else {
-          result = result(items);
-        }
-        return  result;
+        this.expect(')') && this.next();
+        this.expect(';') && this.nextWithComments();
+        return result(items);
 
       case this.tok.T_DECLARE:
         var result = this.node('declare'), options, body;
-        this.next().expect('(').next();
+        this.next().expect('(') && this.next();
         options = this.read_declare_list();
-        this.expect(')').nextWithComments();
+        this.expect(')') && this.nextWithComments();
         if (this.token === ':') {
           body = [];
           this.next();
           while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
             body.push(this.read_statement());
           }
-          this.ignoreComments().expect(this.tok.T_ENDDECLARE).next().expectEndOfStatement();
+          this.ignoreComments().expect(this.tok.T_ENDDECLARE) && this.next();
+          this.expectEndOfStatement();
         } else {
           body = this.read_statement();
         }
@@ -298,14 +309,16 @@ module.exports = {
           // default fallback expr
           this.lexer.tokens.push(current);
           var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]).nextWithComments();
+          this.expect([';', this.tok.T_CLOSE_TAG]) && this.nextWithComments();
           return expr;
         }
 
       case this.tok.T_GOTO:
-        var result = this.node('goto');
-        var label = this.next().expect(this.tok.T_STRING).text();
-        this.next().expectEndOfStatement();
+        var result = this.node('goto'), label = null;
+        if (this.next().expect(this.tok.T_STRING)) {
+          label = this.text();
+          this.next().expectEndOfStatement();
+        }
         return result(label);
 
       default: // default fallback expr
@@ -320,12 +333,12 @@ module.exports = {
    * ```
    */
   ,read_code_block: function(top) {
-    this.expect('{').nextWithComments();
+    this.expect('{') && this.nextWithComments();
     var body = top ?
       this.read_top_statements()
       : this.read_inner_statements()
     ;
-    this.expect('}').nextWithComments();
+    this.expect('}') && this.nextWithComments();
     return body;
   }
 };

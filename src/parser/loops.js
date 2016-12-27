@@ -10,11 +10,12 @@ module.exports = {
    */
   read_short_form: function(token) {
     var body = [];
-    this.expect(':').next();
+    if (this.expect(':')) this.next();
     while(this.token != this.EOF && this.token !== token) {
       body.push(this.read_inner_statement());
     }
-    this.expect(token).next().expectEndOfStatement();
+    if (this.expect(token)) this.next();
+    this.expectEndOfStatement();
     return body;
   }
   /**
@@ -22,9 +23,9 @@ module.exports = {
    */
   ,read_while: function() {
     var result = this.node('while');
-    this.expect('(').next();
+    if (this.expect('(')) this.next();
     var cond = this.read_expr();
-    this.expect(')').next();
+    if (this.expect(')')) this.next();
     var body = [];
     if (this.token === ':') {
       body = this.read_short_form(this.tok.T_ENDWHILE);
@@ -34,32 +35,35 @@ module.exports = {
     return result(cond, body);
   }
   ,read_do: function() {
-    var result = this.node('do');
+    var result = this.node('do'), cond = null;
     var body = this.read_statement();
-    this.expect(this.tok.T_WHILE).next().expect('(').next();
-    var cond = this.read_expr();
-    this.expect(')').next().expect(';').next();
+    if (this.expect(this.tok.T_WHILE)) {
+      if (this.next().expect('(')) this.next();
+      cond  = this.read_expr();
+      if (this.expect(')')) this.next();
+      if (this.expect(';')) this.next();
+    }
     return result(cond, body);
   }
   ,read_for: function() {
     var result = this.node('for');
-    this.expect('(').next();
+    if (this.expect('(')) this.next();
     var expr1 = null, expr2 = null, expr3 = null;
     if (this.token !== ';') {
       expr1 = this.read_list(this.read_expr, ',');
-      this.expect(';').next();
+      if (this.expect(';')) this.next();
     } else {
       this.next();
     }
     if (this.token !== ';') {
       expr2 = this.read_list(this.read_expr, ',');
-      this.expect(';').next();
+      if (this.expect(';')) this.next();
     } else {
       this.next();
     }
     if (this.token !== ')') {
       expr3 = this.read_list(this.read_expr, ',');
-      this.expect(')').next();
+      if (this.expect(')')) this.next();
     } else {
       this.next();
     }
@@ -77,17 +81,19 @@ module.exports = {
    * ```
    */
   ,read_foreach: function() {
-    var result = this.node('foreach');
-    this.expect('(').next();
+    var result = this.node('foreach'), item = null, key = null;
+    if (this.expect('(')) this.next();
     var expr = this.read_expr();
-    this.expect(this.tok.T_AS).next();
-    var item = this.read_foreach_variable(),
-      key = false;
-    if (this.token === this.tok.T_DOUBLE_ARROW) {
-      key = item;
-      item = this.next().read_foreach_variable();
+    if (this.expect(this.tok.T_AS)) {
+      this.next();
+      item = this.read_foreach_variable();
+      if (this.token === this.tok.T_DOUBLE_ARROW) {
+        key = item;
+        item = this.next().read_foreach_variable();
+      }
     }
-    this.expect(')').next();
+
+    if (this.expect(')')) this.next();
     var body = [];
     if (this.token === ':') {
       body = this.read_short_form(this.tok.T_ENDFOREACH);
@@ -106,9 +112,9 @@ module.exports = {
         return this.next().read_variable(false, false, true);
       } else if (this.token === this.tok.T_LIST) {
         var result = this.node('list');
-        this.next().expect('(').next();
+        if (this.next().expect('(')) this.next();
         var assignList = this.read_assignment_list();
-        this.expect(')').next();
+        if (this.expect(')')) this.next();
         return result(assignList, false);
       } else {
         return this.read_variable(false, false, false);

@@ -24,10 +24,10 @@ module.exports = {
 
     this.ignoreComments();
     while(this.token === this.tok.T_CATCH) {
-      this.next().expect('(').next();
+      this.next().expect('(') && this.next();
       var exName = this.read_namespace_name();
       var varName = this.read_variable(true, false, false);
-      this.expect(')').nextWithComments();
+      this.expect(')') && this.nextWithComments();
       catches.push({
         exception: exName,
         as: varName,

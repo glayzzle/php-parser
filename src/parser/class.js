@@ -13,10 +13,8 @@ module.exports = {
    */
   read_class: function(flag) {
     var result = this.node('class');
-    this.expect(this.tok.T_CLASS)
-      .next()
-      .expect(this.tok.T_STRING)
-    ;
+    this.expect(this.tok.T_CLASS);
+    this.next().expect(this.tok.T_STRING);
     var propName = this.text()
       , propExtends = null
       , propImplements = null
@@ -28,7 +26,8 @@ module.exports = {
     if (this.token == this.tok.T_IMPLEMENTS) {
       propImplements = this.next().read_name_list();
     }
-    body = this.expect('{').nextWithComments().read_class_body();
+    this.expect('{');
+    body = this.nextWithComments().read_class_body();
     return result(
       propName
       ,propExtends
@@ -89,7 +88,8 @@ module.exports = {
       // check constant
       if (this.token === this.tok.T_CONST) {
         var constants = this.read_constant_list(flags);
-        this.expect(';').nextWithComments();
+        this.expect(';');
+        this.nextWithComments();
         result = result.concat(constants);
         continue;
       }
@@ -104,7 +104,8 @@ module.exports = {
 
         // reads a variable
         var variables = this.read_variable_list(flags);
-        this.expect(';').nextWithComments();
+        this.expect(';');
+        this.nextWithComments();
         result = result.concat(variables);
 
       } else if (this.token === this.tok.T_FUNCTION) {
@@ -125,7 +126,8 @@ module.exports = {
 
       }
     }
-    this.expect('}').nextWithComments();
+    this.expect('}');
+    this.nextWithComments();
     return result;
   }
   /**
@@ -145,7 +147,8 @@ module.exports = {
        */
       function read_variable_declaration() {
         var result = this.node('property');
-        var name = this.expect(this.tok.T_VARIABLE).text();
+        this.expect(this.tok.T_VARIABLE);
+        var name = this.text();
         this.next();
         if (this.token === ';' || this.token === ',') {
           return result(name, null, flags);
@@ -166,9 +169,10 @@ module.exports = {
    * ```
    */
   ,read_constant_list: function(flags) {
-    return this.expect(this.tok.T_CONST)
-      .next()
-      .read_list(
+    if (this.expect(this.tok.T_CONST)) {
+      this.next();
+    }
+    return this.read_list(
         /**
          * Reads a constant declaration
          *
@@ -178,9 +182,14 @@ module.exports = {
          * @return {Constant} [:link:](AST.md#constant)
          */
         function read_constant_declaration() {
-          var result = this.node('classconstant');
-          var name = this.expect(this.tok.T_STRING).text();
-          var value =  this.next().expect('=').next().read_expr();
+          var result = this.node('classconstant'), name = null, value = null;
+          if (this.expect(this.tok.T_STRING)) {
+            name = this.text();
+            this.next();
+          }
+          if (this.expect('=')) {
+            value =  this.next().read_expr();
+          }
           return result(name, value, flags);
         }, ','
       )
@@ -238,21 +247,21 @@ module.exports = {
    * ```
    */
   ,read_interface: function() {
-    var result = this.node('interface');
-    var name = this.expect(this.tok.T_INTERFACE)
-      .next()
-      .expect(this.tok.T_STRING)
-      .text()
-    ;
-    var propExtends = null;
-    if (this.next().token == this.tok.T_EXTENDS) {
+    var result = this.node('interface'), name = null, body = null, propExtends = null;
+    if (this.expect(this.tok.T_INTERFACE)) {
+      this.next();
+    }
+    if (this.expect(this.tok.T_STRING)) {
+      name = this.text();
+      this.next();
+    }
+    if (this.token === this.tok.T_EXTENDS) {
       propExtends = this.next().read_name_list();
     }
-    return result(
-      name
-      , propExtends
-      , this.expect('{').next().read_interface_body()
-    );
+    if (this.expect('{')) {
+      body = this.next().read_interface_body();
+    }
+    return result(name, propExtends, body);
   }
   /**
    * Reads an interface body
@@ -281,7 +290,9 @@ module.exports = {
       // check constant
       if (this.token == this.tok.T_CONST) {
         var constants = this.read_constant_list(flags);
-        this.expect(';').nextWithComments();
+        if (this.expect(';')) {
+          this.nextWithComments();
+        }
         result = result.concat(constants);
       }
 
@@ -290,7 +301,9 @@ module.exports = {
         var method = this.read_function_declaration(2, flags);
         method.parseFlags(flags);
         result.push(method);
-        this.expect(';').nextWithComments();
+        if (this.expect(';')) {
+          this.nextWithComments();
+        }
       } else {
         // raise an error
         this.error([
@@ -300,7 +313,9 @@ module.exports = {
         this.next();
       }
     }
-    this.expect('}').next();
+    if (this.expect('}')) {
+      this.next();
+    }
     return result;
   }
   /**
@@ -310,25 +325,31 @@ module.exports = {
    * ```
    */
   ,read_trait: function(flag) {
-    var result = this.node('trait');
-    this.expect(this.tok.T_TRAIT)
-      .next()
-      .expect(this.tok.T_STRING)
-    ;
-    var propName = this.text(),
+    var result = this.node('trait'),
+      propName = null,
       propExtends = null,
-      propImplements = null;
+      propImplements = null,
+      body = null;
+    if (this.expect(this.tok.T_TRAIT)) {
+      this.next();
+    }
+    if (this.expect(this.tok.T_STRING)) {
+      propName = this.text();
+    }
     if (this.next().token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
     }
     if (this.token == this.tok.T_IMPLEMENTS) {
       propImplements = this.next().read_name_list();
     }
+    if (this.expect('{')) {
+      body = this.next().read_class_body();
+    }
     return result(
       propName,
       propExtends,
       propImplements,
-      this.expect('{').next().read_class_body()
+      body
     );
   }
   /**
@@ -350,14 +371,18 @@ module.exports = {
     if (this.token === '{') {
       adaptations = [];
       // defines alias statements
-      while(this.next()) {
+      while(this.next().token !== this.EOF) {
         if (this.token === '}') break;
         adaptations.push(this.read_trait_use_alias());
         this.expect(';');
       }
-      this.expect('}').nextWithComments();
+      if (this.expect('}')) {
+        this.nextWithComments();
+      }
     } else {
-      this.expect(';').nextWithComments();
+      if (this.expect(';')) {
+        this.nextWithComments();
+      }
     }
     return node(traits, adaptations);
   }
@@ -373,9 +398,11 @@ module.exports = {
     var method = this.read_namespace_name();
 
     if (this.token === this.tok.T_DOUBLE_COLON) {
-      trait = method;
-      method = this.next().expect(this.tok.T_STRING).text();
-      this.next();
+      if (this.next().expect(this.tok.T_STRING)) {
+        trait = method;
+        method = this.text();
+        this.next();
+      }
     } else {
       // convert identifier as string
       method = method.name;
@@ -410,10 +437,7 @@ module.exports = {
     }
 
     // handle errors
-    this.expect([
-      this.tok.T_AS,
-      this.tok.T_INSTEADOF
-    ]);
+    this.expect([this.tok.T_AS, this.tok.T_INSTEADOF]);
     return node('traitalias', trait, method, null, null);
   }
 };

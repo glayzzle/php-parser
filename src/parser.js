@@ -234,6 +234,7 @@ parser.prototype.node = function(name) {
 
 /**
  * expects an end of statement or end of file
+ * @return {boolean}
  */
 parser.prototype.expectEndOfStatement = function() {
   if (this.token === ';') {
@@ -246,8 +247,9 @@ parser.prototype.expectEndOfStatement = function() {
     this.nextWithComments();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(';');
+    return false;
   }
-  return this;
+  return true;
 };
 
 /** outputs some debug information on current token **/
@@ -290,7 +292,7 @@ parser.prototype.showlog = function() {
  * be added to the program error stack and this function will return `false`.
  *
  * @param {String|Number} token
- * @return {Parser|False}
+ * @return {boolean}
  * @throws Error
  */
 parser.prototype.expect = function(token) {
@@ -303,7 +305,7 @@ parser.prototype.expect = function(token) {
     this.error(token);
     return false;
   }
-  return this;
+  return true;
 };
 
 /**

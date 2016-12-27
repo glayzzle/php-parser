@@ -14,7 +14,7 @@ module.exports = {
    * ```
    */
   read_namespace: function() {
-    this.expect(this.tok.T_NAMESPACE).next();
+    if (this.expect(this.tok.T_NAMESPACE)) this.next();
     var result = this.node('namespace');
     if (this.token == '{') {
       this.currentNamespace = [''];
@@ -58,7 +58,7 @@ module.exports = {
   ,read_namespace_name: function() {
     var result = this.node('identifier');
     if (this.token === this.tok.T_NAMESPACE) {
-      this.next().expect(this.tok.T_NS_SEPARATOR).next();
+      if (this.next().expect(this.tok.T_NS_SEPARATOR)) this.next();
     }
     return result(
       this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true)
@@ -74,14 +74,15 @@ module.exports = {
   ,read_use_statements: function() {
       var result = [];
       while(this.token !== this.EOF) {
-          this.expect(this.tok.T_USE).next();
-          this.read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
-            if (Array.isArray(item)) {
-              result = result.concat(item);
-            } else {
-              result.push(item);
-            }
-          });
+          if (this.expect(this.tok.T_USE)) {
+            this.next().read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
+              if (Array.isArray(item)) {
+                result = result.concat(item);
+              } else {
+                result.push(item);
+              }
+            });
+          }
           if(this.token !== this.tok.T_USE) break;
       }
       return result;
@@ -126,12 +127,13 @@ module.exports = {
     var result = this.node('use');
     var use = this.read_use_statement();
     if(this.token === this.tok.T_AS) {
-      this.next().expect(this.tok.T_STRING);
-      use[1] = this.text();
-      this.next();
+      if (this.next().expect(this.tok.T_STRING)) {
+        use[1] = this.text();
+        this.next();
+      }
     } else if (this.token === '{') {
       use = this.next().read_inline_use_declaration(use);
-      this.expect('}').next();
+      if (this.expect('}')) this.next();
       return use;
     }
     return result.apply(this, use);

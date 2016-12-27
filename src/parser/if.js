@@ -30,7 +30,8 @@ module.exports = {
         }
         body.push(this.read_inner_statement());
       }
-      this.ignoreComments().expect(this.tok.T_ENDIF).next().expectEndOfStatement();
+      if (this.ignoreComments().expect(this.tok.T_ENDIF)) this.next();
+      this.expectEndOfStatement();
     } else {
       body = this.read_statement();
       this.ignoreComments();
@@ -46,9 +47,9 @@ module.exports = {
    * reads an if expression : '(' expr ')'
    */
   read_if_expr: function() {
-    this.expect('(').next();
+    if (this.expect('(')) this.next();
     var result = this.read_expr();
-    this.expect(')').next();
+    if (this.expect(')')) this.next();
     return result;
   },
   /**
@@ -57,7 +58,7 @@ module.exports = {
   read_elseif_short: function() {
     var result = this.node('if');
     var cond = this.read_if_expr();
-    this.expect(':').next();
+    if (this.expect(':')) this.next();
     var body = [];
     var elseCond = false;
 
@@ -78,7 +79,7 @@ module.exports = {
    *
    */
   read_else_short: function() {
-    this.expect(':').next();
+    if (this.expect(':')) this.next();
     var body = [];
     while(this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       body.push(this.read_inner_statement());

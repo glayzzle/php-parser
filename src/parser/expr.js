@@ -55,7 +55,9 @@ module.exports = {
         if (this.next().token !== ':') {
           trueArg = this.read_expr();
         }
-        this.expect(':').next();
+        if (this.expect(':')) {
+          this.next();
+        }
         return ['retif', expr, trueArg, this.read_expr()];
     }
     return expr;
@@ -96,7 +98,9 @@ module.exports = {
 
       case '(':
         var expr = this.next().read_expr();
-        this.expect(')').next();
+        if (this.expect(')')) {
+          this.next();
+        }
 
         // handle dereferencable
         if (this.token === this.tok.T_OBJECT_OPERATOR) {
@@ -120,7 +124,9 @@ module.exports = {
 
       case this.tok.T_LIST:
         var result = this.node('list');
-        this.next().expect('(').next();
+        if (this.next().expect('(')) {
+          this.next();
+        }
         var isInner = this.innerList;
 
         if (!this.innerList) this.innerList = true;
@@ -139,12 +145,18 @@ module.exports = {
             'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
           );
         }
-        this.expect(')').next();
+        if (this.expect(')')) {
+          this.next();
+        }
 
         if (!isInner) {
           this.innerList = false;
-          this.expect('=').next();
-          return result(assignList, this.read_expr());
+          if (this.expect('=')) {
+            return result(assignList, this.next().read_expr());
+          } else {
+            // fallback : list($a, $b);
+            return result(assignList, null);
+          }
         } else {
           return result(assignList, null);
         }
@@ -167,16 +179,24 @@ module.exports = {
 
       case this.tok.T_ISSET:
         var result = this.node('isset');
-        this.next().expect('(').next();
+        if (this.next().expect('(')) {
+          this.next();
+        }
         var args = this.read_list(this.read_expr, ',');
-        this.expect(')').next();
+        if (this.expect(')')) {
+          this.next();
+        }
         return result(args);
 
       case this.tok.T_EMPTY:
         var result = this.node('empty');
-        this.next().expect('(').next();
+        if (this.next().expect('(')) {
+          this.next();
+        }
         var arg = this.read_expr();
-        this.expect(')').next();
+        if (this.expect(')')) {
+          this.next();
+        }
         return result([arg]);
 
       case this.tok.T_INCLUDE:
@@ -205,9 +225,13 @@ module.exports = {
 
       case this.tok.T_EVAL:
         var result = this.node('eval');
-        this.next().expect('(').next();
+        if (this.next().expect('(')) {
+          this.next();
+        }
         var expr = this.read_expr();
-        this.expect(')').next();
+        if (this.expect(')')) {
+          this.next();
+        }
         return result(expr);
 
       case this.tok.T_INT_CAST:
@@ -239,7 +263,9 @@ module.exports = {
         if ( this.next().token === '(' ) {
           if (this.next().token !== ')') {
             status = this.read_expr();
-            this.expect(')').next();
+            if (this.expect(')')) {
+              this.next();
+            }
           } else {
             this.next();
           }
@@ -361,18 +387,21 @@ module.exports = {
     var result = this.node('new');
     if (this.token === this.tok.T_CLASS) {
       // Annonymous class declaration
-      var propExtends = false, propImplements = false;
+      var propExtends = null, propImplements = null, body = null;
       if (this.next().token == this.tok.T_EXTENDS) {
         propExtends = this.next().read_namespace_name();
       }
       if (this.token == this.tok.T_IMPLEMENTS) {
         propImplements = this.next().read_name_list();
       }
+      if (this.expect('{')) {
+        body = this.next().read_class_body();
+      }
       return result(
         false           // class name => false : means it's an annonymous class
         ,propExtends
         ,propImplements
-        ,this.expect('{').next().read_class_body()
+        ,body
       );
     } else {
       // Already existing class

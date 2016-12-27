@@ -167,32 +167,16 @@ describe('Test classes', function() {
 
   describe('Test of silent mode', function() {
     var ast = parser.parseEval([
-      'class foo implements boo {',
-      '  use A;',
+      'class foo {',
+      '  use A',
       '  use B { foo };',
-      '  // comment',
-      '  /* boo */',
-      '  /** doc',
-      '   * data',
-      '     foo',
-      '   */',
-      '  var $var = true;',
-      '  final function __construct() { }',
-      '  private function boo() { }',
-      '}',
-      'interface boo extends something {',
-      '  // some doc',
-      '  const A = 1.5;',
-      '  /** foo */',
-      '  protected function foo();',
-      '}',
-      'trait line extends foo implements boo {',
-      '  // some doc',
-      '  const A = 1.5;',
-      '  abstract protected function foo();',
       '}'
     ].join('\n'), {
       parser: { suppressErrors: true }
+    });
+
+    it('check use statement errors', function() {
+      // @todo
     });
   });
 });

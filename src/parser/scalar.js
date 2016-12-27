@@ -87,9 +87,7 @@ module.exports = {
           var result = this.node('number');
           var value = this.text();
           if (this.token === '-') {
-            this.next().expect([
-              this.tok.T_LNUMBER, this.tok.T_DNUMBER
-            ]);
+            this.next().expect([this.tok.T_LNUMBER, this.tok.T_DNUMBER]);
             value += this.text();
           }
           result = result(value);
@@ -104,14 +102,15 @@ module.exports = {
           var result = ['constant', value];
           if ( this.token == this.tok.T_DOUBLE_COLON) {
             // class constant  MyClass::CONSTANT
-            this.next().expect([this.tok.T_STRING, this.tok.T_CLASS]);
-            result[1] = [value, this.text()];
-            this.next();
+            if (this.next().expect([this.tok.T_STRING, this.tok.T_CLASS])) {
+              result[1] = [value, this.text()];
+              this.next();
+            }
           }
           // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
           while(this.token === '[') {
             result = ['offset', result, this.next().read_expr()];
-            this.expect(']').next();
+            if (this.expect(']')) this.next();
           }
           return result;
 
@@ -134,7 +133,7 @@ module.exports = {
     var result;
     if (this.token === '[') {
       result = ['offset', expr, this.next().read_expr()];
-      this.expect(']').next();
+      if (this.expect(']')) this.next();
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       result = ['offset', expr, this.read_encapsed_string_item()];
     }
@@ -160,18 +159,18 @@ module.exports = {
         result = ['var', this.text()];
         if (this.next().token === '[') {
           result = ['offset', result, this.next().read_expr()];
-          this.expect(']').next();
+          if (this.expect(']')) this.next();
         }
       } else {
         result = this.read_expr();
       }
-      this.expect('}').next();
+      if (this.expect('}')) this.next();
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       result = this.next().read_variable(false, false, false);
-      this.expect('}').next();
+      if (this.expect('}')) this.next();
     } else if (this.token === '[') {
       result = ['offset', result, this.next().read_expr()];
-      this.expect(']').next();
+      if (this.expect(']')) this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
       result = this.read_variable(false, true, false);
     } else {
@@ -180,7 +179,7 @@ module.exports = {
         this.tok.T_CURLY_OPEN,
         this.tok.T_DOLLAR_OPEN_CURLY_BRACES,
         this.tok.T_ENCAPSED_AND_WHITESPACE
-      ])
+      ]);
     }
     return result;
   }
@@ -207,7 +206,7 @@ module.exports = {
         'bin', '.', result[3], this.read_encapsed_string_item()
       ];
     }
-    this.expect(expect).next();
+    if (this.expect(expect)) this.next();
     return result;
   }
   /**
