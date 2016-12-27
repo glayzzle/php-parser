@@ -273,12 +273,12 @@ module.exports = {
     while(this.token !== this.EOF && this.token !== '}') {
 
       if (this.token === this.tok.T_COMMENT) {
-        comment = this.read_comment();
+        result.push(this.read_comment());
         continue;
       }
 
       if (this.token === this.tok.T_DOC_COMMENT) {
-        comment = this.read_doc_comment();
+        result.push(this.read_doc_comment());
         continue;
       }
 
@@ -294,8 +294,8 @@ module.exports = {
 
       // reads a function
       else if (this.token === this.tok.T_FUNCTION) {
-        var method = this.read_function_declaration(2);
-        (this.locations ? method[3] : method).push(flags);
+        var method = this.read_function_declaration(2, flags);
+        method.parseFlags(flags);
         result.push(method);
         this.expect(';').nextWithComments();
       } else {
