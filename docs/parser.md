@@ -64,6 +64,8 @@ Creates a new AST node
 
 expects an end of statement or end of file
 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ## expect
 
 Force the parser to check the current token.
@@ -81,7 +83,7 @@ be added to the program error stack and this function will return `false`.
 
 -   Throws **any** Error
 
-Returns **(Parser | False)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## text
 
@@ -392,6 +394,8 @@ read type hinting
 ```
 
 # read_if
+
+Reads an IF statement
 
 ```ebnf
  if ::= '(' expr ')' ':' ...

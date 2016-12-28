@@ -37,6 +37,7 @@ var Position = require('./ast/position');
  *     - [Coalesce](#coalesce)
  *     - [Include](#include)
  *     - [Assign](#assign)
+ *     - [If](#if)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
@@ -131,6 +132,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/array'),
   require('./ast/assign'),
   require('./ast/boolean'),
+  require('./ast/block'),
   require('./ast/class'),
   require('./ast/classconstant'),
   require('./ast/clone'),
@@ -145,6 +147,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/exit'),
   require('./ast/function'),
   require('./ast/identifier'),
+  require('./ast/if'),
   require('./ast/include'),
   require('./ast/inline'),
   require('./ast/interface'),

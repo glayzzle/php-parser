@@ -218,6 +218,8 @@ Creates a new AST node
 
 expects an end of statement or end of file
 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ## expect
 
 Force the parser to check the current token.
@@ -235,7 +237,7 @@ be added to the program error stack and this function will return `false`.
 
 -   Throws **any** Error
 
-Returns **(Parser | False)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## text
 
@@ -539,6 +541,8 @@ read type hinting
 
 # read_if
 
+Reads an IF statement
+
 ```ebnf
  if ::= '(' expr ')' ':' ...
 ```
@@ -835,6 +839,7 @@ Some samples of parsed code :
         -   [Coalesce](#coalesce)
         -   [Include](#include)
         -   [Assign](#assign)
+        -   [If](#if)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -962,17 +967,27 @@ Assigns a value to the specified target
 -   `right` **[Expression](#expression)** 
 -   `operator` **[String](#string)** 
 
-# Statement
-
-**Extends Node**
-
-Any statement.
-
 # Boolean
 
 **Extends Literal**
 
 Defines a boolean value (true/false)
+
+# Block
+
+**Extends Statement**
+
+A block statement, i.e., a sequence of statements surrounded by braces.
+
+**Properties**
+
+-   `children` **[Array](#array)&lt;[Node](#node)>** 
+
+# Statement
+
+**Extends Node**
+
+Any statement.
 
 # Class
 
@@ -988,6 +1003,26 @@ A class definition
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Declaration
+
+**Extends Statement**
+
+A declaration statement (function, class, interface...)
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## parseFlags
+
+Generic flags parser
+
+**Parameters**
+
+-   `flags` **[Array](#array)&lt;Integer>** 
+
+Returns **void** 
 
 # ClassConstant
 
@@ -1031,26 +1066,6 @@ Defines a namespace constant
 **Properties**
 
 -   `value` **([Node](#node) | null)** 
-
-# Declaration
-
-**Extends Statement**
-
-A declaration statement (function, class, interface...)
-
-**Properties**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## parseFlags
-
-Generic flags parser
-
-**Parameters**
-
--   `flags` **[Array](#array)&lt;Integer>** 
-
-Returns **void** 
 
 # Documentation
 
@@ -1177,6 +1192,19 @@ Defines an identifier node
 -   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+# If
+
+**Extends Statement**
+
+Defines a if statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Array](#array)&lt;[Node](#node)>** 
+-   `alternate` **([Block](#block) \| [If](#if) | null)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Include
 
 **Extends Statement**
@@ -1251,16 +1279,6 @@ The main program node
 
 -   `name` **[Identifier](#identifier)** 
 -   `withBrackets` **[Boolean](#boolean)** 
-
-# Block
-
-**Extends Statement**
-
-A block statement, i.e., a sequence of statements surrounded by braces.
-
-**Properties**
-
--   `children` **[Array](#array)&lt;[Node](#node)>** 
 
 # Number
 
