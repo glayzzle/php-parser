@@ -85,6 +85,45 @@ describe('Test loops statements (for, while)', function() {
   });
 
   describe('Test foreach', function() {
+    var ast = parser.parseEval([
+      'foreach(&$foo as $v)',
+      'echo "$k -> $v\n";',
+      'foreach([[1,2], [3,4]] as list($a, $b) => [$c, $d]):',
+      'echo "$a -> $b\n";',
+      'endforeach;'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    it('test kind & form', function() {
+      ast.children[0].kind.should.be.exactly('foreach');
+      ast.children[0].shortForm.should.be.exactly(false);
+      ast.children[1].kind.should.be.exactly('foreach');
+      ast.children[1].shortForm.should.be.exactly(true);
+
+    });
+    it('test source', function() {
+      ast.children[0].source.kind.should.be.exactly('variable');
+      ast.children[0].source.byref.should.be.exactly(true);
+      ast.children[0].source.identifier.should.be.exactly('$foo');
+      ast.children[1].source.kind.should.be.exactly('array');
+      ast.children[1].source.items.length.should.be.exactly(2);
+    });
+    it('test key', function() {
+      should.equal(ast.children[0].key, null);
+      ast.children[1].key.kind.should.be.exactly('list');
+      ast.children[1].key.arguments.length.should.be.exactly(2);
+    });
+    it('test value', function() {
+      ast.children[0].value.kind.should.be.exactly('variable');
+      ast.children[0].value.identifier.should.be.exactly('$v');
+      ast.children[1].value.kind.should.be.exactly('array');
+      ast.children[1].value.shortForm.should.be.exactly(true);
+    });
+    it('test body', function() {
+      ast.children[0].body.kind.should.be.exactly('echo');
+      ast.children[1].body.kind.should.be.exactly('block');
+      ast.children[1].body.children[0].kind.should.be.exactly('echo');
+    });
   });
 
 });

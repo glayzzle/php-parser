@@ -415,15 +415,25 @@ Returns **For**
 
 # read_foreach
 
+Reads a foreach loop
+
 ```ebnf
 foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
 ```
 
+Returns **Foreach** 
+
 # read_foreach_variable
 
+Reads a foreach variable statement
+
 ```ebnf
-foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
+foreach_variable = variable |
+ T_LIST '(' assignment_list ')' |
+ '[' array_pair_list ']'
 ```
+
+Returns **Expression** 
 
 # read_start
 
@@ -647,12 +657,13 @@ Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 Reads a variable
 
 ```ebnf
-  variable ::= ...complex @todo
+  variable ::= &? ...complex @todo
 ```
 
 Some samples of parsed code :
 
 ```php
+ &$var                      // simple var
  $var                      // simple var
  classname::CONST_NAME     // dynamic class name with const retrieval
  foo()                     // function call

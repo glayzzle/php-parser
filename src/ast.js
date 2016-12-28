@@ -1,7 +1,7 @@
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
- * @url http://glayzzle.com
+ * @url http://gla*yzzle.com
  */
 
 var Location = require('./ast/location');
@@ -41,11 +41,13 @@ var Position = require('./ast/position');
  *     - [Do](#do)
  *     - [While](#while)
  *     - [For](#for)
+ *     - [Foreach](#foreach)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
  *     - [Sys](#sys)
  *       - [Echo](#echo)
+ *       - [List](#list)
  *       - [Print](#print)
  *       - [Isset](#isset)
  *       - [Unset](#unset)
@@ -150,6 +152,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/eval'),
   require('./ast/exit'),
   require('./ast/for'),
+  require('./ast/foreach'),
   require('./ast/function'),
   require('./ast/identifier'),
   require('./ast/if'),
@@ -157,6 +160,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/inline'),
   require('./ast/interface'),
   require('./ast/isset'),
+  require('./ast/list'),
   require('./ast/literal'),
   require('./ast/magic'),
   require('./ast/method'),

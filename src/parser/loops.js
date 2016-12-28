@@ -97,46 +97,60 @@ module.exports = {
     return result(init, test, increment, body, shortForm);
   }
   /**
+   * Reads a foreach loop
    * ```ebnf
    * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
    * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L438
+   * @return {Foreach}
    */
   ,read_foreach: function() {
-    var result = this.node('foreach'), item = null, key = null;
+    var result = this.node('foreach'),
+      source = null,
+      key = null,
+      value = null,
+      body = null,
+      shortForm = false;
     if (this.expect('(')) this.next();
-    var expr = this.read_expr();
+    source = this.read_expr();
     if (this.expect(this.tok.T_AS)) {
       this.next();
-      item = this.read_foreach_variable();
+      value = this.read_foreach_variable();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
-        key = item;
-        item = this.next().read_foreach_variable();
+        key = value;
+        value = this.next().read_foreach_variable();
       }
     }
 
     if (this.expect(')')) this.next();
-    var body = [];
+
     if (this.token === ':') {
+      shortForm = true;
       body = this.read_short_form(this.tok.T_ENDFOREACH);
     } else {
       body = this.read_statement();
     }
-    return result(expr, key, item, body);
+    return result(source, key, value, body, shortForm);
   }
   /**
+   * Reads a foreach variable statement
    * ```ebnf
-   * foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
+   * foreach_variable = variable |
+   *  T_LIST '(' assignment_list ')' |
+   *  '[' array_pair_list ']'
    * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L544
+   * @return {Expression}
    */
   ,read_foreach_variable: function() {
-      if (this.token === '&') {
-        return this.next().read_variable(false, false, true);
-      } else if (this.token === this.tok.T_LIST) {
+      if (this.token === this.tok.T_LIST) {
         var result = this.node('list');
         if (this.next().expect('(')) this.next();
         var assignList = this.read_assignment_list();
         if (this.expect(')')) this.next();
-        return result(assignList, false);
+        return result(assignList);
+      } else if (this.token === '[') {
+        return this.read_array();
       } else {
         return this.read_variable(false, false, false);
       }

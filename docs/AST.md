@@ -61,11 +61,13 @@ Returns **[Function](#function)**
         -   [Do](#do)
         -   [While](#while)
         -   [For](#for)
+        -   [Foreach](#foreach)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
+            -   [List](#list)
             -   [Print](#print)
             -   [Isset](#isset)
             -   [Unset](#unset)
@@ -316,6 +318,20 @@ Defines a for iterator
 -   `body` **[Statement](#statement)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+# Foreach
+
+**Extends Statement**
+
+Defines a foreach iterator
+
+**Properties**
+
+-   `source` **[Expression](#expression)** 
+-   `key` **([Expression](#expression) | null)** 
+-   `value` **[Expression](#expression)** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Function
 
 **Extends Declaration**
@@ -387,6 +403,12 @@ An interface definition
 **Extends Sys**
 
 Defines an isset call
+
+# List
+
+**Extends Sys**
+
+Defines list assignment
 
 # Literal
 

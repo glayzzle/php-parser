@@ -17,7 +17,7 @@ var KIND = 'for';
  * @property {Expression[]} increment
  * @property {Statement} body
  * @property {boolean} shortForm
- * @see http://php.net/manual/fr/control-structures.for.php
+ * @see http://php.net/manual/en/control-structures.for.php
  */
 var For = Statement.extends(function For(init, test, increment, body, shortForm, location) {
   Statement.apply(this, [KIND, location]);

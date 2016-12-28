@@ -569,15 +569,25 @@ Returns **[For](#for)**
 
 # read_foreach
 
+Reads a foreach loop
+
 ```ebnf
 foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
 ```
 
+Returns **[Foreach](#foreach)** 
+
 # read_foreach_variable
 
+Reads a foreach variable statement
+
 ```ebnf
-foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
+foreach_variable = variable |
+ T_LIST '(' assignment_list ')' |
+ '[' array_pair_list ']'
 ```
+
+Returns **[Expression](#expression)** 
 
 # read_start
 
@@ -801,12 +811,13 @@ Returns **[Array](#array)&lt;[Identifier](#identifier)>**
 Reads a variable
 
 ```ebnf
-  variable ::= ...complex @todo
+  variable ::= &? ...complex @todo
 ```
 
 Some samples of parsed code :
 
 ```php
+ &$var                      // simple var
  $var                      // simple var
  classname::CONST_NAME     // dynamic class name with const retrieval
  foo()                     // function call
@@ -871,11 +882,13 @@ Some samples of parsed code :
         -   [Do](#do)
         -   [While](#while)
         -   [For](#for)
+        -   [Foreach](#foreach)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
+            -   [List](#list)
             -   [Print](#print)
             -   [Isset](#isset)
             -   [Unset](#unset)
@@ -1224,6 +1237,20 @@ Defines a for iterator
 -   `body` **[Statement](#statement)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+# Foreach
+
+**Extends Statement**
+
+Defines a foreach iterator
+
+**Properties**
+
+-   `source` **[Expression](#expression)** 
+-   `key` **([Expression](#expression) | null)** 
+-   `value` **[Expression](#expression)** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Function
 
 **Extends Declaration**
@@ -1295,6 +1322,12 @@ An interface definition
 **Extends Sys**
 
 Defines an isset call
+
+# List
+
+**Extends Sys**
+
+Defines list assignment
 
 # Literal
 
