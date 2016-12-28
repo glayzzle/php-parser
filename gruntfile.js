@@ -63,7 +63,7 @@ module.exports = function(grunt) {
           version: "<%= pkg.version %>",
           name: "<%= pkg.name %>",
           filename: "README.md",
-          shallow: false
+          shallow: true
         },
         files: [{
           src: ['src/index.js']
