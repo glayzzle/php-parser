@@ -58,6 +58,8 @@ Returns **[Function](#function)**
         -   [Include](#include)
         -   [Assign](#assign)
         -   [If](#if)
+        -   [Do](#do)
+        -   [While](#while)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -214,6 +216,17 @@ Generic flags parser
 
 Returns **void** 
 
+# Do
+
+**Extends Statement**
+
+Defines a do/while statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+
 # Documentation
 
 **Extends Node**
@@ -299,7 +312,7 @@ Defines a classic function
 -   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `body` **([Array](#array)&lt;[Node](#node)> | null)** 
+-   `body` **([Block](#block) | null)** 
 
 # Identifier
 
@@ -321,7 +334,7 @@ Defines a if statement
 **Properties**
 
 -   `test` **[Expression](#expression)** 
--   `body` **[Array](#array)&lt;[Node](#node)>** 
+-   `body` **[Block](#block)** 
 -   `alternate` **([Block](#block) \| [If](#if) | null)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
@@ -601,3 +614,15 @@ be any expression in general, an expression can also be a pattern.
 
 -   `identifier` **([String](#string) \| [Node](#node))** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# While
+
+**Extends Statement**
+
+Defines a while statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

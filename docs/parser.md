@@ -115,36 +115,6 @@ Check if token is of specified type
 
 convert an token to ast \*
 
-## read_list
-
-Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
-
-```ebnf
-list ::= separator? ( item separator )* item
-```
-
-**Parameters**
-
--   `item`  
--   `separator`  
--   `preserveFirstSeparator`  
-
-## read_name_list
-
-Reads a list of names separated by a comma
-
-```ebnf
-name_list ::= namespace (',' namespace)*
-```
-
-Sample code :
-
-```php
-<?php class foo extends bar, baz { }
-```
-
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Identifier>** 
-
 # ignoreStack
 
 outputs some debug information on current token \*
@@ -411,10 +381,6 @@ reads an elseif (expr): statements
 
 # read_else_short
 
-# read_short_form
-
-Reads a short form of tokens
-
 # read_while
 
 Reads a while statement
@@ -613,6 +579,40 @@ Reads a switch statement
          )*
          (T_FINALLY '{' inner_statement* '}')?
 ```
+
+# read_short_form
+
+Reads a short form of tokens
+
+**Parameters**
+
+-   `token` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** The ending token
+
+Returns **Block** 
+
+# read_list
+
+Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
+
+```ebnf
+list ::= separator? ( item separator )* item
+```
+
+# read_name_list
+
+Reads a list of names separated by a comma
+
+```ebnf
+name_list ::= namespace (',' namespace)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Identifier>** 
 
 # read_variable
 

@@ -269,36 +269,6 @@ Check if token is of specified type
 
 convert an token to ast \*
 
-## read_list
-
-Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
-
-```ebnf
-list ::= separator? ( item separator )* item
-```
-
-**Parameters**
-
--   `item`  
--   `separator`  
--   `preserveFirstSeparator`  
-
-## read_name_list
-
-Reads a list of names separated by a comma
-
-```ebnf
-name_list ::= namespace (',' namespace)*
-```
-
-Sample code :
-
-```php
-<?php class foo extends bar, baz { }
-```
-
-Returns **[Array](#array)&lt;[Identifier](#identifier)>** 
-
 # ignoreStack
 
 outputs some debug information on current token \*
@@ -440,6 +410,14 @@ Reads a constant declaration
 
 Returns **[Constant](#constant)** [:link:](AST.md#constant)
 
+# read_comment
+
+Comments with // or # or / _ ... _ /
+
+# read_doc_comment
+
+Comments with / \*_ ... _ /
+
 # read_expr_item
 
 ```ebnf
@@ -556,10 +534,6 @@ reads an if expression : '(' expr ')'
 reads an elseif (expr): statements
 
 # read_else_short
-
-# read_short_form
-
-Reads a short form of tokens
 
 # read_while
 
@@ -760,13 +734,39 @@ Reads a switch statement
          (T_FINALLY '{' inner_statement* '}')?
 ```
 
-# read_comment
+# read_short_form
 
-Comments with // or # or / _ ... _ /
+Reads a short form of tokens
 
-# read_doc_comment
+**Parameters**
 
-Comments with / \*_ ... _ /
+-   `token` **[Number](#number)** The ending token
+
+Returns **[Block](#block)** 
+
+# read_list
+
+Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
+
+```ebnf
+list ::= separator? ( item separator )* item
+```
+
+# read_name_list
+
+Reads a list of names separated by a comma
+
+```ebnf
+name_list ::= namespace (',' namespace)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **[Array](#array)&lt;[Identifier](#identifier)>** 
 
 # read_variable
 
@@ -840,6 +840,8 @@ Some samples of parsed code :
         -   [Include](#include)
         -   [Assign](#assign)
         -   [If](#if)
+        -   [Do](#do)
+        -   [While](#while)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -967,6 +969,12 @@ Assigns a value to the specified target
 -   `right` **[Expression](#expression)** 
 -   `operator` **[String](#string)** 
 
+# Statement
+
+**Extends Node**
+
+Any statement.
+
 # Boolean
 
 **Extends Literal**
@@ -983,12 +991,6 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
 
-# Statement
-
-**Extends Node**
-
-Any statement.
-
 # Class
 
 **Extends Declaration**
@@ -1003,26 +1005,6 @@ A class definition
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-# Declaration
-
-**Extends Statement**
-
-A declaration statement (function, class, interface...)
-
-**Properties**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## parseFlags
-
-Generic flags parser
-
-**Parameters**
-
--   `flags` **[Array](#array)&lt;Integer>** 
-
-Returns **void** 
 
 # ClassConstant
 
@@ -1067,6 +1049,37 @@ Defines a namespace constant
 
 -   `value` **([Node](#node) | null)** 
 
+# Declaration
+
+**Extends Statement**
+
+A declaration statement (function, class, interface...)
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## parseFlags
+
+Generic flags parser
+
+**Parameters**
+
+-   `flags` **[Array](#array)&lt;Integer>** 
+
+Returns **void** 
+
+# Do
+
+**Extends Statement**
+
+Defines a do/while statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+
 # Documentation
 
 **Extends Node**
@@ -1108,12 +1121,6 @@ Returns **[Function](#function)**
 
 Defines system based call
 
-# Empty
-
-**Extends Sys**
-
-Defines an empty check call
-
 # Sys
 
 **Extends Statement**
@@ -1123,6 +1130,12 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
+
+# Empty
+
+**Extends Sys**
+
+Defines an empty check call
 
 # Entry
 
@@ -1179,7 +1192,7 @@ Defines a classic function
 -   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `body` **([Array](#array)&lt;[Node](#node)> | null)** 
+-   `body` **([Block](#block) | null)** 
 
 # Identifier
 
@@ -1201,7 +1214,7 @@ Defines a if statement
 **Properties**
 
 -   `test` **[Expression](#expression)** 
--   `body` **[Array](#array)&lt;[Node](#node)>** 
+-   `body` **[Block](#block)** 
 -   `alternate` **([Block](#block) \| [If](#if) | null)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
@@ -1409,3 +1422,15 @@ be any expression in general, an expression can also be a pattern.
 
 -   `identifier` **([String](#string) \| [Node](#node))** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# While
+
+**Extends Statement**
+
+Defines a while statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
