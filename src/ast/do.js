@@ -13,7 +13,7 @@ var KIND = 'do';
  * @constructor Do
  * @extends {Statement}
  * @property {Expression} test
- * @property {Block} body
+ * @property {Statement} body
  */
 var Do = Statement.extends(function Do(test, body, location) {
   Statement.apply(this, [KIND, location]);

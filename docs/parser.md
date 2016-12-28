@@ -385,6 +385,34 @@ reads an elseif (expr): statements
 
 Reads a while statement
 
+```ebnf
+while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')
+```
+
+Returns **While** 
+
+# read_do
+
+Reads a do / while loop
+
+```ebnf
+do ::= T_DO statement T_WHILE '(' expr ')' ';'
+```
+
+Returns **Do** 
+
+# read_for
+
+Read a for incremental loop
+
+```ebnf
+for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
+for_statement ::= statement | ':' inner_statement_list T_ENDFOR ';'
+for_exprs ::= expr? (',' expr)*
+```
+
+Returns **For** 
+
 # read_foreach
 
 ```ebnf

@@ -40,6 +40,7 @@ var Position = require('./ast/position');
  *     - [If](#if)
  *     - [Do](#do)
  *     - [While](#while)
+ *     - [For](#for)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
@@ -148,6 +149,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/error'),
   require('./ast/eval'),
   require('./ast/exit'),
+  require('./ast/for'),
   require('./ast/function'),
   require('./ast/identifier'),
   require('./ast/if'),

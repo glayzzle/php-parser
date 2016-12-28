@@ -13,7 +13,7 @@ var KIND = 'while';
  * @constructor While
  * @extends {Statement}
  * @property {Expression} test
- * @property {Block} body
+ * @property {Statement} body
  * @property {boolean} shortForm
  */
 var While = Statement.extends(function While(test, body, shortForm, location) {

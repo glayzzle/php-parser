@@ -60,6 +60,7 @@ Returns **[Function](#function)**
         -   [If](#if)
         -   [Do](#do)
         -   [While](#while)
+        -   [For](#for)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -225,7 +226,7 @@ Defines a do/while statement
 **Properties**
 
 -   `test` **[Expression](#expression)** 
--   `body` **[Block](#block)** 
+-   `body` **[Statement](#statement)** 
 
 # Documentation
 
@@ -300,6 +301,20 @@ Defines an exit / die call
 
 Any expression node. Since the left-hand side of an assignment may
 be any expression in general, an expression can also be a pattern.
+
+# For
+
+**Extends Statement**
+
+Defines a for iterator
+
+**Properties**
+
+-   `init` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `test` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `increment` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Function
 
@@ -624,5 +639,5 @@ Defines a while statement
 **Properties**
 
 -   `test` **[Expression](#expression)** 
--   `body` **[Block](#block)** 
+-   `body` **[Statement](#statement)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

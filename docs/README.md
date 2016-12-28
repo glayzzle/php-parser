@@ -539,6 +539,34 @@ reads an elseif (expr): statements
 
 Reads a while statement
 
+```ebnf
+while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')
+```
+
+Returns **[While](#while)** 
+
+# read_do
+
+Reads a do / while loop
+
+```ebnf
+do ::= T_DO statement T_WHILE '(' expr ')' ';'
+```
+
+Returns **[Do](#do)** 
+
+# read_for
+
+Read a for incremental loop
+
+```ebnf
+for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
+for_statement ::= statement | ':' inner_statement_list T_ENDFOR ';'
+for_exprs ::= expr? (',' expr)*
+```
+
+Returns **[For](#for)** 
+
 # read_foreach
 
 ```ebnf
@@ -842,6 +870,7 @@ Some samples of parsed code :
         -   [If](#if)
         -   [Do](#do)
         -   [While](#while)
+        -   [For](#for)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -1006,6 +1035,26 @@ A class definition
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+# Declaration
+
+**Extends Statement**
+
+A declaration statement (function, class, interface...)
+
+**Properties**
+
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## parseFlags
+
+Generic flags parser
+
+**Parameters**
+
+-   `flags` **[Array](#array)&lt;Integer>** 
+
+Returns **void** 
+
 # ClassConstant
 
 **Extends Constant**
@@ -1049,26 +1098,6 @@ Defines a namespace constant
 
 -   `value` **([Node](#node) | null)** 
 
-# Declaration
-
-**Extends Statement**
-
-A declaration statement (function, class, interface...)
-
-**Properties**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## parseFlags
-
-Generic flags parser
-
-**Parameters**
-
--   `flags` **[Array](#array)&lt;Integer>** 
-
-Returns **void** 
-
 # Do
 
 **Extends Statement**
@@ -1078,7 +1107,7 @@ Defines a do/while statement
 **Properties**
 
 -   `test` **[Expression](#expression)** 
--   `body` **[Block](#block)** 
+-   `body` **[Statement](#statement)** 
 
 # Documentation
 
@@ -1180,6 +1209,20 @@ Defines an exit / die call
 **Properties**
 
 -   `status` **([Node](#node) | null)** 
+
+# For
+
+**Extends Statement**
+
+Defines a for iterator
+
+**Properties**
+
+-   `init` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `test` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `increment` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Function
 
@@ -1432,5 +1475,5 @@ Defines a while statement
 **Properties**
 
 -   `test` **[Expression](#expression)** 
--   `body` **[Block](#block)** 
+-   `body` **[Statement](#statement)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

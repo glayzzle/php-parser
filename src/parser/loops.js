@@ -7,6 +7,11 @@
 module.exports = {
   /**
    * Reads a while statement
+   * ```ebnf
+   * while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')
+   * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L587
+   * @return {While}
    */
   read_while: function() {
     var result = this.node('while'),
@@ -25,6 +30,14 @@ module.exports = {
     }
     return result(test, body, shortForm);
   }
+  /**
+   * Reads a do / while loop
+   * ```ebnf
+   * do ::= T_DO statement T_WHILE '(' expr ')' ';'
+   * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L423
+   * @return {Do}
+   */
   ,read_do: function() {
     var result = this.node('do'),
       test = null,
@@ -39,35 +52,49 @@ module.exports = {
     }
     return result(test, body);
   }
+  /**
+   * Read a for incremental loop
+   * ```ebnf
+   * for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
+   * for_statement ::= statement | ':' inner_statement_list T_ENDFOR ';'
+   * for_exprs ::= expr? (',' expr)*
+   * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L425
+   * @return {For}
+   */
   ,read_for: function() {
-    var result = this.node('for');
+    var result = this.node('for'),
+      init = [],
+      test = [],
+      increment = [],
+      body = null,
+      shortForm = false;
     if (this.expect('(')) this.next();
-    var expr1 = null, expr2 = null, expr3 = null;
     if (this.token !== ';') {
-      expr1 = this.read_list(this.read_expr, ',');
+      init = this.read_list(this.read_expr, ',');
       if (this.expect(';')) this.next();
     } else {
       this.next();
     }
     if (this.token !== ';') {
-      expr2 = this.read_list(this.read_expr, ',');
+      test = this.read_list(this.read_expr, ',');
       if (this.expect(';')) this.next();
     } else {
       this.next();
     }
     if (this.token !== ')') {
-      expr3 = this.read_list(this.read_expr, ',');
+      increment = this.read_list(this.read_expr, ',');
       if (this.expect(')')) this.next();
     } else {
       this.next();
     }
-    var body = null;
     if (this.token === ':') {
+      shortForm = true;
       body = this.read_short_form(this.tok.T_ENDFOR);
     } else  {
       body = this.read_statement();
     }
-    return result(expr1, expr2, expr3, body);
+    return result(init, test, increment, body, shortForm);
   }
   /**
    * ```ebnf
