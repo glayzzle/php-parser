@@ -4,7 +4,7 @@
  * @url http://glayzzle.com
  */
 
-// DEFINE LONG SIZE
+/* istanbul ignore else  */
 if (process.arch == 'x64') {
   var SIZEOF_LONG = 8;
   var MAX_LENGTH_OF_LONG = 20;
