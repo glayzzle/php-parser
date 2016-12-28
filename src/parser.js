@@ -79,7 +79,7 @@ var parser = function(lexer, ast) {
     ],
     'VARIABLE': [
       this.tok.T_VARIABLE,
-      '$',
+      '$', '&',
       this.tok.T_NS_SEPARATOR,
       this.tok.T_STRING,
       this.tok.T_STATIC

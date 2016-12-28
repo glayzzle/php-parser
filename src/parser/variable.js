@@ -8,11 +8,12 @@ module.exports = {
    * Reads a variable
    *
    * ```ebnf
-   *   variable ::= ...complex @todo
+   *   variable ::= &? ...complex @todo
    * ```
    *
    * Some samples of parsed code :
    * ```php
+   *  &$var                      // simple var
    *  $var                      // simple var
    *  classname::CONST_NAME     // dynamic class name with const retrieval
    *  foo()                     // function call
@@ -21,6 +22,12 @@ module.exports = {
    */
   read_variable: function(read_only, encapsed, byref) {
     var result;
+
+    // check the byref flag
+    if (!byref && this.token === '&') {
+      byref = true;
+      this.next();
+    }
 
     // reads the entry point
     if (this.is([this.tok.T_VARIABLE, '$'])) {
