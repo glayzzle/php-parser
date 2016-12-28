@@ -70,6 +70,12 @@ describe('Test AST structure', function() {
     ast.children[3].kind.should.be.exactly('unset');
     ast.children[4].kind.should.be.exactly('empty');
   });
+  it('test list statements', function() {
+    var ast = parser.parseEval([
+      'list($a, $b) = [1, 2];'
+    ].join('\n'));
+    // @todo
+  });
   it('should be variable', function() {
     // @todo
   });
