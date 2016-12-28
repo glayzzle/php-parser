@@ -354,11 +354,13 @@ module.exports = {
         case this.tok.T_SR_EQUAL:
           return ['set', expr, ['bin', '>>', expr, this.next().read_expr()]];
         case this.tok.T_INC:
+          var result = this.node('post');
           this.next();
-          return ['post', '+', expr];
+          return result('+', expr);
         case this.tok.T_DEC:
+          var result = this.node('post');
           this.next();
-          return ['post', '-', expr];
+          return result('+', expr);
       }
     } else if (this.is('SCALAR')) {
       expr = this.read_scalar();

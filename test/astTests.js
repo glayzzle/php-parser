@@ -79,9 +79,6 @@ describe('Test AST structure', function() {
   it('should be variable', function() {
     // @todo
   });
-  it('should be assign', function() {
-    // @todo
-  });
   it('test literals', function() {
     // @todo string / numbers / booleans
   });

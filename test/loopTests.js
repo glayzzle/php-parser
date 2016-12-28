@@ -54,6 +54,7 @@ describe('Test loops statements (for, while)', function() {
       'echo $i;',
       'for(;;):',
       'echo $ok;',
+      'continue;;',
       'endfor;'
     ].join('\n'), {
       parser: { debug: false }

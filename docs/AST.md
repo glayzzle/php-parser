@@ -39,12 +39,15 @@ Returns **[Function](#function)**
     -   [TraitPrecedence](#traitprecedence)
     -   [Entry](#entry)
     -   [Case](#case)
+    -   [Label](#label)
     -   [Doc](#doc)
     -   [Error](#error)
     -   [Expression](#expression)
         -   [Array](#array)
         -   [Variable](#variable)
         -   [ConstRef](#constref)
+        -   [Operation](#operation)
+            -   [Post](#post)
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
@@ -65,6 +68,7 @@ Returns **[Function](#function)**
         -   [For](#for)
         -   [Foreach](#foreach)
         -   [Switch](#switch)
+        -   [Goto](#goto)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -381,6 +385,16 @@ Defines a classic function
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `body` **([Block](#block) | null)** 
 
+# Goto
+
+**Extends Statement**
+
+Defines goto statement
+
+**Properties**
+
+-   `label` **[String](#string)** 
+
 # Identifier
 
 **Extends Node**
@@ -439,6 +453,16 @@ An interface definition
 **Extends Sys**
 
 Defines an isset call
+
+# Label
+
+**Extends Node**
+
+A label statement (referenced by goto)
+
+**Properties**
+
+-   `name` **[String](#string)** 
 
 # List
 
@@ -532,6 +556,12 @@ Returns **[Function](#function)**
 
 Defines a numeric value
 
+# Operation
+
+**Extends Expression**
+
+Defines binary operations
+
 # Parameter
 
 **Extends Declaration**
@@ -560,6 +590,17 @@ Each Position object consists of a line number (1-indexed) and a column number (
 -   `line` **[Number](#number)** 
 -   `column` **[Number](#number)** 
 -   `offset` **[Number](#number)** 
+
+# Post
+
+**Extends Operation**
+
+Defines a post operation `$i++` or `$i--`
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Variable](#variable)** 
 
 # Print
 
