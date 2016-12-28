@@ -14,7 +14,7 @@ var KIND          = 'function';
  * @property {Parameter[]} arguments
  * @property {Identifier} type
  * @property {boolean} byref
- * @property {Node[]|null} body
+ * @property {Block|null} body
  */
 var fn = Declaration.extends(function _Function(name, args, byref, type, location) {
   Declaration.apply(this, [KIND, name, location]);

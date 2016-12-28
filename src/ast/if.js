@@ -13,7 +13,7 @@ var KIND = 'if';
  * @constructor If
  * @extends {Statement}
  * @property {Expression} test
- * @property {Node[]} body
+ * @property {Block} body
  * @property {Block|If|null} alternate
  * @property {boolean} shortForm
  */
