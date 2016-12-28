@@ -49,6 +49,9 @@ var Position = require('./ast/position');
  *     - [Foreach](#foreach)
  *     - [Switch](#switch)
  *     - [Goto](#goto)
+ *     - [Try](#try)
+ *     - [Catch](#catch)
+ *     - [Call](#call)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
@@ -146,7 +149,9 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/block'),
   require('./ast/boolean'),
   require('./ast/break'),
+  require('./ast/call'),
   require('./ast/case'),
+  require('./ast/catch'),
   require('./ast/class'),
   require('./ast/classconstant'),
   require('./ast/clone'),
@@ -192,6 +197,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/traitalias'),
   require('./ast/traitprecedence'),
   require('./ast/traituse'),
+  require('./ast/try'),
   require('./ast/unset'),
   require('./ast/variable'),
   require('./ast/while')

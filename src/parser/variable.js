@@ -97,7 +97,9 @@ module.exports = {
           if (read_only) {
             return result;
           } else {
-            result = ['call', result,  this.read_function_argument_list()];
+            result = this.node('call')(
+              result,  this.read_function_argument_list()
+            );
           }
           break;
         case '[':

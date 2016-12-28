@@ -36,7 +36,7 @@ module.exports = {
       } else if (this.token === '(') {
         // resolve ambuiguity between namespace & function call
         return this.node('call')(
-          ['ns', name.slice(1)]
+          ['ns', name.slice(1)] // @todo
           , this.read_function_argument_list()
         );
       } else {

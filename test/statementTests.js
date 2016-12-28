@@ -16,4 +16,28 @@ describe('Test statements', function() {
     ast.children[2].kind.should.be.exactly('goto');
     ast.children[2].label.should.be.exactly('start');
   });
+  it('test try', function() {
+    var ast = parser.parseEval([
+      'try {',
+      '  foo();',
+      '} catch(FooError|BarError $err) {',
+      '  var_dump($err);',
+      '} finally {',
+      '  clean();',
+      '}'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    ast.children[0].kind.should.be.exactly('try');
+    ast.children[0].body.kind.should.be.exactly('block');
+    ast.children[0].body.children[0].kind.should.be.exactly('call');
+    ast.children[0].body.children[0].what.name.should.be.exactly('foo');
+    ast.children[0].catches[0].kind.should.be.exactly('catch');
+    ast.children[0].catches[0].what.length.should.be.exactly(2);
+    ast.children[0].catches[0].what[0].name.should.be.exactly('FooError');
+    ast.children[0].catches[0].what[1].name.should.be.exactly('BarError');
+    ast.children[0].catches[0].variable.kind.should.be.exactly('variable');
+    ast.children[0].catches[0].variable.identifier.should.be.exactly('$err');
+    ast.children[0].always.kind.should.be.exactly('block');
+  });
 });

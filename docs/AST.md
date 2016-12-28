@@ -2,32 +2,6 @@
 
 # AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
 ## Class hierarchy
 
 -   [Location](#location)
@@ -69,6 +43,9 @@ Returns **[Function](#function)**
         -   [Foreach](#foreach)
         -   [Switch](#switch)
         -   [Goto](#goto)
+        -   [Try](#try)
+        -   [Catch](#catch)
+        -   [Call](#call)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -96,6 +73,32 @@ Returns **[Function](#function)**
 
 -   `withPositions`  
 -   `withSource`  
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## prepare
 
@@ -154,6 +157,16 @@ Defines a boolean value (true/false)
 
 A break statement
 
+# Call
+
+**Extends Statement**
+
+Executes a call statement
+
+**Properties**
+
+-   `arguments` **[Array](#array)&lt;Arguments>** 
+
 # Case
 
 **Extends Node**
@@ -164,6 +177,30 @@ A switch case statement
 
 -   `test` **([Expression](#expression) | null)** if null, means that the default case
 -   `body` **([Block](#block) | null)** 
+
+# Try
+
+**Extends Statement**
+
+Defines a catch statement
+
+**Properties**
+
+-   `what` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `variable` **[Variable](#variable)** 
+-   `body` **[Statement](#statement)** 
+
+# Try
+
+**Extends Statement**
+
+Defines a try statement
+
+**Properties**
+
+-   `body` **[Block](#block)** 
+-   `catches` **[Array](#array)&lt;Catch>** 
+-   `allways` **[Block](#block)** 
 
 # Class
 

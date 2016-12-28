@@ -620,6 +620,8 @@ Returns **Switch**
          (T_FINALLY '{' inner_statement* '}')?
 ```
 
+Returns **Try** 
+
 # read_short_form
 
 Reads a short form of tokens
