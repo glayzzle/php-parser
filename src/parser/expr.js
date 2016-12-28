@@ -123,11 +123,14 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_LIST:
-        var result = this.node('list');
+        var result = this.node('list'), assign = null;
+        var isInner = this.innerList;
+        if (!isInner) {
+          assign = this.node('assign');
+        }
         if (this.next().expect('(')) {
           this.next();
         }
-        var isInner = this.innerList;
 
         if (!this.innerList) this.innerList = true;
         var assignList = this.read_assignment_list();
@@ -152,13 +155,17 @@ module.exports = {
         if (!isInner) {
           this.innerList = false;
           if (this.expect('=')) {
-            return result(assignList, this.next().read_expr());
+            return assign(
+              result(assignList),
+              this.next().read_expr(),
+              '='
+            );
           } else {
             // fallback : list($a, $b);
-            return result(assignList, null);
+            return result(assignList);
           }
         } else {
-          return result(assignList, null);
+          return result(assignList);
         }
 
       case this.tok.T_CLONE:
