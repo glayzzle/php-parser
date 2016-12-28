@@ -38,11 +38,13 @@ Returns **[Function](#function)**
     -   [TraitAlias](#traitalias)
     -   [TraitPrecedence](#traitprecedence)
     -   [Entry](#entry)
+    -   [Case](#case)
     -   [Doc](#doc)
     -   [Error](#error)
     -   [Expression](#expression)
         -   [Array](#array)
         -   [Variable](#variable)
+        -   [ConstRef](#constref)
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
@@ -62,6 +64,7 @@ Returns **[Function](#function)**
         -   [While](#while)
         -   [For](#for)
         -   [Foreach](#foreach)
+        -   [Switch](#switch)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -141,6 +144,23 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 Defines a boolean value (true/false)
 
+# Break
+
+**Extends Node**
+
+A break statement
+
+# Case
+
+**Extends Node**
+
+A switch case statement
+
+**Properties**
+
+-   `test` **([Expression](#expression) | null)** if null, means that the default case
+-   `body` **([Block](#block) | null)** 
+
 # Class
 
 **Extends Declaration**
@@ -198,6 +218,22 @@ Defines a namespace constant
 **Properties**
 
 -   `value` **([Node](#node) | null)** 
+
+# ConstRef
+
+**Extends Expression**
+
+A constant reference
+
+**Properties**
+
+-   `name` **([String](#string) \| [Node](#node))** 
+
+# Continue
+
+**Extends Node**
+
+A continue statement
 
 # Declaration
 
@@ -554,6 +590,16 @@ Defines a class property
 -   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **([Node](#node) | null)** 
 
+# Return
+
+**Extends Node**
+
+A continue statement
+
+**Properties**
+
+-   `expr` **([Expression](#expression) | null)** 
+
 # Shell
 
 **Extends Literal**
@@ -575,6 +621,18 @@ Defines inline html output (treated as echo output)
 **Properties**
 
 -   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Switch
+
+**Extends Statement**
+
+Defines a switch statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Sys
 

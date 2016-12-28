@@ -3,30 +3,38 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
+
 module.exports = {
   /**
    * Reads a switch statement
    * ```ebnf
    *  switch ::= T_SWITCH '(' expr ')' switch_case_list
    * ```
+   * @return {Switch}
+   * @see http://php.net/manual/en/control-structures.switch.php
    */
   read_switch: function() {
     this.expect(this.tok.T_SWITCH) && this.next();
-    var result = this.node('switch');
+    var result = this.node('switch'), test, body, shortForm;
     this.expect('(') && this.next();
-    var expr = this.read_expr();
+    test = this.read_expr();
     this.expect(')') && this.next();
-    var cases = this.read_switch_case_list();
-    return result(expr, cases);
+    shortForm = (this.token === ':');
+    body = this.read_switch_case_list();
+    return result(test, body, shortForm);
   }
   /**
    * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
    * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L566
    */
   ,read_switch_case_list: function() {
     // DETECT SWITCH MODE
-    var expect = null, result = [];
+    var expect = null,
+      result = this.node('block'),
+      items = [];
     if (this.token === '{') {
       expect = '}';
     } else if (this.token === ':') {
@@ -35,9 +43,8 @@ module.exports = {
       this.expect(['{', ':']);
     }
     // OPTIONNAL ';'
-    this.next();
-    if (this.token === ';') {
-      // why ? it's compliant with spec but why ... wtf ?
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L570
+    if (this.next().token === ';') {
       this.next();
     }
     // IGNORE THE CLOSE TAG TOKEN WITH SHORT MODE
@@ -46,14 +53,14 @@ module.exports = {
     }
     // EXTRACTING CASES
     while(this.token !== this.EOF && this.token !== expect) {
-      result.push( this.read_case_list(expect) );
+      items.push( this.read_case_list(expect) );
     }
     // CHECK END TOKEN
     this.expect(expect) && this.next();
     if (expect === this.tok.T_ENDSWITCH) {
       this.expectEndOfStatement();
     }
-    return result;
+    return result(null, items);
   }
   /**
    * ```ebnf
@@ -61,12 +68,9 @@ module.exports = {
    * ```
    */
   ,read_case_list: function(stopToken) {
-    var result = {
-      condition: false,
-      body: []
-    };
+    var result = this.node('case'), test = null, body = null, items = [];
     if (this.token === this.tok.T_CASE) {
-      result.condition = this.next().read_expr();
+      test = this.next().read_expr();
     } else if (this.token === this.tok.T_DEFAULT) {
       // the defaut entry - no condition
       this.next();
@@ -74,14 +78,17 @@ module.exports = {
       this.expect([this.tok.T_CASE, this.tok.T_DEFAULT]);
     }
     this.expect([':', ';']) && this.next();
+    body = this.node('block');
     while(
       this.token != this.EOF
       && this.token !== stopToken
       && this.token !== this.tok.T_CASE
       && this.token !== this.tok.T_DEFAULT
     ) {
-      result.body.push(this.read_inner_statement());
+      items.push(this.read_inner_statement());
     }
-    return result;
+    return result(
+      test, items.length > 0 ? body(null, items) : null
+    );
   }
 };

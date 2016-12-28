@@ -197,20 +197,22 @@ module.exports = {
       case this.tok.T_DOC_COMMENT: return this.read_doc_comment();
 
       case this.tok.T_RETURN:
-      case this.tok.T_BREAK:
-      case this.tok.T_CONTINUE:
-        var mode;
-        switch(this.token) {
-          case this.tok.T_RETURN:     mode = 'return';    break;
-          case this.tok.T_BREAK:      mode = 'break';     break;
-          case this.tok.T_CONTINUE:   mode = 'continue';  break;
-        }
-        var expr = null;
+        var result = this.node('return'), expr = null;
         if (!this.next().is('EOS')) {
           expr = this.read_expr();
         }
         this.expectEndOfStatement();
-        return [mode, expr];
+        return result(expr);
+
+      case this.tok.T_BREAK:
+        var result = this.node('break');
+        this.next().expectEndOfStatement();
+        return result();
+
+      case this.tok.T_CONTINUE:
+        var result = this.node('continue');
+        this.next().expectEndOfStatement();
+        return result();
 
       case this.tok.T_GLOBAL:
         var items = this.next().read_list(this.read_simple_variable, ',');

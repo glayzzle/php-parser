@@ -18,11 +18,13 @@ var Position = require('./ast/position');
  *   - [TraitAlias](#traitalias)
  *   - [TraitPrecedence](#traitprecedence)
  *   - [Entry](#entry)
+ *   - [Case](#case)
  *   - [Doc](#doc)
  *   - [Error](#error)
  *   - [Expression](#expression)
  *     - [Array](#array)
  *     - [Variable](#variable)
+ *     - [ConstRef](#constref)
  *     - [Literal](#literal)
  *       - [Boolean](#boolean)
  *       - [String](#string)
@@ -42,6 +44,7 @@ var Position = require('./ast/position');
  *     - [While](#while)
  *     - [For](#for)
  *     - [Foreach](#foreach)
+ *     - [Switch](#switch)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
@@ -136,13 +139,17 @@ AST.prototype.prepare = function(kind, parser) {
 [
   require('./ast/array'),
   require('./ast/assign'),
-  require('./ast/boolean'),
   require('./ast/block'),
+  require('./ast/boolean'),
+  require('./ast/break'),
+  require('./ast/case'),
   require('./ast/class'),
   require('./ast/classconstant'),
   require('./ast/clone'),
   require('./ast/coalesce'),
   require('./ast/constant'),
+  require('./ast/constref'),
+  require('./ast/continue'),
   require('./ast/do'),
   require('./ast/doc'),
   require('./ast/echo'),
@@ -170,8 +177,10 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/print'),
   require('./ast/program'),
   require('./ast/property'),
+  require('./ast/return'),
   require('./ast/shell'),
   require('./ast/string'),
+  require('./ast/switch'),
   require('./ast/trait'),
   require('./ast/traitalias'),
   require('./ast/traitprecedence'),

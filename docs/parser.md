@@ -596,6 +596,8 @@ Reads a switch statement
  switch ::= T_SWITCH '(' expr ')' switch_case_list
 ```
 
+Returns **Switch** 
+
 # read_switch_case_list
 
 ```ebnf

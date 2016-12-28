@@ -47,7 +47,7 @@ module.exports = {
           result = result('boolean', false);
         } else {
           // @todo null keyword ?
-          result = ['constant', name];
+          result = result('constref', name);
         }
       } else {
         result = name;
