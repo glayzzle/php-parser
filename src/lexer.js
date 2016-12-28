@@ -321,10 +321,8 @@ lexer.prototype.lex = function() {
         )
       )
       || (
-        !this.mode_eval // ignore open/close tags
-        && token === this.tok.T_OPEN_TAG
-        //  || token === this.tok.T_CLOSE_TAG
-        //  )
+        // ignore open tags
+        token === this.tok.T_OPEN_TAG
       )
     ) {
       token = this.next() || this.lex();
