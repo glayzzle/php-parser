@@ -1,5 +1,14 @@
 # Releases
 
+## 1.0.0 : (2016-12-29)
+
+- All nodes are now converted to objects
+- Bruteforce tests are in a separate project
+- Improved tests with mocha
+- Many syntax fixes
+- Tests over a silent error mode
+- Release of a complete AST documentation
+
 ## 0.1.5 : (2016-12-27)
 
 > The 0.1.x version starts to be deprecated
