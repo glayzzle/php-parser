@@ -372,66 +372,11 @@ parser.prototype.read_token = function() {
   return result;
 };
 
-/**
- * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
- * ```ebnf
- * list ::= separator? ( item separator )* item
- * ```
- */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
-  var result = [];
-
-  if (this.token == separator) {
-    if (preserveFirstSeparator) result.push('');
-    this.next();
-  }
-
-  if (typeof (item) === "function") {
-    do {
-      result.push(item.apply(this, []));
-      if (this.token != separator) {
-        break;
-      }
-    } while(this.next().token != this.EOF);
-  } else {
-    if (this.expect(item)) {
-      result.push(this.text());
-    }
-    while (this.next().token != this.EOF) {
-      if (this.token != separator) break;
-      // trim current separator & check item
-      if (this.next().token != item) break;
-      result.push(this.text());
-    }
-  }
-  return result;
-};
-
-/**
- * Reads a list of names separated by a comma
- *
- * ```ebnf
- * name_list ::= namespace (',' namespace)*
- * ```
- *
- * Sample code :
- * ```php
- * <?php class foo extends bar, baz { }
- * ```
- *
- * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L726
- * @return {Identifier[]}
- */
-parser.prototype.read_name_list = function() {
-  return this.read_list(
-    this.read_namespace_name, ',', false
-  );
-};
-
 // extends the parser with syntax files
 [
   require('./parser/array.js'),
   require('./parser/class.js'),
+  require('./parser/comment.js'),
   require('./parser/expr.js'),
   require('./parser/function.js'),
   require('./parser/if.js'),
@@ -442,7 +387,7 @@ parser.prototype.read_name_list = function() {
   require('./parser/statement.js'),
   require('./parser/switch.js'),
   require('./parser/try.js'),
-  require('./parser/comment.js'),
+  require('./parser/utils.js'),
   require('./parser/variable.js')
 ].forEach(function (ext) {
   for(var k in ext) {
