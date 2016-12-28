@@ -68,4 +68,38 @@ describe('Test IF statements', function() {
       el2.kind.should.be.exactly('block');
     });
   });
+  describe('Improve coverage', function() {
+    var ast = parser.parseEval([
+      'if (true):',
+      '  echo "is true";',
+      'elseif (false):',
+      '  echo "false";',
+      'elseif (false):',
+      '  echo "false";',
+      'endif;',
+      'if (true):',
+      '  echo "is true";',
+      'else:',
+      '  echo "false";',
+      'endif;'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    it('should have 2 childs', function() {
+      ast.children.length.should.be.exactly(2);
+      ast.children[0].kind.should.be.exactly('if');
+      ast.children[0].shortForm.should.be.exactly(true);
+      ast.children[1].kind.should.be.exactly('if');
+      ast.children[1].shortForm.should.be.exactly(true);
+    });
+    it('test else branches', function() {
+      var el1 = ast.children[0].alternate;
+      el1.kind.should.be.exactly('if');
+      var el2 = el1.alternate;
+      el2.kind.should.be.exactly('if');
+      should.equal(el2.alternate, null); // no else
+      // else block
+      ast.children[1].alternate.kind.should.be.exactly('block');
+    });
+  });
 });
