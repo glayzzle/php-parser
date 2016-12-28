@@ -333,12 +333,13 @@ module.exports = {
    * ```
    */
   ,read_code_block: function(top) {
+    var result = this.node('block');
     this.expect('{') && this.nextWithComments();
     var body = top ?
       this.read_top_statements()
       : this.read_inner_statements()
     ;
     this.expect('}') && this.nextWithComments();
-    return body;
+    return result(null, body);
   }
 };

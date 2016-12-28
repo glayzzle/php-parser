@@ -59,7 +59,7 @@ describe('Test comments', function() {
       ast.children[1].kind.should.be.exactly("function");
       ast.children[1].name.should.be.exactly("name");
       ast.children[1].arguments.length.should.be.exactly(1);
-      var body = ast.children[1].body;
+      var body = ast.children[1].body.children;
       body[0].kind.should.be.exactly('doc');
       // @todo body[1].kind.should.be.exactly('return');
     });
