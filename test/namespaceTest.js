@@ -29,7 +29,7 @@ describe('Test namespace statements', function() {
   });
 
   var multiNs = parser.parseEval([
-    'namespace foo {',
+    'namespace \\foo {',
     '  $i++;',
     '}',
     'namespace {',

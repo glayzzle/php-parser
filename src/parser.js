@@ -183,6 +183,7 @@ parser.prototype.parse = function(code) {
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
+  message += ' on line ' + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
     throw new Error(message);
   }
@@ -219,7 +220,7 @@ parser.prototype.error = function(expect) {
   }
   this.token !== this.EOF
   return this.raiseError(
-    msg + ' on line ' + this.lexer.yylloc.first_line,
+    msg,
     msgExpect,
     expect,
     token

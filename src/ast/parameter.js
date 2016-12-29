@@ -15,13 +15,15 @@ var KIND = 'parameter';
  * @property {Node|null} value
  * @property {boolean} byref
  * @property {boolean} variadic
+ * @property {boolean} nullable
  */
-var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, location) {
+var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, nullable, location) {
   Declaration.apply(this, [KIND, name, location]);
   this.value = value;
   this.type = type;
   this.byref = isRef;
   this.variadic = isVariadic;
+  this.nullable = nullable;
 });
 
 module.exports = Parameter;

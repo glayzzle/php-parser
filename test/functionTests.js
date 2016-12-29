@@ -1,18 +1,22 @@
 var should = require("should");
 var parser = require('../src/index');
 
-/*describe('Function tests', function() {
+describe('Function tests', function() {
+  var ast = parser.parseEval(
+    'function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}'
+  );
 
-  it('test variadic', function () {
+  it('test description', function () {
     // Get result from parser
-    var ast = parser.parseEval('function &foo($a = 1, array &...$params) {}');
-    var fn = ast[1][0];
-    fn[0].should.be.exactly('function');
-    fn[1].should.be.exactly('foo');
+    ast.children[0].kind.should.be.exactly('function');
+    ast.children[0].name.should.be.exactly('foo');
+    ast.children[0].byref.should.be.exactly(true);
+    ast.children[0].nullable.should.be.exactly(true);
+    ast.children[0].type.name.should.be.exactly('boolean');
+  });
 
-    var args = fn[2];
-    args.length.should.be.exactly(2);
-
+  it('test arguments', function () {
+    /*
     // 1st param
     var arg1 = args[0];
     arg1[0].should.be.exactly('param');
@@ -31,6 +35,8 @@ var parser = require('../src/index');
     should.equal(arg2[3], null);
     arg2[4].should.be.exactly(true, 'byref');
     arg2[5].should.be.exactly(true, 'variadic');
+    */
   });
 
-});*/
+
+});

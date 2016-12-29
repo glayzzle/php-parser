@@ -69,7 +69,7 @@ module.exports = {
       this.next();
     }
     var isRef = this.is_reference();
-    var name = false, use = [], returnType = false;
+    var name = false, use = [], returnType = null, nullable = false;
     if (type !== 1) {
       if (this.expect(this.tok.T_STRING)) {
         name = this.text();
@@ -85,13 +85,17 @@ module.exports = {
       if (this.expect(')')) this.next();
     }
     if (this.token === ':') {
-      returnType = this.next().read_type();
+      if (this.next().token === '?') {
+        nullable = true;
+        this.next();
+      }
+      returnType = this.read_type();
     }
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType);
+      return result(params, isRef, use, returnType, nullable);
     }
-    return result(name, params, isRef, returnType);
+    return result(name, params, isRef, returnType, nullable);
   }
   /**
    * ```ebnf
@@ -144,8 +148,17 @@ module.exports = {
   ,read_parameter: function() {
     var node = this.node('parameter'),
       name = null,
-      value = null;
-    var type = this.read_type();
+      value = null,
+      type = null,
+      nullable = false;
+    if (this.token === '?') {
+      this.next();
+      nullable = true;
+    }
+    type = this.read_type();
+    if (nullable && !type) {
+      this.raiseError('Expecting a type definition combined with nullable operator');
+    }
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
     if (this.expect(this.tok.T_VARIABLE)) {
@@ -155,16 +168,17 @@ module.exports = {
     if (this.token == '=') {
       value = this.next().read_expr();
     }
-    return node(name, type, value, isRef, isVariadic);
+    return node(name, type, value, isRef, isVariadic, nullable);
   }
   /**
+   * Reads a list of arguments
    * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
    * ```
    */
   ,read_function_argument_list: function() {
     var result = [];
-    if (this.expect('(')) this.next();
+    this.expect('(') && this.next();
     if (this.token !== ')') {
       while(this.token != this.EOF) {
         result.push(this.read_argument_list());
@@ -173,7 +187,7 @@ module.exports = {
         } else break;
       }
     }
-    if (this.expect(')')) this.next();
+    this.expect(')') && this.next();
     return result;
   }
   /**
@@ -194,16 +208,18 @@ module.exports = {
    * ```
    */
   ,read_type: function() {
+    var result = this.node('identifier');
     switch(this.token) {
       case this.tok.T_ARRAY:
         this.next();
-        return ['array'];
+        return result(['', 'array'], false);
+      case this.tok.T_NAMESPACE:
       case this.tok.T_NS_SEPARATOR:
       case this.tok.T_STRING:
         return this.read_namespace_name();
       case this.tok.T_CALLABLE:
         this.next();
-        return ['callable'];
+        return result(['', 'callable'], false);
       default:
         return null;
     }
