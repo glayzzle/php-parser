@@ -30,7 +30,7 @@ var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, loca
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
       this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
+    } else {
       this.visibility = IS_PRIVATE;
     }
   } else {

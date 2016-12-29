@@ -2,44 +2,6 @@
 
 # AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## position
-
-Create a position node from specified parser
-including it's lexer current state
-
-**Parameters**
-
--   `Parser`  
--   `parser`  
-
-Returns **[Position](#position)** 
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
 ## Class hierarchy
 
 -   [Location](#location)
@@ -61,6 +23,9 @@ Returns **[Function](#function)**
         -   [Operation](#operation)
             -   [Coalesce](#coalesce)
             -   [Post](#post)
+            -   [Bin](#bin)
+            -   [Unary](#unary)
+            -   [Cast](#cast)
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
@@ -138,6 +103,44 @@ Prepares an AST node
 
 Returns **[Function](#function)** 
 
+# AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
 # Array
 
 **Extends Expression**
@@ -160,6 +163,18 @@ Assigns a value to the specified target
 -   `left` **[Expression](#expression)** 
 -   `right` **[Expression](#expression)** 
 -   `operator` **[String](#string)** 
+
+# Bin
+
+**Extends Operation**
+
+Binary operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `left` **[Expression](#expression)** 
+-   `right` **[Expression](#expression)** 
 
 # Block
 
@@ -203,6 +218,17 @@ A switch case statement
 
 -   `test` **([Expression](#expression) | null)** if null, means that the default case
 -   `body` **([Block](#block) | null)** 
+
+# Cast
+
+**Extends Operation**
+
+Binary operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Expression](#expression)** 
 
 # Try
 
@@ -446,6 +472,7 @@ Defines a classic function
 -   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `body` **([Block](#block) | null)** 
 
 # Goto
@@ -663,6 +690,7 @@ Defines a function parameter
 -   `value` **([Node](#node) | null)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `variadic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Position
 
@@ -821,6 +849,17 @@ Defines a trait usage
 
 -   `traits` **[Array](#array)&lt;[Identifier](#identifier)>** 
 -   `adaptations` **([Array](#array)&lt;[Node](#node)> | null)** 
+
+# Unary
+
+**Extends Operation**
+
+Unary operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Expression](#expression)** 
 
 # Unset
 

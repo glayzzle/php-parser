@@ -3,27 +3,28 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
 
 module.exports = {
 
   read_expr: function() {
+    var result = this.node();
     var expr = this.read_expr_item();
+    // binary operations
+    if (this.token === '|') return result('bin', '|', expr, this.next().read_expr());
+    if (this.token === '&') return result('bin', '&', expr, this.next().read_expr());
+    if (this.token === '^') return result('bin', '^', expr, this.next().read_expr());
+    if (this.token === '.') return result('bin', '.', expr, this.next().read_expr());
+    if (this.token === '+') return result('bin', '+', expr, this.next().read_expr());
+    if (this.token === '-') return result('bin', '-', expr, this.next().read_expr());
+    if (this.token === '*') return result('bin', '*', expr, this.next().read_expr());
+    if (this.token === '/') return result('bin', '/', expr, this.next().read_expr());
+    if (this.token === '%') return result('bin', '%', expr, this.next().read_expr());
+    if (this.token === this.tok.T_POW) return result('bin', '**', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SL) return result('bin', '<<', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SR) return result('bin', '>>', expr, this.next().read_expr());
+    // boolean operations
     switch(this.token) {
-      // binary operations
-      case '|': return this.node('bin')('|', expr, this.next().read_expr());
-      case '&': return this.node('bin')('&', expr, this.next().read_expr());
-      case '^': return ['bin', '^', expr, this.next().read_expr()];
-      case '.': return ['bin', '.', expr, this.next().read_expr()];
-      case '+': return ['bin', '+', expr, this.next().read_expr()];
-      case '-': return ['bin', '-', expr, this.next().read_expr()];
-      case '*': return ['bin', '*', expr, this.next().read_expr()];
-      case '/': return ['bin', '/', expr, this.next().read_expr()];
-      case '%': return ['bin', '%', expr, this.next().read_expr()];
-      case this.tok.T_POW:  return ['bin', '**', expr, this.next().read_expr()];
-      case this.tok.T_SL:   return ['bin', '<<', expr, this.next().read_expr()];
-      case this.tok.T_SR:   return ['bin', '>>', expr, this.next().read_expr()];
-
-      // boolean operations
       case this.tok.T_BOOLEAN_OR:
       case this.tok.T_LOGICAL_OR:   return ['bool', '|', expr, this.next().read_expr()];
 
@@ -94,7 +95,7 @@ module.exports = {
       case '+':
       case '!':
       case '~':
-        return this.node('unary')(this.token, this.read_expr());
+        return this.node('unary')(this.token, this.next().read_expr());
 
       case '(':
         var expr = this.next().read_expr();
@@ -242,22 +243,22 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_INT_CAST:
-        return ['cast', 'int', this.next().read_expr()];
+        return this.node('cast')('int', this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return ['cast', 'double', this.next().read_expr()];
+        return this.node('cast')('double', this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
-        return ['cast', 'string', this.next().read_expr()];
+        return this.node('cast')('string', this.next().read_expr());
 
       case this.tok.T_ARRAY_CAST:
-        return ['cast', 'array', this.next().read_expr()];
+        return this.node('cast')('array', this.next().read_expr());
 
       case this.tok.T_OBJECT_CAST:
-        return ['cast', 'object', this.next().read_expr()];
+        return this.node('cast')('object', this.next().read_expr());
 
       case this.tok.T_BOOL_CAST:
-        return ['cast', 'boolean', this.next().read_expr()];
+        return this.node('cast')('boolean', this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
         return this.node('unset')(

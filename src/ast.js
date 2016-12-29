@@ -29,6 +29,9 @@ var Position = require('./ast/position');
  *     - [Operation](#operation)
  *       - [Coalesce](#coalesce)
  *       - [Post](#post)
+ *       - [Bin](#bin)
+ *       - [Unary](#unary)
+ *       - [Cast](#cast)
  *     - [Literal](#literal)
  *       - [Boolean](#boolean)
  *       - [String](#string)
@@ -158,11 +161,13 @@ AST.prototype.prepare = function(kind, parser) {
 [
   require('./ast/array'),
   require('./ast/assign'),
+  require('./ast/bin'),
   require('./ast/block'),
   require('./ast/boolean'),
   require('./ast/break'),
   require('./ast/call'),
   require('./ast/case'),
+  require('./ast/cast'),
   require('./ast/catch'),
   require('./ast/class'),
   require('./ast/classconstant'),
@@ -210,6 +215,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/traitprecedence'),
   require('./ast/traituse'),
   require('./ast/try'),
+  require('./ast/unary'),
   require('./ast/unset'),
   require('./ast/usegroup'),
   require('./ast/useitem'),

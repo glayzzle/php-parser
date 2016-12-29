@@ -345,6 +345,8 @@ reads a list of parameters
 
 # read_function_argument_list
 
+Reads a list of arguments
+
 ```ebnf
  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
 ```

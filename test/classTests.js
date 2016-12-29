@@ -17,7 +17,9 @@ describe('Test classes', function() {
       '  use A, B {',
       '    B::smallTalk insteadof A;',
       '    A::bigTalk insteadof B, C;',
+      '    B::bigTalk as public talk;',
       '    B::bigTalk as protected talk;',
+      '    B::bigTalk as private talk;',
       '  }',
       '  /**',
       '   * Some informations',
@@ -79,7 +81,7 @@ describe('Test classes', function() {
       use.traits[0].name.should.be.exactly('A');
       use.traits[1].name.should.be.exactly('B');
       // test adaptations
-      use.adaptations.length.should.be.exactly(3);
+      use.adaptations.length.should.be.exactly(5);
       use.adaptations[0].kind.should.be.exactly('traitprecedence');
       use.adaptations[1].kind.should.be.exactly('traitprecedence');
       use.adaptations[2].kind.should.be.exactly('traitalias');
@@ -98,8 +100,10 @@ describe('Test classes', function() {
       // test adaptation contents
       use.adaptations[2].trait.name.should.be.exactly('B');
       use.adaptations[2].method.should.be.exactly('bigTalk');
-      use.adaptations[2].visibility.should.be.exactly('protected');
       use.adaptations[2].as.should.be.exactly('talk');
+      use.adaptations[2].visibility.should.be.exactly('public');
+      use.adaptations[3].visibility.should.be.exactly('protected');
+      use.adaptations[4].visibility.should.be.exactly('private');
 
     });
 
