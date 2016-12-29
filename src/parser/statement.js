@@ -56,9 +56,7 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_USE:
-        var expr = this.read_use_statements();
-        if (this.expect(';')) this.nextWithComments();
-        return expr;
+        return this.read_use_statement();
       case this.tok.T_CONST:
         return this.next().read_const_list();
       case this.tok.T_NAMESPACE:

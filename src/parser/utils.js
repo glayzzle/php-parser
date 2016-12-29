@@ -47,6 +47,8 @@ module.exports = {
     } else {
       if (this.expect(item)) {
         result.push(this.text());
+      } else {
+        return [];
       }
       while (this.next().token != this.EOF) {
         if (this.token != separator) break;

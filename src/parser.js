@@ -53,6 +53,7 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C,
+      this.tok.T_NAMESPACE,
       '"',
       'b"',
       'B"',

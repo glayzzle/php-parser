@@ -443,6 +443,8 @@ start ::= (namespace | top_statement)*
 
 # read_namespace
 
+Reads a namespace declaration block
+
 ```ebnf
 namespace ::= T_NAMESPACE namespace_name? '{'
    top_statements
@@ -450,43 +452,71 @@ namespace ::= T_NAMESPACE namespace_name? '{'
 | T_NAMESPACE namespace_name ';' top_statements
 ```
 
+Returns **Namespace** 
+
 # read_namespace_name
 
-reading a namespace name
+Reads a namespace name
 
 ```ebnf
  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
 ```
 
-# read_use_statements
-
-```ebnf
-use_statements ::=
-     use_statements ',' use_statement
-     | use_statement
-```
-
-# read_inline_use_declaration
-
-```ebnf
- inline_use_declaration ::= ...
-```
-
-# read_use_statement_mixed
-
-```ebnf
-  use_statement_mixed ::=
-      use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' )
-      (',' read_use_statement)*
-```
+Returns **Identifier** 
 
 # read_use_statement
 
+Reads a use statement
+
 ```ebnf
-use_statement ::= (
- (T_FUNCTION | T_CONST)? namespace_name
- )
+use_statement ::= T_USE
+  use_type? use_declarations |
+  use_type use_statement '{' use_declarations '}' |
+  use_statement '{' use_declarations(=>typed) '}'
+';'
 ```
+
+Returns **UseGroup** 
+
+# read_use_declaration
+
+Reads a use declaration
+
+```ebnf
+use_declaration ::= use_type? namespace_name use_alias
+```
+
+Returns **UseItem** 
+
+# read_use_declarations
+
+Reads a list of use declarations
+
+```ebnf
+use_declarations ::= use_declaration (',' use_declaration)*
+```
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;UseItem>** 
+
+# read_use_alias
+
+Reads a use statement
+
+```ebnf
+use_alias ::= (T_AS T_STRING)?
+```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+
+# read_use_type
+
+Reads the namespace type declaration
+
+```ebnf
+use_type ::= (T_FUNCTION | T_CONST)?
+```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** Possible values : function, const
 
 # resolve_special_chars
 

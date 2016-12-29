@@ -82,9 +82,6 @@ describe('Test AST structure', function() {
   it('test literals', function() {
     // @todo string / numbers / booleans
   });
-  it('test namespace', function() {
-    // @todo
-  });
 
   it('test constants', function() {
     var ast = parser.parseEval('const FOO = 3.14;');

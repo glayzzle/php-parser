@@ -2,6 +2,44 @@
 
 # AST
 
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
 ## Class hierarchy
 
 -   [Location](#location)
@@ -21,6 +59,7 @@
         -   [Variable](#variable)
         -   [ConstRef](#constref)
         -   [Operation](#operation)
+            -   [Coalesce](#coalesce)
             -   [Post](#post)
         -   [Literal](#literal)
             -   [Boolean](#boolean)
@@ -33,7 +72,6 @@
         -   [Eval](#eval)
         -   [Exit](#exit)
         -   [Clone](#clone)
-        -   [Coalesce](#coalesce)
         -   [Include](#include)
         -   [Assign](#assign)
         -   [If](#if)
@@ -46,6 +84,8 @@
         -   [Try](#try)
         -   [Catch](#catch)
         -   [Call](#call)
+        -   [UseGroup](#usegroup)
+        -   [UseItem](#useitem)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
@@ -74,31 +114,17 @@
 -   `withPositions`  
 -   `withSource`  
 
-## prepare
+## position
 
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
-The AST builder class
+Create a position node from specified parser
+including it's lexer current state
 
 **Parameters**
 
--   `withPositions`  
--   `withSource`  
+-   `Parser`  
+-   `parser`  
 
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+Returns **[Position](#position)** 
 
 ## prepare
 
@@ -240,7 +266,7 @@ Defines a clone call
 
 # Coalesce
 
-**Extends Statement**
+**Extends Operation**
 
 Verify is the test property is defined and is not null, and returns
 is, otherwise returns the ifnull expression.
@@ -441,7 +467,33 @@ Defines an identifier node
 **Properties**
 
 -   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `resolution` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## UNQUALIFIED_NAME
+
+This is an identifier without a namespace separator, such as Foo
+
+Type: [String](#string)
+
+## QUALIFIED_NAME
+
+This is an identifier with a namespace separator, such as Foo\\Bar
+
+Type: [String](#string)
+
+## FULL_QUALIFIED_NAME
+
+This is an identifier with a namespace separator that begins with
+a namespace separator, such as \\Foo\\Bar. The namespace \\Foo is also
+a fully qualified name.
+
+Type: [String](#string)
+
+## RELATIVE_NAME
+
+This is an identifier starting with namespace, such as namespace\\Foo\\Bar.
+
+Type: [String](#string)
 
 # If
 
@@ -775,6 +827,42 @@ Defines a trait usage
 **Extends Sys**
 
 Deletes references to a list of variables
+
+# UseGroup
+
+**Extends Statement**
+
+Defines a use statement (with a list of use items)
+
+**Properties**
+
+-   `name` **([Identifier](#identifier) | null)** 
+-   `type` **([String](#string) | null)** Possible value : function, const
+-   `item` **[Array](#array)&lt;[UseItem](#useitem)>** 
+
+# UseItem
+
+**Extends Statement**
+
+Defines a use statement (from namespace)
+
+**Properties**
+
+-   `name` **[Identifier](#identifier)** 
+-   `type` **([String](#string) | null)** Possible value : function, const
+-   `alias` **([String](#string) | null)** 
+
+## TYPE_CONST
+
+Importing a constant
+
+Type: [String](#string)
+
+## TYPE_FUNC
+
+Importing a function
+
+Type: [String](#string)
 
 # Variable
 

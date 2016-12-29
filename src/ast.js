@@ -27,6 +27,7 @@ var Position = require('./ast/position');
  *     - [Variable](#variable)
  *     - [ConstRef](#constref)
  *     - [Operation](#operation)
+ *       - [Coalesce](#coalesce)
  *       - [Post](#post)
  *     - [Literal](#literal)
  *       - [Boolean](#boolean)
@@ -39,7 +40,6 @@ var Position = require('./ast/position');
  *     - [Eval](#eval)
  *     - [Exit](#exit)
  *     - [Clone](#clone)
- *     - [Coalesce](#coalesce)
  *     - [Include](#include)
  *     - [Assign](#assign)
  *     - [If](#if)
@@ -52,6 +52,8 @@ var Position = require('./ast/position');
  *     - [Try](#try)
  *     - [Catch](#catch)
  *     - [Call](#call)
+ *     - [UseGroup](#usegroup)
+ *     - [UseItem](#useitem)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
@@ -87,6 +89,20 @@ var AST = function(withPositions, withSource) {
 };
 
 /**
+ * Create a position node from specified parser
+ * including it's lexer current state
+ * @param {Parser}
+ * @return {Position}
+ */
+AST.prototype.position = function(parser) {
+  return new Position(
+    parser.lexer.yylloc.first_line,
+    parser.lexer.yylloc.first_column,
+    parser.lexer.yylloc.first_offset
+  );
+};
+
+/**
  * Prepares an AST node
  * @param {String|null} kind - Defines the node type
  * (if null, the kind must be passed at the function call)
@@ -96,11 +112,7 @@ var AST = function(withPositions, withSource) {
 AST.prototype.prepare = function(kind, parser) {
   var start = null;
   if (this.withPositions || this.withSource) {
-    start = new Position(
-      parser.lexer.yylloc.first_line,
-      parser.lexer.yylloc.first_column,
-      parser.lexer.yylloc.first_offset
-    );
+    start = this.position(parser);
   }
   var self = this;
   // returns the node
@@ -199,6 +211,8 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/traituse'),
   require('./ast/try'),
   require('./ast/unset'),
+  require('./ast/usegroup'),
+  require('./ast/useitem'),
   require('./ast/variable'),
   require('./ast/while')
 ].forEach(function (ctor) {
