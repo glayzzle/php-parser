@@ -96,112 +96,117 @@ module.exports = {
 
     if (this.token === '@')
       return this.node('silent')(this.next().read_expr());
+    if (this.token === '+')
+      return this.node('unary')('+', this.next().read_expr());
+    if (this.token === '!')
+      return this.node('unary')('!', this.next().read_expr());
+    if (this.token === '~')
+      return this.node('unary')('~', this.next().read_expr());
 
-    switch(this.token) {
-      case '-':
-        var result = this.node();
+    if (this.token === '-') {
+      var result = this.node();
+      this.next();
+      if (
+        this.token === this.tok.T_LNUMBER ||
+        this.token === this.tok.T_DNUMBER
+      ) {
+        // negative number
+        result = result('number', '-' + this.text());
         this.next();
-        if (
-          this.token === this.tok.T_LNUMBER ||
-          this.token === this.tok.T_DNUMBER
-        ) {
-          // negative number
-          result = result('number', '-' + this.text());
-          this.next();
-          return result;
-        } else {
-          return result('unary', '-', this.read_expr());
+        return result;
+      } else {
+        return result('unary', '-', this.read_expr());
+      }
+    }
+
+    if (this.token === '(') {
+      var expr = this.next().read_expr();
+      this.expect(')') && this.next();
+      // handle dereferencable
+      if (this.token === this.tok.T_OBJECT_OPERATOR) {
+        return this.recursive_variable_chain_scan(expr, false);
+      } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
+        return this.read_dereferencable(expr);
+      } else if (this.token === '(') {
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
+        return this.node('call')(
+          expr, this.read_function_argument_list()
+        );
+      } else {
+        return expr;
+      }
+    }
+
+    if (this.token === '`') {
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
+      return this.node('shell')(
+        this.next().read_encapsed_string('`')
+      );
+    }
+
+    if (this.token === this.tok.T_LIST) {
+      var result = this.node('list'), assign = null;
+      var isInner = this.innerList;
+      if (!isInner) {
+        assign = this.node('assign');
+      }
+      if (this.next().expect('(')) {
+        this.next();
+      }
+
+      if (!this.innerList) this.innerList = true;
+      var assignList = this.read_assignment_list();
+
+      // check if contains at least one assignment statement
+      var hasItem = false;
+      for(var i = 0; i < assignList.length; i++) {
+        if (assignList[i] !== null) {
+          hasItem = true;
+          break;
         }
+      }
+      if (!hasItem) {
+        this.raiseError(
+          'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
+        );
+      }
+      if (this.expect(')')) {
+        this.next();
+      }
 
-      case '+':
-      case '!':
-      case '~':
-        return this.node('unary')(this.token, this.next().read_expr());
-
-      case '(':
-        var expr = this.next().read_expr();
-        if (this.expect(')')) {
-          this.next();
-        }
-
-        // handle dereferencable
-        if (this.token === this.tok.T_OBJECT_OPERATOR) {
-          return this.recursive_variable_chain_scan(expr, false);
-        } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
-          return this.read_dereferencable(expr);
-        } else if (this.token === '(') {
-          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-          return this.node('call')(
-            expr, this.read_function_argument_list()
+      if (!isInner) {
+        this.innerList = false;
+        if (this.expect('=')) {
+          return assign(
+            result(assignList),
+            this.next().read_expr(),
+            '='
           );
         } else {
-          return expr;
-        }
-
-      case '`':
-        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-        var result = this.node('shell');
-        var expr = this.next().read_encapsed_string('`');
-        return result(expr);
-
-      case this.tok.T_LIST:
-        var result = this.node('list'), assign = null;
-        var isInner = this.innerList;
-        if (!isInner) {
-          assign = this.node('assign');
-        }
-        if (this.next().expect('(')) {
-          this.next();
-        }
-
-        if (!this.innerList) this.innerList = true;
-        var assignList = this.read_assignment_list();
-
-        // check if contains at least one assignment statement
-        var hasItem = false;
-        for(var i = 0; i < assignList.length; i++) {
-          if (assignList[i] !== null) {
-            hasItem = true;
-            break;
-          }
-        }
-        if (!hasItem) {
-          this.raiseError(
-            'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
-          );
-        }
-        if (this.expect(')')) {
-          this.next();
-        }
-
-        if (!isInner) {
-          this.innerList = false;
-          if (this.expect('=')) {
-            return assign(
-              result(assignList),
-              this.next().read_expr(),
-              '='
-            );
-          } else {
-            // fallback : list($a, $b);
-            return result(assignList);
-          }
-        } else {
+          // fallback : list($a, $b);
           return result(assignList);
         }
+      } else {
+        return result(assignList);
+      }
+    }
 
-      case this.tok.T_CLONE:
-        return this.node('clone')(
-          this.next().read_expr()
-        );
+    if (this.token === this.tok.T_CLONE)
+      return this.node('clone')(
+        this.next().read_expr()
+      );
+
+    switch(this.token) {
 
       case this.tok.T_INC:
-        var name = this.next().read_variable(false, false, false);
-        return ['set', name, ['bin', '+', name, ['number', 1]]];
+        return this.node('pre')(
+          '+', this.next().read_variable(false, false, false)
+        );
 
       case this.tok.T_DEC:
-        var name = this.next().read_variable(false, false, false);
-        return ['set', name, ['bin', '-', name, ['number', 1]]];
+        return this.node('pre')(
+          '-', this.next().read_variable(false, false, false)
+        );
 
       case this.tok.T_NEW:
         return this.next().read_new_expr();
@@ -351,30 +356,41 @@ module.exports = {
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
-          return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '+=');
+
         case this.tok.T_MINUS_EQUAL:
-          return ['set', expr, ['bin', '-', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '-=');
+
         case this.tok.T_MUL_EQUAL:
-          return ['set', expr, ['bin', '*', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '*=');
+
         case this.tok.T_POW_EQUAL:
-          return ['set', expr, ['bin', '**', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '**=');
+
         case this.tok.T_DIV_EQUAL:
-          return ['set', expr, ['bin', '/', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '/=');
+
         case this.tok.T_CONCAT_EQUAL:
-          // NB : convert as string and add
-          return ['set', expr, ['bin', '.', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '.=');
+
         case this.tok.T_MOD_EQUAL:
-          return ['set', expr, ['bin', '%', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '%=');
+
         case this.tok.T_AND_EQUAL:
-          return ['set', expr, ['bin', '&', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '&=');
+
         case this.tok.T_OR_EQUAL:
-          return ['set', expr, ['bin', '|', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '|=');
+
         case this.tok.T_XOR_EQUAL:
-          return ['set', expr, ['bin', '^', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '^=');
+
         case this.tok.T_SL_EQUAL:
-          return ['set', expr, ['bin', '<<', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '<<=');
+
         case this.tok.T_SR_EQUAL:
-          return ['set', expr, ['bin', '>>', expr, this.next().read_expr()]];
+          return this.node('assign')(expr, this.next().read_expr(), '>>=');
+
         case this.tok.T_INC:
           var result = this.node('post');
           this.next();
@@ -382,7 +398,7 @@ module.exports = {
         case this.tok.T_DEC:
           var result = this.node('post');
           this.next();
-          return result('+', expr);
+          return result('-', expr);
       }
     } else if (this.is('SCALAR')) {
       expr = this.read_scalar();

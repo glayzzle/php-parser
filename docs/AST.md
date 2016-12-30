@@ -22,6 +22,7 @@
         -   [ConstRef](#constref)
         -   [Operation](#operation)
             -   [Coalesce](#coalesce)
+            -   [Pre](#pre)
             -   [Post](#post)
             -   [Bin](#bin)
             -   [Bool](#Bool)
@@ -728,6 +729,17 @@ Each Position object consists of a line number (1-indexed) and a column number (
 **Extends Operation**
 
 Defines a post operation `$i++` or `$i--`
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Variable](#variable)** 
+
+# Pre
+
+**Extends Operation**
+
+Defines a pre operation `++$i` or `--$i`
 
 **Properties**
 

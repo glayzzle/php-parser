@@ -28,6 +28,7 @@ var Position = require('./ast/position');
  *     - [ConstRef](#constref)
  *     - [Operation](#operation)
  *       - [Coalesce](#coalesce)
+ *       - [Pre](#pre)
  *       - [Post](#post)
  *       - [Bin](#bin)
  *       - [Bool](#Bool)
@@ -207,6 +208,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/number'),
   require('./ast/parameter'),
   require('./ast/post'),
+  require('./ast/pre'),
   require('./ast/print'),
   require('./ast/program'),
   require('./ast/property'),

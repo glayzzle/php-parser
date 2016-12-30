@@ -56,6 +56,26 @@ describe('Test expressions', function() {
     // @todo
   });
 
+
+  it('test assignements', function() {
+    var ast = parser.parseEval([
+      '$a = $b;',
+      '$a .= $b;',
+      '$a += $b;',
+      '$a -= $b;',
+      '$a *= $b;',
+      '$a **= $b;',
+      '$a /= $b;',
+      '$a &= $b;',
+      '$a |= $b;',
+      '$a %= $b;',
+      '$a ^= $b;',
+      '$a <<= $b;',
+      '$a >>= $b;'
+    ].join('\n'));
+    // @todo
+  });
+
   it('test if based returns', function() {
     var ast = parser.parseEval([
       '$a ?? false;',
@@ -139,6 +159,37 @@ describe('Test expressions', function() {
       }
     });
     // @todo
+  });
+
+  it('test incr/decr', function() {
+    var ast = parser.parseEval([
+      '$i++;',
+      '$i--;',
+      '++$i;',
+      '--$i;'
+    ].join('\n'), {
+      ast: {
+        withPositions: true
+      }
+    });
+    ast.children[0].kind.should.be.exactly('post');
+    ast.children[1].kind.should.be.exactly('post');
+    ast.children[2].kind.should.be.exactly('pre');
+    ast.children[3].kind.should.be.exactly('pre');
+    ast.children[0].type.should.be.exactly('+');
+    ast.children[1].type.should.be.exactly('-');
+    ast.children[2].type.should.be.exactly('+');
+    ast.children[3].type.should.be.exactly('-');
+  });
+
+  it('test new', function() {
+    var ast = parser.parseEval([
+      '$a = new foo();',
+      '$a = new $foo();'
+    ].join('\n'), {
+      ast: { debug: false }
+    });
+    console.log(ast);
   });
 
 });
