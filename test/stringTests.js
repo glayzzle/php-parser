@@ -69,4 +69,33 @@ describe('Test strings', function() {
   it('...', function() {
     var ast = parser.parseEval('return "Class.create(\'$package$className\',{";');
   });
+  it('heredoc ...', function() {
+    var ast = parser.parseEval([
+      '$code = <<<EOFX',
+      '',
+      '/*{$this->docStar}',
+      ' * Constructor.',
+      ' */',
+      'public function __construct()',
+      '{{$targetDirs}',
+      'EOFX;'
+    ].join('\r\n'));
+  });
+  it('heredoc ...', function() {
+    var ast = parser.parseEval([
+      '$code .= <<<\'EOF\'',
+      '  }',
+      'EOF;'
+    ].join('\r\n'));
+  });
+  it('heredoc ...', function() {
+    var ast = parser.parseEval([
+      '$fallbackContent .= sprintf(<<<EOF2',
+      '\\$catalogue%s = new MessageCatalogue(\'%s\', %s);',
+      '\\$catalogue%s->addFallbackCatalogue(\\$catalogue%s);',
+      'EOF2',
+      ');',
+    ].join('\r\n'));
+  });
+
 });
