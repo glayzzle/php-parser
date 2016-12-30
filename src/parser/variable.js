@@ -54,8 +54,9 @@ module.exports = {
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
+      result = this.node('constref');
       this.next();
-      result = ['ns', ['static']];
+      result = result('static');
     } else {
       this.expect('VARIABLE');
     }
@@ -69,25 +70,28 @@ module.exports = {
   }
 
   // resolves a static call
-  ,read_static_getter: function(from, encapsed) {
-    var getter = null;
+  ,read_static_getter: function(what, encapsed) {
+    var result = this.node('staticlookup');
+    var offset = null;
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
-      getter = this.read_reference_variable(encapsed, false);
+      offset = this.read_reference_variable(encapsed, false);
     } else if (
       this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS
     ) {
-      getter = this.text();
+      offset = this.node('constref');
+      var name = this.text();
       this.next();
+      offset = offset(name);
     } else {
-      getter = this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
+      this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
       // graceful mode : set getter as error node and continue
+      offset = this.node('constref');
+      var name = this.text();
       this.next();
+      offset = offset(name);
     }
-    if (from[0] != 'ns') {
-      from = ['lookup', 'class', from];
-    }
-    return ['static', 'get', from, getter];
+    return result(what, offset);
   }
 
   ,recursive_variable_chain_scan: function(result, read_only, encapsed) {

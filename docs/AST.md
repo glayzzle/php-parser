@@ -22,6 +22,7 @@
         -   [ConstRef](#constref)
         -   [Lookup](#lookup)
             -   [PropertyLookup](#propertylookup)
+            -   [StaticLookup](#staticlookup)
             -   [OffsetLookup](#offsetlookup)
         -   [Operation](#operation)
             -   [Coalesce](#coalesce)
@@ -871,6 +872,12 @@ Avoids to show/log warnings & notices from the inner expression
 **Extends Node**
 
 Any statement.
+
+# StaticLookup
+
+**Extends Lookup**
+
+Lookup to a static property
 
 # String
 

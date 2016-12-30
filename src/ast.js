@@ -28,6 +28,7 @@ var Position = require('./ast/position');
  *     - [ConstRef](#constref)
  *     - [Lookup](#lookup)
  *       - [PropertyLookup](#propertylookup)
+ *       - [StaticLookup](#staticlookup)
  *       - [OffsetLookup](#offsetlookup)
  *     - [Operation](#operation)
  *       - [Coalesce](#coalesce)
@@ -225,6 +226,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/return'),
   require('./ast/shell'),
   require('./ast/silent'),
+  require('./ast/staticlookup'),
   require('./ast/string'),
   require('./ast/switch'),
   require('./ast/trait'),
