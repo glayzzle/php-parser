@@ -67,8 +67,8 @@ describe('Test loops statements (for, while)', function() {
     });
     it('test init args', function() {
       ast.children[0].init.length.should.be.exactly(2);
-      ast.children[0].init[0].left.identifier.should.be.exactly('$i');
-      ast.children[0].init[1].left.identifier.should.be.exactly('$b');
+      ast.children[0].init[0].left.name.should.be.exactly('$i');
+      ast.children[0].init[1].left.name.should.be.exactly('$b');
       ast.children[1].init.length.should.be.exactly(0);
     });
     it('check test args', function() {
@@ -105,7 +105,7 @@ describe('Test loops statements (for, while)', function() {
     it('test source', function() {
       ast.children[0].source.kind.should.be.exactly('variable');
       ast.children[0].source.byref.should.be.exactly(true);
-      ast.children[0].source.identifier.should.be.exactly('$foo');
+      ast.children[0].source.name.should.be.exactly('$foo');
       ast.children[1].source.kind.should.be.exactly('array');
       ast.children[1].source.items.length.should.be.exactly(2);
     });
@@ -116,7 +116,7 @@ describe('Test loops statements (for, while)', function() {
     });
     it('test value', function() {
       ast.children[0].value.kind.should.be.exactly('variable');
-      ast.children[0].value.identifier.should.be.exactly('$v');
+      ast.children[0].value.name.should.be.exactly('$v');
       ast.children[1].value.kind.should.be.exactly('array');
       ast.children[1].value.shortForm.should.be.exactly(true);
     });

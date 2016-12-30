@@ -37,7 +37,7 @@ describe('Test statements', function() {
     ast.children[0].catches[0].what[0].name.should.be.exactly('FooError');
     ast.children[0].catches[0].what[1].name.should.be.exactly('BarError');
     ast.children[0].catches[0].variable.kind.should.be.exactly('variable');
-    ast.children[0].catches[0].variable.identifier.should.be.exactly('$err');
+    ast.children[0].catches[0].variable.name.should.be.exactly('$err');
     ast.children[0].always.kind.should.be.exactly('block');
   });
 });

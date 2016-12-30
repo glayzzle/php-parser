@@ -26,30 +26,6 @@ describe('Test AST structure', function() {
     // @todo
   });
 
-
-
-  it('test arrays', function() {
-    var ast;
-
-    ast = parser.parseEval('\n\narray(\n\t"item1",\n\t"item2",\n\t"item3");\n\n');
-    ast.children[0].kind.should.be.exactly('array');
-    ast.children[0].shortForm.should.be.exactly(false);
-    ast.children[0].items.length.should.be.exactly(3);
-    ast.children[0].items[0].kind.should.be.exactly('entry');
-
-    ast = parser.parseEval('[0 => &$foo, $bar => "foobar"];');
-    ast.children[0].items.length.should.be.exactly(2);
-    ast.children[0].shortForm.should.be.exactly(true);
-    ast.children[0].items[0].key.kind.should.be.exactly('number');
-    ast.children[0].items[0].value.kind.should.be.exactly('variable');
-    ast.children[0].items[0].value.byref.should.be.exactly(true);
-    ast.children[0].items[0].value.identifier.should.be.exactly('$foo');
-    ast.children[0].items[0].value.byref.should.be.exactly(true);
-    ast.children[0].items[1].key.kind.should.be.exactly('variable');
-    ast.children[0].items[1].key.identifier.should.be.exactly('$bar');
-    ast.children[0].items[1].key.byref.should.be.exactly(false);
-  });
-
   it('test inline', function() {
     var ast = parser.parseCode('Hello <?php echo "World"; ?> !');
     ast.children[0].kind.should.be.exactly('inline');
