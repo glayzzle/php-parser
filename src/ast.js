@@ -30,6 +30,7 @@ var Position = require('./ast/position');
  *       - [Coalesce](#coalesce)
  *       - [Post](#post)
  *       - [Bin](#bin)
+ *       - [Bool](#Bool)
  *       - [Unary](#unary)
  *       - [Cast](#cast)
  *     - [Literal](#literal)
@@ -45,6 +46,7 @@ var Position = require('./ast/position');
  *     - [Clone](#clone)
  *     - [Include](#include)
  *     - [Assign](#assign)
+ *     - [RetIf](#retif)
  *     - [If](#if)
  *     - [Do](#do)
  *     - [While](#while)
@@ -163,6 +165,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/assign'),
   require('./ast/bin'),
   require('./ast/block'),
+  require('./ast/bool'),
   require('./ast/boolean'),
   require('./ast/break'),
   require('./ast/call'),
@@ -206,6 +209,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/print'),
   require('./ast/program'),
   require('./ast/property'),
+  require('./ast/retif'),
   require('./ast/return'),
   require('./ast/shell'),
   require('./ast/string'),

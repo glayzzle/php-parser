@@ -11,56 +11,78 @@ module.exports = {
     var result = this.node();
     var expr = this.read_expr_item();
     // binary operations
-    if (this.token === '|') return result('bin', '|', expr, this.next().read_expr());
-    if (this.token === '&') return result('bin', '&', expr, this.next().read_expr());
-    if (this.token === '^') return result('bin', '^', expr, this.next().read_expr());
-    if (this.token === '.') return result('bin', '.', expr, this.next().read_expr());
-    if (this.token === '+') return result('bin', '+', expr, this.next().read_expr());
-    if (this.token === '-') return result('bin', '-', expr, this.next().read_expr());
-    if (this.token === '*') return result('bin', '*', expr, this.next().read_expr());
-    if (this.token === '/') return result('bin', '/', expr, this.next().read_expr());
-    if (this.token === '%') return result('bin', '%', expr, this.next().read_expr());
-    if (this.token === this.tok.T_POW) return result('bin', '**', expr, this.next().read_expr());
-    if (this.token === this.tok.T_SL) return result('bin', '<<', expr, this.next().read_expr());
-    if (this.token === this.tok.T_SR) return result('bin', '>>', expr, this.next().read_expr());
+    if (this.token === '|')
+    return result('bin', '|', expr, this.next().read_expr());
+    if (this.token === '&')
+    return result('bin', '&', expr, this.next().read_expr());
+    if (this.token === '^')
+    return result('bin', '^', expr, this.next().read_expr());
+    if (this.token === '.')
+    return result('bin', '.', expr, this.next().read_expr());
+    if (this.token === '+')
+    return result('bin', '+', expr, this.next().read_expr());
+    if (this.token === '-')
+    return result('bin', '-', expr, this.next().read_expr());
+    if (this.token === '*')
+    return result('bin', '*', expr, this.next().read_expr());
+    if (this.token === '/')
+    return result('bin', '/', expr, this.next().read_expr());
+    if (this.token === '%')
+    return result('bin', '%', expr, this.next().read_expr());
+    if (this.token === this.tok.T_POW)
+    return result('bin', '**', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SL)
+    return result('bin', '<<', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SR)
+    return result('bin', '>>', expr, this.next().read_expr());
     // boolean operations
-    switch(this.token) {
-      case this.tok.T_BOOLEAN_OR:
-      case this.tok.T_LOGICAL_OR:   return ['bool', '|', expr, this.next().read_expr()];
+    if (this.token === this.tok.T_BOOLEAN_OR)
+    return result('bool', '|', expr, this.next().read_expr());
+    if (this.token === this.tok.T_LOGICAL_OR)
+    return result('bool', '|', expr, this.next().read_expr());
+    if (this.token === this.tok.T_BOOLEAN_AND)
+    return result('bool', '&', expr, this.next().read_expr());
+    if (this.token === this.tok.T_LOGICAL_AND)
+    return result('bool', '&', expr, this.next().read_expr());
+    if (this.token === this.tok.T_LOGICAL_XOR)
+    return result('bool', '^', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_IDENTICAL)
+    return result('bool', '=', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_NOT_IDENTICAL)
+    return result('bool', '!=', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_EQUAL)
+    return result('bool', '~', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_NOT_EQUAL)
+    return result('bool', '!~', expr, this.next().read_expr());
+    if (this.token === '<')
+    return result('bool', '<', expr, this.next().read_expr());
+    if (this.token === '>')
+    return result('bool', '!~', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL)
+    return result('bool', '<=', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_GREATER_OR_EQUAL)
+    return result('bool', '=>', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SPACESHIP)
+    return result('bool', '<=>', expr, this.next().read_expr());
+    if (this.token === this.tok.T_INSTANCEOF)
+    return result('bool', '?', expr, this.next().read_expr());
 
-      case this.tok.T_BOOLEAN_AND:
-      case this.tok.T_LOGICAL_AND:  return ['bool', '&', expr, this.next().read_expr()];
+    // extra operations :
+    // $username = $_GET['user'] ?? 'nobody';
+    if (this.token === this.tok.T_COALESCE)
+    return result('coalesce', expr, this.next().read_expr());
 
-      case this.tok.T_LOGICAL_XOR:      return ['bool', '^', expr, this.next().read_expr()];
-      case this.tok.T_IS_IDENTICAL:     return ['bool', '=', expr, this.next().read_expr()];
-      case this.tok.T_IS_NOT_IDENTICAL: return ['bool', '!=', expr, this.next().read_expr()];
-      case this.tok.T_IS_EQUAL:         return ['bool', '~', expr, this.next().read_expr()];
-      case this.tok.T_IS_NOT_EQUAL:     return ['bool', '!~', expr, this.next().read_expr()];
-      case '<':                       return ['bool', '<', expr, this.next().read_expr()];
-      case '>':                       return ['bool', '>', expr, this.next().read_expr()];
-
-      case this.tok.T_IS_SMALLER_OR_EQUAL:  return ['bool', '<=', expr, this.next().read_expr()];
-      case this.tok.T_IS_GREATER_OR_EQUAL:  return ['bool', '>=', expr, this.next().read_expr()];
-      case this.tok.T_SPACESHIP:            return ['bool', '<=>', expr, this.next().read_expr()];
-      case this.tok.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
-
-      // extra operations :
-      case this.tok.T_COALESCE:
-        // $username = $_GET['user'] ?? 'nobody';
-        return this.node('coalesce')(
-          expr, this.next().read_expr()
-        );
-
-      case '?':
-        var trueArg = null;
-        if (this.next().token !== ':') {
-          trueArg = this.read_expr();
-        }
-        if (this.expect(':')) {
-          this.next();
-        }
-        return ['retif', expr, trueArg, this.read_expr()];
+    // extra operations :
+    // $username = $_GET['user'] ? true : false;
+    if (this.token === '?') {
+      var trueArg = null;
+      if (this.next().token !== ':') {
+        trueArg = this.read_expr();
+      }
+      this.expect(':') && this.next();
+      return result('retif', expr, trueArg, this.read_expr());
     }
+
     return expr;
   }
 

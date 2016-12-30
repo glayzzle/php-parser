@@ -53,7 +53,16 @@ describe('Test expressions', function() {
       '$a <=> $b;',
       '$a instanceof $b;'
     ].join('\n'));
-    // todo
+    // @todo
+  });
+
+  it('test if based returns', function() {
+    var ast = parser.parseEval([
+      '$a ?? false;',
+      '$a ? true : false;',
+      '$a ?: false;'
+    ].join('\n'));
+    // @todo
   });
 
   it('test unary', function() {

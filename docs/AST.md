@@ -24,6 +24,7 @@
             -   [Coalesce](#coalesce)
             -   [Post](#post)
             -   [Bin](#bin)
+            -   [Bool](#Bool)
             -   [Unary](#unary)
             -   [Cast](#cast)
         -   [Literal](#literal)
@@ -39,6 +40,7 @@
         -   [Clone](#clone)
         -   [Include](#include)
         -   [Assign](#assign)
+        -   [RetIf](#retif)
         -   [If](#if)
         -   [Do](#do)
         -   [While](#while)
@@ -185,6 +187,18 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 **Properties**
 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
+
+# Bool
+
+**Extends Operation**
+
+Boolean operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `left` **[Expression](#expression)** 
+-   `right` **[Expression](#expression)** 
 
 # Boolean
 
@@ -747,6 +761,18 @@ Defines a class property
 -   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **([Node](#node) | null)** 
+
+# RetIf
+
+**Extends Statement**
+
+Defines a short if statement that returns a value
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `trueExpr` **[Expression](#expression)** 
+-   `falseExpr` **[Expression](#expression)** 
 
 # Return
 
