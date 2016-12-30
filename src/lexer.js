@@ -3,7 +3,7 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
+"use strict";
 /**
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
@@ -22,6 +22,7 @@ var lexer = function(engine) {
   this.engine = engine;
   this.tok = this.engine.tokens.names;
   this.EOF = 1;
+  this.debug = false;
   this.all_tokens = true;
   this.comment_tokens = false;
   this.mode_eval = false;
@@ -134,6 +135,9 @@ lexer.prototype.setInput = function(input) {
     first_offset: 0,
     first_line: 1,
     first_column: 0,
+    prev_offset: 0,
+    prev_line: 1,
+    prev_column: 0,
     last_line: 1,
     last_column: 0
   };
@@ -186,6 +190,8 @@ lexer.prototype.unput = function(size) {
       this.yylloc.last_line --;
       this.yylineno --;
       this.yylloc.last_column = this.yyprevcol;
+    } else {
+      this.yylloc.last_column --;
     }
     this.yytext = this.yytext.substring(0, this.yytext.length - size);
   } else if (size > 0) {
@@ -194,27 +200,27 @@ lexer.prototype.unput = function(size) {
       this.yytext = this.yytext.substring(0, this.yytext.length - size);
       // re-calculate position
       this.yylloc.last_line = this.yylloc.first_line;
-      this.yylloc.last_col = this.yyprevcol = this.yylloc.first_col;
+      this.yylloc.last_column = this.yyprevcol = this.yylloc.first_column;
       for(var i = 0; i < this.yytext.length; i++) {
         var c = this.yytext[i];
         if (c === '\r') {
           c = this.yytext[++i];
-          this.yyprevcol = this.yylloc.last_col;
+          this.yyprevcol = this.yylloc.last_column;
           this.yylloc.last_line ++;
-          this.yylloc.last_col = 0;
+          this.yylloc.last_column = 0;
           if (c !== '\n') {
             if (c === '\r') {
               this.yylloc.last_line ++;
             } else {
-              this.yylloc.last_col ++;
+              this.yylloc.last_column ++;
             }
           }
         } else if (c === '\n') {
-          this.yyprevcol = this.yylloc.last_col;
+          this.yyprevcol = this.yylloc.last_column;
           this.yylloc.last_line ++;
-          this.yylloc.last_col = 0;
+          this.yylloc.last_column = 0;
         } else {
-          this.yylloc.last_col ++;
+          this.yylloc.last_column ++;
         }
       }
       this.yylineno = this.yylloc.last_line;
@@ -310,6 +316,9 @@ lexer.prototype.appendToken = function(value, ahead) {
 
 // return next match that has a token
 lexer.prototype.lex = function() {
+  this.yylloc.prev_offset = this.offset;
+  this.yylloc.prev_line = this.yylloc.last_line;
+  this.yylloc.prev_column = this.yylloc.last_column;
   var token = this.next() || this.lex();
   if (!this.all_tokens) {
     while(
@@ -331,6 +340,11 @@ lexer.prototype.lex = function() {
       // open tag with echo statement
       return this.tok.T_ECHO;
     }
+  }
+  if (!this.yylloc.prev_offset) {
+    this.yylloc.prev_offset = this.yylloc.first_offset;
+    this.yylloc.prev_line = this.yylloc.first_line;
+    this.yylloc.prev_column = this.yylloc.first_column;
   }
   return token;
 };
@@ -364,13 +378,16 @@ lexer.prototype.next = function () {
   if (!this._input) {
     this.done = true;
   }
-  if (this.done) {
-    return this.EOF;
-  }
   this.yylloc.first_offset = this.offset;
   this.yylloc.first_line = this.yylloc.last_line;
   this.yylloc.first_column = this.yylloc.last_column;
   this.yytext = '';
+  if (this.done) {
+    this.yylloc.prev_offset = this.yylloc.first_offset;
+    this.yylloc.prev_line = this.yylloc.first_line;
+    this.yylloc.prev_column = this.yylloc.first_column;
+    return this.EOF;
+  }
   if (this.tokens.length > 0) {
     token = this.tokens.shift();
     if (typeof token[1] === 'object') {
@@ -384,6 +401,19 @@ lexer.prototype.next = function () {
   }
   if (this.offset >= this.size && this.tokens.length === 0) {
     this.done = true;
+  }
+  if (this.debug) {
+    var tName = token;
+    if (typeof tName === 'number') {
+      tName = this.engine.tokens.values[tName];
+    } else {
+      tName = '"'+tName+'"';
+    }
+    console.log(
+      tName,
+      'from ' + this.yylloc.first_line + ',' + this.yylloc.first_column,
+      ' - to ' + this.yylloc.last_line + ',' + this.yylloc.last_column
+    );
   }
   return token;
 };
