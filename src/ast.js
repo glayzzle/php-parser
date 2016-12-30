@@ -133,14 +133,14 @@ AST.prototype.prepare = function(kind, parser) {
       if (self.withSource) {
         src = parser.lexer._input.substring(
           start.offset,
-          parser.lexer.offset
+          parser.lexer.yylloc.prev_offset
         );
       }
       if (self.withPositions) {
         location = new Location(src, start, new Position(
-          parser.lexer.yylloc.first_line,
-          parser.lexer.yylloc.first_column,
-          parser.lexer.offset
+          parser.lexer.yylloc.prev_line,
+          parser.lexer.yylloc.prev_column,
+          parser.lexer.yylloc.prev_offset
         ));
       } else {
         location = new Location(src, null, null);
