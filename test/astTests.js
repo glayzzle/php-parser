@@ -9,6 +9,25 @@ describe('Test AST structure', function() {
     ast.children.length.should.be.exactly(0);
   });
 
+  it('test withSource options', function() {
+    var ast = parser.parseEval('true;', {
+      ast: {
+        withSource: true
+      }
+    });
+    // @todo
+  });
+  it('test withPositions options', function() {
+    var ast = parser.parseEval('true;', {
+      ast: {
+        withPositions: true
+      }
+    });
+    // @todo
+  });
+
+
+
   it('test arrays', function() {
     var ast;
 
