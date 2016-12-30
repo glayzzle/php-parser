@@ -12,65 +12,65 @@ module.exports = {
     var expr = this.read_expr_item();
     // binary operations
     if (this.token === '|')
-    return result('bin', '|', expr, this.next().read_expr());
+      return result('bin', '|', expr, this.next().read_expr());
     if (this.token === '&')
-    return result('bin', '&', expr, this.next().read_expr());
+      return result('bin', '&', expr, this.next().read_expr());
     if (this.token === '^')
-    return result('bin', '^', expr, this.next().read_expr());
+      return result('bin', '^', expr, this.next().read_expr());
     if (this.token === '.')
-    return result('bin', '.', expr, this.next().read_expr());
+      return result('bin', '.', expr, this.next().read_expr());
     if (this.token === '+')
-    return result('bin', '+', expr, this.next().read_expr());
+      return result('bin', '+', expr, this.next().read_expr());
     if (this.token === '-')
-    return result('bin', '-', expr, this.next().read_expr());
+      return result('bin', '-', expr, this.next().read_expr());
     if (this.token === '*')
-    return result('bin', '*', expr, this.next().read_expr());
+      return result('bin', '*', expr, this.next().read_expr());
     if (this.token === '/')
-    return result('bin', '/', expr, this.next().read_expr());
+      return result('bin', '/', expr, this.next().read_expr());
     if (this.token === '%')
-    return result('bin', '%', expr, this.next().read_expr());
+      return result('bin', '%', expr, this.next().read_expr());
     if (this.token === this.tok.T_POW)
-    return result('bin', '**', expr, this.next().read_expr());
+      return result('bin', '**', expr, this.next().read_expr());
     if (this.token === this.tok.T_SL)
-    return result('bin', '<<', expr, this.next().read_expr());
+      return result('bin', '<<', expr, this.next().read_expr());
     if (this.token === this.tok.T_SR)
-    return result('bin', '>>', expr, this.next().read_expr());
+      return result('bin', '>>', expr, this.next().read_expr());
     // boolean operations
     if (this.token === this.tok.T_BOOLEAN_OR)
-    return result('bool', '|', expr, this.next().read_expr());
+      return result('bool', '|', expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_OR)
-    return result('bool', '|', expr, this.next().read_expr());
+      return result('bool', '|', expr, this.next().read_expr());
     if (this.token === this.tok.T_BOOLEAN_AND)
-    return result('bool', '&', expr, this.next().read_expr());
+      return result('bool', '&', expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_AND)
-    return result('bool', '&', expr, this.next().read_expr());
+      return result('bool', '&', expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_XOR)
-    return result('bool', '^', expr, this.next().read_expr());
+      return result('bool', '^', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_IDENTICAL)
-    return result('bool', '=', expr, this.next().read_expr());
+      return result('bool', '=', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_NOT_IDENTICAL)
-    return result('bool', '!=', expr, this.next().read_expr());
+      return result('bool', '!=', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_EQUAL)
-    return result('bool', '~', expr, this.next().read_expr());
+      return result('bool', '~', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_NOT_EQUAL)
-    return result('bool', '!~', expr, this.next().read_expr());
+      return result('bool', '!~', expr, this.next().read_expr());
     if (this.token === '<')
-    return result('bool', '<', expr, this.next().read_expr());
+      return result('bool', '<', expr, this.next().read_expr());
     if (this.token === '>')
-    return result('bool', '!~', expr, this.next().read_expr());
+      return result('bool', '!~', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL)
-    return result('bool', '<=', expr, this.next().read_expr());
+      return result('bool', '<=', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_GREATER_OR_EQUAL)
-    return result('bool', '=>', expr, this.next().read_expr());
+      return result('bool', '=>', expr, this.next().read_expr());
     if (this.token === this.tok.T_SPACESHIP)
-    return result('bool', '<=>', expr, this.next().read_expr());
+      return result('bool', '<=>', expr, this.next().read_expr());
     if (this.token === this.tok.T_INSTANCEOF)
-    return result('bool', '?', expr, this.next().read_expr());
+      return result('bool', '?', expr, this.next().read_expr());
 
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
     if (this.token === this.tok.T_COALESCE)
-    return result('coalesce', expr, this.next().read_expr());
+      return result('coalesce', expr, this.next().read_expr());
 
     // extra operations :
     // $username = $_GET['user'] ? true : false;
@@ -94,11 +94,10 @@ module.exports = {
    */
   ,read_expr_item: function() {
 
+    if (this.token === '@')
+      return this.node('silent')(this.next().read_expr());
+
     switch(this.token) {
-
-      case '@':
-        return ['silent', this.next().read_expr()];
-
       case '-':
         var result = this.node();
         this.next();

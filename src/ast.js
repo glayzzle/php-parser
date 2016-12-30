@@ -54,6 +54,7 @@ var Position = require('./ast/position');
  *     - [Foreach](#foreach)
  *     - [Switch](#switch)
  *     - [Goto](#goto)
+ *     - [Silent](#silent)
  *     - [Try](#try)
  *     - [Catch](#catch)
  *     - [Call](#call)
@@ -212,6 +213,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/retif'),
   require('./ast/return'),
   require('./ast/shell'),
+  require('./ast/silent'),
   require('./ast/string'),
   require('./ast/switch'),
   require('./ast/trait'),

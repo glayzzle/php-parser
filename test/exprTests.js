@@ -65,6 +65,14 @@ describe('Test expressions', function() {
     // @todo
   });
 
+  it('test silent', function() {
+    var ast = parser.parseEval([
+      '@trigger_error();'
+    ].join('\n'));
+    ast.children[0].kind.should.be.exactly('silent');
+    ast.children[0].expr.kind.should.be.exactly('call');
+  });
+
   it('test unary', function() {
     var ast = parser.parseEval([
       '+$var;',

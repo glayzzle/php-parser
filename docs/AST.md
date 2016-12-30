@@ -48,6 +48,7 @@
         -   [Foreach](#foreach)
         -   [Switch](#switch)
         -   [Goto](#goto)
+        -   [Silent](#silent)
         -   [Try](#try)
         -   [Catch](#catch)
         -   [Call](#call)
@@ -789,6 +790,16 @@ A continue statement
 **Extends Literal**
 
 Defines inline html output (treated as echo output)
+
+# Silent
+
+**Extends Statement**
+
+Avoids to show/log warnings & notices from the inner expression
+
+**Properties**
+
+-   `expr` **[Expression](#expression)** 
 
 # Statement
 
