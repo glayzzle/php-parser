@@ -233,7 +233,7 @@ module.exports = {
     var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']) && this.token === this.tok.T_VARIABLE) {
       // plain variable name
-      var name = this.text();
+      var name = this.text().substring(1);
       this.next();
       result = result(name, byref);
     } else {
@@ -241,22 +241,26 @@ module.exports = {
       // dynamic variable name
       switch(this.token) {
         case '{':
-          result = this.next().read_expr();
+          var expr = this.next().read_expr();
           this.expect('}') && this.next();
+          result = result(expr, byref);
           break;
         case '$': // $$$var
-          result = ['lookup', 'var', this.read_simple_variable(false)];
+          result = result(this.read_simple_variable(false), byref);
           break;
         case this.tok.T_VARIABLE: // $$var
-          result = ['var', this.text()];
+          var name = this.text().substring(1);
+          var node = this.node('variable');
           this.next();
+          result = result(node(name, false), byref);
           break;
         default:
-          result = this.error(['{', '$', this.tok.T_VARIABLE]);
+          this.error(['{', '$', this.tok.T_VARIABLE]);
           // graceful mode
+          var name = this.text();
           this.next();
+          result = result(name, byref);
       }
-      result = ['lookup', 'var', result];
     }
     return result;
   }

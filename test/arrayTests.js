@@ -92,13 +92,13 @@ describe('Array without keys', function() {
 
     it('should have correct item types and values', function () {
       ast.children[0].items[0].value.kind.should.be.exactly("variable");
-      ast.children[0].items[0].value.name.should.be.exactly("$obj1");
+      ast.children[0].items[0].value.name.should.be.exactly("obj1");
 
       ast.children[0].items[1].value.kind.should.be.exactly("variable");
-      ast.children[0].items[1].value.name.should.be.exactly("$obj2");
+      ast.children[0].items[1].value.name.should.be.exactly("obj2");
 
       ast.children[0].items[2].value.kind.should.be.exactly("variable");
-      ast.children[0].items[2].value.name.should.be.exactly("$obj3");
+      ast.children[0].items[2].value.name.should.be.exactly("obj3");
     });
   });
 
@@ -171,10 +171,10 @@ describe('Array without keys', function() {
       ast.children[0].items[0].key.kind.should.be.exactly('number');
       ast.children[0].items[0].value.kind.should.be.exactly('variable');
       ast.children[0].items[0].value.byref.should.be.exactly(true);
-      ast.children[0].items[0].value.name.should.be.exactly('$foo');
+      ast.children[0].items[0].value.name.should.be.exactly('foo');
       ast.children[0].items[0].value.byref.should.be.exactly(true);
       ast.children[0].items[1].key.kind.should.be.exactly('variable');
-      ast.children[0].items[1].key.name.should.be.exactly('$bar');
+      ast.children[0].items[1].key.name.should.be.exactly('bar');
       ast.children[0].items[1].key.byref.should.be.exactly(false);
     });
 
