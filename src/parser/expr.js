@@ -337,11 +337,11 @@ module.exports = {
     // SCALAR | VARIABLE
     var expr;
     if (this.is('VARIABLE')) {
+      var result = this.node();
       expr = this.read_variable(false, false, false);
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
-          var result = this.node('assign');
           var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
@@ -352,53 +352,51 @@ module.exports = {
           } else {
             right = this.read_expr();
           }
-          return result(expr, right, '=');
+          return result('assign', expr, right, '=');
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '+=');
+          return result('assign', expr, this.next().read_expr(), '+=');
 
         case this.tok.T_MINUS_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '-=');
+          return result('assign', expr, this.next().read_expr(), '-=');
 
         case this.tok.T_MUL_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '*=');
+          return result('assign', expr, this.next().read_expr(), '*=');
 
         case this.tok.T_POW_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '**=');
+          return result('assign', expr, this.next().read_expr(), '**=');
 
         case this.tok.T_DIV_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '/=');
+          return result('assign', expr, this.next().read_expr(), '/=');
 
         case this.tok.T_CONCAT_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '.=');
+          return result('assign', expr, this.next().read_expr(), '.=');
 
         case this.tok.T_MOD_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '%=');
+          return result('assign', expr, this.next().read_expr(), '%=');
 
         case this.tok.T_AND_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '&=');
+          return result('assign', expr, this.next().read_expr(), '&=');
 
         case this.tok.T_OR_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '|=');
+          return result('assign', expr, this.next().read_expr(), '|=');
 
         case this.tok.T_XOR_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '^=');
+          return result('assign', expr, this.next().read_expr(), '^=');
 
         case this.tok.T_SL_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '<<=');
+          return result('assign', expr, this.next().read_expr(), '<<=');
 
         case this.tok.T_SR_EQUAL:
-          return this.node('assign')(expr, this.next().read_expr(), '>>=');
+          return result('assign',expr, this.next().read_expr(), '>>=');
 
         case this.tok.T_INC:
-          var result = this.node('post');
           this.next();
-          return result('+', expr);
+          return result('post', '+', expr);
         case this.tok.T_DEC:
-          var result = this.node('post');
           this.next();
-          return result('-', expr);
+          return result('post', '-', expr);
       }
     } else if (this.is('SCALAR')) {
       expr = this.read_scalar();
@@ -416,7 +414,7 @@ module.exports = {
         }
       }
     } else {
-      expr = this.error('EXPR');
+      this.error('EXPR');
       this.next();
     }
 
