@@ -433,6 +433,7 @@ module.exports = {
   ,read_new_expr: function() {
     var result = this.node('new');
     if (this.token === this.tok.T_CLASS) {
+      var what = this.node('class');
       // Annonymous class declaration
       var propExtends = null, propImplements = null, body = null;
       if (this.next().token == this.tok.T_EXTENDS) {
@@ -445,10 +446,13 @@ module.exports = {
         body = this.next().read_class_body();
       }
       return result(
-        false           // class name => false : means it's an annonymous class
-        ,propExtends
-        ,propImplements
-        ,body
+        what(
+          null
+          ,propExtends
+          ,propImplements
+          ,body
+          ,[0, 0, 0]
+        ), []
       );
     } else {
       // Already existing class
@@ -471,8 +475,6 @@ module.exports = {
       var result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
-      } else {
-        result = ['ns', result];
       }
       return result;
     } else if (this.is('VARIABLE')) {

@@ -2,6 +2,44 @@
 
 # AST
 
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
 ## Class hierarchy
 
 -   [Location](#location)
@@ -53,6 +91,7 @@
         -   [Try](#try)
         -   [Catch](#catch)
         -   [Call](#call)
+        -   [New](#new)
         -   [UseGroup](#usegroup)
         -   [UseItem](#useitem)
         -   [Block](#block)
@@ -82,44 +121,6 @@
 
 -   `withPositions`  
 -   `withSource`  
-
-## position
-
-Create a position node from specified parser
-including it's lexer current state
-
-**Parameters**
-
--   `Parser`  
--   `parser`  
-
-Returns **[Position](#position)** 
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## position
 
@@ -657,6 +658,17 @@ The main program node
 
 -   `name` **[Identifier](#identifier)** 
 -   `withBrackets` **[Boolean](#boolean)** 
+
+# New
+
+**Extends Statement**
+
+Creates a new instance of the specified class
+
+**Properties**
+
+-   `what` **([Identifier](#identifier) \| [Variable](#variable) \| [Class](#class))** 
+-   `arguments` **[Array](#array)&lt;Arguments>** 
 
 # Node
 

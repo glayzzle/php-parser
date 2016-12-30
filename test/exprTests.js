@@ -185,11 +185,19 @@ describe('Test expressions', function() {
   it('test new', function() {
     var ast = parser.parseEval([
       '$a = new foo();',
-      '$a = new $foo();'
+      '$a = new $foo();',
+      '$a = new class extends foo implements bar { };',
     ].join('\n'), {
       ast: { debug: false }
     });
-    console.log(ast);
+    ast.children[0].right.kind.should.be.exactly('new');
+    ast.children[0].right.what.kind.should.be.exactly('identifier');
+
+    ast.children[1].right.kind.should.be.exactly('new');
+    ast.children[1].right.what.kind.should.be.exactly('variable');
+
+    ast.children[2].right.kind.should.be.exactly('new');
+    ast.children[2].right.what.kind.should.be.exactly('class');
   });
 
 });

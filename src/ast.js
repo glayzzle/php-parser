@@ -59,6 +59,7 @@ var Position = require('./ast/position');
  *     - [Try](#try)
  *     - [Catch](#catch)
  *     - [Call](#call)
+ *     - [New](#new)
  *     - [UseGroup](#usegroup)
  *     - [UseItem](#useitem)
  *     - [Block](#block)
@@ -205,6 +206,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/magic'),
   require('./ast/method'),
   require('./ast/namespace'),
+  require('./ast/new'),
   require('./ast/number'),
   require('./ast/parameter'),
   require('./ast/post'),
