@@ -20,6 +20,9 @@
         -   [Array](#array)
         -   [Variable](#variable)
         -   [ConstRef](#constref)
+        -   [Lookup](#lookup)
+            -   [PropertyLookup](#propertylookup)
+            -   [OffsetLookup](#offsetlookup)
         -   [Operation](#operation)
             -   [Coalesce](#coalesce)
             -   [Pre](#pre)
@@ -644,6 +647,17 @@ Defines the location of the node (with it's source contents as string)
 -   `start` **[Position](#position)** 
 -   `end` **[Position](#position)** 
 
+# Lookup
+
+**Extends Expression**
+
+Lookup on an offset in the specified object
+
+**Properties**
+
+-   `what` **[Expression](#expression)** 
+-   `offset` **[Expression](#expression)** 
+
 # Magic
 
 **Extends Literal**
@@ -714,6 +728,12 @@ Returns **[Function](#function)**
 **Extends Literal**
 
 Defines a numeric value
+
+# OffsetLookup
+
+**Extends Lookup**
+
+Lookup on an offset in an array
 
 # Operation
 
@@ -801,6 +821,12 @@ Defines a class property
 -   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **([Node](#node) | null)** 
+
+# PropertyLookup
+
+**Extends Lookup**
+
+Lookup to an object property
 
 # RetIf
 

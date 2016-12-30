@@ -26,6 +26,9 @@ var Position = require('./ast/position');
  *     - [Array](#array)
  *     - [Variable](#variable)
  *     - [ConstRef](#constref)
+ *     - [Lookup](#lookup)
+ *       - [PropertyLookup](#propertylookup)
+ *       - [OffsetLookup](#offsetlookup)
  *     - [Operation](#operation)
  *       - [Coalesce](#coalesce)
  *       - [Pre](#pre)
@@ -210,12 +213,14 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/namespace'),
   require('./ast/new'),
   require('./ast/number'),
+  require('./ast/offsetlookup'),
   require('./ast/parameter'),
   require('./ast/post'),
   require('./ast/pre'),
   require('./ast/print'),
   require('./ast/program'),
   require('./ast/property'),
+  require('./ast/propertylookup'),
   require('./ast/retif'),
   require('./ast/return'),
   require('./ast/shell'),

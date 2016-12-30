@@ -109,8 +109,10 @@ module.exports = {
           }
           // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
           while(this.token === '[') {
-            result = ['offset', result, this.next().read_expr()];
+            var node = this.node('offsetlookup');
+            var offset = this.next().read_expr();
             if (this.expect(']')) this.next();
+            result = node(result, offset);
           }
           return result;
 
@@ -131,11 +133,14 @@ module.exports = {
    */
   ,read_dereferencable: function(expr) {
     var result;
+    var node = this.node('offsetlookup');
     if (this.token === '[') {
-      result = ['offset', expr, this.next().read_expr()];
+      var offset = this.next().read_expr();
       if (this.expect(']')) this.next();
+      result = node(expr, offset);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      result = ['offset', expr, this.read_encapsed_string_item()];
+      var offset = this.read_encapsed_string_item();
+      result = node(expr, offset);
     }
     return result;
   }
@@ -158,8 +163,10 @@ module.exports = {
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         result = ['var', this.text()];
         if (this.next().token === '[') {
-          result = ['offset', result, this.next().read_expr()];
+          var node = this.node('offsetlookup');
+          var offset = this.next().read_expr();
           if (this.expect(']')) this.next();
+          result = node(result, offset);
         }
       } else {
         result = this.read_expr();
@@ -169,8 +176,10 @@ module.exports = {
       result = this.next().read_variable(false, false, false);
       if (this.expect('}')) this.next();
     } else if (this.token === '[') {
-      result = ['offset', result, this.next().read_expr()];
+      var node = this.node('offsetlookup');
+      var offset = this.next().read_expr();
       if (this.expect(']')) this.next();
+      result = node(result, offset);
     } else if (this.token === this.tok.T_VARIABLE) {
       result = this.read_variable(false, true, false);
     } else {

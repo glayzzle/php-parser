@@ -96,6 +96,7 @@ module.exports = {
       switch(this.token) {
         case '(':
           if (read_only) {
+            // @fixme : add more informations & test
             return result;
           } else {
             result = this.node('call')(
@@ -104,6 +105,7 @@ module.exports = {
           }
           break;
         case '[':
+          var node = this.node('offsetlookup');
           this.next();
           var offset = false;
           if (encapsed) {
@@ -118,29 +120,36 @@ module.exports = {
               this.next();
             }
           }
-          result = ['offset', result, offset];
+          result = node(result, offset);
           break;
         case this.tok.T_OBJECT_OPERATOR:
-          var what;
+          var node = this.node('propertylookup');
+          var what = null;
           switch(this.next().token) {
             case this.tok.T_STRING:
-              what = ['string', this.text()];
-              var tok = this.next().token;
-              if (tok === this.tok.T_VARIABLE) {
+              what = this.node('constref');
+              var name = this.text();
+              this.next();
+              what = what(name);
+              if (this.token === this.tok.T_VARIABLE) {
+                // @fixme : create encapsed var node
+                name = this.text().substring(1);
+                this.next();
                 // fix $obj->var_$prop
-                what = ['bin', '.', what, ['var', this.text()]];
-              } else if (tok === '{') {
+                what = ['bin', '.', what, ['var', name]];
+              } else if (this.token === '{') {
                 // fix $obj->var_{$prop}
                 what = ['bin', '.', what, this.next().read_expr()];
                 this.expect('}') && this.next();
               }
               break;
             case this.tok.T_VARIABLE:
-              what = ['var', this.text()];
+              what = this.node('variable');
+              var name = this.text().substring(1);
               this.next();
+              what = what(name, false);
               break;
             case '$':
-
               this.next().expect(['{', this.tok.T_VARIABLE]);
               if (this.token === '{') {
                 // $obj->${$varname}
@@ -156,12 +165,15 @@ module.exports = {
               this.expect('}') && this.next();
               break;
             default:
-              what = this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
+              this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
               // graceful mode : set what as error mode & continue
+              what = this.node('constref');
+              var name = this.text();
               this.next();
+              what = what(name);
               break;
           }
-          result = ['prop', result, what];
+          result = node(result, what);
           break;
         default:
           break recursive_scan_loop;
@@ -178,21 +190,29 @@ module.exports = {
       var text = this.text();
       var isDblQuote = text[0] === '"';
       text = text.substring(1, text.length - 1);
+      this.next();
       offset = offset(
         'string', isDblQuote, this.resolve_special_chars(text)
       );
     } else if (this.token === this.tok.T_NUM_STRING) {
-      offset = offset('number', this.text());
+      var num = this.text();
+      this.next();
+      offset = offset('number', num);
     } else if (this.token === this.tok.T_VARIABLE) {
-      offset = offset('variable', this.text());
+      var name = this.text().substring(1);
+      this.next();
+      offset = offset('variable', name, false);
     } else {
       this.expect([
         this.tok.T_STRING,
         this.tok.T_NUM_STRING,
         this.tok.T_VARIABLE
       ]);
+      // fallback : consider as text
+      var text = this.text();
+      this.next();
+      offset = offset('string', false, text);
     }
-    this.next();
     return offset;
   }
   /**
@@ -209,17 +229,19 @@ module.exports = {
   ,read_reference_variable: function(encapsed, byref) {
     var result = this.read_simple_variable(byref);
     while(this.token != this.EOF) {
+      var node = this.node();
       if (this.token == '[') {
         if (encapsed) {
           result = this.next().read_encaps_var_offset();
         } else {
           var offset = this.next().token === ']' ? null : this.read_dim_offset();
-          result = ['offset', result, offset];
+          result = node('offsetlookup', result, offset);
         }
         this.expect(']') && this.next();
       } else if (this.token == '{' && !encapsed) {
-        result = ['offset', result, this.next().read_expr()];
+        var offset = this.next().read_expr();
         this.expect('}') && this.next();
+        result = node('offsetlookup', result, offset);
       } else break;
     }
     return result;
