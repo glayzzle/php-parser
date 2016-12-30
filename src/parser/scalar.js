@@ -58,11 +58,11 @@ module.exports = {
             isDoubleQuote = text[0] === '"';
             text = text.substring(1, text.length - 1);
           }
+          this.next();
           value = value(isDoubleQuote, this.resolve_special_chars(text));
           if (isBinCast) {
             value = ['cast', 'binary', value];
           }
-          this.next();
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
             return this.read_static_getter(value);
