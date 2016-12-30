@@ -2,9 +2,12 @@ var should = require("should");
 var parser = require('../src/index');
 
 describe('Function tests', function() {
-  var ast = parser.parseEval(
-    'function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}'
-  );
+  var ast = parser.parseEval([
+    'function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}',
+    '$a = function &($b) use($c) : array {',
+    '  return true;',
+    '};'
+  ].join('\n'));
 
   it('test description', function () {
     // Get result from parser
@@ -36,6 +39,13 @@ describe('Function tests', function() {
     arg2[4].should.be.exactly(true, 'byref');
     arg2[5].should.be.exactly(true, 'variadic');
     */
+  });
+
+  it('test closure', function () {
+    // @todo
+    ast.children[1].right.kind.should.be.exactly('closure');
+    var fn = ast.children[1].right;
+    fn.byref.should.be.exactly(true);
   });
 
 

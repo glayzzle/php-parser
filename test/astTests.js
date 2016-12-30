@@ -10,7 +10,7 @@ describe('Test AST structure', function() {
   });
 
   it('test withSource options', function() {
-    var ast = parser.parseEval('true;', {
+    var ast = parser.parseEval('$a = true;', {
       ast: {
         withSource: true
       }
@@ -18,7 +18,7 @@ describe('Test AST structure', function() {
     // @todo
   });
   it('test withPositions options', function() {
-    var ast = parser.parseEval('true;', {
+    var ast = parser.parseEval('$a = true;', {
       ast: {
         withPositions: true
       }
