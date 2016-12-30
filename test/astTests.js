@@ -9,23 +9,6 @@ describe('Test AST structure', function() {
     ast.children.length.should.be.exactly(0);
   });
 
-  it('test withSource options', function() {
-    var ast = parser.parseEval('$a = true;', {
-      ast: {
-        withSource: true
-      }
-    });
-    // @todo
-  });
-  it('test withPositions options', function() {
-    var ast = parser.parseEval('$a = true;', {
-      ast: {
-        withPositions: true
-      }
-    });
-    // @todo
-  });
-
   it('test inline', function() {
     var ast = parser.parseCode('Hello <?php echo "World"; ?> !');
     ast.children[0].kind.should.be.exactly('inline');
