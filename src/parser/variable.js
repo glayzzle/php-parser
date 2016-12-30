@@ -3,6 +3,7 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
 module.exports = {
   /**
    * Reads a variable
@@ -232,8 +233,9 @@ module.exports = {
     var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']) && this.token === this.tok.T_VARIABLE) {
       // plain variable name
-      result = result(this.text(), byref);
+      var name = this.text();
       this.next();
+      result = result(name, byref);
     } else {
       if (this.token === '$') this.next();
       // dynamic variable name
