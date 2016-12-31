@@ -213,9 +213,10 @@ module.exports = {
         return result();
 
       case this.tok.T_GLOBAL:
+        var result = this.node('global');
         var items = this.next().read_list(this.read_simple_variable, ',');
         this.expectEndOfStatement();
-        return ['global', items];
+        return result(items);
 
       case this.tok.T_STATIC:
         var current = [this.token, this.lexer.getState()];

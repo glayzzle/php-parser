@@ -16,6 +16,22 @@ describe('Test statements', function() {
     ast.children[2].kind.should.be.exactly('goto');
     ast.children[2].label.should.be.exactly('start');
   });
+  it('test global', function() {
+    var ast = parser.parseEval([
+      'function foo() {',
+      '  global $a, $b;',
+      '}'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    var expr = ast.children[0].body.children[0];
+    expr.kind.should.be.exactly('global');
+    expr.items[0].kind.should.be.exactly('variable');
+    expr.items[0].name.should.be.exactly('a');
+    expr.items[1].kind.should.be.exactly('variable');
+    expr.items[1].name.should.be.exactly('b');
+  });
+
   it('test try', function() {
     var ast = parser.parseEval([
       'try {',

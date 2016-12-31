@@ -43,6 +43,7 @@
         -   [Eval](#eval)
         -   [Exit](#exit)
         -   [Clone](#clone)
+        -   [Global](#global)
         -   [Include](#include)
         -   [Assign](#assign)
         -   [RetIf](#retif)
@@ -510,6 +511,16 @@ Defines a classic function
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `body` **([Block](#block) | null)** 
+
+# Global
+
+**Extends Statement**
+
+Imports a variable from the global scope
+
+**Properties**
+
+-   `items` **[Array](#array)&lt;[Variable](#variable)>** 
 
 # Goto
 
