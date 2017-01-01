@@ -210,7 +210,7 @@ module.exports = {
       , first
       , this.read_encapsed_string_item()
     ];
-    while(this.token !== expect) {
+    while(this.token !== expect && this.token !== this.EOF) {
       result[3] = [
         'bin', '.', result[3], this.read_encapsed_string_item()
       ];

@@ -4,7 +4,7 @@ var parser = require('../src/index');
 describe('Test strings', function() {
 
   it('...', function() {
-    var ast = parser.parseEval('$a = b\'a\';');
+    var ast = parser.parseEval('$a = b\'\\t\\ra\';');
   });
   it('...', function() {
     var ast = parser.parseEval('echo b"\\colors contains >$colors<\\n";');
@@ -54,8 +54,28 @@ describe('Test strings', function() {
   it('...', function() {
     var ast = parser.parseEval('return "\\x1B[{$color}m{$str}\\x1B[0m";');
   });
-  it('...', function() {
-    var ast = parser.parseEval('$tiny = "$";');
+  it('test double quotes', function() {
+    var ast = parser.parseEval([
+      '$a = "$";',
+      '$a = "{";',
+      '$a = "-$-";',
+      '$a = "-{";',
+      '$a = "$b";',
+      '$a = "{$b}";',
+      '$a = "${$b}";',
+      '$a = "-$b?";',
+      '$a = "-{$b}";',
+      '$a = "-${$b}";',
+      '$a = "";',
+      '$a = "\\"";',
+    ].join('\r\n'), {
+      lexer: {
+        debug: false
+      },
+      parser: {
+        debug: false
+      }
+    });
   });
   it('...', function() {
     var ast = parser.parseEval('$foo = array("v1.09azAZ-._~!$", true);');
@@ -71,13 +91,14 @@ describe('Test strings', function() {
   });
   it('heredoc ...', function() {
     var ast = parser.parseEval([
-      '$code = <<<EOFX',
+      '$code = <<<\t EOFX',
       '',
       '/*{$this->docStar}',
       ' * Constructor.',
       ' */',
       'public function __construct()',
-      '{{$targetDirs}',
+      '${$targetDirs}',
+      '$test',
       'EOFX;'
     ].join('\r\n'));
   });
@@ -96,6 +117,54 @@ describe('Test strings', function() {
       'EOF2',
       ');',
     ].join('\r\n'));
+  });
+  it('test empty nowdoc & heredoc contents', function() {
+    var ast = parser.parseEval([
+      'echo <<<HDOC',
+      'HDOC',
+      ';',
+      'echo <<<\'NDOC\'',
+      'NDOC',
+      ';',
+    ].join('\r\n'));
+  });
+  it('test heredoc end of doc', function() {
+    var ast = parser.parseEval([
+      '$a = <<<EOF2',
+      '\\$catalogue%s = new MessageCatalogue(\'%s\', %s);',
+      '\\$catalogue%s->addFallbackCatalogue(\\$catalogue%s);'
+    ].join('\r'), {
+      parser: {
+        suppressErrors: true
+      }
+    });
+  });
+  it('test nowdoc end of doc', function() {
+    var ast = parser.parseEval([
+      '$a = <<<\'EOF2\'',
+      '\\$catalogue%s = new MessageCatalogue(\'%s\', %s);',
+      '\\$catalogue%s->addFallbackCatalogue(\\$catalogue%s);'
+    ].join('\r'), {
+      parser: {
+        suppressErrors: true
+      }
+    });
+  });
+  it('test backquotes', function() {
+    var ast = parser.parseEval([
+      '$a = `ls $cwd`;',
+      '$a = `ls ${$cwd}`;',
+      '$a = `ls {$cwd}`;',
+      '$a = `$var`;',
+      '$a = `${var}`;',
+      '$a = `{$var}`;',
+      '$a = ``;',
+      '$a = `\\``;',
+      '$a = `{`;',
+      '$a = `-{`;',
+      '$a = `-$`;',
+      '$a = `$`;',
+    ].join('\r'));
   });
 
 });
