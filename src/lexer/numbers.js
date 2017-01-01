@@ -4,14 +4,16 @@
  * @url http://glayzzle.com
  */
 
+"use strict";
+
 /* istanbul ignore else  */
 if (process.arch == 'x64') {
   var SIZEOF_LONG = 8;
-  var MAX_LENGTH_OF_LONG = 20;
+  var MAX_LENGTH_OF_LONG = 19;
   var long_min_digits = "9223372036854775808";
 } else {
   var SIZEOF_LONG = 4;
-  var MAX_LENGTH_OF_LONG = 11;
+  var MAX_LENGTH_OF_LONG = 10;
   var long_min_digits = "2147483648";
 }
 
@@ -76,8 +78,10 @@ module.exports = {
       return this.tok.T_LNUMBER;
     } else {
       if (
-        this.yytext.length == MAX_LENGTH_OF_LONG
-        && this.yytext < long_min_digits
+        this.yytext.length < MAX_LENGTH_OF_LONG || (
+          this.yytext.length == MAX_LENGTH_OF_LONG
+          && this.yytext < long_min_digits
+        )
       ) {
         return this.tok.T_LNUMBER;
       }

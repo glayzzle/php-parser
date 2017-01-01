@@ -1,5 +1,5 @@
 var should = require("should");
-var parser = require('../src/index');
+var parser = require('./main');
 
 describe('Test AST structure', function() {
 
