@@ -12,32 +12,33 @@ module.exports = {
    *          )*
    *          (T_FINALLY '{' inner_statement* '}')?
    * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L448
+   * @return {Try}
    */
   read_try: function() {
-
-    // @todo implement the short form of declarations
     this.expect(this.tok.T_TRY);
-    var result = this.node('try');
-    var code = this.nextWithComments().read_statement();
-    var allways = false;
-    var catches = [];
-
+    var result = this.node('try'),
+      always = null,
+      body,
+      catches = []
+    ;
+    body = this.nextWithComments().read_statement();
     this.ignoreComments();
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
     while(this.token === this.tok.T_CATCH) {
-      this.next().expect('(').next();
-      var exName = this.read_namespace_name();
-      var varName = this.read_variable(true, false, false);
-      this.expect(')').nextWithComments();
-      catches.push({
-        exception: exName,
-        as: varName,
-        body: this.read_statement()
-      });
+      var item = this.node('catch'), what = [], variable = null;
+      this.next().expect('(') && this.next();
+      what = this.read_list(
+        this.read_namespace_name, '|', false
+      );
+      variable = this.read_variable(true, false, false);
+      this.expect(')');
+      catches.push(item(this.next().read_statement(), what, variable));
       this.ignoreComments();
     }
     if (this.token === this.tok.T_FINALLY) {
-      allways = this.nextWithComments().read_statement();
+      always = this.nextWithComments().read_statement();
     }
-    return result(code, catches, allways);
+    return result(body, catches, always);
   }
 };

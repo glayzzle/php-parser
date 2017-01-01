@@ -53,6 +53,7 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C,
+      this.tok.T_NAMESPACE,
       '"',
       'b"',
       'B"',
@@ -79,7 +80,7 @@ var parser = function(lexer, ast) {
     ],
     'VARIABLE': [
       this.tok.T_VARIABLE,
-      '$',
+      '$', '&',
       this.tok.T_NS_SEPARATOR,
       this.tok.T_STRING,
       this.tok.T_STATIC
@@ -182,6 +183,7 @@ parser.prototype.parse = function(code) {
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
+  message += ' on line ' + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
     throw new Error(message);
   }
@@ -218,7 +220,7 @@ parser.prototype.error = function(expect) {
   }
   this.token !== this.EOF
   return this.raiseError(
-    msg + ' on line ' + this.lexer.yylloc.first_line,
+    msg,
     msgExpect,
     expect,
     token
@@ -234,6 +236,7 @@ parser.prototype.node = function(name) {
 
 /**
  * expects an end of statement or end of file
+ * @return {boolean}
  */
 parser.prototype.expectEndOfStatement = function() {
   if (this.token === ';') {
@@ -246,8 +249,9 @@ parser.prototype.expectEndOfStatement = function() {
     this.nextWithComments();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(';');
+    return false;
   }
-  return this;
+  return true;
 };
 
 /** outputs some debug information on current token **/
@@ -290,7 +294,7 @@ parser.prototype.showlog = function() {
  * be added to the program error stack and this function will return `false`.
  *
  * @param {String|Number} token
- * @return {Parser|False}
+ * @return {boolean}
  * @throws Error
  */
 parser.prototype.expect = function(token) {
@@ -303,7 +307,7 @@ parser.prototype.expect = function(token) {
     this.error(token);
     return false;
   }
-  return this;
+  return true;
 };
 
 /**
@@ -370,44 +374,11 @@ parser.prototype.read_token = function() {
   return result;
 };
 
-/**
- * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
- * ```ebnf
- * list ::= separator? ( item separator )* item
- * ```
- */
-parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
-  var result = [];
-
-  if (this.token == separator) {
-    if (preserveFirstSeparator) result.push('');
-    this.next();
-  }
-
-  if (typeof (item) === "function") {
-    do {
-      result.push(item.apply(this, []));
-      if (this.token != separator) {
-        break;
-      }
-    } while(this.next().token != this.EOF);
-  } else {
-    result.push(this.expect(item).text());
-    while (this.next().token != this.EOF) {
-      if (this.token != separator) break;
-      // trim current separator & check item
-      if (this.next().token != item) break;
-      result.push(this.text());
-    }
-  }
-  return result;
-};
-
-
 // extends the parser with syntax files
 [
   require('./parser/array.js'),
   require('./parser/class.js'),
+  require('./parser/comment.js'),
   require('./parser/expr.js'),
   require('./parser/function.js'),
   require('./parser/if.js'),
@@ -418,7 +389,7 @@ parser.prototype.read_list = function(item, separator, preserveFirstSeparator) {
   require('./parser/statement.js'),
   require('./parser/switch.js'),
   require('./parser/try.js'),
-  require('./parser/comment.js'),
+  require('./parser/utils.js'),
   require('./parser/variable.js')
 ].forEach(function (ext) {
   for(var k in ext) {

@@ -58,11 +58,11 @@ module.exports = {
             isDoubleQuote = text[0] === '"';
             text = text.substring(1, text.length - 1);
           }
+          this.next();
           value = value(isDoubleQuote, this.resolve_special_chars(text));
           if (isBinCast) {
             value = ['cast', 'binary', value];
           }
-          this.next();
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
             return this.read_static_getter(value);
@@ -87,9 +87,7 @@ module.exports = {
           var result = this.node('number');
           var value = this.text();
           if (this.token === '-') {
-            this.next().expect([
-              this.tok.T_LNUMBER, this.tok.T_DNUMBER
-            ]);
+            this.next().expect([this.tok.T_LNUMBER, this.tok.T_DNUMBER]);
             value += this.text();
           }
           result = result(value);
@@ -104,14 +102,17 @@ module.exports = {
           var result = ['constant', value];
           if ( this.token == this.tok.T_DOUBLE_COLON) {
             // class constant  MyClass::CONSTANT
-            this.next().expect([this.tok.T_STRING, this.tok.T_CLASS]);
-            result[1] = [value, this.text()];
-            this.next();
+            if (this.next().expect([this.tok.T_STRING, this.tok.T_CLASS])) {
+              result[1] = [value, this.text()];
+              this.next();
+            }
           }
           // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
           while(this.token === '[') {
-            result = ['offset', result, this.next().read_expr()];
-            this.expect(']').next();
+            var node = this.node('offsetlookup');
+            var offset = this.next().read_expr();
+            if (this.expect(']')) this.next();
+            result = node(result, offset);
           }
           return result;
 
@@ -132,11 +133,14 @@ module.exports = {
    */
   ,read_dereferencable: function(expr) {
     var result;
+    var node = this.node('offsetlookup');
     if (this.token === '[') {
-      result = ['offset', expr, this.next().read_expr()];
-      this.expect(']').next();
+      var offset = this.next().read_expr();
+      if (this.expect(']')) this.next();
+      result = node(expr, offset);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      result = ['offset', expr, this.read_encapsed_string_item()];
+      var offset = this.read_encapsed_string_item();
+      result = node(expr, offset);
     }
     return result;
   }
@@ -159,19 +163,23 @@ module.exports = {
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         result = ['var', this.text()];
         if (this.next().token === '[') {
-          result = ['offset', result, this.next().read_expr()];
-          this.expect(']').next();
+          var node = this.node('offsetlookup');
+          var offset = this.next().read_expr();
+          if (this.expect(']')) this.next();
+          result = node(result, offset);
         }
       } else {
         result = this.read_expr();
       }
-      this.expect('}').next();
+      if (this.expect('}')) this.next();
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       result = this.next().read_variable(false, false, false);
-      this.expect('}').next();
+      if (this.expect('}')) this.next();
     } else if (this.token === '[') {
-      result = ['offset', result, this.next().read_expr()];
-      this.expect(']').next();
+      var node = this.node('offsetlookup');
+      var offset = this.next().read_expr();
+      if (this.expect(']')) this.next();
+      result = node(result, offset);
     } else if (this.token === this.tok.T_VARIABLE) {
       result = this.read_variable(false, true, false);
     } else {
@@ -180,7 +188,7 @@ module.exports = {
         this.tok.T_CURLY_OPEN,
         this.tok.T_DOLLAR_OPEN_CURLY_BRACES,
         this.tok.T_ENCAPSED_AND_WHITESPACE
-      ])
+      ]);
     }
     return result;
   }
@@ -202,12 +210,12 @@ module.exports = {
       , first
       , this.read_encapsed_string_item()
     ];
-    while(this.token !== expect) {
+    while(this.token !== expect && this.token !== this.EOF) {
       result[3] = [
         'bin', '.', result[3], this.read_encapsed_string_item()
       ];
     }
-    this.expect(expect).next();
+    if (this.expect(expect)) this.next();
     return result;
   }
   /**

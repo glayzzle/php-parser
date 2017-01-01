@@ -9,7 +9,7 @@ var KIND = 'literal';
 
 /**
  * Defines an array structure
- * @constructor ArrayExpression
+ * @constructor Literal
  * @extends {Expression}
  * @property {Node|string|number|boolean|null} value
  */

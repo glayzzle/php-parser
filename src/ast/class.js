@@ -18,7 +18,6 @@ var KIND = 'class';
  * @property {boolean} isAnonymous
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
- * @property {boolean} isFinal
  */
 var Class = Declaration.extends(function Class(name, ext, impl, body, flags, location) {
   Declaration.apply(this, [KIND, name, location]);

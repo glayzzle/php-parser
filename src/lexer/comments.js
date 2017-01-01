@@ -3,7 +3,14 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+
+"use strict";
+
 module.exports = {
+  /**
+   * Reads a single line comment
+   * @see
+   */
   T_COMMENT: function() {
     while(this.offset < this.size) {
       var ch = this.input();
@@ -14,7 +21,7 @@ module.exports = {
         return this.tok.T_COMMENT;
       } else if (ch === '%' && this.aspTagMode && this._input[this.offset] === '>') {
         this.unput(1);
-        return tthis.tok.T_COMMENT;
+        return this.tok.T_COMMENT;
       }
     }
     return this.tok.T_COMMENT;

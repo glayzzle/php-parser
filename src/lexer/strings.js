@@ -134,6 +134,7 @@ module.exports = {
   matchST_NOWDOC: function() {
     /** edge case : empty now doc **/
     if (this.isDOC_MATCH()) {
+      // @fixme : never reached (may be caused by quotes)
       this.consume(this.heredoc_label.length);
       this.popState();
       return this.tok.T_END_HEREDOC;
@@ -274,9 +275,9 @@ module.exports = {
         this.begin('ST_IN_SCRIPTING');
         return this.tok.T_CURLY_OPEN;
       }
-    } else if (ch === '"') {
+    } else if (ch === '`') {
       this.popState();
-      return '"';
+      return '`';
     }
 
     // any char
@@ -399,6 +400,7 @@ module.exports = {
             this.unput(2);
             return this.tok.T_ENCAPSED_AND_WHITESPACE;
           } else {
+            // @fixme : yytext = '"{$' (this.yytext.length > 3)
             this.unput(1);
             return this.tok.T_CURLY_OPEN;
           }

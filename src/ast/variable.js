@@ -3,7 +3,7 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
+"use strict";
 var Expr = require('./expression');
 var KIND = 'variable';
 
@@ -12,12 +12,12 @@ var KIND = 'variable';
  * be any expression in general, an expression can also be a pattern.
  * @constructor Variable
  * @extends {Expression}
- * @property {String|Node} identifier
+ * @property {String|Node} name
  * @property {boolean} byref
  */
-var Variable = Expr.extends(function Variable(identifier, byref, location) {
+var Variable = Expr.extends(function Variable(name, byref, location) {
   Expr.apply(this, [KIND, location]);
-  this.identifier = identifier;
+  this.name = name;
   this.byref = byref || false;
 });
 

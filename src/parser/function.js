@@ -32,12 +32,19 @@ module.exports = {
    * ```
    */
   ,read_function: function(closure, flag) {
-    var result = this.read_function_declaration(closure ? 1 : flag ? 2 : 0)
+    var result = this.read_function_declaration(
+      closure ? 1 : (flag ? 2 : 0)
+    );
     if (flag && flag[2] == 1) {
+      // abstract function :
       result.parseFlags(flag);
-      this.expect(';').nextWithComments();
+      if (this.expect(';')) {
+        this.nextWithComments();
+      }
     } else {
-      result.children = this.expect('{').read_code_block(false);
+      if (this.expect('{')) {
+        result.body = this.read_code_block(false);
+      }
       if (flag) {
         result.parseFlags(flag);
       }
@@ -58,27 +65,37 @@ module.exports = {
       nodeName = 'method';
     }
     var result = this.node(nodeName);
-    this.expect(this.tok.T_FUNCTION);
-    var isRef = this.next().is_reference();
-    var name = false, use = [], returnType = false;
-    if (type !== 1) {
-      name = this.expect(this.tok.T_STRING).text();
+    if (this.expect(this.tok.T_FUNCTION)) {
       this.next();
     }
-    this.expect('(').next();
+    var isRef = this.is_reference();
+    var name = false, use = [], returnType = null, nullable = false;
+    if (type !== 1) {
+      if (this.expect(this.tok.T_STRING)) {
+        name = this.text();
+        this.next();
+      }
+    }
+    if (this.expect('(')) this.next();
     var params = this.read_parameter_list();
-    this.expect(')').next();
+    if (this.expect(')')) this.next();
     if (type === 1 && this.token === this.tok.T_USE) {
-      use = this.next().expect('(').next().read_list(this.read_lexical_var, ',');
-      this.expect(')').next();
+      if (this.next().expect('(')) this.next();
+      use = this.read_list(this.read_lexical_var, ',');
+      if (this.expect(')')) this.next();
     }
     if (this.token === ':') {
-      returnType = this.next().read_type();
+      if (this.next().token === '?') {
+        nullable = true;
+        this.next();
+      }
+      returnType = this.read_type();
     }
     if (type === 1) {
-      return result(params, isRef, use, returnType);
+      // closure
+      return result(params, isRef, use, returnType, nullable);
     }
-    return result(name, params, isRef, returnType);
+    return result(name, params, isRef, returnType, nullable);
   }
   /**
    * ```ebnf
@@ -129,25 +146,39 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   ,read_parameter: function() {
-    var node = this.node('parameter');
-    var type = this.read_type();
+    var node = this.node('parameter'),
+      name = null,
+      value = null,
+      type = null,
+      nullable = false;
+    if (this.token === '?') {
+      this.next();
+      nullable = true;
+    }
+    type = this.read_type();
+    if (nullable && !type) {
+      this.raiseError('Expecting a type definition combined with nullable operator');
+    }
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
-    var name = this.expect(this.tok.T_VARIABLE).text();
-    var value = null;
-    if (this.next().token == '=') {
+    if (this.expect(this.tok.T_VARIABLE)) {
+      name = this.text();
+      this.next();
+    }
+    if (this.token == '=') {
       value = this.next().read_expr();
     }
-    return node(name, type, value, isRef, isVariadic);
+    return node(name, type, value, isRef, isVariadic, nullable);
   }
   /**
+   * Reads a list of arguments
    * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
    * ```
    */
   ,read_function_argument_list: function() {
     var result = [];
-    this.expect('(').next();
+    this.expect('(') && this.next();
     if (this.token !== ')') {
       while(this.token != this.EOF) {
         result.push(this.read_argument_list());
@@ -156,7 +187,7 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(')').next();
+    this.expect(')') && this.next();
     return result;
   }
   /**
@@ -177,16 +208,18 @@ module.exports = {
    * ```
    */
   ,read_type: function() {
+    var result = this.node('identifier');
     switch(this.token) {
       case this.tok.T_ARRAY:
         this.next();
-        return ['array'];
+        return result(['', 'array'], false);
+      case this.tok.T_NAMESPACE:
       case this.tok.T_NS_SEPARATOR:
       case this.tok.T_STRING:
         return this.read_namespace_name();
       case this.tok.T_CALLABLE:
         this.next();
-        return ['callable'];
+        return result(['', 'callable'], false);
       default:
         return null;
     }
