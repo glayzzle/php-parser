@@ -90,8 +90,8 @@ module.exports = {
             this.next().expect([this.tok.T_LNUMBER, this.tok.T_DNUMBER]);
             value += this.text();
           }
-          result = result(value);
           this.next();
+          result = result(value);
           return result;
 
         // CONSTANTS

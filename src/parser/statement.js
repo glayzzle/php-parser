@@ -203,14 +203,18 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_BREAK:
-        var result = this.node('break');
-        this.next().expectEndOfStatement();
-        return result();
-
       case this.tok.T_CONTINUE:
-        var result = this.node('continue');
-        this.next().expectEndOfStatement();
-        return result();
+        var result = this.node(
+          this.token === this.tok.T_CONTINUE ? 'continue' : 'break'
+        ), level = null;
+        if(this.next().token === this.tok.T_LNUMBER) {
+          level = this.node('number');
+          var value = this.text();
+          this.next();
+          level = level(value);
+        }
+        this.expectEndOfStatement();
+        return result(level);
 
       case this.tok.T_GLOBAL:
         var result = this.node('global');

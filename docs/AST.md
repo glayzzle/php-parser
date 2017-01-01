@@ -2,6 +2,44 @@
 
 # AST
 
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
 ## Class hierarchy
 
 -   [Location](#location)
@@ -117,44 +155,6 @@ Prepares an AST node
 
 Returns **[Function](#function)** 
 
-# AST
-
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## position
-
-Create a position node from specified parser
-including it's lexer current state
-
-**Parameters**
-
--   `Parser`  
--   `parser`  
-
-Returns **[Position](#position)** 
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
 # Array
 
 **Extends Expression**
@@ -223,6 +223,10 @@ Defines a boolean value (true/false)
 **Extends Node**
 
 A break statement
+
+**Properties**
+
+-   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
 
 # Call
 
@@ -367,6 +371,10 @@ A constant reference
 **Extends Node**
 
 A continue statement
+
+**Properties**
+
+-   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
 
 # Declaration
 
