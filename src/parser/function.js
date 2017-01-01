@@ -178,10 +178,17 @@ module.exports = {
    */
   ,read_function_argument_list: function() {
     var result = [];
+    var wasVariadic = false;
     this.expect('(') && this.next();
     if (this.token !== ')') {
       while(this.token != this.EOF) {
-        result.push(this.read_argument_list());
+        var argument = this.read_argument_list();
+        result.push(argument);
+        if (argument.kind === 'variadic') {
+          wasVariadic = true;
+        } else if (wasVariadic) {
+          this.raiseError('Unexpected argument after a variadic argument');
+        }
         if (this.token === ',') {
           this.next();
         } else break;

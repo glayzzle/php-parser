@@ -25,6 +25,7 @@ var Position = require('./ast/position');
  *   - [Expression](#expression)
  *     - [Array](#array)
  *     - [Variable](#variable)
+ *     - [Variadic](#variadic)
  *     - [ConstRef](#constref)
  *     - [Lookup](#lookup)
  *       - [PropertyLookup](#propertylookup)
@@ -245,6 +246,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/usegroup'),
   require('./ast/useitem'),
   require('./ast/variable'),
+  require('./ast/variadic'),
   require('./ast/while')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();

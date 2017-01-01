@@ -19,6 +19,7 @@
     -   [Expression](#expression)
         -   [Array](#array)
         -   [Variable](#variable)
+        -   [Variadic](#variadic)
         -   [ConstRef](#constref)
         -   [Lookup](#lookup)
             -   [PropertyLookup](#propertylookup)
@@ -1056,6 +1057,16 @@ be any expression in general, an expression can also be a pattern.
 
 -   `name` **([String](#string) \| [Node](#node))** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Variadic
+
+**Extends Expression**
+
+Introduce a list of items into the arguments of the call
+
+**Properties**
+
+-   `what` **([Array](#array) \| [Expression](#expression))** 
 
 # While
 

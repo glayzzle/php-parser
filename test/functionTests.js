@@ -6,8 +6,24 @@ describe('Function tests', function() {
     'function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}',
     '$a = function &($b) use($c) : array {',
     '  return true;',
-    '};'
+    '};',
+    '$b = foo(...[1, null, 1, 2, 3]);'
   ].join('\n'));
+
+
+  it('test variadic error', function () {
+    var astErr = parser.parseEval([
+      '$b = foo(...[1, 2, 3], $a);'
+    ].join('\n'), {
+      parser: {
+        suppressErrors: true
+      }
+    });
+    var msg = 'Unexpected argument after a variadic argument on line 1';
+    astErr.errors.length.should.be.exactly(1);
+    astErr.errors[0].line.should.be.exactly(1);
+    astErr.errors[0].message.should.be.exactly(msg);
+  });
 
   it('test description', function () {
     // Get result from parser
