@@ -164,6 +164,11 @@ describe('Array without keys', function() {
   });
 
   describe('mixed tests / coverage', function() {
+    it('test empty array', function() {
+      var ast = parser.parseEval('$a = []; $b = array();');
+      ast.children[0].right.items.length.should.be.exactly(0);
+      ast.children[1].right.items.length.should.be.exactly(0);
+    });
     it('test short form / keys', function() {
       var ast = parser.parseEval('[0 => &$foo, $bar => "foobar"];');
       ast.children[0].items.length.should.be.exactly(2);

@@ -20,13 +20,14 @@ module.exports = {
     var items = [];
     var result = this.node(ArrayExpr);
 
-    this.expect([this.tok.T_ARRAY, '[']);
-
-    if (this.token == this.tok.T_ARRAY) {
+    if (this.token === this.tok.T_ARRAY) {
       this.next().expect('(');
+      expect = ')';
     } else {
       shortForm = true;
+      expect = ']';
     }
+
     if (this.next().token != expect) {
       while(this.token != this.EOF) {
         items.push(this.read_array_pair_list());
@@ -38,7 +39,7 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(shortForm ? ']' : ')');
+    this.expect(expect);
     this.next();
     return result(shortForm, items);
   },
