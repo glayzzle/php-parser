@@ -44,6 +44,7 @@
         -   [Exit](#exit)
         -   [Clone](#clone)
         -   [Global](#global)
+        -   [Static](#static)
         -   [Include](#include)
         -   [Assign](#assign)
         -   [RetIf](#retif)
@@ -884,6 +885,16 @@ Avoids to show/log warnings & notices from the inner expression
 **Extends Node**
 
 Any statement.
+
+# Static
+
+**Extends Statement**
+
+Declares a static variable into the current scope
+
+**Properties**
+
+-   `items` **([Array](#array)&lt;[Variable](#variable)> | [Array](#array)&lt;[Assign](#assign)>)** 
 
 # StaticLookup
 

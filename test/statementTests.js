@@ -32,6 +32,35 @@ describe('Test statements', function() {
     expr.items[1].name.should.be.exactly('b');
   });
 
+  it('test static', function() {
+    var ast = parser.parseEval([
+      'function foo() {',
+      '  static $a, $b = 5;',
+      '}',
+      'static $sVar1 = 11;'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+
+    // test function multi statements
+    var expr = ast.children[0].body.children[0];
+    expr.kind.should.be.exactly('static');
+    expr.items.length.should.be.exactly(2);
+    expr.items[0].kind.should.be.exactly('variable');
+    expr.items[1].kind.should.be.exactly('assign');
+
+    // test single statement
+    ast.children[1].kind.should.be.exactly('static');
+    ast.children[1].items.length.should.be.exactly(1);
+    ast.children[1].items[0].kind.should.be.exactly('assign');
+    ast.children[1].items[0].left.kind.should.be.exactly('variable');
+    ast.children[1].items[0].left.name.should.be.exactly('sVar1');
+    ast.children[1].items[0].right.kind.should.be.exactly('number');
+    ast.children[1].items[0].right.value.should.be.exactly('11');
+
+  });
+
+
   it('test try', function() {
     var ast = parser.parseEval([
       'try {',

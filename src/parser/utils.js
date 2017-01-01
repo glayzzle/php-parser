@@ -81,4 +81,40 @@ module.exports = {
     );
   }
 
+  /**
+   * Reads a list of variables declarations
+   *
+   * ```ebnf
+   * variable_declaration ::= T_VARIABLE ('=' expr)?*
+   * variable_declarations ::= variable_declaration (',' variable_declaration)*
+   * ```
+   *
+   * Sample code :
+   * ```php
+   * <?php class foo extends bar, baz { }
+   * ```
+   * @return {Variable[]|Assign[]} Returns an array composed by a list of variables, or
+   * assign values
+   */
+  ,read_variable_declarations: function() {
+    return this.read_list(function() {
+      var node = this.node('assign'),
+        value = null,
+        variable = this.node('variable');
+      // plain variable name
+      if (this.expect(this.tok.T_VARIABLE)) {
+        var name = this.text().substring(1);
+        this.next();
+        variable = variable(name, false);
+      } else {
+        variable = variable('#ERR', false);
+      }
+      if (this.token === '=') {
+        return node(variable, this.next().read_expr());
+      } else {
+        return variable;
+      }
+    }, ',');
+  }
+
 };

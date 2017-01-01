@@ -228,19 +228,9 @@ module.exports = {
           this.expect(';') && this.nextWithComments();
           return expr;
         }
-        var items = this.read_list(function() {
-          var value = null, name = null;
-          if (this.expect(this.tok.T_VARIABLE)) {
-            name = this.text();
-            this.next();
-          }
-          if (this.token === '=') {
-            value = this.next().read_expr();
-          }
-          return [name, value];
-        }, ',');
+        var items = this.read_variable_declarations();
         this.expectEndOfStatement();
-        return result('declare', items);
+        return result(items);
 
       case this.tok.T_ECHO:
         var result = this.node('echo');

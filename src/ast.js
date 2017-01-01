@@ -50,6 +50,7 @@ var Position = require('./ast/position');
  *     - [Exit](#exit)
  *     - [Clone](#clone)
  *     - [Global](#global)
+ *     - [Static](#static)
  *     - [Include](#include)
  *     - [Assign](#assign)
  *     - [RetIf](#retif)
@@ -229,6 +230,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/return'),
   require('./ast/shell'),
   require('./ast/silent'),
+  require('./ast/static'),
   require('./ast/staticlookup'),
   require('./ast/string'),
   require('./ast/switch'),

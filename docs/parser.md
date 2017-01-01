@@ -688,6 +688,24 @@ Sample code :
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Identifier>** 
 
+# read_variable_declarations
+
+Reads a list of variables declarations
+
+```ebnf
+variable_declaration ::= T_VARIABLE ('=' expr)?*
+variable_declarations ::= variable_declaration (',' variable_declaration)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Variable> | [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Assign>)** Returns an array composed by a list of variables, or
+assign values
+
 # read_variable
 
 Reads a variable
