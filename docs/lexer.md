@@ -56,6 +56,10 @@ Sets the current lexer state
 
 -   `state`  
 
+# T_COMMENT
+
+Reads a single line comment
+
 # T_DOC_COMMENT
 
 Behaviour : <https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927>

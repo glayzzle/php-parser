@@ -38,22 +38,38 @@ describe('Test statements', function() {
       '  foo();',
       '} catch(FooError|BarError $err) {',
       '  var_dump($err);',
+      '  throw $err;',
       '} finally {',
       '  clean();',
       '}'
     ].join('\n'), {
       parser: { debug: false }
     });
-    ast.children[0].kind.should.be.exactly('try');
-    ast.children[0].body.kind.should.be.exactly('block');
-    ast.children[0].body.children[0].kind.should.be.exactly('call');
-    ast.children[0].body.children[0].what.name.should.be.exactly('foo');
-    ast.children[0].catches[0].kind.should.be.exactly('catch');
-    ast.children[0].catches[0].what.length.should.be.exactly(2);
-    ast.children[0].catches[0].what[0].name.should.be.exactly('FooError');
-    ast.children[0].catches[0].what[1].name.should.be.exactly('BarError');
-    ast.children[0].catches[0].variable.kind.should.be.exactly('variable');
-    ast.children[0].catches[0].variable.name.should.be.exactly('err');
-    ast.children[0].always.kind.should.be.exactly('block');
+
+    var expr = ast.children[0];
+    expr.kind.should.be.exactly('try');
+    expr.body.kind.should.be.exactly('block');
+    expr.body.children[0].kind.should.be.exactly('call');
+    expr.body.children[0].what.name.should.be.exactly('foo');
+    expr.catches.length.should.be.exactly(1);
+
+    // test catch
+    var catchExpr = expr.catches[0];
+    catchExpr.kind.should.be.exactly('catch');
+    catchExpr.what.length.should.be.exactly(2);
+    catchExpr.what[0].name.should.be.exactly('FooError');
+    catchExpr.what[1].name.should.be.exactly('BarError');
+    catchExpr.variable.kind.should.be.exactly('variable');
+    catchExpr.variable.name.should.be.exactly('err');
+
+    // test the throw statement
+    catchExpr.body.kind.should.be.exactly('block');
+    catchExpr.body.children.length.should.be.exactly(2);
+    catchExpr.body.children[1].kind.should.be.exactly('throw');
+    catchExpr.body.children[1].what.kind.should.be.exactly('variable');
+    catchExpr.body.children[1].what.name.should.be.exactly('err');
+
+    // always block
+    expr.always.kind.should.be.exactly('block');
   });
 });

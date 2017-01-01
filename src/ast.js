@@ -63,6 +63,7 @@ var Position = require('./ast/position');
  *     - [Silent](#silent)
  *     - [Try](#try)
  *     - [Catch](#catch)
+ *     - [Throw](#throw)
  *     - [Call](#call)
  *     - [Closure](#closure)
  *     - [New](#new)
@@ -231,6 +232,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/staticlookup'),
   require('./ast/string'),
   require('./ast/switch'),
+  require('./ast/throw'),
   require('./ast/trait'),
   require('./ast/traitalias'),
   require('./ast/traitprecedence'),

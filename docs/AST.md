@@ -57,6 +57,7 @@
         -   [Silent](#silent)
         -   [Try](#try)
         -   [Catch](#catch)
+        -   [Throw](#throw)
         -   [Call](#call)
         -   [Closure](#closure)
         -   [New](#new)
@@ -921,6 +922,16 @@ Defines system based call
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
+
+# Throw
+
+**Extends Statement**
+
+Defines a throw statement
+
+**Properties**
+
+-   `what` **[Expression](#expression)** 
 
 # Trait
 
