@@ -405,6 +405,19 @@ module.exports = {
       }
     } else if (this.is('SCALAR')) {
       expr = this.read_scalar();
+      // handle dereferencable
+      while(this.token !== this.EOF) {
+        if (this.token === this.tok.T_OBJECT_OPERATOR) {
+          expr = this.recursive_variable_chain_scan(expr, false);
+        } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
+          expr = this.read_dereferencable(expr);
+        } else if (this.token === '(') {
+          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
+          expr = this.node('call')(expr, this.read_function_argument_list());
+        } else {
+          return expr;
+        }
+      }
     } else {
       this.error('EXPR');
       this.next();

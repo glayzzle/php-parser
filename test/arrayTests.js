@@ -3,6 +3,19 @@ var parser = require('../src/index');
 
 describe('Array without keys', function() {
 
+  it('deference array', function () {
+    var ast = parser.parseEval([
+      '$a = [',
+      '"a", "b"',
+      ']($foo)[$foo->bar()[1]]->foo()'
+    ].join('\r'), {
+      parser: {
+        debug: true
+      }
+    });
+    console.log(ast);
+  });
+
   describe('of strings', function () {
     // Get result from parser
     var ast = parser.parseEval('array("item1", "item2", "item3")');
