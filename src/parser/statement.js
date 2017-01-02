@@ -166,10 +166,18 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER:
-        if (this.next().expect('(')) this.next();
-        if (this.expect(')')) this.next();
-        if (this.expect(';')) this.next();
-        this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
+        this.raiseError(
+          '__HALT_COMPILER() can only be used from the outermost scope'
+        );
+        // fallback : returns a node but does not stop the parsing
+        var node = this.node('halt');
+        this.next().expect('(') && this.next();
+        this.expect(')') && this.next();
+        node = node(this.lexer._input.substring(
+          this.lexer.offset
+        ));
+        this.expect(';') && this.next();
+        return node;
       default:
         return this.read_statement();
     }

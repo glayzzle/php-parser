@@ -45,6 +45,33 @@ describe('Test statements', function() {
     ast.children[0].kind.should.be.exactly('assign');
     ast.children[1].kind.should.be.exactly('halt');
     ast.children[1].after.should.be.exactly('\n$b = 1;');
+
+    // test the inner error
+    (function() {
+      var ast = parser.parseEval([
+        'if (true) {',
+        '  __halt_compiler();',
+        '}'
+      ].join('\n'));
+    }).should.throw(/line\s2/);
+
+    // test the fallback
+    ast = parser.parseEval([
+      'if (true) {',
+      '  __halt_compiler();',
+      '}',
+      '$b = 1;'
+    ].join('\n'), {
+      parser: { suppressErrors: true }
+    });
+
+    ast.children.length.should.be.exactly(2);
+    ast.errors.length.should.be.exactly(1);
+    ast.children[0].kind.should.be.exactly('if');
+    ast.children[0].body.children[0].kind.should.be.exactly('halt');
+    ast.children[0].body.children[0].after.should.be.exactly('\n}\n$b = 1;');
+    ast.children[1].kind.should.be.exactly('assign');
+
   });
 
   it('test static', function() {
