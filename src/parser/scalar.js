@@ -98,7 +98,6 @@ module.exports = {
           return node('binary', what);
 
         // NUMERIC
-        case '-':  // long
         case this.tok.T_LNUMBER:  // long
         case this.tok.T_DNUMBER:  // double
           var result = this.node('number');
