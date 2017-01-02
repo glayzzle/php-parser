@@ -2,7 +2,9 @@
 
 # parser
 
-The PHP Parser class
+The PHP Parser class that build the AST tree from the lexer
+
+Type: Parser
 
 **Parameters**
 
@@ -11,11 +13,12 @@ The PHP Parser class
 
 **Properties**
 
--   `EOF` **Integer** 
--   `lexer` **Lexer** 
--   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `lexer` **Lexer** current lexer instance
+-   `ast` **AST** the AST factory instance
+-   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** current token
+-   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should extract documentation as AST node
+-   `suppressErrors` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should ignore parsing errors and continue
+-   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should output debug informations
 
 ## getTokenName
 

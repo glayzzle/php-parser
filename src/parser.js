@@ -13,30 +13,25 @@ function isNumber(n) {
 
 
 /**
- * The PHP Parser class
- *
- * @public @constructor {Parser}
- * @property {Integer} EOF
- * @property {Lexer} lexer
- * @property {Integer|String} token
- * @property {Boolean} extractDoc
- * @property {Boolean} debug
+ * The PHP Parser class that build the AST tree from the lexer
+ * @constructor {Parser}
+ * @property {Lexer} lexer - current lexer instance
+ * @property {AST} ast - the AST factory instance
+ * @property {Integer|String} token - current token
+ * @property {Boolean} extractDoc - should extract documentation as AST node
+ * @property {Boolean} suppressErrors - should ignore parsing errors and continue
+ * @property {Boolean} debug - should output debug informations
  */
 var parser = function(lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
-  // Private vars, do not use directly
-  this._gracefulProxy = {};
-  this._graceful = false;
   this.token = null;
   this.prev = null;
   this.debug = false;
   this.extractDoc = false;
   this.suppressErrors = false;
-  this.lastError = false;
-  this.startAt = [];
   this.entries = {
     'SCALAR': [
       this.tok.T_CONSTANT_ENCAPSED_STRING,
