@@ -299,7 +299,6 @@ module.exports = {
           mode = this.ast.declare.MODE_NONE;
         }
         return result(what, body, mode);
-        break;
 
       case this.tok.T_TRY:
         return this.read_try();
