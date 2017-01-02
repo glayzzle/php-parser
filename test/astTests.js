@@ -11,13 +11,23 @@ describe('Test AST structure', function() {
 
 
   it('test syntax error', function() {
+    var err = null;
     (function(){
-      var ast = parser.parseCode([
-        '<?php',
-        ' $a = 1',
-        ' $b = 2' // <-- unexpected $b expecting a ';'
-      ].join('\n'));
+      try {
+        var ast = parser.parseCode([
+          '<?php',
+          ' $a = 1',
+          ' $b = 2' // <-- unexpected $b expecting a ';'
+        ].join('\n'), 'foo.php');
+      } catch(e) {
+        err = e;
+        throw e;
+      }
     }).should.throw(/line\s3/);
+    err.name.should.be.exactly('SyntaxError');
+    err.lineNumber.should.be.exactly(3);
+    err.fileName.should.be.exactly('foo.php');
+    err.columnNumber.should.be.exactly(1);
   });
 
   it('test inline', function() {

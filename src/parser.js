@@ -189,6 +189,8 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     var err = new SyntaxError(
       message, this.filename, this.lexer.yylloc.first_line
     );
+    err.lineNumber = this.lexer.yylloc.first_line;
+    err.fileName = this.filename;
     err.columnNumber = this.lexer.yylloc.first_column
     throw err;
   }
