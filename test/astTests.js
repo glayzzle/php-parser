@@ -9,6 +9,17 @@ describe('Test AST structure', function() {
     ast.children.length.should.be.exactly(0);
   });
 
+
+  it('test syntax error', function() {
+    (function(){
+      var ast = parser.parseCode([
+        '<?php',
+        ' $a = 1',
+        ' $b = 2' // <-- unexpected $b expecting a ';'
+      ].join('\n'));
+    }).should.throw(/line\s3/);
+  });
+
   it('test inline', function() {
     var ast = parser.parseCode('Hello <?php echo "World"; ?> !');
     ast.children[0].kind.should.be.exactly('inline');

@@ -32,6 +32,7 @@ main entry point : converts a source code to AST
 **Parameters**
 
 -   `code`  
+-   `filename`  
 
 ## raiseError
 

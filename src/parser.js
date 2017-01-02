@@ -156,8 +156,9 @@ parser.prototype.getTokenName = function(token) {
 /**
  * main entry point : converts a source code to AST
  */
-parser.prototype.parse = function(code) {
+parser.prototype.parse = function(code, filename) {
   this._errors = [];
+  this.filename = filename || 'eval';
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -185,7 +186,11 @@ parser.prototype.parse = function(code) {
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
   message += ' on line ' + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
-    throw new Error(message);
+    var err = new SyntaxError(
+      message, this.filename, this.lexer.yylloc.first_line
+    );
+    err.columnNumber = this.lexer.yylloc.first_column
+    throw err;
   }
   // Error node :
   var node = this.ast.prepare('error', this)(

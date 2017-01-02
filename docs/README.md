@@ -27,11 +27,30 @@ Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 
 ## parseCode
 
-parse php code with '&lt;?php $x = 1;'
+Function that parse a php code with open/close tags
+
+Sample code :
+
+```php
+<?php $x = 1;
+```
+
+Usage :
+
+```js
+var parser = require('php-parser');
+var phpParser = new parser({
+  // some options
+});
+var ast = phpParser.parseCode('...php code...', 'foo.php');
+```
 
 **Parameters**
 
--   `buffer`  
+-   `buffer` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The code to be parsed
+-   `filename` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Filename
+
+Returns **Program** 
 
 ## tokenGetAll
 
@@ -62,18 +81,36 @@ Evaluate the buffer
 
 ## parseCode
 
-parse php code with '&lt;?php $x = 1;'
+Static function that parse a php code with open/close tags
+
+Sample code :
+
+```php
+<?php $x = 1;
+```
+
+Usage :
+
+```js
+var parser = require('php-parser');
+var ast = parser.parseCode('...php code...', 'foo.php');
+```
 
 **Parameters**
 
--   `buffer`  
--   `options`  
+-   `buffer` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The code to be parsed
+-   `filename` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Filename
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Optional options
+
+Returns **Program** 
 
 ## tokenGetAll
 
-split the buffer into tokens
+Split the buffer into tokens
 
 **Parameters**
 
 -   `buffer`  
 -   `options`  
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
