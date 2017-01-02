@@ -33,7 +33,7 @@ module.exports = {
     // reads the entry point
     if (this.is([this.tok.T_VARIABLE, '$'])) {
       result = this.read_reference_variable(encapsed, byref);
-    } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING])) {
+    } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING, this.tok.T_NAMESPACE])) {
       result = this.node();
       var name = this.read_namespace_name();
       if (
@@ -235,13 +235,14 @@ module.exports = {
     while(this.token != this.EOF) {
       var node = this.node();
       if (this.token == '[') {
+        var offset = null;
         if (encapsed) {
-          result = this.next().read_encaps_var_offset();
+          offset = this.next().read_encaps_var_offset();
         } else {
-          var offset = this.next().token === ']' ? null : this.read_dim_offset();
-          result = node('offsetlookup', result, offset);
+          offset = this.next().token === ']' ? null : this.read_dim_offset();
         }
         this.expect(']') && this.next();
+        result = node('offsetlookup', result, offset);
       } else if (this.token == '{' && !encapsed) {
         var offset = this.next().read_expr();
         this.expect('}') && this.next();

@@ -111,28 +111,6 @@ module.exports = {
           result = result(value);
           return result;
 
-        // CONSTANTS
-        case this.tok.T_NAMESPACE:
-        case this.tok.T_NS_SEPARATOR:
-        case this.tok.T_STRING:
-          var value = this.read_namespace_name();
-          var result = ['constant', value];
-          if ( this.token == this.tok.T_DOUBLE_COLON) {
-            // class constant  MyClass::CONSTANT
-            if (this.next().expect([this.tok.T_STRING, this.tok.T_CLASS])) {
-              result[1] = [value, this.text()];
-              this.next();
-            }
-          }
-          // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
-          while(this.token === '[') {
-            var node = this.node('offsetlookup');
-            var offset = this.next().read_expr();
-            if (this.expect(']')) this.next();
-            result = node(result, offset);
-          }
-          return result;
-
         // ARRAYS
         case this.tok.T_ARRAY:  // array parser
         case '[':             // short array format
@@ -217,18 +195,18 @@ module.exports = {
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
     else if (this.token === this.tok.T_CURLY_OPEN) {
       result = this.next().read_variable(false, false, false);
-      if (this.expect('}')) this.next();
+      this.expect('}') && this.next();
     }
 
     // plain variable
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
     else if (this.token === this.tok.T_VARIABLE) {
-      result = this.read_variable(false, true, false);
+      result = this.read_simple_variable(false);
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
       if (this.token === '[') {
         var node = this.node('offsetlookup');
-        var offset = this.next().read_expr();
+        var offset = this.next().read_encaps_var_offset();
         this.expect(']') && this.next();
         result = node(result, offset);
       }

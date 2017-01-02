@@ -33,12 +33,19 @@ var parser = function(lexer, ast) {
   this.extractDoc = false;
   this.suppressErrors = false;
   this.entries = {
+    'VARIABLE': [
+      this.tok.T_VARIABLE,
+      '$', '&',
+      this.tok.T_NS_SEPARATOR,
+      this.tok.T_STRING,
+      this.tok.T_NAMESPACE,
+      this.tok.T_STATIC
+    ],
     'SCALAR': [
       this.tok.T_CONSTANT_ENCAPSED_STRING,
       this.tok.T_START_HEREDOC,
       this.tok.T_LNUMBER,
       this.tok.T_DNUMBER,
-      this.tok.T_STRING,
       this.tok.T_ARRAY,'[',
       this.tok.T_CLASS_C,
       this.tok.T_TRAIT_C,
@@ -48,7 +55,6 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C,
-      this.tok.T_NAMESPACE,
       '"',
       'b"',
       'B"',
@@ -72,13 +78,6 @@ var parser = function(lexer, ast) {
       this.tok.T_STATIC,
       this.tok.T_ABSTRACT,
       this.tok.T_FINAL
-    ],
-    'VARIABLE': [
-      this.tok.T_VARIABLE,
-      '$', '&',
-      this.tok.T_NS_SEPARATOR,
-      this.tok.T_STRING,
-      this.tok.T_STATIC
     ],
     'EOS': [
       ';',
