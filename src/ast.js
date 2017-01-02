@@ -36,6 +36,7 @@ var Position = require('./ast/position');
  *       - [Pre](#pre)
  *       - [Post](#post)
  *       - [Bin](#bin)
+ *       - [Parenthesis](#parenthesis)
  *       - [Bool](#Bool)
  *       - [Unary](#unary)
  *       - [Cast](#cast)
@@ -203,6 +204,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/error'),
   require('./ast/eval'),
   require('./ast/exit'),
+  require('./ast/expression'),
   require('./ast/for'),
   require('./ast/foreach'),
   require('./ast/function'),
@@ -222,9 +224,11 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/method'),
   require('./ast/namespace'),
   require('./ast/new'),
+  require('./ast/node'),
   require('./ast/number'),
   require('./ast/offsetlookup'),
   require('./ast/parameter'),
+  require('./ast/parenthesis'),
   require('./ast/post'),
   require('./ast/pre'),
   require('./ast/print'),

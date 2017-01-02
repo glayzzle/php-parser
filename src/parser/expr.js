@@ -120,8 +120,10 @@ module.exports = {
     }
 
     if (this.token === '(') {
+      var node = this.node('parenthesis');
       var expr = this.next().read_expr();
       this.expect(')') && this.next();
+      expr = node(expr);
       // handle dereferencable
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         return this.recursive_variable_chain_scan(expr, false);

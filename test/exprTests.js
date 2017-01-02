@@ -142,7 +142,7 @@ describe('Test expressions', function() {
   it('test exit', function() {
     var ast = parser.parseEval([
       'exit(1);',
-      'exit();',
+      'die();',
       'exit;'
     ].join('\n'));
     ast.children[0].kind.should.be.exactly('exit');
@@ -188,7 +188,7 @@ describe('Test expressions', function() {
       '$a = new $foo();',
       '$a = new class extends foo implements bar { };',
     ].join('\n'), {
-      ast: { debug: false }
+      parser: { debug: false }
     });
     ast.children[0].right.kind.should.be.exactly('new');
     ast.children[0].right.what.kind.should.be.exactly('identifier');
@@ -198,6 +198,34 @@ describe('Test expressions', function() {
 
     ast.children[2].right.kind.should.be.exactly('new');
     ast.children[2].right.what.kind.should.be.exactly('class');
+  });
+
+  it('test nested expressions', function() {
+    var ast = parser.parseEval([
+      '$a = 5 * 2 + 1;', // same as (1 + (5 * 2))
+      '$b = 5 * (2 + 1);',
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    var aExpr = ast.children[0].right;
+    aExpr.kind.should.be.exactly('bin');
+    aExpr.left.value.should.be.exactly('1');
+    aExpr.type.should.be.exactly('+');
+
+    aExpr.right.left.value.should.be.exactly('5');
+    aExpr.right.type.should.be.exactly('*');
+    aExpr.right.right.value.should.be.exactly('2');
+
+    var bExpr = ast.children[1].right;
+    bExpr.kind.should.be.exactly('bin');
+    bExpr.left.value.should.be.exactly('5');
+    bExpr.type.should.be.exactly('*');
+
+    bExpr.right.kind.should.be.exactly('parenthesis');
+    bExpr.right.inner.left.value.should.be.exactly('2');
+    bExpr.right.inner.type.should.be.exactly('+');
+    bExpr.right.inner.right.value.should.be.exactly('1');
+
   });
 
 });

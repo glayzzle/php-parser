@@ -30,6 +30,7 @@
             -   [Pre](#pre)
             -   [Post](#post)
             -   [Bin](#bin)
+            -   [Parenthesis](#parenthesis)
             -   [Bool](#Bool)
             -   [Unary](#unary)
             -   [Cast](#cast)
@@ -842,6 +843,16 @@ Defines a function parameter
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `variadic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Parenthesis
+
+**Extends Operation**
+
+Parenthesis encapsulation `(... expr ...)`
+
+**Properties**
+
+-   `inner` **[Expression](#expression)** 
 
 # Position
 

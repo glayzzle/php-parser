@@ -251,12 +251,7 @@ module.exports = {
 
       case this.tok.T_ECHO:
         var result = this.node('echo');
-        var withParanthesis = (this.next().token === '(');
-        withParanthesis && this.next();
-        var args = this.read_list(this.read_expr, ',');
-        if (withParanthesis) {
-          this.expect(')') && this.next();
-        }
+        var args = this.next().read_list(this.read_expr, ',');
         this.expectEndOfStatement();
         return result(args);
 

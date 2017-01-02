@@ -56,7 +56,7 @@ describe('Test AST structure', function() {
   });
   it('test echo, isset, unset, empty', function() {
     var ast = parser.parseEval([
-      'echo(true, $var)',
+      'echo ($expr) ? "ok" : "ko";',
       'print "some text"',
       'isset($foo, $bar)',
       'unset($var)',
