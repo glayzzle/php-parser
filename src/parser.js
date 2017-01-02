@@ -365,16 +365,6 @@ parser.prototype.is = function(type) {
   }
 };
 
-/** convert an token to ast **/
-parser.prototype.read_token = function() {
-  var result = this.token;
-  if (isNumber(result)) {
-    result = [result, this.text(), this.lexer.yylloc.first_line];
-  }
-  this.next();
-  return result;
-};
-
 // extends the parser with syntax files
 [
   require('./parser/array.js'),
