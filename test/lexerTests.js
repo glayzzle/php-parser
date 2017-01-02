@@ -50,16 +50,35 @@ describe('Test lexer', function() {
         lexer: {
           short_tags: true,
           asp_tags: true,
-          debug: true
+          debug: false
         },
         parser: {
           extractDoc: true,
-          debug: true
+          debug: false
         }
       });
       // @fixme
       ast.children[0].kind.should.be.exactly('doc');
-      console.log(ast.children);
+      // console.log(ast.children);
     });
+  });
+  it('test tokens', function() {
+    var tokens = parser.tokenGetAll('<?php\necho $var;');
+    // test type
+    tokens[0][0].should.be.exactly('T_OPEN_TAG');
+    tokens[1][0].should.be.exactly('T_ECHO');
+    tokens[2][0].should.be.exactly('T_WHITESPACE');
+    tokens[3][0].should.be.exactly('T_VARIABLE');
+    tokens[4].should.be.exactly(';');
+    // test contents
+    tokens[0][1].should.be.exactly('<?php\n');
+    tokens[1][1].should.be.exactly('echo');
+    tokens[2][1].should.be.exactly(' ');
+    tokens[3][1].should.be.exactly('$var');
+    // test lines
+    tokens[0][2].should.be.exactly(1);
+    tokens[1][2].should.be.exactly(2);
+    tokens[2][2].should.be.exactly(2);
+    tokens[3][2].should.be.exactly(2);
   });
 });
