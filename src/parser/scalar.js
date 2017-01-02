@@ -103,10 +103,6 @@ module.exports = {
         case this.tok.T_DNUMBER:  // double
           var result = this.node('number');
           var value = this.text();
-          if (this.token === '-') {
-            this.next().expect([this.tok.T_LNUMBER, this.tok.T_DNUMBER]);
-            value += this.text();
-          }
           this.next();
           result = result(value);
           return result;
