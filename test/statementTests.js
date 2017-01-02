@@ -193,4 +193,19 @@ describe('Test statements', function() {
     // always block
     expr.always.kind.should.be.exactly('block');
   });
+
+  it('test inner statements', function() {
+    var ast = parser.parseEval([
+      'if (true) {',
+      '  function foo() {}',
+      '  abstract class foo {}',
+      '  trait foo {}',
+      '  final class foo {}',
+      '  interface foo {}',
+      '}'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    // @todo : do assert
+  });
 });
