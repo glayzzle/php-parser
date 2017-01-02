@@ -2,44 +2,6 @@
 
 # AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## position
-
-Create a position node from specified parser
-including it's lexer current state
-
-**Parameters**
-
--   `Parser`  
--   `parser`  
-
-Returns **[Position](#position)** 
-
-## prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-# AST
-
 ## Class hierarchy
 
 -   [Location](#location)
@@ -82,6 +44,7 @@ Returns **[Function](#function)**
         -   [Eval](#eval)
         -   [Exit](#exit)
         -   [Clone](#clone)
+        -   [Declare](#declare)
         -   [Global](#global)
         -   [Static](#static)
         -   [Include](#include)
@@ -130,6 +93,44 @@ Returns **[Function](#function)**
 
 -   `withPositions`  
 -   `withSource`  
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
+
+## prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+# AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ## position
 
@@ -395,6 +396,59 @@ Generic flags parser
 -   `flags` **[Array](#array)&lt;Integer>** 
 
 Returns **void** 
+
+# Declare
+
+**Extends Block**
+
+The declare construct is used to set execution directives for a block of code
+
+**Properties**
+
+-   `what` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `mode` **[String](#string)** 
+
+## MODE_SHORT
+
+The node is declared as a short tag syntax :
+
+```php
+<?php
+declare(ticks=1):
+// some statements
+enddeclare;
+```
+
+Type: [String](#string)
+
+## MODE_BLOCK
+
+The node is declared bracket enclosed code :
+
+```php
+<?php
+declare(ticks=1) {
+// some statements
+}
+```
+
+Type: [String](#string)
+
+## MODE_NONE
+
+The node is declared as a simple statement. In order to make things simpler
+children of the node are automatically collected until the next
+declare statement.
+
+```php
+<?php
+declare(ticks=1);
+// some statements
+declare(ticks=2);
+// some statements
+```
+
+Type: [String](#string)
 
 # Do
 

@@ -60,6 +60,56 @@ describe('Test statements', function() {
 
   });
 
+  it('test declare', function() {
+    var ast = parser.parseEval([
+      'declare(ticks=1);',
+      '$a = 1;',
+      'declare(ticks=2,encoding="ISO-8859-1");',
+      '$b = 1;',
+      'declare(ticks=1) {',
+      '  $c = 2;',
+      '}',
+      'declare(encoding="UTF-8"):',
+      '  $d = 3;',
+      'enddeclare;',
+      '$e = 4;' // <- single statement
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    ast.children.length.should.be.exactly(5);
+
+    ast.children[0].kind.should.be.exactly('declare');
+    ast.children[0].mode.should.be.exactly('none');
+    ast.children[0].children.length.should.be.exactly(1);
+    ast.children[0].children[0].left.name.should.be.exactly('a');
+    ast.children[0].what.ticks.kind.should.be.exactly('number');
+    ast.children[0].what.ticks.value.should.be.exactly('1');
+
+    ast.children[1].kind.should.be.exactly('declare');
+    ast.children[1].mode.should.be.exactly('none');
+    ast.children[1].children.length.should.be.exactly(1);
+    ast.children[1].children[0].left.name.should.be.exactly('b');
+    ast.children[1].what.ticks.kind.should.be.exactly('number');
+    ast.children[1].what.ticks.value.should.be.exactly('2');
+    ast.children[1].what.encoding.kind.should.be.exactly('string');
+    ast.children[1].what.encoding.value.should.be.exactly('ISO-8859-1');
+
+    ast.children[2].kind.should.be.exactly('declare');
+    ast.children[2].mode.should.be.exactly('block');
+    ast.children[2].children.length.should.be.exactly(1);
+    ast.children[2].children[0].left.name.should.be.exactly('c');
+    ast.children[2].what.ticks.kind.should.be.exactly('number');
+    ast.children[2].what.ticks.value.should.be.exactly('1');
+
+    ast.children[3].kind.should.be.exactly('declare');
+    ast.children[3].mode.should.be.exactly('short');
+    ast.children[3].children.length.should.be.exactly(1);
+    ast.children[3].children[0].left.name.should.be.exactly('d');
+    ast.children[3].what.encoding.kind.should.be.exactly('string');
+    ast.children[3].what.encoding.value.should.be.exactly('UTF-8');
+
+    ast.children[4].kind.should.be.exactly('assign');
+  });
 
   it('test try', function() {
     var ast = parser.parseEval([

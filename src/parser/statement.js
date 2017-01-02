@@ -118,19 +118,24 @@ module.exports = {
   /**
    * Reads a list of constants declaration
    * ```ebnf
-   *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+   *   declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
    * ```
+   * @retrurn {Object}
    */
   ,read_declare_list: function() {
-    return this.read_list(function() {
+    var result = {};
+    while(this.token != this.EOF && this.token !== ')') {
       this.expect(this.tok.T_STRING);
-      var name = this.text();
+      var name = this.text().toLowerCase();
       if (this.next().expect('=')) {
-        return [name, this.next().read_expr()];
+        result[name] = this.next().read_expr();
       } else {
-        return [name, null];
+        result[name] = null;
       }
-    }, ',');
+      if (this.token !== ',') break;
+      this.next();
+    }
+    return result;
   }
   /**
    * reads a simple inner statement
@@ -261,22 +266,36 @@ module.exports = {
         return result(items);
 
       case this.tok.T_DECLARE:
-        var result = this.node('declare'), options, body;
+        var result = this.node('declare'),
+          what,
+          body = [],
+          mode;
         this.next().expect('(') && this.next();
-        options = this.read_declare_list();
-        this.expect(')') && this.nextWithComments();
+        what = this.read_declare_list();
+        this.expect(')') && this.next();
         if (this.token === ':') {
-          body = [];
-          this.next();
+          this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
             body.push(this.read_statement());
           }
-          this.ignoreComments().expect(this.tok.T_ENDDECLARE) && this.next();
+          this.expect(this.tok.T_ENDDECLARE) && this.next();
           this.expectEndOfStatement();
+          mode = this.ast.declare.MODE_SHORT;
+        } else if (this.token === '{') {
+          this.nextWithComments();
+          while(this.token != this.EOF && this.token !== '}') {
+            body.push(this.read_statement());
+          }
+          this.expect('}') && this.next();
+          mode = this.ast.declare.MODE_BLOCK;
         } else {
-          body = this.read_statement();
+          this.expect(';') && this.next();
+          while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
+            body.push(this.read_statement());
+          }
+          mode = this.ast.declare.MODE_NONE;
         }
-        return result(options, body);
+        return result(what, body, mode);
         break;
 
       case this.tok.T_TRY:

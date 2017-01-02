@@ -599,7 +599,7 @@ Reads a list of constants declaration
 Reads a list of constants declaration
 
 ```ebnf
-  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+  declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
 ```
 
 # read_inner_statement
