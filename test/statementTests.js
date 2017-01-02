@@ -199,8 +199,9 @@ describe('Test statements', function() {
       'if (true) {',
       '  function foo() {}',
       '  abstract class foo {}',
-      '  trait foo {}',
       '  final class foo {}',
+      '  class foo {}',
+      '  trait foo {}',
       '  interface foo {}',
       '}'
     ].join('\n'), {
