@@ -200,10 +200,11 @@ describe('Test expressions', function() {
     ast.children[2].right.what.kind.should.be.exactly('class');
   });
 
-  it('test nested expressions', function() {
+  it('test nested expressions precedence', function() {
     var ast = parser.parseEval([
       '$a = 5 * 2 + 1;', // same as (1 + (5 * 2))
       '$b = 5 * (2 + 1);',
+      '$c = 1 + 2 / 3 + 4;', // same as (1 + (4 + (2 / 3)))
     ].join('\n'), {
       parser: { debug: false }
     });
@@ -225,6 +226,20 @@ describe('Test expressions', function() {
     bExpr.right.inner.left.value.should.be.exactly('2');
     bExpr.right.inner.type.should.be.exactly('+');
     bExpr.right.inner.right.value.should.be.exactly('1');
+
+    var cExpr = ast.children[2].right;
+    cExpr.kind.should.be.exactly('bin');
+    cExpr.left.value.should.be.exactly('1');
+    cExpr.type.should.be.exactly('+');
+
+    cExpr.right.kind.should.be.exactly('bin');
+    cExpr.right.left.value.should.be.exactly('4');
+    cExpr.right.type.should.be.exactly('+');
+
+    cExpr.right.right.kind.should.be.exactly('bin');
+    cExpr.right.right.left.value.should.be.exactly('2');
+    cExpr.right.right.type.should.be.exactly('/');
+    cExpr.right.right.right.value.should.be.exactly('3');
 
   });
 
