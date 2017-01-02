@@ -47,6 +47,8 @@ var Position = require('./ast/position');
  *       - [Inline](#inline)
  *       - [Magic](#magic)
  *       - [Shell](#shell)
+ *       - [Nowdoc](#nowdoc)
+ *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
@@ -200,6 +202,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/doc'),
   require('./ast/echo'),
   require('./ast/empty'),
+  require('./ast/encapsed'),
   require('./ast/entry'),
   require('./ast/error'),
   require('./ast/eval'),
@@ -225,6 +228,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/namespace'),
   require('./ast/new'),
   require('./ast/node'),
+  require('./ast/nowdoc'),
   require('./ast/number'),
   require('./ast/offsetlookup'),
   require('./ast/parameter'),
