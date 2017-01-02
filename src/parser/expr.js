@@ -461,7 +461,11 @@ module.exports = {
    * ```
    */
   ,read_class_name_reference: function() {
-    if (this.token === '\\' || this.token === this.tok.T_STRING) {
+    if (
+      this.token === this.tok.T_NS_SEPARATOR ||
+      this.token === this.tok.T_STRING ||
+      this.token === this.tok.T_NAMESPACE
+    ) {
       var result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
