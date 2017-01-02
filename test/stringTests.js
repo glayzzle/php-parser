@@ -89,18 +89,27 @@ describe('Test strings', function() {
   it('...', function() {
     var ast = parser.parseEval('return "Class.create(\'$package$className\',{";');
   });
-  it('heredoc ...', function() {
+  it('test encapsed elements', function() {
     var ast = parser.parseEval([
       '$code = <<<\t EOFX',
-      '',
-      '/*{$this->docStar}',
-      ' * Constructor.',
-      ' */',
-      'public function __construct()',
-      '${$targetDirs}',
-      '$test',
+      '{$this->docStar}',
+      '${$foo}',
+      '${targetDirs[1]}',
+      '$test[1]',
+      '$test->foo',
       'EOFX;'
-    ].join('\r\n'));
+    ].join('\r'), {
+      parser: {
+        debug: false
+      }
+    });
+    var expr = ast.children[0].right.value;
+    expr[0].kind.should.be.exactly('propertylookup');
+    expr[2].kind.should.be.exactly('variable');
+    expr[4].kind.should.be.exactly('variable');
+    expr[6].kind.should.be.exactly('offsetlookup');
+    expr[8].kind.should.be.exactly('propertylookup');
+    // @todo : improve assertions
   });
   it('test nowdoc label and contents', function() {
     var ast = parser.parseEval([
