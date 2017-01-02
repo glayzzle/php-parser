@@ -279,7 +279,8 @@ module.exports = {
         if (this.token === ':') {
           this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
-            body.push(this.read_statement());
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
           }
           this.expect(this.tok.T_ENDDECLARE) && this.next();
           this.expectEndOfStatement();
@@ -287,14 +288,16 @@ module.exports = {
         } else if (this.token === '{') {
           this.nextWithComments();
           while(this.token != this.EOF && this.token !== '}') {
-            body.push(this.read_statement());
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
           }
           this.expect('}') && this.next();
           mode = this.ast.declare.MODE_BLOCK;
         } else {
           this.expect(';') && this.next();
           while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
-            body.push(this.read_statement());
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
           }
           mode = this.ast.declare.MODE_NONE;
         }
