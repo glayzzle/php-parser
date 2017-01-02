@@ -10,6 +10,20 @@ describe('Test scalar statements', function() {
         debug: true
       }
     });
-    console.log(ast);
+    // @todo assert console.log(ast);
+
+  });
+  it('dereferencable', function() {
+    var ast = parser.parseEval([
+      '$a = foo::bar()[5]->test;',
+      '$b = (new test())->foo();',
+      '$c = (foo())[5];',
+      '$d = (function($a) { return $a * 2; })(5);',
+    ].join('\n'), {
+      parser: {
+        debug: true
+      }
+    });
+
   });
 });
