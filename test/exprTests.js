@@ -93,6 +93,26 @@ describe('Test expressions', function() {
     ast.children[0].expr.kind.should.be.exactly('call');
   });
 
+  it('test generators', function() {
+    var ast = parser.parseEval([
+      'function gen() {',
+      '  yield 0; // key 0',
+      '  yield from foo(); // keys 0-2',
+      '  yield 1 => $a; // key 1',
+      '}'
+    ].join('\n'));
+    var expr = ast.children[0].body.children;
+    expr[0].kind.should.be.exactly('yield');
+    expr[0].value.kind.should.be.exactly('number');
+
+    expr[1].kind.should.be.exactly('yieldfrom');
+    expr[1].value.kind.should.be.exactly('call');
+
+    expr[2].kind.should.be.exactly('yield');
+    expr[2].key.kind.should.be.exactly('number');
+    expr[2].value.kind.should.be.exactly('variable');
+  });
+
   it('test unary', function() {
     var ast = parser.parseEval([
       '+$var;',

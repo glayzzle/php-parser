@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2016-12-28 */
+/*! php-parser - BSD3 License - 2017-01-02 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -210,9 +210,21 @@ var Position = require('./ast/position');
  *   - [Expression](#expression)
  *     - [Array](#array)
  *     - [Variable](#variable)
+ *     - [Variadic](#variadic)
  *     - [ConstRef](#constref)
+ *     - [Lookup](#lookup)
+ *       - [PropertyLookup](#propertylookup)
+ *       - [StaticLookup](#staticlookup)
+ *       - [OffsetLookup](#offsetlookup)
  *     - [Operation](#operation)
+ *       - [Coalesce](#coalesce)
+ *       - [Pre](#pre)
  *       - [Post](#post)
+ *       - [Bin](#bin)
+ *       - [Parenthesis](#parenthesis)
+ *       - [Bool](#Bool)
+ *       - [Unary](#unary)
+ *       - [Cast](#cast)
  *     - [Literal](#literal)
  *       - [Boolean](#boolean)
  *       - [String](#string)
@@ -220,13 +232,19 @@ var Position = require('./ast/position');
  *       - [Inline](#inline)
  *       - [Magic](#magic)
  *       - [Shell](#shell)
+ *       - [Nowdoc](#nowdoc)
+ *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
+ *     - [Halt](#halt)
  *     - [Clone](#clone)
- *     - [Coalesce](#coalesce)
+ *     - [Declare](#declare)
+ *     - [Global](#global)
+ *     - [Static](#static)
  *     - [Include](#include)
  *     - [Assign](#assign)
+ *     - [RetIf](#retif)
  *     - [If](#if)
  *     - [Do](#do)
  *     - [While](#while)
@@ -234,6 +252,15 @@ var Position = require('./ast/position');
  *     - [Foreach](#foreach)
  *     - [Switch](#switch)
  *     - [Goto](#goto)
+ *     - [Silent](#silent)
+ *     - [Try](#try)
+ *     - [Catch](#catch)
+ *     - [Throw](#throw)
+ *     - [Call](#call)
+ *     - [Closure](#closure)
+ *     - [New](#new)
+ *     - [UseGroup](#usegroup)
+ *     - [UseItem](#useitem)
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
@@ -269,6 +296,20 @@ var AST = function(withPositions, withSource) {
 };
 
 /**
+ * Create a position node from specified parser
+ * including it's lexer current state
+ * @param {Parser}
+ * @return {Position}
+ */
+AST.prototype.position = function(parser) {
+  return new Position(
+    parser.lexer.yylloc.first_line,
+    parser.lexer.yylloc.first_column,
+    parser.lexer.yylloc.first_offset
+  );
+};
+
+/**
  * Prepares an AST node
  * @param {String|null} kind - Defines the node type
  * (if null, the kind must be passed at the function call)
@@ -278,11 +319,7 @@ var AST = function(withPositions, withSource) {
 AST.prototype.prepare = function(kind, parser) {
   var start = null;
   if (this.withPositions || this.withSource) {
-    start = new Position(
-      parser.lexer.yylloc.first_line,
-      parser.lexer.yylloc.first_column,
-      parser.lexer.yylloc.first_offset
-    );
+    start = this.position(parser);
   }
   var self = this;
   // returns the node
@@ -294,14 +331,14 @@ AST.prototype.prepare = function(kind, parser) {
       if (self.withSource) {
         src = parser.lexer._input.substring(
           start.offset,
-          parser.lexer.offset
+          parser.lexer.yylloc.prev_offset
         );
       }
       if (self.withPositions) {
         location = new Location(src, start, new Position(
-          parser.lexer.yylloc.first_line,
-          parser.lexer.yylloc.first_column,
-          parser.lexer.offset
+          parser.lexer.yylloc.prev_line,
+          parser.lexer.yylloc.prev_column,
+          parser.lexer.yylloc.prev_offset
         ));
       } else {
         location = new Location(src, null, null);
@@ -328,29 +365,40 @@ AST.prototype.prepare = function(kind, parser) {
 [
   require('./ast/array'),
   require('./ast/assign'),
+  require('./ast/bin'),
   require('./ast/block'),
+  require('./ast/bool'),
   require('./ast/boolean'),
   require('./ast/break'),
+  require('./ast/call'),
   require('./ast/case'),
+  require('./ast/cast'),
+  require('./ast/catch'),
   require('./ast/class'),
   require('./ast/classconstant'),
   require('./ast/clone'),
+  require('./ast/closure'),
   require('./ast/coalesce'),
   require('./ast/constant'),
   require('./ast/constref'),
   require('./ast/continue'),
+  require('./ast/declare'),
   require('./ast/do'),
   require('./ast/doc'),
   require('./ast/echo'),
   require('./ast/empty'),
+  require('./ast/encapsed'),
   require('./ast/entry'),
   require('./ast/error'),
   require('./ast/eval'),
   require('./ast/exit'),
+  require('./ast/expression'),
   require('./ast/for'),
   require('./ast/foreach'),
   require('./ast/function'),
+  require('./ast/global'),
   require('./ast/goto'),
+  require('./ast/halt'),
   require('./ast/identifier'),
   require('./ast/if'),
   require('./ast/include'),
@@ -363,22 +411,39 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/magic'),
   require('./ast/method'),
   require('./ast/namespace'),
+  require('./ast/new'),
+  require('./ast/node'),
+  require('./ast/nowdoc'),
   require('./ast/number'),
+  require('./ast/offsetlookup'),
   require('./ast/parameter'),
+  require('./ast/parenthesis'),
   require('./ast/post'),
+  require('./ast/pre'),
   require('./ast/print'),
   require('./ast/program'),
   require('./ast/property'),
+  require('./ast/propertylookup'),
+  require('./ast/retif'),
   require('./ast/return'),
   require('./ast/shell'),
+  require('./ast/silent'),
+  require('./ast/static'),
+  require('./ast/staticlookup'),
   require('./ast/string'),
   require('./ast/switch'),
+  require('./ast/throw'),
   require('./ast/trait'),
   require('./ast/traitalias'),
   require('./ast/traitprecedence'),
   require('./ast/traituse'),
+  require('./ast/try'),
+  require('./ast/unary'),
   require('./ast/unset'),
+  require('./ast/usegroup'),
+  require('./ast/useitem'),
   require('./ast/variable'),
+  require('./ast/variadic'),
   require('./ast/while')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
@@ -388,7 +453,7 @@ AST.prototype.prepare = function(kind, parser) {
 
 module.exports = AST;
 
-},{"./ast/array":3,"./ast/assign":4,"./ast/block":5,"./ast/boolean":6,"./ast/break":7,"./ast/case":8,"./ast/class":9,"./ast/classconstant":10,"./ast/clone":11,"./ast/coalesce":12,"./ast/constant":13,"./ast/constref":14,"./ast/continue":15,"./ast/do":17,"./ast/doc":18,"./ast/echo":19,"./ast/empty":20,"./ast/entry":21,"./ast/error":22,"./ast/eval":23,"./ast/exit":24,"./ast/for":26,"./ast/foreach":27,"./ast/function":28,"./ast/goto":29,"./ast/identifier":30,"./ast/if":31,"./ast/include":32,"./ast/inline":33,"./ast/interface":34,"./ast/isset":35,"./ast/label":36,"./ast/list":37,"./ast/literal":38,"./ast/location":39,"./ast/magic":40,"./ast/method":41,"./ast/namespace":42,"./ast/number":44,"./ast/parameter":46,"./ast/position":47,"./ast/post":48,"./ast/print":49,"./ast/program":50,"./ast/property":51,"./ast/return":52,"./ast/shell":53,"./ast/string":55,"./ast/switch":56,"./ast/trait":58,"./ast/traitalias":59,"./ast/traitprecedence":60,"./ast/traituse":61,"./ast/unset":62,"./ast/variable":63,"./ast/while":64}],3:[function(require,module,exports){
+},{"./ast/array":3,"./ast/assign":4,"./ast/bin":5,"./ast/block":6,"./ast/bool":7,"./ast/boolean":8,"./ast/break":9,"./ast/call":10,"./ast/case":11,"./ast/cast":12,"./ast/catch":13,"./ast/class":14,"./ast/classconstant":15,"./ast/clone":16,"./ast/closure":17,"./ast/coalesce":18,"./ast/constant":19,"./ast/constref":20,"./ast/continue":21,"./ast/declare":23,"./ast/do":24,"./ast/doc":25,"./ast/echo":26,"./ast/empty":27,"./ast/encapsed":28,"./ast/entry":29,"./ast/error":30,"./ast/eval":31,"./ast/exit":32,"./ast/expression":33,"./ast/for":34,"./ast/foreach":35,"./ast/function":36,"./ast/global":37,"./ast/goto":38,"./ast/halt":39,"./ast/identifier":40,"./ast/if":41,"./ast/include":42,"./ast/inline":43,"./ast/interface":44,"./ast/isset":45,"./ast/label":46,"./ast/list":47,"./ast/literal":48,"./ast/location":49,"./ast/magic":51,"./ast/method":52,"./ast/namespace":53,"./ast/new":54,"./ast/node":55,"./ast/nowdoc":56,"./ast/number":57,"./ast/offsetlookup":58,"./ast/parameter":60,"./ast/parenthesis":61,"./ast/position":62,"./ast/post":63,"./ast/pre":64,"./ast/print":65,"./ast/program":66,"./ast/property":67,"./ast/propertylookup":68,"./ast/retif":69,"./ast/return":70,"./ast/shell":71,"./ast/silent":72,"./ast/static":74,"./ast/staticlookup":75,"./ast/string":76,"./ast/switch":77,"./ast/throw":79,"./ast/trait":80,"./ast/traitalias":81,"./ast/traitprecedence":82,"./ast/traituse":83,"./ast/try":84,"./ast/unary":85,"./ast/unset":86,"./ast/usegroup":87,"./ast/useitem":88,"./ast/variable":89,"./ast/variadic":90,"./ast/while":91}],3:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -413,7 +478,7 @@ var Array = Expr.extends(function Array(shortForm, items, location) {
 
 module.exports = Array;
 
-},{"./expression":25}],4:[function(require,module,exports){
+},{"./expression":33}],4:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -440,7 +505,59 @@ var Assign = Statement.extends(function Assign(left, right, operator, location) 
 
 module.exports = Assign;
 
-},{"./statement":54}],5:[function(require,module,exports){
+},{"./statement":73}],5:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Operation = require('./operation');
+var KIND = 'bin';
+
+// define nodes shifting
+var precedence = {
+  '+': 1,
+  '-': 1,
+  '.': 1,
+  '*': 2,
+  '/': 2,
+  '%': 2
+};
+
+/**
+ * Binary operations
+ * @constructor Bin
+ * @extends {Operation}
+ * @property {String} type
+ * @property {Expression} left
+ * @property {Expression} right
+ */
+var Bin = Operation.extends(function Bin(type, left, right, location) {
+  Operation.apply(this, [KIND, location]);
+  if (right && right.kind === 'bin') {
+    var lLevel = precedence[type];
+    var rLevel = precedence[right.type];
+    if (lLevel && rLevel && rLevel < lLevel) {
+      // shift precedence
+      var buffer = right.right;
+      right.right = right.left;
+      right.left = left;
+      left = buffer;
+      buffer = right.type;
+      right.type = type;
+      type = buffer;
+    }
+  }
+  this.type = type;
+  this.left = left;
+  this.right = right;
+});
+
+module.exports = Bin;
+
+},{"./operation":59}],6:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -463,7 +580,35 @@ var Block = Statement.extends(function Block(kind, children, location) {
 
 module.exports = Block;
 
-},{"./statement":54}],6:[function(require,module,exports){
+},{"./statement":73}],7:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Operation = require('./operation');
+var KIND = 'bool';
+
+/**
+ * Boolean operations
+ * @constructor Bool
+ * @extends {Operation}
+ * @property {String} type
+ * @property {Expression} left
+ * @property {Expression} right
+ */
+var Bool = Operation.extends(function Bool(type, left, right, location) {
+  Operation.apply(this, [KIND, location]);
+  this.type = type;
+  this.left = left;
+  this.right = right;
+});
+
+module.exports = Bool;
+
+},{"./operation":59}],8:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -484,7 +629,7 @@ var Boolean = Literal.extends(function Boolean(value, location) {
 
 module.exports = Boolean;
 
-},{"./literal":38}],7:[function(require,module,exports){
+},{"./literal":48}],9:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -498,14 +643,42 @@ var KIND = 'break';
  * A break statement
  * @constructor Break
  * @extends {Node}
+ * @property {Number|Null} level
  */
-var Break = Node.extends(function Break(location) {
+var Break = Node.extends(function Break(level, location) {
   Node.apply(this, [KIND, location]);
+  this.level = level;
 });
 
 module.exports = Break;
 
-},{"./node":43}],8:[function(require,module,exports){
+},{"./node":55}],10:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'call';
+
+/**
+ * Executes a call statement
+ * @constructor Call
+ * @extends {Statement}
+ * @property {Identifier|Variable|??} what
+ * @property {Arguments[]} arguments
+ */
+var Call = Statement.extends(function Call(what, args, location) {
+  Statement.apply(this, [KIND, location]);
+  this.what = what;
+  this.arguments = args;
+});
+
+module.exports = Call;
+
+},{"./statement":73}],11:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -530,7 +703,62 @@ var Case = Node.extends(function Case(test, body, location) {
 
 module.exports = Case;
 
-},{"./node":43}],9:[function(require,module,exports){
+},{"./node":55}],12:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Operation = require('./operation');
+var KIND = 'cast';
+
+/**
+ * Binary operations
+ * @constructor Cast
+ * @extends {Operation}
+ * @property {String} type
+ * @property {Expression} what
+ */
+var Cast = Operation.extends(function Cast(type, what, location) {
+  Operation.apply(this, [KIND, location]);
+  this.type = type;
+  this.what = what;
+});
+
+module.exports = Cast;
+
+},{"./operation":59}],13:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'catch';
+
+/**
+ * Defines a catch statement
+ * @constructor Try
+ * @extends {Statement}
+ * @property {Identifier[]} what
+ * @property {Variable} variable
+ * @property {Statement} body
+ * @see http://php.net/manual/en/language.exceptions.php
+ */
+var Catch = Statement.extends(function Catch(body, what, variable, location) {
+  Statement.apply(this, [KIND, location]);
+  this.body = body;
+  this.what = what;
+  this.variable = variable;
+});
+
+module.exports = Catch;
+
+},{"./statement":73}],14:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -563,7 +791,7 @@ var Class = Declaration.extends(function Class(name, ext, impl, body, flags, loc
 
 module.exports = Class;
 
-},{"./declaration":16}],10:[function(require,module,exports){
+},{"./declaration":22}],15:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -588,7 +816,7 @@ var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, 
 
 module.exports = ClassConstant;
 
-},{"./constant":13}],11:[function(require,module,exports){
+},{"./constant":19}],16:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -611,34 +839,65 @@ var Clone = Statement.extends(function Clone(what, location) {
 
 module.exports = Clone;
 
-},{"./statement":54}],12:[function(require,module,exports){
+},{"./statement":73}],17:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Statement = require('./statement');
+var KIND = 'closure';
+
+/**
+ * Defines a closure
+ * @constructor Closure
+ * @extends {Statement}
+ * @property {Parameter[]} arguments
+ * @property {Identifier} type
+ * @property {boolean} byref
+ * @property {boolean} nullable
+ * @property {Block|null} body
+ */
+var Closure = Statement.extends(function Closure(args, byref, type, nullable, location) {
+  Statement.apply(this, [KIND, location]);
+  this.arguments = args;
+  this.byref = byref;
+  this.type = type;
+  this.nullable = nullable;
+  this.body = null;
+});
+
+module.exports = Closure;
+
+},{"./statement":73}],18:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
+var Operation = require('./operation');
 var KIND = 'coalesce';
 
 /**
  * Verify is the test property is defined and is not null, and returns
  * is, otherwise returns the ifnull expression.
  * @constructor Coalesce
- * @extends {Statement}
+ * @extends {Operation}
  * @property {Expression} test - The expression to be testes
  * @property {Expression} ifnull - The returned expression if test is null
  * @see https://wiki.php.net/rfc/isset_ternary
  */
-var Coalesce = Statement.extends(function Coalesce(test, ifnull, location) {
-  Statement.apply(this, [KIND, location]);
+var Coalesce = Operation.extends(function Coalesce(test, ifnull, location) {
+  Operation.apply(this, [KIND, location]);
   this.test = test;
   this.ifnull = ifnull;
 });
 
 module.exports = Coalesce;
 
-},{"./statement":54}],13:[function(require,module,exports){
+},{"./operation":59}],19:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -661,7 +920,7 @@ var Constant = Declaration.extends(function Constant(name, value, location) {
 
 module.exports = Constant;
 
-},{"./declaration":16}],14:[function(require,module,exports){
+},{"./declaration":22}],20:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -684,7 +943,7 @@ var ConstRef = Expr.extends(function ConstRef(identifier, location) {
 
 module.exports = ConstRef;
 
-},{"./expression":25}],15:[function(require,module,exports){
+},{"./expression":33}],21:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -698,14 +957,16 @@ var KIND = 'continue';
  * A continue statement
  * @constructor Continue
  * @extends {Node}
+ * @property {Number|Null} level
  */
-var Continue = Node.extends(function Continue(location) {
+var Continue = Node.extends(function Continue(level, location) {
   Node.apply(this, [KIND, location]);
+  this.level = level;
 });
 
 module.exports = Continue;
 
-},{"./node":43}],16:[function(require,module,exports){
+},{"./node":55}],22:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -752,7 +1013,73 @@ Declaration.prototype.parseFlags = function(flags) {
 
 module.exports = Declaration;
 
-},{"./statement":54}],17:[function(require,module,exports){
+},{"./statement":73}],23:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Block = require('./block');
+var KIND = 'declare';
+
+/**
+ * The declare construct is used to set execution directives for a block of code
+ * @constructor Declare
+ * @extends {Block}
+ * @property {Expression[]} what
+ * @property {String} mode
+ * @see http://php.net/manual/en/control-structures.declare.php
+ */
+var Declare = Block.extends(function Declare(what, body, mode, location) {
+  Block.apply(this, [KIND, body, location]);
+  this.what = what;
+  this.mode = mode;
+});
+
+
+/**
+ * The node is declared as a short tag syntax :
+ * ```php
+ * <?php
+ * declare(ticks=1):
+ * // some statements
+ * enddeclare;
+ * ```
+ * @constant {String} MODE_SHORT
+ */
+Declare.MODE_SHORT = 'short';
+
+/**
+ * The node is declared bracket enclosed code :
+ * ```php
+ * <?php
+ * declare(ticks=1) {
+ * // some statements
+ * }
+ * ```
+ * @constant {String} MODE_BLOCK
+ */
+Declare.MODE_BLOCK = 'block';
+
+/**
+ * The node is declared as a simple statement. In order to make things simpler
+ * children of the node are automatically collected until the next
+ * declare statement.
+ * ```php
+ * <?php
+ * declare(ticks=1);
+ * // some statements
+ * declare(ticks=2);
+ * // some statements
+ * ```
+ * @constant {String} MODE_NONE
+ */
+Declare.MODE_NONE = 'none';
+
+module.exports = Declare;
+
+},{"./block":6}],24:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -778,7 +1105,7 @@ var Do = Statement.extends(function Do(test, body, location) {
 
 module.exports = Do;
 
-},{"./statement":54}],18:[function(require,module,exports){
+},{"./statement":73}],25:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -803,7 +1130,7 @@ var Doc = Node.extends(function Doc(isDoc, lines, location) {
 
 module.exports = Doc;
 
-},{"./node":43}],19:[function(require,module,exports){
+},{"./node":55}],26:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -824,7 +1151,7 @@ var Echo = Sys.extends(function Echo(args, location) {
 
 module.exports = Echo;
 
-},{"./sys":57}],20:[function(require,module,exports){
+},{"./sys":78}],27:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -845,7 +1172,65 @@ var Empty = Sys.extends(function Empty(args, location) {
 
 module.exports = Empty;
 
-},{"./sys":57}],21:[function(require,module,exports){
+},{"./sys":78}],28:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'encapsed';
+
+/**
+ * Defines an encapsed string (contains expressions)
+ * @constructor Encapsed
+ * @extends {Literal}
+ * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
+ * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
+ */
+var Encapsed = Literal.extends(function Encapsed(value, type, location) {
+  Literal.apply(this, [KIND, value, location]);
+  this.type = type;
+});
+
+
+/**
+ * The node is a double quote string :
+ * ```php
+ * <?php
+ * echo "hello $world";
+ * ```
+ * @constant {String} TYPE_STRING - `string`
+ */
+Encapsed.TYPE_STRING = 'string';
+
+/**
+ * The node is a shell execute string :
+ * ```php
+ * <?php
+ * echo `ls -larth $path`;
+ * ```
+ * @constant {String} TYPE_SHELL - `shell`
+ */
+Encapsed.TYPE_SHELL = 'shell';
+
+/**
+ * The node is a shell execute string :
+ * ```php
+ * <?php
+ * echo <<<STR
+ *  Hello $world
+ * STR
+ * ;
+ * ```
+ * @constant {String} TYPE_HEREDOC - `heredoc`
+ */
+Encapsed.TYPE_HEREDOC = 'heredoc';
+
+module.exports = Encapsed;
+
+},{"./literal":48}],29:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -870,7 +1255,7 @@ var Entry = Node.extends(function Entry(key, value, location) {
 
 module.exports = Entry;
 
-},{"./node":43}],22:[function(require,module,exports){
+},{"./node":55}],30:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -900,7 +1285,7 @@ var Error = Node.extends(function Error(message, token, line, expected, location
 
 module.exports = Error;
 
-},{"./node":43}],23:[function(require,module,exports){
+},{"./node":55}],31:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -923,7 +1308,7 @@ var Eval = Statement.extends(function Eval(source, location) {
 
 module.exports = Eval;
 
-},{"./statement":54}],24:[function(require,module,exports){
+},{"./statement":73}],32:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -946,7 +1331,7 @@ var Exit = Statement.extends(function Exit(status, location) {
 
 module.exports = Exit;
 
-},{"./statement":54}],25:[function(require,module,exports){
+},{"./statement":73}],33:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -968,7 +1353,7 @@ var Expression = Node.extends(function Expression(kind, location) {
 
 module.exports = Expression;
 
-},{"./node":43}],26:[function(require,module,exports){
+},{"./node":55}],34:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1001,7 +1386,7 @@ var For = Statement.extends(function For(init, test, increment, body, shortForm,
 
 module.exports = For;
 
-},{"./statement":54}],27:[function(require,module,exports){
+},{"./statement":73}],35:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1034,7 +1419,7 @@ var Foreach = Statement.extends(function Foreach(source, key, value, body, short
 
 module.exports = Foreach;
 
-},{"./statement":54}],28:[function(require,module,exports){
+},{"./statement":73}],36:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1051,18 +1436,43 @@ var KIND          = 'function';
  * @property {Parameter[]} arguments
  * @property {Identifier} type
  * @property {boolean} byref
+ * @property {boolean} nullable
  * @property {Block|null} body
  */
-var fn = Declaration.extends(function _Function(name, args, byref, type, location) {
+var fn = Declaration.extends(function _Function(name, args, byref, type, nullable, location) {
   Declaration.apply(this, [KIND, name, location]);
   this.arguments = args;
   this.byref = byref;
   this.type = type;
+  this.nullable = nullable;
   this.body = null;
 });
 module.exports = fn;
 
-},{"./declaration":16}],29:[function(require,module,exports){
+},{"./declaration":22}],37:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Statement = require('./statement');
+var KIND = 'global';
+
+/**
+ * Imports a variable from the global scope
+ * @constructor Global
+ * @extends {Statement}
+ * @property {Variable[]} items
+ */
+var Global = Statement.extends(function Global(items, location) {
+  Statement.apply(this, [KIND, location]);
+  this.items = items;
+});
+
+module.exports = Global;
+
+},{"./statement":73}],38:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1087,7 +1497,32 @@ var Goto = Statement.extends(function Goto(label, location) {
 
 module.exports = Goto;
 
-},{"./statement":54}],30:[function(require,module,exports){
+},{"./statement":73}],39:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'halt';
+
+/**
+ * Halts the compiler execution
+ * @constructor Halt
+ * @extends {Statement}
+ * @property {String} after - String after the halt statement
+ * @see http://php.net/manual/en/function.halt-compiler.php
+ */
+var Halt = Statement.extends(function Halt(after, location) {
+  Statement.apply(this, [KIND, location]);
+  this.after = after;
+});
+
+module.exports = Halt;
+
+},{"./statement":73}],40:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1097,27 +1532,54 @@ module.exports = Goto;
 var Node = require('./node');
 var KIND = 'identifier';
 
-
 /**
  * Defines an identifier node
  * @constructor Identifier
  * @extends {Node}
  * @property {string} name
- * @property {boolean} fqn
+ * @property {string} resolution
  */
-var Identifier = Node.extends(function Identifier(name, fqn, location) {
+var Identifier = Node.extends(function Identifier(name, isRelative, location) {
   Node.apply(this, [KIND, location]);
-  this.name = Array.isArray(name) ? name.join('\\') : name;
-  if (typeof fqn !== 'boolean') {
-    this.fqn = this.name[0] === '\\';
+  if (isRelative) {
+    this.resolution = Identifier.RELATIVE_NAME;
+  } else if (name.length === 1) {
+    this.resolution = Identifier.UNQUALIFIED_NAME;
+  } else if (name[0] === '') {
+    this.resolution = Identifier.FULL_QUALIFIED_NAME;
   } else {
-    this.fqn = fqn;
+    this.resolution = Identifier.QUALIFIED_NAME;
   }
+  this.name = name.join('\\');
 });
+
+/**
+ * This is an identifier without a namespace separator, such as Foo
+ * @constant {String} UNQUALIFIED_NAME
+ */
+Identifier.UNQUALIFIED_NAME = 'uqn';
+/**
+ * This is an identifier with a namespace separator, such as Foo\Bar
+ * @constant {String} QUALIFIED_NAME
+ */
+Identifier.QUALIFIED_NAME = 'qn';
+/**
+ * This is an identifier with a namespace separator that begins with
+ * a namespace separator, such as \Foo\Bar. The namespace \Foo is also
+ * a fully qualified name.
+ * @constant {String} FULL_QUALIFIED_NAME
+ */
+Identifier.FULL_QUALIFIED_NAME = 'fqn';
+/**
+ * This is an identifier starting with namespace, such as namespace\Foo\Bar.
+ * @constant {String} RELATIVE_NAME
+ */
+Identifier.RELATIVE_NAME = 'rn';
+
 
 module.exports = Identifier;
 
-},{"./node":43}],31:[function(require,module,exports){
+},{"./node":55}],41:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1147,7 +1609,7 @@ var If = Statement.extends(function If(test, body, alternate, shortForm, locatio
 
 module.exports = If;
 
-},{"./statement":54}],32:[function(require,module,exports){
+},{"./statement":73}],42:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1174,7 +1636,7 @@ var Include = Statement.extends(function Include(once, require, target, location
 
 module.exports = Include;
 
-},{"./statement":54}],33:[function(require,module,exports){
+},{"./statement":73}],43:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1195,7 +1657,7 @@ var Inline = Literal.extends(function Inline(value, location) {
 
 module.exports = Inline;
 
-},{"./literal":38}],34:[function(require,module,exports){
+},{"./literal":48}],44:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1221,7 +1683,7 @@ var Interface = Declaration.extends(function Interface(name, ext, body, location
 
 module.exports = Interface;
 
-},{"./declaration":16}],35:[function(require,module,exports){
+},{"./declaration":22}],45:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1242,7 +1704,7 @@ var Isset = Sys.extends(function Isset(args, location) {
 
 module.exports = Isset;
 
-},{"./sys":57}],36:[function(require,module,exports){
+},{"./sys":78}],46:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1265,7 +1727,7 @@ var Label = Node.extends(function Label(name, location) {
 
 module.exports = Label;
 
-},{"./node":43}],37:[function(require,module,exports){
+},{"./node":55}],47:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1286,7 +1748,7 @@ var List = Sys.extends(function List(args, location) {
 
 module.exports = List;
 
-},{"./sys":57}],38:[function(require,module,exports){
+},{"./sys":78}],48:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1309,7 +1771,7 @@ var Literal = Expr.extends(function Literal(kind, value, location) {
 
 module.exports = Literal;
 
-},{"./expression":25}],39:[function(require,module,exports){
+},{"./expression":33}],49:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1331,7 +1793,32 @@ var Location = function(source, start, end) {
 
 module.exports = Location;
 
-},{}],40:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Expr = require('./expression');
+var KIND = 'lookup';
+
+/**
+ * Lookup on an offset in the specified object
+ * @constructor Lookup
+ * @extends {Expression}
+ * @property {Expression} what
+ * @property {Expression} offset
+ */
+var Lookup = Expr.extends(function Lookup(kind, what, offset, location) {
+  Expr.apply(this, [kind || KIND, location]);
+  this.what = what;
+  this.offset = offset;
+});
+
+module.exports = Lookup;
+
+},{"./expression":33}],51:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1352,7 +1839,7 @@ var Magic = Literal.extends(function Magic(value, location) {
 
 module.exports = Magic;
 
-},{"./literal":38}],41:[function(require,module,exports){
+},{"./literal":48}],52:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1378,7 +1865,7 @@ var Method = fn.extends(function Method() {
 
 module.exports = Method;
 
-},{"./function":28}],42:[function(require,module,exports){
+},{"./function":36}],53:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1408,7 +1895,33 @@ var Namespace = Block.extends(function Namespace(name, children, withBrackets, l
 
 module.exports = Namespace;
 
-},{"./block":5,"./identifier":30}],43:[function(require,module,exports){
+},{"./block":6,"./identifier":40}],54:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'new';
+
+/**
+ * Creates a new instance of the specified class
+ * @constructor New
+ * @extends {Statement}
+ * @property {Identifier|Variable|Class} what
+ * @property {Arguments[]} arguments
+ */
+var New = Statement.extends(function New(what, args, location) {
+  Statement.apply(this, [KIND, location]);
+  this.what = what;
+  this.arguments = args;
+});
+
+module.exports = New;
+
+},{"./statement":73}],55:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1442,7 +1955,31 @@ Node.extends = function(constructor) {
 
 module.exports = Node;
 
-},{}],44:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Literal = require('./literal');
+var KIND = 'nowdoc';
+
+/**
+ * Defines a nowdoc string
+ * @constructor String
+ * @extends {Literal}
+ * @property {String} label
+
+ */
+var Nowdoc = Literal.extends(function Nowdoc(value, label, location) {
+  Literal.apply(this, [KIND, value, location]);
+  this.label = label;
+});
+
+module.exports = Nowdoc;
+
+},{"./literal":48}],57:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1463,7 +2000,28 @@ var _Number = Literal.extends(function Number(value, location) {
 
 module.exports = _Number;
 
-},{"./literal":38}],45:[function(require,module,exports){
+},{"./literal":48}],58:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Lookup = require('./lookup');
+var KIND = 'offsetlookup';
+
+/**
+ * Lookup on an offset in an array
+ * @constructor OffsetLookup
+ * @extends {Lookup}
+ */
+var OffsetLookup = Lookup.extends(function OffsetLookup(what, offset, location) {
+  Lookup.apply(this, [KIND, what, offset, location]);
+});
+
+module.exports = OffsetLookup;
+
+},{"./lookup":50}],59:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1485,7 +2043,7 @@ var Operation = Expr.extends(function Operation(kind, location) {
 
 module.exports = Operation;
 
-},{"./expression":25}],46:[function(require,module,exports){
+},{"./expression":33}],60:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1503,18 +2061,44 @@ var KIND = 'parameter';
  * @property {Node|null} value
  * @property {boolean} byref
  * @property {boolean} variadic
+ * @property {boolean} nullable
  */
-var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, location) {
+var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, nullable, location) {
   Declaration.apply(this, [KIND, name, location]);
   this.value = value;
   this.type = type;
   this.byref = isRef;
   this.variadic = isVariadic;
+  this.nullable = nullable;
 });
 
 module.exports = Parameter;
 
-},{"./declaration":16}],47:[function(require,module,exports){
+},{"./declaration":22}],61:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Operation = require('./operation');
+var KIND = 'parenthesis';
+
+/**
+ * Parenthesis encapsulation `(... expr ...)`
+ * @constructor Parenthesis
+ * @extends {Operation}
+ * @property {Expression} inner
+ */
+var Parenthesis = Operation.extends(function Parenthesis(inner, location) {
+  Operation.apply(this, [KIND, location]);
+  this.inner = inner;
+});
+
+module.exports = Parenthesis;
+
+},{"./operation":59}],62:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1536,7 +2120,7 @@ var Position = function(line, column, offset) {
 
 module.exports = Position;
 
-},{}],48:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1562,7 +2146,33 @@ var Post = Operation.extends(function Post(type, what, location) {
 
 module.exports = Post;
 
-},{"./operation":45}],49:[function(require,module,exports){
+},{"./operation":59}],64:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Operation = require('./operation');
+var KIND = 'pre';
+
+/**
+ * Defines a pre operation `++$i` or `--$i`
+ * @constructor Pre
+ * @extends {Operation}
+ * @property {String} type
+ * @property {Variable} what
+ */
+var Pre = Operation.extends(function Pre(type, what, location) {
+  Operation.apply(this, [KIND, location]);
+  this.type = type;
+  this.what = what;
+});
+
+module.exports = Pre;
+
+},{"./operation":59}],65:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1583,7 +2193,7 @@ var Print = Sys.extends(function Print(args, location) {
 
 module.exports = Print;
 
-},{"./sys":57}],50:[function(require,module,exports){
+},{"./sys":78}],66:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1606,7 +2216,7 @@ var Program = Block.extends(function Program(children, errors, location) {
 
 module.exports = Program;
 
-},{"./block":5}],51:[function(require,module,exports){
+},{"./block":6}],67:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1633,7 +2243,56 @@ var Property = Declaration.extends(function Property(name, value, flags, locatio
 
 module.exports = Property;
 
-},{"./declaration":16}],52:[function(require,module,exports){
+},{"./declaration":22}],68:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Lookup = require('./lookup');
+var KIND = 'propertylookup';
+
+/**
+ * Lookup to an object property
+ * @constructor PropertyLookup
+ * @extends {Lookup}
+ */
+var PropertyLookup = Lookup.extends(function PropertyLookup(what, offset, location) {
+  Lookup.apply(this, [KIND, what, offset, location]);
+});
+
+module.exports = PropertyLookup;
+
+},{"./lookup":50}],69:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'retif';
+
+/**
+ * Defines a short if statement that returns a value
+ * @constructor RetIf
+ * @extends {Statement}
+ * @property {Expression} test
+ * @property {Expression} trueExpr
+ * @property {Expression} falseExpr
+ */
+var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location) {
+  Statement.apply(this, [KIND, location]);
+  this.test = test;
+  this.trueExpr = trueExpr;
+  this.falseExpr = falseExpr;
+});
+
+module.exports = RetIf;
+
+},{"./statement":73}],70:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1656,7 +2315,7 @@ var Return = Node.extends(function Return(expr, location) {
 
 module.exports = Return;
 
-},{"./node":43}],53:[function(require,module,exports){
+},{"./node":55}],71:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1678,7 +2337,31 @@ var Shell = Literal.extends(function Shell(value, location) {
 
 module.exports = Shell;
 
-},{"./literal":38}],54:[function(require,module,exports){
+},{"./literal":48}],72:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'silent';
+
+/**
+ * Avoids to show/log warnings & notices from the inner expression
+ * @constructor Silent
+ * @extends {Statement}
+ * @property {Expression} expr
+ */
+var Silent = Statement.extends(function Silent(expr, location) {
+  Statement.apply(this, [KIND, location]);
+  this.expr = expr;
+});
+
+module.exports = Silent;
+
+},{"./statement":73}],73:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1699,7 +2382,51 @@ var Statement = Node.extends(function Statement(kind, location) {
 
 module.exports = Statement;
 
-},{"./node":43}],55:[function(require,module,exports){
+},{"./node":55}],74:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Statement = require('./statement');
+var KIND = 'static';
+
+/**
+ * Declares a static variable into the current scope
+ * @constructor Static
+ * @extends {Statement}
+ * @property {Variable[]|Assign[]} items
+ */
+var Static = Statement.extends(function Static(items, location) {
+  Statement.apply(this, [KIND, location]);
+  this.items = items;
+});
+
+module.exports = Static;
+
+},{"./statement":73}],75:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Lookup = require('./lookup');
+var KIND = 'staticlookup';
+
+/**
+ * Lookup to a static property
+ * @constructor StaticLookup
+ * @extends {Lookup}
+ */
+var StaticLookup = Lookup.extends(function StaticLookup(what, offset, location) {
+  Lookup.apply(this, [KIND, what, offset, location]);
+});
+
+module.exports = StaticLookup;
+
+},{"./lookup":50}],76:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1710,11 +2437,11 @@ var Literal = require('./literal');
 var KIND = 'string';
 
 /**
- * Defines inline html output (treated as echo output)
+ * Defines a string (simple ou double quoted) - chars are already escaped
  * @constructor String
  * @extends {Literal}
  * @property {boolean} isDoubleQuote
-
+ * @see {Encapsed}
  */
 var String = Literal.extends(function String(isDoubleQuote, value, location) {
   Literal.apply(this, [KIND, value, location]);
@@ -1723,7 +2450,7 @@ var String = Literal.extends(function String(isDoubleQuote, value, location) {
 
 module.exports = String;
 
-},{"./literal":38}],56:[function(require,module,exports){
+},{"./literal":48}],77:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1751,7 +2478,7 @@ var Switch = Statement.extends(function Switch(test, body, shortForm, location) 
 
 module.exports = Switch;
 
-},{"./statement":54}],57:[function(require,module,exports){
+},{"./statement":73}],78:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1774,7 +2501,31 @@ var Sys = Statement.extends(function Sys(kind, args, location) {
 
 module.exports = Sys;
 
-},{"./statement":54}],58:[function(require,module,exports){
+},{"./statement":73}],79:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'throw';
+
+/**
+ * Defines a throw statement
+ * @constructor Throw
+ * @extends {Statement}
+ * @property {Expression} what
+ */
+var Throw = Statement.extends(function Throw(what, location) {
+  Statement.apply(this, [KIND, location]);
+  this.what = what;
+});
+
+module.exports = Throw;
+
+},{"./statement":73}],80:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1802,7 +2553,7 @@ var Trait = Declaration.extends(function Trait(name, ext, impl, body, location) 
 
 module.exports = Trait;
 
-},{"./declaration":16}],59:[function(require,module,exports){
+},{"./declaration":22}],81:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1835,7 +2586,7 @@ var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, loca
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
       this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
+    } else {
       this.visibility = IS_PRIVATE;
     }
   } else {
@@ -1845,7 +2596,7 @@ var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, loca
 
 module.exports = TraitAlias;
 
-},{"./node":43}],60:[function(require,module,exports){
+},{"./node":55}],82:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1872,7 +2623,7 @@ var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, inste
 
 module.exports = TraitPrecedence;
 
-},{"./node":43}],61:[function(require,module,exports){
+},{"./node":55}],83:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1897,7 +2648,61 @@ var TraitUse = Node.extends(function TraitUse(traits, adaptations, location) {
 
 module.exports = TraitUse;
 
-},{"./node":43}],62:[function(require,module,exports){
+},{"./node":55}],84:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Statement = require('./statement');
+var KIND = 'try';
+
+/**
+ * Defines a try statement
+ * @constructor Try
+ * @extends {Statement}
+ * @property {Block} body
+ * @property {Catch[]} catches
+ * @property {Block} allways
+ */
+var Try = Statement.extends(function Try(body, catches, always, location) {
+  Statement.apply(this, [KIND, location]);
+  this.body = body;
+  this.catches = catches;
+  this.always = always;
+});
+
+module.exports = Try;
+
+},{"./statement":73}],85:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+var Operation = require('./operation');
+var KIND = 'unary';
+
+/**
+ * Unary operations
+ * @constructor Unary
+ * @extends {Operation}
+ * @property {String} type
+ * @property {Expression} what
+ */
+var Unary = Operation.extends(function Unary(type, what, location) {
+  Operation.apply(this, [KIND, location]);
+  this.type = type;
+  this.what = what;
+});
+
+module.exports = Unary;
+
+},{"./operation":59}],86:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1918,13 +2723,84 @@ var Unset = Sys.extends(function Unset(args, location) {
 
 module.exports = Unset;
 
-},{"./sys":57}],63:[function(require,module,exports){
+},{"./sys":78}],87:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
+var Statement = require('./statement');
+var KIND = 'usegroup';
 
+/**
+ * Defines a use statement (with a list of use items)
+ * @constructor UseGroup
+ * @extends {Statement}
+ * @property {Identifier|null} name
+ * @property {String|null} type - Possible value : function, const
+ * @property {UseItem[]} item
+ * @see {Namespace}
+ * @see http://php.net/manual/en/language.namespaces.importing.php
+ */
+var UseGroup = Statement.extends(function UseGroup(name, type, items, location) {
+  Statement.apply(this, [KIND, location]);
+  this.name = name;
+  this.type = type;
+  this.items = items;
+});
+
+module.exports = UseGroup;
+
+},{"./statement":73}],88:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Statement = require('./statement');
+var KIND = 'useitem';
+
+/**
+ * Defines a use statement (from namespace)
+ * @constructor UseItem
+ * @extends {Statement}
+ * @property {Identifier} name
+ * @property {String|null} type - Possible value : function, const
+ * @property {String|null} alias
+ * @see {Namespace}
+ * @see http://php.net/manual/en/language.namespaces.importing.php
+ */
+var UseItem = Statement.extends(function UseItem(name, alias, type, location) {
+  Statement.apply(this, [KIND, location]);
+  this.name = name;
+  this.alias = alias;
+  this.type = type;
+});
+
+
+/**
+ * Importing a constant
+ * @constant {String} TYPE_CONST
+ */
+UseItem.TYPE_CONST = 'const';
+/**
+ * Importing a function
+ * @constant {String} TYPE_FUNC
+ */
+UseItem.TYPE_FUNCTION = 'function';
+
+
+module.exports = UseItem;
+
+},{"./statement":73}],89:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
 var Expr = require('./expression');
 var KIND = 'variable';
 
@@ -1933,18 +2809,42 @@ var KIND = 'variable';
  * be any expression in general, an expression can also be a pattern.
  * @constructor Variable
  * @extends {Expression}
- * @property {String|Node} identifier
+ * @property {String|Node} name
  * @property {boolean} byref
  */
-var Variable = Expr.extends(function Variable(identifier, byref, location) {
+var Variable = Expr.extends(function Variable(name, byref, location) {
   Expr.apply(this, [KIND, location]);
-  this.identifier = identifier;
+  this.name = name;
   this.byref = byref || false;
 });
 
 module.exports = Variable;
 
-},{"./expression":25}],64:[function(require,module,exports){
+},{"./expression":33}],90:[function(require,module,exports){
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+var Expr = require('./expression');
+var KIND = 'variadic';
+
+/**
+ * Introduce a list of items into the arguments of the call
+ * @constructor Variadic
+ * @extends {Expression}
+ * @property {Array|Expression} what
+ * @see https://wiki.php.net/rfc/argument_unpacking
+ */
+var Variadic = Expr.extends(function Variadic(what, location) {
+  Expr.apply(this, [KIND, location]);
+  this.what = what;
+});
+
+module.exports = Variadic;
+
+},{"./expression":33}],91:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1972,13 +2872,13 @@ var While = Statement.extends(function While(test, body, shortForm, location) {
 
 module.exports = While;
 
-},{"./statement":54}],65:[function(require,module,exports){
+},{"./statement":73}],92:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
+"use strict";
 /**
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
@@ -1997,6 +2897,7 @@ var lexer = function(engine) {
   this.engine = engine;
   this.tok = this.engine.tokens.names;
   this.EOF = 1;
+  this.debug = false;
   this.all_tokens = true;
   this.comment_tokens = false;
   this.mode_eval = false;
@@ -2109,6 +3010,9 @@ lexer.prototype.setInput = function(input) {
     first_offset: 0,
     first_line: 1,
     first_column: 0,
+    prev_offset: 0,
+    prev_line: 1,
+    prev_column: 0,
     last_line: 1,
     last_column: 0
   };
@@ -2161,6 +3065,8 @@ lexer.prototype.unput = function(size) {
       this.yylloc.last_line --;
       this.yylineno --;
       this.yylloc.last_column = this.yyprevcol;
+    } else {
+      this.yylloc.last_column --;
     }
     this.yytext = this.yytext.substring(0, this.yytext.length - size);
   } else if (size > 0) {
@@ -2169,27 +3075,27 @@ lexer.prototype.unput = function(size) {
       this.yytext = this.yytext.substring(0, this.yytext.length - size);
       // re-calculate position
       this.yylloc.last_line = this.yylloc.first_line;
-      this.yylloc.last_col = this.yyprevcol = this.yylloc.first_col;
+      this.yylloc.last_column = this.yyprevcol = this.yylloc.first_column;
       for(var i = 0; i < this.yytext.length; i++) {
         var c = this.yytext[i];
         if (c === '\r') {
           c = this.yytext[++i];
-          this.yyprevcol = this.yylloc.last_col;
+          this.yyprevcol = this.yylloc.last_column;
           this.yylloc.last_line ++;
-          this.yylloc.last_col = 0;
+          this.yylloc.last_column = 0;
           if (c !== '\n') {
             if (c === '\r') {
               this.yylloc.last_line ++;
             } else {
-              this.yylloc.last_col ++;
+              this.yylloc.last_column ++;
             }
           }
         } else if (c === '\n') {
-          this.yyprevcol = this.yylloc.last_col;
+          this.yyprevcol = this.yylloc.last_column;
           this.yylloc.last_line ++;
-          this.yylloc.last_col = 0;
+          this.yylloc.last_column = 0;
         } else {
-          this.yylloc.last_col ++;
+          this.yylloc.last_column ++;
         }
       }
       this.yylineno = this.yylloc.last_line;
@@ -2285,6 +3191,9 @@ lexer.prototype.appendToken = function(value, ahead) {
 
 // return next match that has a token
 lexer.prototype.lex = function() {
+  this.yylloc.prev_offset = this.offset;
+  this.yylloc.prev_line = this.yylloc.last_line;
+  this.yylloc.prev_column = this.yylloc.last_column;
   var token = this.next() || this.lex();
   if (!this.all_tokens) {
     while(
@@ -2306,6 +3215,11 @@ lexer.prototype.lex = function() {
       // open tag with echo statement
       return this.tok.T_ECHO;
     }
+  }
+  if (!this.yylloc.prev_offset) {
+    this.yylloc.prev_offset = this.yylloc.first_offset;
+    this.yylloc.prev_line = this.yylloc.first_line;
+    this.yylloc.prev_column = this.yylloc.first_column;
   }
   return token;
 };
@@ -2339,13 +3253,16 @@ lexer.prototype.next = function () {
   if (!this._input) {
     this.done = true;
   }
-  if (this.done) {
-    return this.EOF;
-  }
   this.yylloc.first_offset = this.offset;
   this.yylloc.first_line = this.yylloc.last_line;
   this.yylloc.first_column = this.yylloc.last_column;
   this.yytext = '';
+  if (this.done) {
+    this.yylloc.prev_offset = this.yylloc.first_offset;
+    this.yylloc.prev_line = this.yylloc.first_line;
+    this.yylloc.prev_column = this.yylloc.first_column;
+    return this.EOF;
+  }
   if (this.tokens.length > 0) {
     token = this.tokens.shift();
     if (typeof token[1] === 'object') {
@@ -2359,6 +3276,19 @@ lexer.prototype.next = function () {
   }
   if (this.offset >= this.size && this.tokens.length === 0) {
     this.done = true;
+  }
+  if (this.debug) {
+    var tName = token;
+    if (typeof tName === 'number') {
+      tName = this.engine.tokens.values[tName];
+    } else {
+      tName = '"'+tName+'"';
+    }
+    console.log(
+      tName,
+      'from ' + this.yylloc.first_line + ',' + this.yylloc.first_column,
+      ' - to ' + this.yylloc.last_line + ',' + this.yylloc.last_column
+    );
   }
   return token;
 };
@@ -2382,13 +3312,20 @@ lexer.prototype.next = function () {
 
 module.exports = lexer;
 
-},{"./lexer/comments.js":66,"./lexer/initial.js":67,"./lexer/numbers.js":68,"./lexer/property.js":69,"./lexer/scripting.js":70,"./lexer/strings.js":71,"./lexer/tokens.js":72,"./lexer/utils.js":73}],66:[function(require,module,exports){
+},{"./lexer/comments.js":93,"./lexer/initial.js":94,"./lexer/numbers.js":95,"./lexer/property.js":96,"./lexer/scripting.js":97,"./lexer/strings.js":98,"./lexer/tokens.js":99,"./lexer/utils.js":100}],93:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+
+"use strict";
+
 module.exports = {
+  /**
+   * Reads a single line comment
+   * @see
+   */
   T_COMMENT: function() {
     while(this.offset < this.size) {
       var ch = this.input();
@@ -2399,7 +3336,7 @@ module.exports = {
         return this.tok.T_COMMENT;
       } else if (ch === '%' && this.aspTagMode && this._input[this.offset] === '>') {
         this.unput(1);
-        return tthis.tok.T_COMMENT;
+        return this.tok.T_COMMENT;
       }
     }
     return this.tok.T_COMMENT;
@@ -2432,7 +3369,7 @@ module.exports = {
   }
 };
 
-},{}],67:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2492,7 +3429,7 @@ module.exports = {
   }
 };
 
-},{}],68:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 (function (process){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
@@ -2500,14 +3437,16 @@ module.exports = {
  * @url http://glayzzle.com
  */
 
+"use strict";
+
 /* istanbul ignore else  */
 if (process.arch == 'x64') {
   var SIZEOF_LONG = 8;
-  var MAX_LENGTH_OF_LONG = 20;
+  var MAX_LENGTH_OF_LONG = 19;
   var long_min_digits = "9223372036854775808";
 } else {
   var SIZEOF_LONG = 4;
-  var MAX_LENGTH_OF_LONG = 11;
+  var MAX_LENGTH_OF_LONG = 10;
   var long_min_digits = "2147483648";
 }
 
@@ -2572,8 +3511,10 @@ module.exports = {
       return this.tok.T_LNUMBER;
     } else {
       if (
-        this.yytext.length == MAX_LENGTH_OF_LONG
-        && this.yytext < long_min_digits
+        this.yytext.length < MAX_LENGTH_OF_LONG || (
+          this.yytext.length == MAX_LENGTH_OF_LONG
+          && this.yytext < long_min_digits
+        )
       ) {
         return this.tok.T_LNUMBER;
       }
@@ -2617,7 +3558,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"_process":1}],69:[function(require,module,exports){
+},{"_process":1}],96:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2691,7 +3632,7 @@ module.exports = {
   }
 };
 
-},{}],70:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2793,7 +3734,7 @@ module.exports = {
   }
 };
 
-},{}],71:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2930,6 +3871,7 @@ module.exports = {
   matchST_NOWDOC: function() {
     /** edge case : empty now doc **/
     if (this.isDOC_MATCH()) {
+      // @fixme : never reached (may be caused by quotes)
       this.consume(this.heredoc_label.length);
       this.popState();
       return this.tok.T_END_HEREDOC;
@@ -3070,9 +4012,9 @@ module.exports = {
         this.begin('ST_IN_SCRIPTING');
         return this.tok.T_CURLY_OPEN;
       }
-    } else if (ch === '"') {
+    } else if (ch === '`') {
       this.popState();
-      return '"';
+      return '`';
     }
 
     // any char
@@ -3195,6 +4137,7 @@ module.exports = {
             this.unput(2);
             return this.tok.T_ENCAPSED_AND_WHITESPACE;
           } else {
+            // @fixme : yytext = '"{$' (this.yytext.length > 3)
             this.unput(1);
             return this.tok.T_CURLY_OPEN;
           }
@@ -3207,7 +4150,7 @@ module.exports = {
   }
 };
 
-},{}],72:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3478,7 +4421,7 @@ module.exports = {
   }
 };
 
-},{}],73:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3566,7 +4509,7 @@ module.exports = {
   }
 };
 
-},{}],74:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3582,30 +4525,25 @@ function isNumber(n) {
 
 
 /**
- * The PHP Parser class
- *
- * @public @constructor {Parser}
- * @property {Integer} EOF
- * @property {Lexer} lexer
- * @property {Integer|String} token
- * @property {Boolean} extractDoc
- * @property {Boolean} debug
+ * The PHP Parser class that build the AST tree from the lexer
+ * @constructor {Parser}
+ * @property {Lexer} lexer - current lexer instance
+ * @property {AST} ast - the AST factory instance
+ * @property {Integer|String} token - current token
+ * @property {Boolean} extractDoc - should extract documentation as AST node
+ * @property {Boolean} suppressErrors - should ignore parsing errors and continue
+ * @property {Boolean} debug - should output debug informations
  */
 var parser = function(lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
-  // Private vars, do not use directly
-  this._gracefulProxy = {};
-  this._graceful = false;
   this.token = null;
   this.prev = null;
   this.debug = false;
   this.extractDoc = false;
   this.suppressErrors = false;
-  this.lastError = false;
-  this.startAt = [];
   this.entries = {
     'SCALAR': [
       this.tok.T_CONSTANT_ENCAPSED_STRING,
@@ -3622,6 +4560,7 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C,
+      this.tok.T_NAMESPACE,
       '"',
       'b"',
       'B"',
@@ -3724,8 +4663,9 @@ parser.prototype.getTokenName = function(token) {
 /**
  * main entry point : converts a source code to AST
  */
-parser.prototype.parse = function(code) {
+parser.prototype.parse = function(code, filename) {
   this._errors = [];
+  this.filename = filename || 'eval';
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -3751,8 +4691,15 @@ parser.prototype.parse = function(code) {
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
+  message += ' on line ' + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
-    throw new Error(message);
+    var err = new SyntaxError(
+      message, this.filename, this.lexer.yylloc.first_line
+    );
+    err.lineNumber = this.lexer.yylloc.first_line;
+    err.fileName = this.filename;
+    err.columnNumber = this.lexer.yylloc.first_column
+    throw err;
   }
   // Error node :
   var node = this.ast.prepare('error', this)(
@@ -3787,7 +4734,7 @@ parser.prototype.error = function(expect) {
   }
   this.token !== this.EOF
   return this.raiseError(
-    msg + ' on line ' + this.lexer.yylloc.first_line,
+    msg,
     msgExpect,
     expect,
     token
@@ -3966,7 +4913,7 @@ parser.prototype.read_token = function() {
 
 module.exports = parser;
 
-},{"./parser/array.js":75,"./parser/class.js":76,"./parser/comment.js":77,"./parser/expr.js":78,"./parser/function.js":79,"./parser/if.js":80,"./parser/loops.js":81,"./parser/main.js":82,"./parser/namespace.js":83,"./parser/scalar.js":84,"./parser/statement.js":85,"./parser/switch.js":86,"./parser/try.js":87,"./parser/utils.js":88,"./parser/variable.js":89}],75:[function(require,module,exports){
+},{"./parser/array.js":102,"./parser/class.js":103,"./parser/comment.js":104,"./parser/expr.js":105,"./parser/function.js":106,"./parser/if.js":107,"./parser/loops.js":108,"./parser/main.js":109,"./parser/namespace.js":110,"./parser/scalar.js":111,"./parser/statement.js":112,"./parser/switch.js":113,"./parser/try.js":114,"./parser/utils.js":115,"./parser/variable.js":116}],102:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3989,13 +4936,14 @@ module.exports = {
     var items = [];
     var result = this.node(ArrayExpr);
 
-    this.expect([this.tok.T_ARRAY, '[']);
-
-    if (this.token == this.tok.T_ARRAY) {
+    if (this.token === this.tok.T_ARRAY) {
       this.next().expect('(');
+      expect = ')';
     } else {
       shortForm = true;
+      expect = ']';
     }
+
     if (this.next().token != expect) {
       while(this.token != this.EOF) {
         items.push(this.read_array_pair_list());
@@ -4007,7 +4955,7 @@ module.exports = {
         } else break;
       }
     }
-    this.expect(shortForm ? ']' : ')');
+    this.expect(expect);
     this.next();
     return result(shortForm, items);
   },
@@ -4056,7 +5004,7 @@ module.exports = {
   }
 };
 
-},{}],76:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4501,7 +5449,7 @@ module.exports = {
   }
 };
 
-},{}],77:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -4548,69 +5496,92 @@ module.exports = {
   }
 };
 
-},{}],78:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
 
 module.exports = {
 
   read_expr: function() {
+    var result = this.node();
     var expr = this.read_expr_item();
-    switch(this.token) {
-      // binary operations
-      case '|': return this.node('bin')('|', expr, this.next().read_expr());
-      case '&': return this.node('bin')('&', expr, this.next().read_expr());
-      case '^': return ['bin', '^', expr, this.next().read_expr()];
-      case '.': return ['bin', '.', expr, this.next().read_expr()];
-      case '+': return ['bin', '+', expr, this.next().read_expr()];
-      case '-': return ['bin', '-', expr, this.next().read_expr()];
-      case '*': return ['bin', '*', expr, this.next().read_expr()];
-      case '/': return ['bin', '/', expr, this.next().read_expr()];
-      case '%': return ['bin', '%', expr, this.next().read_expr()];
-      case this.tok.T_POW:  return ['bin', '**', expr, this.next().read_expr()];
-      case this.tok.T_SL:   return ['bin', '<<', expr, this.next().read_expr()];
-      case this.tok.T_SR:   return ['bin', '>>', expr, this.next().read_expr()];
+    // binary operations
+    if (this.token === '|')
+      return result('bin', '|', expr, this.next().read_expr());
+    if (this.token === '&')
+      return result('bin', '&', expr, this.next().read_expr());
+    if (this.token === '^')
+      return result('bin', '^', expr, this.next().read_expr());
+    if (this.token === '.')
+      return result('bin', '.', expr, this.next().read_expr());
+    if (this.token === '+')
+      return result('bin', '+', expr, this.next().read_expr());
+    if (this.token === '-')
+      return result('bin', '-', expr, this.next().read_expr());
+    if (this.token === '*')
+      return result('bin', '*', expr, this.next().read_expr());
+    if (this.token === '/')
+      return result('bin', '/', expr, this.next().read_expr());
+    if (this.token === '%')
+      return result('bin', '%', expr, this.next().read_expr());
+    if (this.token === this.tok.T_POW)
+      return result('bin', '**', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SL)
+      return result('bin', '<<', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SR)
+      return result('bin', '>>', expr, this.next().read_expr());
+    // boolean operations
+    if (this.token === this.tok.T_BOOLEAN_OR)
+      return result('bool', '|', expr, this.next().read_expr());
+    if (this.token === this.tok.T_LOGICAL_OR)
+      return result('bool', '|', expr, this.next().read_expr());
+    if (this.token === this.tok.T_BOOLEAN_AND)
+      return result('bool', '&', expr, this.next().read_expr());
+    if (this.token === this.tok.T_LOGICAL_AND)
+      return result('bool', '&', expr, this.next().read_expr());
+    if (this.token === this.tok.T_LOGICAL_XOR)
+      return result('bool', '^', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_IDENTICAL)
+      return result('bool', '=', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_NOT_IDENTICAL)
+      return result('bool', '!=', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_EQUAL)
+      return result('bool', '~', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_NOT_EQUAL)
+      return result('bool', '!~', expr, this.next().read_expr());
+    if (this.token === '<')
+      return result('bool', '<', expr, this.next().read_expr());
+    if (this.token === '>')
+      return result('bool', '!~', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL)
+      return result('bool', '<=', expr, this.next().read_expr());
+    if (this.token === this.tok.T_IS_GREATER_OR_EQUAL)
+      return result('bool', '=>', expr, this.next().read_expr());
+    if (this.token === this.tok.T_SPACESHIP)
+      return result('bool', '<=>', expr, this.next().read_expr());
+    if (this.token === this.tok.T_INSTANCEOF)
+      return result('bool', '?', expr, this.next().read_expr());
 
-      // boolean operations
-      case this.tok.T_BOOLEAN_OR:
-      case this.tok.T_LOGICAL_OR:   return ['bool', '|', expr, this.next().read_expr()];
+    // extra operations :
+    // $username = $_GET['user'] ?? 'nobody';
+    if (this.token === this.tok.T_COALESCE)
+      return result('coalesce', expr, this.next().read_expr());
 
-      case this.tok.T_BOOLEAN_AND:
-      case this.tok.T_LOGICAL_AND:  return ['bool', '&', expr, this.next().read_expr()];
-
-      case this.tok.T_LOGICAL_XOR:      return ['bool', '^', expr, this.next().read_expr()];
-      case this.tok.T_IS_IDENTICAL:     return ['bool', '=', expr, this.next().read_expr()];
-      case this.tok.T_IS_NOT_IDENTICAL: return ['bool', '!=', expr, this.next().read_expr()];
-      case this.tok.T_IS_EQUAL:         return ['bool', '~', expr, this.next().read_expr()];
-      case this.tok.T_IS_NOT_EQUAL:     return ['bool', '!~', expr, this.next().read_expr()];
-      case '<':                       return ['bool', '<', expr, this.next().read_expr()];
-      case '>':                       return ['bool', '>', expr, this.next().read_expr()];
-
-      case this.tok.T_IS_SMALLER_OR_EQUAL:  return ['bool', '<=', expr, this.next().read_expr()];
-      case this.tok.T_IS_GREATER_OR_EQUAL:  return ['bool', '>=', expr, this.next().read_expr()];
-      case this.tok.T_SPACESHIP:            return ['bool', '<=>', expr, this.next().read_expr()];
-      case this.tok.T_INSTANCEOF:           return ['bool', '?', expr, this.next().read_expr()];
-
-      // extra operations :
-      case this.tok.T_COALESCE:
-        // $username = $_GET['user'] ?? 'nobody';
-        return this.node('coalesce')(
-          expr, this.next().read_expr()
-        );
-
-      case '?':
-        var trueArg = null;
-        if (this.next().token !== ':') {
-          trueArg = this.read_expr();
-        }
-        if (this.expect(':')) {
-          this.next();
-        }
-        return ['retif', expr, trueArg, this.read_expr()];
+    // extra operations :
+    // $username = $_GET['user'] ? true : false;
+    if (this.token === '?') {
+      var trueArg = null;
+      if (this.next().token !== ':') {
+        trueArg = this.read_expr();
+      }
+      this.expect(':') && this.next();
+      return result('retif', expr, trueArg, this.read_expr());
     }
+
     return expr;
   }
 
@@ -4622,115 +5593,121 @@ module.exports = {
    */
   ,read_expr_item: function() {
 
-    switch(this.token) {
+    if (this.token === '@')
+      return this.node('silent')(this.next().read_expr());
+    if (this.token === '+')
+      return this.node('unary')('+', this.next().read_expr());
+    if (this.token === '!')
+      return this.node('unary')('!', this.next().read_expr());
+    if (this.token === '~')
+      return this.node('unary')('~', this.next().read_expr());
 
-      case '@':
-        return ['silent', this.next().read_expr()];
-
-      case '-':
-        var result = this.node();
+    if (this.token === '-') {
+      var result = this.node();
+      this.next();
+      if (
+        this.token === this.tok.T_LNUMBER ||
+        this.token === this.tok.T_DNUMBER
+      ) {
+        // negative number
+        result = result('number', '-' + this.text());
         this.next();
-        if (
-          this.token === this.tok.T_LNUMBER ||
-          this.token === this.tok.T_DNUMBER
-        ) {
-          // negative number
-          result = result('number', '-' + this.text());
-          this.next();
-          return result;
-        } else {
-          return result('unary', '-', this.read_expr());
+        return result;
+      } else {
+        return result('unary', '-', this.read_expr());
+      }
+    }
+
+    if (this.token === '(') {
+      var node = this.node('parenthesis');
+      var expr = this.next().read_expr();
+      this.expect(')') && this.next();
+      expr = node(expr);
+      // handle dereferencable
+      if (this.token === this.tok.T_OBJECT_OPERATOR) {
+        return this.recursive_variable_chain_scan(expr, false);
+      } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
+        return this.read_dereferencable(expr);
+      } else if (this.token === '(') {
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
+        return this.node('call')(
+          expr, this.read_function_argument_list()
+        );
+      } else {
+        return expr;
+      }
+    }
+
+    if (this.token === '`') {
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
+      return this.node('shell')(
+        this.next().read_encapsed_string('`')
+      );
+    }
+
+    if (this.token === this.tok.T_LIST) {
+      var result = this.node('list'), assign = null;
+      var isInner = this.innerList;
+      if (!isInner) {
+        assign = this.node('assign');
+      }
+      if (this.next().expect('(')) {
+        this.next();
+      }
+
+      if (!this.innerList) this.innerList = true;
+      var assignList = this.read_assignment_list();
+
+      // check if contains at least one assignment statement
+      var hasItem = false;
+      for(var i = 0; i < assignList.length; i++) {
+        if (assignList[i] !== null) {
+          hasItem = true;
+          break;
         }
+      }
+      if (!hasItem) {
+        this.raiseError(
+          'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
+        );
+      }
+      if (this.expect(')')) {
+        this.next();
+      }
 
-      case '+':
-      case '!':
-      case '~':
-        return this.node('unary')(this.token, this.read_expr());
-
-      case '(':
-        var expr = this.next().read_expr();
-        if (this.expect(')')) {
-          this.next();
-        }
-
-        // handle dereferencable
-        if (this.token === this.tok.T_OBJECT_OPERATOR) {
-          return this.recursive_variable_chain_scan(expr, false);
-        } else if (this.token === this.tok.T_CURLY_OPEN || this.token === '[') {
-          return this.read_dereferencable(expr);
-        } else if (this.token === '(') {
-          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-          return this.node('call')(
-            expr, this.read_function_argument_list()
+      if (!isInner) {
+        this.innerList = false;
+        if (this.expect('=')) {
+          return assign(
+            result(assignList),
+            this.next().read_expr(),
+            '='
           );
         } else {
-          return expr;
-        }
-
-      case '`':
-        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-        var result = this.node('shell');
-        var expr = this.next().read_encapsed_string('`');
-        return result(expr);
-
-      case this.tok.T_LIST:
-        var result = this.node('list'), assign = null;
-        var isInner = this.innerList;
-        if (!isInner) {
-          assign = this.node('assign');
-        }
-        if (this.next().expect('(')) {
-          this.next();
-        }
-
-        if (!this.innerList) this.innerList = true;
-        var assignList = this.read_assignment_list();
-
-        // check if contains at least one assignment statement
-        var hasItem = false;
-        for(var i = 0; i < assignList.length; i++) {
-          if (assignList[i] !== null) {
-            hasItem = true;
-            break;
-          }
-        }
-        if (!hasItem) {
-          this.raiseError(
-            'Fatal Error :  Cannot use empty list on line ' + this.lexer.yylloc.first_line
-          );
-        }
-        if (this.expect(')')) {
-          this.next();
-        }
-
-        if (!isInner) {
-          this.innerList = false;
-          if (this.expect('=')) {
-            return assign(
-              result(assignList),
-              this.next().read_expr(),
-              '='
-            );
-          } else {
-            // fallback : list($a, $b);
-            return result(assignList);
-          }
-        } else {
+          // fallback : list($a, $b);
           return result(assignList);
         }
+      } else {
+        return result(assignList);
+      }
+    }
 
-      case this.tok.T_CLONE:
-        return this.node('clone')(
-          this.next().read_expr()
-        );
+    if (this.token === this.tok.T_CLONE)
+      return this.node('clone')(
+        this.next().read_expr()
+      );
+
+    switch(this.token) {
 
       case this.tok.T_INC:
-        var name = this.next().read_variable(false, false, false);
-        return ['set', name, ['bin', '+', name, ['number', 1]]];
+        return this.node('pre')(
+          '+', this.next().read_variable(false, false, false)
+        );
 
       case this.tok.T_DEC:
-        var name = this.next().read_variable(false, false, false);
-        return ['set', name, ['bin', '-', name, ['number', 1]]];
+        return this.node('pre')(
+          '-', this.next().read_variable(false, false, false)
+        );
 
       case this.tok.T_NEW:
         return this.next().read_new_expr();
@@ -4793,22 +5770,22 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_INT_CAST:
-        return ['cast', 'int', this.next().read_expr()];
+        return this.node('cast')('int', this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return ['cast', 'double', this.next().read_expr()];
+        return this.node('cast')('double', this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
-        return ['cast', 'string', this.next().read_expr()];
+        return this.node('cast')('string', this.next().read_expr());
 
       case this.tok.T_ARRAY_CAST:
-        return ['cast', 'array', this.next().read_expr()];
+        return this.node('cast')('array', this.next().read_expr());
 
       case this.tok.T_OBJECT_CAST:
-        return ['cast', 'object', this.next().read_expr()];
+        return this.node('cast')('object', this.next().read_expr());
 
       case this.tok.T_BOOL_CAST:
-        return ['cast', 'boolean', this.next().read_expr()];
+        return this.node('cast')('boolean', this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
         return this.node('unset')(
@@ -4861,11 +5838,11 @@ module.exports = {
     // SCALAR | VARIABLE
     var expr;
     if (this.is('VARIABLE')) {
+      var result = this.node();
       expr = this.read_variable(false, false, false);
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
-          var result = this.node('assign');
           var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
@@ -4876,42 +5853,51 @@ module.exports = {
           } else {
             right = this.read_expr();
           }
-          return result(expr, right, '=');
+          return result('assign', expr, right, '=');
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
-          return ['set', expr, ['bin', '+', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '+=');
+
         case this.tok.T_MINUS_EQUAL:
-          return ['set', expr, ['bin', '-', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '-=');
+
         case this.tok.T_MUL_EQUAL:
-          return ['set', expr, ['bin', '*', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '*=');
+
         case this.tok.T_POW_EQUAL:
-          return ['set', expr, ['bin', '**', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '**=');
+
         case this.tok.T_DIV_EQUAL:
-          return ['set', expr, ['bin', '/', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '/=');
+
         case this.tok.T_CONCAT_EQUAL:
-          // NB : convert as string and add
-          return ['set', expr, ['bin', '.', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '.=');
+
         case this.tok.T_MOD_EQUAL:
-          return ['set', expr, ['bin', '%', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '%=');
+
         case this.tok.T_AND_EQUAL:
-          return ['set', expr, ['bin', '&', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '&=');
+
         case this.tok.T_OR_EQUAL:
-          return ['set', expr, ['bin', '|', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '|=');
+
         case this.tok.T_XOR_EQUAL:
-          return ['set', expr, ['bin', '^', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '^=');
+
         case this.tok.T_SL_EQUAL:
-          return ['set', expr, ['bin', '<<', expr, this.next().read_expr()]];
+          return result('assign', expr, this.next().read_expr(), '<<=');
+
         case this.tok.T_SR_EQUAL:
-          return ['set', expr, ['bin', '>>', expr, this.next().read_expr()]];
+          return result('assign',expr, this.next().read_expr(), '>>=');
+
         case this.tok.T_INC:
-          var result = this.node('post');
           this.next();
-          return result('+', expr);
+          return result('post', '+', expr);
         case this.tok.T_DEC:
-          var result = this.node('post');
           this.next();
-          return result('+', expr);
+          return result('post', '-', expr);
       }
     } else if (this.is('SCALAR')) {
       expr = this.read_scalar();
@@ -4929,7 +5915,7 @@ module.exports = {
         }
       }
     } else {
-      expr = this.error('EXPR');
+      this.error('EXPR');
       this.next();
     }
 
@@ -4946,6 +5932,7 @@ module.exports = {
   ,read_new_expr: function() {
     var result = this.node('new');
     if (this.token === this.tok.T_CLASS) {
+      var what = this.node('class');
       // Annonymous class declaration
       var propExtends = null, propImplements = null, body = null;
       if (this.next().token == this.tok.T_EXTENDS) {
@@ -4958,10 +5945,13 @@ module.exports = {
         body = this.next().read_class_body();
       }
       return result(
-        false           // class name => false : means it's an annonymous class
-        ,propExtends
-        ,propImplements
-        ,body
+        what(
+          null
+          ,propExtends
+          ,propImplements
+          ,body
+          ,[0, 0, 0]
+        ), []
       );
     } else {
       // Already existing class
@@ -4984,8 +5974,6 @@ module.exports = {
       var result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
-      } else {
-        result = ['ns', result];
       }
       return result;
     } else if (this.is('VARIABLE')) {
@@ -5024,7 +6012,7 @@ module.exports = {
   }
 };
 
-},{}],79:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5096,7 +6084,7 @@ module.exports = {
       this.next();
     }
     var isRef = this.is_reference();
-    var name = false, use = [], returnType = false;
+    var name = false, use = [], returnType = null, nullable = false;
     if (type !== 1) {
       if (this.expect(this.tok.T_STRING)) {
         name = this.text();
@@ -5112,13 +6100,17 @@ module.exports = {
       if (this.expect(')')) this.next();
     }
     if (this.token === ':') {
-      returnType = this.next().read_type();
+      if (this.next().token === '?') {
+        nullable = true;
+        this.next();
+      }
+      returnType = this.read_type();
     }
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType);
+      return result(params, isRef, use, returnType, nullable);
     }
-    return result(name, params, isRef, returnType);
+    return result(name, params, isRef, returnType, nullable);
   }
   /**
    * ```ebnf
@@ -5171,8 +6163,17 @@ module.exports = {
   ,read_parameter: function() {
     var node = this.node('parameter'),
       name = null,
-      value = null;
-    var type = this.read_type();
+      value = null,
+      type = null,
+      nullable = false;
+    if (this.token === '?') {
+      this.next();
+      nullable = true;
+    }
+    type = this.read_type();
+    if (nullable && !type) {
+      this.raiseError('Expecting a type definition combined with nullable operator');
+    }
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
     if (this.expect(this.tok.T_VARIABLE)) {
@@ -5182,25 +6183,33 @@ module.exports = {
     if (this.token == '=') {
       value = this.next().read_expr();
     }
-    return node(name, type, value, isRef, isVariadic);
+    return node(name, type, value, isRef, isVariadic, nullable);
   }
   /**
+   * Reads a list of arguments
    * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
    * ```
    */
   ,read_function_argument_list: function() {
     var result = [];
-    if (this.expect('(')) this.next();
+    var wasVariadic = false;
+    this.expect('(') && this.next();
     if (this.token !== ')') {
       while(this.token != this.EOF) {
-        result.push(this.read_argument_list());
+        var argument = this.read_argument_list();
+        result.push(argument);
+        if (argument.kind === 'variadic') {
+          wasVariadic = true;
+        } else if (wasVariadic) {
+          this.raiseError('Unexpected argument after a variadic argument');
+        }
         if (this.token === ',') {
           this.next();
         } else break;
       }
     }
-    if (this.expect(')')) this.next();
+    this.expect(')') && this.next();
     return result;
   }
   /**
@@ -5221,23 +6230,25 @@ module.exports = {
    * ```
    */
   ,read_type: function() {
+    var result = this.node('identifier');
     switch(this.token) {
       case this.tok.T_ARRAY:
         this.next();
-        return ['array'];
+        return result(['', 'array'], false);
+      case this.tok.T_NAMESPACE:
       case this.tok.T_NS_SEPARATOR:
       case this.tok.T_STRING:
         return this.read_namespace_name();
       case this.tok.T_CALLABLE:
         this.next();
-        return ['callable'];
+        return result(['', 'callable'], false);
       default:
         return null;
     }
   }
 };
 
-},{}],80:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5337,7 +6348,7 @@ module.exports = {
   }
 };
 
-},{}],81:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5489,7 +6500,7 @@ module.exports = {
         var assignList = this.read_assignment_list();
         if (this.expect(')')) this.next();
         return result(assignList);
-      } else if (this.token === '[') {
+      } else if (this.token === '[' || this.token === this.tok.T_ARRAY) {
         return this.read_array();
       } else {
         return this.read_variable(false, false, false);
@@ -5497,7 +6508,7 @@ module.exports = {
   }
 };
 
-},{}],82:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5519,33 +6530,33 @@ module.exports = {
   }
 };
 
-},{}],83:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
 
 module.exports = {
   /**
+   * Reads a namespace declaration block
    * ```ebnf
    * namespace ::= T_NAMESPACE namespace_name? '{'
    *    top_statements
    * '}'
    * | T_NAMESPACE namespace_name ';' top_statements
    * ```
+   * @see http://php.net/manual/en/language.namespaces.php
+   * @return {Namespace}
    */
   read_namespace: function() {
-    if (this.expect(this.tok.T_NAMESPACE)) this.next();
     var result = this.node('namespace');
+    this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == '{') {
       this.currentNamespace = [''];
-      return result([''], this.read_code_block(true));
+      return result([''], this.read_code_block(true), true);
     } else {
-      if(this.token === this.tok.T_NAMESPACE) {
-        this.error(['{', this.tok.T_STRING]);
-        this.next(); // ignore namespace token
-      }
       var name = this.read_namespace_name();
       if (this.token == ';') {
         this.currentNamespace = name;
@@ -5554,12 +6565,13 @@ module.exports = {
         return result(name, body);
       } else if (this.token == '{') {
         this.currentNamespace = name;
-        return result(name, this.read_code_block(true));
+        return result(name, this.read_code_block(true), true);
       } else if (this.token === '(') {
         // resolve ambuiguity between namespace & function call
+        name.resolution = this.ast.identifier.RELATIVE_NAME;
+        name.name = name.name.substring(1);
         return this.node('call')(
-          ['ns', name.slice(1)]
-          , this.read_function_argument_list()
+          name, this.read_function_argument_list()
         );
       } else {
         this.error(['{', ';']);
@@ -5572,115 +6584,123 @@ module.exports = {
     }
   }
   /**
-   * reading a namespace name
+   * Reads a namespace name
    * ```ebnf
    *  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
    * ```
+   * @see http://php.net/manual/en/language.namespaces.rules.php
+   * @return {Identifier}
    */
   ,read_namespace_name: function() {
-    var result = this.node('identifier');
+    var result = this.node('identifier'), relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
-      if (this.next().expect(this.tok.T_NS_SEPARATOR)) this.next();
+      this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();
+      relative = true
     }
     return result(
-      this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true)
+      this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true),
+      relative
     );
   }
   /**
+   * Reads a use statement
    * ```ebnf
-   * use_statements ::=
-   *      use_statements ',' use_statement
-   *      | use_statement
+   * use_statement ::= T_USE
+   *   use_type? use_declarations |
+   *   use_type use_statement '{' use_declarations '}' |
+   *   use_statement '{' use_declarations(=>typed) '}'
+   * ';'
    * ```
+   * @see http://php.net/manual/en/language.namespaces.importing.php
+   * @return {UseGroup}
    */
-  ,read_use_statements: function() {
-      var result = [];
-      while(this.token !== this.EOF) {
-          if (this.expect(this.tok.T_USE)) {
-            this.next().read_list(this.read_use_statement_mixed, ',').forEach(function(item) {
-              if (Array.isArray(item)) {
-                result = result.concat(item);
-              } else {
-                result.push(item);
-              }
-            });
-          }
-          if(this.token !== this.tok.T_USE) break;
-      }
-      return result;
+  ,read_use_statement: function() {
+    var result = this.node('usegroup'),
+      type = null,
+      items = [],
+      name = null
+    ;
+    this.expect(this.tok.T_USE) && this.next();
+    type = this.read_use_type();
+    items.push(this.read_use_declaration(false));
+    if (this.token === ',') {
+      items = items.concat(this.next().read_use_declarations(false));
+    } else if (this.token === '{') {
+      name = items[0].name;
+      items = this.next().read_use_declarations(type === null);
+      this.expect('}') && this.next();
+    }
+    this.expect(';') && this.nextWithComments();
+    return result(name, type, items);
   }
   /**
+   * Reads a use declaration
    * ```ebnf
-   *  inline_use_declaration ::= ...
+   * use_declaration ::= use_type? namespace_name use_alias
    * ```
-   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L375
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
+   * @return {UseItem}
    */
-  ,read_inline_use_declaration: function(prefix) {
-    var result = [];
-    while(this.token !== this.EOF) {
-      var node = this.node('use');
-      var ns = this.read_use_statement(prefix[3] !== false);
-      if(this.token === this.tok.T_AS) {
-        this.next().expect(this.tok.T_STRING);
-        ns[1] = this.text();
-        this.next();
-      }
-      ns[0] = prefix[0].concat(ns[0]);
-      if (prefix[2] !== false) {
-        ns[2] = prefix[2];
-      }
-      result.push(node.apply(this, ns));
-      if(this.token !== ',') {
-        break;
-      } else {
+  ,read_use_declaration: function(typed) {
+    var result = this.node('useitem'), type = null;
+    if (typed) type = this.read_use_type();
+    var name = this.read_namespace_name();
+    var alias = this.read_use_alias();
+    return result(name, alias, type);
+  }
+  /**
+  * Reads a list of use declarations
+  * ```ebnf
+  * use_declarations ::= use_declaration (',' use_declaration)*
+  * ```
+  * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
+  * @return {UseItem[]}
+   */
+  ,read_use_declarations: function(typed) {
+    var result = [this.read_use_declaration(typed)];
+    while(this.token === ',') {
+      result.push(this.next().read_use_declaration(typed));
+    }
+    return result;
+  }
+  /**
+   * Reads a use statement
+   * ```ebnf
+   * use_alias ::= (T_AS T_STRING)?
+   * ```
+   * @return {String|null}
+   */
+  ,read_use_alias: function() {
+    var result = null;
+    if (this.token === this.tok.T_AS) {
+      if (this.next().expect(this.tok.T_STRING)) {
+        result = this.text();
         this.next();
       }
     }
     return result;
   }
   /**
+   * Reads the namespace type declaration
    * ```ebnf
-   *   use_statement_mixed ::=
-   *       use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' )
-   *       (',' read_use_statement)*
+   * use_type ::= (T_FUNCTION | T_CONST)?
    * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L335
+   * @return {String|null} Possible values : function, const
    */
-  ,read_use_statement_mixed: function() {
-    var result = this.node('use');
-    var use = this.read_use_statement();
-    if(this.token === this.tok.T_AS) {
-      if (this.next().expect(this.tok.T_STRING)) {
-        use[1] = this.text();
-        this.next();
-      }
-    } else if (this.token === '{') {
-      use = this.next().read_inline_use_declaration(use);
-      if (this.expect('}')) this.next();
-      return use;
+  ,read_use_type: function() {
+    if (this.token === this.tok.T_FUNCTION) {
+      this.next();
+      return this.ast.useitem.TYPE_FUNCTION;
+    } else if (this.token === this.tok.T_CONST) {
+      this.next();
+      return this.ast.useitem.TYPE_CONST;
     }
-    return result.apply(this, use);
-  }
-  /**
-   * ```ebnf
-   * use_statement ::= (
-   *  (T_FUNCTION | T_CONST)? namespace_name
-   *  )
-   * ```
-   */
-  ,read_use_statement: function(ignoreType) {
-      var type = false;
-      if(
-        !ignoreType && (this.token === this.tok.T_FUNCTION || this.token === this.tok.T_CONST)
-      ) {
-        type = this.token === this.tok.T_FUNCTION ? 'function' : 'constant';
-        this.next();
-      }
-      var name = this.read_namespace_name();
-      return [name, name[name.length - 1], type];
+    return null;
   }
 };
 
-},{}],84:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5732,20 +6752,10 @@ module.exports = {
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
           var value = this.node('string');
           var text = this.text();
-          var isDoubleQuote = false;
-          var isBinCast = value[0] === 'b' || value[0] === 'B';
-          if (isBinCast) {
-            isDoubleQuote = text[1] === '"';
-            text = text.substring(2, text.length - 1);
-          } else {
-            isDoubleQuote = text[0] === '"';
-            text = text.substring(1, text.length - 1);
-          }
-          value = value(isDoubleQuote, this.resolve_special_chars(text));
-          if (isBinCast) {
-            value = ['cast', 'binary', value];
-          }
+          var isDoubleQuote = text[0] === '"';
+          text = text.substring(1, text.length - 1);
           this.next();
+          value = value(isDoubleQuote, this.resolve_special_chars(text));
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
             return this.read_static_getter(value);
@@ -5754,14 +6764,41 @@ module.exports = {
             return value;
           }
         case this.tok.T_START_HEREDOC:
-          return this.next().read_encapsed_string(
-            this.tok.T_END_HEREDOC
-          );
+          if (this.lexer.curCondition === 'ST_NOWDOC') {
+            var node = this.node('nowdoc');
+            var value = this.next().text();
+            // strip the last line return char
+            var lastCh = value[value.length-1];
+            if (lastCh === '\n') {
+              if (value[value.length-2] === '\r') {
+                // windows style
+                value = value.substring(0, value.length - 2);
+              } else {
+                // linux style
+                value = value.substring(0, value.length - 1);
+              }
+            } else if (lastCh === '\r') {
+              // mac style
+              value = value.substring(0, value.length - 1);
+            }
+            this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
+            node = node(value, this.lexer.heredoc_label);
+            this.expect(this.tok.T_END_HEREDOC) && this.next();
+            return node;
+          } else {
+            return this.next().read_encapsed_string(
+              this.tok.T_END_HEREDOC
+            );
+          }
+
         case '"':
           return this.next().read_encapsed_string('"');
+
         case 'b"':
         case 'B"':
-          return ['cast', 'binary', this.next().read_encapsed_string('"')];
+          var node = this.node('cast');
+          var what = this.next().read_encapsed_string('"');
+          return node('binary', what);
 
         // NUMERIC
         case '-':  // long
@@ -5773,8 +6810,8 @@ module.exports = {
             this.next().expect([this.tok.T_LNUMBER, this.tok.T_DNUMBER]);
             value += this.text();
           }
-          result = result(value);
           this.next();
+          result = result(value);
           return result;
 
         // CONSTANTS
@@ -5792,8 +6829,10 @@ module.exports = {
           }
           // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
           while(this.token === '[') {
-            result = ['offset', result, this.next().read_expr()];
+            var node = this.node('offsetlookup');
+            var offset = this.next().read_expr();
             if (this.expect(']')) this.next();
+            result = node(result, offset);
           }
           return result;
 
@@ -5814,83 +6853,136 @@ module.exports = {
    */
   ,read_dereferencable: function(expr) {
     var result;
+    var node = this.node('offsetlookup');
     if (this.token === '[') {
-      result = ['offset', expr, this.next().read_expr()];
+      var offset = this.next().read_expr();
       if (this.expect(']')) this.next();
+      result = node(expr, offset);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      result = ['offset', expr, this.read_encapsed_string_item()];
+      var offset = this.read_encapsed_string_item();
+      result = node(expr, offset);
     }
     return result;
   }
   /**
+   * Reads and extracts an encapsed item
    * ```ebnf
    * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
    *  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
    *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
    *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
-   *  | variable
    *  | T_CURLY_OPEN variable '}'
+   *  | variable
+   *  | variable '[' expr ']'
+   *  | variable T_OBJECT_OPERATOR T_STRING
    * ```
+   * @return {String|Variable|Expr|Lookup}
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
   ,read_encapsed_string_item: function() {
-    var result = null;
+    var result = this.node();
+
+    // plain text
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1222
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
-      result = this.node('string')(false, this.text());
+      var text = this.text();
       this.next();
-    } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      result = result(
+        'string', false, this.resolve_special_chars(text)
+      );
+    }
+
+    // dynamic variable name
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
+    else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      var name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
-        result = ['var', this.text()];
-        if (this.next().token === '[') {
-          result = ['offset', result, this.next().read_expr()];
-          if (this.expect(']')) this.next();
+        var varName = this.text().substring(1);
+        name = this.node('variable');
+        this.next();
+        name = name(varName, false);
+        // check if lookup an offset
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
+        if (this.token === '[') {
+          var node = this.node('offsetlookup');
+          var offset = this.next().read_expr();
+          this.expect(']') && this.next();
+          name = node(name, offset);
         }
       } else {
-        result = this.read_expr();
+        name = this.read_expr();
       }
-      if (this.expect('}')) this.next();
-    } else if (this.token === this.tok.T_CURLY_OPEN) {
+      this.expect('}') && this.next();
+      result = result('variable', name, false);
+    }
+
+    // expression
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
+    else if (this.token === this.tok.T_CURLY_OPEN) {
       result = this.next().read_variable(false, false, false);
       if (this.expect('}')) this.next();
-    } else if (this.token === '[') {
-      result = ['offset', result, this.next().read_expr()];
-      if (this.expect(']')) this.next();
-    } else if (this.token === this.tok.T_VARIABLE) {
-      result = this.read_variable(false, true, false);
-    } else {
-      this.expect([
-        this.tok.T_VARIABLE,
-        this.tok.T_CURLY_OPEN,
-        this.tok.T_DOLLAR_OPEN_CURLY_BRACES,
-        this.tok.T_ENCAPSED_AND_WHITESPACE
-      ]);
     }
+
+    // plain variable
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
+    else if (this.token === this.tok.T_VARIABLE) {
+      result = this.read_variable(false, true, false);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
+      if (this.token === '[') {
+        var node = this.node('offsetlookup');
+        var offset = this.next().read_expr();
+        this.expect(']') && this.next();
+        result = node(result, offset);
+      }
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
+      if (this.token === this.tok.T_OBJECT_OPERATOR) {
+        var node = this.node('propertylookup');
+        var what = this.node('constref');
+        this.next().expect(this.tok.T_STRING);
+        var name = this.text();
+        this.next();
+        result = node(result, what(name));
+      }
+
+    // error / fallback
+    } else {
+      this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE);
+      var value = this.text();
+      this.next();
+      // consider it as string
+      result = result('string', false, value);
+    }
+
     return result;
   }
   /**
    * Reads an encapsed string
    */
   ,read_encapsed_string: function(expect) {
-    if (this.token === expect) {
-      this.next();
-      return null; // empty
+    var node = this.node('encapsed'), value = [], type = null;
+
+    if (expect === '`') {
+      type = this.ast.encapsed.TYPE_SHELL;
+    } else if (expect === '"') {
+      type = this.ast.encapsed.TYPE_STRING;
+    } else {
+      type = this.ast.encapsed.TYPE_HEREDOC;
     }
-    var first = this.read_encapsed_string_item();
-    if (this.token === expect) {
-      this.next();
-      return first;
+
+    // reading encapsed parts
+    while(this.token !== expect && this.token !== this.EOF) {
+      value.push(this.read_encapsed_string_item());
     }
-    var result = [
-      'bin', '.'
-      , first
-      , this.read_encapsed_string_item()
-    ];
-    while(this.token !== expect) {
-      result[3] = [
-        'bin', '.', result[3], this.read_encapsed_string_item()
-      ];
+
+    this.expect(expect) && this.next();
+    node = node(value, type);
+
+    if (expect === this.tok.T_END_HEREDOC) {
+      node.label = this.lexer.heredoc_label;
     }
-    if (this.expect(expect)) this.next();
-    return result;
+    return node;
   }
   /**
    * Constant token
@@ -5903,7 +6995,7 @@ module.exports = {
   }
 };
 
-},{}],85:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5962,9 +7054,7 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_USE:
-        var expr = this.read_use_statements();
-        if (this.expect(';')) this.nextWithComments();
-        return expr;
+        return this.read_use_statement();
       case this.tok.T_CONST:
         return this.next().read_const_list();
       case this.tok.T_NAMESPACE:
@@ -6026,19 +7116,24 @@ module.exports = {
   /**
    * Reads a list of constants declaration
    * ```ebnf
-   *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+   *   declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
    * ```
+   * @retrurn {Object}
    */
   ,read_declare_list: function() {
-    return this.read_list(function() {
+    var result = {};
+    while(this.token != this.EOF && this.token !== ')') {
       this.expect(this.tok.T_STRING);
-      var name = this.text();
+      var name = this.text().toLowerCase();
       if (this.next().expect('=')) {
-        return [name, this.next().read_expr()];
+        result[name] = this.next().read_expr();
       } else {
-        return [name, null];
+        result[name] = null;
       }
-    }, ',');
+      if (this.token !== ',') break;
+      this.next();
+    }
+    return result;
   }
   /**
    * reads a simple inner statement
@@ -6069,10 +7164,18 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER:
-        if (this.next().expect('(')) this.next();
-        if (this.expect(')')) this.next();
-        if (this.expect(';')) this.next();
-        this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
+        this.raiseError(
+          '__HALT_COMPILER() can only be used from the outermost scope'
+        );
+        // fallback : returns a node but does not stop the parsing
+        var node = this.node('halt');
+        this.next().expect('(') && this.next();
+        this.expect(')') && this.next();
+        node = node(this.lexer._input.substring(
+          this.lexer.offset
+        ));
+        this.expect(';') && this.next();
+        return node;
       default:
         return this.read_statement();
     }
@@ -6111,19 +7214,24 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_BREAK:
-        var result = this.node('break');
-        this.next().expectEndOfStatement();
-        return result();
-
       case this.tok.T_CONTINUE:
-        var result = this.node('continue');
-        this.next().expectEndOfStatement();
-        return result();
+        var result = this.node(
+          this.token === this.tok.T_CONTINUE ? 'continue' : 'break'
+        ), level = null;
+        if(this.next().token === this.tok.T_LNUMBER) {
+          level = this.node('number');
+          var value = this.text();
+          this.next();
+          level = level(value);
+        }
+        this.expectEndOfStatement();
+        return result(level);
 
       case this.tok.T_GLOBAL:
+        var result = this.node('global');
         var items = this.next().read_list(this.read_simple_variable, ',');
         this.expectEndOfStatement();
-        return ['global', items];
+        return result(items);
 
       case this.tok.T_STATIC:
         var current = [this.token, this.lexer.getState()];
@@ -6135,28 +7243,13 @@ module.exports = {
           this.expect(';') && this.nextWithComments();
           return expr;
         }
-        var items = this.read_list(function() {
-          var value = null, name = null;
-          if (this.expect(this.tok.T_VARIABLE)) {
-            name = this.text();
-            this.next();
-          }
-          if (this.token === '=') {
-            value = this.next().read_expr();
-          }
-          return [name, value];
-        }, ',');
+        var items = this.read_variable_declarations();
         this.expectEndOfStatement();
-        return result('declare', items);
+        return result(items);
 
       case this.tok.T_ECHO:
         var result = this.node('echo');
-        var withParanthesis = (this.next().token === '(');
-        withParanthesis && this.next();
-        var args = this.read_list(this.read_expr, ',');
-        if (withParanthesis) {
-          this.expect(')') && this.next();
-        }
+        var args = this.next().read_list(this.read_expr, ',');
         this.expectEndOfStatement();
         return result(args);
 
@@ -6174,22 +7267,36 @@ module.exports = {
         return result(items);
 
       case this.tok.T_DECLARE:
-        var result = this.node('declare'), options, body;
+        var result = this.node('declare'),
+          what,
+          body = [],
+          mode;
         this.next().expect('(') && this.next();
-        options = this.read_declare_list();
-        this.expect(')') && this.nextWithComments();
+        what = this.read_declare_list();
+        this.expect(')') && this.next();
         if (this.token === ':') {
-          body = [];
-          this.next();
+          this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
             body.push(this.read_statement());
           }
-          this.ignoreComments().expect(this.tok.T_ENDDECLARE) && this.next();
+          this.expect(this.tok.T_ENDDECLARE) && this.next();
           this.expectEndOfStatement();
+          mode = this.ast.declare.MODE_SHORT;
+        } else if (this.token === '{') {
+          this.nextWithComments();
+          while(this.token != this.EOF && this.token !== '}') {
+            body.push(this.read_statement());
+          }
+          this.expect('}') && this.next();
+          mode = this.ast.declare.MODE_BLOCK;
         } else {
-          body = this.read_statement();
+          this.expect(';') && this.next();
+          while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
+            body.push(this.read_statement());
+          }
+          mode = this.ast.declare.MODE_NONE;
         }
-        return result(options, body);
+        return result(what, body, mode);
         break;
 
       case this.tok.T_TRY:
@@ -6252,7 +7359,7 @@ module.exports = {
   }
 };
 
-},{}],86:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6348,7 +7455,7 @@ module.exports = {
   }
 };
 
-},{}],87:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6363,37 +7470,38 @@ module.exports = {
    *          )*
    *          (T_FINALLY '{' inner_statement* '}')?
    * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L448
+   * @return {Try}
    */
   read_try: function() {
-
-    // @todo implement the short form of declarations
     this.expect(this.tok.T_TRY);
-    var result = this.node('try');
-    var code = this.nextWithComments().read_statement();
-    var allways = false;
-    var catches = [];
-
+    var result = this.node('try'),
+      always = null,
+      body,
+      catches = []
+    ;
+    body = this.nextWithComments().read_statement();
     this.ignoreComments();
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
     while(this.token === this.tok.T_CATCH) {
+      var item = this.node('catch'), what = [], variable = null;
       this.next().expect('(') && this.next();
-      var exName = this.read_namespace_name();
-      var varName = this.read_variable(true, false, false);
-      this.expect(')') && this.nextWithComments();
-      catches.push({
-        exception: exName,
-        as: varName,
-        body: this.read_statement()
-      });
+      what = this.read_list(
+        this.read_namespace_name, '|', false
+      );
+      variable = this.read_variable(true, false, false);
+      this.expect(')');
+      catches.push(item(this.next().read_statement(), what, variable));
       this.ignoreComments();
     }
     if (this.token === this.tok.T_FINALLY) {
-      allways = this.nextWithComments().read_statement();
+      always = this.nextWithComments().read_statement();
     }
-    return result(code, catches, allways);
+    return result(body, catches, always);
   }
 };
 
-},{}],88:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*!
  * Defines a list of helper functions for parsing
  * Copyright (C) 2017 Glayzzle (BSD3 License)
@@ -6443,6 +7551,8 @@ module.exports = {
     } else {
       if (this.expect(item)) {
         result.push(this.text());
+      } else {
+        return [];
       }
       while (this.next().token != this.EOF) {
         if (this.token != separator) break;
@@ -6475,14 +7585,51 @@ module.exports = {
     );
   }
 
+  /**
+   * Reads a list of variables declarations
+   *
+   * ```ebnf
+   * variable_declaration ::= T_VARIABLE ('=' expr)?*
+   * variable_declarations ::= variable_declaration (',' variable_declaration)*
+   * ```
+   *
+   * Sample code :
+   * ```php
+   * <?php class foo extends bar, baz { }
+   * ```
+   * @return {Variable[]|Assign[]} Returns an array composed by a list of variables, or
+   * assign values
+   */
+  ,read_variable_declarations: function() {
+    return this.read_list(function() {
+      var node = this.node('assign'),
+        value = null,
+        variable = this.node('variable');
+      // plain variable name
+      if (this.expect(this.tok.T_VARIABLE)) {
+        var name = this.text().substring(1);
+        this.next();
+        variable = variable(name, false);
+      } else {
+        variable = variable('#ERR', false);
+      }
+      if (this.token === '=') {
+        return node(variable, this.next().read_expr());
+      } else {
+        return variable;
+      }
+    }, ',');
+  }
+
 };
 
-},{}],89:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
+"use strict";
 module.exports = {
   /**
    * Reads a variable
@@ -6533,8 +7680,9 @@ module.exports = {
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
+      result = this.node('constref');
       this.next();
-      result = ['ns', ['static']];
+      result = result('static');
     } else {
       this.expect('VARIABLE');
     }
@@ -6548,25 +7696,28 @@ module.exports = {
   }
 
   // resolves a static call
-  ,read_static_getter: function(from, encapsed) {
-    var getter = null;
+  ,read_static_getter: function(what, encapsed) {
+    var result = this.node('staticlookup');
+    var offset = null;
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
-      getter = this.read_reference_variable(encapsed, false);
+      offset = this.read_reference_variable(encapsed, false);
     } else if (
       this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS
     ) {
-      getter = this.text();
+      offset = this.node('constref');
+      var name = this.text();
       this.next();
+      offset = offset(name);
     } else {
-      getter = this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
+      this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
       // graceful mode : set getter as error node and continue
+      offset = this.node('constref');
+      var name = this.text();
       this.next();
+      offset = offset(name);
     }
-    if (from[0] != 'ns') {
-      from = ['lookup', 'class', from];
-    }
-    return ['static', 'get', from, getter];
+    return result(what, offset);
   }
 
   ,recursive_variable_chain_scan: function(result, read_only, encapsed) {
@@ -6575,12 +7726,16 @@ module.exports = {
       switch(this.token) {
         case '(':
           if (read_only) {
+            // @fixme : add more informations & test
             return result;
           } else {
-            result = ['call', result,  this.read_function_argument_list()];
+            result = this.node('call')(
+              result,  this.read_function_argument_list()
+            );
           }
           break;
         case '[':
+          var node = this.node('offsetlookup');
           this.next();
           var offset = false;
           if (encapsed) {
@@ -6595,29 +7750,36 @@ module.exports = {
               this.next();
             }
           }
-          result = ['offset', result, offset];
+          result = node(result, offset);
           break;
         case this.tok.T_OBJECT_OPERATOR:
-          var what;
+          var node = this.node('propertylookup');
+          var what = null;
           switch(this.next().token) {
             case this.tok.T_STRING:
-              what = ['string', this.text()];
-              var tok = this.next().token;
-              if (tok === this.tok.T_VARIABLE) {
+              what = this.node('constref');
+              var name = this.text();
+              this.next();
+              what = what(name);
+              if (this.token === this.tok.T_VARIABLE) {
+                // @fixme : create encapsed var node
+                name = this.text().substring(1);
+                this.next();
                 // fix $obj->var_$prop
-                what = ['bin', '.', what, ['var', this.text()]];
-              } else if (tok === '{') {
+                what = ['bin', '.', what, ['var', name]];
+              } else if (this.token === '{') {
                 // fix $obj->var_{$prop}
                 what = ['bin', '.', what, this.next().read_expr()];
                 this.expect('}') && this.next();
               }
               break;
             case this.tok.T_VARIABLE:
-              what = ['var', this.text()];
+              what = this.node('variable');
+              var name = this.text().substring(1);
               this.next();
+              what = what(name, false);
               break;
             case '$':
-
               this.next().expect(['{', this.tok.T_VARIABLE]);
               if (this.token === '{') {
                 // $obj->${$varname}
@@ -6633,12 +7795,15 @@ module.exports = {
               this.expect('}') && this.next();
               break;
             default:
-              what = this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
+              this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
               // graceful mode : set what as error mode & continue
+              what = this.node('constref');
+              var name = this.text();
               this.next();
+              what = what(name);
               break;
           }
-          result = ['prop', result, what];
+          result = node(result, what);
           break;
         default:
           break recursive_scan_loop;
@@ -6655,21 +7820,29 @@ module.exports = {
       var text = this.text();
       var isDblQuote = text[0] === '"';
       text = text.substring(1, text.length - 1);
+      this.next();
       offset = offset(
         'string', isDblQuote, this.resolve_special_chars(text)
       );
     } else if (this.token === this.tok.T_NUM_STRING) {
-      offset = offset('number', this.text());
+      var num = this.text();
+      this.next();
+      offset = offset('number', num);
     } else if (this.token === this.tok.T_VARIABLE) {
-      offset = offset('variable', this.text());
+      var name = this.text().substring(1);
+      this.next();
+      offset = offset('variable', name, false);
     } else {
       this.expect([
         this.tok.T_STRING,
         this.tok.T_NUM_STRING,
         this.tok.T_VARIABLE
       ]);
+      // fallback : consider as text
+      var text = this.text();
+      this.next();
+      offset = offset('string', false, text);
     }
-    this.next();
     return offset;
   }
   /**
@@ -6686,17 +7859,19 @@ module.exports = {
   ,read_reference_variable: function(encapsed, byref) {
     var result = this.read_simple_variable(byref);
     while(this.token != this.EOF) {
+      var node = this.node();
       if (this.token == '[') {
         if (encapsed) {
           result = this.next().read_encaps_var_offset();
         } else {
           var offset = this.next().token === ']' ? null : this.read_dim_offset();
-          result = ['offset', result, offset];
+          result = node('offsetlookup', result, offset);
         }
         this.expect(']') && this.next();
       } else if (this.token == '{' && !encapsed) {
-        result = ['offset', result, this.next().read_expr()];
+        var offset = this.next().read_expr();
         this.expect('}') && this.next();
+        result = node('offsetlookup', result, offset);
       } else break;
     }
     return result;
@@ -6710,35 +7885,40 @@ module.exports = {
     var result = this.node('variable');
     if (this.expect([this.tok.T_VARIABLE, '$']) && this.token === this.tok.T_VARIABLE) {
       // plain variable name
-      result = result(this.text(), byref);
+      var name = this.text().substring(1);
       this.next();
+      result = result(name, byref);
     } else {
       if (this.token === '$') this.next();
       // dynamic variable name
       switch(this.token) {
         case '{':
-          result = this.next().read_expr();
+          var expr = this.next().read_expr();
           this.expect('}') && this.next();
+          result = result(expr, byref);
           break;
         case '$': // $$$var
-          result = ['lookup', 'var', this.read_simple_variable(false)];
+          result = result(this.read_simple_variable(false), byref);
           break;
         case this.tok.T_VARIABLE: // $$var
-          result = ['var', this.text()];
+          var name = this.text().substring(1);
+          var node = this.node('variable');
           this.next();
+          result = result(node(name, false), byref);
           break;
         default:
-          result = this.error(['{', '$', this.tok.T_VARIABLE]);
+          this.error(['{', '$', this.tok.T_VARIABLE]);
           // graceful mode
+          var name = this.text();
           this.next();
+          result = result(name, byref);
       }
-      result = ['lookup', 'var', result];
     }
     return result;
   }
 };
 
-},{}],90:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7056,8 +8236,33 @@ function combine(src, to) {
 }
 
 /**
+ * Initialise a new parser instance with the specified options
+ *
+ * Usage :
+ * ```js
+ * var parser = require('php-parser');
+ * var instance = new parser({
+ *   parser: {
+ *     extractDoc: true,
+ *     suppressErrors: true
+ *   },
+ *   ast: {
+ *     withPositions: true
+ *   },
+ *   lexer: {
+ *     short_tags: true,
+ *     asp_tags: true
+ *   }
+ * });
+ *
+ * var evalAST = instance.parseEval('some php code');
+ * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
+ * var tokens = instance.tokenGetAll('<?php some php code');
+ * ```
+ *
  * @constructor {Engine}
- * @param {Object} options
+ * @param {Object} options - List of options
+ *
  * @property {Lexer} lexer
  * @property {Parser} parser
  * @property {AST} ast
@@ -7077,16 +8282,18 @@ var engine = function(options) {
 };
 
 /**
- * Creates a new instance
+ * Creates a new instance (Helper)
  * @param {Object} options
  * @return {Engine}
- */
+ * @private
+*/
 engine.create = function(options) {
   return new engine(options);
 };
 
 /**
  * Evaluate the buffer
+ * @private
  */
 engine.parseEval = function(buffer, options) {
   var self = new engine(options);
@@ -7094,34 +8301,59 @@ engine.parseEval = function(buffer, options) {
 };
 
 /**
- * parsing eval string as '$x = 1;'
- * @return {Array}
+ * Parse an evaluating mode string (no need to open php tags)
+ * @param {String} buffer
+ * @return {Program}
  */
 engine.prototype.parseEval = function(buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
-  return this.parser.parse(buffer);
+  return this.parser.parse(buffer, 'eval');
 };
 
 /**
- * parse php code with '<?php $x = 1;'
+ * Static function that parse a php code with open/close tags
+ * @private
  */
-engine.parseCode = function(buffer, options) {
+engine.parseCode = function(buffer, filename, options) {
+  if (typeof filename === 'object') {
+    // retro-compatibility
+    options = filename;
+    filename = 'unknown';
+  }
   var self = new engine(options);
-  return self.parseCode(buffer);
+  return self.parseCode(buffer, filename);
 };
 
 /**
- * parse php code with '<?php $x = 1;'
+ * Function that parse a php code with open/close tags
+ *
+ * Sample code :
+ * ```php
+ * <?php $x = 1;
+ * ```
+ *
+ * Usage :
+ * ```js
+ * var parser = require('php-parser');
+ * var phpParser = new parser({
+ *   // some options
+ * });
+ * var ast = phpParser.parseCode('...php code...', 'foo.php');
+ * ```
+ * @param {String} buffer - The code to be parsed
+ * @param {String} filename - Filename
+ * @return {Program}
  */
-engine.prototype.parseCode = function(buffer) {
+engine.prototype.parseCode = function(buffer, filename) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = false;
-  return this.parser.parse(buffer);
+  return this.parser.parse(buffer, filename);
 };
 
 /**
- * split the buffer into tokens
+ * Split the buffer into tokens
+ * @private
  */
 engine.tokenGetAll = function(buffer, options) {
   var self = new engine(options);
@@ -7129,7 +8361,10 @@ engine.tokenGetAll = function(buffer, options) {
 };
 
 /**
- * split the buffer into tokens
+ * Extract tokens from the specified buffer.
+ * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
+ * @param {String} buffer
+ * @return {String[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
  */
 engine.prototype.tokenGetAll = function(buffer) {
   this.lexer.mode_eval = false;
@@ -7153,4 +8388,4 @@ engine.prototype.tokenGetAll = function(buffer) {
 // exports the function
 module.exports = engine;
 
-},{"./ast":2,"./lexer":65,"./parser":74,"./tokens":90}]},{},[]);
+},{"./ast":2,"./lexer":92,"./parser":101,"./tokens":117}]},{},[]);

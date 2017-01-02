@@ -27,6 +27,8 @@ var Position = require('./ast/position');
  *     - [Variable](#variable)
  *     - [Variadic](#variadic)
  *     - [ConstRef](#constref)
+ *     - [Yield](#yield)
+ *     - [YieldFrom](#yieldfrom)
  *     - [Lookup](#lookup)
  *       - [PropertyLookup](#propertylookup)
  *       - [StaticLookup](#staticlookup)
@@ -259,7 +261,9 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/useitem'),
   require('./ast/variable'),
   require('./ast/variadic'),
-  require('./ast/while')
+  require('./ast/while'),
+  require('./ast/yield'),
+  require('./ast/yieldfrom')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
   if (kind[0] === '_') kind = kind.substring(1);

@@ -21,6 +21,8 @@
         -   [Variable](#variable)
         -   [Variadic](#variadic)
         -   [ConstRef](#constref)
+        -   [Yield](#yield)
+        -   [YieldFrom](#yieldfrom)
         -   [Lookup](#lookup)
             -   [PropertyLookup](#propertylookup)
             -   [StaticLookup](#staticlookup)
@@ -1222,3 +1224,24 @@ Defines a while statement
 -   `test` **[Expression](#expression)** 
 -   `body` **[Statement](#statement)** 
 -   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Yield
+
+**Extends Expression**
+
+Defines a yield generator statement
+
+**Properties**
+
+-   `value` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+-   `key` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+
+# YieldFrom
+
+**Extends Expression**
+
+Defines a yield from generator statement
+
+**Properties**
+
+-   `value` **[Expression](#expression)** 
