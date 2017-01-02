@@ -49,6 +49,7 @@ var Position = require('./ast/position');
  *   - [Statement](#statement)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
+ *     - [Halt](#halt)
  *     - [Clone](#clone)
  *     - [Declare](#declare)
  *     - [Global](#global)
@@ -207,6 +208,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/function'),
   require('./ast/global'),
   require('./ast/goto'),
+  require('./ast/halt'),
   require('./ast/identifier'),
   require('./ast/if'),
   require('./ast/include'),

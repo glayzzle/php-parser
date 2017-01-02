@@ -16,6 +16,7 @@ describe('Test statements', function() {
     ast.children[2].kind.should.be.exactly('goto');
     ast.children[2].label.should.be.exactly('start');
   });
+
   it('test global', function() {
     var ast = parser.parseEval([
       'function foo() {',
@@ -30,6 +31,20 @@ describe('Test statements', function() {
     expr.items[0].name.should.be.exactly('a');
     expr.items[1].kind.should.be.exactly('variable');
     expr.items[1].name.should.be.exactly('b');
+  });
+
+  it('test halt statement', function() {
+    var ast = parser.parseEval([
+      '$a = 1;',
+      '__halt_compiler();',
+      '$b = 1;'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    ast.children.length.should.be.exactly(2);
+    ast.children[0].kind.should.be.exactly('assign');
+    ast.children[1].kind.should.be.exactly('halt');
+    ast.children[1].after.should.be.exactly('\n$b = 1;');
   });
 
   it('test static', function() {

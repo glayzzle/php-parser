@@ -43,6 +43,7 @@
     -   [Statement](#statement)
         -   [Eval](#eval)
         -   [Exit](#exit)
+        -   [Halt](#halt)
         -   [Clone](#clone)
         -   [Declare](#declare)
         -   [Global](#global)
@@ -596,6 +597,16 @@ Defines goto statement
 **Properties**
 
 -   `label` **[String](#string)** 
+
+# Halt
+
+**Extends Statement**
+
+Halts the compiler execution
+
+**Properties**
+
+-   `after` **[String](#string)** String after the halt statement
 
 # Identifier
 
