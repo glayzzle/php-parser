@@ -8,11 +8,11 @@ var Literal = require('./literal');
 var KIND = 'string';
 
 /**
- * Defines inline html output (treated as echo output)
+ * Defines a string (simple ou double quoted) - chars are already escaped
  * @constructor String
  * @extends {Literal}
  * @property {boolean} isDoubleQuote
-
+ * @see {Encapsed}
  */
 var String = Literal.extends(function String(isDoubleQuote, value, location) {
   Literal.apply(this, [KIND, value, location]);

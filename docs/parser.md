@@ -545,14 +545,20 @@ Handles the dereferencing
 
 # read_encapsed_string_item
 
+Reads and extracts an encapsed item
+
 ```ebnf
 encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
- | variable
  | T_CURLY_OPEN variable '}'
+ | variable
+ | variable '[' expr ']'
+ | variable T_OBJECT_OPERATOR T_STRING
 ```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | Variable | Expr | Lookup)** 
 
 # read_encapsed_string
 

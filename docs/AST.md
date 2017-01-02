@@ -41,6 +41,8 @@
             -   [Inline](#inline)
             -   [Magic](#magic)
             -   [Shell](#shell)
+            -   [Nowdoc](#nowdoc)
+            -   [Encapsed](#encapsed)
     -   [Statement](#statement)
         -   [Eval](#eval)
         -   [Exit](#exit)
@@ -486,6 +488,53 @@ Defines system based call
 
 Defines an empty check call
 
+# Encapsed
+
+**Extends Literal**
+
+Defines an encapsed string (contains expressions)
+
+**Properties**
+
+-   `type` **[String](#string)** Defines the type of encapsed string (shell, heredoc, string)
+-   `label` **([String](#string) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** The heredoc label, defined only when the type is heredoc
+
+## TYPE_STRING
+
+The node is a double quote string :
+
+```php
+<?php
+echo "hello $world";
+```
+
+Type: [String](#string)
+
+## TYPE_SHELL
+
+The node is a shell execute string :
+
+```php
+<?php
+echo `ls -larth $path`;
+```
+
+Type: [String](#string)
+
+## TYPE_HEREDOC
+
+The node is a shell execute string :
+
+```php
+<?php
+echo <<<STR
+ Hello $world
+STR
+;
+```
+
+Type: [String](#string)
+
 # Entry
 
 **Extends Node**
@@ -812,6 +861,26 @@ Helper for extending the Node class
 
 Returns **[Function](#function)** 
 
+# String
+
+**Extends Literal**
+
+Defines a nowdoc string
+
+**Properties**
+
+-   `label` **[String](#string)** 
+
+# String
+
+**Extends Literal**
+
+Defines a string (simple ou double quoted) - chars are already escaped
+
+**Properties**
+
+-   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Number
 
 **Extends Literal**
@@ -986,16 +1055,6 @@ Declares a static variable into the current scope
 **Extends Lookup**
 
 Lookup to a static property
-
-# String
-
-**Extends Literal**
-
-Defines inline html output (treated as echo output)
-
-**Properties**
-
--   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Switch
 
