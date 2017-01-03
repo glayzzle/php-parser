@@ -11,7 +11,7 @@ var Position = require('./ast/position');
  * ## Class hierarchy
  *
  * - [Location](#location)
- * - [Position](#position-2)
+ * - [Position](#position)
  * - [Node](#node)
  *   - [Identifier](#identifier)
  *   - [TraitUse](#traituse)
