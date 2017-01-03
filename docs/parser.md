@@ -115,10 +115,6 @@ Check if token is of specified type
 
 -   `type`  
 
-## read_token
-
-convert an token to ast \*
-
 # ignoreStack
 
 outputs some debug information on current token \*
