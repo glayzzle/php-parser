@@ -11,8 +11,8 @@ var Position = require('./ast/position');
  * ## Class hierarchy
  *
  * - [Location](#location)
- * - [Position](#position)
- * - [Node](#Node)
+ * - [Position](#position-2)
+ * - [Node](#node)
  *   - [Identifier](#identifier)
  *   - [TraitUse](#traituse)
  *   - [TraitAlias](#traitalias)
@@ -117,6 +117,7 @@ var AST = function(withPositions, withSource) {
  * including it's lexer current state
  * @param {Parser}
  * @return {Position}
+ * @private
  */
 AST.prototype.position = function(parser) {
   return new Position(
