@@ -9,14 +9,17 @@ module.exports = {
     if (ch === '-') {
       ch = this.input();
       if (ch === '>') {
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1296
         return this.tok.T_OBJECT_OPERATOR;
       }
       this.unput(1);
     } else if (this.is_LABEL_START()) {
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1300
       this.consume_LABEL();
       this.popState();
       return this.tok.T_STRING;
     }
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1306
     this.popState();
     this.unput(1);
     return false;
