@@ -72,8 +72,11 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        compress: true,
+        compress: {
+          keep_fnames: true
+        },
         sourceMap: true,
+        mangle: false,
         maxLineLen: 1024
       },
       dist: {
