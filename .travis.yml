@@ -1,6 +1,10 @@
 language: node_js
 node_js:
   - '0.12'
+cache:
+  bundler: true
+  directories:
+  - node_modules # NPM package
 notifications:
   email: false
   webhooks:
@@ -9,11 +13,5 @@ notifications:
     on_success: change
     on_failure: always
     on_start: never
-before_script:
-  - sudo apt-get install python-software-properties -y
-  - sudo LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php -y
-  - sudo apt-get update -y
-  - sudo apt-get install php7.0 php7.0-xml -y
-  - php -v
 script: npm run cover
 after_success: cat /home/travis/build/glayzzle/php-parser/coverage/lcov.info | /home/travis/build/glayzzle/php-parser/node_modules/coveralls/bin/coveralls.js

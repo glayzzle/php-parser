@@ -37,38 +37,35 @@ module.exports = {
   ,read_top_statement: function() {
     switch(this.token) {
       case this.tok.T_FUNCTION:
-        return this.read_function();
+        return this.read_function(false, false);
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
         var flag = this.read_class_scope();
-        switch(this.token) {
-          case this.tok.T_CLASS:
-            return this.read_class(flag);
-          case this.tok.T_INTERFACE:
-            return this.read_interface(flag);
-          default:
-            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
-            this.next();
-            return err;
+        if (this.token === this.tok.T_CLASS) {
+          return this.read_class(flag);
+        } else {
+          this.error(this.tok.T_CLASS);
+          this.next();
+          return null;
         }
       case this.tok.T_CLASS:
-        return this.read_class(0);
+        return this.read_class([0, 0, 0]);
       case this.tok.T_INTERFACE:
-        return this.read_interface(0);
+        return this.read_interface();
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_USE:
-        var expr = this.read_use_statements();
-        this.expect(';').nextWithComments();
-        return expr;
+        return this.read_use_statement();
       case this.tok.T_CONST:
         return this.next().read_const_list();
       case this.tok.T_NAMESPACE:
         return this.read_namespace();
       case this.tok.T_HALT_COMPILER:
         var result = this.node('halt');
-        this.next().expect('(').next().expect(')').next().expect(';');
+        if (this.next().expect('(')) this.next();
+        if (this.expect(')')) this.next();
+        this.expect(';');
         this.lexer.done = true;
         return result(this.lexer._input.substring(
           this.lexer.offset
@@ -108,8 +105,12 @@ module.exports = {
       this.expect(this.tok.T_STRING);
       var result = this.node('constant');
       var name = this.text();
-      this.next().expect('=').next();
-      return result(name, this.read_expr());
+      if (this.next().expect('=')) {
+        return result(name, this.next().read_expr());
+      } else {
+        // fallback
+        return result(name, null);
+      }
     }, ',', false);
     this.expectEndOfStatement();
     return result;
@@ -117,16 +118,24 @@ module.exports = {
   /**
    * Reads a list of constants declaration
    * ```ebnf
-   *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+   *   declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
    * ```
+   * @retrurn {Object}
    */
   ,read_declare_list: function() {
-    return this.read_list(function() {
+    var result = {};
+    while(this.token != this.EOF && this.token !== ')') {
       this.expect(this.tok.T_STRING);
-      var name = this.text();
-      this.next().expect('=').next();
-      return [name, this.read_expr()];
-    }, ',');
+      var name = this.text().toLowerCase();
+      if (this.next().expect('=')) {
+        result[name] = this.next().read_expr();
+      } else {
+        result[name] = null;
+      }
+      if (this.token !== ',') break;
+      this.next();
+    }
+    return result;
   }
   /**
    * reads a simple inner statement
@@ -137,31 +146,38 @@ module.exports = {
   ,read_inner_statement: function() {
     switch(this.token) {
       case this.tok.T_FUNCTION:
-        return this.read_function();
+        return this.read_function(false, false);
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
         var flag = this.read_class_scope();
-        switch(this.token) {
-          case this.tok.T_CLASS:
-            return this.read_class(flag);
-          case this.tok.T_INTERFACE:
-            return this.read_interface(flag);
-          default:
-            var err = this.error([this.tok.T_CLASS, this.tok.T_INTERFACE]);
-            // graceful mode : ignore token & go next
-            this.next();
-            return err;
+        if (this.token === this.tok.T_CLASS) {
+          return this.read_class(flag);
+        } else {
+          this.error(this.tok.T_CLASS);
+          // graceful mode : ignore token & go next
+          this.next();
+          return null;
         }
       case this.tok.T_CLASS:
-        return this.read_class(0);
+        return this.read_class([0, 0, 0]);
       case this.tok.T_INTERFACE:
-        return this.read_interface(0);
+        return this.read_interface();
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER:
-        this.next().expect('(').next().expect(')').next().expect(';').next();
-        this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
+        this.raiseError(
+          '__HALT_COMPILER() can only be used from the outermost scope'
+        );
+        // fallback : returns a node but does not stop the parsing
+        var node = this.node('halt');
+        this.next().expect('(') && this.next();
+        this.expect(')') && this.next();
+        node = node(this.lexer._input.substring(
+          this.lexer.offset
+        ));
+        this.expect(';') && this.next();
+        return node;
       default:
         return this.read_statement();
     }
@@ -192,25 +208,31 @@ module.exports = {
       case this.tok.T_DOC_COMMENT: return this.read_doc_comment();
 
       case this.tok.T_RETURN:
-      case this.tok.T_BREAK:
-      case this.tok.T_CONTINUE:
-        var mode;
-        switch(this.token) {
-          case this.tok.T_RETURN:     mode = 'return';    break;
-          case this.tok.T_BREAK:      mode = 'break';     break;
-          case this.tok.T_CONTINUE:   mode = 'continue';  break;
-        }
-        var expr = null;
+        var result = this.node('return'), expr = null;
         if (!this.next().is('EOS')) {
           expr = this.read_expr();
         }
         this.expectEndOfStatement();
-        return [mode, expr];
+        return result(expr);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L429
+      case this.tok.T_BREAK:
+      case this.tok.T_CONTINUE:
+        var result = this.node(
+          this.token === this.tok.T_CONTINUE ? 'continue' : 'break'
+        ), level = null;
+        this.next(); // look ahead
+        if (this.token !== ';' && this.token !== this.tok.T_CLOSE_TAG) {
+          level = this.read_expr();
+        }
+        this.expectEndOfStatement();
+        return result(level);
 
       case this.tok.T_GLOBAL:
+        var result = this.node('global');
         var items = this.next().read_list(this.read_simple_variable, ',');
         this.expectEndOfStatement();
-        return ['global', items];
+        return result(items);
 
       case this.tok.T_STATIC:
         var current = [this.token, this.lexer.getState()];
@@ -219,28 +241,16 @@ module.exports = {
           // static keyword for a class
           this.lexer.tokens.push(current);
           var expr = this.next().read_expr();
-          this.expect(';').nextWithComments();
+          this.expect(';') && this.nextWithComments();
           return expr;
         }
-        var items = this.read_list(function() {
-          var name = this.expect(this.tok.T_VARIABLE).text();
-          var value = null;
-          if (this.next().token === '=') {
-            value = this.next().read_expr();
-          }
-          return [name, value];
-        }, ',');
+        var items = this.read_variable_declarations();
         this.expectEndOfStatement();
-        return result('declare', items);
+        return result(items);
 
       case this.tok.T_ECHO:
         var result = this.node('echo');
-        var withParanthesis = (this.next().token === '(');
-        withParanthesis && this.next();
-        var args = this.read_list(this.read_expr, ',');
-        if (withParanthesis) {
-          this.expect(')').next();
-        }
+        var args = this.next().read_list(this.read_expr, ',');
         this.expectEndOfStatement();
         return result(args);
 
@@ -251,33 +261,46 @@ module.exports = {
 
       case this.tok.T_UNSET:
         var result = this.node('unset');
-        this.next().expect('(').next();
+        this.next().expect('(') && this.next();
         var items = this.read_list(this.read_variable, ',');
-        if (this.expect(')').next().expect(';')) {
-          result = result(items);
-          this.nextWithComments();
-        } else {
-          result = result(items);
-        }
-        return  result;
+        this.expect(')') && this.next();
+        this.expect(';') && this.nextWithComments();
+        return result(items);
 
       case this.tok.T_DECLARE:
-        var result = this.node('declare'), options, body;
-        this.next().expect('(').next();
-        options = this.read_declare_list();
-        this.expect(')').nextWithComments();
+        var result = this.node('declare'),
+          what,
+          body = [],
+          mode;
+        this.next().expect('(') && this.next();
+        what = this.read_declare_list();
+        this.expect(')') && this.next();
         if (this.token === ':') {
-          body = [];
-          this.next();
+          this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
-            body.push(this.read_statement());
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
           }
-          this.ignoreComments().expect(this.tok.T_ENDDECLARE).next().expectEndOfStatement();
+          this.expect(this.tok.T_ENDDECLARE) && this.next();
+          this.expectEndOfStatement();
+          mode = this.ast.declare.MODE_SHORT;
+        } else if (this.token === '{') {
+          this.nextWithComments();
+          while(this.token != this.EOF && this.token !== '}') {
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
+          }
+          this.expect('}') && this.next();
+          mode = this.ast.declare.MODE_BLOCK;
         } else {
-          body = this.read_statement();
+          this.expect(';') && this.next();
+          while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
+          }
+          mode = this.ast.declare.MODE_NONE;
         }
-        return result(options, body);
-        break;
+        return result(what, body, mode);
 
       case this.tok.T_TRY:
         return this.read_try();
@@ -304,14 +327,16 @@ module.exports = {
           // default fallback expr
           this.lexer.tokens.push(current);
           var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]).nextWithComments();
+          this.expect([';', this.tok.T_CLOSE_TAG]) && this.nextWithComments();
           return expr;
         }
 
       case this.tok.T_GOTO:
-        var result = this.node('goto');
-        var label = this.next().expect(this.tok.T_STRING).text();
-        this.next().expectEndOfStatement();
+        var result = this.node('goto'), label = null;
+        if (this.next().expect(this.tok.T_STRING)) {
+          label = this.text();
+          this.next().expectEndOfStatement();
+        }
         return result(label);
 
       default: // default fallback expr
@@ -326,12 +351,13 @@ module.exports = {
    * ```
    */
   ,read_code_block: function(top) {
-    this.expect('{').nextWithComments();
+    var result = this.node('block');
+    this.expect('{') && this.nextWithComments();
     var body = top ?
       this.read_top_statements()
       : this.read_inner_statements()
     ;
-    this.expect('}').nextWithComments();
-    return body;
+    this.expect('}') && this.nextWithComments();
+    return result(null, body);
   }
 };

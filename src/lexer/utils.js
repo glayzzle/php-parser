@@ -52,11 +52,6 @@ module.exports = {
     var ch = this._input[this.offset - 1];
     return tokens.indexOf(ch) !== -1;
   },
-  // check if current char is a newline
-  is_NEWLINE: function() {
-    var ch = this._input[this.offset - 1];
-    return ch === '\n' || ch === '\r';
-  },
   // check if current char is a whitespace
   is_WHITESPACE: function() {
     var ch = this._input[this.offset - 1];

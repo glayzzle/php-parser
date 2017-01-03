@@ -1,13 +1,11 @@
 {
   "name": "php-parser",
   "version": "1.0.0",
-  "description": "Parse PHP code with NodeJS and convert it to AST",
+  "description": "Parse PHP 5/7 code and returns its AST",
   "main": "src/index.js",
   "scripts": {
-    "bench": "node --expose-gc bin/bench.js",
-    "test": "node --stack-size=5000 bin/test.js -r -d test/",
-    "cover": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover -x \"**/bin/**\" bin/test.js -- -m test/functional/",
-    "mocha": "node node_modules/mocha/bin/mocha test/functional  --stack-size=5000"
+    "test": "node node_modules/mocha/bin/mocha test --stack-size=5000",
+    "cover": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
   },
   "repository": {
     "type": "git",
@@ -30,7 +28,6 @@
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-documentation": "^1.2.1",
     "istanbul": "0.3.x",
-    "memwatch-next": "^0.3.0",
     "mocha": "^2.0.1",
     "should": "^8.3.0"
   }

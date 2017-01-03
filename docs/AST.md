@@ -4,8 +4,38 @@
 
 ## Class hierarchy
 
+-   [Location](#location)
+-   [Position](#position)
 -   [Node](#Node)
+    -   [Identifier](#identifier)
+    -   [TraitUse](#traituse)
+    -   [TraitAlias](#traitalias)
+    -   [TraitPrecedence](#traitprecedence)
+    -   [Entry](#entry)
+    -   [Case](#case)
+    -   [Label](#label)
+    -   [Doc](#doc)
+    -   [Error](#error)
     -   [Expression](#expression)
+        -   [Array](#array)
+        -   [Variable](#variable)
+        -   [Variadic](#variadic)
+        -   [ConstRef](#constref)
+        -   [Yield](#yield)
+        -   [YieldFrom](#yieldfrom)
+        -   [Lookup](#lookup)
+            -   [PropertyLookup](#propertylookup)
+            -   [StaticLookup](#staticlookup)
+            -   [OffsetLookup](#offsetlookup)
+        -   [Operation](#operation)
+            -   [Coalesce](#coalesce)
+            -   [Pre](#pre)
+            -   [Post](#post)
+            -   [Bin](#bin)
+            -   [Parenthesis](#parenthesis)
+            -   [Bool](#Bool)
+            -   [Unary](#unary)
+            -   [Cast](#cast)
         -   [Literal](#literal)
             -   [Boolean](#boolean)
             -   [String](#string)
@@ -13,38 +43,55 @@
             -   [Inline](#inline)
             -   [Magic](#magic)
             -   [Shell](#shell)
-        -   [Array](#array)
-        -   [Variable](#variable)
+            -   [Nowdoc](#nowdoc)
+            -   [Encapsed](#encapsed)
     -   [Statement](#statement)
+        -   [Eval](#eval)
+        -   [Exit](#exit)
+        -   [Halt](#halt)
+        -   [Clone](#clone)
+        -   [Declare](#declare)
+        -   [Global](#global)
+        -   [Static](#static)
+        -   [Include](#include)
+        -   [Assign](#assign)
+        -   [RetIf](#retif)
+        -   [If](#if)
+        -   [Do](#do)
+        -   [While](#while)
+        -   [For](#for)
+        -   [Foreach](#foreach)
+        -   [Switch](#switch)
+        -   [Goto](#goto)
+        -   [Silent](#silent)
+        -   [Try](#try)
+        -   [Catch](#catch)
+        -   [Throw](#throw)
+        -   [Call](#call)
+        -   [Closure](#closure)
+        -   [New](#new)
+        -   [UseGroup](#usegroup)
+        -   [UseItem](#useitem)
         -   [Block](#block)
             -   [Program](#program)
             -   [Namespace](#namespace)
         -   [Sys](#sys)
             -   [Echo](#echo)
+            -   [List](#list)
             -   [Print](#print)
             -   [Isset](#isset)
             -   [Unset](#unset)
             -   [Empty](#empty)
         -   [Declaration](#declaration)
             -   [Class](#class)
+            -   [Interface](#interface)
+            -   [Trait](#trait)
             -   [Constant](#constant)
                 -   [ClassConstant](#classconstant)
             -   [Function](#function)
                 -   [Method](#method)
             -   [Parameter](#parameter)
             -   [Property](#property)
-        -   [Eval](#eval)
-        -   [Exit](#exit)
-        -   [Clone](#clone)
-        -   [Coalesce](#coalesce)
-        -   [Include](#include)
-        -   [Assign](#assign)
-    -   [Identifier](#identifier)
-    -   [Entry](#entry)
-    -   [Documentation](#documentation)
-    -   [Error](#error)
--   [Location](#location)
--   [Position](#position)
 
 * * *
 
@@ -52,6 +99,18 @@
 
 -   `withPositions`  
 -   `withSource`  
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
 
 ## prepare
 
@@ -78,6 +137,18 @@ The AST builder class
 
 -   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
 -   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
+
+## position
+
+Create a position node from specified parser
+including it's lexer current state
+
+**Parameters**
+
+-   `Parser`  
+-   `parser`  
+
+Returns **[Position](#position)** 
 
 ## prepare
 
@@ -114,6 +185,18 @@ Assigns a value to the specified target
 -   `right` **[Expression](#expression)** 
 -   `operator` **[String](#string)** 
 
+# Bin
+
+**Extends Operation**
+
+Binary operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `left` **[Expression](#expression)** 
+-   `right` **[Expression](#expression)** 
+
 # Block
 
 **Extends Statement**
@@ -124,11 +207,89 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
 
+# Bool
+
+**Extends Operation**
+
+Boolean operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `left` **[Expression](#expression)** 
+-   `right` **[Expression](#expression)** 
+
 # Boolean
 
 **Extends Literal**
 
 Defines a boolean value (true/false)
+
+# Break
+
+**Extends Node**
+
+A break statement
+
+**Properties**
+
+-   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+
+# Call
+
+**Extends Statement**
+
+Executes a call statement
+
+**Properties**
+
+-   `arguments` **[Array](#array)&lt;Arguments>** 
+
+# Case
+
+**Extends Node**
+
+A switch case statement
+
+**Properties**
+
+-   `test` **([Expression](#expression) | null)** if null, means that the default case
+-   `body` **([Block](#block) | null)** 
+
+# Cast
+
+**Extends Operation**
+
+Binary operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Expression](#expression)** 
+
+# Try
+
+**Extends Statement**
+
+Defines a catch statement
+
+**Properties**
+
+-   `what` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `variable` **[Variable](#variable)** 
+-   `body` **[Statement](#statement)** 
+
+# Try
+
+**Extends Statement**
+
+Defines a try statement
+
+**Properties**
+
+-   `body` **[Block](#block)** 
+-   `catches` **[Array](#array)&lt;Catch>** 
+-   `allways` **[Block](#block)** 
 
 # Class
 
@@ -143,7 +304,6 @@ A class definition
 -   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
 -   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # ClassConstant
@@ -167,9 +327,23 @@ Defines a clone call
 
 -   `what` **[Expression](#expression)** 
 
-# Coalesce
+# Closure
 
 **Extends Statement**
+
+Defines a closure
+
+**Properties**
+
+-   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
+-   `type` **[Identifier](#identifier)** 
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `body` **([Block](#block) | null)** 
+
+# Coalesce
+
+**Extends Operation**
 
 Verify is the test property is defined and is not null, and returns
 is, otherwise returns the ifnull expression.
@@ -188,6 +362,26 @@ Defines a namespace constant
 **Properties**
 
 -   `value` **([Node](#node) | null)** 
+
+# ConstRef
+
+**Extends Expression**
+
+A constant reference
+
+**Properties**
+
+-   `name` **([String](#string) \| [Node](#node))** 
+
+# Continue
+
+**Extends Node**
+
+A continue statement
+
+**Properties**
+
+-   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
 
 # Declaration
 
@@ -209,6 +403,70 @@ Generic flags parser
 
 Returns **void** 
 
+# Declare
+
+**Extends Block**
+
+The declare construct is used to set execution directives for a block of code
+
+**Properties**
+
+-   `what` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `mode` **[String](#string)** 
+
+## MODE_SHORT
+
+The node is declared as a short tag syntax :
+
+```php
+<?php
+declare(ticks=1):
+// some statements
+enddeclare;
+```
+
+Type: [String](#string)
+
+## MODE_BLOCK
+
+The node is declared bracket enclosed code :
+
+```php
+<?php
+declare(ticks=1) {
+// some statements
+}
+```
+
+Type: [String](#string)
+
+## MODE_NONE
+
+The node is declared as a simple statement. In order to make things simpler
+children of the node are automatically collected until the next
+declare statement.
+
+```php
+<?php
+declare(ticks=1);
+// some statements
+declare(ticks=2);
+// some statements
+```
+
+Type: [String](#string)
+
+# Do
+
+**Extends Statement**
+
+Defines a do/while statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Statement](#statement)** 
+
 # Documentation
 
 **Extends Node**
@@ -218,7 +476,7 @@ A comment or documentation
 **Properties**
 
 -   `isDoc` **[Boolean](#boolean)** 
--   `text` **[String](#string)** 
+-   `lines` **[Array](#array)&lt;[String](#string)>** 
 
 # Echo
 
@@ -231,6 +489,53 @@ Defines system based call
 **Extends Sys**
 
 Defines an empty check call
+
+# Encapsed
+
+**Extends Literal**
+
+Defines an encapsed string (contains expressions)
+
+**Properties**
+
+-   `type` **[String](#string)** Defines the type of encapsed string (shell, heredoc, string)
+-   `label` **([String](#string) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** The heredoc label, defined only when the type is heredoc
+
+## TYPE_STRING
+
+The node is a double quote string :
+
+```php
+<?php
+echo "hello $world";
+```
+
+Type: [String](#string)
+
+## TYPE_SHELL
+
+The node is a shell execute string :
+
+```php
+<?php
+echo `ls -larth $path`;
+```
+
+Type: [String](#string)
+
+## TYPE_HEREDOC
+
+The node is a shell execute string :
+
+```php
+<?php
+echo <<<STR
+ Hello $world
+STR
+;
+```
+
+Type: [String](#string)
 
 # Entry
 
@@ -283,6 +588,34 @@ Defines an exit / die call
 Any expression node. Since the left-hand side of an assignment may
 be any expression in general, an expression can also be a pattern.
 
+# For
+
+**Extends Statement**
+
+Defines a for iterator
+
+**Properties**
+
+-   `init` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `test` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `increment` **[Array](#array)&lt;[Expression](#expression)>** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Foreach
+
+**Extends Statement**
+
+Defines a foreach iterator
+
+**Properties**
+
+-   `source` **[Expression](#expression)** 
+-   `key` **([Expression](#expression) | null)** 
+-   `value` **[Expression](#expression)** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Function
 
 **Extends Declaration**
@@ -291,10 +624,41 @@ Defines a classic function
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;Argument>** 
+-   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `children` **[Array](#array)&lt;[Node](#node)>** 
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `body` **([Block](#block) | null)** 
+
+# Global
+
+**Extends Statement**
+
+Imports a variable from the global scope
+
+**Properties**
+
+-   `items` **[Array](#array)&lt;[Variable](#variable)>** 
+
+# Goto
+
+**Extends Statement**
+
+Defines goto statement
+
+**Properties**
+
+-   `label` **[String](#string)** 
+
+# Halt
+
+**Extends Statement**
+
+Halts the compiler execution
+
+**Properties**
+
+-   `after` **[String](#string)** String after the halt statement
 
 # Identifier
 
@@ -305,7 +669,46 @@ Defines an identifier node
 **Properties**
 
 -   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `fqn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `resolution` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## UNQUALIFIED_NAME
+
+This is an identifier without a namespace separator, such as Foo
+
+Type: [String](#string)
+
+## QUALIFIED_NAME
+
+This is an identifier with a namespace separator, such as Foo\\Bar
+
+Type: [String](#string)
+
+## FULL_QUALIFIED_NAME
+
+This is an identifier with a namespace separator that begins with
+a namespace separator, such as \\Foo\\Bar. The namespace \\Foo is also
+a fully qualified name.
+
+Type: [String](#string)
+
+## RELATIVE_NAME
+
+This is an identifier starting with namespace, such as namespace\\Foo\\Bar.
+
+Type: [String](#string)
+
+# If
+
+**Extends Statement**
+
+Defines a if statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+-   `alternate` **([Block](#block) \| [If](#if) | null)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Include
 
@@ -325,13 +728,40 @@ Defines system include call
 
 Defines inline html output (treated as echo output)
 
+# Interface
+
+**Extends Declaration**
+
+An interface definition
+
+**Properties**
+
+-   `extends` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
+
 # Isset
 
 **Extends Sys**
 
 Defines an isset call
 
-# ArrayExpression
+# Label
+
+**Extends Node**
+
+A label statement (referenced by goto)
+
+**Properties**
+
+-   `name` **[String](#string)** 
+
+# List
+
+**Extends Sys**
+
+Defines list assignment
+
+# Literal
 
 **Extends Expression**
 
@@ -356,6 +786,17 @@ Defines the location of the node (with it's source contents as string)
 -   `source` **([String](#string) | null)** 
 -   `start` **[Position](#position)** 
 -   `end` **[Position](#position)** 
+
+# Lookup
+
+**Extends Expression**
+
+Lookup on an offset in the specified object
+
+**Properties**
+
+-   `what` **[Expression](#expression)** 
+-   `offset` **[Expression](#expression)** 
 
 # Magic
 
@@ -387,6 +828,17 @@ The main program node
 -   `name` **[Identifier](#identifier)** 
 -   `withBrackets` **[Boolean](#boolean)** 
 
+# New
+
+**Extends Statement**
+
+Creates a new instance of the specified class
+
+**Properties**
+
+-   `what` **([Identifier](#identifier) \| [Variable](#variable) \| [Class](#class))** 
+-   `arguments` **[Array](#array)&lt;Arguments>** 
+
 # Node
 
 A generic AST node
@@ -411,11 +863,43 @@ Helper for extending the Node class
 
 Returns **[Function](#function)** 
 
+# String
+
+**Extends Literal**
+
+Defines a nowdoc string
+
+**Properties**
+
+-   `label` **[String](#string)** 
+
+# String
+
+**Extends Literal**
+
+Defines a string (simple ou double quoted) - chars are already escaped
+
+**Properties**
+
+-   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 # Number
 
 **Extends Literal**
 
 Defines a numeric value
+
+# OffsetLookup
+
+**Extends Lookup**
+
+Lookup on an offset in an array
+
+# Operation
+
+**Extends Expression**
+
+Defines binary operations
 
 # Parameter
 
@@ -429,6 +913,17 @@ Defines a function parameter
 -   `value` **([Node](#node) | null)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `variadic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Parenthesis
+
+**Extends Operation**
+
+Parenthesis encapsulation `(... expr ...)`
+
+**Properties**
+
+-   `inner` **[Expression](#expression)** 
 
 # Position
 
@@ -445,6 +940,28 @@ Each Position object consists of a line number (1-indexed) and a column number (
 -   `line` **[Number](#number)** 
 -   `column` **[Number](#number)** 
 -   `offset` **[Number](#number)** 
+
+# Post
+
+**Extends Operation**
+
+Defines a post operation `$i++` or `$i--`
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Variable](#variable)** 
+
+# Pre
+
+**Extends Operation**
+
+Defines a pre operation `++$i` or `--$i`
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Variable](#variable)** 
 
 # Print
 
@@ -475,11 +992,49 @@ Defines a class property
 -   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `value` **([Node](#node) | null)** 
 
+# PropertyLookup
+
+**Extends Lookup**
+
+Lookup to an object property
+
+# RetIf
+
+**Extends Statement**
+
+Defines a short if statement that returns a value
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `trueExpr` **[Expression](#expression)** 
+-   `falseExpr` **[Expression](#expression)** 
+
+# Return
+
+**Extends Node**
+
+A continue statement
+
+**Properties**
+
+-   `expr` **([Expression](#expression) | null)** 
+
 # Shell
 
 **Extends Literal**
 
 Defines inline html output (treated as echo output)
+
+# Silent
+
+**Extends Statement**
+
+Avoids to show/log warnings & notices from the inner expression
+
+**Properties**
+
+-   `expr` **[Expression](#expression)** 
 
 # Statement
 
@@ -487,15 +1042,33 @@ Defines inline html output (treated as echo output)
 
 Any statement.
 
-# String
+# Static
 
-**Extends Literal**
+**Extends Statement**
 
-Defines inline html output (treated as echo output)
+Declares a static variable into the current scope
 
 **Properties**
 
--   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `items` **([Array](#array)&lt;[Variable](#variable)> | [Array](#array)&lt;[Assign](#assign)>)** 
+
+# StaticLookup
+
+**Extends Lookup**
+
+Lookup to a static property
+
+# Switch
+
+**Extends Statement**
+
+Defines a switch statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Block](#block)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 # Sys
 
@@ -507,11 +1080,116 @@ Defines system based call
 
 -   `arguments` **[Array](#array)&lt;[Node](#node)>** 
 
+# Throw
+
+**Extends Statement**
+
+Defines a throw statement
+
+**Properties**
+
+-   `what` **[Expression](#expression)** 
+
+# Trait
+
+**Extends Declaration**
+
+A trait definition
+
+**Properties**
+
+-   `extends` **([Identifier](#identifier) | null)** 
+-   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
+
+# TraitAlias
+
+**Extends Node**
+
+Defines a trait alias
+
+**Properties**
+
+-   `trait` **([Identifier](#identifier) | null)** 
+-   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `as` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+-   `visibility` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+
+# TraitPrecedence
+
+**Extends Node**
+
+Defines a trait alias
+
+**Properties**
+
+-   `trait` **([Identifier](#identifier) | null)** 
+-   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `instead` **[Array](#array)&lt;[Identifier](#identifier)>** 
+
+# TraitUse
+
+**Extends Node**
+
+Defines a trait usage
+
+**Properties**
+
+-   `traits` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `adaptations` **([Array](#array)&lt;[Node](#node)> | null)** 
+
+# Unary
+
+**Extends Operation**
+
+Unary operations
+
+**Properties**
+
+-   `type` **[String](#string)** 
+-   `what` **[Expression](#expression)** 
+
 # Unset
 
 **Extends Sys**
 
 Deletes references to a list of variables
+
+# UseGroup
+
+**Extends Statement**
+
+Defines a use statement (with a list of use items)
+
+**Properties**
+
+-   `name` **([Identifier](#identifier) | null)** 
+-   `type` **([String](#string) | null)** Possible value : function, const
+-   `item` **[Array](#array)&lt;[UseItem](#useitem)>** 
+
+# UseItem
+
+**Extends Statement**
+
+Defines a use statement (from namespace)
+
+**Properties**
+
+-   `name` **[Identifier](#identifier)** 
+-   `type` **([String](#string) | null)** Possible value : function, const
+-   `alias` **([String](#string) | null)** 
+
+## TYPE_CONST
+
+Importing a constant
+
+Type: [String](#string)
+
+## TYPE_FUNC
+
+Importing a function
+
+Type: [String](#string)
 
 # Variable
 
@@ -522,5 +1200,48 @@ be any expression in general, an expression can also be a pattern.
 
 **Properties**
 
--   `identifier` **([String](#string) \| [Node](#node))** 
+-   `name` **([String](#string) \| [Node](#node))** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Variadic
+
+**Extends Expression**
+
+Introduce a list of items into the arguments of the call
+
+**Properties**
+
+-   `what` **([Array](#array) \| [Expression](#expression))** 
+
+# While
+
+**Extends Statement**
+
+Defines a while statement
+
+**Properties**
+
+-   `test` **[Expression](#expression)** 
+-   `body` **[Statement](#statement)** 
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+# Yield
+
+**Extends Expression**
+
+Defines a yield generator statement
+
+**Properties**
+
+-   `value` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+-   `key` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+
+# YieldFrom
+
+**Extends Expression**
+
+Defines a yield from generator statement
+
+**Properties**
+
+-   `value` **[Expression](#expression)** 

@@ -2,7 +2,9 @@
 
 # parser
 
-The PHP Parser class
+The PHP Parser class that build the AST tree from the lexer
+
+Type: Parser
 
 **Parameters**
 
@@ -11,11 +13,12 @@ The PHP Parser class
 
 **Properties**
 
--   `EOF` **Integer** 
--   `lexer` **Lexer** 
--   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `lexer` **Lexer** current lexer instance
+-   `ast` **AST** the AST factory instance
+-   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** current token
+-   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should extract documentation as AST node
+-   `suppressErrors` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should ignore parsing errors and continue
+-   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should output debug informations
 
 ## getTokenName
 
@@ -32,6 +35,7 @@ main entry point : converts a source code to AST
 **Parameters**
 
 -   `code`  
+-   `filename`  
 
 ## raiseError
 
@@ -64,6 +68,8 @@ Creates a new AST node
 
 expects an end of statement or end of file
 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ## expect
 
 Force the parser to check the current token.
@@ -81,7 +87,7 @@ be added to the program error stack and this function will return `false`.
 
 -   Throws **any** Error
 
-Returns **(Parser | False)** 
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## text
 
@@ -108,24 +114,6 @@ Check if token is of specified type
 **Parameters**
 
 -   `type`  
-
-## read_token
-
-convert an token to ast \*
-
-## read_list
-
-Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
-
-```ebnf
-list ::= separator? ( item separator )* item
-```
-
-**Parameters**
-
--   `item`  
--   `separator`  
--   `preserveFirstSeparator`  
 
 # ignoreStack
 
@@ -215,7 +203,7 @@ Returns **any** array
 reading an interface
 
 ```ebnf
-interface ::= class_scope? T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
+interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
 ```
 
 # read_interface_body
@@ -270,11 +258,11 @@ Returns **Constant** [:link:](AST.md#constant)
 
 # read_comment
 
-Comments with // or #
+Comments with // or # or / _ ... _ /
 
 # read_doc_comment
 
-Comments with / \*\* \*\* /
+Comments with / \*_ ... _ /
 
 # read_expr_item
 
@@ -357,6 +345,8 @@ reads a list of parameters
 
 # read_function_argument_list
 
+Reads a list of arguments
+
 ```ebnf
  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
 ```
@@ -377,6 +367,8 @@ read type hinting
 
 # read_if
 
+Reads an IF statement
+
 ```ebnf
  if ::= '(' expr ')' ':' ...
 ```
@@ -391,25 +383,59 @@ reads an elseif (expr): statements
 
 # read_else_short
 
-# read_short_form
-
-Reads a short form of tokens
-
 # read_while
 
 Reads a while statement
 
+```ebnf
+while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')
+```
+
+Returns **While** 
+
+# read_do
+
+Reads a do / while loop
+
+```ebnf
+do ::= T_DO statement T_WHILE '(' expr ')' ';'
+```
+
+Returns **Do** 
+
+# read_for
+
+Read a for incremental loop
+
+```ebnf
+for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
+for_statement ::= statement | ':' inner_statement_list T_ENDFOR ';'
+for_exprs ::= expr? (',' expr)*
+```
+
+Returns **For** 
+
 # read_foreach
+
+Reads a foreach loop
 
 ```ebnf
 foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
 ```
 
+Returns **Foreach** 
+
 # read_foreach_variable
 
+Reads a foreach variable statement
+
 ```ebnf
-foreach_variable = ('&'? variable) | (T_LIST '(' assignment_list ')')
+foreach_variable = variable |
+ T_LIST '(' assignment_list ')' |
+ '[' array_pair_list ']'
 ```
+
+Returns **Expression** 
 
 # read_start
 
@@ -419,6 +445,8 @@ start ::= (namespace | top_statement)*
 
 # read_namespace
 
+Reads a namespace declaration block
+
 ```ebnf
 namespace ::= T_NAMESPACE namespace_name? '{'
    top_statements
@@ -426,43 +454,71 @@ namespace ::= T_NAMESPACE namespace_name? '{'
 | T_NAMESPACE namespace_name ';' top_statements
 ```
 
+Returns **Namespace** 
+
 # read_namespace_name
 
-reading a namespace name
+Reads a namespace name
 
 ```ebnf
  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
 ```
 
-# read_use_statements
-
-```ebnf
-use_statements ::=
-     use_statements ',' use_statement
-     | use_statement
-```
-
-# read_inline_use_declaration
-
-```ebnf
- inline_use_declaration ::= ...
-```
-
-# read_use_statement_mixed
-
-```ebnf
-  use_statement_mixed ::=
-      use_statement  (T_AS T_STRING | '{' read_inline_use_declaration '}' )
-      (',' read_use_statement)*
-```
+Returns **Identifier** 
 
 # read_use_statement
 
+Reads a use statement
+
 ```ebnf
-use_statement ::= (
- (T_FUNCTION | T_CONST)? namespace_name
- )
+use_statement ::= T_USE
+  use_type? use_declarations |
+  use_type use_statement '{' use_declarations '}' |
+  use_statement '{' use_declarations(=>typed) '}'
+';'
 ```
+
+Returns **UseGroup** 
+
+# read_use_declaration
+
+Reads a use declaration
+
+```ebnf
+use_declaration ::= use_type? namespace_name use_alias
+```
+
+Returns **UseItem** 
+
+# read_use_declarations
+
+Reads a list of use declarations
+
+```ebnf
+use_declarations ::= use_declaration (',' use_declaration)*
+```
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;UseItem>** 
+
+# read_use_alias
+
+Reads a use statement
+
+```ebnf
+use_alias ::= (T_AS T_STRING)?
+```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+
+# read_use_type
+
+Reads the namespace type declaration
+
+```ebnf
+use_type ::= (T_FUNCTION | T_CONST)?
+```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** Possible values : function, const
 
 # resolve_special_chars
 
@@ -485,14 +541,20 @@ Handles the dereferencing
 
 # read_encapsed_string_item
 
+Reads and extracts an encapsed item
+
 ```ebnf
 encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
- | variable
  | T_CURLY_OPEN variable '}'
+ | variable
+ | variable '[' expr ']'
+ | variable T_OBJECT_OPERATOR T_STRING
 ```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | Variable | Expr | Lookup)** 
 
 # read_encapsed_string
 
@@ -543,7 +605,7 @@ Reads a list of constants declaration
 Reads a list of constants declaration
 
 ```ebnf
-  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+  declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
 ```
 
 # read_inner_statement
@@ -572,6 +634,8 @@ Reads a switch statement
  switch ::= T_SWITCH '(' expr ')' switch_case_list
 ```
 
+Returns **Switch** 
+
 # read_switch_case_list
 
 ```ebnf
@@ -594,17 +658,72 @@ Reads a switch statement
          (T_FINALLY '{' inner_statement* '}')?
 ```
 
+Returns **Try** 
+
+# read_short_form
+
+Reads a short form of tokens
+
+**Parameters**
+
+-   `token` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** The ending token
+
+Returns **Block** 
+
+# read_list
+
+Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
+
+```ebnf
+list ::= separator? ( item separator )* item
+```
+
+# read_name_list
+
+Reads a list of names separated by a comma
+
+```ebnf
+name_list ::= namespace (',' namespace)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Identifier>** 
+
+# read_variable_declarations
+
+Reads a list of variables declarations
+
+```ebnf
+variable_declaration ::= T_VARIABLE ('=' expr)?*
+variable_declarations ::= variable_declaration (',' variable_declaration)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Variable> | [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Assign>)** Returns an array composed by a list of variables, or
+assign values
+
 # read_variable
 
 Reads a variable
 
 ```ebnf
-  variable ::= ...complex @todo
+  variable ::= &? ...complex @todo
 ```
 
 Some samples of parsed code :
 
 ```php
+ &$var                      // simple var
  $var                      // simple var
  classname::CONST_NAME     // dynamic class name with const retrieval
  foo()                     // function call

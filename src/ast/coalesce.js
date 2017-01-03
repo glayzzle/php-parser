@@ -4,20 +4,20 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
+var Operation = require('./operation');
 var KIND = 'coalesce';
 
 /**
  * Verify is the test property is defined and is not null, and returns
  * is, otherwise returns the ifnull expression.
  * @constructor Coalesce
- * @extends {Statement}
+ * @extends {Operation}
  * @property {Expression} test - The expression to be testes
  * @property {Expression} ifnull - The returned expression if test is null
  * @see https://wiki.php.net/rfc/isset_ternary
  */
-var Coalesce = Statement.extends(function Coalesce(test, ifnull, location) {
-  Statement.apply(this, [KIND, location]);
+var Coalesce = Operation.extends(function Coalesce(test, ifnull, location) {
+  Operation.apply(this, [KIND, location]);
   this.test = test;
   this.ifnull = ifnull;
 });

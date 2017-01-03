@@ -34,8 +34,33 @@ function combine(src, to) {
 }
 
 /**
+ * Initialise a new parser instance with the specified options
+ *
+ * Usage :
+ * ```js
+ * var parser = require('php-parser');
+ * var instance = new parser({
+ *   parser: {
+ *     extractDoc: true,
+ *     suppressErrors: true
+ *   },
+ *   ast: {
+ *     withPositions: true
+ *   },
+ *   lexer: {
+ *     short_tags: true,
+ *     asp_tags: true
+ *   }
+ * });
+ *
+ * var evalAST = instance.parseEval('some php code');
+ * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
+ * var tokens = instance.tokenGetAll('<?php some php code');
+ * ```
+ *
  * @constructor {Engine}
- * @param {Object} options
+ * @param {Object} options - List of options
+ *
  * @property {Lexer} lexer
  * @property {Parser} parser
  * @property {AST} ast
@@ -55,16 +80,18 @@ var engine = function(options) {
 };
 
 /**
- * Creates a new instance
+ * Creates a new instance (Helper)
  * @param {Object} options
  * @return {Engine}
- */
+ * @private
+*/
 engine.create = function(options) {
   return new engine(options);
 };
 
 /**
  * Evaluate the buffer
+ * @private
  */
 engine.parseEval = function(buffer, options) {
   var self = new engine(options);
@@ -72,34 +99,59 @@ engine.parseEval = function(buffer, options) {
 };
 
 /**
- * parsing eval string as '$x = 1;'
- * @return {Array}
+ * Parse an evaluating mode string (no need to open php tags)
+ * @param {String} buffer
+ * @return {Program}
  */
 engine.prototype.parseEval = function(buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
-  return this.parser.parse(buffer);
+  return this.parser.parse(buffer, 'eval');
 };
 
 /**
- * parse php code with '<?php $x = 1;'
+ * Static function that parse a php code with open/close tags
+ * @private
  */
-engine.parseCode = function(buffer, options) {
+engine.parseCode = function(buffer, filename, options) {
+  if (typeof filename === 'object') {
+    // retro-compatibility
+    options = filename;
+    filename = 'unknown';
+  }
   var self = new engine(options);
-  return self.parseCode(buffer);
+  return self.parseCode(buffer, filename);
 };
 
 /**
- * parse php code with '<?php $x = 1;'
+ * Function that parse a php code with open/close tags
+ *
+ * Sample code :
+ * ```php
+ * <?php $x = 1;
+ * ```
+ *
+ * Usage :
+ * ```js
+ * var parser = require('php-parser');
+ * var phpParser = new parser({
+ *   // some options
+ * });
+ * var ast = phpParser.parseCode('...php code...', 'foo.php');
+ * ```
+ * @param {String} buffer - The code to be parsed
+ * @param {String} filename - Filename
+ * @return {Program}
  */
-engine.prototype.parseCode = function(buffer) {
+engine.prototype.parseCode = function(buffer, filename) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = false;
-  return this.parser.parse(buffer);
+  return this.parser.parse(buffer, filename);
 };
 
 /**
- * split the buffer into tokens
+ * Split the buffer into tokens
+ * @private
  */
 engine.tokenGetAll = function(buffer, options) {
   var self = new engine(options);
@@ -107,7 +159,10 @@ engine.tokenGetAll = function(buffer, options) {
 };
 
 /**
- * split the buffer into tokens
+ * Extract tokens from the specified buffer.
+ * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
+ * @param {String} buffer
+ * @return {String[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
  */
 engine.prototype.tokenGetAll = function(buffer) {
   this.lexer.mode_eval = false;
