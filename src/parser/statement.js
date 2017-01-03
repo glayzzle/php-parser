@@ -215,16 +215,15 @@ module.exports = {
         this.expectEndOfStatement();
         return result(expr);
 
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L429
       case this.tok.T_BREAK:
       case this.tok.T_CONTINUE:
         var result = this.node(
           this.token === this.tok.T_CONTINUE ? 'continue' : 'break'
         ), level = null;
-        if(this.next().token === this.tok.T_LNUMBER) {
-          level = this.node('number');
-          var value = this.text();
-          this.next();
-          level = level(value);
+        this.next(); // look ahead
+        if (this.token !== ';' && this.token !== this.tok.T_CLOSE_TAG) {
+          level = this.read_expr();
         }
         this.expectEndOfStatement();
         return result(level);
