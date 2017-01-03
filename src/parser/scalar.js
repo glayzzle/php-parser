@@ -49,20 +49,10 @@ module.exports = {
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
           var value = this.node('string');
           var text = this.text();
-          var isDoubleQuote = false;
-          var isBinCast = value[0] === 'b' || value[0] === 'B';
-          if (isBinCast) {
-            isDoubleQuote = text[1] === '"';
-            text = text.substring(2, text.length - 1);
-          } else {
-            isDoubleQuote = text[0] === '"';
-            text = text.substring(1, text.length - 1);
-          }
+          var isDoubleQuote = text[0] === '"';
+          text = text.substring(1, text.length - 1);
           this.next();
           value = value(isDoubleQuote, this.resolve_special_chars(text));
-          if (isBinCast) {
-            value = ['cast', 'binary', value];
-          }
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
             return this.read_static_getter(value);
@@ -71,49 +61,49 @@ module.exports = {
             return value;
           }
         case this.tok.T_START_HEREDOC:
-          return this.next().read_encapsed_string(
-            this.tok.T_END_HEREDOC
-          );
+          if (this.lexer.curCondition === 'ST_NOWDOC') {
+            var node = this.node('nowdoc');
+            var value = this.next().text();
+            // strip the last line return char
+            var lastCh = value[value.length-1];
+            if (lastCh === '\n') {
+              if (value[value.length-2] === '\r') {
+                // windows style
+                value = value.substring(0, value.length - 2);
+              } else {
+                // linux style
+                value = value.substring(0, value.length - 1);
+              }
+            } else if (lastCh === '\r') {
+              // mac style
+              value = value.substring(0, value.length - 1);
+            }
+            this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
+            node = node(value, this.lexer.heredoc_label);
+            this.expect(this.tok.T_END_HEREDOC) && this.next();
+            return node;
+          } else {
+            return this.next().read_encapsed_string(
+              this.tok.T_END_HEREDOC
+            );
+          }
+
         case '"':
           return this.next().read_encapsed_string('"');
+
         case 'b"':
         case 'B"':
-          return ['cast', 'binary', this.next().read_encapsed_string('"')];
+          var node = this.node('cast');
+          var what = this.next().read_encapsed_string('"');
+          return node('binary', what);
 
         // NUMERIC
-        case '-':  // long
         case this.tok.T_LNUMBER:  // long
         case this.tok.T_DNUMBER:  // double
           var result = this.node('number');
           var value = this.text();
-          if (this.token === '-') {
-            this.next().expect([this.tok.T_LNUMBER, this.tok.T_DNUMBER]);
-            value += this.text();
-          }
-          result = result(value);
           this.next();
-          return result;
-
-        // CONSTANTS
-        case this.tok.T_NAMESPACE:
-        case this.tok.T_NS_SEPARATOR:
-        case this.tok.T_STRING:
-          var value = this.read_namespace_name();
-          var result = ['constant', value];
-          if ( this.token == this.tok.T_DOUBLE_COLON) {
-            // class constant  MyClass::CONSTANT
-            if (this.next().expect([this.tok.T_STRING, this.tok.T_CLASS])) {
-              result[1] = [value, this.text()];
-              this.next();
-            }
-          }
-          // CONSTANT ARRAYS OFFSET : MYCONST[1][0]...
-          while(this.token === '[') {
-            var node = this.node('offsetlookup');
-            var offset = this.next().read_expr();
-            if (this.expect(']')) this.next();
-            result = node(result, offset);
-          }
+          result = result(value);
           return result;
 
         // ARRAYS
@@ -145,78 +135,124 @@ module.exports = {
     return result;
   }
   /**
+   * Reads and extracts an encapsed item
    * ```ebnf
    * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
    *  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
    *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
    *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
-   *  | variable
    *  | T_CURLY_OPEN variable '}'
+   *  | variable
+   *  | variable '[' expr ']'
+   *  | variable T_OBJECT_OPERATOR T_STRING
    * ```
+   * @return {String|Variable|Expr|Lookup}
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
   ,read_encapsed_string_item: function() {
-    var result = null;
+    var result = this.node();
+
+    // plain text
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1222
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
-      result = this.node('string')(false, this.text());
+      var text = this.text();
       this.next();
-    } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      result = result(
+        'string', false, this.resolve_special_chars(text)
+      );
+    }
+
+    // dynamic variable name
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
+    else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      var name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
-        result = ['var', this.text()];
-        if (this.next().token === '[') {
+        var varName = this.text().substring(1);
+        name = this.node('variable');
+        this.next();
+        name = name(varName, false);
+        // check if lookup an offset
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
+        if (this.token === '[') {
           var node = this.node('offsetlookup');
           var offset = this.next().read_expr();
-          if (this.expect(']')) this.next();
-          result = node(result, offset);
+          this.expect(']') && this.next();
+          name = node(name, offset);
         }
       } else {
-        result = this.read_expr();
+        name = this.read_expr();
       }
-      if (this.expect('}')) this.next();
-    } else if (this.token === this.tok.T_CURLY_OPEN) {
-      result = this.next().read_variable(false, false, false);
-      if (this.expect('}')) this.next();
-    } else if (this.token === '[') {
-      var node = this.node('offsetlookup');
-      var offset = this.next().read_expr();
-      if (this.expect(']')) this.next();
-      result = node(result, offset);
-    } else if (this.token === this.tok.T_VARIABLE) {
-      result = this.read_variable(false, true, false);
-    } else {
-      this.expect([
-        this.tok.T_VARIABLE,
-        this.tok.T_CURLY_OPEN,
-        this.tok.T_DOLLAR_OPEN_CURLY_BRACES,
-        this.tok.T_ENCAPSED_AND_WHITESPACE
-      ]);
+      this.expect('}') && this.next();
+      result = result('variable', name, false);
     }
+
+    // expression
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
+    else if (this.token === this.tok.T_CURLY_OPEN) {
+      result = this.next().read_variable(false, false, false);
+      this.expect('}') && this.next();
+    }
+
+    // plain variable
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
+    else if (this.token === this.tok.T_VARIABLE) {
+      result = this.read_simple_variable(false);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
+      if (this.token === '[') {
+        var node = this.node('offsetlookup');
+        var offset = this.next().read_encaps_var_offset();
+        this.expect(']') && this.next();
+        result = node(result, offset);
+      }
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
+      if (this.token === this.tok.T_OBJECT_OPERATOR) {
+        var node = this.node('propertylookup');
+        var what = this.node('constref');
+        this.next().expect(this.tok.T_STRING);
+        var name = this.text();
+        this.next();
+        result = node(result, what(name));
+      }
+
+    // error / fallback
+    } else {
+      this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE);
+      var value = this.text();
+      this.next();
+      // consider it as string
+      result = result('string', false, value);
+    }
+
     return result;
   }
   /**
    * Reads an encapsed string
    */
   ,read_encapsed_string: function(expect) {
-    if (this.token === expect) {
-      this.next();
-      return null; // empty
+    var node = this.node('encapsed'), value = [], type = null;
+
+    if (expect === '`') {
+      type = this.ast.encapsed.TYPE_SHELL;
+    } else if (expect === '"') {
+      type = this.ast.encapsed.TYPE_STRING;
+    } else {
+      type = this.ast.encapsed.TYPE_HEREDOC;
     }
-    var first = this.read_encapsed_string_item();
-    if (this.token === expect) {
-      this.next();
-      return first;
-    }
-    var result = [
-      'bin', '.'
-      , first
-      , this.read_encapsed_string_item()
-    ];
+
+    // reading encapsed parts
     while(this.token !== expect && this.token !== this.EOF) {
-      result[3] = [
-        'bin', '.', result[3], this.read_encapsed_string_item()
-      ];
+      value.push(this.read_encapsed_string_item());
     }
-    if (this.expect(expect)) this.next();
-    return result;
+
+    this.expect(expect) && this.next();
+    node = node(value, type);
+
+    if (expect === this.tok.T_END_HEREDOC) {
+      node.label = this.lexer.heredoc_label;
+    }
+    return node;
   }
   /**
    * Constant token

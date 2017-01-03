@@ -82,4 +82,17 @@ describe('Test namespace statements', function() {
     nsKeyword.children[0].what.name.should.be.exactly('foo');
     // @todo : test second child
   });
+
+  it('should work with declare statement', function() {
+    var ast = parser.parseEval([
+      'declare(strict_types=1);',
+      'namespace foo;',
+      'class bar {}'
+    ].join('\n'), {
+      parser: {
+        debug: false
+      }
+    });
+    // @todo : make assertions
+  });
 });

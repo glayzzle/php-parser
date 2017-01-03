@@ -25,7 +25,10 @@ var Position = require('./ast/position');
  *   - [Expression](#expression)
  *     - [Array](#array)
  *     - [Variable](#variable)
+ *     - [Variadic](#variadic)
  *     - [ConstRef](#constref)
+ *     - [Yield](#yield)
+ *     - [YieldFrom](#yieldfrom)
  *     - [Lookup](#lookup)
  *       - [PropertyLookup](#propertylookup)
  *       - [StaticLookup](#staticlookup)
@@ -35,6 +38,7 @@ var Position = require('./ast/position');
  *       - [Pre](#pre)
  *       - [Post](#post)
  *       - [Bin](#bin)
+ *       - [Parenthesis](#parenthesis)
  *       - [Bool](#Bool)
  *       - [Unary](#unary)
  *       - [Cast](#cast)
@@ -45,11 +49,16 @@ var Position = require('./ast/position');
  *       - [Inline](#inline)
  *       - [Magic](#magic)
  *       - [Shell](#shell)
+ *       - [Nowdoc](#nowdoc)
+ *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
+ *     - [Halt](#halt)
  *     - [Clone](#clone)
+ *     - [Declare](#declare)
  *     - [Global](#global)
+ *     - [Static](#static)
  *     - [Include](#include)
  *     - [Assign](#assign)
  *     - [RetIf](#retif)
@@ -63,6 +72,7 @@ var Position = require('./ast/position');
  *     - [Silent](#silent)
  *     - [Try](#try)
  *     - [Catch](#catch)
+ *     - [Throw](#throw)
  *     - [Call](#call)
  *     - [Closure](#closure)
  *     - [New](#new)
@@ -189,19 +199,23 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/constant'),
   require('./ast/constref'),
   require('./ast/continue'),
+  require('./ast/declare'),
   require('./ast/do'),
   require('./ast/doc'),
   require('./ast/echo'),
   require('./ast/empty'),
+  require('./ast/encapsed'),
   require('./ast/entry'),
   require('./ast/error'),
   require('./ast/eval'),
   require('./ast/exit'),
+  require('./ast/expression'),
   require('./ast/for'),
   require('./ast/foreach'),
   require('./ast/function'),
   require('./ast/global'),
   require('./ast/goto'),
+  require('./ast/halt'),
   require('./ast/identifier'),
   require('./ast/if'),
   require('./ast/include'),
@@ -215,9 +229,12 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/method'),
   require('./ast/namespace'),
   require('./ast/new'),
+  require('./ast/node'),
+  require('./ast/nowdoc'),
   require('./ast/number'),
   require('./ast/offsetlookup'),
   require('./ast/parameter'),
+  require('./ast/parenthesis'),
   require('./ast/post'),
   require('./ast/pre'),
   require('./ast/print'),
@@ -228,9 +245,11 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/return'),
   require('./ast/shell'),
   require('./ast/silent'),
+  require('./ast/static'),
   require('./ast/staticlookup'),
   require('./ast/string'),
   require('./ast/switch'),
+  require('./ast/throw'),
   require('./ast/trait'),
   require('./ast/traitalias'),
   require('./ast/traitprecedence'),
@@ -241,7 +260,10 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/usegroup'),
   require('./ast/useitem'),
   require('./ast/variable'),
-  require('./ast/while')
+  require('./ast/variadic'),
+  require('./ast/while'),
+  require('./ast/yield'),
+  require('./ast/yieldfrom')
 ].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
   if (kind[0] === '_') kind = kind.substring(1);

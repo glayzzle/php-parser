@@ -5,18 +5,18 @@
  */
 
 var Literal = require('./literal');
-var KIND = 'string';
+var KIND = 'nowdoc';
 
 /**
- * Defines a string (simple ou double quoted) - chars are already escaped
+ * Defines a nowdoc string
  * @constructor String
  * @extends {Literal}
- * @property {boolean} isDoubleQuote
- * @see {Encapsed}
+ * @property {String} label
+
  */
-var String = Literal.extends(function String(isDoubleQuote, value, location) {
+var Nowdoc = Literal.extends(function Nowdoc(value, label, location) {
   Literal.apply(this, [KIND, value, location]);
-  this.isDoubleQuote = isDoubleQuote;
+  this.label = label;
 });
 
-module.exports = String;
+module.exports = Nowdoc;

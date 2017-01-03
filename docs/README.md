@@ -2,11 +2,36 @@
 
 # engine
 
+Initialise a new parser instance with the specified options
+
+Usage :
+
+```js
+var parser = require('php-parser');
+var instance = new parser({
+  parser: {
+    extractDoc: true,
+    suppressErrors: true
+  },
+  ast: {
+    withPositions: true
+  },
+  lexer: {
+    short_tags: true,
+    asp_tags: true
+  }
+});
+
+var evalAST = instance.parseEval('some php code');
+var codeAST = instance.parseCode('<?php some php code', 'foo.php');
+var tokens = instance.tokenGetAll('<?php some php code');
+```
+
 Type: Engine
 
 **Parameters**
 
--   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** List of options
 
 **Properties**
 
@@ -17,63 +42,49 @@ Type: Engine
 
 ## parseEval
 
-parsing eval string as '$x = 1;'
+Parse an evaluating mode string (no need to open php tags)
 
 **Parameters**
 
--   `buffer`  
+-   `buffer` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
+Returns **Program** 
 
 ## parseCode
 
-parse php code with '&lt;?php $x = 1;'
+Function that parse a php code with open/close tags
+
+Sample code :
+
+```php
+<?php $x = 1;
+```
+
+Usage :
+
+```js
+var parser = require('php-parser');
+var phpParser = new parser({
+  // some options
+});
+var ast = phpParser.parseCode('...php code...', 'foo.php');
+```
 
 **Parameters**
 
--   `buffer`  
+-   `buffer` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The code to be parsed
+-   `filename` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Filename
+
+Returns **Program** 
 
 ## tokenGetAll
 
-split the buffer into tokens
+Extract tokens from the specified buffer.
+
+> Note that the output tokens are _STRICLY_ similar to PHP function `token_get_all`
 
 **Parameters**
 
--   `buffer`  
+-   `buffer` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-## create
-
-Creates a new instance
-
-**Parameters**
-
--   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-Returns **Engine** 
-
-## parseEval
-
-Evaluate the buffer
-
-**Parameters**
-
--   `buffer`  
--   `options`  
-
-## parseCode
-
-parse php code with '&lt;?php $x = 1;'
-
-**Parameters**
-
--   `buffer`  
--   `options`  
-
-## tokenGetAll
-
-split the buffer into tokens
-
-**Parameters**
-
--   `buffer`  
--   `options`  
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>** Each item can be a string or an array with following informations [token_name, text, line_number]

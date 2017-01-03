@@ -118,19 +118,24 @@ module.exports = {
   /**
    * Reads a list of constants declaration
    * ```ebnf
-   *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+   *   declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
    * ```
+   * @retrurn {Object}
    */
   ,read_declare_list: function() {
-    return this.read_list(function() {
+    var result = {};
+    while(this.token != this.EOF && this.token !== ')') {
       this.expect(this.tok.T_STRING);
-      var name = this.text();
+      var name = this.text().toLowerCase();
       if (this.next().expect('=')) {
-        return [name, this.next().read_expr()];
+        result[name] = this.next().read_expr();
       } else {
-        return [name, null];
+        result[name] = null;
       }
-    }, ',');
+      if (this.token !== ',') break;
+      this.next();
+    }
+    return result;
   }
   /**
    * reads a simple inner statement
@@ -161,10 +166,18 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER:
-        if (this.next().expect('(')) this.next();
-        if (this.expect(')')) this.next();
-        if (this.expect(';')) this.next();
-        this.raiseError('__HALT_COMPILER() can only be used from the outermost scope');
+        this.raiseError(
+          '__HALT_COMPILER() can only be used from the outermost scope'
+        );
+        // fallback : returns a node but does not stop the parsing
+        var node = this.node('halt');
+        this.next().expect('(') && this.next();
+        this.expect(')') && this.next();
+        node = node(this.lexer._input.substring(
+          this.lexer.offset
+        ));
+        this.expect(';') && this.next();
+        return node;
       default:
         return this.read_statement();
     }
@@ -202,15 +215,18 @@ module.exports = {
         this.expectEndOfStatement();
         return result(expr);
 
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L429
       case this.tok.T_BREAK:
-        var result = this.node('break');
-        this.next().expectEndOfStatement();
-        return result();
-
       case this.tok.T_CONTINUE:
-        var result = this.node('continue');
-        this.next().expectEndOfStatement();
-        return result();
+        var result = this.node(
+          this.token === this.tok.T_CONTINUE ? 'continue' : 'break'
+        ), level = null;
+        this.next(); // look ahead
+        if (this.token !== ';' && this.token !== this.tok.T_CLOSE_TAG) {
+          level = this.read_expr();
+        }
+        this.expectEndOfStatement();
+        return result(level);
 
       case this.tok.T_GLOBAL:
         var result = this.node('global');
@@ -228,28 +244,13 @@ module.exports = {
           this.expect(';') && this.nextWithComments();
           return expr;
         }
-        var items = this.read_list(function() {
-          var value = null, name = null;
-          if (this.expect(this.tok.T_VARIABLE)) {
-            name = this.text();
-            this.next();
-          }
-          if (this.token === '=') {
-            value = this.next().read_expr();
-          }
-          return [name, value];
-        }, ',');
+        var items = this.read_variable_declarations();
         this.expectEndOfStatement();
-        return result('declare', items);
+        return result(items);
 
       case this.tok.T_ECHO:
         var result = this.node('echo');
-        var withParanthesis = (this.next().token === '(');
-        withParanthesis && this.next();
-        var args = this.read_list(this.read_expr, ',');
-        if (withParanthesis) {
-          this.expect(')') && this.next();
-        }
+        var args = this.next().read_list(this.read_expr, ',');
         this.expectEndOfStatement();
         return result(args);
 
@@ -267,23 +268,39 @@ module.exports = {
         return result(items);
 
       case this.tok.T_DECLARE:
-        var result = this.node('declare'), options, body;
+        var result = this.node('declare'),
+          what,
+          body = [],
+          mode;
         this.next().expect('(') && this.next();
-        options = this.read_declare_list();
-        this.expect(')') && this.nextWithComments();
+        what = this.read_declare_list();
+        this.expect(')') && this.next();
         if (this.token === ':') {
-          body = [];
-          this.next();
+          this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
-            body.push(this.read_statement());
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
           }
-          this.ignoreComments().expect(this.tok.T_ENDDECLARE) && this.next();
+          this.expect(this.tok.T_ENDDECLARE) && this.next();
           this.expectEndOfStatement();
+          mode = this.ast.declare.MODE_SHORT;
+        } else if (this.token === '{') {
+          this.nextWithComments();
+          while(this.token != this.EOF && this.token !== '}') {
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
+          }
+          this.expect('}') && this.next();
+          mode = this.ast.declare.MODE_BLOCK;
         } else {
-          body = this.read_statement();
+          this.expect(';') && this.next();
+          while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
+            // @todo : check declare_statement from php / not valid
+            body.push(this.read_top_statement());
+          }
+          mode = this.ast.declare.MODE_NONE;
         }
-        return result(options, body);
-        break;
+        return result(what, body, mode);
 
       case this.tok.T_TRY:
         return this.read_try();

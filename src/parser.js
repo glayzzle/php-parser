@@ -13,37 +13,39 @@ function isNumber(n) {
 
 
 /**
- * The PHP Parser class
- *
- * @public @constructor {Parser}
- * @property {Integer} EOF
- * @property {Lexer} lexer
- * @property {Integer|String} token
- * @property {Boolean} extractDoc
- * @property {Boolean} debug
+ * The PHP Parser class that build the AST tree from the lexer
+ * @constructor {Parser}
+ * @property {Lexer} lexer - current lexer instance
+ * @property {AST} ast - the AST factory instance
+ * @property {Integer|String} token - current token
+ * @property {Boolean} extractDoc - should extract documentation as AST node
+ * @property {Boolean} suppressErrors - should ignore parsing errors and continue
+ * @property {Boolean} debug - should output debug informations
  */
 var parser = function(lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
-  // Private vars, do not use directly
-  this._gracefulProxy = {};
-  this._graceful = false;
   this.token = null;
   this.prev = null;
   this.debug = false;
   this.extractDoc = false;
   this.suppressErrors = false;
-  this.lastError = false;
-  this.startAt = [];
   this.entries = {
+    'VARIABLE': [
+      this.tok.T_VARIABLE,
+      '$', '&',
+      this.tok.T_NS_SEPARATOR,
+      this.tok.T_STRING,
+      this.tok.T_NAMESPACE,
+      this.tok.T_STATIC
+    ],
     'SCALAR': [
       this.tok.T_CONSTANT_ENCAPSED_STRING,
       this.tok.T_START_HEREDOC,
       this.tok.T_LNUMBER,
       this.tok.T_DNUMBER,
-      this.tok.T_STRING,
       this.tok.T_ARRAY,'[',
       this.tok.T_CLASS_C,
       this.tok.T_TRAIT_C,
@@ -53,7 +55,6 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C,
-      this.tok.T_NAMESPACE,
       '"',
       'b"',
       'B"',
@@ -77,13 +78,6 @@ var parser = function(lexer, ast) {
       this.tok.T_STATIC,
       this.tok.T_ABSTRACT,
       this.tok.T_FINAL
-    ],
-    'VARIABLE': [
-      this.tok.T_VARIABLE,
-      '$', '&',
-      this.tok.T_NS_SEPARATOR,
-      this.tok.T_STRING,
-      this.tok.T_STATIC
     ],
     'EOS': [
       ';',
@@ -156,8 +150,9 @@ parser.prototype.getTokenName = function(token) {
 /**
  * main entry point : converts a source code to AST
  */
-parser.prototype.parse = function(code) {
+parser.prototype.parse = function(code, filename) {
   this._errors = [];
+  this.filename = filename || 'eval';
   this.currentNamespace = [''];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -185,7 +180,13 @@ parser.prototype.parse = function(code) {
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
   message += ' on line ' + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
-    throw new Error(message);
+    var err = new SyntaxError(
+      message, this.filename, this.lexer.yylloc.first_line
+    );
+    err.lineNumber = this.lexer.yylloc.first_line;
+    err.fileName = this.filename;
+    err.columnNumber = this.lexer.yylloc.first_column
+    throw err;
   }
   // Error node :
   var node = this.ast.prepare('error', this)(
@@ -362,16 +363,6 @@ parser.prototype.is = function(type) {
   } else {
     return this.entries[type].indexOf(this.token) != -1;
   }
-};
-
-/** convert an token to ast **/
-parser.prototype.read_token = function() {
-  var result = this.token;
-  if (isNumber(result)) {
-    result = [result, this.text(), this.lexer.yylloc.first_line];
-  }
-  this.next();
-  return result;
 };
 
 // extends the parser with syntax files

@@ -120,8 +120,10 @@ module.exports = {
     }
 
     if (this.token === '(') {
+      var node = this.node('parenthesis');
       var expr = this.next().read_expr();
       this.expect(')') && this.next();
+      expr = node(expr);
       // handle dereferencable
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         return this.recursive_variable_chain_scan(expr, false);
@@ -313,20 +315,23 @@ module.exports = {
 
       // T_YIELD (expr (T_DOUBLE_ARROW expr)?)?
       case this.tok.T_YIELD:
-        var result = ['yield', null, null];
+        var result = this.node('yield'), value = null, key = null;
         if (this.next().is('EXPR')) {
           // reads the yield return value
-          result[1] = this.read_expr();
+          value = this.read_expr();
           if (this.token === this.tok.T_DOUBLE_ARROW) {
             // reads the yield returned key
-            result[2] = this.next().read_expr();
+            key = value;
+            value = this.next().read_expr();
           }
         }
-        return result;
+        return result(value, key);
 
       // T_YIELD_FROM expr
       case this.tok.T_YIELD_FROM:
-        return ['yieldfrom', this.next().read_expr()];
+        var result = this.node('yieldfrom');
+        var expr = this.next().read_expr();
+        return result(expr);
 
       case this.tok.T_FUNCTION:
         // @fixme later - removed static lambda function declarations (colides with static keyword usage)
@@ -469,7 +474,11 @@ module.exports = {
    * ```
    */
   ,read_class_name_reference: function() {
-    if (this.token === '\\' || this.token === this.tok.T_STRING) {
+    if (
+      this.token === this.tok.T_NS_SEPARATOR ||
+      this.token === this.tok.T_STRING ||
+      this.token === this.tok.T_NAMESPACE
+    ) {
       var result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);

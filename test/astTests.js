@@ -9,6 +9,27 @@ describe('Test AST structure', function() {
     ast.children.length.should.be.exactly(0);
   });
 
+
+  it('test syntax error', function() {
+    var err = null;
+    (function(){
+      try {
+        var ast = parser.parseCode([
+          '<?php',
+          ' $a = 1',
+          ' $b = 2' // <-- unexpected $b expecting a ';'
+        ].join('\n'), 'foo.php');
+      } catch(e) {
+        err = e;
+        throw e;
+      }
+    }).should.throw(/line\s3/);
+    err.name.should.be.exactly('SyntaxError');
+    err.lineNumber.should.be.exactly(3);
+    err.fileName.should.be.exactly('foo.php');
+    err.columnNumber.should.be.exactly(1);
+  });
+
   it('test inline', function() {
     var ast = parser.parseCode('Hello <?php echo "World"; ?> !');
     ast.children[0].kind.should.be.exactly('inline');
@@ -35,7 +56,7 @@ describe('Test AST structure', function() {
   });
   it('test echo, isset, unset, empty', function() {
     var ast = parser.parseEval([
-      'echo(true, $var)',
+      'echo ($expr) ? "ok" : "ko";',
       'print "some text"',
       'isset($foo, $bar)',
       'unset($var)',

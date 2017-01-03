@@ -149,7 +149,7 @@ module.exports = {
         var assignList = this.read_assignment_list();
         if (this.expect(')')) this.next();
         return result(assignList);
-      } else if (this.token === '[') {
+      } else if (this.token === '[' || this.token === this.tok.T_ARRAY) {
         return this.read_array();
       } else {
         return this.read_variable(false, false, false);

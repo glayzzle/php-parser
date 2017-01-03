@@ -2,7 +2,9 @@
 
 # parser
 
-The PHP Parser class
+The PHP Parser class that build the AST tree from the lexer
+
+Type: Parser
 
 **Parameters**
 
@@ -11,11 +13,12 @@ The PHP Parser class
 
 **Properties**
 
--   `EOF` **Integer** 
--   `lexer` **Lexer** 
--   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `lexer` **Lexer** current lexer instance
+-   `ast` **AST** the AST factory instance
+-   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** current token
+-   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should extract documentation as AST node
+-   `suppressErrors` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should ignore parsing errors and continue
+-   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should output debug informations
 
 ## getTokenName
 
@@ -32,6 +35,7 @@ main entry point : converts a source code to AST
 **Parameters**
 
 -   `code`  
+-   `filename`  
 
 ## raiseError
 
@@ -110,10 +114,6 @@ Check if token is of specified type
 **Parameters**
 
 -   `type`  
-
-## read_token
-
-convert an token to ast \*
 
 # ignoreStack
 
@@ -541,14 +541,20 @@ Handles the dereferencing
 
 # read_encapsed_string_item
 
+Reads and extracts an encapsed item
+
 ```ebnf
 encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
- | variable
  | T_CURLY_OPEN variable '}'
+ | variable
+ | variable '[' expr ']'
+ | variable T_OBJECT_OPERATOR T_STRING
 ```
+
+Returns **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | Variable | Expr | Lookup)** 
 
 # read_encapsed_string
 
@@ -599,7 +605,7 @@ Reads a list of constants declaration
 Reads a list of constants declaration
 
 ```ebnf
-  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)*
+  declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
 ```
 
 # read_inner_statement
@@ -687,6 +693,24 @@ Sample code :
 ```
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Identifier>** 
+
+# read_variable_declarations
+
+Reads a list of variables declarations
+
+```ebnf
+variable_declaration ::= T_VARIABLE ('=' expr)?*
+variable_declarations ::= variable_declaration (',' variable_declaration)*
+```
+
+Sample code :
+
+```php
+<?php class foo extends bar, baz { }
+```
+
+Returns **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Variable> | [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Assign>)** Returns an array composed by a list of variables, or
+assign values
 
 # read_variable
 

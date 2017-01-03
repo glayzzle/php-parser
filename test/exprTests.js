@@ -93,6 +93,26 @@ describe('Test expressions', function() {
     ast.children[0].expr.kind.should.be.exactly('call');
   });
 
+  it('test generators', function() {
+    var ast = parser.parseEval([
+      'function gen() {',
+      '  yield 0; // key 0',
+      '  yield from foo(); // keys 0-2',
+      '  yield 1 => $a; // key 1',
+      '}'
+    ].join('\n'));
+    var expr = ast.children[0].body.children;
+    expr[0].kind.should.be.exactly('yield');
+    expr[0].value.kind.should.be.exactly('number');
+
+    expr[1].kind.should.be.exactly('yieldfrom');
+    expr[1].value.kind.should.be.exactly('call');
+
+    expr[2].kind.should.be.exactly('yield');
+    expr[2].key.kind.should.be.exactly('number');
+    expr[2].value.kind.should.be.exactly('variable');
+  });
+
   it('test unary', function() {
     var ast = parser.parseEval([
       '+$var;',
@@ -142,7 +162,7 @@ describe('Test expressions', function() {
   it('test exit', function() {
     var ast = parser.parseEval([
       'exit(1);',
-      'exit();',
+      'die();',
       'exit;'
     ].join('\n'));
     ast.children[0].kind.should.be.exactly('exit');
@@ -184,20 +204,64 @@ describe('Test expressions', function() {
 
   it('test new', function() {
     var ast = parser.parseEval([
-      '$a = new foo();',
+      '$a = new \\foo();',
+      '$a = new namespace\\foo::class();',
       '$a = new $foo();',
       '$a = new class extends foo implements bar { };',
     ].join('\n'), {
-      ast: { debug: false }
+      parser: { debug: false }
     });
     ast.children[0].right.kind.should.be.exactly('new');
     ast.children[0].right.what.kind.should.be.exactly('identifier');
 
-    ast.children[1].right.kind.should.be.exactly('new');
-    ast.children[1].right.what.kind.should.be.exactly('variable');
-
     ast.children[2].right.kind.should.be.exactly('new');
-    ast.children[2].right.what.kind.should.be.exactly('class');
+    ast.children[2].right.what.kind.should.be.exactly('variable');
+
+    ast.children[3].right.kind.should.be.exactly('new');
+    ast.children[3].right.what.kind.should.be.exactly('class');
+  });
+
+  it('test nested expressions precedence', function() {
+    var ast = parser.parseEval([
+      '$a = 5 * 2 + 1;', // same as (1 + (5 * 2))
+      '$b = 5 * (2 + 1);',
+      '$c = 1 + 2 / 3 + 4;', // same as (1 + (4 + (2 / 3)))
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    var aExpr = ast.children[0].right;
+    aExpr.kind.should.be.exactly('bin');
+    aExpr.left.value.should.be.exactly('1');
+    aExpr.type.should.be.exactly('+');
+
+    aExpr.right.left.value.should.be.exactly('5');
+    aExpr.right.type.should.be.exactly('*');
+    aExpr.right.right.value.should.be.exactly('2');
+
+    var bExpr = ast.children[1].right;
+    bExpr.kind.should.be.exactly('bin');
+    bExpr.left.value.should.be.exactly('5');
+    bExpr.type.should.be.exactly('*');
+
+    bExpr.right.kind.should.be.exactly('parenthesis');
+    bExpr.right.inner.left.value.should.be.exactly('2');
+    bExpr.right.inner.type.should.be.exactly('+');
+    bExpr.right.inner.right.value.should.be.exactly('1');
+
+    var cExpr = ast.children[2].right;
+    cExpr.kind.should.be.exactly('bin');
+    cExpr.left.value.should.be.exactly('1');
+    cExpr.type.should.be.exactly('+');
+
+    cExpr.right.kind.should.be.exactly('bin');
+    cExpr.right.left.value.should.be.exactly('4');
+    cExpr.right.type.should.be.exactly('+');
+
+    cExpr.right.right.kind.should.be.exactly('bin');
+    cExpr.right.right.left.value.should.be.exactly('2');
+    cExpr.right.right.type.should.be.exactly('/');
+    cExpr.right.right.right.value.should.be.exactly('3');
+
   });
 
 });

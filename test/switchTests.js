@@ -7,7 +7,7 @@ describe('Test SWITCH statements', function() {
     '  case 1:',
     '  case $var:',
     '    $foo = false;',
-    '    break;',
+    '    break 10;',
     '  case FOO:',
     '    $foo = true;',
     '    break;',
