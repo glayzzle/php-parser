@@ -1,6 +1,6 @@
 # Releases
 
-## 1.0.0 : (2016-12-29)
+## 1.0.0 : (2017-01-03)
 
 - All nodes are now converted to objects
 - Bruteforce tests are in a separate project
