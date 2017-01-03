@@ -384,6 +384,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/constant'),
   require('./ast/constref'),
   require('./ast/continue'),
+  require('./ast/declaration'),
   require('./ast/declare'),
   require('./ast/do'),
   require('./ast/doc'),
@@ -410,6 +411,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/label'),
   require('./ast/list'),
   require('./ast/literal'),
+  require('./ast/lookup'),
   require('./ast/magic'),
   require('./ast/method'),
   require('./ast/namespace'),
@@ -418,6 +420,7 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/nowdoc'),
   require('./ast/number'),
   require('./ast/offsetlookup'),
+  require('./ast/operation'),
   require('./ast/parameter'),
   require('./ast/parenthesis'),
   require('./ast/post'),
@@ -430,10 +433,12 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/return'),
   require('./ast/shell'),
   require('./ast/silent'),
+  require('./ast/statement'),
   require('./ast/static'),
   require('./ast/staticlookup'),
   require('./ast/string'),
   require('./ast/switch'),
+  require('./ast/sys'),
   require('./ast/throw'),
   require('./ast/trait'),
   require('./ast/traitalias'),
@@ -457,7 +462,7 @@ AST.prototype.prepare = function(kind, parser) {
 
 module.exports = AST;
 
-},{"./ast/array":3,"./ast/assign":4,"./ast/bin":5,"./ast/block":6,"./ast/bool":7,"./ast/boolean":8,"./ast/break":9,"./ast/call":10,"./ast/case":11,"./ast/cast":12,"./ast/catch":13,"./ast/class":14,"./ast/classconstant":15,"./ast/clone":16,"./ast/closure":17,"./ast/coalesce":18,"./ast/constant":19,"./ast/constref":20,"./ast/continue":21,"./ast/declare":23,"./ast/do":24,"./ast/doc":25,"./ast/echo":26,"./ast/empty":27,"./ast/encapsed":28,"./ast/entry":29,"./ast/error":30,"./ast/eval":31,"./ast/exit":32,"./ast/expression":33,"./ast/for":34,"./ast/foreach":35,"./ast/function":36,"./ast/global":37,"./ast/goto":38,"./ast/halt":39,"./ast/identifier":40,"./ast/if":41,"./ast/include":42,"./ast/inline":43,"./ast/interface":44,"./ast/isset":45,"./ast/label":46,"./ast/list":47,"./ast/literal":48,"./ast/location":49,"./ast/magic":51,"./ast/method":52,"./ast/namespace":53,"./ast/new":54,"./ast/node":55,"./ast/nowdoc":56,"./ast/number":57,"./ast/offsetlookup":58,"./ast/parameter":60,"./ast/parenthesis":61,"./ast/position":62,"./ast/post":63,"./ast/pre":64,"./ast/print":65,"./ast/program":66,"./ast/property":67,"./ast/propertylookup":68,"./ast/retif":69,"./ast/return":70,"./ast/shell":71,"./ast/silent":72,"./ast/static":74,"./ast/staticlookup":75,"./ast/string":76,"./ast/switch":77,"./ast/throw":79,"./ast/trait":80,"./ast/traitalias":81,"./ast/traitprecedence":82,"./ast/traituse":83,"./ast/try":84,"./ast/unary":85,"./ast/unset":86,"./ast/usegroup":87,"./ast/useitem":88,"./ast/variable":89,"./ast/variadic":90,"./ast/while":91,"./ast/yield":92,"./ast/yieldfrom":93}],3:[function(require,module,exports){
+},{"./ast/array":3,"./ast/assign":4,"./ast/bin":5,"./ast/block":6,"./ast/bool":7,"./ast/boolean":8,"./ast/break":9,"./ast/call":10,"./ast/case":11,"./ast/cast":12,"./ast/catch":13,"./ast/class":14,"./ast/classconstant":15,"./ast/clone":16,"./ast/closure":17,"./ast/coalesce":18,"./ast/constant":19,"./ast/constref":20,"./ast/continue":21,"./ast/declaration":22,"./ast/declare":23,"./ast/do":24,"./ast/doc":25,"./ast/echo":26,"./ast/empty":27,"./ast/encapsed":28,"./ast/entry":29,"./ast/error":30,"./ast/eval":31,"./ast/exit":32,"./ast/expression":33,"./ast/for":34,"./ast/foreach":35,"./ast/function":36,"./ast/global":37,"./ast/goto":38,"./ast/halt":39,"./ast/identifier":40,"./ast/if":41,"./ast/include":42,"./ast/inline":43,"./ast/interface":44,"./ast/isset":45,"./ast/label":46,"./ast/list":47,"./ast/literal":48,"./ast/location":49,"./ast/lookup":50,"./ast/magic":51,"./ast/method":52,"./ast/namespace":53,"./ast/new":54,"./ast/node":55,"./ast/nowdoc":56,"./ast/number":57,"./ast/offsetlookup":58,"./ast/operation":59,"./ast/parameter":60,"./ast/parenthesis":61,"./ast/position":62,"./ast/post":63,"./ast/pre":64,"./ast/print":65,"./ast/program":66,"./ast/property":67,"./ast/propertylookup":68,"./ast/retif":69,"./ast/return":70,"./ast/shell":71,"./ast/silent":72,"./ast/statement":73,"./ast/static":74,"./ast/staticlookup":75,"./ast/string":76,"./ast/switch":77,"./ast/sys":78,"./ast/throw":79,"./ast/trait":80,"./ast/traitalias":81,"./ast/traitprecedence":82,"./ast/traituse":83,"./ast/try":84,"./ast/unary":85,"./ast/unset":86,"./ast/usegroup":87,"./ast/useitem":88,"./ast/variable":89,"./ast/variadic":90,"./ast/while":91,"./ast/yield":92,"./ast/yieldfrom":93}],3:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
