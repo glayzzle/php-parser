@@ -14,6 +14,7 @@ module.exports = {
       this.unput(1);
     } else if (this.is_LABEL_START()) {
       this.consume_LABEL();
+      this.popState();
       return this.tok.T_STRING;
     }
     this.popState();

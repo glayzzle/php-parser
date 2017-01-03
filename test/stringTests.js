@@ -30,8 +30,24 @@ describe('Test strings', function() {
   it('...', function() {
     var ast = parser.parseEval('echo "~\'.{{$expectedLength}}\'\\$~s";');
   });
-  it('...', function() {
-    var ast = parser.parseEval('echo "Hello \\"$obj->name\\" !";');
+  it('test encapsed variable', function() {
+    var ast = parser.parseEval([
+      'echo "Hello $obj->name !";',
+      'echo "Hello $obj->foo->bar !";',
+      'echo "Hello $obj[1]->foo !";'
+    ].join('\n'));
+
+    ast.children[0].arguments[0].kind.should.be.exactly('encapsed');
+    ast.children[0].arguments[0].value[0].value.should.be.exactly('Hello ');
+    ast.children[0].arguments[0].value[2].value.should.be.exactly(' !');
+
+    ast.children[1].arguments[0].kind.should.be.exactly('encapsed');
+    ast.children[1].arguments[0].value[0].value.should.be.exactly('Hello ');
+    ast.children[1].arguments[0].value[2].value.should.be.exactly('->bar !');
+
+    ast.children[2].arguments[0].kind.should.be.exactly('encapsed');
+    ast.children[2].arguments[0].value[0].value.should.be.exactly('Hello ');
+    ast.children[2].arguments[0].value[2].value.should.be.exactly('->foo !');
   });
   it('...', function() {
     var ast = parser.parseEval('echo "Hello {".$obj->name."} !";');
