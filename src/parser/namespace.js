@@ -22,17 +22,21 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == '{') {
       this.currentNamespace = [''];
-      return result([''], this.read_code_block(true), true);
+      var body =  this.nextWithComments().read_top_statements();
+      this.expect('}') && this.nextWithComments();
+      return result([''], body, true);
     } else {
       var name = this.read_namespace_name();
       if (this.token == ';') {
         this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
-        return result(name, body);
+        return result(name, body, false);
       } else if (this.token == '{') {
         this.currentNamespace = name;
-        return result(name, this.read_code_block(true), true);
+        var body =  this.nextWithComments().read_top_statements();
+        this.expect('}') && this.nextWithComments();
+        return result(name, body, true);
       } else if (this.token === '(') {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.identifier.RELATIVE_NAME;
@@ -46,7 +50,7 @@ module.exports = {
         this.currentNamespace = name;
         var body = this.read_top_statements();
         this.expect(this.EOF);
-        return result(name, body);
+        return result(name, body, false);
       }
     }
   }
