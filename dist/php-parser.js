@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-01-03 */
+/*! php-parser - BSD3 License - 2017-01-15 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -197,7 +197,7 @@ var Position = require('./ast/position');
  *
  * - [Location](#location)
  * - [Position](#position)
- * - [Node](#Node)
+ * - [Node](#node)
  *   - [Identifier](#identifier)
  *   - [TraitUse](#traituse)
  *   - [TraitAlias](#traitalias)
@@ -302,6 +302,7 @@ var AST = function(withPositions, withSource) {
  * including it's lexer current state
  * @param {Parser}
  * @return {Position}
+ * @private
  */
 AST.prototype.position = function(parser) {
   return new Position(
@@ -751,7 +752,7 @@ var KIND = 'catch';
 
 /**
  * Defines a catch statement
- * @constructor Try
+ * @constructor Catch
  * @extends {Statement}
  * @property {Identifier[]} what
  * @property {Variable} variable
@@ -863,13 +864,15 @@ var KIND = 'closure';
  * @constructor Closure
  * @extends {Statement}
  * @property {Parameter[]} arguments
+ * @property {Variable[]} uses
  * @property {Identifier} type
  * @property {boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
  */
-var Closure = Statement.extends(function Closure(args, byref, type, nullable, location) {
+var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, location) {
   Statement.apply(this, [KIND, location]);
+  this.uses = uses;
   this.arguments = args;
   this.byref = byref;
   this.type = type;
@@ -6174,18 +6177,16 @@ module.exports = {
    * ```
    */
   ,read_lexical_var: function() {
-    var result = [false, null];
+    var result = this.node('variable');
+    var isRef = false;
     if (this.token === '&') {
-      result[0] = true;
+      isRef = true;
       this.next();
     }
-    if (this.token === this.tok.T_VARIABLE) {
-      result[1] = this.text();
-      this.next();
-    } else {
-      this.expect(['&', this.tok.T_VARIABLE]);
-    }
-    return result;
+    this.expect(this.tok.T_VARIABLE);
+    var name = this.text().substring(1);
+    this.next();
+    return result(name, isRef);
   }
   /**
    * reads a list of parameters
@@ -6233,7 +6234,7 @@ module.exports = {
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
     if (this.expect(this.tok.T_VARIABLE)) {
-      name = this.text();
+      name = this.text().substring(1);
       this.next();
     }
     if (this.token == '=') {
@@ -6611,17 +6612,21 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == '{') {
       this.currentNamespace = [''];
-      return result([''], this.read_code_block(true), true);
+      var body =  this.nextWithComments().read_top_statements();
+      this.expect('}') && this.nextWithComments();
+      return result([''], body, true);
     } else {
       var name = this.read_namespace_name();
       if (this.token == ';') {
         this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
-        return result(name, body);
+        return result(name, body, false);
       } else if (this.token == '{') {
         this.currentNamespace = name;
-        return result(name, this.read_code_block(true), true);
+        var body =  this.nextWithComments().read_top_statements();
+        this.expect('}') && this.nextWithComments();
+        return result(name, body, true);
       } else if (this.token === '(') {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.identifier.RELATIVE_NAME;
@@ -6635,7 +6640,7 @@ module.exports = {
         this.currentNamespace = name;
         var body = this.read_top_statements();
         this.expect(this.EOF);
-        return result(name, body);
+        return result(name, body, false);
       }
     }
   }
@@ -7320,7 +7325,7 @@ module.exports = {
           this.expect('}') && this.next();
           mode = this.ast.declare.MODE_BLOCK;
         } else {
-          this.expect(';') && this.next();
+          this.expect(';') && this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());
