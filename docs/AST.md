@@ -300,6 +300,7 @@ Defines a closure
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
+-   `uses` **[Array](#array)&lt;[Variable](#variable)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
