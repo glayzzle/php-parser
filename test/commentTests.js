@@ -2,6 +2,32 @@ var should = require("should");
 var parser = require('../src/index');
 
 describe('Test comments', function() {
+
+  describe('issues', function () {
+    it('fix #55', function () {
+      var ast = parser.parseEval([
+        'if (true):',
+        '  if (true):',
+        '  // inner statements',
+        '  endif; // another comment',
+        'endif; // 2nd comment'
+      ].join('\n'), {
+        parser: {
+          extractDoc: true,
+          // debug: true
+        }
+      });
+      ast.children.length.should.be.exactly(2);
+      ast.children[0].kind.should.be.exactly('if');
+      ast.children[0].body.children.length.should.be.exactly(2);
+      ast.children[0].body.children[0].kind.should.be.exactly('if');
+      ast.children[0].body.children[1].kind.should.be.exactly('doc');
+      ast.children[0].body.children[1].lines[0].should.be.exactly('another comment');
+      ast.children[1].kind.should.be.exactly('doc');
+      ast.children[1].lines[0].should.be.exactly('2nd comment');
+    });
+  });
+
   describe('single line comments', function () {
     var ast = parser.parseEval([
       '# some information',
@@ -63,7 +89,32 @@ describe('Test comments', function() {
       body[0].kind.should.be.exactly('doc');
       // @todo body[1].kind.should.be.exactly('return');
     });
-
+    it('test if statements', function () {
+      var ast = parser.parseEval([
+        'if /* ignore */ (/* */ true) /* ignore */ {',
+        '# inner statement',
+        '} /* ignore */ else /* ignore */ ',
+        // else with a inner if single statement :
+        '  if (true /* ignore */) /* ignore */ {',
+        '  } /* ignore */ elseif /* ignore */ (/* ignore */ false /* ignore */ /* ignore */) /* ignore */ /* ignore */ {',
+        '  } /* ignore */ else /* ignore */ {',
+        '  }',
+        'if (false) /* ignore */ : /* ignore */',
+        '/* ignore */ endif /* ignore */;/* ignore */'
+      ].join('\n'), {
+        lexer: {
+          //debug: true
+        },
+        parser: {
+          extractDoc: true,
+          // debug: true
+        }
+      });
+      ast.children.length.should.be.exactly(3);
+      ast.children[0].kind.should.be.exactly('if');
+      ast.children[1].kind.should.be.exactly('if');
+      ast.children[2].kind.should.be.exactly('doc');
+    });
   });
 
   describe('test classes', function () {
