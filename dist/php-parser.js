@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-01-15 */
+/*! php-parser - BSD3 License - 2017-01-16 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -4831,7 +4831,7 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ['parser.next', 'parser.nextWithComments'];
+var ignoreStack = ['parser.next', 'parser.ignoreComments', 'parser.nextWithComments'];
 parser.prototype.showlog = function() {
   var stack = (new Error()).stack.split('\n');
   var line;
@@ -6317,7 +6317,7 @@ module.exports = {
    * Reads an IF statement
    *
    * ```ebnf
-   *  if ::= '(' expr ')' ':' ...
+   *  if ::= T_IF '(' expr ')' ':' ...
    * ```
    */
   read_if: function() {
@@ -6333,8 +6333,7 @@ module.exports = {
       this.next();
       body = this.node('block');
       var items = [];
-      while(this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
-        this.ignoreComments();
+      while(this.token !== this.EOF && this.token !== this.tok.T_ENDIF) {
         if (this.token === this.tok.T_ELSEIF) {
           alternate = this.next().read_elseif_short();
           break;
@@ -6345,10 +6344,13 @@ module.exports = {
         items.push(this.read_inner_statement());
       }
       body = body(null, items);
-      if (this.ignoreComments().expect(this.tok.T_ENDIF)) this.next();
+      this.expect(this.tok.T_ENDIF) && this.next();
       this.expectEndOfStatement();
     } else {
       body = this.read_statement();
+      /**
+       * ignore : if (..) { } /* *./ else { }
+       */
       this.ignoreComments();
       if (this.token === this.tok.T_ELSEIF) {
         alternate = this.next().read_if();
@@ -6362,9 +6364,9 @@ module.exports = {
    * reads an if expression : '(' expr ')'
    */
   read_if_expr: function() {
-    if (this.expect('(')) this.next();
+    this.expect('(') && this.next();
     var result = this.read_expr();
-    if (this.expect(')')) this.next();
+    this.expect(')') && this.next();
     return result;
   },
   /**
@@ -7515,10 +7517,9 @@ module.exports = {
       body,
       catches = []
     ;
-    body = this.nextWithComments().read_statement();
-    this.ignoreComments();
+    body = this.next().read_statement();
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
-    while(this.token === this.tok.T_CATCH) {
+    while(this.ignoreComments().token === this.tok.T_CATCH) {
       var item = this.node('catch'), what = [], variable = null;
       this.next().expect('(') && this.next();
       what = this.read_list(
@@ -7526,11 +7527,12 @@ module.exports = {
       );
       variable = this.read_variable(true, false, false);
       this.expect(')');
-      catches.push(item(this.next().read_statement(), what, variable));
-      this.ignoreComments();
+      catches.push(
+        item(this.next().read_statement(), what, variable)
+      );
     }
     if (this.token === this.tok.T_FINALLY) {
-      always = this.nextWithComments().read_statement();
+      always = this.next().read_statement();
     }
     return result(body, catches, always);
   }
