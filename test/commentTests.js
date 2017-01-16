@@ -115,6 +115,33 @@ describe('Test comments', function() {
       ast.children[1].kind.should.be.exactly('if');
       ast.children[2].kind.should.be.exactly('doc');
     });
+    it('test try statements', function () {
+      var ast = parser.parseEval([
+        'try /* ignore */ {',
+        '# inner statement',
+        '} /* dd */ catch(/* zz */ \\Exception /* 1 */ | /* 2 */ \\Foo /* aa */ $e /* bb */) /* dd */ {',
+        '/* ee */',
+        '} /* zz */ finally /* yy */ {',
+        '/* ignore */',
+        '} // end'
+      ].join('\n'), {
+        lexer: {
+          //debug: true
+        },
+        parser: {
+          extractDoc: true,
+          // debug: true
+        }
+      });
+      ast.children.length.should.be.exactly(2);
+      ast.children[0].kind.should.be.exactly('try');
+      ast.children[0].body.kind.should.be.exactly('block');
+      ast.children[0].catches[0].kind.should.be.exactly('catch');
+      ast.children[0].catches[0].what[0].name.should.be.exactly('\\Exception');
+      ast.children[0].catches[0].what[1].name.should.be.exactly('\\Foo');
+      ast.children[0].catches[0].variable.name.should.be.exactly('e');
+      ast.children[1].kind.should.be.exactly('doc');
+    });
   });
 
   describe('test classes', function () {
