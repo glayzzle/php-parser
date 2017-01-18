@@ -7,7 +7,7 @@ describe('Test expressions', function() {
       '1 | 3;',
       '1 & 3;',
       '1 ^ 3;',
-      '"a" . "b";',
+      '"1" . "3";',
       '1 + 3;',
       '1 - 3;',
       '1 * 3;',
@@ -18,21 +18,16 @@ describe('Test expressions', function() {
       '1 >> 3;'
     ].join('\n'));
 
-    ast.children[0].kind.should.be.exactly('bin');
-    ast.children[0].type.should.be.exactly('|');
-    ast.children[0].left.value.should.be.exactly('1');
-    ast.children[0].right.value.should.be.exactly('3');
+    ast.children.should.matchEach(function (node) {
+      node.should.have.property('kind', 'bin');
+      node.left.value.should.be.exactly('1');
+      node.right.value.should.be.exactly('3');
+    });
 
-    ast.children[1].kind.should.be.exactly('bin');
-    ast.children[1].type.should.be.exactly('&');
-    ast.children[1].left.value.should.be.exactly('1');
-    ast.children[1].right.value.should.be.exactly('3');
-
-    ast.children[2].kind.should.be.exactly('bin');
-    ast.children[2].type.should.be.exactly('^');
-    ast.children[2].left.value.should.be.exactly('1');
-    ast.children[2].right.value.should.be.exactly('3');
-    // @todo
+    ast.children.map(function (node) { return node.type; })
+      .should.deepEqual([
+        '|', '&', '^', '.', '+', '-', '*', '/', '%', '**', '<<', '>>'
+      ]);
   });
 
   it('test boolean', function() {
@@ -53,7 +48,17 @@ describe('Test expressions', function() {
       '$a <=> $b;',
       '$a instanceof $b;'
     ].join('\n'));
-    // @todo
+
+    ast.children.should.matchEach(function (node) {
+      node.should.have.property('kind', 'bool');
+      node.left.name.should.be.exactly('a');
+      node.right.name.should.be.exactly('b');
+    });
+
+    ast.children.map(function (node) { return node.type; })
+      .should.deepEqual([
+        '&', '&', '|', '|', '^', '=', '!=', '~', '!~', '!~', '<', '=>', '<=', '<=>', '?'
+      ]);
   });
 
 
