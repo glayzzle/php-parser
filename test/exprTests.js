@@ -30,7 +30,7 @@ describe('Test expressions', function() {
       ]);
   });
 
-  it('test boolean', function() {
+  it('test more binary ops (formerly bool)', function() {
     var ast = parser.parseEval([
       '$a && $b;',
       '$a AND $b;',
@@ -50,14 +50,14 @@ describe('Test expressions', function() {
     ].join('\n'));
 
     ast.children.should.matchEach(function (node) {
-      node.should.have.property('kind', 'bool');
+      node.should.have.property('kind', 'bin');
       node.left.name.should.be.exactly('a');
       node.right.name.should.be.exactly('b');
     });
 
     ast.children.map(function (node) { return node.type; })
       .should.deepEqual([
-        '&', '&', '|', '|', '^', '=', '!=', '~', '!~', '!~', '<', '=>', '<=', '<=>', '?'
+        '&&', 'and', '||', 'or', 'xor', '===', '!==', '==', '!=', '>', '<', '>=', '<=', '<=>', 'instanceof'
       ]);
   });
 
@@ -228,20 +228,21 @@ describe('Test expressions', function() {
 
   it('test nested expressions precedence', function() {
     var ast = parser.parseEval([
-      '$a = 5 * 2 + 1;', // same as (1 + (5 * 2))
+      '$a = 5 * 2 + 1;', // same as ((5 * 2) + 1)
       '$b = 5 * (2 + 1);',
-      '$c = 1 + 2 / 3 + 4;', // same as (1 + (4 + (2 / 3)))
+      '$c = 1 + 2 / 3 + 4;', // same as (1 + ((2 / 3) + 4))
+      '$d = 1 !== 2 && 3;', // same as (1 !== 2) && 3
     ].join('\n'), {
       parser: { debug: false }
     });
     var aExpr = ast.children[0].right;
     aExpr.kind.should.be.exactly('bin');
-    aExpr.left.value.should.be.exactly('1');
+    aExpr.right.value.should.be.exactly('1');
     aExpr.type.should.be.exactly('+');
 
-    aExpr.right.left.value.should.be.exactly('5');
-    aExpr.right.type.should.be.exactly('*');
-    aExpr.right.right.value.should.be.exactly('2');
+    aExpr.left.left.value.should.be.exactly('5');
+    aExpr.left.type.should.be.exactly('*');
+    aExpr.left.right.value.should.be.exactly('2');
 
     var bExpr = ast.children[1].right;
     bExpr.kind.should.be.exactly('bin');
@@ -259,14 +260,36 @@ describe('Test expressions', function() {
     cExpr.type.should.be.exactly('+');
 
     cExpr.right.kind.should.be.exactly('bin');
-    cExpr.right.left.value.should.be.exactly('4');
+    cExpr.right.right.value.should.be.exactly('4');
     cExpr.right.type.should.be.exactly('+');
 
-    cExpr.right.right.kind.should.be.exactly('bin');
-    cExpr.right.right.left.value.should.be.exactly('2');
-    cExpr.right.right.type.should.be.exactly('/');
-    cExpr.right.right.right.value.should.be.exactly('3');
+    cExpr.right.left.kind.should.be.exactly('bin');
+    cExpr.right.left.left.value.should.be.exactly('2');
+    cExpr.right.left.type.should.be.exactly('/');
+    cExpr.right.left.right.value.should.be.exactly('3');
 
+    var dExpr = ast.children[3].right;
+    dExpr.should.have.property('kind', 'bin');
+    dExpr.should.deepEqual({
+      kind: "bin",
+      left: {
+        kind: "bin",
+        left: {
+          kind: "number",
+          value: "1"
+        },
+        right: {
+          kind: "number",
+          value: "2"
+        },
+        type: "!=="
+      },
+      right: {
+        kind: "number",
+        value: "3"
+      },
+      type: "&&"
+    });
   });
 
 });

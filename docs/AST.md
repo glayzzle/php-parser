@@ -28,12 +28,10 @@
             -   [StaticLookup](#staticlookup)
             -   [OffsetLookup](#offsetlookup)
         -   [Operation](#operation)
-            -   [Coalesce](#coalesce)
             -   [Pre](#pre)
             -   [Post](#post)
             -   [Bin](#bin)
             -   [Parenthesis](#parenthesis)
-            -   [Bool](#Bool)
             -   [Unary](#unary)
             -   [Cast](#cast)
         -   [Literal](#literal)
@@ -207,18 +205,6 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 -   `children` **[Array](#array)&lt;[Node](#node)>** 
 
-# Bool
-
-**Extends Operation**
-
-Boolean operations
-
-**Properties**
-
--   `type` **[String](#string)** 
--   `left` **[Expression](#expression)** 
--   `right` **[Expression](#expression)** 
-
 # Boolean
 
 **Extends Literal**
@@ -340,18 +326,6 @@ Defines a closure
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `body` **([Block](#block) | null)** 
-
-# Coalesce
-
-**Extends Operation**
-
-Verify is the test property is defined and is not null, and returns
-is, otherwise returns the ifnull expression.
-
-**Properties**
-
--   `test` **[Expression](#expression)** The expression to be testes
--   `ifnull` **[Expression](#expression)** The returned expression if test is null
 
 # Constant
 

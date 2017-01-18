@@ -34,12 +34,10 @@ var Position = require('./ast/position');
  *       - [StaticLookup](#staticlookup)
  *       - [OffsetLookup](#offsetlookup)
  *     - [Operation](#operation)
- *       - [Coalesce](#coalesce)
  *       - [Pre](#pre)
  *       - [Post](#post)
  *       - [Bin](#bin)
  *       - [Parenthesis](#parenthesis)
- *       - [Bool](#Bool)
  *       - [Unary](#unary)
  *       - [Cast](#cast)
  *     - [Literal](#literal)
@@ -184,7 +182,6 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/assign'),
   require('./ast/bin'),
   require('./ast/block'),
-  require('./ast/bool'),
   require('./ast/boolean'),
   require('./ast/break'),
   require('./ast/call'),
@@ -195,7 +192,6 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/classconstant'),
   require('./ast/clone'),
   require('./ast/closure'),
-  require('./ast/coalesce'),
   require('./ast/constant'),
   require('./ast/constref'),
   require('./ast/continue'),
