@@ -100,11 +100,12 @@ describe('Test AST structure', function() {
     ast.children[0].status.value.should.be.exactly('-1');
   });
 
-  it('test coalesce', function() {
+  it('test coalesce operator', function() {
     var ast = parser.parseEval('$var = $a ?? true;');
-    ast.children[0].right.kind.should.be.exactly('coalesce');
-    ast.children[0].right.test.kind.should.be.exactly('variable');
-    ast.children[0].right.ifnull.kind.should.be.exactly('boolean');
+    ast.children[0].right.kind.should.be.exactly('bin');
+    ast.children[0].right.type.should.be.exactly('??');
+    ast.children[0].right.left.kind.should.be.exactly('variable');
+    ast.children[0].right.right.kind.should.be.exactly('boolean');
   });
 
   it('test include / require', function() {

@@ -8,16 +8,44 @@
 var Operation = require('./operation');
 var KIND = 'bin';
 
-// define nodes shifting
-var precedence = {
-  '+': 1,
-  '-': 1,
-  '.': 1,
-  '*': 2,
-  '/': 2,
-  '%': 2
-};
+// operators in ascending order of precedence
+var binOperatorsPrecedence = [
+  ['or'],
+  ['xor'],
+  ['and'],
+  // TODO: assignment
+  // TODO: ternary ? :
+  ['??'],
+  ['||'],
+  ['&&'],
+  ['|'],
+  ['^'],
+  ['&'],
+  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
+  ['<', '<=', '>', '>='],
+  ['<<', '>>'],
+  ['+', '-', '.'],
+  ['*', '/', '%'],
+  // TODO: unary !
+  ['instanceof'],
+  // TODO: unary ++, --, ~, @, typecasts
+  // TODO: [ (array)
+  // TODO: clone, new
+];
 
+// define nodes shifting
+var precedence = {};
+binOperatorsPrecedence.forEach(function (list, index) {
+  list.forEach(function (operator) {
+    precedence[operator] = index + 1;
+  });
+});
+
+/*
+x OP1 (y OP2 z)
+z OP1 (x OP2 y)
+z OP2 (x OP1 y)
+*/
 /**
  * Binary operations
  * @constructor Bin
@@ -40,6 +68,9 @@ var Bin = Operation.extends(function Bin(type, left, right, location) {
       buffer = right.type;
       right.type = type;
       type = buffer;
+      buffer = left;
+      left = right;
+      right = buffer;
     }
   }
   this.type = type;
