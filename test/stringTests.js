@@ -12,20 +12,12 @@ describe('Test strings', function() {
   it('...', function() {
     var ast = parser.parseEval('echo B"\\colors[1] contains >$colors[1]<\\n";');
   });
+  it('binary cast', function() {
+    var ast = parser.parseEval('echo (binary)"\\colors[1] contains >$colors[1]<\\n";');
+    console.log(ast.children[0].arguments[0]);
+  });
   it('...', function() {
     var ast = parser.parseEval('echo "\\colors[1] contains >$colors [1]<\\n";');
-  });
-  it('...', function() {
-    var ast = parser.parseEval('var_dump("$colors[1]");');
-  });
-  it('...', function() {
-    var ast = parser.parseEval('var_dump("$colors[01]");');
-  });
-  it('...', function() {
-    var ast = parser.parseEval('var_dump("$colors[0x1]");');
-  });
-  it('...', function() {
-    var ast = parser.parseEval('var_dump("$colors[0X1]");');
   });
   it('...', function() {
     var ast = parser.parseEval('echo "~\'.{{$expectedLength}}\'\\$~s";');

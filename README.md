@@ -1,13 +1,12 @@
-php-parser
-==========
-
-This javascript library parses PHP code and convert it to AST.
-
-[![npm version](https://badge.fury.io/js/php-parser.svg)](https://www.npmjs.com/package/php-parser)
-[![Build Status](https://travis-ci.org/glayzzle/php-parser.svg)](https://travis-ci.org/glayzzle/php-parser)
-[![Coverage Status](https://img.shields.io/coveralls/glayzzle/php-parser.svg)](https://coveralls.io/r/glayzzle/php-parser)
-[![Gitter](https://img.shields.io/badge/GITTER-join%20chat-green.svg)](https://gitter.im/glayzzle/Lobby)
-
+<h1 align="center">php-parser</h1>
+<p align="center">
+<a href="https://travis-ci.org/glayzzle/php-parser"><img src="https://travis-ci.org/glayzzle/php-parser.svg"></a>
+<a href="https://coveralls.io/github/glayzzle/php-parser?branch=master"><img src="https://coveralls.io/repos/github/glayzzle/php-parser/badge.svg?branch=master&v=20170115" alt="Coverage Status" /></a>
+<a title="npm version" href="https://www.npmjs.com/package/php-parser"><img src="https://badge.fury.io/js/php-parser.svg"></a>
+<a title="npm downloads" href="https://www.npmjs.com/package/php-parser"><img src="https://img.shields.io/npm/dm/php-parser.svg?style=flat"></a>
+<a title="Gitter" href="https://gitter.im/glayzzle/Lobby"><img src="https://img.shields.io/badge/GITTER-join%20chat-green.svg"></a>
+</p>
+<p align="center">This javascript library parses PHP code and convert it to AST.</p>
 
 Installation
 ------------

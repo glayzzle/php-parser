@@ -35,42 +35,42 @@ module.exports = {
       return result('bin', '<<', expr, this.next().read_expr());
     if (this.token === this.tok.T_SR)
       return result('bin', '>>', expr, this.next().read_expr());
-    // boolean operations
+    // more binary operations (formerly bool)
     if (this.token === this.tok.T_BOOLEAN_OR)
-      return result('bool', '|', expr, this.next().read_expr());
+      return result('bin', '||', expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_OR)
-      return result('bool', '|', expr, this.next().read_expr());
+      return result('bin', 'or', expr, this.next().read_expr());
     if (this.token === this.tok.T_BOOLEAN_AND)
-      return result('bool', '&', expr, this.next().read_expr());
+      return result('bin', '&&', expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_AND)
-      return result('bool', '&', expr, this.next().read_expr());
+      return result('bin', 'and', expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_XOR)
-      return result('bool', '^', expr, this.next().read_expr());
+      return result('bin', 'xor', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_IDENTICAL)
-      return result('bool', '=', expr, this.next().read_expr());
+      return result('bin', '===', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_NOT_IDENTICAL)
-      return result('bool', '!=', expr, this.next().read_expr());
+      return result('bin', '!==', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_EQUAL)
-      return result('bool', '~', expr, this.next().read_expr());
+      return result('bin', '==', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_NOT_EQUAL)
-      return result('bool', '!~', expr, this.next().read_expr());
+      return result('bin', '!=', expr, this.next().read_expr());
     if (this.token === '<')
-      return result('bool', '<', expr, this.next().read_expr());
+      return result('bin', '<', expr, this.next().read_expr());
     if (this.token === '>')
-      return result('bool', '!~', expr, this.next().read_expr());
+      return result('bin', '>', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL)
-      return result('bool', '<=', expr, this.next().read_expr());
+      return result('bin', '<=', expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_GREATER_OR_EQUAL)
-      return result('bool', '=>', expr, this.next().read_expr());
+      return result('bin', '>=', expr, this.next().read_expr());
     if (this.token === this.tok.T_SPACESHIP)
-      return result('bool', '<=>', expr, this.next().read_expr());
+      return result('bin', '<=>', expr, this.next().read_expr());
     if (this.token === this.tok.T_INSTANCEOF)
-      return result('bool', '?', expr, this.next().read_expr());
+      return result('bin', 'instanceof', expr, this.next().read_expr());
 
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
     if (this.token === this.tok.T_COALESCE)
-      return result('coalesce', expr, this.next().read_expr());
+      return result('bin', '??', expr, this.next().read_expr());
 
     // extra operations :
     // $username = $_GET['user'] ? true : false;

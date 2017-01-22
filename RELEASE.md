@@ -1,5 +1,9 @@
 # Releases
 
+## 2.0.0 (in progress) :
+
+- Update AST for operators, unify bin/bool/coalesce nodes
+
 ## 1.0.0 : (2017-01-03)
 
 - All nodes are now converted to objects
