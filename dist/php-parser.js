@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-01-18 */
+/*! php-parser - BSD3 License - 2017-01-22 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -6426,7 +6426,7 @@ module.exports = {
       body = null
     ;
     body = this.read_statement();
-    if (this.expect(this.tok.T_WHILE)) {
+    if (this.ignoreComments().expect(this.tok.T_WHILE)) {
       if (this.next().expect('(')) this.next();
       test  = this.read_expr();
       if (this.expect(')')) this.next();
@@ -6495,7 +6495,7 @@ module.exports = {
       shortForm = false;
     if (this.expect('(')) this.next();
     source = this.read_expr();
-    if (this.expect(this.tok.T_AS)) {
+    if (this.ignoreComments().expect(this.tok.T_AS)) {
       this.next();
       value = this.read_foreach_variable();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
