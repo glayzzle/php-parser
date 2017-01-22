@@ -12,13 +12,15 @@ var KIND = 'closure';
  * @constructor Closure
  * @extends {Statement}
  * @property {Parameter[]} arguments
+ * @property {Variable[]} uses
  * @property {Identifier} type
  * @property {boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
  */
-var Closure = Statement.extends(function Closure(args, byref, type, nullable, location) {
+var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, location) {
   Statement.apply(this, [KIND, location]);
+  this.uses = uses;
   this.arguments = args;
   this.byref = byref;
   this.type = type;

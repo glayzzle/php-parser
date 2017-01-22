@@ -293,7 +293,7 @@ module.exports = {
           this.expect('}') && this.next();
           mode = this.ast.declare.MODE_BLOCK;
         } else {
-          this.expect(';') && this.next();
+          this.expect(';') && this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());

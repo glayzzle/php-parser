@@ -10,7 +10,7 @@ var KIND = 'catch';
 
 /**
  * Defines a catch statement
- * @constructor Try
+ * @constructor Catch
  * @extends {Statement}
  * @property {Identifier[]} what
  * @property {Variable} variable

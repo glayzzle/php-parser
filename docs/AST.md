@@ -6,7 +6,7 @@
 
 -   [Location](#location)
 -   [Position](#position)
--   [Node](#Node)
+-   [Node](#node)
     -   [Identifier](#identifier)
     -   [TraitUse](#traituse)
     -   [TraitAlias](#traitalias)
@@ -98,18 +98,6 @@
 -   `withPositions`  
 -   `withSource`  
 
-## position
-
-Create a position node from specified parser
-including it's lexer current state
-
-**Parameters**
-
--   `Parser`  
--   `parser`  
-
-Returns **[Position](#position)** 
-
 ## prepare
 
 Prepares an AST node
@@ -135,18 +123,6 @@ The AST builder class
 
 -   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
 -   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-## position
-
-Create a position node from specified parser
-including it's lexer current state
-
-**Parameters**
-
--   `Parser`  
--   `parser`  
-
-Returns **[Position](#position)** 
 
 ## prepare
 
@@ -253,7 +229,7 @@ Binary operations
 -   `type` **[String](#string)** 
 -   `what` **[Expression](#expression)** 
 
-# Try
+# Catch
 
 **Extends Statement**
 
@@ -264,18 +240,6 @@ Defines a catch statement
 -   `what` **[Array](#array)&lt;[Identifier](#identifier)>** 
 -   `variable` **[Variable](#variable)** 
 -   `body` **[Statement](#statement)** 
-
-# Try
-
-**Extends Statement**
-
-Defines a try statement
-
-**Properties**
-
--   `body` **[Block](#block)** 
--   `catches` **[Array](#array)&lt;Catch>** 
--   `allways` **[Block](#block)** 
 
 # Class
 
@@ -322,6 +286,7 @@ Defines a closure
 **Properties**
 
 -   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
+-   `uses` **[Array](#array)&lt;[Variable](#variable)>** 
 -   `type` **[Identifier](#identifier)** 
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
@@ -1111,6 +1076,18 @@ Defines a trait usage
 
 -   `traits` **[Array](#array)&lt;[Identifier](#identifier)>** 
 -   `adaptations` **([Array](#array)&lt;[Node](#node)> | null)** 
+
+# Try
+
+**Extends Statement**
+
+Defines a try statement
+
+**Properties**
+
+-   `body` **[Block](#block)** 
+-   `catches` **[Array](#array)&lt;[Catch](#catch)>** 
+-   `allways` **[Block](#block)** 
 
 # Unary
 

@@ -7,11 +7,10 @@ describe('Test scalar statements', function() {
       '$a = foo::ref[-5];'
     ].join('\n'), {
       parser: {
-        debug: true
+        //debug: true
       }
     });
     // @todo assert console.log(ast);
-
   });
   it('dereferencable', function() {
     var ast = parser.parseEval([
@@ -21,9 +20,9 @@ describe('Test scalar statements', function() {
       '$d = (function($a) { return $a * 2; })(5);',
     ].join('\n'), {
       parser: {
-        debug: true
+        // debug: true
       }
     });
-
+    // @todo
   });
 });

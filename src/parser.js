@@ -256,7 +256,7 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ['parser.next', 'parser.nextWithComments'];
+var ignoreStack = ['parser.next', 'parser.ignoreComments', 'parser.nextWithComments'];
 parser.prototype.showlog = function() {
   var stack = (new Error()).stack.split('\n');
   var line;
