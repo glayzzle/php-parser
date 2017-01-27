@@ -4,6 +4,7 @@
 
 - Update AST for operators, unify bin/bool/coalesce nodes
 - Fix nested block usage on function bodies
+- Avoid initial $ on variables
 
 ## 1.0.0 : (2017-01-03)
 
