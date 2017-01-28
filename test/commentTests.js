@@ -177,10 +177,10 @@ describe('Test comments', function() {
       body[0].lines[0].should.be.exactly("@var test");
 
       body[1].kind.should.be.exactly("property");
-      body[1].name.should.be.exactly("$test");
+      body[1].name.should.be.exactly("test");
 
       body[2].kind.should.be.exactly("property");
-      body[2].name.should.be.exactly("$toto");
+      body[2].name.should.be.exactly("toto");
 
       body[3].kind.should.be.exactly("doc");
       body[3].lines[0].should.be.exactly("ignored comment");
@@ -189,7 +189,7 @@ describe('Test comments', function() {
       body[4].lines[0].should.be.exactly("@var Class");
 
       body[5].kind.should.be.exactly("property");
-      body[5].name.should.be.exactly("$foo");
+      body[5].name.should.be.exactly("foo");
 
       body[8].kind.should.be.exactly("method");
       body[8].name.should.be.exactly("void");
