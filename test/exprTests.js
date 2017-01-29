@@ -270,7 +270,7 @@ describe('Test expressions', function() {
 
     var dExpr = ast.children[3].right;
     dExpr.should.have.property('kind', 'bin');
-    dExpr.should.deepEqual({
+    JSON.parse(JSON.stringify(dExpr)).should.deepEqual({
       kind: "bin",
       left: {
         kind: "bin",
