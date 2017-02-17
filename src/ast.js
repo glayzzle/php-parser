@@ -46,7 +46,6 @@ var Position = require('./ast/position');
  *       - [Number](#number)
  *       - [Inline](#inline)
  *       - [Magic](#magic)
- *       - [Shell](#shell)
  *       - [Nowdoc](#nowdoc)
  *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
@@ -243,7 +242,6 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/propertylookup'),
   require('./ast/retif'),
   require('./ast/return'),
-  require('./ast/shell'),
   require('./ast/silent'),
   require('./ast/statement'),
   require('./ast/static'),

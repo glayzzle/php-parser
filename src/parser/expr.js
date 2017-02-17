@@ -141,9 +141,7 @@ module.exports = {
 
     if (this.token === '`') {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-      return this.node('shell')(
-        this.next().read_encapsed_string('`')
-      );
+      return this.next().read_encapsed_string('`');
     }
 
     if (this.token === this.tok.T_LIST) {
