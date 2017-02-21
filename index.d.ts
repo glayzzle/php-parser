@@ -4,7 +4,6 @@
  * @url http://glayzzle.com
  */
 
-// https://github.com/glayzzle/php-parser
 declare module "php-parser" {
   /**
    * Token items
@@ -319,9 +318,23 @@ declare module "php-parser" {
    * List of options / extensions
    */
   interface Options {
-    ast: AST,
-    lexer: Lexer,
-    parser: Parser
+    ast?: {
+        withPositions?: Boolean;
+        withSource?: Boolean;
+    };
+    lexer?: {
+        debug?: Boolean;
+        all_tokens?: Boolean;
+        comment_tokens?: Boolean;
+        mode_eval?: Boolean;
+        asp_tags?: Boolean;
+        short_tags?: Boolean;
+    };
+    parser?: {
+        debug?: Boolean;
+        extractDoc?: Boolean;
+        suppressErrors?: Boolean;
+    };
   }
 
   /**
