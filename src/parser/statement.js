@@ -255,9 +255,9 @@ module.exports = {
         return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var result = this.node('inline')(this.text());
+        var result = this.node('inline'), value = this.text();
         this.next();
-        return result;
+        return result(value);
 
       case this.tok.T_UNSET:
         var result = this.node('unset');
