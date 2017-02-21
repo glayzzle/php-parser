@@ -6,6 +6,7 @@
 - Fix nested block usage on function bodies
 - Avoid initial $ on variables
 - Shell nodes are now exposed by encapsed nodes only
+- Typescript definition file
 
 ## 1.0.0 : (2017-01-03)
 
