@@ -763,7 +763,7 @@ The main program node
 
 **Properties**
 
--   `name` **[Identifier](#identifier)** 
+-   `name` **[String](#string)** 
 -   `withBrackets` **[Boolean](#boolean)** 
 
 ## New
@@ -1107,7 +1107,7 @@ Defines a use statement (with a list of use items)
 
 **Properties**
 
--   `name` **([Identifier](#identifier) | null)** 
+-   `name` **([String](#string) | null)** 
 -   `type` **([String](#string) | null)** Possible value : function, const
 -   `item` **[Array](#array)&lt;[UseItem](#useitem)>** 
 
@@ -1119,7 +1119,7 @@ Defines a use statement (from namespace)
 
 **Properties**
 
--   `name` **[Identifier](#identifier)** 
+-   `name` **[String](#string)** 
 -   `type` **([String](#string) | null)** Possible value : function, const
 -   `alias` **([String](#string) | null)** 
 
