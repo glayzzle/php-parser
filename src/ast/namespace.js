@@ -17,11 +17,7 @@ var KIND = 'namespace';
  */
 var Namespace = Block.extends(function Namespace(name, children, withBrackets, location) {
   Block.apply(this, [KIND, children, location]);
-  if (name instanceof Identifier) {
-    this.name = name;
-  } else {
-    this.name = new Identifier(name);
-  }
+  this.name = name;
   this.withBrackets = withBrackets || false;
 });
 

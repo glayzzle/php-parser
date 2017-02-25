@@ -31,12 +31,12 @@ module.exports = {
         this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
-        return result(name, body, false);
+        return result(name.name, body, false);
       } else if (this.token == '{') {
         this.currentNamespace = name;
         var body =  this.nextWithComments().read_top_statements();
         this.expect('}') && this.nextWithComments();
-        return result(name, body, true);
+        return result(name.name, body, true);
       } else if (this.token === '(') {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.identifier.RELATIVE_NAME;
