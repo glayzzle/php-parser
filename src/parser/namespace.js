@@ -97,7 +97,7 @@ module.exports = {
     if (this.token === ',') {
       items = items.concat(this.next().read_use_declarations(false));
     } else if (this.token === '{') {
-      name = items[0].name;
+      name = items[0].name.name;
       items = this.next().read_use_declarations(type === null);
       this.expect('}') && this.next();
     }
@@ -117,7 +117,7 @@ module.exports = {
     if (typed) type = this.read_use_type();
     var name = this.read_namespace_name();
     var alias = this.read_use_alias();
-    return result(name, alias, type);
+    return result(name.name, alias, type);
   }
   /**
   * Reads a list of use declarations

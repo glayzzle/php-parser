@@ -12,7 +12,7 @@ var KIND = 'namespace';
  * The main program node
  * @constructor Namespace
  * @extends {Block}
- * @property {Identifier} name
+ * @property {String} name
  * @property {Boolean} withBrackets
  */
 var Namespace = Block.extends(function Namespace(name, children, withBrackets, location) {

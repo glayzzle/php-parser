@@ -11,7 +11,7 @@ var KIND = 'useitem';
  * Defines a use statement (from namespace)
  * @constructor UseItem
  * @extends {Statement}
- * @property {Identifier} name
+ * @property {String} name
  * @property {String|null} type - Possible value : function, const
  * @property {String|null} alias
  * @see {Namespace}
