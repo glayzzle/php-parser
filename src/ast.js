@@ -172,6 +172,21 @@ AST.prototype.prepare = function(kind, parser) {
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
+    if (
+      result.kind === 'bin' &&
+      result.right &&
+      typeof result.right.precedence === 'function'
+    ) {
+      var out = result.right.precedence(result);
+      if (out) { // shift with precedence
+        result = out;
+      }
+    } else if (result.kind === 'unary') {
+      var out = result.precedence(result.what);
+      if (out) { // shift with precedence
+        result = out;
+      }
+    }
     return result;
   };
 };

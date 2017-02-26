@@ -87,7 +87,9 @@ describe('Test expressions', function() {
       '$a > 5 ? true : false;',
       '$a ?: false;'
     ].join('\n'));
-    console.log(ast);
+    console.log(ast.children[1]);
+    ast.children[1].kind.should.be.exactly('retif');
+
   });
 
   it('test silent', function() {
