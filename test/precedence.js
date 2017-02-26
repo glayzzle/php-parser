@@ -102,7 +102,7 @@ describe('Test precedence', function() {
     shouldBeSame('5 + 4 AND 3', '(5 + 4) AND 3');
     shouldBeSame('5 AND 4 + 3', '5 AND (4 + 3)');
   });
-  it('test !', function() {
+  it('test unary : !', function() {
     shouldBeSame('!4 instanceof 3', '(!4) instanceof 3');
     shouldBeSame('!4 + 5 instanceof 3', '(!4) + (5 instanceof 3)');
     shouldBeSame('6 + !4 + 5', '6 + (!4) + 5');

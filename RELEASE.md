@@ -8,6 +8,7 @@
 - Shell nodes are now exposed by encapsed nodes only
 - Typescript definition file
 - Avoid identifier nodes on namespaces & use statements
+- Fix precedence on bin, unary, retif nodes
 
 ## 1.0.0 : (2017-01-03)
 

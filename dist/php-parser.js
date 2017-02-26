@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-02-17 */
+/*! php-parser - BSD3 License - 2017-02-26 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -357,6 +357,21 @@ AST.prototype.prepare = function(kind, parser) {
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
+    if (
+      result.kind === 'bin' &&
+      result.right &&
+      typeof result.right.precedence === 'function'
+    ) {
+      var out = result.right.precedence(result);
+      if (out) { // shift with precedence
+        result = out;
+      }
+    } else if (result.kind === 'unary') {
+      var out = result.precedence(result.what);
+      if (out) { // shift with precedence
+        result = out;
+      }
+    }
     return result;
   };
 };
@@ -525,8 +540,8 @@ var binOperatorsPrecedence = [
   ['or'],
   ['xor'],
   ['and'],
-  // TODO: assignment
-  // TODO: ternary ? :
+  // TODO: assignment / not sure that PHP allows this with expressions
+  ['retif'],
   ['??'],
   ['||'],
   ['&&'],
@@ -538,20 +553,12 @@ var binOperatorsPrecedence = [
   ['<<', '>>'],
   ['+', '-', '.'],
   ['*', '/', '%'],
-  // TODO: unary !
+  ['!'],
   ['instanceof'],
-  // TODO: unary ++, --, ~, @, typecasts
+  // TODO: typecasts
   // TODO: [ (array)
   // TODO: clone, new
 ];
-
-// define nodes shifting
-var precedence = {};
-binOperatorsPrecedence.forEach(function (list, index) {
-  list.forEach(function (operator) {
-    precedence[operator] = index + 1;
-  });
-});
 
 /*
 x OP1 (y OP2 z)
@@ -568,26 +575,28 @@ z OP2 (x OP1 y)
  */
 var Bin = Operation.extends(function Bin(type, left, right, location) {
   Operation.apply(this, [KIND, location]);
-  if (right && right.kind === 'bin') {
-    var lLevel = precedence[type];
-    var rLevel = precedence[right.type];
-    if (lLevel && rLevel && rLevel < lLevel) {
-      // shift precedence
-      var buffer = right.right;
-      right.right = right.left;
-      right.left = left;
-      left = buffer;
-      buffer = right.type;
-      right.type = type;
-      type = buffer;
-      buffer = left;
-      left = right;
-      right = buffer;
-    }
-  }
   this.type = type;
   this.left = left;
   this.right = right;
+});
+
+Bin.prototype.precedence = function(node) {
+  var lLevel = Bin.precedence[node.type];
+  var rLevel = Bin.precedence[this.type];
+  if (lLevel && rLevel && rLevel < lLevel) {
+    // shift precedence
+    node.right = this.left;
+    this.left = node;
+    return this;
+  }
+};
+
+// define nodes shifting
+Bin.precedence = {};
+binOperatorsPrecedence.forEach(function (list, index) {
+  list.forEach(function (operator) {
+    Bin.precedence[operator] = index + 1;
+  });
 });
 
 module.exports = Bin;
@@ -1862,16 +1871,12 @@ var KIND = 'namespace';
  * The main program node
  * @constructor Namespace
  * @extends {Block}
- * @property {Identifier} name
+ * @property {String} name
  * @property {Boolean} withBrackets
  */
 var Namespace = Block.extends(function Namespace(name, children, withBrackets, location) {
   Block.apply(this, [KIND, children, location]);
-  if (name instanceof Identifier) {
-    this.name = name;
-  } else {
-    this.name = new Identifier(name);
-  }
+  this.name = name;
   this.withBrackets = withBrackets || false;
 });
 
@@ -2256,6 +2261,8 @@ module.exports = PropertyLookup;
 
 var Statement = require('./statement');
 var KIND = 'retif';
+var Bin = require('./bin');
+var PRECEDENCE = Bin.precedence[KIND];
 
 /**
  * Defines a short if statement that returns a value
@@ -2272,9 +2279,26 @@ var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location
   this.falseExpr = falseExpr;
 });
 
+/**
+ * Handles precedence over items
+ */
+RetIf.prototype.precedence = function(node) {
+  var what = node.kind === 'bin' ? node.type : node.kind;
+  var lLevel = Bin.precedence[what];
+  if (lLevel && PRECEDENCE < lLevel) {
+    if (node.kind === 'bin') {
+      node.right = this.test;
+      this.test = node;
+      return this;
+    } else {
+      throw new Error('@todo ' + node.kind);
+    }
+  }
+};
+
 module.exports = RetIf;
 
-},{"./statement":70}],68:[function(require,module,exports){
+},{"./bin":5,"./statement":70}],68:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2660,6 +2684,18 @@ var Unary = Operation.extends(function Unary(type, what, location) {
   this.what = what;
 });
 
+Unary.prototype.precedence = function(node) {
+  if (node.kind === 'bin') {
+    this.what = node.left;
+    node.left = this;
+    return node;
+  } else if (node.kind === 'retif') {
+    this.what = node.test;
+    node.test = this;
+    return node;
+  }
+};
+
 module.exports = Unary;
 
 },{"./operation":57}],83:[function(require,module,exports){
@@ -2697,7 +2733,7 @@ var KIND = 'usegroup';
  * Defines a use statement (with a list of use items)
  * @constructor UseGroup
  * @extends {Statement}
- * @property {Identifier|null} name
+ * @property {String|null} name
  * @property {String|null} type - Possible value : function, const
  * @property {UseItem[]} item
  * @see {Namespace}
@@ -2726,7 +2762,7 @@ var KIND = 'useitem';
  * Defines a use statement (from namespace)
  * @constructor UseItem
  * @extends {Statement}
- * @property {Identifier} name
+ * @property {String} name
  * @property {String|null} type - Possible value : function, const
  * @property {String|null} alias
  * @see {Namespace}
@@ -6569,12 +6605,12 @@ module.exports = {
         this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
-        return result(name, body, false);
+        return result(name.name, body, false);
       } else if (this.token == '{') {
         this.currentNamespace = name;
         var body =  this.nextWithComments().read_top_statements();
         this.expect('}') && this.nextWithComments();
-        return result(name, body, true);
+        return result(name.name, body, true);
       } else if (this.token === '(') {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.identifier.RELATIVE_NAME;
@@ -6635,7 +6671,7 @@ module.exports = {
     if (this.token === ',') {
       items = items.concat(this.next().read_use_declarations(false));
     } else if (this.token === '{') {
-      name = items[0].name;
+      name = items[0].name.name;
       items = this.next().read_use_declarations(type === null);
       this.expect('}') && this.next();
     }
@@ -6655,7 +6691,7 @@ module.exports = {
     if (typed) type = this.read_use_type();
     var name = this.read_namespace_name();
     var alias = this.read_use_alias();
-    return result(name, alias, type);
+    return result(name.name, alias, type);
   }
   /**
   * Reads a list of use declarations
@@ -7235,9 +7271,9 @@ module.exports = {
         return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var result = this.node('inline')(this.text());
+        var result = this.node('inline'), value = this.text();
         this.next();
-        return result;
+        return result(value);
 
       case this.tok.T_UNSET:
         var result = this.node('unset');
