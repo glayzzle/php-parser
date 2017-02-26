@@ -51,7 +51,7 @@ describe('Test variables', function() {
       'foo::$bar;'
     ].join('\n'), {
       parser: {
-        debug: true
+        // debug: true
       }
     });
     it('should be static::foo', function() {

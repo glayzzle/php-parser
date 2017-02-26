@@ -14,7 +14,7 @@ describe('Test strings', function() {
   });
   it('binary cast', function() {
     var ast = parser.parseEval('echo (binary)"\\colors[1] contains >$colors[1]<\\n";');
-    console.log(ast.children[0].arguments[0]);
+    // @todo console.log(ast.children[0].arguments[0]);
   });
   it('...', function() {
     var ast = parser.parseEval('echo "\\colors[1] contains >$colors [1]<\\n";');

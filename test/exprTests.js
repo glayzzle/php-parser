@@ -84,10 +84,10 @@ describe('Test expressions', function() {
   it('test if based returns', function() {
     var ast = parser.parseEval([
       '$a ?? false;',
-      '$a ? true : false;',
+      '$a > 5 ? true : false;',
       '$a ?: false;'
     ].join('\n'));
-    // @todo
+    console.log(ast);
   });
 
   it('test silent', function() {

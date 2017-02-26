@@ -11,10 +11,10 @@ describe('Test offsets', function() {
     },
     parser: {
       extractDoc: true,
-      debug: true
+      // debug: true
     },
     lexer: {
-      debug: true
+      // debug: true
     }
   });
 
