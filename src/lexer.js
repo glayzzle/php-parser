@@ -346,6 +346,9 @@ lexer.prototype.lex = function() {
     this.yylloc.prev_line = this.yylloc.first_line;
     this.yylloc.prev_column = this.yylloc.first_column;
   }
+  /*else if (this.yylloc.prev_offset === this.offset && this.offset !== this.size) {
+    throw new Error('Infinite loop @ ' + this.offset + ' / ' + this.size);
+  }*/
   return token;
 };
 
@@ -409,11 +412,13 @@ lexer.prototype.next = function () {
     } else {
       tName = '"'+tName+'"';
     }
-    console.log(
-      tName,
-      'from ' + this.yylloc.first_line + ',' + this.yylloc.first_column,
-      ' - to ' + this.yylloc.last_line + ',' + this.yylloc.last_column
+    var e = new Error(
+      tName +
+      '\tfrom ' + this.yylloc.first_line + ',' + this.yylloc.first_column +
+      '\t - to ' + this.yylloc.last_line + ',' + this.yylloc.last_column +
+      '\t"'+this.yytext+'"'
     );
+    console.log(e.stack);
   }
   return token;
 };

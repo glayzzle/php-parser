@@ -23,7 +23,7 @@ module.exports = {
             return this.ST_DOUBLE_QUOTES();
           } else if (ch === '\'') {
             return this.T_CONSTANT_ENCAPSED_STRING();
-          } else {
+          } else if (ch) {
             this.unput(1);
           }
         }
