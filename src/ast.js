@@ -12,7 +12,7 @@ var Position = require('./ast/position');
  *
  * - [Location](#location)
  * - [Position](#position)
- * - [Node](#Node)
+ * - [Node](#node)
  *   - [Identifier](#identifier)
  *   - [TraitUse](#traituse)
  *   - [TraitAlias](#traitalias)
@@ -46,7 +46,6 @@ var Position = require('./ast/position');
  *       - [Number](#number)
  *       - [Inline](#inline)
  *       - [Magic](#magic)
- *       - [Shell](#shell)
  *       - [Nowdoc](#nowdoc)
  *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
@@ -115,6 +114,7 @@ var AST = function(withPositions, withSource) {
  * including it's lexer current state
  * @param {Parser}
  * @return {Position}
+ * @private
  */
 AST.prototype.position = function(parser) {
   return new Position(
@@ -172,6 +172,21 @@ AST.prototype.prepare = function(kind, parser) {
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
+    if (
+      result.kind === 'bin' &&
+      result.right &&
+      typeof result.right.precedence === 'function'
+    ) {
+      var out = result.right.precedence(result);
+      if (out) { // shift with precedence
+        result = out;
+      }
+    } else if (result.kind === 'unary') {
+      var out = result.precedence(result.what);
+      if (out) { // shift with precedence
+        result = out;
+      }
+    }
     return result;
   };
 };
@@ -242,7 +257,6 @@ AST.prototype.prepare = function(kind, parser) {
   require('./ast/propertylookup'),
   require('./ast/retif'),
   require('./ast/return'),
-  require('./ast/shell'),
   require('./ast/silent'),
   require('./ast/statement'),
   require('./ast/static'),

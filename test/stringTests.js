@@ -14,7 +14,7 @@ describe('Test strings', function() {
   });
   it('binary cast', function() {
     var ast = parser.parseEval('echo (binary)"\\colors[1] contains >$colors[1]<\\n";');
-    console.log(ast.children[0].arguments[0]);
+    // @todo console.log(ast.children[0].arguments[0]);
   });
   it('...', function() {
     var ast = parser.parseEval('echo "\\colors[1] contains >$colors [1]<\\n";');
@@ -208,14 +208,13 @@ describe('Test strings', function() {
       '$a = `-$`;',
       '$a = `$`;',
     ].join('\r'));
-    ast.children[0].right.kind.should.be.exactly('shell');
-    ast.children[0].right.value.kind.should.be.exactly('encapsed');
-    ast.children[0].right.value.type.should.be.exactly('shell');
-    ast.children[0].right.value.value.length.should.be.exactly(2);
-    ast.children[0].right.value.value[0].kind.should.be.exactly('string');
-    ast.children[0].right.value.value[0].value.should.be.exactly('ls ');
-    ast.children[0].right.value.value[1].kind.should.be.exactly('variable');
-    ast.children[0].right.value.value[1].name.should.be.exactly('cwd');
+    ast.children[0].right.kind.should.be.exactly('encapsed');
+    ast.children[0].right.type.should.be.exactly('shell');
+    ast.children[0].right.value.length.should.be.exactly(2);
+    ast.children[0].right.value[0].kind.should.be.exactly('string');
+    ast.children[0].right.value[0].value.should.be.exactly('ls ');
+    ast.children[0].right.value[1].kind.should.be.exactly('variable');
+    ast.children[0].right.value[1].name.should.be.exactly('cwd');
     // @todo test the rest of childs
   });
 

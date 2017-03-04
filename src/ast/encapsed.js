@@ -53,4 +53,15 @@ Encapsed.TYPE_SHELL = 'shell';
  */
 Encapsed.TYPE_HEREDOC = 'heredoc';
 
+/**
+ * The node contains a list of constref / variables / expr :
+ * ```php
+ * <?php
+ * echo $foo->bar_$baz;
+ * ```
+ * @constant {String} TYPE_OFFSET - `offset`
+ */
+Encapsed.TYPE_OFFSET = 'offset';
+
+
 module.exports = Encapsed;

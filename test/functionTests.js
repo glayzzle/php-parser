@@ -4,7 +4,7 @@ var parser = require('../src/index');
 describe('Function tests', function() {
   var ast = parser.parseEval([
     'function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}',
-    '$a = function &($b) use($c) : array {',
+    '$a = function &($b) use(&$c, $d) : array {',
     '  return true;',
     '};',
     '$b = foo(...[1, null, 1, 2, 3]);'
@@ -58,10 +58,24 @@ describe('Function tests', function() {
   });
 
   it('test closure', function () {
-    // @todo
-    ast.children[1].right.kind.should.be.exactly('closure');
     var fn = ast.children[1].right;
+    fn.kind.should.be.exactly('closure');
     fn.byref.should.be.exactly(true);
+    fn.uses.length.should.be.exactly(2);
+    fn.uses[0].kind.should.be.exactly('variable');
+    fn.uses[0].name.should.be.exactly('c');
+    fn.uses[0].byref.should.be.exactly(true);
+    fn.uses[1].kind.should.be.exactly('variable');
+    fn.uses[1].name.should.be.exactly('d');
+    fn.uses[1].byref.should.be.exactly(false);
+    fn.arguments.length.should.be.exactly(1);
+    fn.arguments[0].kind.should.be.exactly('parameter');
+    fn.arguments[0].name.should.be.exactly('b');
+    fn.arguments[0].byref.should.be.exactly(false);
+    fn.type.kind.should.be.exactly('identifier');
+    fn.type.name.should.be.exactly('\\array');
+    fn.nullable.should.be.exactly(false);
+    fn.body.kind.should.be.exactly('block');
   });
 
 

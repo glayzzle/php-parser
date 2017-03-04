@@ -11,7 +11,7 @@ var KIND = 'usegroup';
  * Defines a use statement (with a list of use items)
  * @constructor UseGroup
  * @extends {Statement}
- * @property {Identifier|null} name
+ * @property {String|null} name
  * @property {String|null} type - Possible value : function, const
  * @property {UseItem[]} item
  * @see {Namespace}

@@ -22,10 +22,9 @@ module.exports = {
       body,
       catches = []
     ;
-    body = this.nextWithComments().read_statement();
-    this.ignoreComments();
+    body = this.next().read_statement();
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
-    while(this.token === this.tok.T_CATCH) {
+    while(this.ignoreComments().token === this.tok.T_CATCH) {
       var item = this.node('catch'), what = [], variable = null;
       this.next().expect('(') && this.next();
       what = this.read_list(
@@ -33,11 +32,12 @@ module.exports = {
       );
       variable = this.read_variable(true, false, false);
       this.expect(')');
-      catches.push(item(this.next().read_statement(), what, variable));
-      this.ignoreComments();
+      catches.push(
+        item(this.next().read_statement(), what, variable)
+      );
     }
     if (this.token === this.tok.T_FINALLY) {
-      always = this.nextWithComments().read_statement();
+      always = this.next().read_statement();
     }
     return result(body, catches, always);
   }

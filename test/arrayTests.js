@@ -10,10 +10,10 @@ describe('Array without keys', function() {
       ']($foo)[$foo->bar()[1]]->foo()'
     ].join('\r'), {
       parser: {
-        debug: true
+        // debug: true
       }
     });
-    console.log(ast);
+    // @todo console.log(ast);
   });
 
   describe('of strings', function () {

@@ -255,9 +255,9 @@ module.exports = {
         return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var result = this.node('inline')(this.text());
+        var result = this.node('inline'), value = this.text();
         this.next();
-        return result;
+        return result(value);
 
       case this.tok.T_UNSET:
         var result = this.node('unset');
@@ -293,7 +293,7 @@ module.exports = {
           this.expect('}') && this.next();
           mode = this.ast.declare.MODE_BLOCK;
         } else {
-          this.expect(';') && this.next();
+          this.expect(';') && this.nextWithComments();
           while(this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());

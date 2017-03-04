@@ -44,6 +44,9 @@ module.exports = {
     } else {
       if (this.expect('{')) {
         result.body = this.read_code_block(false);
+        if (result.loc && result.body.loc) {
+          result.loc.end = result.body.loc.end;
+        }
       }
       if (flag) {
         result.parseFlags(flag);
@@ -103,18 +106,16 @@ module.exports = {
    * ```
    */
   ,read_lexical_var: function() {
-    var result = [false, null];
+    var result = this.node('variable');
+    var isRef = false;
     if (this.token === '&') {
-      result[0] = true;
+      isRef = true;
       this.next();
     }
-    if (this.token === this.tok.T_VARIABLE) {
-      result[1] = this.text();
-      this.next();
-    } else {
-      this.expect(['&', this.tok.T_VARIABLE]);
-    }
-    return result;
+    this.expect(this.tok.T_VARIABLE);
+    var name = this.text().substring(1);
+    this.next();
+    return result(name, isRef);
   }
   /**
    * reads a list of parameters
@@ -162,7 +163,7 @@ module.exports = {
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
     if (this.expect(this.tok.T_VARIABLE)) {
-      name = this.text();
+      name = this.text().substring(1);
       this.next();
     }
     if (this.token == '=') {

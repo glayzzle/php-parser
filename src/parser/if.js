@@ -9,7 +9,7 @@ module.exports = {
    * Reads an IF statement
    *
    * ```ebnf
-   *  if ::= '(' expr ')' ':' ...
+   *  if ::= T_IF '(' expr ')' ':' ...
    * ```
    */
   read_if: function() {
@@ -25,8 +25,7 @@ module.exports = {
       this.next();
       body = this.node('block');
       var items = [];
-      while(this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
-        this.ignoreComments();
+      while(this.token !== this.EOF && this.token !== this.tok.T_ENDIF) {
         if (this.token === this.tok.T_ELSEIF) {
           alternate = this.next().read_elseif_short();
           break;
@@ -37,10 +36,13 @@ module.exports = {
         items.push(this.read_inner_statement());
       }
       body = body(null, items);
-      if (this.ignoreComments().expect(this.tok.T_ENDIF)) this.next();
+      this.expect(this.tok.T_ENDIF) && this.next();
       this.expectEndOfStatement();
     } else {
       body = this.read_statement();
+      /**
+       * ignore : if (..) { } /* *./ else { }
+       */
       this.ignoreComments();
       if (this.token === this.tok.T_ELSEIF) {
         alternate = this.next().read_if();
@@ -54,9 +56,9 @@ module.exports = {
    * reads an if expression : '(' expr ')'
    */
   read_if_expr: function() {
-    if (this.expect('(')) this.next();
+    this.expect('(') && this.next();
     var result = this.read_expr();
-    if (this.expect(')')) this.next();
+    this.expect(')') && this.next();
     return result;
   },
   /**

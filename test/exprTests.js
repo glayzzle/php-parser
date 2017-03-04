@@ -84,10 +84,12 @@ describe('Test expressions', function() {
   it('test if based returns', function() {
     var ast = parser.parseEval([
       '$a ?? false;',
-      '$a ? true : false;',
+      '$a > 5 ? true : false;',
       '$a ?: false;'
     ].join('\n'));
-    // @todo
+    console.log(ast.children[1]);
+    ast.children[1].kind.should.be.exactly('retif');
+
   });
 
   it('test silent', function() {
@@ -270,7 +272,7 @@ describe('Test expressions', function() {
 
     var dExpr = ast.children[3].right;
     dExpr.should.have.property('kind', 'bin');
-    dExpr.should.deepEqual({
+    JSON.parse(JSON.stringify(dExpr)).should.deepEqual({
       kind: "bin",
       left: {
         kind: "bin",

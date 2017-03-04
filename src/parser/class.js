@@ -148,7 +148,7 @@ module.exports = {
       function read_variable_declaration() {
         var result = this.node('property');
         this.expect(this.tok.T_VARIABLE);
-        var name = this.text();
+        var name = this.text().substring(1); // ignore $
         this.next();
         if (this.token === ';' || this.token === ',') {
           return result(name, null, flags);

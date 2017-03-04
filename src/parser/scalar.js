@@ -167,7 +167,7 @@ module.exports = {
     else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       var name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
-        var varName = this.text().substring(1);
+        var varName = this.text();
         name = this.node('variable');
         this.next();
         name = name(varName, false);

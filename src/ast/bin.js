@@ -13,8 +13,8 @@ var binOperatorsPrecedence = [
   ['or'],
   ['xor'],
   ['and'],
-  // TODO: assignment
-  // TODO: ternary ? :
+  // TODO: assignment / not sure that PHP allows this with expressions
+  ['retif'],
   ['??'],
   ['||'],
   ['&&'],
@@ -26,20 +26,12 @@ var binOperatorsPrecedence = [
   ['<<', '>>'],
   ['+', '-', '.'],
   ['*', '/', '%'],
-  // TODO: unary !
+  ['!'],
   ['instanceof'],
-  // TODO: unary ++, --, ~, @, typecasts
+  // TODO: typecasts
   // TODO: [ (array)
   // TODO: clone, new
 ];
-
-// define nodes shifting
-var precedence = {};
-binOperatorsPrecedence.forEach(function (list, index) {
-  list.forEach(function (operator) {
-    precedence[operator] = index + 1;
-  });
-});
 
 /*
 x OP1 (y OP2 z)
@@ -56,26 +48,28 @@ z OP2 (x OP1 y)
  */
 var Bin = Operation.extends(function Bin(type, left, right, location) {
   Operation.apply(this, [KIND, location]);
-  if (right && right.kind === 'bin') {
-    var lLevel = precedence[type];
-    var rLevel = precedence[right.type];
-    if (lLevel && rLevel && rLevel < lLevel) {
-      // shift precedence
-      var buffer = right.right;
-      right.right = right.left;
-      right.left = left;
-      left = buffer;
-      buffer = right.type;
-      right.type = type;
-      type = buffer;
-      buffer = left;
-      left = right;
-      right = buffer;
-    }
-  }
   this.type = type;
   this.left = left;
   this.right = right;
+});
+
+Bin.prototype.precedence = function(node) {
+  var lLevel = Bin.precedence[node.type];
+  var rLevel = Bin.precedence[this.type];
+  if (lLevel && rLevel && rLevel < lLevel) {
+    // shift precedence
+    node.right = this.left;
+    this.left = node;
+    return this;
+  }
+};
+
+// define nodes shifting
+Bin.precedence = {};
+binOperatorsPrecedence.forEach(function (list, index) {
+  list.forEach(function (operator) {
+    Bin.precedence[operator] = index + 1;
+  });
 });
 
 module.exports = Bin;

@@ -66,11 +66,11 @@ module.exports = {
         return '}';
       default:
         if (ch === '.') {
-          this.input();
+          ch = this.input();
           if (this.is_NUM()) {
             return this.consume_NUM();
           } else {
-            this.unput(1);
+            if (ch) this.unput(1);
           }
         }
         if (this.is_NUM()) {

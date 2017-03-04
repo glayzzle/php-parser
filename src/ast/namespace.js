@@ -12,16 +12,12 @@ var KIND = 'namespace';
  * The main program node
  * @constructor Namespace
  * @extends {Block}
- * @property {Identifier} name
+ * @property {String} name
  * @property {Boolean} withBrackets
  */
 var Namespace = Block.extends(function Namespace(name, children, withBrackets, location) {
   Block.apply(this, [KIND, children, location]);
-  if (name instanceof Identifier) {
-    this.name = name;
-  } else {
-    this.name = new Identifier(name);
-  }
+  this.name = name;
   this.withBrackets = withBrackets || false;
 });
 

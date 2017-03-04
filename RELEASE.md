@@ -1,5 +1,20 @@
 # Releases
 
+## 2.0.0 (in progress) :
+
+- Update AST for operators, unify bin/bool/coalesce nodes
+- Fix nested block usage on function bodies
+- Avoid initial $ on variables
+- Shell nodes are now exposed by encapsed nodes only
+- Typescript definition file
+- Avoid identifier nodes on namespaces & use statements
+- Fix precedence on bin, unary, retif nodes
+- Fix ending position on functions/methods/closures
+- Fix lexer unput at the end of the file (infinite loops)
+- Add encapsed node (type=offset) on dynamic offsets
+- Implement annonymous class arguments
+- Fix missing first char on encapsed T_STRING_VARNAME
+
 ## 1.0.0 : (2017-01-03)
 
 - All nodes are now converted to objects
