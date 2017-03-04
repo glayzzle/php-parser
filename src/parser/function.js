@@ -44,6 +44,9 @@ module.exports = {
     } else {
       if (this.expect('{')) {
         result.body = this.read_code_block(false);
+        if (result.loc && result.body.loc) {
+          result.loc.end = result.body.loc.end;
+        }
       }
       if (flag) {
         result.parseFlags(flag);
