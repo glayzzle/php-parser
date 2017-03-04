@@ -436,8 +436,11 @@ module.exports = {
     if (this.token === this.tok.T_CLASS) {
       var what = this.node('class');
       // Annonymous class declaration
-      var propExtends = null, propImplements = null, body = null;
-      if (this.next().token == this.tok.T_EXTENDS) {
+      var propExtends = null, propImplements = null, body = null, args = [];
+      if (this.next().token === '(') {
+        args = this.read_function_argument_list();
+      }
+      if (this.token == this.tok.T_EXTENDS) {
         propExtends = this.next().read_namespace_name();
       }
       if (this.token == this.tok.T_IMPLEMENTS) {
@@ -453,7 +456,7 @@ module.exports = {
           ,propImplements
           ,body
           ,[0, 0, 0]
-        ), []
+        ), args
       );
     } else {
       // Already existing class
