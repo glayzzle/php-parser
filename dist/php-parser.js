@@ -1219,6 +1219,17 @@ Encapsed.TYPE_SHELL = 'shell';
  */
 Encapsed.TYPE_HEREDOC = 'heredoc';
 
+/**
+ * The node contains a list of constref / variables / expr :
+ * ```php
+ * <?php
+ * echo $foo->bar_$baz;
+ * ```
+ * @constant {String} TYPE_OFFSET - `offset`
+ */
+Encapsed.TYPE_OFFSET = 'offset';
+
+
 module.exports = Encapsed;
 
 },{"./literal":46}],27:[function(require,module,exports){
@@ -7789,15 +7800,26 @@ module.exports = {
               this.next();
               what = what(name);
               if (this.token === this.tok.T_VARIABLE) {
-                // @fixme : create encapsed var node
+                var inner = this.node('variable');
                 name = this.text().substring(1);
                 this.next();
-                // fix $obj->var_$prop
-                what = ['bin', '.', what, ['var', name]];
+                what = this.node('encapsed')(
+                  [what, inner(name, false)],
+                  'offset'
+                );
+                if (what.loc && what.value[0].loc) {
+                  what.loc.start = what.value[0].loc.start;
+                }
               } else if (this.token === '{') {
-                // fix $obj->var_{$prop}
-                what = ['bin', '.', what, this.next().read_expr()];
+                var expr = this.next().read_expr();
                 this.expect('}') && this.next();
+                what = this.node('encapsed')(
+                  [what, expr],
+                  'offset'
+                );
+                if (what.loc && what.value[0].loc) {
+                  what.loc.start = what.value[0].loc.start;
+                }
               }
               break;
             case this.tok.T_VARIABLE:

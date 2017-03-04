@@ -475,6 +475,17 @@ STR
 
 Type: [String](#string)
 
+### TYPE_OFFSET
+
+The node contains a list of constref / variables / expr :
+
+```php
+<?php
+echo $foo->bar_$baz;
+```
+
+Type: [String](#string)
+
 ## Entry
 
 **Extends Node**
@@ -947,6 +958,14 @@ Defines a short if statement that returns a value
 -   `test` **[Expression](#expression)** 
 -   `trueExpr` **[Expression](#expression)** 
 -   `falseExpr` **[Expression](#expression)** 
+
+### precedence
+
+Handles precedence over items
+
+**Parameters**
+
+-   `node`  
 
 ## Return
 
