@@ -56,14 +56,14 @@ module.exports = {
               this.consume_LNUM();
               return this.tok.T_DNUMBER;
             } else {
-              this.unput(3);
+              if (ch) this.unput(3);
               break;
             }
           } else if (this.is_NUM()) {
             this.consume_LNUM();
             return this.tok.T_DNUMBER;
           } else {
-            this.unput(2);
+            if (ch) this.unput(2);
             break;
           }
         } else {
@@ -116,7 +116,7 @@ module.exports = {
     while(this.offset < this.size) {
       ch = this.input();
       if (ch !== '0' && ch !== '1') {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }

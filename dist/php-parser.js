@@ -3542,14 +3542,14 @@ module.exports = {
               this.consume_LNUM();
               return this.tok.T_DNUMBER;
             } else {
-              this.unput(3);
+              if (ch) this.unput(3);
               break;
             }
           } else if (this.is_NUM()) {
             this.consume_LNUM();
             return this.tok.T_DNUMBER;
           } else {
-            this.unput(2);
+            if (ch) this.unput(2);
             break;
           }
         } else {
@@ -3602,7 +3602,7 @@ module.exports = {
     while(this.offset < this.size) {
       ch = this.input();
       if (ch !== '0' && ch !== '1') {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -3626,7 +3626,7 @@ module.exports = {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1296
         return this.tok.T_OBJECT_OPERATOR;
       }
-      this.unput(1);
+      if (ch) this.unput(1);
     } else if (this.is_LABEL_START()) {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1300
       this.consume_LABEL();
@@ -3635,7 +3635,7 @@ module.exports = {
     }
     // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1306
     this.popState();
-    this.unput(1);
+    if (ch) this.unput(1);
     return false;
   },
   matchST_LOOKING_FOR_VARNAME: function() {
@@ -3653,7 +3653,7 @@ module.exports = {
         return false;
       }
     } else {
-      this.unput(1);
+      if (ch) this.unput(1);
       this.popState();
       this.begin('ST_IN_SCRIPTING');
       // console.log(this.yylineno, 'ST_LOOKING_FOR_VARNAME', this._input[this.offset - 1], this.conditionStack);
@@ -3758,11 +3758,11 @@ module.exports = {
         return '}';
       default:
         if (ch === '.') {
-          this.input();
+          ch = this.input();
           if (this.is_NUM()) {
             return this.consume_NUM();
           } else {
-            this.unput(1);
+            if (ch) this.unput(1);
           }
         }
         if (this.is_NUM()) {
@@ -4199,7 +4199,7 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       }
       ch = this.input();
     }

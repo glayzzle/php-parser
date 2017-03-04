@@ -405,7 +405,7 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       }
       ch = this.input();
     }
