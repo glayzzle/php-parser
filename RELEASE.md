@@ -9,6 +9,11 @@
 - Typescript definition file
 - Avoid identifier nodes on namespaces & use statements
 - Fix precedence on bin, unary, retif nodes
+- Fix ending position on functions/methods/closures
+- Fix lexer unput at the end of the file (infinite loops)
+- Add encapsed node (type=offset) on dynamic offsets
+- Implement annonymous class arguments
+- Fix missing first char on encapsed T_STRING_VARNAME
 
 ## 1.0.0 : (2017-01-03)
 
