@@ -1,6 +1,6 @@
 # Releases
 
-## 2.0.0 (in progress) :
+## 2.0.0 : (2017-03-04)
 
 - Update AST for operators, unify bin/bool/coalesce nodes
 - Fix nested block usage on function bodies
