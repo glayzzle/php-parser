@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-03-04 */
+/*! php-parser - BSD3 License - 2017-03-05 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -6693,7 +6693,7 @@ module.exports = {
     if (this.token === ',') {
       items = items.concat(this.next().read_use_declarations(false));
     } else if (this.token === '{') {
-      name = items[0].name.name;
+      name = items[0].name;
       items = this.next().read_use_declarations(type === null);
       this.expect('}') && this.next();
     }
