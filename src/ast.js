@@ -181,7 +181,7 @@ AST.prototype.prepare = function(kind, parser) {
       if (out) { // shift with precedence
         result = out;
       }
-    } else if (result.kind === 'unary') {
+    } else if (result.kind === 'unary' && result.what) {
       var out = result.precedence(result.what);
       if (out) { // shift with precedence
         result = out;
