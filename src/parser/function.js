@@ -184,11 +184,13 @@ module.exports = {
     if (this.token !== ')') {
       while(this.token != this.EOF) {
         var argument = this.read_argument_list();
-        result.push(argument);
-        if (argument.kind === 'variadic') {
-          wasVariadic = true;
-        } else if (wasVariadic) {
-          this.raiseError('Unexpected argument after a variadic argument');
+        if (argument) {
+          result.push(argument);
+          if (argument.kind === 'variadic') {
+            wasVariadic = true;
+          } else if (wasVariadic) {
+            this.raiseError('Unexpected argument after a variadic argument');
+          }
         }
         if (this.token === ',') {
           this.next();

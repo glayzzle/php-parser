@@ -1,5 +1,9 @@
 # Releases
 
+## 2.1.0 : pending
+
+- Fix AST errors on suppressErrors
+
 ## 2.0.0 : (2017-03-04)
 
 - Update AST for operators, unify bin/bool/coalesce nodes
