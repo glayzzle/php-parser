@@ -88,6 +88,16 @@ describe('Test graceful mode', function() {
       // the supressError mode cant guarantee $foo to be included into the arguments list
     });
 
+    it('test method chains', function () {
+      // test.parser.debug = true;
+      var ast = test.parseEval([
+        '$controller->expects($this->once())',
+        '->'
+      ].join('\n'));
+      ast.children[0].kind.should.be.exactly('propertylookup');
+      ast.children[0].what.kind.should.be.exactly('call');
+      ast.children[0].what.what.kind.should.be.exactly('propertylookup');
+    });
 
   });
 
