@@ -47,14 +47,62 @@ describe('Test strings', function() {
   it('...', function() {
     var ast = parser.parseEval('echo "Hello {$obj->name} !";');
   });
-  it('...', function() {
+  it('Encapsed variable / curly varname', function() {
     var ast = parser.parseEval('echo "Hello ${obj}->name !";');
+    ast.children[0].kind.should.be.exactly('echo');
+    ast.children[0].arguments.length.should.be.exactly(1);
+    var arg1 = ast.children[0].arguments[0];
+    arg1.kind.should.be.exactly('encapsed');
+    arg1.type.should.be.exactly('string');
+    arg1.value.length.should.be.exactly(3);
+    // test constant parts
+    arg1.value[0].kind.should.be.exactly('string');
+    arg1.value[0].value.should.be.exactly('Hello ');
+    arg1.value[2].kind.should.be.exactly('string');
+    arg1.value[2].value.should.be.exactly('->name !');
+    // test the varname
+    arg1.value[1].kind.should.be.exactly('variable');
+    arg1.value[1].name.should.be.exactly('obj');
+    arg1.value[1].curly.should.be.exactly(true);
+  });
+  it('Encapsed variable / curly constant', function() {
+    var ast = parser.parseEval('echo "Hello ${ obj }";');
+    ast.children[0].kind.should.be.exactly('echo');
+    ast.children[0].arguments.length.should.be.exactly(1);
+    var arg1 = ast.children[0].arguments[0];
+    arg1.kind.should.be.exactly('encapsed');
+    arg1.type.should.be.exactly('string');
+    arg1.value.length.should.be.exactly(2);
+    // test constant parts
+    arg1.value[0].kind.should.be.exactly('string');
+    arg1.value[0].value.should.be.exactly('Hello ');
+    // test the varname
+    arg1.value[1].kind.should.be.exactly('variable');
+    arg1.value[1].name.kind.should.be.exactly('constref');
+    arg1.value[1].name.name.kind.should.be.exactly('identifier');
+    arg1.value[1].name.name.name.should.be.exactly('obj');
+    arg1.value[1].curly.should.be.exactly(true);
   });
   it('...', function() {
     var ast = parser.parseEval('echo "\\"$parts[0]\\"\\n";');
   });
-  it('...', function() {
+  it('Encapsed variable / offsetlookup', function() {
     var ast = parser.parseEval('echo "${$parts[$i]}\\n";');
+    ast.children[0].kind.should.be.exactly('echo');
+    ast.children[0].arguments.length.should.be.exactly(1);
+    var arg1 = ast.children[0].arguments[0];
+    arg1.kind.should.be.exactly('encapsed');
+    arg1.type.should.be.exactly('string');
+    arg1.value.length.should.be.exactly(2);
+    // check the varvar
+    arg1.value[0].kind.should.be.exactly('variable');
+    // check the lookup structure
+    arg1.value[0].name.kind.should.be.exactly('offsetlookup');
+    arg1.value[0].name.what.name.should.be.exactly('parts');
+    arg1.value[0].name.offset.name.should.be.exactly('i');
+    // check ending string
+    arg1.value[1].kind.should.be.exactly('string');
+    arg1.value[1].value.should.be.exactly('\n');
   });
   it('...', function() {
     var ast = parser.parseEval('echo "yo : {$feeds[0][\'title[0][value]\']}";');
