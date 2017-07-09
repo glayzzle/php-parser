@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-03-21 */
+/*! php-parser - BSD3 License - 2017-07-10 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -485,9 +485,31 @@ var KIND = 'array';
 /**
  * Defines an array structure
  * @constructor Array
+ * @example
+ * // PHP code :
+ * [1, 'foo' => 'bar', 3]
+ *
+ * // AST structure :
+ * {
+ *  "kind": "array",
+ *  "shortForm": true
+ *  "items": [{
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "1"}
+ *  }, {
+ *    "kind": "entry",
+ *    "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
+ *    "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
+ *  }, {
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "3"}
+ *  }]
+ * }
  * @extends {Expression}
- * @property {Entry[]} items
- * @property {boolean} shortForm
+ * @property {Entry[]} items List of array items
+ * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
 var Array = Expr.extends(function Array(shortForm, items, location) {
   Expr.apply(this, [KIND, location]);
@@ -875,14 +897,16 @@ var KIND = 'closure';
  * @property {boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
+ * @property {boolean} isStatic
  */
-var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, location) {
+var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, isStatic, location) {
   Statement.apply(this, [KIND, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;
   this.type = type;
   this.nullable = nullable;
+  this.isStatic = isStatic || false;
   this.body = null;
 });
 
@@ -1243,11 +1267,11 @@ var Node = require('./node');
 var KIND = 'entry';
 
 /**
- * An array entry
+ * An array entry - see [Array](#array)
  * @constructor Entry
  * @extends {Node}
- * @property {Node|null} key
- * @property {Node} value
+ * @property {Node|null} key The entry key/offset
+ * @property {Node} value The entry value
  */
 var Entry = Node.extends(function Entry(key, value, location) {
   Node.apply(this, [KIND, location]);
@@ -2816,13 +2840,25 @@ var KIND = 'variable';
  * be any expression in general, an expression can also be a pattern.
  * @constructor Variable
  * @extends {Expression}
- * @property {String|Node} name
- * @property {boolean} byref
+ * @example
+ * // PHP code :
+ * &$foo
+ * // AST output
+ * {
+ *  "kind": "variable",
+ *  "name": "foo",
+ *  "byref": true,
+ *  "curly": false
+ * }
+ * @property {String|Node} name The variable name (can be a complex expression when the name is resolved dynamically)
+ * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
+ * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-var Variable = Expr.extends(function Variable(name, byref, location) {
+var Variable = Expr.extends(function Variable(name, byref, curly, location) {
   Expr.apply(this, [KIND, location]);
   this.name = name;
   this.byref = byref || false;
+  this.curly = curly || false;
 });
 
 module.exports = Variable;
@@ -5883,8 +5919,19 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_FUNCTION:
-        // @fixme later - removed static lambda function declarations (colides with static keyword usage)
         return this.read_function(true);
+
+      case this.tok.T_STATIC:
+        var backup = [this.token, this.lexer.getState()];
+        if (this.next().token === this.tok.T_FUNCTION) {
+          // handles static function
+          return this.read_function(true, [0, 1, 0]);
+        } else {
+          // rollback
+          this.lexer.tokens.push(backup);
+          this.next();
+        }
+
 
     }
 
@@ -6108,7 +6155,8 @@ module.exports = {
    */
   ,read_function: function(closure, flag) {
     var result = this.read_function_declaration(
-      closure ? 1 : (flag ? 2 : 0)
+      closure ? 1 : (flag ? 2 : 0),
+      flag && flag[1] === 1
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -6123,7 +6171,7 @@ module.exports = {
           result.loc.end = result.body.loc.end;
         }
       }
-      if (flag) {
+      if (!closure && flag) {
         result.parseFlags(flag);
       }
     }
@@ -6135,7 +6183,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  ,read_function_declaration: function(type) {
+  ,read_function_declaration: function(type, isStatic) {
     var nodeName = 'function';
     if (type === 1) {
       nodeName = 'closure';
@@ -6143,6 +6191,7 @@ module.exports = {
       nodeName = 'method';
     }
     var result = this.node(nodeName);
+
     if (this.expect(this.tok.T_FUNCTION)) {
       this.next();
     }
@@ -6171,7 +6220,7 @@ module.exports = {
     }
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType, nullable);
+      return result(params, isRef, use, returnType, nullable, isStatic);
     }
     return result(name, params, isRef, returnType, nullable);
   }
@@ -6190,7 +6239,7 @@ module.exports = {
     this.expect(this.tok.T_VARIABLE);
     var name = this.text().substring(1);
     this.next();
-    return result(name, isRef);
+    return result(name, isRef, false);
   }
   /**
    * reads a list of parameters
@@ -6942,20 +6991,22 @@ module.exports = {
         var varName = this.text();
         name = this.node('variable');
         this.next();
-        name = name(varName, false);
         // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
         if (this.token === '[') {
+          name = name(varName, false);
           var node = this.node('offsetlookup');
           var offset = this.next().read_expr();
           this.expect(']') && this.next();
           name = node(name, offset);
+        } else {
+          name = varName;
         }
       } else {
         name = this.read_expr();
       }
       this.expect('}') && this.next();
-      result = result('variable', name, false);
+      result = result('variable', name, false, true);
     }
 
     // expression
@@ -7283,6 +7334,9 @@ module.exports = {
           var expr = this.next().read_expr();
           this.expect(';') && this.nextWithComments();
           return expr;
+        }
+        if (this.token === this.tok.T_FUNCTION) {
+          return this.read_function(true, [0, 1, 0]);
         }
         var items = this.read_variable_declarations();
         this.expectEndOfStatement();
@@ -7652,9 +7706,9 @@ module.exports = {
       if (this.expect(this.tok.T_VARIABLE)) {
         var name = this.text().substring(1);
         this.next();
-        variable = variable(name, false);
+        variable = variable(name, false, false);
       } else {
-        variable = variable('#ERR', false);
+        variable = variable('#ERR', false, false);
       }
       if (this.token === '=') {
         return node(variable, this.next().read_expr());
@@ -7809,7 +7863,7 @@ module.exports = {
                 name = this.text().substring(1);
                 this.next();
                 what = this.node('encapsed')(
-                  [what, inner(name, false)],
+                  [what, inner(name, false, false)],
                   'offset'
                 );
                 if (what.loc && what.value[0].loc) {
@@ -7831,7 +7885,7 @@ module.exports = {
               what = this.node('variable');
               var name = this.text().substring(1);
               this.next();
-              what = what(name, false);
+              what = what(name, false, false);
               break;
             case '$':
               this.next().expect(['{', this.tok.T_VARIABLE]);
@@ -7885,7 +7939,7 @@ module.exports = {
     } else if (this.token === this.tok.T_VARIABLE) {
       var name = this.text().substring(1);
       this.next();
-      offset = offset('variable', name, false);
+      offset = offset('variable', name, false, false);
     } else {
       this.expect([
         this.tok.T_STRING,
@@ -7942,7 +7996,7 @@ module.exports = {
       // plain variable name
       var name = this.text().substring(1);
       this.next();
-      result = result(name, byref);
+      result = result(name, byref, false);
     } else {
       if (this.token === '$') this.next();
       // dynamic variable name
@@ -7950,7 +8004,7 @@ module.exports = {
         case '{':
           var expr = this.next().read_expr();
           this.expect('}') && this.next();
-          result = result(expr, byref);
+          result = result(expr, byref, true);
           break;
         case '$': // $$$var
           result = result(this.read_simple_variable(false), byref);
@@ -7959,14 +8013,14 @@ module.exports = {
           var name = this.text().substring(1);
           var node = this.node('variable');
           this.next();
-          result = result(node(name, false), byref);
+          result = result(node(name, false, false), byref, false);
           break;
         default:
           this.error(['{', '$', this.tok.T_VARIABLE]);
           // graceful mode
           var name = this.text();
           this.next();
-          result = result(name, byref);
+          result = result(name, byref, false);
       }
     }
     return result;
