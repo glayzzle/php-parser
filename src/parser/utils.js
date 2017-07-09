@@ -105,9 +105,9 @@ module.exports = {
       if (this.expect(this.tok.T_VARIABLE)) {
         var name = this.text().substring(1);
         this.next();
-        variable = variable(name, false);
+        variable = variable(name, false, false);
       } else {
-        variable = variable('#ERR', false);
+        variable = variable('#ERR', false, false);
       }
       if (this.token === '=') {
         return node(variable, this.next().read_expr());

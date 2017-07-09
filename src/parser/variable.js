@@ -140,7 +140,7 @@ module.exports = {
                 name = this.text().substring(1);
                 this.next();
                 what = this.node('encapsed')(
-                  [what, inner(name, false)],
+                  [what, inner(name, false, false)],
                   'offset'
                 );
                 if (what.loc && what.value[0].loc) {
@@ -162,7 +162,7 @@ module.exports = {
               what = this.node('variable');
               var name = this.text().substring(1);
               this.next();
-              what = what(name, false);
+              what = what(name, false, false);
               break;
             case '$':
               this.next().expect(['{', this.tok.T_VARIABLE]);
@@ -216,7 +216,7 @@ module.exports = {
     } else if (this.token === this.tok.T_VARIABLE) {
       var name = this.text().substring(1);
       this.next();
-      offset = offset('variable', name, false);
+      offset = offset('variable', name, false, false);
     } else {
       this.expect([
         this.tok.T_STRING,
@@ -273,7 +273,7 @@ module.exports = {
       // plain variable name
       var name = this.text().substring(1);
       this.next();
-      result = result(name, byref);
+      result = result(name, byref, false);
     } else {
       if (this.token === '$') this.next();
       // dynamic variable name
@@ -281,7 +281,7 @@ module.exports = {
         case '{':
           var expr = this.next().read_expr();
           this.expect('}') && this.next();
-          result = result(expr, byref);
+          result = result(expr, byref, true);
           break;
         case '$': // $$$var
           result = result(this.read_simple_variable(false), byref);
@@ -290,14 +290,14 @@ module.exports = {
           var name = this.text().substring(1);
           var node = this.node('variable');
           this.next();
-          result = result(node(name, false), byref);
+          result = result(node(name, false, false), byref, false);
           break;
         default:
           this.error(['{', '$', this.tok.T_VARIABLE]);
           // graceful mode
           var name = this.text();
           this.next();
-          result = result(name, byref);
+          result = result(name, byref, false);
       }
     }
     return result;

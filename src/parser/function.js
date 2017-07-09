@@ -115,7 +115,7 @@ module.exports = {
     this.expect(this.tok.T_VARIABLE);
     var name = this.text().substring(1);
     this.next();
-    return result(name, isRef);
+    return result(name, isRef, false);
   }
   /**
    * reads a list of parameters
