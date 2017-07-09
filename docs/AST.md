@@ -24,7 +24,7 @@ Prepares an AST node
     (if null, the kind must be passed at the function call)
 -   `parser` **Parser** The parser instance (use for extracting locations)
 
-Returns **[Function](#function)** 
+Returns **[Function](#function)**
 
 ## AST
 
@@ -133,7 +133,7 @@ Prepares an AST node
     (if null, the kind must be passed at the function call)
 -   `parser` **Parser** The parser instance (use for extracting locations)
 
-Returns **[Function](#function)** 
+Returns **[Function](#function)**
 
 ## Array
 
@@ -143,8 +143,31 @@ Defines an array structure
 
 **Properties**
 
--   `items` **[Array](#array)&lt;[Entry](#entry)>** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `items` **[Array](#array)&lt;[Entry](#entry)>**
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+
+**Examples**
+
+```javascript
+[1, 2, 3]
+{
+ "kind": "array",
+ "shortForm": true
+ "items": [{
+   "kind": "entry",
+   "key": null,
+   "value": {"kind": "number", "value": "1"}
+ }, {
+   "kind": "entry",
+   "key": null,
+   "value": {"kind": "number", "value": "2"}
+ }, {
+   "kind": "entry",
+   "key": null,
+   "value": {"kind": "number", "value": "3"}
+ }]
+}
+```
 
 ## Assign
 
@@ -154,9 +177,9 @@ Assigns a value to the specified target
 
 **Properties**
 
--   `left` **[Expression](#expression)** 
--   `right` **[Expression](#expression)** 
--   `operator` **[String](#string)** 
+-   `left` **[Expression](#expression)**
+-   `right` **[Expression](#expression)**
+-   `operator` **[String](#string)**
 
 ## Bin
 
@@ -166,9 +189,9 @@ Binary operations
 
 **Properties**
 
--   `type` **[String](#string)** 
--   `left` **[Expression](#expression)** 
--   `right` **[Expression](#expression)** 
+-   `type` **[String](#string)**
+-   `left` **[Expression](#expression)**
+-   `right` **[Expression](#expression)**
 
 ## Block
 
@@ -178,7 +201,7 @@ A block statement, i.e., a sequence of statements surrounded by braces.
 
 **Properties**
 
--   `children` **[Array](#array)&lt;[Node](#node)>** 
+-   `children` **[Array](#array)&lt;[Node](#node)>**
 
 ## Boolean
 
@@ -194,7 +217,7 @@ A break statement
 
 **Properties**
 
--   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+-   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))**
 
 ## Call
 
@@ -204,7 +227,7 @@ Executes a call statement
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;Arguments>** 
+-   `arguments` **[Array](#array)&lt;Arguments>**
 
 ## Case
 
@@ -215,7 +238,7 @@ A switch case statement
 **Properties**
 
 -   `test` **([Expression](#expression) | null)** if null, means that the default case
--   `body` **([Block](#block) | null)** 
+-   `body` **([Block](#block) | null)**
 
 ## Cast
 
@@ -225,8 +248,8 @@ Binary operations
 
 **Properties**
 
--   `type` **[String](#string)** 
--   `what` **[Expression](#expression)** 
+-   `type` **[String](#string)**
+-   `what` **[Expression](#expression)**
 
 ## Catch
 
@@ -236,9 +259,9 @@ Defines a catch statement
 
 **Properties**
 
--   `what` **[Array](#array)&lt;[Identifier](#identifier)>** 
--   `variable` **[Variable](#variable)** 
--   `body` **[Statement](#statement)** 
+-   `what` **[Array](#array)&lt;[Identifier](#identifier)>**
+-   `variable` **[Variable](#variable)**
+-   `body` **[Statement](#statement)**
 
 ## Class
 
@@ -248,12 +271,12 @@ A class definition
 
 **Properties**
 
--   `extends` **([Identifier](#identifier) | null)** 
--   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
--   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
--   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `extends` **([Identifier](#identifier) | null)**
+-   `implements` **[Array](#array)&lt;[Identifier](#identifier)>**
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>**
+-   `isAnonymous` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## ClassConstant
 
@@ -263,8 +286,8 @@ Defines a class/interface/trait constant
 
 **Properties**
 
--   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
 
 ## Clone
 
@@ -274,7 +297,7 @@ Defines a clone call
 
 **Properties**
 
--   `what` **[Expression](#expression)** 
+-   `what` **[Expression](#expression)**
 
 ## Closure
 
@@ -284,12 +307,12 @@ Defines a closure
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
--   `uses` **[Array](#array)&lt;[Variable](#variable)>** 
--   `type` **[Identifier](#identifier)** 
--   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `body` **([Block](#block) | null)** 
+-   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>**
+-   `uses` **[Array](#array)&lt;[Variable](#variable)>**
+-   `type` **[Identifier](#identifier)**
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `body` **([Block](#block) | null)**
 
 ## Constant
 
@@ -299,7 +322,7 @@ Defines a namespace constant
 
 **Properties**
 
--   `value` **([Node](#node) | null)** 
+-   `value` **([Node](#node) | null)**
 
 ## ConstRef
 
@@ -309,7 +332,7 @@ A constant reference
 
 **Properties**
 
--   `name` **([String](#string) \| [Node](#node))** 
+-   `name` **([String](#string) \| [Node](#node))**
 
 ## Continue
 
@@ -319,7 +342,7 @@ A continue statement
 
 **Properties**
 
--   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+-   `level` **([Number](#number) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))**
 
 ## Declaration
 
@@ -329,7 +352,7 @@ A declaration statement (function, class, interface...)
 
 **Properties**
 
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
 
 ### parseFlags
 
@@ -337,9 +360,9 @@ Generic flags parser
 
 **Parameters**
 
--   `flags` **[Array](#array)&lt;Integer>** 
+-   `flags` **[Array](#array)&lt;Integer>**
 
-Returns **void** 
+Returns **void**
 
 ## Declare
 
@@ -349,8 +372,8 @@ The declare construct is used to set execution directives for a block of code
 
 **Properties**
 
--   `what` **[Array](#array)&lt;[Expression](#expression)>** 
--   `mode` **[String](#string)** 
+-   `what` **[Array](#array)&lt;[Expression](#expression)>**
+-   `mode` **[String](#string)**
 
 ### MODE_SHORT
 
@@ -402,8 +425,8 @@ Defines a do/while statement
 
 **Properties**
 
--   `test` **[Expression](#expression)** 
--   `body` **[Statement](#statement)** 
+-   `test` **[Expression](#expression)**
+-   `body` **[Statement](#statement)**
 
 ## Documentation
 
@@ -413,8 +436,8 @@ A comment or documentation
 
 **Properties**
 
--   `isDoc` **[Boolean](#boolean)** 
--   `lines` **[Array](#array)&lt;[String](#string)>** 
+-   `isDoc` **[Boolean](#boolean)**
+-   `lines` **[Array](#array)&lt;[String](#string)>**
 
 ## Echo
 
@@ -494,8 +517,8 @@ An array entry
 
 **Properties**
 
--   `key` **([Node](#node) | null)** 
--   `value` **[Node](#node)** 
+-   `key` **([Node](#node) | null)**
+-   `value` **[Node](#node)**
 
 ## Error
 
@@ -505,10 +528,10 @@ Defines an error node (used only on silentMode)
 
 **Properties**
 
--   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** 
--   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
+-   `message` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
+-   `line` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**
+-   `token` **([number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**
+-   `expected` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array))**
 
 ## Eval
 
@@ -518,7 +541,7 @@ Defines an eval statement
 
 **Properties**
 
--   `source` **[Node](#node)** 
+-   `source` **[Node](#node)**
 
 ## Exit
 
@@ -528,7 +551,7 @@ Defines an exit / die call
 
 **Properties**
 
--   `status` **([Node](#node) | null)** 
+-   `status` **([Node](#node) | null)**
 
 ## Expression
 
@@ -545,11 +568,11 @@ Defines a for iterator
 
 **Properties**
 
--   `init` **[Array](#array)&lt;[Expression](#expression)>** 
--   `test` **[Array](#array)&lt;[Expression](#expression)>** 
--   `increment` **[Array](#array)&lt;[Expression](#expression)>** 
--   `body` **[Statement](#statement)** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `init` **[Array](#array)&lt;[Expression](#expression)>**
+-   `test` **[Array](#array)&lt;[Expression](#expression)>**
+-   `increment` **[Array](#array)&lt;[Expression](#expression)>**
+-   `body` **[Statement](#statement)**
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Foreach
 
@@ -559,11 +582,11 @@ Defines a foreach iterator
 
 **Properties**
 
--   `source` **[Expression](#expression)** 
--   `key` **([Expression](#expression) | null)** 
--   `value` **[Expression](#expression)** 
--   `body` **[Statement](#statement)** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `source` **[Expression](#expression)**
+-   `key` **([Expression](#expression) | null)**
+-   `value` **[Expression](#expression)**
+-   `body` **[Statement](#statement)**
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Function
 
@@ -573,11 +596,11 @@ Defines a classic function
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>** 
--   `type` **[Identifier](#identifier)** 
--   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `body` **([Block](#block) | null)** 
+-   `arguments` **[Array](#array)&lt;[Parameter](#parameter)>**
+-   `type` **[Identifier](#identifier)**
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `body` **([Block](#block) | null)**
 
 ## Global
 
@@ -587,7 +610,7 @@ Imports a variable from the global scope
 
 **Properties**
 
--   `items` **[Array](#array)&lt;[Variable](#variable)>** 
+-   `items` **[Array](#array)&lt;[Variable](#variable)>**
 
 ## Goto
 
@@ -597,7 +620,7 @@ Defines goto statement
 
 **Properties**
 
--   `label` **[String](#string)** 
+-   `label` **[String](#string)**
 
 ## Halt
 
@@ -617,8 +640,8 @@ Defines an identifier node
 
 **Properties**
 
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `resolution` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
+-   `resolution` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
 
 ### UNQUALIFIED_NAME
 
@@ -654,10 +677,10 @@ Defines a if statement
 
 **Properties**
 
--   `test` **[Expression](#expression)** 
--   `body` **[Block](#block)** 
--   `alternate` **([Block](#block) \| [If](#if) | null)** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `test` **[Expression](#expression)**
+-   `body` **[Block](#block)**
+-   `alternate` **([Block](#block) \| [If](#if) | null)**
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Include
 
@@ -667,9 +690,9 @@ Defines system include call
 
 **Properties**
 
--   `target` **[Node](#node)** 
--   `once` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `require` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `target` **[Node](#node)**
+-   `once` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `require` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Inline
 
@@ -685,8 +708,8 @@ An interface definition
 
 **Properties**
 
--   `extends` **[Array](#array)&lt;[Identifier](#identifier)>** 
--   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
+-   `extends` **[Array](#array)&lt;[Identifier](#identifier)>**
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>**
 
 ## Isset
 
@@ -702,7 +725,7 @@ A label statement (referenced by goto)
 
 **Properties**
 
--   `name` **[String](#string)** 
+-   `name` **[String](#string)**
 
 ## List
 
@@ -718,7 +741,7 @@ Defines an array structure
 
 **Properties**
 
--   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)** 
+-   `value` **([Node](#node) \| [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | null)**
 
 ## Location
 
@@ -732,9 +755,9 @@ Defines the location of the node (with it's source contents as string)
 
 **Properties**
 
--   `source` **([String](#string) | null)** 
--   `start` **[Position](#position)** 
--   `end` **[Position](#position)** 
+-   `source` **([String](#string) | null)**
+-   `start` **[Position](#position)**
+-   `end` **[Position](#position)**
 
 ## Lookup
 
@@ -744,8 +767,8 @@ Lookup on an offset in the specified object
 
 **Properties**
 
--   `what` **[Expression](#expression)** 
--   `offset` **[Expression](#expression)** 
+-   `what` **[Expression](#expression)**
+-   `offset` **[Expression](#expression)**
 
 ## Magic
 
@@ -761,10 +784,10 @@ Defines a class/interface/trait method
 
 **Properties**
 
--   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `isAbstract` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
 
 ## Namespace
 
@@ -774,8 +797,8 @@ The main program node
 
 **Properties**
 
--   `name` **[String](#string)** 
--   `withBrackets` **[Boolean](#boolean)** 
+-   `name` **[String](#string)**
+-   `withBrackets` **[Boolean](#boolean)**
 
 ## New
 
@@ -785,8 +808,8 @@ Creates a new instance of the specified class
 
 **Properties**
 
--   `what` **([Identifier](#identifier) \| [Variable](#variable) \| [Class](#class))** 
--   `arguments` **[Array](#array)&lt;Arguments>** 
+-   `what` **([Identifier](#identifier) \| [Variable](#variable) \| [Class](#class))**
+-   `arguments` **[Array](#array)&lt;Arguments>**
 
 ## Node
 
@@ -799,8 +822,8 @@ A generic AST node
 
 **Properties**
 
--   `loc` **([Location](#location) | null)** 
--   `kind` **[String](#string)** 
+-   `loc` **([Location](#location) | null)**
+-   `kind` **[String](#string)**
 
 ### extends
 
@@ -808,9 +831,9 @@ Helper for extending the Node class
 
 **Parameters**
 
--   `constructor` **[Function](#function)** 
+-   `constructor` **[Function](#function)**
 
-Returns **[Function](#function)** 
+Returns **[Function](#function)**
 
 ## String
 
@@ -820,7 +843,7 @@ Defines a nowdoc string
 
 **Properties**
 
--   `label` **[String](#string)** 
+-   `label` **[String](#string)**
 
 ## String
 
@@ -830,7 +853,7 @@ Defines a string (simple ou double quoted) - chars are already escaped
 
 **Properties**
 
--   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isDoubleQuote` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Number
 
@@ -858,11 +881,11 @@ Defines a function parameter
 
 **Properties**
 
--   `type` **([Identifier](#identifier) | null)** 
--   `value` **([Node](#node) | null)** 
--   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `variadic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `type` **([Identifier](#identifier) | null)**
+-   `value` **([Node](#node) | null)**
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `variadic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Parenthesis
 
@@ -872,7 +895,7 @@ Parenthesis encapsulation `(... expr ...)`
 
 **Properties**
 
--   `inner` **[Expression](#expression)** 
+-   `inner` **[Expression](#expression)**
 
 ## Position
 
@@ -886,9 +909,9 @@ Each Position object consists of a line number (1-indexed) and a column number (
 
 **Properties**
 
--   `line` **[Number](#number)** 
--   `column` **[Number](#number)** 
--   `offset` **[Number](#number)** 
+-   `line` **[Number](#number)**
+-   `column` **[Number](#number)**
+-   `offset` **[Number](#number)**
 
 ## Post
 
@@ -898,8 +921,8 @@ Defines a post operation `$i++` or `$i--`
 
 **Properties**
 
--   `type` **[String](#string)** 
--   `what` **[Variable](#variable)** 
+-   `type` **[String](#string)**
+-   `what` **[Variable](#variable)**
 
 ## Pre
 
@@ -909,8 +932,8 @@ Defines a pre operation `++$i` or `--$i`
 
 **Properties**
 
--   `type` **[String](#string)** 
--   `what` **[Variable](#variable)** 
+-   `type` **[String](#string)**
+-   `what` **[Variable](#variable)**
 
 ## Print
 
@@ -926,7 +949,7 @@ The main program node
 
 **Properties**
 
--   `errors` **[Array](#array)&lt;[Error](#error)>** 
+-   `errors` **[Array](#array)&lt;[Error](#error)>**
 
 ## Property
 
@@ -936,10 +959,10 @@ Defines a class property
 
 **Properties**
 
--   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `value` **([Node](#node) | null)** 
+-   `isFinal` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `visibility` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
+-   `value` **([Node](#node) | null)**
 
 ## PropertyLookup
 
@@ -955,9 +978,9 @@ Defines a short if statement that returns a value
 
 **Properties**
 
--   `test` **[Expression](#expression)** 
--   `trueExpr` **[Expression](#expression)** 
--   `falseExpr` **[Expression](#expression)** 
+-   `test` **[Expression](#expression)**
+-   `trueExpr` **[Expression](#expression)**
+-   `falseExpr` **[Expression](#expression)**
 
 ### precedence
 
@@ -975,7 +998,7 @@ A continue statement
 
 **Properties**
 
--   `expr` **([Expression](#expression) | null)** 
+-   `expr` **([Expression](#expression) | null)**
 
 ## Silent
 
@@ -985,7 +1008,7 @@ Avoids to show/log warnings & notices from the inner expression
 
 **Properties**
 
--   `expr` **[Expression](#expression)** 
+-   `expr` **[Expression](#expression)**
 
 ## Statement
 
@@ -1001,7 +1024,7 @@ Declares a static variable into the current scope
 
 **Properties**
 
--   `items` **([Array](#array)&lt;[Variable](#variable)> | [Array](#array)&lt;[Assign](#assign)>)** 
+-   `items` **([Array](#array)&lt;[Variable](#variable)> | [Array](#array)&lt;[Assign](#assign)>)**
 
 ## StaticLookup
 
@@ -1017,9 +1040,9 @@ Defines a switch statement
 
 **Properties**
 
--   `test` **[Expression](#expression)** 
--   `body` **[Block](#block)** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `test` **[Expression](#expression)**
+-   `body` **[Block](#block)**
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Sys
 
@@ -1029,7 +1052,7 @@ Defines system based call
 
 **Properties**
 
--   `arguments` **[Array](#array)&lt;[Node](#node)>** 
+-   `arguments` **[Array](#array)&lt;[Node](#node)>**
 
 ## Throw
 
@@ -1039,7 +1062,7 @@ Defines a throw statement
 
 **Properties**
 
--   `what` **[Expression](#expression)** 
+-   `what` **[Expression](#expression)**
 
 ## Trait
 
@@ -1049,9 +1072,9 @@ A trait definition
 
 **Properties**
 
--   `extends` **([Identifier](#identifier) | null)** 
--   `implements` **[Array](#array)&lt;[Identifier](#identifier)>** 
--   `body` **[Array](#array)&lt;[Declaration](#declaration)>** 
+-   `extends` **([Identifier](#identifier) | null)**
+-   `implements` **[Array](#array)&lt;[Identifier](#identifier)>**
+-   `body` **[Array](#array)&lt;[Declaration](#declaration)>**
 
 ## TraitAlias
 
@@ -1061,10 +1084,10 @@ Defines a trait alias
 
 **Properties**
 
--   `trait` **([Identifier](#identifier) | null)** 
--   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `as` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
--   `visibility` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+-   `trait` **([Identifier](#identifier) | null)**
+-   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
+-   `as` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)**
+-   `visibility` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)**
 
 ## TraitPrecedence
 
@@ -1074,9 +1097,9 @@ Defines a trait alias
 
 **Properties**
 
--   `trait` **([Identifier](#identifier) | null)** 
--   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
--   `instead` **[Array](#array)&lt;[Identifier](#identifier)>** 
+-   `trait` **([Identifier](#identifier) | null)**
+-   `method` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**
+-   `instead` **[Array](#array)&lt;[Identifier](#identifier)>**
 
 ## TraitUse
 
@@ -1086,8 +1109,8 @@ Defines a trait usage
 
 **Properties**
 
--   `traits` **[Array](#array)&lt;[Identifier](#identifier)>** 
--   `adaptations` **([Array](#array)&lt;[Node](#node)> | null)** 
+-   `traits` **[Array](#array)&lt;[Identifier](#identifier)>**
+-   `adaptations` **([Array](#array)&lt;[Node](#node)> | null)**
 
 ## Try
 
@@ -1097,9 +1120,9 @@ Defines a try statement
 
 **Properties**
 
--   `body` **[Block](#block)** 
--   `catches` **[Array](#array)&lt;[Catch](#catch)>** 
--   `allways` **[Block](#block)** 
+-   `body` **[Block](#block)**
+-   `catches` **[Array](#array)&lt;[Catch](#catch)>**
+-   `allways` **[Block](#block)**
 
 ## Unary
 
@@ -1109,8 +1132,8 @@ Unary operations
 
 **Properties**
 
--   `type` **[String](#string)** 
--   `what` **[Expression](#expression)** 
+-   `type` **[String](#string)**
+-   `what` **[Expression](#expression)**
 
 ## Unset
 
@@ -1126,9 +1149,9 @@ Defines a use statement (with a list of use items)
 
 **Properties**
 
--   `name` **([String](#string) | null)** 
+-   `name` **([String](#string) | null)**
 -   `type` **([String](#string) | null)** Possible value : function, const
--   `item` **[Array](#array)&lt;[UseItem](#useitem)>** 
+-   `item` **[Array](#array)&lt;[UseItem](#useitem)>**
 
 ## UseItem
 
@@ -1138,9 +1161,9 @@ Defines a use statement (from namespace)
 
 **Properties**
 
--   `name` **[String](#string)** 
+-   `name` **[String](#string)**
 -   `type` **([String](#string) | null)** Possible value : function, const
--   `alias` **([String](#string) | null)** 
+-   `alias` **([String](#string) | null)**
 
 ### TYPE_CONST
 
@@ -1163,8 +1186,8 @@ be any expression in general, an expression can also be a pattern.
 
 **Properties**
 
--   `name` **([String](#string) \| [Node](#node))** 
--   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `name` **([String](#string) \| [Node](#node))**
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Variadic
 
@@ -1174,7 +1197,7 @@ Introduce a list of items into the arguments of the call
 
 **Properties**
 
--   `what` **([Array](#array) \| [Expression](#expression))** 
+-   `what` **([Array](#array) \| [Expression](#expression))**
 
 ## While
 
@@ -1184,9 +1207,9 @@ Defines a while statement
 
 **Properties**
 
--   `test` **[Expression](#expression)** 
--   `body` **[Statement](#statement)** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `test` **[Expression](#expression)**
+-   `body` **[Statement](#statement)**
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
 
 ## Yield
 
@@ -1196,8 +1219,8 @@ Defines a yield generator statement
 
 **Properties**
 
--   `value` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
--   `key` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))** 
+-   `value` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))**
+-   `key` **([Expression](#expression) \| [Null](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null))**
 
 ## YieldFrom
 
@@ -1207,4 +1230,4 @@ Defines a yield from generator statement
 
 **Properties**
 
--   `value` **[Expression](#expression)** 
+-   `value` **[Expression](#expression)**

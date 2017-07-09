@@ -10,6 +10,25 @@ var KIND = 'array';
 /**
  * Defines an array structure
  * @constructor Array
+ * @example
+ * [1, 2, 3]
+ * {
+ *  "kind": "array",
+ *  "shortForm": true
+ *  "items": [{
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "1"}
+ *  }, {
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "2"}
+ *  }, {
+ *    "kind": "entry",
+ *    "key": null,
+ *    "value": {"kind": "number", "value": "3"}
+ *  }]
+ * }
  * @extends {Expression}
  * @property {Entry[]} items
  * @property {boolean} shortForm
