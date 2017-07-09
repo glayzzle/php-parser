@@ -2,32 +2,6 @@
 
 ## AST
 
-The AST builder class
-
-**Parameters**
-
--   `withPositions`  
--   `withSource`  
-
-**Properties**
-
--   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
--   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
-
-### prepare
-
-Prepares an AST node
-
-**Parameters**
-
--   `kind` **([String](#string) | null)** Defines the node type
-    (if null, the kind must be passed at the function call)
--   `parser` **Parser** The parser instance (use for extracting locations)
-
-Returns **[Function](#function)** 
-
-## AST
-
 ## Class hierarchy
 
 -   [Location](#location)
@@ -122,6 +96,32 @@ Returns **[Function](#function)**
 
 -   `withPositions`  
 -   `withSource`  
+
+### prepare
+
+Prepares an AST node
+
+**Parameters**
+
+-   `kind` **([String](#string) | null)** Defines the node type
+    (if null, the kind must be passed at the function call)
+-   `parser` **Parser** The parser instance (use for extracting locations)
+
+Returns **[Function](#function)** 
+
+## AST
+
+The AST builder class
+
+**Parameters**
+
+-   `withPositions`  
+-   `withSource`  
+
+**Properties**
+
+-   `withPositions` **[Boolean](#boolean)** Should locate any node (by default false)
+-   `withSource` **[Boolean](#boolean)** Should extract the node original code (by default false)
 
 ### prepare
 
@@ -1189,8 +1189,23 @@ be any expression in general, an expression can also be a pattern.
 
 **Properties**
 
--   `name` **([String](#string) \| [Node](#node))** 
--   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `name` **([String](#string) \| [Node](#node))** The variable name (can be a complex expression when the name is resolved dynamically)
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Indicate if the variable reference is used, ex `&$foo`
+-   `curly` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Indicate if the name is defined between curlies, ex `${foo}`
+
+**Examples**
+
+```javascript
+// PHP code :
+&$foo
+// AST output
+{
+ "kind": "variable",
+ "name": "foo",
+ "byref": true,
+ "curly": false
+}
+```
 
 ## Variadic
 
