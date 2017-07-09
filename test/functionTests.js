@@ -78,5 +78,17 @@ describe('Function tests', function() {
     fn.body.kind.should.be.exactly('block');
   });
 
+  it('test static closure', function() {
+    // from expr
+    var ast = parser.parseEval('$a = static function() {};');
+    var fn = ast.children[0].right;
+    fn.kind.should.be.exactly('closure');
+    fn.isStatic.should.be.exactly(true);
+    // from statement
+    ast = parser.parseEval('static function() {};');
+    fn = ast.children[0];
+    fn.kind.should.be.exactly('closure');
+    fn.isStatic.should.be.exactly(true);
+  });
 
 });

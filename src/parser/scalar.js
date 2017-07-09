@@ -170,20 +170,22 @@ module.exports = {
         var varName = this.text();
         name = this.node('variable');
         this.next();
-        name = name(varName, false);
         // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
         if (this.token === '[') {
+          name = name(varName, false);
           var node = this.node('offsetlookup');
           var offset = this.next().read_expr();
           this.expect(']') && this.next();
           name = node(name, offset);
+        } else {
+          name = varName;
         }
       } else {
         name = this.read_expr();
       }
       this.expect('}') && this.next();
-      result = result('variable', name, false);
+      result = result('variable', name, false, true);
     }
 
     // expression

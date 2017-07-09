@@ -244,6 +244,9 @@ module.exports = {
           this.expect(';') && this.nextWithComments();
           return expr;
         }
+        if (this.token === this.tok.T_FUNCTION) {
+          return this.read_function(true, [0, 1, 0]);
+        }
         var items = this.read_variable_declarations();
         this.expectEndOfStatement();
         return result(items);

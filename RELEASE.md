@@ -1,5 +1,11 @@
 # Releases
 
+## 2.0.4 : (2017-07-09)
+
+- Fix AST errors on suppressErrors
+- Add curly boolean on variable node (for `${bar}` syntax)
+- Implement the static closure flag, ex: `$c = static function() {};`
+
 ## 2.0.0 : (2017-03-04)
 
 - Update AST for operators, unify bin/bool/coalesce nodes

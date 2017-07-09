@@ -17,14 +17,16 @@ var KIND = 'closure';
  * @property {boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
+ * @property {boolean} isStatic
  */
-var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, location) {
+var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, isStatic, location) {
   Statement.apply(this, [KIND, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;
   this.type = type;
   this.nullable = nullable;
+  this.isStatic = isStatic || false;
   this.body = null;
 });
 

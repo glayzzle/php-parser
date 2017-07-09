@@ -143,8 +143,34 @@ Defines an array structure
 
 **Properties**
 
--   `items` **[Array](#array)&lt;[Entry](#entry)>** 
--   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `items` **[Array](#array)&lt;[Entry](#entry)>** List of array items
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Indicate if the short array syntax is used, ex `[]` instead `array()`
+
+**Examples**
+
+```javascript
+// PHP code :
+[1, 'foo' => 'bar', 3]
+
+// AST structure :
+{
+ "kind": "array",
+ "shortForm": true
+ "items": [{
+   "kind": "entry",
+   "key": null,
+   "value": {"kind": "number", "value": "1"}
+ }, {
+   "kind": "entry",
+   "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
+   "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
+ }, {
+   "kind": "entry",
+   "key": null,
+   "value": {"kind": "number", "value": "3"}
+ }]
+}
+```
 
 ## Assign
 
@@ -290,6 +316,7 @@ Defines a closure
 -   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `nullable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `body` **([Block](#block) | null)** 
+-   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## Constant
 
@@ -490,12 +517,12 @@ Type: [String](#string)
 
 **Extends Node**
 
-An array entry
+An array entry - see [Array](#array)
 
 **Properties**
 
--   `key` **([Node](#node) | null)** 
--   `value` **[Node](#node)** 
+-   `key` **([Node](#node) | null)** The entry key/offset
+-   `value` **[Node](#node)** The entry value
 
 ## Error
 
@@ -1163,8 +1190,23 @@ be any expression in general, an expression can also be a pattern.
 
 **Properties**
 
--   `name` **([String](#string) \| [Node](#node))** 
--   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `name` **([String](#string) \| [Node](#node))** The variable name (can be a complex expression when the name is resolved dynamically)
+-   `byref` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Indicate if the variable reference is used, ex `&$foo`
+-   `curly` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Indicate if the name is defined between curlies, ex `${foo}`
+
+**Examples**
+
+```javascript
+// PHP code :
+&$foo
+// AST output
+{
+ "kind": "variable",
+ "name": "foo",
+ "byref": true,
+ "curly": false
+}
+```
 
 ## Variadic
 

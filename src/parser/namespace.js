@@ -97,7 +97,7 @@ module.exports = {
     if (this.token === ',') {
       items = items.concat(this.next().read_use_declarations(false));
     } else if (this.token === '{') {
-      name = items[0].name.name;
+      name = items[0].name;
       items = this.next().read_use_declarations(type === null);
       this.expect('}') && this.next();
     }

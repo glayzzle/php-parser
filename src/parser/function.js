@@ -33,7 +33,8 @@ module.exports = {
    */
   ,read_function: function(closure, flag) {
     var result = this.read_function_declaration(
-      closure ? 1 : (flag ? 2 : 0)
+      closure ? 1 : (flag ? 2 : 0),
+      flag && flag[1] === 1
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -48,7 +49,7 @@ module.exports = {
           result.loc.end = result.body.loc.end;
         }
       }
-      if (flag) {
+      if (!closure && flag) {
         result.parseFlags(flag);
       }
     }
@@ -60,7 +61,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  ,read_function_declaration: function(type) {
+  ,read_function_declaration: function(type, isStatic) {
     var nodeName = 'function';
     if (type === 1) {
       nodeName = 'closure';
@@ -68,6 +69,7 @@ module.exports = {
       nodeName = 'method';
     }
     var result = this.node(nodeName);
+
     if (this.expect(this.tok.T_FUNCTION)) {
       this.next();
     }
@@ -96,7 +98,7 @@ module.exports = {
     }
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType, nullable);
+      return result(params, isRef, use, returnType, nullable, isStatic);
     }
     return result(name, params, isRef, returnType, nullable);
   }
@@ -115,7 +117,7 @@ module.exports = {
     this.expect(this.tok.T_VARIABLE);
     var name = this.text().substring(1);
     this.next();
-    return result(name, isRef);
+    return result(name, isRef, false);
   }
   /**
    * reads a list of parameters
@@ -184,11 +186,13 @@ module.exports = {
     if (this.token !== ')') {
       while(this.token != this.EOF) {
         var argument = this.read_argument_list();
-        result.push(argument);
-        if (argument.kind === 'variadic') {
-          wasVariadic = true;
-        } else if (wasVariadic) {
-          this.raiseError('Unexpected argument after a variadic argument');
+        if (argument) {
+          result.push(argument);
+          if (argument.kind === 'variadic') {
+            wasVariadic = true;
+          } else if (wasVariadic) {
+            this.raiseError('Unexpected argument after a variadic argument');
+          }
         }
         if (this.token === ',') {
           this.next();

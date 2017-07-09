@@ -70,6 +70,35 @@ describe('Test graceful mode', function() {
       ast.children[0].kind.should.be.exactly('interface');
     });
 
+    it('test function arguments', function () {
+      // test.parser.debug = true;
+      var ast = test.parseEval([
+        '$foo->bar($arg, );',
+        '$foo = new bar($baz, ,$foo);'
+      ].join('\n'));
+      var callNode = ast.children[0];
+      callNode.kind.should.be.exactly('call');
+      callNode.what.kind.should.be.exactly('propertylookup');
+      callNode.arguments.length.should.be.exactly(1);
+      callNode.arguments[0].name.should.be.exactly('arg');
+      var assignNode = ast.children[1];
+      assignNode.kind.should.be.exactly('assign');
+      assignNode.right.kind.should.be.exactly('new');
+      assignNode.right.arguments[0].name.should.be.exactly('baz');
+      // the supressError mode cant guarantee $foo to be included into the arguments list
+    });
+
+    it('test method chains', function () {
+      // test.parser.debug = true;
+      var ast = test.parseEval([
+        '$controller->expects($this->once())',
+        '->'
+      ].join('\n'));
+      ast.children[0].kind.should.be.exactly('propertylookup');
+      ast.children[0].what.kind.should.be.exactly('call');
+      ast.children[0].what.what.kind.should.be.exactly('propertylookup');
+    });
+
   });
 
 });
