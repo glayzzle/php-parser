@@ -332,8 +332,19 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_FUNCTION:
-        // @fixme later - removed static lambda function declarations (colides with static keyword usage)
         return this.read_function(true);
+
+      case this.tok.T_STATIC:
+        var backup = [this.token, this.lexer.getState()];
+        if (this.next().token === this.tok.T_FUNCTION) {
+          // handles static function
+          return this.read_function(true, [0, 1, 0]);
+        } else {
+          // rollback
+          this.lexer.tokens.push(backup);
+          this.next();
+        }
+
 
     }
 
