@@ -353,9 +353,20 @@ module.exports = {
     if (this.is('VARIABLE')) {
       var result = this.node();
       expr = this.read_variable(false, false, false);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
+      // should accept only a variable
+      var isConst = (
+        expr.kind === 'constref' || (
+          expr.kind === 'staticlookup' &&
+          expr.offset.kind === 'constref'
+        )
+      );
+
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
+          if (isConst) this.error('VARIABLE');
           var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
@@ -370,45 +381,59 @@ module.exports = {
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '+=');
 
         case this.tok.T_MINUS_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '-=');
 
         case this.tok.T_MUL_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '*=');
 
         case this.tok.T_POW_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '**=');
 
         case this.tok.T_DIV_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '/=');
 
         case this.tok.T_CONCAT_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '.=');
 
         case this.tok.T_MOD_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '%=');
 
         case this.tok.T_AND_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '&=');
 
         case this.tok.T_OR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '|=');
 
         case this.tok.T_XOR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '^=');
 
         case this.tok.T_SL_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '<<=');
 
         case this.tok.T_SR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign',expr, this.next().read_expr(), '>>=');
 
         case this.tok.T_INC:
+          if (isConst) this.error('VARIABLE');
           this.next();
           return result('post', '+', expr);
         case this.tok.T_DEC:
+          if (isConst) this.error('VARIABLE');
           this.next();
           return result('post', '-', expr);
       }

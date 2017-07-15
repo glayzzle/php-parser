@@ -87,7 +87,7 @@ describe('Test expressions', function() {
       '$a > 5 ? true : false;',
       '$a ?: false;'
     ].join('\n'));
-    console.log(ast.children[1]);
+    //console.log(ast.children[1]);
     ast.children[1].kind.should.be.exactly('retif');
 
   });
@@ -207,6 +207,32 @@ describe('Test expressions', function() {
     ast.children[1].type.should.be.exactly('-');
     ast.children[2].type.should.be.exactly('+');
     ast.children[3].type.should.be.exactly('-');
+  });
+
+  it('should fail to assign constants', function() {
+    var ast = parser.parseEval('a = 1;', {
+      parser: { debug: false, suppressErrors: true }
+    });
+    var msg = 'Parse Error : syntax error, unexpected \'=\' on line 1';
+    ast.errors.length.should.be.exactly(1);
+    ast.errors[0].message.should.be.exactly(msg);
+  });
+
+  it('should fail to assign class constants', function() {
+    var ast = parser.parseEval('foo::b = 1;', {
+      parser: { debug: false, suppressErrors: true }
+    });
+    var msg = 'Parse Error : syntax error, unexpected \'=\' on line 1';
+    ast.errors.length.should.be.exactly(1);
+    ast.errors[0].message.should.be.exactly(msg);
+  });
+
+  it('should assign class static', function() {
+    var ast = parser.parseEval('a::$b = 1;', {
+      parser: { debug: false, suppressErrors: true }
+    });
+    ast.errors.length.should.be.exactly(0);
+    ast.children[0].kind.should.be.exactly('assign');
   });
 
   it('test new', function() {

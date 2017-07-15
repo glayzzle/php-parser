@@ -90,6 +90,7 @@ Documentation
 Related projects
 ----------------
 
+- [babel-preset-php](https://gitlab.com/kornelski/babel-preset-php) : Babel preset for converting PHP syntax to JavaScript. It can run subset of PHP in the browser or in Node.js. .
 - [php-unparser](https://github.com/chris-l/php-unparser) : Produce code that uses the style format recommended by PSR-1 and PSR-2.
 - [php-writer](https://github.com/glayzzle/php-writer) : Update PHP scripts from their AST
 - [ts-php-inspections](https://github.com/DaGhostman/ts-php-inspections) : Provide PHP code inspections written in typescript
