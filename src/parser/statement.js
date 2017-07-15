@@ -322,17 +322,18 @@ module.exports = {
       case this.tok.T_STRING:
         var current = [this.token, this.lexer.getState()];
         var label = this.text();
+        // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
         if (this.next().token === ':') {
           var result = this.node('label');
           this.next();
           return result(label);
-        } else {
-          // default fallback expr
-          this.lexer.tokens.push(current);
-          var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]) && this.nextWithComments();
-          return expr;
         }
+
+        // default fallback expr / T_STRING '::' (etc...)
+        this.lexer.tokens.push(current);
+        var expr = this.next().read_expr();
+        this.expectEndOfStatement();
+        return expr;
 
       case this.tok.T_GOTO:
         var result = this.node('goto'), label = null;
