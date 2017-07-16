@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-07-10 */
+/*! php-parser - BSD3 License - 2017-07-16 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 // shim for using process in browser
@@ -309,6 +309,96 @@ AST.prototype.position = function(parser) {
   );
 };
 
+
+// operators in ascending order of precedence
+AST.precedence = {};
+var binOperatorsPrecedence = [
+  ['or'],
+  ['xor'],
+  ['and'],
+  // TODO: assignment / not sure that PHP allows this with expressions
+  ['?'],
+  ['??'],
+  ['||'],
+  ['&&'],
+  ['|'],
+  ['^'],
+  ['&'],
+  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
+  ['<', '<=', '>', '>='],
+  ['<<', '>>'],
+  ['+', '-', '.'],
+  ['*', '/', '%'],
+  ['!'],
+  ['instanceof'],
+  // TODO: typecasts
+  // TODO: [ (array)
+  // TODO: clone, new
+].forEach(function (list, index) {
+  list.forEach(function (operator) {
+    AST.precedence[operator] = index + 1;
+  });
+});
+
+
+/**
+ * Check and fix precence, by default using right
+ */
+AST.prototype.resolvePrecedence = function(result) {
+  var buffer;
+  // handling precendence
+  if (result.kind === 'bin') {
+    if (result.right) {
+      if (result.right.kind === 'bin') {
+        var lLevel = AST.precedence[result.type];
+        var rLevel = AST.precedence[result.right.type];
+        if (lLevel && rLevel && rLevel <= lLevel) {
+          // https://github.com/glayzzle/php-parser/issues/79
+          // shift precedence
+          buffer = result.right;
+          result.right = result.right.left;
+          buffer.left = this.resolvePrecedence(result);
+          result = buffer;
+        }
+      } else if (result.right.kind === 'retif') {
+        var lLevel = AST.precedence[result.type];
+        var rLevel = AST.precedence['?'];
+        if (lLevel && rLevel && rLevel <= lLevel) {
+          buffer = result.right;
+          result.right = result.right.test;
+          buffer.test = this.resolvePrecedence(result);
+          result = buffer;
+        }
+      }
+    }
+  } else if (result.kind === 'unary') {
+    // https://github.com/glayzzle/php-parser/issues/75
+    if (result.what) {
+      // unary precedence is allways lower
+      if (result.what.kind === 'bin') {
+        buffer = result.what;
+        result.what = result.what.left;
+        buffer.left = this.resolvePrecedence(result);
+        result = buffer;
+      } else if (result.what.kind === 'retif') {
+        buffer = result.what;
+        result.what = result.what.test;
+        buffer.test = this.resolvePrecedence(result);
+        result = buffer;
+      }
+    }
+  } else if (result.kind === 'retif') {
+    // https://github.com/glayzzle/php-parser/issues/77
+    if (result.falseExpr && result.falseExpr.kind === 'retif') {
+      buffer = result.falseExpr;
+      result.falseExpr = buffer.test;
+      buffer.test = this.resolvePrecedence(result);
+      result = buffer;
+    }
+  }
+  return result;
+};
+
 /**
  * Prepares an AST node
  * @param {String|null} kind - Defines the node type
@@ -357,22 +447,7 @@ AST.prototype.prepare = function(kind, parser) {
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
-    if (
-      result.kind === 'bin' &&
-      result.right &&
-      typeof result.right.precedence === 'function'
-    ) {
-      var out = result.right.precedence(result);
-      if (out) { // shift with precedence
-        result = out;
-      }
-    } else if (result.kind === 'unary' && result.what) {
-      var out = result.precedence(result.what);
-      if (out) { // shift with precedence
-        result = out;
-      }
-    }
-    return result;
+    return self.resolvePrecedence(result);
   };
 };
 
@@ -556,37 +631,6 @@ module.exports = Assign;
 
 var Operation = require('./operation');
 var KIND = 'bin';
-
-// operators in ascending order of precedence
-var binOperatorsPrecedence = [
-  ['or'],
-  ['xor'],
-  ['and'],
-  // TODO: assignment / not sure that PHP allows this with expressions
-  ['retif'],
-  ['??'],
-  ['||'],
-  ['&&'],
-  ['|'],
-  ['^'],
-  ['&'],
-  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
-  ['<', '<=', '>', '>='],
-  ['<<', '>>'],
-  ['+', '-', '.'],
-  ['*', '/', '%'],
-  ['!'],
-  ['instanceof'],
-  // TODO: typecasts
-  // TODO: [ (array)
-  // TODO: clone, new
-];
-
-/*
-x OP1 (y OP2 z)
-z OP1 (x OP2 y)
-z OP2 (x OP1 y)
-*/
 /**
  * Binary operations
  * @constructor Bin
@@ -600,25 +644,6 @@ var Bin = Operation.extends(function Bin(type, left, right, location) {
   this.type = type;
   this.left = left;
   this.right = right;
-});
-
-Bin.prototype.precedence = function(node) {
-  var lLevel = Bin.precedence[node.type];
-  var rLevel = Bin.precedence[this.type];
-  if (lLevel && rLevel && rLevel < lLevel) {
-    // shift precedence
-    node.right = this.left;
-    this.left = node;
-    return this;
-  }
-};
-
-// define nodes shifting
-Bin.precedence = {};
-binOperatorsPrecedence.forEach(function (list, index) {
-  list.forEach(function (operator) {
-    Bin.precedence[operator] = index + 1;
-  });
 });
 
 module.exports = Bin;
@@ -2296,8 +2321,6 @@ module.exports = PropertyLookup;
 
 var Statement = require('./statement');
 var KIND = 'retif';
-var Bin = require('./bin');
-var PRECEDENCE = Bin.precedence[KIND];
 
 /**
  * Defines a short if statement that returns a value
@@ -2314,26 +2337,9 @@ var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location
   this.falseExpr = falseExpr;
 });
 
-/**
- * Handles precedence over items
- */
-RetIf.prototype.precedence = function(node) {
-  var what = node.kind === 'bin' ? node.type : node.kind;
-  var lLevel = Bin.precedence[what];
-  if (lLevel && PRECEDENCE < lLevel) {
-    if (node.kind === 'bin') {
-      node.right = this.test;
-      this.test = node;
-      return this;
-    } else {
-      throw new Error('@todo ' + node.kind);
-    }
-  }
-};
-
 module.exports = RetIf;
 
-},{"./bin":5,"./statement":70}],68:[function(require,module,exports){
+},{"./statement":70}],68:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2718,18 +2724,6 @@ var Unary = Operation.extends(function Unary(type, what, location) {
   this.type = type;
   this.what = what;
 });
-
-Unary.prototype.precedence = function(node) {
-  if (node.kind === 'bin') {
-    this.what = node.left;
-    node.left = this;
-    return node;
-  } else if (node.kind === 'retif') {
-    this.what = node.test;
-    node.test = this;
-    return node;
-  }
-};
 
 module.exports = Unary;
 
@@ -5940,9 +5934,20 @@ module.exports = {
     if (this.is('VARIABLE')) {
       var result = this.node();
       expr = this.read_variable(false, false, false);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
+      // should accept only a variable
+      var isConst = (
+        expr.kind === 'constref' || (
+          expr.kind === 'staticlookup' &&
+          expr.offset.kind === 'constref'
+        )
+      );
+
       // VARIABLES SPECIFIC OPERATIONS
       switch(this.token) {
         case '=':
+          if (isConst) this.error('VARIABLE');
           var right;
           if (this.next().token == '&') {
             if (this.next().token === this.tok.T_NEW) {
@@ -5957,45 +5962,59 @@ module.exports = {
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '+=');
 
         case this.tok.T_MINUS_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '-=');
 
         case this.tok.T_MUL_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '*=');
 
         case this.tok.T_POW_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '**=');
 
         case this.tok.T_DIV_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '/=');
 
         case this.tok.T_CONCAT_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '.=');
 
         case this.tok.T_MOD_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '%=');
 
         case this.tok.T_AND_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '&=');
 
         case this.tok.T_OR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '|=');
 
         case this.tok.T_XOR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '^=');
 
         case this.tok.T_SL_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign', expr, this.next().read_expr(), '<<=');
 
         case this.tok.T_SR_EQUAL:
+          if (isConst) this.error('VARIABLE');
           return result('assign',expr, this.next().read_expr(), '>>=');
 
         case this.tok.T_INC:
+          if (isConst) this.error('VARIABLE');
           this.next();
           return result('post', '+', expr);
         case this.tok.T_DEC:
+          if (isConst) this.error('VARIABLE');
           this.next();
           return result('post', '-', expr);
       }
@@ -7413,17 +7432,18 @@ module.exports = {
       case this.tok.T_STRING:
         var current = [this.token, this.lexer.getState()];
         var label = this.text();
+        // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
         if (this.next().token === ':') {
           var result = this.node('label');
           this.next();
           return result(label);
-        } else {
-          // default fallback expr
-          this.lexer.tokens.push(current);
-          var expr = this.next().read_expr();
-          this.expect([';', this.tok.T_CLOSE_TAG]) && this.nextWithComments();
-          return expr;
         }
+
+        // default fallback expr / T_STRING '::' (etc...)
+        this.lexer.tokens.push(current);
+        var expr = this.next().read_expr();
+        this.expectEndOfStatement();
+        return expr;
 
       case this.tok.T_GOTO:
         var result = this.node('goto'), label = null;

@@ -1,5 +1,9 @@
 # Releases
 
+## 2.0.5 : (2017-07-16)
+
+- Fix precedence between bin, retif, unary
+
 ## 2.0.4 : (2017-07-09)
 
 - Fix AST errors on suppressErrors
