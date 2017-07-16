@@ -7,6 +7,8 @@ var parser = require('../src/index');
 var checkPrecedence = function(a, b) {
   if (!a || !b) return false;
   if (b.kind === 'parenthesis') {
+    // force the precendence with parenthesis
+    // ignore them in test
     b = b.inner;
   }
   for(var k in b) {
@@ -106,5 +108,15 @@ describe('Test precedence', function() {
     shouldBeSame('!4 instanceof 3', '(!4) instanceof 3');
     shouldBeSame('!4 + 5 instanceof 3', '(!4) + (5 instanceof 3)');
     shouldBeSame('6 + !4 + 5', '6 + (!4) + 5');
+    shouldBeSame('if($a && !$b) {}', 'if($a && (!$b)) {}');
+  });
+  it('test concat', function() {
+    shouldBeSame('"a"."b"."c"."d"', '((("a"."b")."c")."d")');
+  });
+  it('test retif', function() {
+    shouldBeSame('$a ? 1 : $b ? 2 : $c ? 3 : 4', '(($a ? 1 : $b) ? 2 : $c) ? 3 : 4');
+  });
+  it('test + / *', function() {
+    shouldBeSame('1 + 2 * 3', '1 + (2 * 3)');
   });
 });

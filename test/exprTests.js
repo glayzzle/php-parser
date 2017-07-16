@@ -284,17 +284,11 @@ describe('Test expressions', function() {
 
     var cExpr = ast.children[2].right;
     cExpr.kind.should.be.exactly('bin');
-    cExpr.left.value.should.be.exactly('1');
+    cExpr.left.type.should.be.exactly('+');
+    cExpr.left.left.value.should.be.exactly('1');
+    cExpr.left.right.type.should.be.exactly('/');
     cExpr.type.should.be.exactly('+');
-
-    cExpr.right.kind.should.be.exactly('bin');
-    cExpr.right.right.value.should.be.exactly('4');
-    cExpr.right.type.should.be.exactly('+');
-
-    cExpr.right.left.kind.should.be.exactly('bin');
-    cExpr.right.left.left.value.should.be.exactly('2');
-    cExpr.right.left.type.should.be.exactly('/');
-    cExpr.right.left.right.value.should.be.exactly('3');
+    cExpr.right.value.should.be.exactly('4');
 
     var dExpr = ast.children[3].right;
     dExpr.should.have.property('kind', 'bin');
