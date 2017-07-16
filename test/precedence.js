@@ -119,11 +119,24 @@ describe('Test precedence', function() {
   it('test + / *', function() {
     shouldBeSame('1 + 2 * 3', '1 + (2 * 3)');
   });
-  it('test assign', function() {
-    // https://github.com/glayzzle/php-parser/issues/81
+  // https://github.com/glayzzle/php-parser/issues/81
+  it('test assign with and', function() {
     shouldBeSame(
       '$a and $b = $c and $d',
       '($a and ($b = $c)) and $d'
     );
   });
+  it('test assign list', function() {
+    shouldBeSame(
+      '$a = $b = $c',
+      '($a = ($b = $c))'
+    );
+  });
+  it('test assign with &&', function() {
+    shouldBeSame(
+      '$a && $b = $c && $d',
+      '$a && ($b = ($c && $d))'
+    );
+  });
+
 });
