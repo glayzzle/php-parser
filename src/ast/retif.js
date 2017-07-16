@@ -7,8 +7,6 @@
 
 var Statement = require('./statement');
 var KIND = 'retif';
-var Bin = require('./bin');
-var PRECEDENCE = Bin.precedence[KIND];
 
 /**
  * Defines a short if statement that returns a value
@@ -24,22 +22,5 @@ var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location
   this.trueExpr = trueExpr;
   this.falseExpr = falseExpr;
 });
-
-/**
- * Handles precedence over items
- */
-RetIf.prototype.precedence = function(node) {
-  var what = node.kind === 'bin' ? node.type : node.kind;
-  var lLevel = Bin.precedence[what];
-  if (lLevel && PRECEDENCE < lLevel) {
-    if (node.kind === 'bin') {
-      node.right = this.test;
-      this.test = node;
-      return this;
-    } else {
-      throw new Error('@todo ' + node.kind);
-    }
-  }
-};
 
 module.exports = RetIf;

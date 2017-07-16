@@ -21,16 +21,4 @@ var Unary = Operation.extends(function Unary(type, what, location) {
   this.what = what;
 });
 
-Unary.prototype.precedence = function(node) {
-  if (node.kind === 'bin') {
-    this.what = node.left;
-    node.left = this;
-    return node;
-  } else if (node.kind === 'retif') {
-    this.what = node.test;
-    node.test = this;
-    return node;
-  }
-};
-
 module.exports = Unary;

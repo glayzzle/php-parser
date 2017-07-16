@@ -124,6 +124,85 @@ AST.prototype.position = function(parser) {
   );
 };
 
+
+// operators in ascending order of precedence
+AST.precedence = {};
+var binOperatorsPrecedence = [
+  ['or'],
+  ['xor'],
+  ['and'],
+  // TODO: assignment / not sure that PHP allows this with expressions
+  ['retif'],
+  ['??'],
+  ['||'],
+  ['&&'],
+  ['|'],
+  ['^'],
+  ['&'],
+  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
+  ['<', '<=', '>', '>='],
+  ['<<', '>>'],
+  ['+', '-', '.'],
+  ['*', '/', '%'],
+  ['!'],
+  ['instanceof'],
+  // TODO: typecasts
+  // TODO: [ (array)
+  // TODO: clone, new
+].forEach(function (list, index) {
+  list.forEach(function (operator) {
+    AST.precedence[operator] = index + 1;
+  });
+});
+
+
+/**
+ * Check and fix precence, by default using right
+ */
+AST.prototype.resolvePrecedence = function(result) {
+  var buffer;
+  // handling precendence
+  if (result.kind === 'bin') {
+    if (result.right && result.right.kind === 'bin') {
+      var lLevel = AST.precedence[result.type];
+      var rLevel = AST.precedence[result.right.type];
+      if (lLevel && rLevel && rLevel <= lLevel) {
+        // https://github.com/glayzzle/php-parser/issues/79
+        // shift precedence
+        buffer = result.right;
+        result.right = result.right.left;
+        buffer.left = this.resolvePrecedence(result);
+        result = buffer;
+      }
+    }
+  } else if (result.kind === 'unary') {
+    // https://github.com/glayzzle/php-parser/issues/75
+    if (result.what) {
+      // unary precedence is allways lower
+      if (result.what.kind === 'bin') {
+        buffer = result.what;
+        result.what = result.what.left;
+        buffer.left = this.resolvePrecedence(result);
+        result = buffer;
+      } else if (result.what.kind === 'retif') {
+        buffer = result.what;
+        result.what = result.what.test;
+        buffer.test = this.resolvePrecedence(result);
+        result = buffer;
+      }
+    }
+  } else if (result.kind === 'retif') {
+    // https://github.com/glayzzle/php-parser/issues/77
+    if (result.falseExpr && result.falseExpr.kind === 'retif') {
+      buffer = result.falseExpr;
+      result.falseExpr = buffer.test;
+      buffer.test = this.resolvePrecedence(result);
+      result = buffer;
+    }
+  }
+  return result;
+};
+
 /**
  * Prepares an AST node
  * @param {String|null} kind - Defines the node type
@@ -172,22 +251,7 @@ AST.prototype.prepare = function(kind, parser) {
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
-    if (
-      result.kind === 'bin' &&
-      result.right &&
-      typeof result.right.precedence === 'function'
-    ) {
-      var out = result.right.precedence(result);
-      if (out) { // shift with precedence
-        result = out;
-      }
-    } else if (result.kind === 'unary' && result.what) {
-      var out = result.precedence(result.what);
-      if (out) { // shift with precedence
-        result = out;
-      }
-    }
-    return result;
+    return self.resolvePrecedence(result);
   };
 };
 
