@@ -131,7 +131,7 @@ var binOperatorsPrecedence = [
   ['or'],
   ['xor'],
   ['and'],
-  // TODO: assignment / not sure that PHP allows this with expressions
+  ['='],
   ['?'],
   ['??'],
   ['||'],
@@ -209,6 +209,19 @@ AST.prototype.resolvePrecedence = function(result) {
       result.falseExpr = buffer.test;
       buffer.test = this.resolvePrecedence(result);
       result = buffer;
+    }
+  } else if (result.kind === 'assign') {
+    // https://github.com/glayzzle/php-parser/issues/81
+    if (result.right && result.right.kind === 'bin') {
+      var lLevel = AST.precedence['='];
+      var rLevel = AST.precedence[result.right.type];
+      // only shifts with and, xor, or
+      if (lLevel && rLevel && rLevel < lLevel) {
+        buffer = result.right;
+        result.right = result.right.left;
+        buffer.left = result;
+        result = buffer;
+      }
     }
   }
   return result;
