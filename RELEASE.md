@@ -1,8 +1,9 @@
 # Releases
 
-## 2.0.5 : (2017-07-16)
+## 2.0.6 : (2017-07-16)
 
 - Fix precedence between bin, retif, unary
+- Fix precedence with assign
 
 ## 2.0.4 : (2017-07-09)
 
