@@ -15,7 +15,7 @@ var KIND = 'block';
  */
 var Block = Statement.extends(function Block(kind, children, location) {
   Statement.apply(this, [kind || KIND, location]);
-  this.children = children;
+  this.children = children.filter(Boolean);
 });
 
 module.exports = Block;
