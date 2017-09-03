@@ -192,10 +192,18 @@ describe('Test classes', function() {
         '  public function constructor() {}',
         '  public function __proto__() {',
         '    $this->constructor = null;',
-        '    self::constructor = null;',
+        '    self::$constructor = null;',
         '  }',
         '}'
       ].join('\n'));
+      ast.children[0].kind.should.be.exactly('class');
+      ast.children[0].name.should.be.exactly('__proto__');
+      ast.children[0].body[0].kind.should.be.exactly('property');
+      ast.children[0].body[0].name.should.be.exactly('constructor');
+      ast.children[0].body[1].kind.should.be.exactly('method');
+      ast.children[0].body[1].name.should.be.exactly('constructor');
+      ast.children[0].body[2].kind.should.be.exactly('method');
+      ast.children[0].body[2].name.should.be.exactly('__proto__');
     });
   })
 });

@@ -7,7 +7,7 @@ module.exports = {
   T_STRING: function() {
     var token = this.yytext.toLowerCase();
     var id = this.keywords[token];
-    if (!id) {
+    if (typeof id !== 'number') {
       if (token === 'yield') {
         if (this.tryMatch(' from')) {
           this.consume(5);
@@ -97,7 +97,7 @@ module.exports = {
         this.consume_LABEL();
         var castToken = this.yytext.substring(yylen - 1).toLowerCase();
         var castId = this.castKeywords[castToken];
-        if (castId) {
+        if (typeof castId === 'number') {
           this.input();
           if (this.is_TABSPACE()) {
             this.consume_TABSPACE().input();
