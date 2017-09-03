@@ -1,5 +1,9 @@
 # Releases
 
+## 2.0.7 : (2017-09-03)
+- Fix #86 : bug on Object properties usage in PHP like `__proto__`, or `constructor`
+- Fix #84 : remove null statements from bodies
+
 ## 2.0.6 : (2017-07-16)
 
 - Fix precedence between bin, retif, unary
