@@ -102,4 +102,19 @@ describe('Test IF statements', function() {
       ast.children[1].alternate.kind.should.be.exactly('block');
     });
   });
+  describe('Issue #84', function () {
+    var ast = parser.parseCode([
+      '<?php if (true): ?>',
+      '<?php else: ?>',
+      '<?php endif; ?>'
+    ].join('\n'), {
+      parser: { debug: false }
+    });
+    it('if block should have zero children', function() {
+      ast.children[0].body.children.length.should.be.exactly(0);
+    });
+    it('else block should have zero children', function() {
+      ast.children[0].alternate.children.length.should.be.exactly(0);
+    });
+  });
 });
