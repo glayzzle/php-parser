@@ -183,4 +183,19 @@ describe('Test classes', function() {
       // @todo
     });
   });
+
+  describe('Test issues', function() {
+    it('pass js properties', function() {
+      var ast = parser.parseEval([
+        'class __proto__ {',
+        '  static $constructor;',
+        '  public function constructor() {}',
+        '  public function __proto__() {',
+        '    $this->constructor = null;',
+        '    self::constructor = null;',
+        '  }',
+        '}'
+      ].join('\n'));
+    });
+  })
 });
