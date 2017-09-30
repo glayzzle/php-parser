@@ -80,6 +80,15 @@ var engine = function(options) {
 };
 
 /**
+ * Check if the inpyt is a buffer or a string
+ * @param  {Buffer|String} buffer Input value that can be either a buffer or a string
+ * @return {String}   Returns the string from input
+ */
+var getStringBuffer = function(buffer) {
+  return Buffer.isBuffer(buffer) ? buffer.toString() : buffer;
+};
+
+/**
  * Creates a new instance (Helper)
  * @param {Object} options
  * @return {Engine}
@@ -106,6 +115,7 @@ engine.parseEval = function(buffer, options) {
 engine.prototype.parseEval = function(buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
+  buffer = getStringBuffer(buffer);
   return this.parser.parse(buffer, 'eval');
 };
 
@@ -146,6 +156,7 @@ engine.parseCode = function(buffer, filename, options) {
 engine.prototype.parseCode = function(buffer, filename) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = false;
+  buffer = getStringBuffer(buffer);
   return this.parser.parse(buffer, filename);
 };
 
@@ -167,6 +178,7 @@ engine.tokenGetAll = function(buffer, options) {
 engine.prototype.tokenGetAll = function(buffer) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = true;
+  buffer = getStringBuffer(buffer);
   var EOF = this.lexer.EOF;
   var names = this.tokens.values;
   this.lexer.setInput(buffer);

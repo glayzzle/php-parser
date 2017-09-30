@@ -22,7 +22,10 @@ Usage
 
 ```js
 // initialize the php parser factory class
+var fs = require('fs');
+var path = require('path');
 var engine = require('php-parser');
+
 // initialize a new parser instance
 var parser = new engine({
   // some options :
@@ -35,12 +38,19 @@ var parser = new engine({
 });
 
 // Retrieve the AST from the specified source
-var AST = parser.parseEval('echo "Hello World";');
-// AST.kind === 'program';
-// AST.children[0].kind === 'echo';
+var eval = parser.parseEval('echo "Hello World";');
 
 // Retrieve an array of tokens (same as php function token_get_all)
 var tokens = parser.tokenGetAll('<?php echo "Hello World";');
+
+// Load a static file (Note: this file should exist on your computer)
+var phpFile = fs.readFileSync( './example.php' );
+
+// Log out results
+console.log( 'Eval parse:', eval );
+console.log( 'Tokens parse:', tokens );
+console.log( 'File parse:', parser.parseCode(phpFile) );
+
 ```
 
 Sample AST output
@@ -72,9 +82,9 @@ API Overview
 
 The main API exposes a class with the following methods :
 
-- **parseEval**(String buffer) : parse a PHP code in eval style mode (without php open tags)
-- **parseCode**(String buffer, String filename) : parse a PHP code by using php open tags.
-- **tokenGetAll**(String buffer) : retrieves a list of all tokens from the specified input.
+- **parseEval**(String|Buffer) : parse a PHP code in eval style mode (without php open tags)
+- **parseCode**(String|Buffer, String filename) : parse a PHP code by using php open tags.
+- **tokenGetAll**(String|Buffer) : retrieves a list of all tokens from the specified input.
 
 You can also [pass options](https://github.com/glayzzle/php-parser/wiki/Options) that change the behavior of the parser/lexer.
 
