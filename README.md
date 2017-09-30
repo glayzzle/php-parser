@@ -82,9 +82,9 @@ API Overview
 
 The main API exposes a class with the following methods :
 
-- **parseEval**(String buffer) : parse a PHP code in eval style mode (without php open tags)
-- **parseCode**(String buffer, String filename) : parse a PHP code by using php open tags.
-- **tokenGetAll**(String buffer) : retrieves a list of all tokens from the specified input.
+- **parseEval**(String|Buffer) : parse a PHP code in eval style mode (without php open tags)
+- **parseCode**(String|Buffer, String filename) : parse a PHP code by using php open tags.
+- **tokenGetAll**(String|Buffer) : retrieves a list of all tokens from the specified input.
 
 You can also [pass options](https://github.com/glayzzle/php-parser/wiki/Options) that change the behavior of the parser/lexer.
 
