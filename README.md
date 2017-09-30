@@ -24,7 +24,7 @@ Usage
 // initialize the php parser factory class
 var fs = require('fs');
 var path = require('path');
-var engine = require('../src/index.js');
+var engine = require('php-parser');
 
 // initialize a new parser instance
 var parser = new engine({
