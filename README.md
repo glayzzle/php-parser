@@ -22,7 +22,10 @@ Usage
 
 ```js
 // initialize the php parser factory class
-var engine = require('php-parser');
+var fs = require('fs');
+var path = require('path');
+var engine = require('../src/index.js');
+
 // initialize a new parser instance
 var parser = new engine({
   // some options :
@@ -35,12 +38,19 @@ var parser = new engine({
 });
 
 // Retrieve the AST from the specified source
-var AST = parser.parseEval('echo "Hello World";');
-// AST.kind === 'program';
-// AST.children[0].kind === 'echo';
+var eval = parser.parseEval('echo "Hello World";');
 
 // Retrieve an array of tokens (same as php function token_get_all)
 var tokens = parser.tokenGetAll('<?php echo "Hello World";');
+
+// Load a static file (Note: this file should exist on your computer)
+var phpFile = fs.readFileSync( './example.php' );
+
+// Log out results
+console.log( 'Eval parse:', eval );
+console.log( 'Tokens parse:', tokens );
+console.log( 'File parse:', parser.parseCode(phpFile) );
+
 ```
 
 Sample AST output
