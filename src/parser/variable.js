@@ -76,7 +76,7 @@ module.exports = {
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
       offset = this.read_reference_variable(encapsed, false);
     } else if (
-      this.token === this.tok.T_STRING
+      this.is('IDENTIFIER') || this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS
     ) {
       offset = this.node('constref');
@@ -126,6 +126,7 @@ module.exports = {
           }
           result = node(result, offset);
           break;
+        
         case this.tok.T_OBJECT_OPERATOR:
           var node = this.node('propertylookup');
           var what = null;
