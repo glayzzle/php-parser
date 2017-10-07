@@ -48,7 +48,8 @@ describe('Test variables', function() {
       'parent::foo();',
       'foo::class;',
       '$this->foo();',
-      'foo::$bar;'
+      'foo::$bar;',
+      '$this->foo::bar'
     ].join('\n'), {
       parser: {
         // debug: true
@@ -102,6 +103,15 @@ describe('Test variables', function() {
       expr.what.kind.should.be.exactly('identifier');
       expr.what.name.should.be.exactly('foo');
       expr.offset.kind.should.be.exactly('variable');
+      expr.offset.name.should.be.exactly('bar');
+    });
+    it('should be $this->foo::bar', function() {
+      var expr = ast.children[6];
+      expr.kind.should.be.exactly('staticlookup');
+      expr.what.kind.should.be.exactly('propertylookup');
+      expr.what.what.kind.should.be.exactly('variable');
+      expr.what.what.name.should.be.exactly('this');
+      expr.what.offset.name.should.be.exactly('foo');
       expr.offset.name.should.be.exactly('bar');
     });
   });

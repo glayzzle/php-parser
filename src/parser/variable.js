@@ -126,6 +126,9 @@ module.exports = {
           }
           result = node(result, offset);
           break;
+        case this.tok.T_DOUBLE_COLON:
+          result = this.read_static_getter(result, encapsed);
+          break;
         case this.tok.T_OBJECT_OPERATOR:
           var node = this.node('propertylookup');
           var what = null;
