@@ -76,8 +76,10 @@ module.exports = {
     var isRef = this.is_reference();
     var name = false, use = [], returnType = null, nullable = false;
     if (type !== 1) {
-      if (this.expect(this.tok.T_STRING)) {
+      if ((type === 2 && this.is('IDENTIFIER')) || this.expect(this.tok.T_STRING)) {
         name = this.text();
+        this.next();
+      } else {
         this.next();
       }
     }
