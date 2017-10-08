@@ -188,5 +188,36 @@ describe('Test variables', function() {
       ast.children[0].left.kind.should.be.exactly('variable');
       ast.children[0].left.name.should.be.exactly('?');
     });
+    
+    it('should fail on double static lookup', function() {
+      var astErr = parser.parseEval([
+        'this->foo::bar::baz;'
+      ].join('\n'), {
+        parser: {
+          suppressErrors: true
+        }
+      });
+
+      var msg = 'Parse Error : syntax error, unexpected \'::\' (T_DOUBLE_COLON) on line 1';
+      astErr.errors.length.should.be.exactly(1);
+      astErr.errors[0].line.should.be.exactly(1);
+      astErr.errors[0].message.should.be.exactly(msg);
+    });
+    
+    it('should fail on property lookup on static lookup', function() {
+      var astErr = parser.parseEval([
+        'this->foo::bar->baz;'
+      ].join('\n'), {
+        parser: {
+          suppressErrors: true
+        }
+      });
+
+      var msg = 'Parse Error : syntax error, unexpected \'->\' (T_OBJECT_OPERATOR) on line 1';
+      astErr.errors.length.should.be.exactly(1);
+      astErr.errors[0].line.should.be.exactly(1);
+      astErr.errors[0].message.should.be.exactly(msg);
+    });
+    
   });
 });
