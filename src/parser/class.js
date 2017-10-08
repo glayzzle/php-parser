@@ -183,7 +183,7 @@ module.exports = {
          */
         function read_constant_declaration() {
           var result = this.node('classconstant'), name = null, value = null;
-          if (this.expect(this.tok.T_STRING)) {
+          if (this.is('IDENTIFIER') || this.expect(this.tok.T_STRING)) {
             name = this.text();
             this.next();
           }
@@ -395,17 +395,26 @@ module.exports = {
   ,read_trait_use_alias: function() {
     var node = this.node();
     var trait = null;
-    var method = this.read_namespace_name();
+    var method;
 
-    if (this.token === this.tok.T_DOUBLE_COLON) {
-      if (this.next().expect(this.tok.T_STRING)) {
-        trait = method;
-        method = this.text();
-        this.next();
-      }
+    if(this.is('IDENTIFIER')) {
+      method = this.text();
+      this.next();
     } else {
-      // convert identifier as string
-      method = method.name;
+      method = this.read_namespace_name();
+
+      if (this.token === this.tok.T_DOUBLE_COLON) {
+        this.next();
+
+        if (this.is('IDENTIFIER') || this.expect(this.tok.T_STRING)) {
+          trait = method;
+          method = this.text();
+          this.next();
+        }
+      } else {
+        // convert identifier as string
+        method = method.name;
+      }
     }
 
     // handle trait precedence
@@ -424,8 +433,8 @@ module.exports = {
       if (this.next().is('T_MEMBER_FLAGS')) {
         flags = this.read_member_flags();
       }
-
-      if (this.token === this.tok.T_STRING) {
+      
+      if (this.is('IDENTIFIER') || this.token === this.tok.T_STRING) {
         alias = this.text();
         this.next();
       } else if (flags === false) {
