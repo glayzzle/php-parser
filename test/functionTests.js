@@ -25,6 +25,21 @@ describe('Function tests', function() {
     astErr.errors[0].message.should.be.exactly(msg);
   });
 
+  it('test reserved word for function name error', function() {
+    var astErr = parser.parseEval([
+      'function list() {}'
+    ].join('\n'), {
+      parser: {
+        suppressErrors: true
+      }
+    });
+
+    var msg = 'Parse Error : syntax error, unexpected \'list\' (T_LIST), expecting T_STRING on line 1';
+    astErr.errors.length.should.be.exactly(1);
+    astErr.errors[0].line.should.be.exactly(1);
+    astErr.errors[0].message.should.be.exactly(msg);
+  });
+
   it('test description', function () {
     // Get result from parser
     ast.children[0].kind.should.be.exactly('function');

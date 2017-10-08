@@ -12,6 +12,10 @@ describe('Test classes', function() {
       '  public function __construct(array $data = null) {',
       '    $this->data = $data;',
       '  }',
+      '  const list = "bar";',
+      '  public function new($foo = self::list) {',
+      '    return $this::list;',
+      '  }',
       '}',
       'abstract class bar {',
       '  use A, B {',
@@ -20,6 +24,8 @@ describe('Test classes', function() {
       '    B::bigTalk as public talk;',
       '    B::bigTalk as protected talk;',
       '    B::bigTalk as private talk;',
+      '    A::new as list;',
+      '    list as new;',
       '  }',
       '  /**',
       '   * Some informations',
@@ -81,7 +87,7 @@ describe('Test classes', function() {
       use.traits[0].name.should.be.exactly('A');
       use.traits[1].name.should.be.exactly('B');
       // test adaptations
-      use.adaptations.length.should.be.exactly(5);
+      use.adaptations.length.should.be.exactly(7);
       use.adaptations[0].kind.should.be.exactly('traitprecedence');
       use.adaptations[1].kind.should.be.exactly('traitprecedence');
       use.adaptations[2].kind.should.be.exactly('traitalias');
@@ -104,7 +110,11 @@ describe('Test classes', function() {
       use.adaptations[2].visibility.should.be.exactly('public');
       use.adaptations[3].visibility.should.be.exactly('protected');
       use.adaptations[4].visibility.should.be.exactly('private');
-
+      use.adaptations[5].trait.name.should.be.exactly('A');
+      use.adaptations[5].method.should.be.exactly('new');
+      use.adaptations[5].as.should.be.exactly('list');
+      use.adaptations[6].method.should.be.exactly('list');
+      use.adaptations[6].as.should.be.exactly('new');
     });
 
     it('test methods', function() {
@@ -123,6 +133,29 @@ describe('Test classes', function() {
       // check return type
       method.type.name.should.be.exactly('bar');
     });
+    
+    it('test reserved words', function() {
+      var constant = ast.children[0].body[3];
+      var method = ast.children[0].body[4];
+
+      constant.kind.should.be.exactly('classconstant');
+      constant.name.should.be.exactly('list');
+      constant.value.value.should.be.exactly('bar');
+
+      method.kind.should.be.exactly('method');
+      method.name.should.be.exactly('new');
+      method.arguments.length.should.be.exactly(1);
+      method.arguments[0].name.should.be.exactly('foo');
+      method.arguments[0].value.kind.should.be.exactly('staticlookup');
+      method.arguments[0].value.what.name.should.be.exactly('self');
+      method.arguments[0].value.offset.name.should.be.exactly('list');
+      method.body.children[0].kind.should.be.exactly('return');
+      method.body.children[0].expr.kind.should.be.exactly('staticlookup');
+      method.body.children[0].expr.what.kind.should.be.exactly('variable');
+      method.body.children[0].expr.what.name.should.be.exactly('this');
+      method.body.children[0].expr.offset.name.should.be.exactly('list');
+    });
+    
   });
 
   describe('Advanced tests', function() {
