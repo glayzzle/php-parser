@@ -49,7 +49,7 @@ describe('Test variables', function() {
       'foo::class;',
       '$this->foo();',
       'foo::$bar;',
-      '$this->foo::bar'
+      '$this->foo::bar["baz"]::qux();'
     ].join('\n'), {
       parser: {
         // debug: true
@@ -105,14 +105,29 @@ describe('Test variables', function() {
       expr.offset.kind.should.be.exactly('variable');
       expr.offset.name.should.be.exactly('bar');
     });
-    it('should be $this->foo::bar', function() {
+    it('should be $this->foo::bar["baz"]::qux();', function() {
       var expr = ast.children[6];
-      expr.kind.should.be.exactly('staticlookup');
-      expr.what.kind.should.be.exactly('propertylookup');
-      expr.what.what.kind.should.be.exactly('variable');
-      expr.what.what.name.should.be.exactly('this');
-      expr.what.offset.name.should.be.exactly('foo');
-      expr.offset.name.should.be.exactly('bar');
+
+      expr.kind.should.be.exactly("call");
+      expr.arguments.length.should.be.exactly(0);
+
+      expr.what.kind.should.be.exactly("staticlookup");
+      expr.what.offset.kind.should.be.exactly("constref");
+      expr.what.offset.name.should.be.exactly("qux");
+
+      expr.what.what.kind.should.be.exactly("offsetlookup");
+      expr.what.what.offset.kind.should.be.exactly("string");
+      expr.what.what.offset.value.should.be.exactly("baz");
+
+      expr.what.what.what.kind.should.be.exactly("staticlookup");
+      expr.what.what.what.offset.kind.should.be.exactly("constref");
+      expr.what.what.what.offset.name.should.be.exactly("bar");
+
+      expr.what.what.what.what.kind.should.be.exactly("propertylookup");
+      expr.what.what.what.what.what.kind.should.be.exactly("variable");
+      expr.what.what.what.what.what.name.should.be.exactly("this");
+      expr.what.what.what.what.offset.kind.should.be.exactly("constref");
+      expr.what.what.what.what.offset.name.should.be.exactly("foo");
     });
   });
 

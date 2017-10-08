@@ -127,7 +127,23 @@ module.exports = {
           result = node(result, offset);
           break;
         case this.tok.T_DOUBLE_COLON:
-          result = this.read_static_getter(result, encapsed);
+          var node = this.node('staticlookup'), offset;
+          this.next();
+
+          if(this.is('IDENTIFIER') || this.token === this.tok.T_STRING
+              || this.token === this.tok.T_CLASS
+          ) {
+            offset = this.node('constref');
+            var name = this.text();
+            this.next();
+            offset = offset(name);
+
+            if(this.token === this.tok.T_OBJECT_OPERATOR || this.token === this.tok.T_DOUBLE_COLON) {
+              this.error();
+            }
+          }
+
+          result = node(result, offset);
           break;
         case this.tok.T_OBJECT_OPERATOR:
           var node = this.node('propertylookup');
