@@ -1,5 +1,9 @@
 # Releases
 
+## 2.1.0 : (2017-11-01)
+- Impl #91 & #92 : Functions support reserved names (PHP7)
+- Fix #89 : parsing methods can use Buffers or Strings
+
 ## 2.0.7 : (2017-09-03)
 - Fix #86 : bug on Object properties usage in PHP like `__proto__`, or `constructor`
 - Fix #84 : remove null statements from bodies
