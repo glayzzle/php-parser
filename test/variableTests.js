@@ -48,7 +48,8 @@ describe('Test variables', function() {
       'parent::foo();',
       'foo::class;',
       '$this->foo();',
-      'foo::$bar;'
+      'foo::$bar;',
+      '$this->foo::bar["baz"]::qux();'
     ].join('\n'), {
       parser: {
         // debug: true
@@ -103,6 +104,30 @@ describe('Test variables', function() {
       expr.what.name.should.be.exactly('foo');
       expr.offset.kind.should.be.exactly('variable');
       expr.offset.name.should.be.exactly('bar');
+    });
+    it('should be $this->foo::bar["baz"]::qux();', function() {
+      var expr = ast.children[6];
+
+      expr.kind.should.be.exactly("call");
+      expr.arguments.length.should.be.exactly(0);
+
+      expr.what.kind.should.be.exactly("staticlookup");
+      expr.what.offset.kind.should.be.exactly("constref");
+      expr.what.offset.name.should.be.exactly("qux");
+
+      expr.what.what.kind.should.be.exactly("offsetlookup");
+      expr.what.what.offset.kind.should.be.exactly("string");
+      expr.what.what.offset.value.should.be.exactly("baz");
+
+      expr.what.what.what.kind.should.be.exactly("staticlookup");
+      expr.what.what.what.offset.kind.should.be.exactly("constref");
+      expr.what.what.what.offset.name.should.be.exactly("bar");
+
+      expr.what.what.what.what.kind.should.be.exactly("propertylookup");
+      expr.what.what.what.what.what.kind.should.be.exactly("variable");
+      expr.what.what.what.what.what.name.should.be.exactly("this");
+      expr.what.what.what.what.offset.kind.should.be.exactly("constref");
+      expr.what.what.what.what.offset.name.should.be.exactly("foo");
     });
   });
 
@@ -163,5 +188,36 @@ describe('Test variables', function() {
       ast.children[0].left.kind.should.be.exactly('variable');
       ast.children[0].left.name.should.be.exactly('?');
     });
+    
+    it('should fail on double static lookup', function() {
+      var astErr = parser.parseEval([
+        'this->foo::bar::baz;'
+      ].join('\n'), {
+        parser: {
+          suppressErrors: true
+        }
+      });
+
+      var msg = 'Parse Error : syntax error, unexpected \'::\' (T_DOUBLE_COLON) on line 1';
+      astErr.errors.length.should.be.exactly(1);
+      astErr.errors[0].line.should.be.exactly(1);
+      astErr.errors[0].message.should.be.exactly(msg);
+    });
+    
+    it('should fail on property lookup on static lookup', function() {
+      var astErr = parser.parseEval([
+        'this->foo::bar->baz;'
+      ].join('\n'), {
+        parser: {
+          suppressErrors: true
+        }
+      });
+
+      var msg = 'Parse Error : syntax error, unexpected \'->\' (T_OBJECT_OPERATOR) on line 1';
+      astErr.errors.length.should.be.exactly(1);
+      astErr.errors[0].line.should.be.exactly(1);
+      astErr.errors[0].message.should.be.exactly(msg);
+    });
+    
   });
 });
