@@ -112,6 +112,10 @@ Related projects
 
 # Misc
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/Qsxz6HVJCRW3sbCpZfWncpRD/glayzzle/php-parser'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/Qsxz6HVJCRW3sbCpZfWncpRD/glayzzle/php-parser.svg' />
+</a>
+
 This library is released under BSD-3 license clause.
 
 If you want to contribute please visit this repository https://github.com/glayzzle/php-parser-dev.
