@@ -88,3 +88,13 @@ Extract tokens from the specified buffer.
 -   `buffer` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>** Each item can be a string or an array with following informations [token_name, text, line_number]
+
+## getStringBuffer
+
+Check if the inpyt is a buffer or a string
+
+**Parameters**
+
+-   `buffer` **([Buffer](https://nodejs.org/api/buffer.html) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** Input value that can be either a buffer or a string
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Returns the string from input
