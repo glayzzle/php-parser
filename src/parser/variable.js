@@ -131,15 +131,15 @@ module.exports = {
             var node = this.node('staticlookup');
             var offset = this.node('constref');
             var name = this.text();
-            
+
             this.next();
             offset = offset(name);
-            
+
             if(this.token === this.tok.T_OBJECT_OPERATOR || this.token === this.tok.T_DOUBLE_COLON) {
               this.error();
-            } else {
-              result = node(result, offset);
             }
+
+            result = node(result, offset);
           }
           break;
         case this.tok.T_OBJECT_OPERATOR:
