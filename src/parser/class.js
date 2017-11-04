@@ -183,7 +183,7 @@ module.exports = {
          */
         function read_constant_declaration() {
           var result = this.node('classconstant'), name = null, value = null;
-          if (this.is('IDENTIFIER') || this.expect(this.tok.T_STRING)) {
+          if (this.token === this.tok.T_STRING || this.is('IDENTIFIER')) {
             name = this.text();
             this.next();
           }
