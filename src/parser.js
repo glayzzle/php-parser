@@ -32,8 +32,11 @@ var parser = function(lexer, ast) {
   this.debug = false;
   this.extractDoc = false;
   this.suppressErrors = false;
+  var mapIt = function(item) {
+    return [item, null];
+  };
   this.entries = {
-    'IDENTIFIER': [
+    'IDENTIFIER': new Map([
       this.tok.T_ABSTRACT,
       this.tok.T_ARRAY,
       this.tok.T_AS,
@@ -106,16 +109,16 @@ var parser = function(lexer, ast) {
       this.tok.T_VAR,
       this.tok.T_WHILE,
       this.tok.T_YIELD
-    ],
-    'VARIABLE': [
+    ].map(mapIt)),
+    'VARIABLE': new Map([
       this.tok.T_VARIABLE,
       '$', '&',
       this.tok.T_NS_SEPARATOR,
       this.tok.T_STRING,
       this.tok.T_NAMESPACE,
       this.tok.T_STATIC
-    ],
-    'SCALAR': [
+    ].map(mapIt)),
+    'SCALAR': new Map([
       this.tok.T_CONSTANT_ENCAPSED_STRING,
       this.tok.T_START_HEREDOC,
       this.tok.T_LNUMBER,
@@ -134,8 +137,8 @@ var parser = function(lexer, ast) {
       'B"',
       '-',
       this.tok.T_NS_SEPARATOR
-    ],
-    'T_MAGIC_CONST': [
+    ].map(mapIt)),
+    'T_MAGIC_CONST': new Map([
         this.tok.T_CLASS_C,
         this.tok.T_TRAIT_C,
         this.tok.T_FUNC_C,
@@ -144,22 +147,22 @@ var parser = function(lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_DIR,
         this.tok.T_NS_C
-    ],
-    'T_MEMBER_FLAGS': [
+    ].map(mapIt)),
+    'T_MEMBER_FLAGS': new Map([
       this.tok.T_PUBLIC,
       this.tok.T_PRIVATE,
       this.tok.T_PROTECTED,
       this.tok.T_STATIC,
       this.tok.T_ABSTRACT,
       this.tok.T_FINAL
-    ],
-    'EOS': [
+    ].map(mapIt)),
+    'EOS': new Map([
       ';',
       this.tok.T_CLOSE_TAG,
       this.EOF,
       this.tok.T_INLINE_HTML
-    ],
-    'EXPR': [
+    ].map(mapIt)),
+    'EXPR': new Map([
       '@','-','+','!','~','(','`',
       this.tok.T_LIST,
       this.tok.T_CLONE,
@@ -205,7 +208,7 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C
-    ]
+    ].map(mapIt))
   };
 };
 
@@ -434,9 +437,8 @@ parser.prototype.nextWithComments = function() {
 parser.prototype.is = function(type) {
   if (Array.isArray(type)) {
     return type.indexOf(this.token) !== -1;
-  } else {
-    return this.entries[type].indexOf(this.token) != -1;
   }
+  return this.entries[type].has(this.token);
 };
 
 // extends the parser with syntax files
