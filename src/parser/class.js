@@ -182,10 +182,14 @@ module.exports = {
          * @return {Constant} [:link:](AST.md#constant)
          */
         function read_constant_declaration() {
-          var result = this.node('classconstant'), name = null, value = null;
+          var result = this.node('classconstant'), 
+            name = null, 
+            value = null;
           if (this.token === this.tok.T_STRING || this.is('IDENTIFIER')) {
             name = this.text();
             this.next();
+          } else {
+            this.expect('IDENTIFIER');
           }
           if (this.expect('=')) {
             value =  this.next().read_expr();

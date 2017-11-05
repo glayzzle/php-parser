@@ -156,6 +156,21 @@ describe('Test classes', function() {
       method.body.children[0].expr.offset.name.should.be.exactly('list');
     });
     
+    it('test fallback on constant names', function() {
+      var ast = parser.parseEval(
+        [
+          'class foo {',
+          '  const = true;',
+          '}'
+        ].join('\n'), {
+          parser: {
+            suppressErrors: true
+          }
+        }
+      );
+      (ast.children[0].body[0].name === null).should.be.true('constant name should be true');
+      ast.errors.length.should.be.exactly(1);
+    });
   });
 
   describe('Advanced tests', function() {
