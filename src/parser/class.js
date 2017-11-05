@@ -412,10 +412,12 @@ module.exports = {
       if (this.token === this.tok.T_DOUBLE_COLON) {
         this.next();
 
-        if (this.is('IDENTIFIER') || this.expect(this.tok.T_STRING)) {
+        if (this.token === this.tok.T_STRING || this.is('IDENTIFIER')) {
           trait = method;
           method = this.text();
           this.next();
+        } else {
+          this.expect(this.tok.T_STRING);
         }
       } else {
         // convert identifier as string
@@ -440,7 +442,7 @@ module.exports = {
         flags = this.read_member_flags();
       }
       
-      if (this.is('IDENTIFIER') || this.token === this.tok.T_STRING) {
+      if (this.token === this.tok.T_STRING || this.is('IDENTIFIER')) {
         alias = this.text();
         this.next();
       } else if (flags === false) {

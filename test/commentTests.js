@@ -65,7 +65,7 @@ describe('Test comments', function() {
       '/**',
       ' * Description',
       ' */',
-      'function /* ignore */ name(/* */ $arg) {',
+      'function /* ignore */ & /* ignore */ name(/* */ $arg) {',
       '// inner',
       'return $arg /* ignore */;',
       '}'

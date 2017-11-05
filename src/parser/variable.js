@@ -76,8 +76,9 @@ module.exports = {
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
       offset = this.read_reference_variable(encapsed, false);
     } else if (
-      this.is('IDENTIFIER') || this.token === this.tok.T_STRING
-      || this.token === this.tok.T_CLASS
+      this.token === this.tok.T_STRING
+      || this.token === this.tok.T_CLASS 
+      || this.is('IDENTIFIER')
     ) {
       offset = this.node('constref');
       var name = this.text();
