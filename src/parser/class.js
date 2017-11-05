@@ -177,7 +177,7 @@ module.exports = {
          * Reads a constant declaration
          *
          * ```ebnf
-         *  constant_declaration ::= T_STRING '=' expr
+         *  constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr
          * ```
          * @return {Constant} [:link:](AST.md#constant)
          */
@@ -395,6 +395,8 @@ module.exports = {
    * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
    * ```
+   * name list : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303
+   * trait adaptation : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742
    */
   ,read_trait_use_alias: function() {
     var node = this.node();
