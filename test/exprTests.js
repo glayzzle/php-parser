@@ -142,28 +142,35 @@ describe('Test expressions', function() {
   });
 
   it('test cast', function() {
+    var typesWithAlias = {
+      int: ['int', 'integer'],
+      bool: ['bool', 'boolean'],
+      float: ['float', 'double', 'real']
+    }
+    Object.keys(typesWithAlias).forEach(function(shortName) {
+      var aliases = typesWithAlias[shortName];
+      var ast = parser.parseEval(aliases.map(function(alias) {
+        return '(' + alias + ')$var;';
+      }).join('\n'));
+
+      aliases.forEach(function(alias, index) {
+        ast.children[index].kind.should.be.exactly('cast');
+        ast.children[index].type.should.be.exactly(shortName);
+      });
+    });
     var ast = parser.parseEval([
-      '(int)$var;',
-      '(double)$var;',
       '(string)$var;',
       '(array)$var;',
       '(object)$var;',
-      '(boolean)$var;',
       '(unset)$var;'
     ].join('\n'));
     ast.children[0].kind.should.be.exactly('cast');
-    ast.children[0].type.should.be.exactly('int');
+    ast.children[0].type.should.be.exactly('string');
     ast.children[1].kind.should.be.exactly('cast');
-    ast.children[1].type.should.be.exactly('double');
+    ast.children[1].type.should.be.exactly('array');
     ast.children[2].kind.should.be.exactly('cast');
-    ast.children[2].type.should.be.exactly('string');
-    ast.children[3].kind.should.be.exactly('cast');
-    ast.children[3].type.should.be.exactly('array');
-    ast.children[4].kind.should.be.exactly('cast');
-    ast.children[4].type.should.be.exactly('object');
-    ast.children[5].kind.should.be.exactly('cast');
-    ast.children[5].type.should.be.exactly('boolean');
-    ast.children[6].kind.should.be.exactly('unset');
+    ast.children[2].type.should.be.exactly('object');
+    ast.children[3].kind.should.be.exactly('unset');
   });
 
   it('test exit', function() {
