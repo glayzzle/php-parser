@@ -98,7 +98,6 @@ module.exports = {
   read_variable_declarations: function() {
     return this.read_list(function() {
       var node = this.node("assign"),
-        value = null,
         variable = this.node("variable");
       // plain variable name
       if (this.expect(this.tok.T_VARIABLE)) {

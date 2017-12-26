@@ -240,7 +240,7 @@ module.exports = {
 
   consume_VARIABLE: function() {
     this.consume_LABEL();
-    ch = this.input();
+    var ch = this.input();
     if (ch == "[") {
       this.unput(1);
       this.begin("ST_VAR_OFFSET");

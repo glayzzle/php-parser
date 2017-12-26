@@ -1,4 +1,3 @@
-var should = require("should");
 var parser = require("../src/index");
 
 describe("Function tests", function() {

@@ -7,14 +7,11 @@
 "use strict";
 
 /* istanbul ignore else  */
+let MAX_LENGTH_OF_LONG = 10;
+let long_min_digits = "2147483648";
 if (process.arch == "x64") {
-  var SIZEOF_LONG = 8;
-  var MAX_LENGTH_OF_LONG = 19;
-  var long_min_digits = "9223372036854775808";
-} else {
-  var SIZEOF_LONG = 4;
-  var MAX_LENGTH_OF_LONG = 10;
-  var long_min_digits = "2147483648";
+  MAX_LENGTH_OF_LONG = 19;
+  long_min_digits = "9223372036854775808";
 }
 
 module.exports = {

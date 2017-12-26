@@ -119,12 +119,12 @@ module.exports = {
     return result(name.name, alias, type);
   },
   /**
-  * Reads a list of use declarations
-  * ```ebnf
-  * use_declarations ::= use_declaration (',' use_declaration)*
-  * ```
-  * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
-  * @return {UseItem[]}
+   * Reads a list of use declarations
+   * ```ebnf
+   * use_declarations ::= use_declaration (',' use_declaration)*
+   * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
+   * @return {UseItem[]}
    */
   read_use_declarations: function(typed) {
     var result = [this.read_use_declaration(typed)];

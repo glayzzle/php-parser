@@ -5,7 +5,6 @@
  */
 
 var Block = require("./block");
-var Identifier = require("./identifier");
 var KIND = "namespace";
 
 /**

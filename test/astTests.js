@@ -1,4 +1,3 @@
-var should = require("should");
 var parser = require("./main");
 
 describe("Test AST structure", function() {

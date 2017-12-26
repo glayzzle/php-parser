@@ -159,13 +159,13 @@ module.exports = {
     }
     return this.read_list(
       /**
-         * Reads a constant declaration
-         *
-         * ```ebnf
-         *  constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr
-         * ```
-         * @return {Constant} [:link:](AST.md#constant)
-         */
+       * Reads a constant declaration
+       *
+       * ```ebnf
+       *  constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr
+       * ```
+       * @return {Constant} [:link:](AST.md#constant)
+       */
       function read_constant_declaration() {
         var result = this.node("classconstant"),
           name = null,
@@ -329,7 +329,7 @@ module.exports = {
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
    * ```
    */
-  read_trait: function(flag) {
+  read_trait: function() {
     var result = this.node("trait"),
       propName = null,
       propExtends = null,
