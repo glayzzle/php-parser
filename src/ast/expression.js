@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'expression';
+var Node = require("./node");
+var KIND = "expression";
 
 /**
  * Any expression node. Since the left-hand side of an assignment may

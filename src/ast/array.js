@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Expr = require('./expression');
-var KIND = 'array';
+var Expr = require("./expression");
+var KIND = "array";
 
 /**
  * Defines an array structure

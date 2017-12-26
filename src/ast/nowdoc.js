@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'nowdoc';
+var Literal = require("./literal");
+var KIND = "nowdoc";
 
 /**
  * Defines a nowdoc string

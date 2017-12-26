@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require('./node');
-var KIND = 'return';
+var Node = require("./node");
+var KIND = "return";
 
 /**
  * A continue statement

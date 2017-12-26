@@ -4,15 +4,19 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Lookup = require('./lookup');
-var KIND = 'offsetlookup';
+var Lookup = require("./lookup");
+var KIND = "offsetlookup";
 
 /**
  * Lookup on an offset in an array
  * @constructor OffsetLookup
  * @extends {Lookup}
  */
-var OffsetLookup = Lookup.extends(function OffsetLookup(what, offset, location) {
+var OffsetLookup = Lookup.extends(function OffsetLookup(
+  what,
+  offset,
+  location
+) {
   Lookup.apply(this, [KIND, what, offset, location]);
 });
 

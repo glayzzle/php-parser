@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'do';
+var Statement = require("./statement");
+var KIND = "do";
 
 /**
  * Defines a do/while statement

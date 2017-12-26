@@ -16,35 +16,38 @@ module.exports = {
    */
   read_switch: function() {
     this.expect(this.tok.T_SWITCH) && this.next();
-    var result = this.node('switch'), test, body, shortForm;
-    this.expect('(') && this.next();
+    var result = this.node("switch"),
+      test,
+      body,
+      shortForm;
+    this.expect("(") && this.next();
     test = this.read_expr();
-    this.expect(')') && this.next();
-    shortForm = (this.token === ':');
+    this.expect(")") && this.next();
+    shortForm = this.token === ":";
     body = this.read_switch_case_list();
     return result(test, body, shortForm);
-  }
+  },
   /**
    * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
    * ```
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L566
    */
-  ,read_switch_case_list: function() {
+  read_switch_case_list: function() {
     // DETECT SWITCH MODE
     var expect = null,
-      result = this.node('block'),
+      result = this.node("block"),
       items = [];
-    if (this.token === '{') {
-      expect = '}';
-    } else if (this.token === ':') {
+    if (this.token === "{") {
+      expect = "}";
+    } else if (this.token === ":") {
       expect = this.tok.T_ENDSWITCH;
     } else {
-      this.expect(['{', ':']);
+      this.expect(["{", ":"]);
     }
     // OPTIONNAL ';'
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L570
-    if (this.next().token === ';') {
+    if (this.next().token === ";") {
       this.next();
     }
     // IGNORE THE CLOSE TAG TOKEN WITH SHORT MODE
@@ -52,8 +55,8 @@ module.exports = {
       this.next();
     }
     // EXTRACTING CASES
-    while(this.token !== this.EOF && this.token !== expect) {
-      items.push( this.read_case_list(expect) );
+    while (this.token !== this.EOF && this.token !== expect) {
+      items.push(this.read_case_list(expect));
     }
     // CHECK END TOKEN
     this.expect(expect) && this.next();
@@ -61,14 +64,17 @@ module.exports = {
       this.expectEndOfStatement();
     }
     return result(null, items);
-  }
+  },
   /**
    * ```ebnf
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
    * ```
    */
-  ,read_case_list: function(stopToken) {
-    var result = this.node('case'), test = null, body = null, items = [];
+  read_case_list: function(stopToken) {
+    var result = this.node("case"),
+      test = null,
+      body = null,
+      items = [];
     if (this.token === this.tok.T_CASE) {
       test = this.next().read_expr();
     } else if (this.token === this.tok.T_DEFAULT) {
@@ -77,18 +83,16 @@ module.exports = {
     } else {
       this.expect([this.tok.T_CASE, this.tok.T_DEFAULT]);
     }
-    this.expect([':', ';']) && this.next();
-    body = this.node('block');
-    while(
-      this.token != this.EOF
-      && this.token !== stopToken
-      && this.token !== this.tok.T_CASE
-      && this.token !== this.tok.T_DEFAULT
+    this.expect([":", ";"]) && this.next();
+    body = this.node("block");
+    while (
+      this.token != this.EOF &&
+      this.token !== stopToken &&
+      this.token !== this.tok.T_CASE &&
+      this.token !== this.tok.T_DEFAULT
     ) {
       items.push(this.read_inner_statement());
     }
-    return result(
-      test, items.length > 0 ? body(null, items) : null
-    );
+    return result(test, items.length > 0 ? body(null, items) : null);
   }
 };

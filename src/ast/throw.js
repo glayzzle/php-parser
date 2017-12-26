@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'throw';
+var Statement = require("./statement");
+var KIND = "throw";
 
 /**
  * Defines a throw statement

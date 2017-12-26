@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'number';
+var Literal = require("./literal");
+var KIND = "number";
 
 /**
  * Defines a numeric value

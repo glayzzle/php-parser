@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require('./declaration');
-var KIND = 'parameter';
+var Declaration = require("./declaration");
+var KIND = "parameter";
 
 /**
  * Defines a function parameter
@@ -17,7 +17,15 @@ var KIND = 'parameter';
  * @property {boolean} variadic
  * @property {boolean} nullable
  */
-var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, nullable, location) {
+var Parameter = Declaration.extends(function Parameter(
+  name,
+  type,
+  value,
+  isRef,
+  isVariadic,
+  nullable,
+  location
+) {
   Declaration.apply(this, [KIND, name, location]);
   this.value = value;
   this.type = type;

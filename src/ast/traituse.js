@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'traituse';
+var Node = require("./node");
+var KIND = "traituse";
 
 /**
  * Defines a trait usage

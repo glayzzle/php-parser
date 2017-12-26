@@ -7,7 +7,7 @@
 "use strict";
 
 /* istanbul ignore else  */
-if (process.arch == 'x64') {
+if (process.arch == "x64") {
   var SIZEOF_LONG = 8;
   var MAX_LENGTH_OF_LONG = 19;
   var long_min_digits = "9223372036854775808";
@@ -20,20 +20,20 @@ if (process.arch == 'x64') {
 module.exports = {
   consume_NUM: function() {
     var ch = this.yytext[0];
-    var hasPoint = this.yytext[0] === '.';
-    if (ch === '0') {
+    var hasPoint = this.yytext[0] === ".";
+    if (ch === "0") {
       ch = this.input();
       // check if hexa
-      if (ch === 'x' || ch === 'X') {
+      if (ch === "x" || ch === "X") {
         this.input();
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
           this.unput(2);
         }
-      } else if (ch === 'b' || ch === 'B') {
+      } else if (ch === "b" || ch === "B") {
         ch = this.input();
-        if (ch === '0' || ch === '1') {
+        if (ch === "0" || ch === "1") {
           return this.consume_BNUM();
         } else {
           this.unput(2);
@@ -43,14 +43,14 @@ module.exports = {
       }
     }
 
-    while(this.offset < this.size) {
+    while (this.offset < this.size) {
       ch = this.input();
       if (!this.is_NUM()) {
-        if (ch === '.' && !hasPoint) {
+        if (ch === "." && !hasPoint) {
           hasPoint = true;
-        } else if (ch === 'e' || ch === 'E') {
+        } else if (ch === "e" || ch === "E") {
           ch = this.input();
-          if (ch === '+' || ch === '-') {
+          if (ch === "+" || ch === "-") {
             ch = this.input();
             if (this.is_NUM()) {
               this.consume_LNUM();
@@ -78,10 +78,9 @@ module.exports = {
       return this.tok.T_LNUMBER;
     } else {
       if (
-        this.yytext.length < MAX_LENGTH_OF_LONG || (
-          this.yytext.length == MAX_LENGTH_OF_LONG
-          && this.yytext < long_min_digits
-        )
+        this.yytext.length < MAX_LENGTH_OF_LONG ||
+        (this.yytext.length == MAX_LENGTH_OF_LONG &&
+          this.yytext < long_min_digits)
       ) {
         return this.tok.T_LNUMBER;
       }
@@ -90,7 +89,7 @@ module.exports = {
   },
   // read hexa
   consume_HNUM: function() {
-    while(this.offset < this.size) {
+    while (this.offset < this.size) {
       this.input();
       if (!this.is_HEX()) {
         this.unput(1);
@@ -101,7 +100,7 @@ module.exports = {
   },
   // read a generic number
   consume_LNUM: function() {
-    while(this.offset < this.size) {
+    while (this.offset < this.size) {
       this.input();
       if (!this.is_NUM()) {
         this.unput(1);
@@ -113,9 +112,9 @@ module.exports = {
   // read binary
   consume_BNUM: function() {
     var ch;
-    while(this.offset < this.size) {
+    while (this.offset < this.size) {
       ch = this.input();
-      if (ch !== '0' && ch !== '1') {
+      if (ch !== "0" && ch !== "1") {
         if (ch) this.unput(1);
         break;
       }

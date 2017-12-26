@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require('./operation');
-var KIND = 'post';
+var Operation = require("./operation");
+var KIND = "post";
 
 /**
  * Defines a post operation `$i++` or `$i--`

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require('./node');
-var KIND = 'break';
+var Node = require("./node");
+var KIND = "break";
 
 /**
  * A break statement

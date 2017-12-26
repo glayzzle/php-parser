@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require('./operation');
-var KIND = 'unary';
+var Operation = require("./operation");
+var KIND = "unary";
 
 /**
  * Unary operations

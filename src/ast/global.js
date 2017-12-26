@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require('./statement');
-var KIND = 'global';
+var Statement = require("./statement");
+var KIND = "global";
 
 /**
  * Imports a variable from the global scope

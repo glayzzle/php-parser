@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'string';
+var Literal = require("./literal");
+var KIND = "string";
 
 /**
  * Defines a string (simple ou double quoted) - chars are already escaped

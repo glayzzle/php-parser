@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require('./declaration');
-var KIND = 'constant';
+var Declaration = require("./declaration");
+var KIND = "constant";
 
 /**
  * Defines a namespace constant

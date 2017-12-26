@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require('./sys');
-var KIND = 'unset';
+var Sys = require("./sys");
+var KIND = "unset";
 
 /**
  * Deletes references to a list of variables

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'exit';
+var Statement = require("./statement");
+var KIND = "exit";
 
 /**
  * Defines an exit / die call

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'goto';
+var Statement = require("./statement");
+var KIND = "goto";
 
 /**
  * Defines goto statement

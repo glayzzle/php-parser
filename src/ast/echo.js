@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require('./sys');
-var KIND = 'echo';
+var Sys = require("./sys");
+var KIND = "echo";
 
 /**
  * Defines system based call

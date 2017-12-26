@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require('./declaration');
-var KIND = 'property';
+var Declaration = require("./declaration");
+var KIND = "property";
 
 /**
  * Defines a class property
@@ -16,7 +16,12 @@ var KIND = 'property';
  * @property {string} visibility
  * @property {Node|null} value
  */
-var Property = Declaration.extends(function Property(name, value, flags, location) {
+var Property = Declaration.extends(function Property(
+  name,
+  value,
+  flags,
+  location
+) {
   Declaration.apply(this, [KIND, name, location]);
   this.value = value;
   this.parseFlags(flags);

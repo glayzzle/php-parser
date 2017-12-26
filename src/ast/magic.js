@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'magic';
+var Literal = require("./literal");
+var KIND = "magic";
 
 /**
  * Defines magic constant

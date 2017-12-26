@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'encapsed';
+var Literal = require("./literal");
+var KIND = "encapsed";
 
 /**
  * Defines an encapsed string (contains expressions)
@@ -19,7 +19,6 @@ var Encapsed = Literal.extends(function Encapsed(value, type, location) {
   this.type = type;
 });
 
-
 /**
  * The node is a double quote string :
  * ```php
@@ -28,7 +27,7 @@ var Encapsed = Literal.extends(function Encapsed(value, type, location) {
  * ```
  * @constant {String} TYPE_STRING - `string`
  */
-Encapsed.TYPE_STRING = 'string';
+Encapsed.TYPE_STRING = "string";
 
 /**
  * The node is a shell execute string :
@@ -38,7 +37,7 @@ Encapsed.TYPE_STRING = 'string';
  * ```
  * @constant {String} TYPE_SHELL - `shell`
  */
-Encapsed.TYPE_SHELL = 'shell';
+Encapsed.TYPE_SHELL = "shell";
 
 /**
  * The node is a shell execute string :
@@ -51,7 +50,7 @@ Encapsed.TYPE_SHELL = 'shell';
  * ```
  * @constant {String} TYPE_HEREDOC - `heredoc`
  */
-Encapsed.TYPE_HEREDOC = 'heredoc';
+Encapsed.TYPE_HEREDOC = "heredoc";
 
 /**
  * The node contains a list of constref / variables / expr :
@@ -61,7 +60,6 @@ Encapsed.TYPE_HEREDOC = 'heredoc';
  * ```
  * @constant {String} TYPE_OFFSET - `offset`
  */
-Encapsed.TYPE_OFFSET = 'offset';
-
+Encapsed.TYPE_OFFSET = "offset";
 
 module.exports = Encapsed;

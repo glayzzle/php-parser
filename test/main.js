@@ -5,7 +5,7 @@
  * @url http://glayzzle.com
  */
 
-var parser = require('../src/index');
+var parser = require("../src/index");
 // @todo : move here the debug code
 // @todo : add an automated token check (with php7)
 module.exports = parser;

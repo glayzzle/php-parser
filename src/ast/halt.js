@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'halt';
+var Statement = require("./statement");
+var KIND = "halt";
 
 /**
  * Halts the compiler execution

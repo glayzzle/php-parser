@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Expr = require('./expression');
-var KIND = 'operation';
+var Expr = require("./expression");
+var KIND = "operation";
 
 /**
  * Defines binary operations

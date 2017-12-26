@@ -4,12 +4,12 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'declaration';
+var Statement = require("./statement");
+var KIND = "declaration";
 
-var IS_PUBLIC     = 'public';
-var IS_PROTECTED  = 'protected';
-var IS_PRIVATE    = 'private';
+var IS_PUBLIC = "public";
+var IS_PROTECTED = "protected";
+var IS_PRIVATE = "private";
 
 /**
  * A declaration statement (function, class, interface...)
@@ -30,7 +30,7 @@ var Declaration = Statement.extends(function Declaration(kind, name, location) {
 Declaration.prototype.parseFlags = function(flags) {
   this.isAbstract = flags[2] === 1;
   this.isFinal = flags[2] === 2;
-  if (this.kind !== 'class') {
+  if (this.kind !== "class") {
     if (flags[0] === 0) {
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {

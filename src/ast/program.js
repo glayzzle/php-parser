@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Block = require('./block');
-var KIND = 'program';
+var Block = require("./block");
+var KIND = "program";
 
 /**
  * The main program node

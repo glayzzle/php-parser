@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'sys';
+var Statement = require("./statement");
+var KIND = "sys";
 
 /**
  * Defines system based call

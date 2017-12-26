@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'boolean';
+var Literal = require("./literal");
+var KIND = "boolean";
 
 /**
  * Defines a boolean value (true/false)

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require('./operation');
-var KIND = 'bin';
+var Operation = require("./operation");
+var KIND = "bin";
 /**
  * Binary operations
  * @constructor Bin

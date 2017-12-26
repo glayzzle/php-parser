@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'if';
+var Statement = require("./statement");
+var KIND = "if";
 
 /**
  * Defines a if statement
@@ -17,7 +17,13 @@ var KIND = 'if';
  * @property {Block|If|null} alternate
  * @property {boolean} shortForm
  */
-var If = Statement.extends(function If(test, body, alternate, shortForm, location) {
+var If = Statement.extends(function If(
+  test,
+  body,
+  alternate,
+  shortForm,
+  location
+) {
   Statement.apply(this, [KIND, location]);
   this.test = test;
   this.body = body;

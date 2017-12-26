@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require('./statement');
-var KIND = 'useitem';
+var Statement = require("./statement");
+var KIND = "useitem";
 
 /**
  * Defines a use statement (from namespace)
@@ -24,17 +24,15 @@ var UseItem = Statement.extends(function UseItem(name, alias, type, location) {
   this.type = type;
 });
 
-
 /**
  * Importing a constant
  * @constant {String} TYPE_CONST
  */
-UseItem.TYPE_CONST = 'const';
+UseItem.TYPE_CONST = "const";
 /**
  * Importing a function
  * @constant {String} TYPE_FUNC
  */
-UseItem.TYPE_FUNCTION = 'function';
-
+UseItem.TYPE_FUNCTION = "function";
 
 module.exports = UseItem;

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require('./operation');
-var KIND = 'parenthesis';
+var Operation = require("./operation");
+var KIND = "parenthesis";
 
 /**
  * Parenthesis encapsulation `(... expr ...)`

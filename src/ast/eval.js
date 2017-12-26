@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'eval';
+var Statement = require("./statement");
+var KIND = "eval";
 
 /**
  * Defines an eval statement
