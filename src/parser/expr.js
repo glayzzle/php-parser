@@ -272,7 +272,7 @@ module.exports = {
         return this.node('cast')('int', this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return this.node('cast')('double', this.next().read_expr());
+        return this.node('cast')('float', this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
         return this.node('cast')('string', this.next().read_expr());
@@ -284,7 +284,7 @@ module.exports = {
         return this.node('cast')('object', this.next().read_expr());
 
       case this.tok.T_BOOL_CAST:
-        return this.node('cast')('boolean', this.next().read_expr());
+        return this.node('cast')('bool', this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
         return this.node('unset')(
