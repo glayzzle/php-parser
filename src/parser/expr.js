@@ -287,9 +287,7 @@ module.exports = {
         return this.node('cast')('bool', this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
-        return this.node('unset')(
-          this.next().read_expr()
-        );
+        return this.node('cast')('unset', this.next().read_expr());
 
       case this.tok.T_EXIT:
         var result = this.node('exit');

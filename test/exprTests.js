@@ -170,7 +170,8 @@ describe('Test expressions', function() {
     ast.children[1].type.should.be.exactly('array');
     ast.children[2].kind.should.be.exactly('cast');
     ast.children[2].type.should.be.exactly('object');
-    ast.children[3].kind.should.be.exactly('unset');
+    ast.children[3].kind.should.be.exactly('cast');
+    ast.children[3].type.should.be.exactly('unset');
   });
 
   it('test exit', function() {
