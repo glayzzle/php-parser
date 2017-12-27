@@ -42,7 +42,8 @@ function combine(src, to) {
  * var instance = new parser({
  *   parser: {
  *     extractDoc: true,
- *     suppressErrors: true
+ *     suppressErrors: true,
+ *     php7: true
  *   },
  *   ast: {
  *     withPositions: true

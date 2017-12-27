@@ -78,7 +78,7 @@ module.exports = {
     } else if (
       this.token === this.tok.T_STRING
       || this.token === this.tok.T_CLASS 
-      || this.is('IDENTIFIER')
+      || (this.php7 && this.is('IDENTIFIER'))
     ) {
       offset = this.node('constref');
       var name = this.text();
@@ -135,7 +135,7 @@ module.exports = {
           }
 
           var node = this.node('staticlookup');
-          if(this.next().token === this.tok.T_STRING || this.is('IDENTIFIER')) {
+          if(this.next().token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
             var offset = this.node('constref');
             var name = this.text();
             this.next();

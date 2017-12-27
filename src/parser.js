@@ -30,6 +30,7 @@ var parser = function(lexer, ast) {
   this.token = null;
   this.prev = null;
   this.debug = false;
+  this.php7 = true;
   this.extractDoc = false;
   this.suppressErrors = false;
   var mapIt = function(item) {
