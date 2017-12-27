@@ -206,7 +206,7 @@ describe('Test variables', function() {
     
     it('should fail on property lookup on static lookup', function() {
       var astErr = parser.parseEval([
-        'this->foo::bar->baz;'
+        '$this->foo::bar->baz;'
       ].join('\n'), {
         parser: {
           suppressErrors: true
@@ -218,6 +218,26 @@ describe('Test variables', function() {
       astErr.errors[0].line.should.be.exactly(1);
       astErr.errors[0].message.should.be.exactly(msg);
     });
-    
+    it('should fail $foo->bar::!', function() {
+      var errAst = parser.parseEval('$foo->bar::!', {
+        parser: {
+          suppressErrors: true
+        }
+      });
+      errAst.errors.length.should.be.exactly(1);
+      errAst.errors[0].token.should.be.exactly('\'!\'');
+      errAst.children[0].kind.should.be.exactly('staticlookup');
+      errAst.children[0].offset.name.should.be.exactly('!');
+    });
+
+    it('should fail foo::bar::baz', function() {
+      var errAst = parser.parseEval('foo::bar::baz', {
+        parser: {
+          suppressErrors: true
+        }
+      });
+      errAst.errors.length.should.be.exactly(1);
+      errAst.children[0].kind.should.be.exactly('staticlookup');
+    });
   });
 });
