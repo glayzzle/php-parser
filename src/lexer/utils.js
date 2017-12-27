@@ -38,9 +38,9 @@ module.exports = {
   // reads each char of the label
   consume_LABEL: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_LABEL()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -65,9 +65,9 @@ module.exports = {
   // consume all whitespaces (excluding newlines)
   consume_TABSPACE: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_TABSPACE()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }

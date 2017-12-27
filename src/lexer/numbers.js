@@ -25,21 +25,21 @@ module.exports = {
       ch = this.input();
       // check if hexa
       if (ch === 'x' || ch === 'X') {
-        this.input();
+        ch = this.input();
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
-          this.unput(2);
+          this.unput(ch ? 2 : 1);
         }
       } else if (ch === 'b' || ch === 'B') {
         ch = this.input();
         if (ch === '0' || ch === '1') {
           return this.consume_BNUM();
         } else {
-          this.unput(2);
+          this.unput(ch ? 2 : 1);
         }
       } else if (!this.is_NUM()) {
-        this.unput(1);
+        if (ch) this.unput(1);
       }
     }
 
@@ -56,18 +56,18 @@ module.exports = {
               this.consume_LNUM();
               return this.tok.T_DNUMBER;
             } else {
-              if (ch) this.unput(3);
+              this.unput(ch ? 3 : 2);
               break;
             }
           } else if (this.is_NUM()) {
             this.consume_LNUM();
             return this.tok.T_DNUMBER;
           } else {
-            if (ch) this.unput(2);
+            this.unput(ch ? 2 : 1);
             break;
           }
         } else {
-          this.unput(1);
+          if (ch) this.unput(1);
           break;
         }
       }
@@ -91,9 +91,9 @@ module.exports = {
   // read hexa
   consume_HNUM: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_HEX()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -102,9 +102,9 @@ module.exports = {
   // read a generic number
   consume_LNUM: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_NUM()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }

@@ -92,7 +92,7 @@ module.exports = {
       if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
         continue;
       }
-      this.unput(1);
+      if (ch) this.unput(1);
       break;
     }
     return this.tok.T_WHITESPACE;
