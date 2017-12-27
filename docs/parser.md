@@ -238,6 +238,9 @@ Reading trait alias
 trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
 ```
 
+name list : <https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303>
+trait adaptation : <https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742>
+
 ## read_variable_declaration
 
 Reads a variable declaration
@@ -251,7 +254,7 @@ Reads a variable declaration
 Reads a constant declaration
 
 ```ebnf
- constant_declaration ::= T_STRING '=' expr
+ constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr
 ```
 
 Returns **Constant** [:link:](AST.md#constant)
