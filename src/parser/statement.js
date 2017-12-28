@@ -186,6 +186,7 @@ module.exports = {
    * Reads statements
    */
   read_statement: function() {
+    var result, expr, items, current, label;
     switch (this.token) {
       case "{":
         return this.read_code_block(false);
@@ -215,8 +216,8 @@ module.exports = {
         return this.read_doc_comment();
 
       case this.tok.T_RETURN:
-        var result = this.node("return"),
-          expr = null;
+        result = this.node("return");
+        expr = null;
         if (!this.next().is("EOS")) {
           expr = this.read_expr();
         }
@@ -226,10 +227,10 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L429
       case this.tok.T_BREAK:
       case this.tok.T_CONTINUE:
-        var result = this.node(
-            this.token === this.tok.T_CONTINUE ? "continue" : "break"
-          ),
-          level = null;
+        result = this.node(
+          this.token === this.tok.T_CONTINUE ? "continue" : "break"
+        );
+        var level = null;
         this.next(); // look ahead
         if (this.token !== ";" && this.token !== this.tok.T_CLOSE_TAG) {
           level = this.read_expr();
@@ -238,51 +239,51 @@ module.exports = {
         return result(level);
 
       case this.tok.T_GLOBAL:
-        var result = this.node("global");
-        var items = this.next().read_list(this.read_simple_variable, ",");
+        result = this.node("global");
+        items = this.next().read_list(this.read_simple_variable, ",");
         this.expectEndOfStatement();
         return result(items);
 
       case this.tok.T_STATIC:
-        var current = [this.token, this.lexer.getState()];
-        var result = this.node("static");
+        current = [this.token, this.lexer.getState()];
+        result = this.node("static");
         if (this.next().token === this.tok.T_DOUBLE_COLON) {
           // static keyword for a class
           this.lexer.tokens.push(current);
-          var expr = this.next().read_expr();
+          expr = this.next().read_expr();
           this.expect(";") && this.nextWithComments();
           return expr;
         }
         if (this.token === this.tok.T_FUNCTION) {
           return this.read_function(true, [0, 1, 0]);
         }
-        var items = this.read_variable_declarations();
+        items = this.read_variable_declarations();
         this.expectEndOfStatement();
         return result(items);
 
       case this.tok.T_ECHO:
-        var result = this.node("echo");
+        result = this.node("echo");
         var args = this.next().read_list(this.read_expr, ",");
         this.expectEndOfStatement();
         return result(args);
 
       case this.tok.T_INLINE_HTML:
-        var result = this.node("inline"),
-          value = this.text();
+        result = this.node("inline");
+        var value = this.text();
         this.next();
         return result(value);
 
       case this.tok.T_UNSET:
-        var result = this.node("unset");
+        result = this.node("unset");
         this.next().expect("(") && this.next();
-        var items = this.read_list(this.read_variable, ",");
+        items = this.read_list(this.read_variable, ",");
         this.expect(")") && this.next();
         this.expect(";") && this.nextWithComments();
         return result(items);
 
       case this.tok.T_DECLARE:
-        var result = this.node("declare"),
-          what,
+        result = this.node("declare");
+        var what,
           body = [],
           mode;
         this.next().expect("(") && this.next();
@@ -322,8 +323,8 @@ module.exports = {
         return this.read_try();
 
       case this.tok.T_THROW:
-        var result = this.node("throw");
-        var expr = this.next().read_expr();
+        result = this.node("throw");
+        expr = this.next().read_expr();
         this.expectEndOfStatement();
         return result(expr);
 
@@ -333,24 +334,24 @@ module.exports = {
         return null;
 
       case this.tok.T_STRING:
-        var current = [this.token, this.lexer.getState()];
-        var label = this.text();
+        current = [this.token, this.lexer.getState()];
+        label = this.text();
         // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
         if (this.next().token === ":") {
-          var result = this.node("label");
+          result = this.node("label");
           this.next();
           return result(label);
         }
 
         // default fallback expr / T_STRING '::' (etc...)
         this.lexer.tokens.push(current);
-        var expr = this.next().read_expr();
+        expr = this.next().read_expr();
         this.expectEndOfStatement();
         return expr;
 
       case this.tok.T_GOTO:
-        var result = this.node("goto"),
-          label = null;
+        result = this.node("goto");
+        label = null;
         if (this.next().expect(this.tok.T_STRING)) {
           label = this.text();
           this.next().expectEndOfStatement();
@@ -359,7 +360,7 @@ module.exports = {
 
       default:
         // default fallback expr
-        var expr = this.read_expr();
+        expr = this.read_expr();
         this.expectEndOfStatement();
         return expr;
     }

@@ -9,7 +9,7 @@ module.exports = {
     var id = this.keywords[token];
     if (typeof id !== "number") {
       if (token === "yield") {
-        if (this.php7 && this.tryMatch(' from')) {
+        if (this.php7 && this.tryMatch(" from")) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
         } else {

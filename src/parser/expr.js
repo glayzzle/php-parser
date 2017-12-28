@@ -92,6 +92,7 @@ module.exports = {
    * ```
    */
   read_expr_item: function() {
+    var result, expr;
     if (this.token === "@") return this.node("silent")(this.next().read_expr());
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
@@ -101,7 +102,7 @@ module.exports = {
       return this.node("unary")("~", this.next().read_expr());
 
     if (this.token === "-") {
-      var result = this.node();
+      result = this.node();
       this.next();
       if (
         this.token === this.tok.T_LNUMBER ||
@@ -118,7 +119,7 @@ module.exports = {
 
     if (this.token === "(") {
       var node = this.node("parenthesis");
-      var expr = this.next().read_expr();
+      expr = this.next().read_expr();
       this.expect(")") && this.next();
       expr = node(expr);
       // handle dereferencable
@@ -140,9 +141,9 @@ module.exports = {
     }
 
     if (this.token === this.tok.T_LIST) {
-      var result = this.node("list"),
-        assign = null;
+      var assign = null;
       var isInner = this.innerList;
+      result = this.node("list");
       if (!isInner) {
         assign = this.node("assign");
       }
@@ -204,7 +205,7 @@ module.exports = {
         return this.next().read_new_expr();
 
       case this.tok.T_ISSET:
-        var result = this.node("isset");
+        result = this.node("isset");
         if (this.next().expect("(")) {
           this.next();
         }
@@ -215,7 +216,7 @@ module.exports = {
         return result(args);
 
       case this.tok.T_EMPTY:
-        var result = this.node("empty");
+        result = this.node("empty");
         if (this.next().expect("(")) {
           this.next();
         }
@@ -238,11 +239,11 @@ module.exports = {
         return this.node("include")(true, true, this.next().read_expr());
 
       case this.tok.T_EVAL:
-        var result = this.node("eval");
+        result = this.node("eval");
         if (this.next().expect("(")) {
           this.next();
         }
-        var expr = this.read_expr();
+        expr = this.read_expr();
         if (this.expect(")")) {
           this.next();
         }
@@ -270,7 +271,7 @@ module.exports = {
         return this.node("cast")("unset", this.next().read_expr());
 
       case this.tok.T_EXIT:
-        var result = this.node("exit");
+        result = this.node("exit");
         var status = null;
         if (this.next().token === "(") {
           if (this.next().token !== ")") {
@@ -289,9 +290,9 @@ module.exports = {
 
       // T_YIELD (expr (T_DOUBLE_ARROW expr)?)?
       case this.tok.T_YIELD:
-        var result = this.node("yield"),
-          value = null,
+        var value = null,
           key = null;
+        result = this.node("yield");
         if (this.next().is("EXPR")) {
           // reads the yield return value
           value = this.read_expr();
@@ -305,8 +306,8 @@ module.exports = {
 
       // T_YIELD_FROM expr
       case this.tok.T_YIELD_FROM:
-        var result = this.node("yieldfrom");
-        var expr = this.next().read_expr();
+        result = this.node("yieldfrom");
+        expr = this.next().read_expr();
         return result(expr);
 
       case this.tok.T_FUNCTION:
@@ -325,9 +326,8 @@ module.exports = {
     }
 
     // SCALAR | VARIABLE
-    var expr;
     if (this.is("VARIABLE")) {
-      var result = this.node();
+      result = this.node();
       expr = this.read_variable(false, false, false);
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
@@ -440,14 +440,14 @@ module.exports = {
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
   read_new_expr: function() {
-    var result = this.node("new");
+    var result = this.node("new"),
+      args = [];
     if (this.token === this.tok.T_CLASS) {
       var what = this.node("class");
       // Annonymous class declaration
       var propExtends = null,
         propImplements = null,
-        body = null,
-        args = [];
+        body = null;
       if (this.next().token === "(") {
         args = this.read_function_argument_list();
       }
@@ -464,15 +464,13 @@ module.exports = {
         what(null, propExtends, propImplements, body, [0, 0, 0]),
         args
       );
-    } else {
-      // Already existing class
-      var name = this.read_class_name_reference();
-      var args = [];
-      if (this.token === "(") {
-        args = this.read_function_argument_list();
-      }
-      return result(name, args);
     }
+    // Already existing class
+    var name = this.read_class_name_reference();
+    if (this.token === "(") {
+      args = this.read_function_argument_list();
+    }
+    return result(name, args);
   },
   /**
    * Reads a class name

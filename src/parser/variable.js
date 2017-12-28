@@ -75,7 +75,7 @@ module.exports = {
   // resolves a static call
   read_static_getter: function(what, encapsed) {
     var result = this.node("staticlookup");
-    var offset = null;
+    var offset, name;
     if (this.next().is([this.tok.T_VARIABLE, "$"])) {
       offset = this.read_reference_variable(encapsed, false);
     } else if (
@@ -84,14 +84,14 @@ module.exports = {
       (this.php7 && this.is("IDENTIFIER"))
     ) {
       offset = this.node("constref");
-      var name = this.text();
+      name = this.text();
       this.next();
       offset = offset(name);
     } else {
       this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
       // graceful mode : set getter as error node and continue
       offset = this.node("constref");
-      var name = this.text();
+      name = this.text();
       this.next();
       offset = offset(name);
     }
@@ -99,6 +99,7 @@ module.exports = {
   },
 
   recursive_variable_chain_scan: function(result, read_only, encapsed) {
+    var name, node, offset;
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
         case "(":
@@ -113,9 +114,9 @@ module.exports = {
           }
           break;
         case "[":
-          var node = this.node("offsetlookup");
+          node = this.node("offsetlookup");
           this.next();
-          var offset = false;
+          offset = false;
           if (encapsed) {
             offset = this.read_encaps_var_offset();
             this.expect("]") && this.next();
@@ -131,20 +132,18 @@ module.exports = {
           result = node(result, offset);
           break;
         case this.tok.T_DOUBLE_COLON:
-
-
           // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
-          if(result.kind === "staticlookup") {
+          if (result.kind === "staticlookup") {
             this.error();
           }
 
-          var node = this.node("staticlookup");
+          node = this.node("staticlookup");
           if (
-            this.next().token === this.tok.T_STRING || 
+            this.next().token === this.tok.T_STRING ||
             (this.php7 && this.is("IDENTIFIER"))
           ) {
-            var offset = this.node("constref");
-            var name = this.text();
+            offset = this.node("constref");
+            name = this.text();
             this.next();
             offset = offset(name);
 
@@ -154,18 +153,18 @@ module.exports = {
           } else {
             this.error(this.tok.T_STRING);
             // fallback on a constref node
-            var offset = this.node('constref')(this.text());
+            offset = this.node("constref")(this.text());
             this.next();
           }
           result = node(result, offset);
           break;
         case this.tok.T_OBJECT_OPERATOR:
-          var node = this.node("propertylookup");
+          node = this.node("propertylookup");
           var what = null;
           switch (this.next().token) {
             case this.tok.T_STRING:
               what = this.node("constref");
-              var name = this.text();
+              name = this.text();
               this.next();
               what = what(name);
               if (this.token === this.tok.T_VARIABLE) {
@@ -190,7 +189,7 @@ module.exports = {
               break;
             case this.tok.T_VARIABLE:
               what = this.node("variable");
-              var name = this.text().substring(1);
+              name = this.text().substring(1);
               this.next();
               what = what(name, false, false);
               break;
@@ -213,7 +212,7 @@ module.exports = {
               this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
               // graceful mode : set what as error mode & continue
               what = this.node("constref");
-              var name = this.text();
+              name = this.text();
               this.next();
               what = what(name);
               break;
@@ -230,9 +229,10 @@ module.exports = {
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   read_encaps_var_offset: function() {
-    var offset = this.node();
+    var offset = this.node(),
+      text;
     if (this.token === this.tok.T_STRING) {
-      var text = this.text();
+      text = this.text();
       var isDblQuote = text[0] === '"';
       text = text.substring(1, text.length - 1);
       this.next();
@@ -252,7 +252,7 @@ module.exports = {
         this.tok.T_VARIABLE
       ]);
       // fallback : consider as text
-      var text = this.text();
+      text = this.text();
       this.next();
       offset = offset("string", false, text);
     }
@@ -270,11 +270,12 @@ module.exports = {
    * </code>
    */
   read_reference_variable: function(encapsed, byref) {
-    var result = this.read_simple_variable(byref);
+    var result = this.read_simple_variable(byref),
+      offset;
     while (this.token != this.EOF) {
       var node = this.node();
       if (this.token == "[") {
-        var offset = null;
+        offset = null;
         if (encapsed) {
           offset = this.next().read_encaps_var_offset();
         } else {
@@ -283,7 +284,7 @@ module.exports = {
         this.expect("]") && this.next();
         result = node("offsetlookup", result, offset);
       } else if (this.token == "{" && !encapsed) {
-        var offset = this.next().read_expr();
+        offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);
       } else break;
@@ -296,13 +297,14 @@ module.exports = {
    * ```
    */
   read_simple_variable: function(byref) {
-    var result = this.node("variable");
+    var result = this.node("variable"),
+      name;
     if (
       this.expect([this.tok.T_VARIABLE, "$"]) &&
       this.token === this.tok.T_VARIABLE
     ) {
       // plain variable name
-      var name = this.text().substring(1);
+      name = this.text().substring(1);
       this.next();
       result = result(name, byref, false);
     } else {
@@ -318,7 +320,7 @@ module.exports = {
           result = result(this.read_simple_variable(false), byref);
           break;
         case this.tok.T_VARIABLE: // $$var
-          var name = this.text().substring(1);
+          name = this.text().substring(1);
           var node = this.node("variable");
           this.next();
           result = result(node(name, false, false), byref, false);
@@ -326,7 +328,7 @@ module.exports = {
         default:
           this.error(["{", "$", this.tok.T_VARIABLE]);
           // graceful mode
-          var name = this.text();
+          name = this.text();
           this.next();
           result = result(name, byref, false);
       }

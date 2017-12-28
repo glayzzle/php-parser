@@ -18,23 +18,24 @@ module.exports = {
    * @return {Namespace}
    */
   read_namespace: function() {
-    var result = this.node("namespace");
+    var result = this.node("namespace"),
+      body;
     this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == "{") {
       this.currentNamespace = [""];
-      var body = this.nextWithComments().read_top_statements();
+      body = this.nextWithComments().read_top_statements();
       this.expect("}") && this.nextWithComments();
       return result([""], body, true);
     } else {
       var name = this.read_namespace_name();
       if (this.token == ";") {
         this.currentNamespace = name;
-        var body = this.nextWithComments().read_top_statements();
+        body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
         return result(name.name, body, false);
       } else if (this.token == "{") {
         this.currentNamespace = name;
-        var body = this.nextWithComments().read_top_statements();
+        body = this.nextWithComments().read_top_statements();
         this.expect("}") && this.nextWithComments();
         return result(name.name, body, true);
       } else if (this.token === "(") {
@@ -46,7 +47,7 @@ module.exports = {
         this.error(["{", ";"]);
         // graceful mode :
         this.currentNamespace = name;
-        var body = this.read_top_statements();
+        body = this.read_top_statements();
         this.expect(this.EOF);
         return result(name, body, false);
       }

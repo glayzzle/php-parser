@@ -80,7 +80,10 @@ module.exports = {
       nullable = false;
     if (type !== 1) {
       if (type === 2) {
-        if (this.token === this.tok.T_STRING || (this.php7 && this.is("IDENTIFIER"))) {
+        if (
+          this.token === this.tok.T_STRING ||
+          (this.php7 && this.is("IDENTIFIER"))
+        ) {
           name = this.text();
           this.next();
         } else {

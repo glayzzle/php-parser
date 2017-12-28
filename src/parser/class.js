@@ -170,7 +170,10 @@ module.exports = {
         var result = this.node("classconstant"),
           name = null,
           value = null;
-        if (this.token === this.tok.T_STRING || (this.php7 && this.is("IDENTIFIER"))) {
+        if (
+          this.token === this.tok.T_STRING ||
+          (this.php7 && this.is("IDENTIFIER"))
+        ) {
           name = this.text();
           this.next();
         } else {
@@ -405,7 +408,10 @@ module.exports = {
 
       if (this.token === this.tok.T_DOUBLE_COLON) {
         this.next();
-        if (this.token === this.tok.T_STRING || (this.php7 && this.is("IDENTIFIER"))) {
+        if (
+          this.token === this.tok.T_STRING ||
+          (this.php7 && this.is("IDENTIFIER"))
+        ) {
           trait = method;
           method = this.text();
           this.next();
@@ -433,8 +439,11 @@ module.exports = {
       if (this.next().is("T_MEMBER_FLAGS")) {
         flags = this.read_member_flags();
       }
-      
-      if (this.token === this.tok.T_STRING || (this.php7 && this.is("IDENTIFIER"))) {
+
+      if (
+        this.token === this.tok.T_STRING ||
+        (this.php7 && this.is("IDENTIFIER"))
+      ) {
         alias = this.text();
         this.next();
       } else if (flags === false) {

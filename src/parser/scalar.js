@@ -22,7 +22,7 @@ module.exports = {
    * Unescape special chars
    */
   resolve_special_chars: function(text) {
-    return text.replace(/\\[rntvef"'\\\$]/g, function(seq) {
+    return text.replace(/\\[rntvef"'\\$]/g, function(seq) {
       return specialChar[seq];
     });
   },
@@ -40,10 +40,11 @@ module.exports = {
     if (this.is("T_MAGIC_CONST")) {
       return this.get_magic_constant();
     } else {
+      var value, node;
       switch (this.token) {
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
-          var value = this.node("string");
+          value = this.node("string");
           var text = this.text();
           var isDoubleQuote = text[0] === '"';
           text = text.substring(1, text.length - 1);
@@ -58,8 +59,8 @@ module.exports = {
           }
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
-            var node = this.node("nowdoc");
-            var value = this.next().text();
+            node = this.node("nowdoc");
+            value = this.next().text();
             // strip the last line return char
             var lastCh = value[value.length - 1];
             if (lastCh === "\n") {
@@ -87,7 +88,7 @@ module.exports = {
 
         case 'b"':
         case 'B"':
-          var node = this.node("cast");
+          node = this.node("cast");
           var what = this.next().read_encapsed_string('"');
           return node("binary", what);
 
@@ -95,7 +96,7 @@ module.exports = {
         case this.tok.T_LNUMBER: // long
         case this.tok.T_DNUMBER: // double
           var result = this.node("number");
-          var value = this.text();
+          value = this.text();
           this.next();
           result = result(value);
           return result;
@@ -116,14 +117,14 @@ module.exports = {
    * Handles the dereferencing
    */
   read_dereferencable: function(expr) {
-    var result;
+    var result, offset;
     var node = this.node("offsetlookup");
     if (this.token === "[") {
-      var offset = this.next().read_expr();
+      offset = this.next().read_expr();
       if (this.expect("]")) this.next();
       result = node(expr, offset);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      var offset = this.read_encapsed_string_item();
+      offset = this.read_encapsed_string_item();
       result = node(expr, offset);
     }
     return result;
@@ -144,7 +145,10 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
   read_encapsed_string_item: function() {
-    var result = this.node();
+    var result = this.node(),
+      offset,
+      node,
+      name;
 
     // plain text
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1222
@@ -155,7 +159,7 @@ module.exports = {
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
-      var name = null;
+      name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         var varName = this.text();
         name = this.node("variable");
@@ -164,8 +168,8 @@ module.exports = {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
         if (this.token === "[") {
           name = name(varName, false);
-          var node = this.node("offsetlookup");
-          var offset = this.next().read_expr();
+          node = this.node("offsetlookup");
+          offset = this.next().read_expr();
           this.expect("]") && this.next();
           name = node(name, offset);
         } else {
@@ -188,18 +192,18 @@ module.exports = {
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
       if (this.token === "[") {
-        var node = this.node("offsetlookup");
-        var offset = this.next().read_encaps_var_offset();
+        node = this.node("offsetlookup");
+        offset = this.next().read_encaps_var_offset();
         this.expect("]") && this.next();
         result = node(result, offset);
       }
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
-        var node = this.node("propertylookup");
+        node = this.node("propertylookup");
         var what = this.node("constref");
         this.next().expect(this.tok.T_STRING);
-        var name = this.text();
+        name = this.text();
         this.next();
         result = node(result, what(name));
       }

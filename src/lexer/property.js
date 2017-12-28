@@ -29,7 +29,7 @@ module.exports = {
 
     // SHIFT STATE
     this.popState();
-    this.begin('ST_IN_SCRIPTING');
+    this.begin("ST_IN_SCRIPTING");
 
     if (this.is_LABEL_START()) {
       this.consume_LABEL();
