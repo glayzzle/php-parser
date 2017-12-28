@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'while';
+var Statement = require("./statement");
+var KIND = "while";
 
 /**
  * Defines a while statement

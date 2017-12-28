@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'catch';
+var Statement = require("./statement");
+var KIND = "catch";
 
 /**
  * Defines a catch statement

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require('./sys');
-var KIND = 'print';
+var Sys = require("./sys");
+var KIND = "print";
 
 /**
  * Outputs

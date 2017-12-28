@@ -18,34 +18,32 @@ module.exports = {
    * @return {Namespace}
    */
   read_namespace: function() {
-    var result = this.node('namespace');
+    var result = this.node("namespace");
     this.expect(this.tok.T_NAMESPACE) && this.next();
-    if (this.token == '{') {
-      this.currentNamespace = [''];
-      var body =  this.nextWithComments().read_top_statements();
-      this.expect('}') && this.nextWithComments();
-      return result([''], body, true);
+    if (this.token == "{") {
+      this.currentNamespace = [""];
+      var body = this.nextWithComments().read_top_statements();
+      this.expect("}") && this.nextWithComments();
+      return result([""], body, true);
     } else {
       var name = this.read_namespace_name();
-      if (this.token == ';') {
+      if (this.token == ";") {
         this.currentNamespace = name;
         var body = this.nextWithComments().read_top_statements();
         this.expect(this.EOF);
         return result(name.name, body, false);
-      } else if (this.token == '{') {
+      } else if (this.token == "{") {
         this.currentNamespace = name;
-        var body =  this.nextWithComments().read_top_statements();
-        this.expect('}') && this.nextWithComments();
+        var body = this.nextWithComments().read_top_statements();
+        this.expect("}") && this.nextWithComments();
         return result(name.name, body, true);
-      } else if (this.token === '(') {
+      } else if (this.token === "(") {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.identifier.RELATIVE_NAME;
         name.name = name.name.substring(1);
-        return this.node('call')(
-          name, this.read_function_argument_list()
-        );
+        return this.node("call")(name, this.read_function_argument_list());
       } else {
-        this.error(['{', ';']);
+        this.error(["{", ";"]);
         // graceful mode :
         this.currentNamespace = name;
         var body = this.read_top_statements();
@@ -53,7 +51,7 @@ module.exports = {
         return result(name, body, false);
       }
     }
-  }
+  },
   /**
    * Reads a namespace name
    * ```ebnf
@@ -62,17 +60,18 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.rules.php
    * @return {Identifier}
    */
-  ,read_namespace_name: function() {
-    var result = this.node('identifier'), relative = false;
+  read_namespace_name: function() {
+    var result = this.node("identifier"),
+      relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();
-      relative = true
+      relative = true;
     }
     return result(
       this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true),
       relative
     );
-  }
+  },
   /**
    * Reads a use statement
    * ```ebnf
@@ -85,25 +84,24 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.importing.php
    * @return {UseGroup}
    */
-  ,read_use_statement: function() {
-    var result = this.node('usegroup'),
+  read_use_statement: function() {
+    var result = this.node("usegroup"),
       type = null,
       items = [],
-      name = null
-    ;
+      name = null;
     this.expect(this.tok.T_USE) && this.next();
     type = this.read_use_type();
     items.push(this.read_use_declaration(false));
-    if (this.token === ',') {
+    if (this.token === ",") {
       items = items.concat(this.next().read_use_declarations(false));
-    } else if (this.token === '{') {
+    } else if (this.token === "{") {
       name = items[0].name;
       items = this.next().read_use_declarations(type === null);
-      this.expect('}') && this.next();
+      this.expect("}") && this.next();
     }
-    this.expect(';') && this.nextWithComments();
+    this.expect(";") && this.nextWithComments();
     return result(name, type, items);
-  }
+  },
   /**
    * Reads a use declaration
    * ```ebnf
@@ -112,28 +110,29 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
    * @return {UseItem}
    */
-  ,read_use_declaration: function(typed) {
-    var result = this.node('useitem'), type = null;
+  read_use_declaration: function(typed) {
+    var result = this.node("useitem"),
+      type = null;
     if (typed) type = this.read_use_type();
     var name = this.read_namespace_name();
     var alias = this.read_use_alias();
     return result(name.name, alias, type);
-  }
+  },
   /**
-  * Reads a list of use declarations
-  * ```ebnf
-  * use_declarations ::= use_declaration (',' use_declaration)*
-  * ```
-  * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
-  * @return {UseItem[]}
+   * Reads a list of use declarations
+   * ```ebnf
+   * use_declarations ::= use_declaration (',' use_declaration)*
+   * ```
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
+   * @return {UseItem[]}
    */
-  ,read_use_declarations: function(typed) {
+  read_use_declarations: function(typed) {
     var result = [this.read_use_declaration(typed)];
-    while(this.token === ',') {
+    while (this.token === ",") {
       result.push(this.next().read_use_declaration(typed));
     }
     return result;
-  }
+  },
   /**
    * Reads a use statement
    * ```ebnf
@@ -141,7 +140,7 @@ module.exports = {
    * ```
    * @return {String|null}
    */
-  ,read_use_alias: function() {
+  read_use_alias: function() {
     var result = null;
     if (this.token === this.tok.T_AS) {
       if (this.next().expect(this.tok.T_STRING)) {
@@ -150,7 +149,7 @@ module.exports = {
       }
     }
     return result;
-  }
+  },
   /**
    * Reads the namespace type declaration
    * ```ebnf
@@ -159,7 +158,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L335
    * @return {String|null} Possible values : function, const
    */
-  ,read_use_type: function() {
+  read_use_type: function() {
     if (this.token === this.tok.T_FUNCTION) {
       this.next();
       return this.ast.useitem.TYPE_FUNCTION;

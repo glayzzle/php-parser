@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require('./sys');
-var KIND = 'list';
+var Sys = require("./sys");
+var KIND = "list";
 
 /**
  * Defines list assignment

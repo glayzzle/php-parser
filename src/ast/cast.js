@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require('./operation');
-var KIND = 'cast';
+var Operation = require("./operation");
+var KIND = "cast";
 
 /**
  * Binary operations

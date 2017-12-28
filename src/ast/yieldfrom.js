@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Expression = require('./expression');
-var KIND = 'yieldfrom';
+var Expression = require("./expression");
+var KIND = "yieldfrom";
 
 /**
  * Defines a yield from generator statement

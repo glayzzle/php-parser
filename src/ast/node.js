@@ -12,7 +12,7 @@
  */
 var Node = function Node(kind, location) {
   this.kind = kind;
-  if(location) {
+  if (location) {
     this.loc = location;
   }
 };

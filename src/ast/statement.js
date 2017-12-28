@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'statement';
+var Node = require("./node");
+var KIND = "statement";
 
 /**
  * Any statement.

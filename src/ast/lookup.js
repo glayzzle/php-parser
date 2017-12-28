@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Expr = require('./expression');
-var KIND = 'lookup';
+var Expr = require("./expression");
+var KIND = "lookup";
 
 /**
  * Lookup on an offset in the specified object

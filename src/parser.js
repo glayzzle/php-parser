@@ -8,9 +8,8 @@
  * @private check if argument is a number
  */
 function isNumber(n) {
-  return n != '.' && n != ',' && !isNaN(parseFloat(n)) && isFinite(n);
+  return n != "." && n != "," && !isNaN(parseFloat(n)) && isFinite(n);
 }
-
 
 /**
  * The PHP Parser class that build the AST tree from the lexer
@@ -37,109 +36,118 @@ var parser = function(lexer, ast) {
     return [item, null];
   };
   this.entries = {
-    'IDENTIFIER': new Map([
-      this.tok.T_ABSTRACT,
-      this.tok.T_ARRAY,
-      this.tok.T_AS,
-      this.tok.T_BREAK,
-      this.tok.T_CALLABLE,
-      this.tok.T_CASE,
-      this.tok.T_CATCH,
-      this.tok.T_CLASS,
-      this.tok.T_CLASS_C,
-      this.tok.T_CLONE,
-      this.tok.T_CONST,
-      this.tok.T_CONTINUE,
-      this.tok.T_DECLARE,
-      this.tok.T_DEFAULT,
-      this.tok.T_DIR,
-      this.tok.T_DO,
-      this.tok.T_ECHO,
-      this.tok.T_ELSE,
-      this.tok.T_ELSEIF,
-      this.tok.T_EMPTY,
-      this.tok.T_ENDDECLARE,
-      this.tok.T_ENDFOR,
-      this.tok.T_ENDFOREACH,
-      this.tok.T_ENDIF,
-      this.tok.T_ENDSWITCH,
-      this.tok.T_ENDWHILE,
-      this.tok.T_EVAL,
-      this.tok.T_EXIT,
-      this.tok.T_EXTENDS,
-      this.tok.T_FILE,
-      this.tok.T_FINAL,
-      this.tok.T_FINALLY,
-      this.tok.T_FUNC_C,
-      this.tok.T_FOR,
-      this.tok.T_FOREACH,
-      this.tok.T_FUNCTION,
-      this.tok.T_GLOBAL,
-      this.tok.T_GOTO,
-      this.tok.T_IF,
-      this.tok.T_IMPLEMENTS,
-      this.tok.T_INCLUDE,
-      this.tok.T_INCLUDE_ONCE,
-      this.tok.T_INSTANCEOF,
-      this.tok.T_INSTEADOF,
-      this.tok.T_INTERFACE,
-      this.tok.T_ISSET,
-      this.tok.T_LINE,
-      this.tok.T_LIST,
-      this.tok.T_LOGICAL_AND,
-      this.tok.T_LOGICAL_OR,
-      this.tok.T_LOGICAL_XOR,
-      this.tok.T_METHOD_C,
-      this.tok.T_NAMESPACE,
-      this.tok.T_NEW,
-      this.tok.T_NS_C,
-      this.tok.T_PRINT,
-      this.tok.T_PRIVATE,
-      this.tok.T_PROTECTED,
-      this.tok.T_PUBLIC,
-      this.tok.T_REQUIRE,
-      this.tok.T_REQUIRE_ONCE,
-      this.tok.T_RETURN,
-      this.tok.T_STATIC,
-      this.tok.T_SWITCH,
-      this.tok.T_THROW,
-      this.tok.T_TRAIT,
-      this.tok.T_TRY,
-      this.tok.T_UNSET,
-      this.tok.T_USE,
-      this.tok.T_VAR,
-      this.tok.T_WHILE,
-      this.tok.T_YIELD
-    ].map(mapIt)),
-    'VARIABLE': new Map([
-      this.tok.T_VARIABLE,
-      '$', '&',
-      this.tok.T_NS_SEPARATOR,
-      this.tok.T_STRING,
-      this.tok.T_NAMESPACE,
-      this.tok.T_STATIC
-    ].map(mapIt)),
-    'SCALAR': new Map([
-      this.tok.T_CONSTANT_ENCAPSED_STRING,
-      this.tok.T_START_HEREDOC,
-      this.tok.T_LNUMBER,
-      this.tok.T_DNUMBER,
-      this.tok.T_ARRAY,'[',
-      this.tok.T_CLASS_C,
-      this.tok.T_TRAIT_C,
-      this.tok.T_FUNC_C,
-      this.tok.T_METHOD_C,
-      this.tok.T_LINE,
-      this.tok.T_FILE,
-      this.tok.T_DIR,
-      this.tok.T_NS_C,
-      '"',
-      'b"',
-      'B"',
-      '-',
-      this.tok.T_NS_SEPARATOR
-    ].map(mapIt)),
-    'T_MAGIC_CONST': new Map([
+    IDENTIFIER: new Map(
+      [
+        this.tok.T_ABSTRACT,
+        this.tok.T_ARRAY,
+        this.tok.T_AS,
+        this.tok.T_BREAK,
+        this.tok.T_CALLABLE,
+        this.tok.T_CASE,
+        this.tok.T_CATCH,
+        this.tok.T_CLASS,
+        this.tok.T_CLASS_C,
+        this.tok.T_CLONE,
+        this.tok.T_CONST,
+        this.tok.T_CONTINUE,
+        this.tok.T_DECLARE,
+        this.tok.T_DEFAULT,
+        this.tok.T_DIR,
+        this.tok.T_DO,
+        this.tok.T_ECHO,
+        this.tok.T_ELSE,
+        this.tok.T_ELSEIF,
+        this.tok.T_EMPTY,
+        this.tok.T_ENDDECLARE,
+        this.tok.T_ENDFOR,
+        this.tok.T_ENDFOREACH,
+        this.tok.T_ENDIF,
+        this.tok.T_ENDSWITCH,
+        this.tok.T_ENDWHILE,
+        this.tok.T_EVAL,
+        this.tok.T_EXIT,
+        this.tok.T_EXTENDS,
+        this.tok.T_FILE,
+        this.tok.T_FINAL,
+        this.tok.T_FINALLY,
+        this.tok.T_FUNC_C,
+        this.tok.T_FOR,
+        this.tok.T_FOREACH,
+        this.tok.T_FUNCTION,
+        this.tok.T_GLOBAL,
+        this.tok.T_GOTO,
+        this.tok.T_IF,
+        this.tok.T_IMPLEMENTS,
+        this.tok.T_INCLUDE,
+        this.tok.T_INCLUDE_ONCE,
+        this.tok.T_INSTANCEOF,
+        this.tok.T_INSTEADOF,
+        this.tok.T_INTERFACE,
+        this.tok.T_ISSET,
+        this.tok.T_LINE,
+        this.tok.T_LIST,
+        this.tok.T_LOGICAL_AND,
+        this.tok.T_LOGICAL_OR,
+        this.tok.T_LOGICAL_XOR,
+        this.tok.T_METHOD_C,
+        this.tok.T_NAMESPACE,
+        this.tok.T_NEW,
+        this.tok.T_NS_C,
+        this.tok.T_PRINT,
+        this.tok.T_PRIVATE,
+        this.tok.T_PROTECTED,
+        this.tok.T_PUBLIC,
+        this.tok.T_REQUIRE,
+        this.tok.T_REQUIRE_ONCE,
+        this.tok.T_RETURN,
+        this.tok.T_STATIC,
+        this.tok.T_SWITCH,
+        this.tok.T_THROW,
+        this.tok.T_TRAIT,
+        this.tok.T_TRY,
+        this.tok.T_UNSET,
+        this.tok.T_USE,
+        this.tok.T_VAR,
+        this.tok.T_WHILE,
+        this.tok.T_YIELD
+      ].map(mapIt)
+    ),
+    VARIABLE: new Map(
+      [
+        this.tok.T_VARIABLE,
+        "$",
+        "&",
+        this.tok.T_NS_SEPARATOR,
+        this.tok.T_STRING,
+        this.tok.T_NAMESPACE,
+        this.tok.T_STATIC
+      ].map(mapIt)
+    ),
+    SCALAR: new Map(
+      [
+        this.tok.T_CONSTANT_ENCAPSED_STRING,
+        this.tok.T_START_HEREDOC,
+        this.tok.T_LNUMBER,
+        this.tok.T_DNUMBER,
+        this.tok.T_ARRAY,
+        "[",
+        this.tok.T_CLASS_C,
+        this.tok.T_TRAIT_C,
+        this.tok.T_FUNC_C,
+        this.tok.T_METHOD_C,
+        this.tok.T_LINE,
+        this.tok.T_FILE,
+        this.tok.T_DIR,
+        this.tok.T_NS_C,
+        '"',
+        'b"',
+        'B"',
+        "-",
+        this.tok.T_NS_SEPARATOR
+      ].map(mapIt)
+    ),
+    T_MAGIC_CONST: new Map(
+      [
         this.tok.T_CLASS_C,
         this.tok.T_TRAIT_C,
         this.tok.T_FUNC_C,
@@ -148,68 +156,77 @@ var parser = function(lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_DIR,
         this.tok.T_NS_C
-    ].map(mapIt)),
-    'T_MEMBER_FLAGS': new Map([
-      this.tok.T_PUBLIC,
-      this.tok.T_PRIVATE,
-      this.tok.T_PROTECTED,
-      this.tok.T_STATIC,
-      this.tok.T_ABSTRACT,
-      this.tok.T_FINAL
-    ].map(mapIt)),
-    'EOS': new Map([
-      ';',
-      this.tok.T_CLOSE_TAG,
-      this.EOF,
-      this.tok.T_INLINE_HTML
-    ].map(mapIt)),
-    'EXPR': new Map([
-      '@','-','+','!','~','(','`',
-      this.tok.T_LIST,
-      this.tok.T_CLONE,
-      this.tok.T_INC,
-      this.tok.T_DEC,
-      this.tok.T_NEW,
-      this.tok.T_ISSET,
-      this.tok.T_EMPTY,
-      this.tok.T_INCLUDE,
-      this.tok.T_INCLUDE_ONCE,
-      this.tok.T_REQUIRE,
-      this.tok.T_REQUIRE_ONCE,
-      this.tok.T_EVAL,
-      this.tok.T_INT_CAST,
-      this.tok.T_DOUBLE_CAST,
-      this.tok.T_STRING_CAST,
-      this.tok.T_ARRAY_CAST,
-      this.tok.T_OBJECT_CAST,
-      this.tok.T_BOOL_CAST,
-      this.tok.T_UNSET_CAST,
-      this.tok.T_EXIT,
-      this.tok.T_PRINT,
-      this.tok.T_YIELD,
-      this.tok.T_STATIC,
-      this.tok.T_FUNCTION,
-      // using VARIABLES :
-      this.tok.T_VARIABLE,
-      '$',
-      this.tok.T_NS_SEPARATOR,
-      this.tok.T_STRING,
-      // using SCALAR :
-      this.tok.T_STRING, // @see variable.js line 45 > conflict with variable = shift/reduce :)
-      this.tok.T_CONSTANT_ENCAPSED_STRING,
-      this.tok.T_START_HEREDOC,
-      this.tok.T_LNUMBER,
-      this.tok.T_DNUMBER,
-      this.tok.T_ARRAY,'[',
-      this.tok.T_CLASS_C,
-      this.tok.T_TRAIT_C,
-      this.tok.T_FUNC_C,
-      this.tok.T_METHOD_C,
-      this.tok.T_LINE,
-      this.tok.T_FILE,
-      this.tok.T_DIR,
-      this.tok.T_NS_C
-    ].map(mapIt))
+      ].map(mapIt)
+    ),
+    T_MEMBER_FLAGS: new Map(
+      [
+        this.tok.T_PUBLIC,
+        this.tok.T_PRIVATE,
+        this.tok.T_PROTECTED,
+        this.tok.T_STATIC,
+        this.tok.T_ABSTRACT,
+        this.tok.T_FINAL
+      ].map(mapIt)
+    ),
+    EOS: new Map(
+      [";", this.tok.T_CLOSE_TAG, this.EOF, this.tok.T_INLINE_HTML].map(mapIt)
+    ),
+    EXPR: new Map(
+      [
+        "@",
+        "-",
+        "+",
+        "!",
+        "~",
+        "(",
+        "`",
+        this.tok.T_LIST,
+        this.tok.T_CLONE,
+        this.tok.T_INC,
+        this.tok.T_DEC,
+        this.tok.T_NEW,
+        this.tok.T_ISSET,
+        this.tok.T_EMPTY,
+        this.tok.T_INCLUDE,
+        this.tok.T_INCLUDE_ONCE,
+        this.tok.T_REQUIRE,
+        this.tok.T_REQUIRE_ONCE,
+        this.tok.T_EVAL,
+        this.tok.T_INT_CAST,
+        this.tok.T_DOUBLE_CAST,
+        this.tok.T_STRING_CAST,
+        this.tok.T_ARRAY_CAST,
+        this.tok.T_OBJECT_CAST,
+        this.tok.T_BOOL_CAST,
+        this.tok.T_UNSET_CAST,
+        this.tok.T_EXIT,
+        this.tok.T_PRINT,
+        this.tok.T_YIELD,
+        this.tok.T_STATIC,
+        this.tok.T_FUNCTION,
+        // using VARIABLES :
+        this.tok.T_VARIABLE,
+        "$",
+        this.tok.T_NS_SEPARATOR,
+        this.tok.T_STRING,
+        // using SCALAR :
+        this.tok.T_STRING, // @see variable.js line 45 > conflict with variable = shift/reduce :)
+        this.tok.T_CONSTANT_ENCAPSED_STRING,
+        this.tok.T_START_HEREDOC,
+        this.tok.T_LNUMBER,
+        this.tok.T_DNUMBER,
+        this.tok.T_ARRAY,
+        "[",
+        this.tok.T_CLASS_C,
+        this.tok.T_TRAIT_C,
+        this.tok.T_FUNC_C,
+        this.tok.T_METHOD_C,
+        this.tok.T_LINE,
+        this.tok.T_FILE,
+        this.tok.T_DIR,
+        this.tok.T_NS_C
+      ].map(mapIt)
+    )
   };
 };
 
@@ -220,7 +237,7 @@ parser.prototype.getTokenName = function(token) {
   if (!isNumber(token)) {
     return "'" + token + "'";
   } else {
-    if (token == this.EOF) return 'the end of file (EOF)';
+    if (token == this.EOF) return "the end of file (EOF)";
     return this.lexer.engine.tokens.values[token];
   }
 };
@@ -230,16 +247,16 @@ parser.prototype.getTokenName = function(token) {
  */
 parser.prototype.parse = function(code, filename) {
   this._errors = [];
-  this.filename = filename || 'eval';
-  this.currentNamespace = [''];
+  this.filename = filename || "eval";
+  this.currentNamespace = [""];
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
-  var program = this.ast.prepare('program', this);
+  var program = this.ast.prepare("program", this);
   var childs = [];
   this.nextWithComments();
-  while(this.token != this.EOF) {
+  while (this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
       if (Array.isArray(node)) {
@@ -256,19 +273,24 @@ parser.prototype.parse = function(code, filename) {
  * Raise an error
  */
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
-  message += ' on line ' + this.lexer.yylloc.first_line;
+  message += " on line " + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
     var err = new SyntaxError(
-      message, this.filename, this.lexer.yylloc.first_line
+      message,
+      this.filename,
+      this.lexer.yylloc.first_line
     );
     err.lineNumber = this.lexer.yylloc.first_line;
     err.fileName = this.filename;
-    err.columnNumber = this.lexer.yylloc.first_column
+    err.columnNumber = this.lexer.yylloc.first_column;
     throw err;
   }
   // Error node :
-  var node = this.ast.prepare('error', this)(
-    message, token, this.lexer.yylloc.first_line, expect
+  var node = this.ast.prepare("error", this)(
+    message,
+    token,
+    this.lexer.yylloc.first_line,
+    expect
   );
   this._errors.push(node);
   return node;
@@ -278,32 +300,27 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
  * handling errors
  */
 parser.prototype.error = function(expect) {
-  var msg = 'Parse Error : syntax error';
+  var msg = "Parse Error : syntax error";
   token = this.getTokenName(this.token);
   if (this.token !== this.EOF) {
     if (isNumber(this.token)) {
       var symbol = this.text();
       if (symbol.length > 10) {
-        symbol = symbol.substring(0, 7) + '...';
+        symbol = symbol.substring(0, 7) + "...";
       }
-      token = '\''+symbol+'\' ('+token+')';
+      token = "'" + symbol + "' (" + token + ")";
     }
-    msg += ', unexpected ' + token;
+    msg += ", unexpected " + token;
   }
-  var msgExpect = '';
+  var msgExpect = "";
   if (expect && !Array.isArray(expect)) {
     if (isNumber(expect) || expect.length === 1) {
-      msgExpect = ', expecting ' + this.getTokenName(expect);
+      msgExpect = ", expecting " + this.getTokenName(expect);
     }
     msg += msgExpect;
   }
-  this.token !== this.EOF
-  return this.raiseError(
-    msg,
-    msgExpect,
-    expect,
-    token
-  );
+  this.token !== this.EOF;
+  return this.raiseError(msg, msgExpect, expect, token);
 };
 
 /**
@@ -318,7 +335,7 @@ parser.prototype.node = function(name) {
  * @return {boolean}
  */
 parser.prototype.expectEndOfStatement = function() {
-  if (this.token === ';') {
+  if (this.token === ";") {
     this.nextWithComments();
     if (this.token === this.tok.T_CLOSE_TAG) {
       // strip close tag (statement already closed with ';')
@@ -327,21 +344,25 @@ parser.prototype.expectEndOfStatement = function() {
   } else if (this.token === this.tok.T_CLOSE_TAG) {
     this.nextWithComments();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
-    this.error(';');
+    this.error(";");
     return false;
   }
   return true;
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ['parser.next', 'parser.ignoreComments', 'parser.nextWithComments'];
+var ignoreStack = [
+  "parser.next",
+  "parser.ignoreComments",
+  "parser.nextWithComments"
+];
 parser.prototype.showlog = function() {
-  var stack = (new Error()).stack.split('\n');
+  var stack = new Error().stack.split("\n");
   var line;
-  for (var offset = 2; offset < stack.length; offset ++) {
+  for (var offset = 2; offset < stack.length; offset++) {
     line = stack[offset].trim();
     var found = false;
-    for(var i = 0; i < ignoreStack.length; i++) {
+    for (var i = 0; i < ignoreStack.length; i++) {
       if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
         found = true;
         break;
@@ -353,12 +374,15 @@ parser.prototype.showlog = function() {
   }
 
   console.log(
-    'Line '
-    + this.lexer.yylloc.first_line
-    + ' : '
-    + this.getTokenName(this.token)
-    + ">" + this.lexer.yytext + "<"
-    + ' @-->' + line
+    "Line " +
+      this.lexer.yylloc.first_line +
+      " : " +
+      this.getTokenName(this.token) +
+      ">" +
+      this.lexer.yytext +
+      "<" +
+      " @-->" +
+      line
   );
   return this;
 };
@@ -404,7 +428,7 @@ parser.prototype.next = function() {
     this.debug = false;
     this.nextWithComments().ignoreComments();
     this.debug = true;
-  } else {
+  } else {
     this.nextWithComments().ignoreComments();
   }
   return this;
@@ -413,7 +437,10 @@ parser.prototype.next = function() {
 /** consume comments (if found) **/
 parser.prototype.ignoreComments = function() {
   if (this.debug) this.showlog();
-  while(this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
+  while (
+    this.token === this.tok.T_COMMENT ||
+    this.token === this.tok.T_DOC_COMMENT
+  ) {
     // IGNORE COMMENTS
     this.nextWithComments();
   }
@@ -444,23 +471,23 @@ parser.prototype.is = function(type) {
 
 // extends the parser with syntax files
 [
-  require('./parser/array.js'),
-  require('./parser/class.js'),
-  require('./parser/comment.js'),
-  require('./parser/expr.js'),
-  require('./parser/function.js'),
-  require('./parser/if.js'),
-  require('./parser/loops.js'),
-  require('./parser/main.js'),
-  require('./parser/namespace.js'),
-  require('./parser/scalar.js'),
-  require('./parser/statement.js'),
-  require('./parser/switch.js'),
-  require('./parser/try.js'),
-  require('./parser/utils.js'),
-  require('./parser/variable.js')
-].forEach(function (ext) {
-  for(var k in ext) {
+  require("./parser/array.js"),
+  require("./parser/class.js"),
+  require("./parser/comment.js"),
+  require("./parser/expr.js"),
+  require("./parser/function.js"),
+  require("./parser/if.js"),
+  require("./parser/loops.js"),
+  require("./parser/main.js"),
+  require("./parser/namespace.js"),
+  require("./parser/scalar.js"),
+  require("./parser/statement.js"),
+  require("./parser/switch.js"),
+  require("./parser/try.js"),
+  require("./parser/utils.js"),
+  require("./parser/variable.js")
+].forEach(function(ext) {
+  for (var k in ext) {
     parser.prototype[k] = ext[k];
   }
 });

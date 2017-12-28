@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'new';
+var Statement = require("./statement");
+var KIND = "new";
 
 /**
  * Creates a new instance of the specified class

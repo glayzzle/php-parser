@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'include';
+var Statement = require("./statement");
+var KIND = "include";
 
 /**
  * Defines system include call
@@ -15,7 +15,12 @@ var KIND = 'include';
  * @property {boolean} once
  * @property {boolean} require
  */
-var Include = Statement.extends(function Include(once, require, target, location) {
+var Include = Statement.extends(function Include(
+  once,
+  require,
+  target,
+  location
+) {
   Statement.apply(this, [KIND, location]);
   this.once = once;
   this.require = require;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'block';
+var Statement = require("./statement");
+var KIND = "block";
 
 /**
  * A block statement, i.e., a sequence of statements surrounded by braces.

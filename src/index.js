@@ -4,10 +4,10 @@
  * @url http://glayzzle.com
  */
 
-var lexer = require('./lexer');
-var parser = require('./parser');
-var tokens = require('./tokens');
-var AST = require('./ast');
+var lexer = require("./lexer");
+var parser = require("./parser");
+var tokens = require("./tokens");
+var AST = require("./ast");
 
 /**
  * @private combine structures
@@ -20,12 +20,12 @@ function combine(src, to) {
     var val = src[k];
     if (val === null) {
       delete to[k];
-    } else if (typeof val === 'function') {
+    } else if (typeof val === "function") {
       to[k] = val.bind(to);
     } else if (Array.isArray(val)) {
       to[k] = Array.isArray(to[k]) ? to[k].concat(val) : val;
-    } else if (typeof val === 'object') {
-      to[k] = typeof to[k] === 'object' ? combine(val, to[k]) : val;
+    } else if (typeof val === "object") {
+      to[k] = typeof to[k] === "object" ? combine(val, to[k]) : val;
     } else {
       to[k] = val;
     }
@@ -68,14 +68,14 @@ function combine(src, to) {
  * @property {Object} tokens
  */
 var engine = function(options) {
-  if (typeof this === 'function') {
+  if (typeof this === "function") {
     return new this(options);
   }
   this.tokens = tokens;
   this.lexer = new lexer(this);
   this.ast = new AST();
   this.parser = new parser(this.lexer, this.ast);
-  if (options && typeof options === 'object') {
+  if (options && typeof options === "object") {
     // disable php7 from lexer if already disabled from parser
     if (options.parser && options.parser.php7 === false) {
       if (!options.lexer) {
@@ -124,7 +124,7 @@ engine.prototype.parseEval = function(buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
-  return this.parser.parse(buffer, 'eval');
+  return this.parser.parse(buffer, "eval");
 };
 
 /**
@@ -132,10 +132,10 @@ engine.prototype.parseEval = function(buffer) {
  * @private
  */
 engine.parseCode = function(buffer, filename, options) {
-  if (typeof filename === 'object') {
+  if (typeof filename === "object") {
     // retro-compatibility
     options = filename;
-    filename = 'unknown';
+    filename = "unknown";
   }
   var self = new engine(options);
   return self.parseCode(buffer, filename);
@@ -192,7 +192,7 @@ engine.prototype.tokenGetAll = function(buffer) {
   this.lexer.setInput(buffer);
   var token = this.lexer.lex() || EOF;
   var result = [];
-  while(token != EOF) {
+  while (token != EOF) {
     var entry = this.lexer.yytext;
     if (names.hasOwnProperty(token)) {
       entry = [names[token], entry, this.lexer.yylloc.first_line];

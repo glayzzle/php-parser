@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require('./statement');
-var KIND = 'static';
+var Statement = require("./statement");
+var KIND = "static";
 
 /**
  * Declares a static variable into the current scope

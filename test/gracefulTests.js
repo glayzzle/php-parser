@@ -1,10 +1,7 @@
-var should = require("should");
-var parser = require('../src/index');
+var parser = require("../src/index");
 
-describe('Test graceful mode', function() {
-
-  describe('to suppress errors', function() {
-
+describe("Test graceful mode", function() {
+  describe("to suppress errors", function() {
     // init a new parser instance
     var test = parser.create({
       parser: {
@@ -12,21 +9,23 @@ describe('Test graceful mode', function() {
       }
     });
 
-    it('should contain 2 errors', function () {
+    it("should contain 2 errors", function() {
       // Get result from parser
-      var ast = test.parseEval([
-        '$var = ',                // 1.
-          'function() {',         // 2.
-            '$foo = ',            // 3. <-- missing expr
-          '}',                    // 4.
-        '}'                       // 5. <-- extra '}' token here
-      ].join('\n'));
+      var ast = test.parseEval(
+        [
+          "$var = ", // 1.
+          "function() {", // 2.
+          "$foo = ", // 3. <-- missing expr
+          "}", // 4.
+          "}" // 5. <-- extra '}' token here
+        ].join("\n")
+      );
       ast.errors.length.should.be.exactly(2);
       // @todo ast[1][0][2][5][0][2][0].should.be.exactly('error');
     });
 
-    it('test expr', function () {
-      var ast = test.parseEval('$a = $b -; $foo = $a;');
+    it("test expr", function() {
+      var ast = test.parseEval("$a = $b -; $foo = $a;");
 
       ast.errors.length.should.be.exactly(2);
       ast.children.length.should.be.exactly(2);
@@ -42,8 +41,8 @@ describe('Test graceful mode', function() {
       */
     });
 
-    it('test class', function () {
-      var ast = test.parseEval('class foo { foo const A = 1 ');
+    it("test class", function() {
+      var ast = test.parseEval("class foo { foo const A = 1 ");
 
       ast.errors.length.should.be.exactly(3);
       ast.children.length.should.be.exactly(1);
@@ -57,48 +56,44 @@ describe('Test graceful mode', function() {
       ast[1][0][5][1][1].should.be.exactly('A');
       ast[1][0][5][1][2][1].should.be.exactly('1');
       */
-
     });
 
-    it('test flags', function () {
-      var ast = test.parseEval([
-        'final final interface foo {',
-        '  abstract function func() '
-      ].join('\n'));
+    it("test flags", function() {
+      var ast = test.parseEval(
+        ["final final interface foo {", "  abstract function func() "].join(
+          "\n"
+        )
+      );
       ast.errors.length.should.be.exactly(4);
       ast.children.length.should.be.exactly(1);
-      ast.children[0].kind.should.be.exactly('interface');
+      ast.children[0].kind.should.be.exactly("interface");
     });
 
-    it('test function arguments', function () {
+    it("test function arguments", function() {
       // test.parser.debug = true;
-      var ast = test.parseEval([
-        '$foo->bar($arg, );',
-        '$foo = new bar($baz, ,$foo);'
-      ].join('\n'));
+      var ast = test.parseEval(
+        ["$foo->bar($arg, );", "$foo = new bar($baz, ,$foo);"].join("\n")
+      );
       var callNode = ast.children[0];
-      callNode.kind.should.be.exactly('call');
-      callNode.what.kind.should.be.exactly('propertylookup');
+      callNode.kind.should.be.exactly("call");
+      callNode.what.kind.should.be.exactly("propertylookup");
       callNode.arguments.length.should.be.exactly(1);
-      callNode.arguments[0].name.should.be.exactly('arg');
+      callNode.arguments[0].name.should.be.exactly("arg");
       var assignNode = ast.children[1];
-      assignNode.kind.should.be.exactly('assign');
-      assignNode.right.kind.should.be.exactly('new');
-      assignNode.right.arguments[0].name.should.be.exactly('baz');
+      assignNode.kind.should.be.exactly("assign");
+      assignNode.right.kind.should.be.exactly("new");
+      assignNode.right.arguments[0].name.should.be.exactly("baz");
       // the supressError mode cant guarantee $foo to be included into the arguments list
     });
 
-    it('test method chains', function () {
+    it("test method chains", function() {
       // test.parser.debug = true;
-      var ast = test.parseEval([
-        '$controller->expects($this->once())',
-        '->'
-      ].join('\n'));
-      ast.children[0].kind.should.be.exactly('propertylookup');
-      ast.children[0].what.kind.should.be.exactly('call');
-      ast.children[0].what.what.kind.should.be.exactly('propertylookup');
+      var ast = test.parseEval(
+        ["$controller->expects($this->once())", "->"].join("\n")
+      );
+      ast.children[0].kind.should.be.exactly("propertylookup");
+      ast.children[0].what.kind.should.be.exactly("call");
+      ast.children[0].what.what.kind.should.be.exactly("propertylookup");
     });
-
   });
-
 });

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require('./operation');
-var KIND = 'pre';
+var Operation = require("./operation");
+var KIND = "pre";
 
 /**
  * Defines a pre operation `++$i` or `--$i`

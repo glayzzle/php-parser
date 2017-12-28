@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'try';
+var Statement = require("./statement");
+var KIND = "try";
 
 /**
  * Defines a try statement

@@ -13,15 +13,16 @@ module.exports = {
    * @return {Block}
    */
   read_short_form: function(token) {
-    var body = this.node('block'), items = [];
-    if (this.expect(':')) this.next();
-    while(this.token != this.EOF && this.token !== token) {
+    var body = this.node("block"),
+      items = [];
+    if (this.expect(":")) this.next();
+    while (this.token != this.EOF && this.token !== token) {
       items.push(this.read_inner_statement());
     }
     if (this.expect(token)) this.next();
     this.expectEndOfStatement();
     return body(null, items);
-  }
+  },
 
   /**
    * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
@@ -29,21 +30,21 @@ module.exports = {
    * list ::= separator? ( item separator )* item
    * ```
    */
-  ,read_list: function(item, separator, preserveFirstSeparator) {
+  read_list: function(item, separator, preserveFirstSeparator) {
     var result = [];
 
     if (this.token == separator) {
-      if (preserveFirstSeparator) result.push('');
+      if (preserveFirstSeparator) result.push("");
       this.next();
     }
 
-    if (typeof (item) === "function") {
+    if (typeof item === "function") {
       do {
         result.push(item.apply(this, []));
         if (this.token != separator) {
           break;
         }
-      } while(this.next().token != this.EOF);
+      } while (this.next().token != this.EOF);
     } else {
       if (this.expect(item)) {
         result.push(this.text());
@@ -58,7 +59,7 @@ module.exports = {
       }
     }
     return result;
-  }
+  },
 
   /**
    * Reads a list of names separated by a comma
@@ -75,11 +76,9 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L726
    * @return {Identifier[]}
    */
-  ,read_name_list: function() {
-    return this.read_list(
-      this.read_namespace_name, ',', false
-    );
-  }
+  read_name_list: function() {
+    return this.read_list(this.read_namespace_name, ",", false);
+  },
 
   /**
    * Reads a list of variables declarations
@@ -96,25 +95,23 @@ module.exports = {
    * @return {Variable[]|Assign[]} Returns an array composed by a list of variables, or
    * assign values
    */
-  ,read_variable_declarations: function() {
+  read_variable_declarations: function() {
     return this.read_list(function() {
-      var node = this.node('assign'),
-        value = null,
-        variable = this.node('variable');
+      var node = this.node("assign"),
+        variable = this.node("variable");
       // plain variable name
       if (this.expect(this.tok.T_VARIABLE)) {
         var name = this.text().substring(1);
         this.next();
         variable = variable(name, false, false);
       } else {
-        variable = variable('#ERR', false, false);
+        variable = variable("#ERR", false, false);
       }
-      if (this.token === '=') {
+      if (this.token === "=") {
         return node(variable, this.next().read_expr());
       } else {
         return variable;
       }
-    }, ',');
+    }, ",");
   }
-
 };

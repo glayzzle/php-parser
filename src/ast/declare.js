@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Block = require('./block');
-var KIND = 'declare';
+var Block = require("./block");
+var KIND = "declare";
 
 /**
  * The declare construct is used to set execution directives for a block of code
@@ -21,7 +21,6 @@ var Declare = Block.extends(function Declare(what, body, mode, location) {
   this.mode = mode;
 });
 
-
 /**
  * The node is declared as a short tag syntax :
  * ```php
@@ -32,7 +31,7 @@ var Declare = Block.extends(function Declare(what, body, mode, location) {
  * ```
  * @constant {String} MODE_SHORT
  */
-Declare.MODE_SHORT = 'short';
+Declare.MODE_SHORT = "short";
 
 /**
  * The node is declared bracket enclosed code :
@@ -44,7 +43,7 @@ Declare.MODE_SHORT = 'short';
  * ```
  * @constant {String} MODE_BLOCK
  */
-Declare.MODE_BLOCK = 'block';
+Declare.MODE_BLOCK = "block";
 
 /**
  * The node is declared as a simple statement. In order to make things simpler
@@ -59,6 +58,6 @@ Declare.MODE_BLOCK = 'block';
  * ```
  * @constant {String} MODE_NONE
  */
-Declare.MODE_NONE = 'none';
+Declare.MODE_NONE = "none";
 
 module.exports = Declare;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require('./sys');
-var KIND = 'empty';
+var Sys = require("./sys");
+var KIND = "empty";
 
 /**
  * Defines an empty check call

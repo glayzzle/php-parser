@@ -4,9 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require('./declaration');
-var KIND = 'class';
-
+var Declaration = require("./declaration");
+var KIND = "class";
 
 /**
  * A class definition
@@ -19,7 +18,14 @@ var KIND = 'class';
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
-var Class = Declaration.extends(function Class(name, ext, impl, body, flags, location) {
+var Class = Declaration.extends(function Class(
+  name,
+  ext,
+  impl,
+  body,
+  flags,
+  location
+) {
   Declaration.apply(this, [KIND, name, location]);
   this.isAnonymous = name ? false : true;
   this.extends = ext;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require('./literal');
-var KIND = 'inline';
+var Literal = require("./literal");
+var KIND = "inline";
 
 /**
  * Defines inline html output (treated as echo output)

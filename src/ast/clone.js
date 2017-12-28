@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require('./statement');
-var KIND = 'clone';
+var Statement = require("./statement");
+var KIND = "clone";
 
 /**
  * Defines a clone call

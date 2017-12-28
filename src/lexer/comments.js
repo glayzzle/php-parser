@@ -12,14 +12,22 @@ module.exports = {
    * @see
    */
   T_COMMENT: function() {
-    while(this.offset < this.size) {
+    while (this.offset < this.size) {
       var ch = this.input();
-      if (ch === '\n' || ch === '\r') {
+      if (ch === "\n" || ch === "\r") {
         return this.tok.T_COMMENT;
-      } else if (ch === '?' && !this.aspTagMode && this._input[this.offset] === '>') {
+      } else if (
+        ch === "?" &&
+        !this.aspTagMode &&
+        this._input[this.offset] === ">"
+      ) {
         this.unput(1);
         return this.tok.T_COMMENT;
-      } else if (ch === '%' && this.aspTagMode && this._input[this.offset] === '>') {
+      } else if (
+        ch === "%" &&
+        this.aspTagMode &&
+        this._input[this.offset] === ">"
+      ) {
         this.unput(1);
         return this.tok.T_COMMENT;
       }
@@ -32,20 +40,22 @@ module.exports = {
   T_DOC_COMMENT: function() {
     var ch = this.input();
     var token = this.tok.T_COMMENT;
-    if (ch === '*') { // started with '/*' , check is next is '*'
+    if (ch === "*") {
+      // started with '/*' , check is next is '*'
       ch = this.input();
-      if (this.is_WHITESPACE()) { // check if next is WHITESPACE
+      if (this.is_WHITESPACE()) {
+        // check if next is WHITESPACE
         token = this.tok.T_DOC_COMMENT;
       }
-      if (ch === '/') {
+      if (ch === "/") {
         return token;
       } else {
         this.unput(1); // reset
       }
     }
-    while(this.offset < this.size) {
+    while (this.offset < this.size) {
       ch = this.input();
-      if (ch === '*' && this._input[this.offset] === '/') {
+      if (ch === "*" && this._input[this.offset] === "/") {
         this.input();
         break;
       }

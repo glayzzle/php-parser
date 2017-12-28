@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'call';
+var Statement = require("./statement");
+var KIND = "call";
 
 /**
  * Executes a call statement

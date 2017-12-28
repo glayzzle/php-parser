@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require('./statement');
-var KIND = 'silent';
+var Statement = require("./statement");
+var KIND = "silent";
 
 /**
  * Avoids to show/log warnings & notices from the inner expression

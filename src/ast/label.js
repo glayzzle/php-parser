@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require('./node');
-var KIND = 'label';
+var Node = require("./node");
+var KIND = "label";
 
 /**
  * A label statement (referenced by goto)

@@ -1,29 +1,27 @@
-var should = require("should");
-var parser = require('./main');
+var parser = require("./main");
 
-describe('Performance tests', function() {
-
+describe("Performance tests", function() {
   var code = [
-    '<?php',
-    'class foo extends bar {',
-    '  const A = 1, B = 2, C = 3;',
-    '  protected $foo = null;',
-    '  public function __construct($a, $b, $c, array $d = []) {',
+    "<?php",
+    "class foo extends bar {",
+    "  const A = 1, B = 2, C = 3;",
+    "  protected $foo = null;",
+    "  public function __construct($a, $b, $c, array $d = []) {",
     '    echo $a . $b . $c . implode(";", $d);',
-    '  }',
-    '  static public function bar(): foo {',
-    '    return new self(1, 2, 3);',
-    '  }',
-    '}'
-  ].join('\n');
+    "  }",
+    "  static public function bar(): foo {",
+    "    return new self(1, 2, 3);",
+    "  }",
+    "}"
+  ].join("\n");
 
-  it('tokenizer', function() {
+  it("tokenizer", function() {
     var reader = new parser();
     var tokSize = reader.tokenGetAll(code).length;
     var hrTime = process.hrtime();
     var iter = 500;
     var start = hrTime[0] * 1000000 + hrTime[1] / 1000;
-    for(var i = 0; i < iter; i++) {
+    for (var i = 0; i < iter; i++) {
       reader.tokenGetAll(code);
     }
     hrTime = process.hrtime();
@@ -36,12 +34,12 @@ describe('Performance tests', function() {
       speed = speed / 1000;
       if (speed > 1000) {
         speed = speed / 1000;
-        speed = (Math.round(speed * 100) / 100) + 'M';
+        speed = Math.round(speed * 100) / 100 + "M";
       } else {
-        speed = (Math.round(speed * 100) / 100) + 'K';
+        speed = Math.round(speed * 100) / 100 + "K";
       }
     }
-    console.log('    + Tokens speed  => ' + speed + '/sec'); 
+    console.log("    + Tokens speed  => " + speed + "/sec");
 
     speed = 1000 / duration * (code.length * iter);
     // speed.should.be.greaterThan(10e5 * 2 * 0.8);
@@ -50,30 +48,30 @@ describe('Performance tests', function() {
       speed = speed / 1024;
       if (speed > 1024) {
         speed = speed / 1024;
-        speed = (Math.round(speed * 100) / 100) + 'M';
+        speed = Math.round(speed * 100) / 100 + "M";
       } else {
-        speed = (Math.round(speed * 100) / 100) + 'K';
+        speed = Math.round(speed * 100) / 100 + "K";
       }
     }
-    console.log('    + Reading speed => ' + speed + '/sec'); 
+    console.log("    + Reading speed => " + speed + "/sec");
   });
 
-  it('parser', function() {
+  it("parser", function() {
     var reader = new parser();
     var nodeSize = 0;
     var countNode = function(node) {
-      nodeSize ++;
-      for(var k in node) {
+      nodeSize++;
+      for (var k in node) {
         if (node[k]) {
           if (node[k].kind) {
             countNode(node[k]);
           } else if (Array.isArray(node[k])) {
-            for(var i = 0; i < node[k].length; i++) {
+            for (var i = 0; i < node[k].length; i++) {
               if (node[k][i].kind) {
                 countNode(node[k][i]);
               }
             }
-          }  
+          }
         }
       }
     };
@@ -82,7 +80,7 @@ describe('Performance tests', function() {
     var hrTime = process.hrtime();
     var iter = 500;
     var start = hrTime[0] * 1000000 + hrTime[1] / 1000;
-    for(var i = 0; i < iter; i++) {
+    for (var i = 0; i < iter; i++) {
       reader.parseCode(code);
     }
     hrTime = process.hrtime();
@@ -95,12 +93,12 @@ describe('Performance tests', function() {
       speed = speed / 1000;
       if (speed > 1000) {
         speed = speed / 1000;
-        speed = (Math.round(speed * 100) / 100) + 'M';
+        speed = Math.round(speed * 100) / 100 + "M";
       } else {
-        speed = (Math.round(speed * 100) / 100) + 'K';
+        speed = Math.round(speed * 100) / 100 + "K";
       }
     }
-    console.log('    + Nodes speed  => ' + speed + '/sec'); 
+    console.log("    + Nodes speed  => " + speed + "/sec");
 
     speed = 1000 / duration * (code.length * iter);
     // speed.should.be.greaterThan(10e5 * 1 * 0.8);
@@ -109,13 +107,11 @@ describe('Performance tests', function() {
       speed = speed / 1024;
       if (speed > 1024) {
         speed = speed / 1024;
-        speed = (Math.round(speed * 100) / 100) + 'M';
+        speed = Math.round(speed * 100) / 100 + "M";
       } else {
-        speed = (Math.round(speed * 100) / 100) + 'K';
+        speed = Math.round(speed * 100) / 100 + "K";
       }
     }
-    console.log('    + Overall speed => ' + speed + '/sec'); 
-    
+    console.log("    + Overall speed => " + speed + "/sec");
   });
-
 });

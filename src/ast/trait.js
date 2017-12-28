@@ -4,9 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require('./declaration');
-var KIND = 'trait';
-
+var Declaration = require("./declaration");
+var KIND = "trait";
 
 /**
  * A trait definition
@@ -16,7 +15,13 @@ var KIND = 'trait';
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
  */
-var Trait = Declaration.extends(function Trait(name, ext, impl, body, location) {
+var Trait = Declaration.extends(function Trait(
+  name,
+  ext,
+  impl,
+  body,
+  location
+) {
   Declaration.apply(this, [KIND, name, location]);
   this.extends = ext;
   this.implements = impl;

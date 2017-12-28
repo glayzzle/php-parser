@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var fn = require('./function');
-var KIND = 'method';
+var fn = require("./function");
+var KIND = "method";
 
 /**
  * Defines a class/interface/trait method

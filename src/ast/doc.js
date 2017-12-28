@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'doc';
+var Node = require("./node");
+var KIND = "doc";
 
 /**
  * A comment or documentation

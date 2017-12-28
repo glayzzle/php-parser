@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require('./sys');
-var KIND = 'isset';
+var Sys = require("./sys");
+var KIND = "isset";
 
 /**
  * Defines an isset call

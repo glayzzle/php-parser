@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'traitprecedence';
+var Node = require("./node");
+var KIND = "traitprecedence";
 
 /**
  * Defines a trait alias
@@ -15,7 +15,12 @@ var KIND = 'traitprecedence';
  * @property {string} method
  * @property {Identifier[]} instead
  */
-var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, instead, location) {
+var TraitPrecedence = Node.extends(function TraitPrecedence(
+  trait,
+  method,
+  instead,
+  location
+) {
   Node.apply(this, [KIND, location]);
   this.trait = trait;
   this.method = method;

@@ -14,22 +14,21 @@ module.exports = {
    * @return {While}
    */
   read_while: function() {
-    var result = this.node('while'),
+    var result = this.node("while"),
       test = null,
       body = null,
-      shortForm = false
-    ;
-    if (this.expect('(')) this.next();
+      shortForm = false;
+    if (this.expect("(")) this.next();
     test = this.read_expr();
-    if (this.expect(')')) this.next();
-    if (this.token === ':') {
+    if (this.expect(")")) this.next();
+    if (this.token === ":") {
       shortForm = true;
       body = this.read_short_form(this.tok.T_ENDWHILE);
     } else {
       body = this.read_statement();
     }
     return result(test, body, shortForm);
-  }
+  },
   /**
    * Reads a do / while loop
    * ```ebnf
@@ -38,20 +37,19 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L423
    * @return {Do}
    */
-  ,read_do: function() {
-    var result = this.node('do'),
+  read_do: function() {
+    var result = this.node("do"),
       test = null,
-      body = null
-    ;
+      body = null;
     body = this.read_statement();
     if (this.ignoreComments().expect(this.tok.T_WHILE)) {
-      if (this.next().expect('(')) this.next();
-      test  = this.read_expr();
-      if (this.expect(')')) this.next();
-      if (this.expect(';')) this.next();
+      if (this.next().expect("(")) this.next();
+      test = this.read_expr();
+      if (this.expect(")")) this.next();
+      if (this.expect(";")) this.next();
     }
     return result(test, body);
-  }
+  },
   /**
    * Read a for incremental loop
    * ```ebnf
@@ -62,40 +60,40 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L425
    * @return {For}
    */
-  ,read_for: function() {
-    var result = this.node('for'),
+  read_for: function() {
+    var result = this.node("for"),
       init = [],
       test = [],
       increment = [],
       body = null,
       shortForm = false;
-    if (this.expect('(')) this.next();
-    if (this.token !== ';') {
-      init = this.read_list(this.read_expr, ',');
-      if (this.expect(';')) this.next();
+    if (this.expect("(")) this.next();
+    if (this.token !== ";") {
+      init = this.read_list(this.read_expr, ",");
+      if (this.expect(";")) this.next();
     } else {
       this.next();
     }
-    if (this.token !== ';') {
-      test = this.read_list(this.read_expr, ',');
-      if (this.expect(';')) this.next();
+    if (this.token !== ";") {
+      test = this.read_list(this.read_expr, ",");
+      if (this.expect(";")) this.next();
     } else {
       this.next();
     }
-    if (this.token !== ')') {
-      increment = this.read_list(this.read_expr, ',');
-      if (this.expect(')')) this.next();
+    if (this.token !== ")") {
+      increment = this.read_list(this.read_expr, ",");
+      if (this.expect(")")) this.next();
     } else {
       this.next();
     }
-    if (this.token === ':') {
+    if (this.token === ":") {
       shortForm = true;
       body = this.read_short_form(this.tok.T_ENDFOR);
-    } else  {
+    } else {
       body = this.read_statement();
     }
     return result(init, test, increment, body, shortForm);
-  }
+  },
   /**
    * Reads a foreach loop
    * ```ebnf
@@ -104,14 +102,14 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L438
    * @return {Foreach}
    */
-  ,read_foreach: function() {
-    var result = this.node('foreach'),
+  read_foreach: function() {
+    var result = this.node("foreach"),
       source = null,
       key = null,
       value = null,
       body = null,
       shortForm = false;
-    if (this.expect('(')) this.next();
+    if (this.expect("(")) this.next();
     source = this.read_expr();
     if (this.ignoreComments().expect(this.tok.T_AS)) {
       this.next();
@@ -122,16 +120,16 @@ module.exports = {
       }
     }
 
-    if (this.expect(')')) this.next();
+    if (this.expect(")")) this.next();
 
-    if (this.token === ':') {
+    if (this.token === ":") {
       shortForm = true;
       body = this.read_short_form(this.tok.T_ENDFOREACH);
     } else {
       body = this.read_statement();
     }
     return result(source, key, value, body, shortForm);
-  }
+  },
   /**
    * Reads a foreach variable statement
    * ```ebnf
@@ -142,17 +140,17 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L544
    * @return {Expression}
    */
-  ,read_foreach_variable: function() {
-      if (this.token === this.tok.T_LIST) {
-        var result = this.node('list');
-        if (this.next().expect('(')) this.next();
-        var assignList = this.read_assignment_list();
-        if (this.expect(')')) this.next();
-        return result(assignList);
-      } else if (this.token === '[' || this.token === this.tok.T_ARRAY) {
-        return this.read_array();
-      } else {
-        return this.read_variable(false, false, false);
-      }
+  read_foreach_variable: function() {
+    if (this.token === this.tok.T_LIST) {
+      var result = this.node("list");
+      if (this.next().expect("(")) this.next();
+      var assignList = this.read_assignment_list();
+      if (this.expect(")")) this.next();
+      return result(assignList);
+    } else if (this.token === "[" || this.token === this.tok.T_ARRAY) {
+      return this.read_array();
+    } else {
+      return this.read_variable(false, false, false);
+    }
   }
 };

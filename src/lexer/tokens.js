@@ -7,8 +7,8 @@ module.exports = {
   T_STRING: function() {
     var token = this.yytext.toLowerCase();
     var id = this.keywords[token];
-    if (typeof id !== 'number') {
-      if (token === 'yield') {
+    if (typeof id !== "number") {
+      if (token === "yield") {
         if (this.php7 && this.tryMatch(' from')) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
@@ -17,11 +17,11 @@ module.exports = {
         }
       } else {
         id = this.tok.T_STRING;
-        if (token === 'b' || token === 'B') {
+        if (token === "b" || token === "B") {
           var ch = this.input(1);
           if (ch === '"') {
             return this.ST_DOUBLE_QUOTES();
-          } else if (ch === '\'') {
+          } else if (ch === "'") {
             return this.T_CONSTANT_ENCAPSED_STRING();
           } else if (ch) {
             this.unput(1);
@@ -43,7 +43,7 @@ module.exports = {
   },
   // list of special char tokens
   tokenTerminals: {
-    '$': function() {
+    $: function() {
       this.offset++;
       if (this.is_LABEL_START()) {
         this.offset--;
@@ -51,42 +51,42 @@ module.exports = {
         return this.tok.T_VARIABLE;
       } else {
         this.offset--;
-        return '$';
+        return "$";
       }
     },
-    '-': function() {
+    "-": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '>') {
-        this.begin('ST_LOOKING_FOR_PROPERTY').input();
+      if (nchar === ">") {
+        this.begin("ST_LOOKING_FOR_PROPERTY").input();
         return this.tok.T_OBJECT_OPERATOR;
-      } else if (nchar === '-') {
+      } else if (nchar === "-") {
         this.input();
         return this.tok.T_DEC;
-      } else if (nchar === '=') {
+      } else if (nchar === "=") {
         this.input();
         return this.tok.T_MINUS_EQUAL;
       }
-      return '-';
+      return "-";
     },
-    '\\': function() {
+    "\\": function() {
       return this.tok.T_NS_SEPARATOR;
     },
-    '/': function() {
-      if (this._input[this.offset] === '=') {
+    "/": function() {
+      if (this._input[this.offset] === "=") {
         this.input();
         return this.tok.T_DIV_EQUAL;
       }
-      return '/';
+      return "/";
     },
-    ':': function() {
-      if (this._input[this.offset] === ':') {
+    ":": function() {
+      if (this._input[this.offset] === ":") {
         this.input();
         return this.tok.T_DOUBLE_COLON;
       } else {
-        return ':';
+        return ":";
       }
     },
-    '(': function() {
+    "(": function() {
       var initial = this.offset;
       this.input();
       if (this.is_TABSPACE()) {
@@ -97,27 +97,27 @@ module.exports = {
         this.consume_LABEL();
         var castToken = this.yytext.substring(yylen - 1).toLowerCase();
         var castId = this.castKeywords[castToken];
-        if (typeof castId === 'number') {
+        if (typeof castId === "number") {
           this.input();
           if (this.is_TABSPACE()) {
             this.consume_TABSPACE().input();
           }
-          if (this._input[this.offset - 1] === ')') {
+          if (this._input[this.offset - 1] === ")") {
             return castId;
           }
         }
       }
       // revert the check
       this.unput(this.offset - initial);
-      return '(';
+      return "(";
     },
-    '=': function() {
+    "=": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '>') {
+      if (nchar === ">") {
         this.input();
         return this.tok.T_DOUBLE_ARROW;
-      } else if (nchar === '=') {
-        if (this._input[this.offset + 1] === '=') {
+      } else if (nchar === "=") {
+        if (this._input[this.offset + 1] === "=") {
           this.consume(2);
           return this.tok.T_IS_IDENTICAL;
         } else {
@@ -125,22 +125,22 @@ module.exports = {
           return this.tok.T_IS_EQUAL;
         }
       }
-      return '=';
+      return "=";
     },
-    '+': function() {
+    "+": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '+') {
+      if (nchar === "+") {
         this.input();
         return this.tok.T_INC;
-      } else if (nchar === '=') {
+      } else if (nchar === "=") {
         this.input();
         return this.tok.T_PLUS_EQUAL;
       }
-      return '+';
+      return "+";
     },
-    '!': function() {
-      if (this._input[this.offset] === '=') {
-        if (this._input[this.offset + 1] === '=') {
+    "!": function() {
+      if (this._input[this.offset] === "=") {
+        if (this._input[this.offset + 1] === "=") {
           this.consume(2);
           return this.tok.T_IS_NOT_IDENTICAL;
         } else {
@@ -148,51 +148,51 @@ module.exports = {
           return this.tok.T_IS_NOT_EQUAL;
         }
       }
-      return '!';
+      return "!";
     },
-    '?': function() {
-      if (this.php7 && this._input[this.offset] === '?') {
+    "?": function() {
+      if (this.php7 && this._input[this.offset] === "?") {
         this.input();
         return this.tok.T_COALESCE;
       }
-      return '?';
+      return "?";
     },
-    '<': function() {
+    "<": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '<') {
+      if (nchar === "<") {
         nchar = this._input[this.offset + 1];
-        if (nchar === '=') {
+        if (nchar === "=") {
           this.consume(2);
           return this.tok.T_SL_EQUAL;
-        } else if (nchar === '<') {
+        } else if (nchar === "<") {
           if (this.is_HEREDOC()) {
             return this.tok.T_START_HEREDOC;
           }
         }
         this.input();
         return this.tok.T_SL;
-      } else if (nchar === '=') {
+      } else if (nchar === "=") {
         this.input();
-        if (this.php7 && this._input[this.offset] === '>') {
+        if (this.php7 && this._input[this.offset] === ">") {
           this.input();
           return this.tok.T_SPACESHIP;
         } else {
           return this.tok.T_IS_SMALLER_OR_EQUAL;
         }
-      } else if (nchar === '>') {
+      } else if (nchar === ">") {
         this.input();
         return this.tok.T_IS_NOT_EQUAL;
       }
-      return '<';
+      return "<";
     },
-    '>': function() {
+    ">": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '=') {
+      if (nchar === "=") {
         this.input();
         return this.tok.T_IS_GREATER_OR_EQUAL;
-      } else if (nchar === '>') {
+      } else if (nchar === ">") {
         nchar = this._input[this.offset + 1];
-        if (nchar === '=') {
+        if (nchar === "=") {
           this.consume(2);
           return this.tok.T_SR_EQUAL;
         } else {
@@ -200,70 +200,70 @@ module.exports = {
           return this.tok.T_SR;
         }
       }
-      return '>';
+      return ">";
     },
-    '*': function() {
+    "*": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '=') {
+      if (nchar === "=") {
         this.input();
         return this.tok.T_MUL_EQUAL;
-      } else if(nchar === '*') {
+      } else if (nchar === "*") {
         this.input();
-        if (this._input[this.offset] === '=') {
+        if (this._input[this.offset] === "=") {
           this.input();
           return this.tok.T_POW_EQUAL;
         } else {
           return this.tok.T_POW;
         }
       }
-      return '*';
+      return "*";
     },
-    '.': function() {
+    ".": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '=') {
+      if (nchar === "=") {
         this.input();
         return this.tok.T_CONCAT_EQUAL;
-      } else if (nchar === '.' && this._input[this.offset + 1] === '.') {
+      } else if (nchar === "." && this._input[this.offset + 1] === ".") {
         this.consume(2);
         return this.tok.T_ELLIPSIS;
       }
-      return '.';
+      return ".";
     },
-    '%': function() {
-      if (this._input[this.offset] === '=') {
+    "%": function() {
+      if (this._input[this.offset] === "=") {
         this.input();
         return this.tok.T_MOD_EQUAL;
       }
-      return '%';
+      return "%";
     },
-    '&': function() {
+    "&": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '=') {
+      if (nchar === "=") {
         this.input();
         return this.tok.T_AND_EQUAL;
-      } else if (nchar === '&') {
+      } else if (nchar === "&") {
         this.input();
         return this.tok.T_BOOLEAN_AND;
       }
-      return '&';
+      return "&";
     },
-    '|': function() {
+    "|": function() {
       var nchar = this._input[this.offset];
-      if (nchar === '=') {
+      if (nchar === "=") {
         this.input();
         return this.tok.T_OR_EQUAL;
-      } else if (nchar === '|') {
+      } else if (nchar === "|") {
         this.input();
         return this.tok.T_BOOLEAN_OR;
       }
-      return '|';
+      return "|";
     },
-    '^': function() {
-      if (this._input[this.offset] === '=') {
+    "^": function() {
+      if (this._input[this.offset] === "=") {
         this.input();
         return this.tok.T_XOR_EQUAL;
       }
-      return '^';
+      return "^";
     }
   }
 };

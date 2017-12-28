@@ -31,94 +31,94 @@ var lexer = function(engine) {
   this.php7 = true;
   this.yyprevcol = 0;
   this.keywords = {
-    "__class__": this.tok.T_CLASS_C,
-    "__trait__": this.tok.T_TRAIT_C,
-    "__function__": this.tok.T_FUNC_C,
-    "__method__": this.tok.T_METHOD_C,
-    "__line__": this.tok.T_LINE,
-    "__file__": this.tok.T_FILE,
-    "__dir__": this.tok.T_DIR,
-    "__namespace__": this.tok.T_NS_C,
-    'exit': this.tok.T_EXIT,
-    'die': this.tok.T_EXIT,
-    'function': this.tok.T_FUNCTION,
-    "const": this.tok.T_CONST,
-    "return": this.tok.T_RETURN,
-    "try": this.tok.T_TRY,
-    "catch": this.tok.T_CATCH,
-    "finally": this.tok.T_FINALLY,
-    "throw": this.tok.T_THROW,
-    "if": this.tok.T_IF,
-    "elseif": this.tok.T_ELSEIF,
-    "endif": this.tok.T_ENDIF,
-    "else": this.tok.T_ELSE,
-    "while": this.tok.T_WHILE,
-    "endwhile": this.tok.T_ENDWHILE,
-    "do": this.tok.T_DO,
-    "for": this.tok.T_FOR,
-    "endfor": this.tok.T_ENDFOR,
-    "foreach": this.tok.T_FOREACH,
-    "endforeach": this.tok.T_ENDFOREACH,
-    "declare": this.tok.T_DECLARE,
-    "enddeclare": this.tok.T_ENDDECLARE,
-    "instanceof": this.tok.T_INSTANCEOF,
-    "as": this.tok.T_AS,
-    "switch": this.tok.T_SWITCH,
-    "endswitch": this.tok.T_ENDSWITCH,
-    "case": this.tok.T_CASE,
-    "default": this.tok.T_DEFAULT,
-    "break": this.tok.T_BREAK,
-    "continue": this.tok.T_CONTINUE,
-    "goto": this.tok.T_GOTO,
-    "echo": this.tok.T_ECHO,
-    "print": this.tok.T_PRINT,
-    "class": this.tok.T_CLASS,
-    "interface": this.tok.T_INTERFACE,
-    "trait": this.tok.T_TRAIT,
-    "extends": this.tok.T_EXTENDS,
-    "implements": this.tok.T_IMPLEMENTS,
-    "new": this.tok.T_NEW,
-    "clone": this.tok.T_CLONE,
-    "var": this.tok.T_VAR,
-    "eval": this.tok.T_EVAL,
-    "include": this.tok.T_INCLUDE,
-    "include_once": this.tok.T_INCLUDE_ONCE,
-    "require": this.tok.T_REQUIRE,
-    "require_once": this.tok.T_REQUIRE_ONCE,
-    "namespace": this.tok.T_NAMESPACE,
-    "use": this.tok.T_USE,
-    "insteadof": this.tok.T_INSTEADOF,
-    "global": this.tok.T_GLOBAL,
-    "isset": this.tok.T_ISSET,
-    "empty": this.tok.T_EMPTY,
-    "__halt_compiler": this.tok.T_HALT_COMPILER,
-    "static": this.tok.T_STATIC,
-    "abstract": this.tok.T_ABSTRACT,
-    "final": this.tok.T_FINAL,
-    "private": this.tok.T_PRIVATE,
-    "protected": this.tok.T_PROTECTED,
-    "public": this.tok.T_PUBLIC,
-    "unset": this.tok.T_UNSET,
-    "list": this.tok.T_LIST,
-    "array": this.tok.T_ARRAY,
-    "callable": this.tok.T_CALLABLE,
-    "or": this.tok.T_LOGICAL_OR,
-    "and": this.tok.T_LOGICAL_AND,
-    "xor": this.tok.T_LOGICAL_XOR
+    __class__: this.tok.T_CLASS_C,
+    __trait__: this.tok.T_TRAIT_C,
+    __function__: this.tok.T_FUNC_C,
+    __method__: this.tok.T_METHOD_C,
+    __line__: this.tok.T_LINE,
+    __file__: this.tok.T_FILE,
+    __dir__: this.tok.T_DIR,
+    __namespace__: this.tok.T_NS_C,
+    exit: this.tok.T_EXIT,
+    die: this.tok.T_EXIT,
+    function: this.tok.T_FUNCTION,
+    const: this.tok.T_CONST,
+    return: this.tok.T_RETURN,
+    try: this.tok.T_TRY,
+    catch: this.tok.T_CATCH,
+    finally: this.tok.T_FINALLY,
+    throw: this.tok.T_THROW,
+    if: this.tok.T_IF,
+    elseif: this.tok.T_ELSEIF,
+    endif: this.tok.T_ENDIF,
+    else: this.tok.T_ELSE,
+    while: this.tok.T_WHILE,
+    endwhile: this.tok.T_ENDWHILE,
+    do: this.tok.T_DO,
+    for: this.tok.T_FOR,
+    endfor: this.tok.T_ENDFOR,
+    foreach: this.tok.T_FOREACH,
+    endforeach: this.tok.T_ENDFOREACH,
+    declare: this.tok.T_DECLARE,
+    enddeclare: this.tok.T_ENDDECLARE,
+    instanceof: this.tok.T_INSTANCEOF,
+    as: this.tok.T_AS,
+    switch: this.tok.T_SWITCH,
+    endswitch: this.tok.T_ENDSWITCH,
+    case: this.tok.T_CASE,
+    default: this.tok.T_DEFAULT,
+    break: this.tok.T_BREAK,
+    continue: this.tok.T_CONTINUE,
+    goto: this.tok.T_GOTO,
+    echo: this.tok.T_ECHO,
+    print: this.tok.T_PRINT,
+    class: this.tok.T_CLASS,
+    interface: this.tok.T_INTERFACE,
+    trait: this.tok.T_TRAIT,
+    extends: this.tok.T_EXTENDS,
+    implements: this.tok.T_IMPLEMENTS,
+    new: this.tok.T_NEW,
+    clone: this.tok.T_CLONE,
+    var: this.tok.T_VAR,
+    eval: this.tok.T_EVAL,
+    include: this.tok.T_INCLUDE,
+    include_once: this.tok.T_INCLUDE_ONCE,
+    require: this.tok.T_REQUIRE,
+    require_once: this.tok.T_REQUIRE_ONCE,
+    namespace: this.tok.T_NAMESPACE,
+    use: this.tok.T_USE,
+    insteadof: this.tok.T_INSTEADOF,
+    global: this.tok.T_GLOBAL,
+    isset: this.tok.T_ISSET,
+    empty: this.tok.T_EMPTY,
+    __halt_compiler: this.tok.T_HALT_COMPILER,
+    static: this.tok.T_STATIC,
+    abstract: this.tok.T_ABSTRACT,
+    final: this.tok.T_FINAL,
+    private: this.tok.T_PRIVATE,
+    protected: this.tok.T_PROTECTED,
+    public: this.tok.T_PUBLIC,
+    unset: this.tok.T_UNSET,
+    list: this.tok.T_LIST,
+    array: this.tok.T_ARRAY,
+    callable: this.tok.T_CALLABLE,
+    or: this.tok.T_LOGICAL_OR,
+    and: this.tok.T_LOGICAL_AND,
+    xor: this.tok.T_LOGICAL_XOR
   };
   this.castKeywords = {
-    'int': this.tok.T_INT_CAST,
-    'integer': this.tok.T_INT_CAST,
-    "real": this.tok.T_DOUBLE_CAST,
-    "double": this.tok.T_DOUBLE_CAST,
-    "float": this.tok.T_DOUBLE_CAST,
-    "string": this.tok.T_STRING_CAST,
-    "binary": this.tok.T_STRING_CAST,
-    "array": this.tok.T_ARRAY_CAST,
-    "object": this.tok.T_OBJECT_CAST,
-    "bool": this.tok.T_BOOL_CAST,
-    "boolean": this.tok.T_BOOL_CAST,
-    "unset": this.tok.T_UNSET_CAST
+    int: this.tok.T_INT_CAST,
+    integer: this.tok.T_INT_CAST,
+    real: this.tok.T_DOUBLE_CAST,
+    double: this.tok.T_DOUBLE_CAST,
+    float: this.tok.T_DOUBLE_CAST,
+    string: this.tok.T_STRING_CAST,
+    binary: this.tok.T_STRING_CAST,
+    array: this.tok.T_ARRAY_CAST,
+    object: this.tok.T_OBJECT_CAST,
+    bool: this.tok.T_BOOL_CAST,
+    boolean: this.tok.T_BOOL_CAST,
+    unset: this.tok.T_UNSET_CAST
   };
 };
 
@@ -131,7 +131,7 @@ lexer.prototype.setInput = function(input) {
   this.yylineno = 1;
   this.offset = 0;
   this.yyprevcol = 0;
-  this.yytext = '';
+  this.yytext = "";
   this.yylloc = {
     first_offset: 0,
     first_line: 1,
@@ -146,27 +146,26 @@ lexer.prototype.setInput = function(input) {
   this.conditionStack = [];
   this.done = this.offset >= this.size;
   if (!this.all_tokens && this.mode_eval) {
-    this.begin('ST_IN_SCRIPTING');
+    this.begin("ST_IN_SCRIPTING");
   } else {
-    this.begin('INITIAL');
+    this.begin("INITIAL");
   }
   return this;
 };
-
 
 /**
  * consumes and returns one char from the input
  */
 lexer.prototype.input = function(size) {
   var ch = this._input[this.offset];
-  if (!ch) return '';
+  if (!ch) return "";
   this.yytext += ch;
-  this.offset ++;
-  if ( ch === '\r' && this._input[this.offset] === '\n' ) {
-    this.yytext += '\n';
+  this.offset++;
+  if (ch === "\r" && this._input[this.offset] === "\n") {
+    this.yytext += "\n";
     this.offset++;
   }
-  if (ch === '\n' || ch === '\r') {
+  if (ch === "\n" || ch === "\r") {
     this.yylloc.last_line = ++this.yylineno;
     this.yyprevcol = this.yylloc.last_column;
     this.yylloc.last_column = 0;
@@ -182,17 +181,23 @@ lexer.prototype.input = function(size) {
 lexer.prototype.unput = function(size) {
   if (size === 1) {
     // 1 char unput (most cases)
-    this.offset --;
-    if (this._input[this.offset] === '\n' && this._input[this.offset - 1] === '\r') {
-      this.offset --;
-      size ++;
+    this.offset--;
+    if (
+      this._input[this.offset] === "\n" &&
+      this._input[this.offset - 1] === "\r"
+    ) {
+      this.offset--;
+      size++;
     }
-    if (this._input[this.offset] === '\r' || this._input[this.offset] === '\n') {
-      this.yylloc.last_line --;
-      this.yylineno --;
+    if (
+      this._input[this.offset] === "\r" ||
+      this._input[this.offset] === "\n"
+    ) {
+      this.yylloc.last_line--;
+      this.yylineno--;
       this.yylloc.last_column = this.yyprevcol;
     } else {
-      this.yylloc.last_column --;
+      this.yylloc.last_column--;
     }
     this.yytext = this.yytext.substring(0, this.yytext.length - size);
   } else if (size > 0) {
@@ -202,26 +207,26 @@ lexer.prototype.unput = function(size) {
       // re-calculate position
       this.yylloc.last_line = this.yylloc.first_line;
       this.yylloc.last_column = this.yyprevcol = this.yylloc.first_column;
-      for(var i = 0; i < this.yytext.length; i++) {
+      for (var i = 0; i < this.yytext.length; i++) {
         var c = this.yytext[i];
-        if (c === '\r') {
+        if (c === "\r") {
           c = this.yytext[++i];
           this.yyprevcol = this.yylloc.last_column;
-          this.yylloc.last_line ++;
+          this.yylloc.last_line++;
           this.yylloc.last_column = 0;
-          if (c !== '\n') {
-            if (c === '\r') {
-              this.yylloc.last_line ++;
+          if (c !== "\n") {
+            if (c === "\r") {
+              this.yylloc.last_line++;
             } else {
-              this.yylloc.last_column ++;
+              this.yylloc.last_column++;
             }
           }
-        } else if (c === '\n') {
+        } else if (c === "\n") {
           this.yyprevcol = this.yylloc.last_column;
-          this.yylloc.last_line ++;
+          this.yylloc.last_line++;
           this.yylloc.last_column = 0;
         } else {
-          this.yylloc.last_column ++;
+          this.yylloc.last_column++;
         }
       }
       this.yylineno = this.yylloc.last_line;
@@ -249,25 +254,28 @@ lexer.prototype.tryMatchCaseless = function(text) {
 // look ahead
 lexer.prototype.ahead = function(size) {
   var text = this._input.substring(this.offset, this.offset + size);
-  if (text[text.length - 1] === '\r' && this._input[this.offset + size + 1] === '\n') {
-    text += '\n';
+  if (
+    text[text.length - 1] === "\r" &&
+    this._input[this.offset + size + 1] === "\n"
+  ) {
+    text += "\n";
   }
   return text;
 };
 
 // consume the specified size
 lexer.prototype.consume = function(size) {
-  for(var i = 0; i < size; i++) {
+  for (var i = 0; i < size; i++) {
     var ch = this._input[this.offset];
     if (!ch) break;
     this.yytext += ch;
-    this.offset ++;
-    if ( ch === '\r' && this._input[this.offset] === '\n' ) {
-      this.yytext += '\n';
+    this.offset++;
+    if (ch === "\r" && this._input[this.offset] === "\n") {
+      this.yytext += "\n";
       this.offset++;
       i++;
     }
-    if (ch === '\n' || ch === '\r') {
+    if (ch === "\n" || ch === "\r") {
       this.yylloc.last_line = ++this.yylineno;
       this.yyprevcol = this.yylloc.last_column;
       this.yylloc.last_column = 0;
@@ -322,18 +330,13 @@ lexer.prototype.lex = function() {
   this.yylloc.prev_column = this.yylloc.last_column;
   var token = this.next() || this.lex();
   if (!this.all_tokens) {
-    while(
-      token === this.tok.T_WHITESPACE      // ignore white space
-      || (
-        !this.comment_tokens && (
-          token === this.tok.T_COMMENT      // ignore single lines comments
-          || token === this.tok.T_DOC_COMMENT  // ignore doc comments
-        )
-      )
-      || (
-        // ignore open tags
-        token === this.tok.T_OPEN_TAG
-      )
+    while (
+      token === this.tok.T_WHITESPACE || // ignore white space
+      (!this.comment_tokens &&
+        (token === this.tok.T_COMMENT || // ignore single lines comments
+          token === this.tok.T_DOC_COMMENT)) || // ignore doc comments
+      // ignore open tags
+      token === this.tok.T_OPEN_TAG
     ) {
       token = this.next() || this.lex();
     }
@@ -357,9 +360,9 @@ lexer.prototype.lex = function() {
 lexer.prototype.begin = function(condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
-  this.stateCb = this['match' + condition];
-  if (typeof this.stateCb !== 'function') {
-    throw new Error('Undefined condition state "'+condition+'"');
+  this.stateCb = this["match" + condition];
+  if (typeof this.stateCb !== "function") {
+    throw new Error('Undefined condition state "' + condition + '"');
   }
   return this;
 };
@@ -367,17 +370,17 @@ lexer.prototype.begin = function(condition) {
 // pop the previously active lexer condition state off the condition stack
 lexer.prototype.popState = function() {
   var n = this.conditionStack.length - 1;
-  var condition = (n > 0) ? this.conditionStack.pop() : this.conditionStack[0];
+  var condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
-  this.stateCb = this['match' + this.curCondition];
-  if (typeof this.stateCb !== 'function') {
-    throw new Error('Undefined condition state "'+this.curCondition+'"');
+  this.stateCb = this["match" + this.curCondition];
+  if (typeof this.stateCb !== "function") {
+    throw new Error('Undefined condition state "' + this.curCondition + '"');
   }
   return condition;
 };
 
 // return next match in input
-lexer.prototype.next = function () {
+lexer.prototype.next = function() {
   var token;
   if (!this._input) {
     this.done = true;
@@ -385,7 +388,7 @@ lexer.prototype.next = function () {
   this.yylloc.first_offset = this.offset;
   this.yylloc.first_line = this.yylloc.last_line;
   this.yylloc.first_column = this.yylloc.last_column;
-  this.yytext = '';
+  this.yytext = "";
   if (this.done) {
     this.yylloc.prev_offset = this.yylloc.first_offset;
     this.yylloc.prev_line = this.yylloc.first_line;
@@ -394,7 +397,7 @@ lexer.prototype.next = function () {
   }
   if (this.tokens.length > 0) {
     token = this.tokens.shift();
-    if (typeof token[1] === 'object') {
+    if (typeof token[1] === "object") {
       this.setState(token[1]);
     } else {
       this.consume(token[1]);
@@ -408,35 +411,42 @@ lexer.prototype.next = function () {
   }
   if (this.debug) {
     var tName = token;
-    if (typeof tName === 'number') {
+    if (typeof tName === "number") {
       tName = this.engine.tokens.values[tName];
     } else {
-      tName = '"'+tName+'"';
+      tName = '"' + tName + '"';
     }
     var e = new Error(
       tName +
-      '\tfrom ' + this.yylloc.first_line + ',' + this.yylloc.first_column +
-      '\t - to ' + this.yylloc.last_line + ',' + this.yylloc.last_column +
-      '\t"'+this.yytext+'"'
+        "\tfrom " +
+        this.yylloc.first_line +
+        "," +
+        this.yylloc.first_column +
+        "\t - to " +
+        this.yylloc.last_line +
+        "," +
+        this.yylloc.last_column +
+        '\t"' +
+        this.yytext +
+        '"'
     );
     console.log(e.stack);
   }
   return token;
 };
 
-
 // extends the lexer with states
 [
-  require('./lexer/comments.js'),
-  require('./lexer/initial.js'),
-  require('./lexer/numbers.js'),
-  require('./lexer/property.js'),
-  require('./lexer/scripting.js'),
-  require('./lexer/strings.js'),
-  require('./lexer/tokens.js'),
-  require('./lexer/utils.js')
-].forEach(function (ext) {
-  for(var k in ext) {
+  require("./lexer/comments.js"),
+  require("./lexer/initial.js"),
+  require("./lexer/numbers.js"),
+  require("./lexer/property.js"),
+  require("./lexer/scripting.js"),
+  require("./lexer/strings.js"),
+  require("./lexer/tokens.js"),
+  require("./lexer/utils.js")
+].forEach(function(ext) {
+  for (var k in ext) {
     lexer.prototype[k] = ext[k];
   }
 });

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'entry';
+var Node = require("./node");
+var KIND = "entry";
 
 /**
  * An array entry - see [Array](#array)

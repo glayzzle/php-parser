@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Expr = require('./expression');
-var KIND = 'variadic';
+var Expr = require("./expression");
+var KIND = "variadic";
 
 /**
  * Introduce a list of items into the arguments of the call

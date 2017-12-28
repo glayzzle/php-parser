@@ -4,8 +4,8 @@
  * @url http://gla*yzzle.com
  */
 
-var Location = require('./ast/location');
-var Position = require('./ast/position');
+var Location = require("./ast/location");
+var Position = require("./ast/position");
 
 /**
  * ## Class hierarchy
@@ -124,37 +124,35 @@ AST.prototype.position = function(parser) {
   );
 };
 
-
 // operators in ascending order of precedence
 AST.precedence = {};
 var binOperatorsPrecedence = [
-  ['or'],
-  ['xor'],
-  ['and'],
-  ['='],
-  ['?'],
-  ['??'],
-  ['||'],
-  ['&&'],
-  ['|'],
-  ['^'],
-  ['&'],
-  ['==', '!=', '===', '!==', /* '<>', */ '<=>'],
-  ['<', '<=', '>', '>='],
-  ['<<', '>>'],
-  ['+', '-', '.'],
-  ['*', '/', '%'],
-  ['!'],
-  ['instanceof'],
+  ["or"],
+  ["xor"],
+  ["and"],
+  ["="],
+  ["?"],
+  ["??"],
+  ["||"],
+  ["&&"],
+  ["|"],
+  ["^"],
+  ["&"],
+  ["==", "!=", "===", "!==", /* '<>', */ "<=>"],
+  ["<", "<=", ">", ">="],
+  ["<<", ">>"],
+  ["+", "-", "."],
+  ["*", "/", "%"],
+  ["!"],
+  ["instanceof"]
   // TODO: typecasts
   // TODO: [ (array)
   // TODO: clone, new
-].forEach(function (list, index) {
-  list.forEach(function (operator) {
+].forEach(function(list, index) {
+  list.forEach(function(operator) {
     AST.precedence[operator] = index + 1;
   });
 });
-
 
 /**
  * Check and fix precence, by default using right
@@ -162,9 +160,9 @@ var binOperatorsPrecedence = [
 AST.prototype.resolvePrecedence = function(result) {
   var buffer;
   // handling precendence
-  if (result.kind === 'bin') {
+  if (result.kind === "bin") {
     if (result.right) {
-      if (result.right.kind === 'bin') {
+      if (result.right.kind === "bin") {
         var lLevel = AST.precedence[result.type];
         var rLevel = AST.precedence[result.right.type];
         if (lLevel && rLevel && rLevel <= lLevel) {
@@ -175,9 +173,9 @@ AST.prototype.resolvePrecedence = function(result) {
           buffer.left = this.resolvePrecedence(result);
           result = buffer;
         }
-      } else if (result.right.kind === 'retif') {
+      } else if (result.right.kind === "retif") {
         var lLevel = AST.precedence[result.type];
-        var rLevel = AST.precedence['?'];
+        var rLevel = AST.precedence["?"];
         if (lLevel && rLevel && rLevel <= lLevel) {
           buffer = result.right;
           result.right = result.right.test;
@@ -186,34 +184,34 @@ AST.prototype.resolvePrecedence = function(result) {
         }
       }
     }
-  } else if (result.kind === 'unary') {
+  } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
     if (result.what) {
       // unary precedence is allways lower
-      if (result.what.kind === 'bin') {
+      if (result.what.kind === "bin") {
         buffer = result.what;
         result.what = result.what.left;
         buffer.left = this.resolvePrecedence(result);
         result = buffer;
-      } else if (result.what.kind === 'retif') {
+      } else if (result.what.kind === "retif") {
         buffer = result.what;
         result.what = result.what.test;
         buffer.test = this.resolvePrecedence(result);
         result = buffer;
       }
     }
-  } else if (result.kind === 'retif') {
+  } else if (result.kind === "retif") {
     // https://github.com/glayzzle/php-parser/issues/77
-    if (result.falseExpr && result.falseExpr.kind === 'retif') {
+    if (result.falseExpr && result.falseExpr.kind === "retif") {
       buffer = result.falseExpr;
       result.falseExpr = buffer.test;
       buffer.test = this.resolvePrecedence(result);
       result = buffer;
     }
-  } else if (result.kind === 'assign') {
+  } else if (result.kind === "assign") {
     // https://github.com/glayzzle/php-parser/issues/81
-    if (result.right && result.right.kind === 'bin') {
-      var lLevel = AST.precedence['='];
+    if (result.right && result.right.kind === "bin") {
+      var lLevel = AST.precedence["="];
       var rLevel = AST.precedence[result.right.type];
       // only shifts with and, xor, or
       if (lLevel && rLevel && rLevel < lLevel) {
@@ -253,11 +251,15 @@ AST.prototype.prepare = function(kind, parser) {
         );
       }
       if (self.withPositions) {
-        location = new Location(src, start, new Position(
-          parser.lexer.yylloc.prev_line,
-          parser.lexer.yylloc.prev_column,
-          parser.lexer.yylloc.prev_offset
-        ));
+        location = new Location(
+          src,
+          start,
+          new Position(
+            parser.lexer.yylloc.prev_line,
+            parser.lexer.yylloc.prev_column,
+            parser.lexer.yylloc.prev_offset
+          )
+        );
       } else {
         location = new Location(src, null, null);
       }
@@ -270,8 +272,8 @@ AST.prototype.prepare = function(kind, parser) {
     }
     // build the object
     var node = self[kind];
-    if (typeof node !== 'function') {
-      throw new Error('Undefined node "'+kind+'"');
+    if (typeof node !== "function") {
+      throw new Error('Undefined node "' + kind + '"');
     }
     var result = Object.create(node.prototype);
     node.apply(result, args);
@@ -281,95 +283,95 @@ AST.prototype.prepare = function(kind, parser) {
 
 // Define all AST nodes
 [
-  require('./ast/array'),
-  require('./ast/assign'),
-  require('./ast/bin'),
-  require('./ast/block'),
-  require('./ast/boolean'),
-  require('./ast/break'),
-  require('./ast/call'),
-  require('./ast/case'),
-  require('./ast/cast'),
-  require('./ast/catch'),
-  require('./ast/class'),
-  require('./ast/classconstant'),
-  require('./ast/clone'),
-  require('./ast/closure'),
-  require('./ast/constant'),
-  require('./ast/constref'),
-  require('./ast/continue'),
-  require('./ast/declaration'),
-  require('./ast/declare'),
-  require('./ast/do'),
-  require('./ast/doc'),
-  require('./ast/echo'),
-  require('./ast/empty'),
-  require('./ast/encapsed'),
-  require('./ast/entry'),
-  require('./ast/error'),
-  require('./ast/eval'),
-  require('./ast/exit'),
-  require('./ast/expression'),
-  require('./ast/for'),
-  require('./ast/foreach'),
-  require('./ast/function'),
-  require('./ast/global'),
-  require('./ast/goto'),
-  require('./ast/halt'),
-  require('./ast/identifier'),
-  require('./ast/if'),
-  require('./ast/include'),
-  require('./ast/inline'),
-  require('./ast/interface'),
-  require('./ast/isset'),
-  require('./ast/label'),
-  require('./ast/list'),
-  require('./ast/literal'),
-  require('./ast/lookup'),
-  require('./ast/magic'),
-  require('./ast/method'),
-  require('./ast/namespace'),
-  require('./ast/new'),
-  require('./ast/node'),
-  require('./ast/nowdoc'),
-  require('./ast/number'),
-  require('./ast/offsetlookup'),
-  require('./ast/operation'),
-  require('./ast/parameter'),
-  require('./ast/parenthesis'),
-  require('./ast/post'),
-  require('./ast/pre'),
-  require('./ast/print'),
-  require('./ast/program'),
-  require('./ast/property'),
-  require('./ast/propertylookup'),
-  require('./ast/retif'),
-  require('./ast/return'),
-  require('./ast/silent'),
-  require('./ast/statement'),
-  require('./ast/static'),
-  require('./ast/staticlookup'),
-  require('./ast/string'),
-  require('./ast/switch'),
-  require('./ast/sys'),
-  require('./ast/throw'),
-  require('./ast/trait'),
-  require('./ast/traitalias'),
-  require('./ast/traitprecedence'),
-  require('./ast/traituse'),
-  require('./ast/try'),
-  require('./ast/unary'),
-  require('./ast/unset'),
-  require('./ast/usegroup'),
-  require('./ast/useitem'),
-  require('./ast/variable'),
-  require('./ast/variadic'),
-  require('./ast/while'),
-  require('./ast/yield'),
-  require('./ast/yieldfrom')
-].forEach(function (ctor) {
+  require("./ast/array"),
+  require("./ast/assign"),
+  require("./ast/bin"),
+  require("./ast/block"),
+  require("./ast/boolean"),
+  require("./ast/break"),
+  require("./ast/call"),
+  require("./ast/case"),
+  require("./ast/cast"),
+  require("./ast/catch"),
+  require("./ast/class"),
+  require("./ast/classconstant"),
+  require("./ast/clone"),
+  require("./ast/closure"),
+  require("./ast/constant"),
+  require("./ast/constref"),
+  require("./ast/continue"),
+  require("./ast/declaration"),
+  require("./ast/declare"),
+  require("./ast/do"),
+  require("./ast/doc"),
+  require("./ast/echo"),
+  require("./ast/empty"),
+  require("./ast/encapsed"),
+  require("./ast/entry"),
+  require("./ast/error"),
+  require("./ast/eval"),
+  require("./ast/exit"),
+  require("./ast/expression"),
+  require("./ast/for"),
+  require("./ast/foreach"),
+  require("./ast/function"),
+  require("./ast/global"),
+  require("./ast/goto"),
+  require("./ast/halt"),
+  require("./ast/identifier"),
+  require("./ast/if"),
+  require("./ast/include"),
+  require("./ast/inline"),
+  require("./ast/interface"),
+  require("./ast/isset"),
+  require("./ast/label"),
+  require("./ast/list"),
+  require("./ast/literal"),
+  require("./ast/lookup"),
+  require("./ast/magic"),
+  require("./ast/method"),
+  require("./ast/namespace"),
+  require("./ast/new"),
+  require("./ast/node"),
+  require("./ast/nowdoc"),
+  require("./ast/number"),
+  require("./ast/offsetlookup"),
+  require("./ast/operation"),
+  require("./ast/parameter"),
+  require("./ast/parenthesis"),
+  require("./ast/post"),
+  require("./ast/pre"),
+  require("./ast/print"),
+  require("./ast/program"),
+  require("./ast/property"),
+  require("./ast/propertylookup"),
+  require("./ast/retif"),
+  require("./ast/return"),
+  require("./ast/silent"),
+  require("./ast/statement"),
+  require("./ast/static"),
+  require("./ast/staticlookup"),
+  require("./ast/string"),
+  require("./ast/switch"),
+  require("./ast/sys"),
+  require("./ast/throw"),
+  require("./ast/trait"),
+  require("./ast/traitalias"),
+  require("./ast/traitprecedence"),
+  require("./ast/traituse"),
+  require("./ast/try"),
+  require("./ast/unary"),
+  require("./ast/unset"),
+  require("./ast/usegroup"),
+  require("./ast/useitem"),
+  require("./ast/variable"),
+  require("./ast/variadic"),
+  require("./ast/while"),
+  require("./ast/yield"),
+  require("./ast/yieldfrom")
+].forEach(function(ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
-  if (kind[0] === '_') kind = kind.substring(1);
+  if (kind[0] === "_") kind = kind.substring(1);
   AST.prototype[kind] = ctor;
 });
 

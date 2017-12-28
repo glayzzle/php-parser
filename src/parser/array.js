@@ -3,8 +3,8 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-var ArrayExpr = 'array';
-var ArrayEntry = 'entry';
+var ArrayExpr = "array";
+var ArrayEntry = "entry";
 
 module.exports = {
   /**
@@ -21,17 +21,17 @@ module.exports = {
     var result = this.node(ArrayExpr);
 
     if (this.token === this.tok.T_ARRAY) {
-      this.next().expect('(');
-      expect = ')';
+      this.next().expect("(");
+      expect = ")";
     } else {
       shortForm = true;
-      expect = ']';
+      expect = "]";
     }
 
     if (this.next().token != expect) {
-      while(this.token != this.EOF) {
+      while (this.token != this.EOF) {
         items.push(this.read_array_pair_list());
-        if (this.token == ',') {
+        if (this.token == ",") {
           this.next();
           if (this.token === expect) {
             break;
@@ -60,13 +60,13 @@ module.exports = {
     var result = this.node(ArrayEntry);
     var key = null;
     var value = null;
-    if (this.token === '&') {
+    if (this.token === "&") {
       value = this.next().read_variable(true, false, true);
     } else {
       var expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         key = expr;
-        if (this.next().token === '&') {
+        if (this.next().token === "&") {
           value = this.next().read_variable(true, false, true);
         } else {
           value = this.read_expr();
@@ -83,7 +83,7 @@ module.exports = {
    * ```
    */
   read_dim_offset: function() {
-    if (this.token == ']') return false;
+    if (this.token == "]") return false;
     return this.read_expr();
   }
 };

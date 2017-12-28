@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Expr = require('./expression');
-var KIND = 'variable';
+var Expr = require("./expression");
+var KIND = "variable";
 
 /**
  * Any expression node. Since the left-hand side of an assignment may

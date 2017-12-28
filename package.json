@@ -4,7 +4,8 @@
   "description": "Parse PHP code and returns its AST",
   "main": "src/index.js",
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha test --stack-size=5000",
+    "lint": "eslint src/**/*.js test/**/*.js",
+    "test": "npm run lint && node node_modules/mocha/bin/mocha test --stack-size=5000",
     "cover": "node --stack-size=5000 node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha"
   },
   "repository": {
@@ -35,12 +36,16 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.15",
+    "eslint": "^4.14.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.4.0",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-documentation": "^1.2.1",
     "istanbul": "0.3.x",
     "mocha": "^3.2.0",
+    "prettier": "^1.9.2",
     "should": "^11.2.0"
   }
 }

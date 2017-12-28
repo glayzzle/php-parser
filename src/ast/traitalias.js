@@ -4,12 +4,12 @@
  * @url http://glayzzle.com
  */
 
-var Node = require('./node');
-var KIND = 'traitalias';
+var Node = require("./node");
+var KIND = "traitalias";
 
-var IS_PUBLIC     = 'public';
-var IS_PROTECTED  = 'protected';
-var IS_PRIVATE    = 'private';
+var IS_PUBLIC = "public";
+var IS_PROTECTED = "protected";
+var IS_PRIVATE = "private";
 
 /**
  * Defines a trait alias
@@ -20,7 +20,13 @@ var IS_PRIVATE    = 'private';
  * @property {string|null} as
  * @property {string|null} visibility
  */
-var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, location) {
+var TraitAlias = Node.extends(function TraitAlias(
+  trait,
+  method,
+  as,
+  flags,
+  location
+) {
   Node.apply(this, [KIND, location]);
   this.trait = trait;
   this.method = method;

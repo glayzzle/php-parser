@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Expr = require('./expression');
-var KIND = 'constref';
+var Expr = require("./expression");
+var KIND = "constref";
 
 /**
  * A constant reference

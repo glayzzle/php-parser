@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require('./node');
-var KIND = 'case';
+var Node = require("./node");
+var KIND = "case";
 
 /**
  * A switch case statement

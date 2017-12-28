@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Constant = require('./constant');
-var KIND = 'classconstant';
+var Constant = require("./constant");
+var KIND = "classconstant";
 
 /**
  * Defines a class/interface/trait constant
@@ -14,7 +14,12 @@ var KIND = 'classconstant';
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, location) {
+var ClassConstant = Constant.extends(function ClassConstant(
+  name,
+  value,
+  flags,
+  location
+) {
   Constant.apply(this, [name, value, location]);
   this.kind = KIND;
   this.parseFlags(flags);
