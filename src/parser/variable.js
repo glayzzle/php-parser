@@ -81,7 +81,7 @@ module.exports = {
     } else if (
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_CLASS ||
-      this.is("IDENTIFIER")
+      (this.php7 && this.is("IDENTIFIER"))
     ) {
       offset = this.node("constref");
       var name = this.text();
@@ -131,26 +131,33 @@ module.exports = {
           result = node(result, offset);
           break;
         case this.tok.T_DOUBLE_COLON:
+
+
+          // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
+          if(result.kind === "staticlookup") {
+            this.error();
+          }
+
+          var node = this.node("staticlookup");
           if (
-            this.next().token === this.tok.T_STRING ||
-            this.is("IDENTIFIER")
+            this.next().token === this.tok.T_STRING || 
+            (this.php7 && this.is("IDENTIFIER"))
           ) {
-            var node = this.node("staticlookup");
             var offset = this.node("constref");
             var name = this.text();
-
             this.next();
             offset = offset(name);
 
-            if (
-              this.token === this.tok.T_OBJECT_OPERATOR ||
-              this.token === this.tok.T_DOUBLE_COLON
-            ) {
+            if (this.token === this.tok.T_OBJECT_OPERATOR) {
               this.error();
             }
-
-            result = node(result, offset);
+          } else {
+            this.error(this.tok.T_STRING);
+            // fallback on a constref node
+            var offset = this.node('constref')(this.text());
+            this.next();
           }
+          result = node(result, offset);
           break;
         case this.tok.T_OBJECT_OPERATOR:
           var node = this.node("propertylookup");

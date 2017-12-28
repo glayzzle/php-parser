@@ -64,18 +64,18 @@ describe("Test variables", function() {
     it("should be self::foo", function() {
       var expr = ast.children[1].what;
       expr.kind.should.be.exactly("staticlookup");
-      // @fixme : self should be a constref
-      //expr.what.kind.should.be.exactly('constref');
-      //expr.what.name.should.be.exactly('self');
+      expr.what.kind.should.be.exactly("identifier");
+      expr.what.name.should.be.exactly("self");
+      expr.what.resolution.should.be.exactly("uqn");
       expr.offset.kind.should.be.exactly("constref");
       expr.offset.name.should.be.exactly("foo");
     });
     it("should be parent::foo", function() {
       var expr = ast.children[2].what;
       expr.kind.should.be.exactly("staticlookup");
-      // @fixme : parent should be a constref
-      //expr.what.kind.should.be.exactly('constref');
-      //expr.what.name.should.be.exactly('parent');
+      expr.what.kind.should.be.exactly("identifier");
+      expr.what.name.should.be.exactly("parent");
+      expr.what.resolution.should.be.exactly("uqn");
       expr.offset.kind.should.be.exactly("constref");
       expr.offset.name.should.be.exactly("foo");
     });
@@ -197,9 +197,11 @@ describe("Test variables", function() {
       astErr.errors[0].line.should.be.exactly(1);
       astErr.errors[0].message.should.be.exactly(msg);
     });
-
+    
     it("should fail on property lookup on static lookup", function() {
-      var astErr = parser.parseEval(["this->foo::bar->baz;"].join("\n"), {
+      var astErr = parser.parseEval([
+        "$this->foo::bar->baz;"
+      ].join('\n'), {
         parser: {
           suppressErrors: true
         }
@@ -210,6 +212,28 @@ describe("Test variables", function() {
       astErr.errors.length.should.be.exactly(1);
       astErr.errors[0].line.should.be.exactly(1);
       astErr.errors[0].message.should.be.exactly(msg);
+    });
+    
+    it('should fail $foo->bar::!', function() {
+      var errAst = parser.parseEval('$foo->bar::!', {
+        parser: {
+          suppressErrors: true
+        }
+      });
+      errAst.errors.length.should.be.exactly(1);
+      errAst.errors[0].token.should.be.exactly('\'!\'');
+      errAst.children[0].kind.should.be.exactly('staticlookup');
+      errAst.children[0].offset.name.should.be.exactly('!');
+    });
+
+    it('should fail foo::bar::baz', function() {
+      var errAst = parser.parseEval('foo::bar::baz', {
+        parser: {
+          suppressErrors: true
+        }
+      });
+      errAst.errors.length.should.be.exactly(1);
+      errAst.children[0].kind.should.be.exactly('staticlookup');
     });
   });
 });

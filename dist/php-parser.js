@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-11-01 */
+/*! php-parser - BSD3 License - 2017-12-28 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -3028,6 +3028,7 @@ var lexer = function(engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = true;
+  this.php7 = true;
   this.yyprevcol = 0;
   this.keywords = {
     "__class__": this.tok.T_CLASS_C,
@@ -3588,21 +3589,21 @@ module.exports = {
       ch = this.input();
       // check if hexa
       if (ch === 'x' || ch === 'X') {
-        this.input();
+        ch = this.input();
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
-          this.unput(2);
+          this.unput(ch ? 2 : 1);
         }
       } else if (ch === 'b' || ch === 'B') {
         ch = this.input();
         if (ch === '0' || ch === '1') {
           return this.consume_BNUM();
         } else {
-          this.unput(2);
+          this.unput(ch ? 2 : 1);
         }
       } else if (!this.is_NUM()) {
-        this.unput(1);
+        if (ch) this.unput(1);
       }
     }
 
@@ -3619,18 +3620,18 @@ module.exports = {
               this.consume_LNUM();
               return this.tok.T_DNUMBER;
             } else {
-              if (ch) this.unput(3);
+              this.unput(ch ? 3 : 2);
               break;
             }
           } else if (this.is_NUM()) {
             this.consume_LNUM();
             return this.tok.T_DNUMBER;
           } else {
-            if (ch) this.unput(2);
+            this.unput(ch ? 2 : 1);
             break;
           }
         } else {
-          this.unput(1);
+          if (ch) this.unput(1);
           break;
         }
       }
@@ -3654,9 +3655,9 @@ module.exports = {
   // read hexa
   consume_HNUM: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_HEX()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -3665,9 +3666,9 @@ module.exports = {
   // read a generic number
   consume_LNUM: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_NUM()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -3717,25 +3718,27 @@ module.exports = {
   },
   matchST_LOOKING_FOR_VARNAME: function() {
     var ch = this.input();
+
+    // SHIFT STATE
+    this.popState();
+    this.begin('ST_IN_SCRIPTING');
+
     if (this.is_LABEL_START()) {
       this.consume_LABEL();
       ch = this.input();
-      this.popState();
       if (ch === '[' || ch === '}') {
-        this.begin('ST_IN_SCRIPTING');
         this.unput(1);
         return this.tok.T_STRING_VARNAME;
       } else {
+        // any char (that's started with a label sequence)
         this.unput(this.yytext.length);
-        return false;
       }
     } else {
+      // any char (thats not a label start sequence)
       if (ch) this.unput(1);
-      this.popState();
-      this.begin('ST_IN_SCRIPTING');
-      // console.log(this.yylineno, 'ST_LOOKING_FOR_VARNAME', this._input[this.offset - 1], this.conditionStack);
-      return false;
     }
+    // stops looking for a varname and starts the scripting mode
+    return false;
   },
   matchST_VAR_OFFSET: function() {
     var ch = this.input();
@@ -3861,7 +3864,7 @@ module.exports = {
       if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
         continue;
       }
-      this.unput(1);
+      if (ch) this.unput(1);
       break;
     }
     return this.tok.T_WHITESPACE;
@@ -3961,14 +3964,14 @@ module.exports = {
           this.unput(2);
           break;
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       } else if (ch == '{') {
         ch = this.input();
         if (ch == '$') {
           this.unput(2);
           break;
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       }
     }
     if (ch == '"') {
@@ -4123,10 +4126,10 @@ module.exports = {
       } else {
         this.unput(2);
       }
-     } else {
-      this.unput(1);
-     }
-     return this.tok.T_VARIABLE;
+    } else {
+      if (ch) this.unput(1);
+    }
+    return this.tok.T_VARIABLE;
   },
   // HANDLES BACKQUOTES
   matchST_BACKQUOTE: function() {
@@ -4183,7 +4186,7 @@ module.exports = {
             return next;
           }
         }
-        this.unput(1);
+        continue;
       } else if (ch === '{') {
         ch = this.input();
         if (ch === '$') {
@@ -4198,7 +4201,7 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
-        this.unput(1);
+        continue;
       }
       ch = this.input();
     }
@@ -4260,7 +4263,7 @@ module.exports = {
             return next;
           }
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       } else if (ch === '{') {
         ch = this.input();
         if (ch === '$') {
@@ -4296,7 +4299,7 @@ module.exports = {
     var id = this.keywords[token];
     if (typeof id !== 'number') {
       if (token === 'yield') {
-        if (this.tryMatch(' from')) {
+        if (this.php7 && this.tryMatch(' from')) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
         } else {
@@ -4438,7 +4441,7 @@ module.exports = {
       return '!';
     },
     '?': function() {
-      if (this._input[this.offset] === '?') {
+      if (this.php7 && this._input[this.offset] === '?') {
         this.input();
         return this.tok.T_COALESCE;
       }
@@ -4460,7 +4463,7 @@ module.exports = {
         return this.tok.T_SL;
       } else if (nchar === '=') {
         this.input();
-        if (this._input[this.offset] === '>') {
+        if (this.php7 && this._input[this.offset] === '>') {
           this.input();
           return this.tok.T_SPACESHIP;
         } else {
@@ -4596,9 +4599,9 @@ module.exports = {
   // reads each char of the label
   consume_LABEL: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_LABEL()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -4623,9 +4626,9 @@ module.exports = {
   // consume all whitespaces (excluding newlines)
   consume_TABSPACE: function() {
     while(this.offset < this.size) {
-      this.input();
+      var ch = this.input();
       if (!this.is_TABSPACE()) {
-        this.unput(1);
+        if (ch) this.unput(1);
         break;
       }
     }
@@ -4671,20 +4674,15 @@ var parser = function(lexer, ast) {
   this.token = null;
   this.prev = null;
   this.debug = false;
+  this.php7 = true;
   this.extractDoc = false;
   this.suppressErrors = false;
+  var mapIt = function(item) {
+    return [item, null];
+  };
   this.entries = {
-    'IDENTIFIER': [
-      this.tok.T_CLASS_C,
-      this.tok.T_DIR,
-      this.tok.T_FILE,
-      this.tok.T_FUNC_C,
-      this.tok.T_LINE,
-      this.tok.T_METHOD_C,
-      this.tok.T_NS_C,
-      this.tok.T_TRAIT,
+    'IDENTIFIER': new Map([
       this.tok.T_ABSTRACT,
-      this.tok.T_LOGICAL_AND,
       this.tok.T_ARRAY,
       this.tok.T_AS,
       this.tok.T_BREAK,
@@ -4692,11 +4690,13 @@ var parser = function(lexer, ast) {
       this.tok.T_CASE,
       this.tok.T_CATCH,
       this.tok.T_CLASS,
+      this.tok.T_CLASS_C,
       this.tok.T_CLONE,
       this.tok.T_CONST,
       this.tok.T_CONTINUE,
       this.tok.T_DECLARE,
       this.tok.T_DEFAULT,
+      this.tok.T_DIR,
       this.tok.T_DO,
       this.tok.T_ECHO,
       this.tok.T_ELSE,
@@ -4711,8 +4711,10 @@ var parser = function(lexer, ast) {
       this.tok.T_EVAL,
       this.tok.T_EXIT,
       this.tok.T_EXTENDS,
+      this.tok.T_FILE,
       this.tok.T_FINAL,
       this.tok.T_FINALLY,
+      this.tok.T_FUNC_C,
       this.tok.T_FOR,
       this.tok.T_FOREACH,
       this.tok.T_FUNCTION,
@@ -4726,10 +4728,15 @@ var parser = function(lexer, ast) {
       this.tok.T_INSTEADOF,
       this.tok.T_INTERFACE,
       this.tok.T_ISSET,
+      this.tok.T_LINE,
       this.tok.T_LIST,
+      this.tok.T_LOGICAL_AND,
+      this.tok.T_LOGICAL_OR,
+      this.tok.T_LOGICAL_XOR,
+      this.tok.T_METHOD_C,
       this.tok.T_NAMESPACE,
       this.tok.T_NEW,
-      this.tok.T_LOGICAL_OR,
+      this.tok.T_NS_C,
       this.tok.T_PRINT,
       this.tok.T_PRIVATE,
       this.tok.T_PROTECTED,
@@ -4746,18 +4753,17 @@ var parser = function(lexer, ast) {
       this.tok.T_USE,
       this.tok.T_VAR,
       this.tok.T_WHILE,
-      this.tok.T_LOGICAL_XOR,
       this.tok.T_YIELD
-    ],
-    'VARIABLE': [
+    ].map(mapIt)),
+    'VARIABLE': new Map([
       this.tok.T_VARIABLE,
       '$', '&',
       this.tok.T_NS_SEPARATOR,
       this.tok.T_STRING,
       this.tok.T_NAMESPACE,
       this.tok.T_STATIC
-    ],
-    'SCALAR': [
+    ].map(mapIt)),
+    'SCALAR': new Map([
       this.tok.T_CONSTANT_ENCAPSED_STRING,
       this.tok.T_START_HEREDOC,
       this.tok.T_LNUMBER,
@@ -4776,8 +4782,8 @@ var parser = function(lexer, ast) {
       'B"',
       '-',
       this.tok.T_NS_SEPARATOR
-    ],
-    'T_MAGIC_CONST': [
+    ].map(mapIt)),
+    'T_MAGIC_CONST': new Map([
         this.tok.T_CLASS_C,
         this.tok.T_TRAIT_C,
         this.tok.T_FUNC_C,
@@ -4786,22 +4792,22 @@ var parser = function(lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_DIR,
         this.tok.T_NS_C
-    ],
-    'T_MEMBER_FLAGS': [
+    ].map(mapIt)),
+    'T_MEMBER_FLAGS': new Map([
       this.tok.T_PUBLIC,
       this.tok.T_PRIVATE,
       this.tok.T_PROTECTED,
       this.tok.T_STATIC,
       this.tok.T_ABSTRACT,
       this.tok.T_FINAL
-    ],
-    'EOS': [
+    ].map(mapIt)),
+    'EOS': new Map([
       ';',
       this.tok.T_CLOSE_TAG,
       this.EOF,
       this.tok.T_INLINE_HTML
-    ],
-    'EXPR': [
+    ].map(mapIt)),
+    'EXPR': new Map([
       '@','-','+','!','~','(','`',
       this.tok.T_LIST,
       this.tok.T_CLONE,
@@ -4847,7 +4853,7 @@ var parser = function(lexer, ast) {
       this.tok.T_FILE,
       this.tok.T_DIR,
       this.tok.T_NS_C
-    ]
+    ].map(mapIt))
   };
 };
 
@@ -5076,9 +5082,8 @@ parser.prototype.nextWithComments = function() {
 parser.prototype.is = function(type) {
   if (Array.isArray(type)) {
     return type.indexOf(this.token) !== -1;
-  } else {
-    return this.entries[type].indexOf(this.token) != -1;
   }
+  return this.entries[type].has(this.token);
 };
 
 // extends the parser with syntax files
@@ -5377,15 +5382,19 @@ module.exports = {
          * Reads a constant declaration
          *
          * ```ebnf
-         *  constant_declaration ::= T_STRING '=' expr
+         *  constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr
          * ```
          * @return {Constant} [:link:](AST.md#constant)
          */
         function read_constant_declaration() {
-          var result = this.node('classconstant'), name = null, value = null;
-          if (this.is('IDENTIFIER') || this.expect(this.tok.T_STRING)) {
+          var result = this.node('classconstant'), 
+            name = null, 
+            value = null;
+          if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
             name = this.text();
             this.next();
+          } else {
+            this.expect('IDENTIFIER');
           }
           if (this.expect('=')) {
             value =  this.next().read_expr();
@@ -5591,6 +5600,8 @@ module.exports = {
    * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
    * ```
+   * name list : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303
+   * trait adaptation : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742
    */
   ,read_trait_use_alias: function() {
     var node = this.node();
@@ -5606,10 +5617,12 @@ module.exports = {
       if (this.token === this.tok.T_DOUBLE_COLON) {
         this.next();
 
-        if (this.is('IDENTIFIER') || this.expect(this.tok.T_STRING)) {
+        if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
           trait = method;
           method = this.text();
           this.next();
+        } else {
+          this.expect(this.tok.T_STRING);
         }
       } else {
         // convert identifier as string
@@ -5634,7 +5647,7 @@ module.exports = {
         flags = this.read_member_flags();
       }
       
-      if (this.is('IDENTIFIER') || this.token === this.tok.T_STRING) {
+      if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
         alias = this.text();
         this.next();
       } else if (flags === false) {
@@ -5973,7 +5986,7 @@ module.exports = {
         return this.node('cast')('int', this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return this.node('cast')('double', this.next().read_expr());
+        return this.node('cast')('float', this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
         return this.node('cast')('string', this.next().read_expr());
@@ -5985,12 +5998,10 @@ module.exports = {
         return this.node('cast')('object', this.next().read_expr());
 
       case this.tok.T_BOOL_CAST:
-        return this.node('cast')('boolean', this.next().read_expr());
+        return this.node('cast')('bool', this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
-        return this.node('unset')(
-          this.next().read_expr()
-        );
+        return this.node('cast')('unset', this.next().read_expr());
 
       case this.tok.T_EXIT:
         var result = this.node('exit');
@@ -6271,7 +6282,7 @@ module.exports = {
    */
   is_reference: function() {
     if (this.token == '&') {
-      this.next();
+      this.next().ignoreComments();
       return true;
     }
     return false;
@@ -6281,7 +6292,7 @@ module.exports = {
    */
   ,is_variadic: function() {
     if (this.token === this.tok.T_ELLIPSIS) {
-      this.next();
+      this.next().ignoreComments();
       return true;
     }
     return false;
@@ -6332,16 +6343,23 @@ module.exports = {
     var result = this.node(nodeName);
 
     if (this.expect(this.tok.T_FUNCTION)) {
-      this.next();
+      this.next().ignoreComments();
     }
     var isRef = this.is_reference();
     var name = false, use = [], returnType = null, nullable = false;
     if (type !== 1) {
-      if ((type === 2 && this.is('IDENTIFIER')) || this.expect(this.tok.T_STRING)) {
-        name = this.text();
-        this.next();
+      if (type === 2) {
+        if (this.token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
+          name = this.text();
+          this.next();
+        } else {
+          this.error('IDENTIFIER');
+        }
       } else {
-        this.next();
+        if (this.expect(this.tok.T_STRING)) {
+          name = this.text();
+        }
+        this.next();  
       }
     }
     if (this.expect('(')) this.next();
@@ -7941,8 +7959,9 @@ module.exports = {
     if (this.next().is([this.tok.T_VARIABLE, '$'])) {
       offset = this.read_reference_variable(encapsed, false);
     } else if (
-      this.is('IDENTIFIER') || this.token === this.tok.T_STRING
-      || this.token === this.tok.T_CLASS
+      this.token === this.tok.T_STRING
+      || this.token === this.tok.T_CLASS 
+      || (this.php7 && this.is('IDENTIFIER'))
     ) {
       offset = this.node('constref');
       var name = this.text();
@@ -7992,22 +8011,27 @@ module.exports = {
           result = node(result, offset);
           break;
         case this.tok.T_DOUBLE_COLON:
-          var node = this.node('staticlookup'), offset;
-          this.next();
 
-          if(this.is('IDENTIFIER') || this.token === this.tok.T_STRING
-              || this.token === this.tok.T_CLASS
-          ) {
-            offset = this.node('constref');
+          // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
+          if(result.kind === 'staticlookup') {
+            this.error();
+          }
+
+          var node = this.node('staticlookup');
+          if(this.next().token === this.tok.T_STRING || (this.php7 && this.is('IDENTIFIER'))) {
+            var offset = this.node('constref');
             var name = this.text();
             this.next();
             offset = offset(name);
-
-            if(this.token === this.tok.T_OBJECT_OPERATOR || this.token === this.tok.T_DOUBLE_COLON) {
+            if(this.token === this.tok.T_OBJECT_OPERATOR) {
               this.error();
             }
+          } else {
+            this.error(this.tok.T_STRING);
+            // fallback on a constref node
+            var offset = this.node('constref')(this.text());
+            this.next();
           }
-
           result = node(result, offset);
           break;
         case this.tok.T_OBJECT_OPERATOR:
@@ -8515,7 +8539,8 @@ function combine(src, to) {
  * var instance = new parser({
  *   parser: {
  *     extractDoc: true,
- *     suppressErrors: true
+ *     suppressErrors: true,
+ *     php7: true
  *   },
  *   ast: {
  *     withPositions: true
@@ -8548,6 +8573,13 @@ var engine = function(options) {
   this.ast = new AST();
   this.parser = new parser(this.lexer, this.ast);
   if (options && typeof options === 'object') {
+    // disable php7 from lexer if already disabled from parser
+    if (options.parser && options.parser.php7 === false) {
+      if (!options.lexer) {
+        options.lexer = {};
+      }
+      options.lexer.php7 = false;
+    }
     combine(options, this);
   }
 };

@@ -26,25 +26,27 @@ module.exports = {
   },
   matchST_LOOKING_FOR_VARNAME: function() {
     var ch = this.input();
+
+    // SHIFT STATE
+    this.popState();
+    this.begin('ST_IN_SCRIPTING');
+
     if (this.is_LABEL_START()) {
       this.consume_LABEL();
       ch = this.input();
-      this.popState();
       if (ch === "[" || ch === "}") {
-        this.begin("ST_IN_SCRIPTING");
         this.unput(1);
         return this.tok.T_STRING_VARNAME;
       } else {
+        // any char (that's started with a label sequence)
         this.unput(this.yytext.length);
-        return false;
       }
     } else {
+      // any char (thats not a label start sequence)
       if (ch) this.unput(1);
-      this.popState();
-      this.begin("ST_IN_SCRIPTING");
-      // console.log(this.yylineno, 'ST_LOOKING_FOR_VARNAME', this._input[this.offset - 1], this.conditionStack);
-      return false;
     }
+    // stops looking for a varname and starts the scripting mode
+    return false;
   },
   matchST_VAR_OFFSET: function() {
     var ch = this.input();

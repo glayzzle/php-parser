@@ -30,7 +30,8 @@ var engine = require('php-parser');
 var parser = new engine({
   // some options :
   parser: {
-    extractDoc: true
+    extractDoc: true,
+    php7: true
   },
   ast: {
     withPositions: true
@@ -74,8 +75,9 @@ Sample AST output
 }
 ```
 
-Try it online (demo) :
-http://glayzzle.com/php-parser/#demo
+- Try it online (demo) : http://glayzzle.com/php-parser/#demo
+- Or from AST Explorer : https://astexplorer.net/
+
 
 API Overview
 ------------

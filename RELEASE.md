@@ -1,5 +1,13 @@
 # Releases
 
+## 2.2.0 : (2017-12-27)
+- Impl #108 : add an option to disable PHP7 support
+- Fix #107 : fix T_DOUBLE_COLON handler
+- Fix #106 : infinite loops from lexer (unput)
+- Fix #105 : T_DOLLAR_OPEN_CURLY_BRACES handles now expressions
+- PR #102 : Normalize the way type casts are defined
+- Fix #103 : Fix critical cast to null confusion
+
 ## 2.1.0 : (2017-11-01)
 - Impl #91 & #92 : Functions support reserved names (PHP7)
 - Fix #89 : parsing methods can use Buffers or Strings

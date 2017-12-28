@@ -94,14 +94,14 @@ module.exports = {
           this.unput(2);
           break;
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       } else if (ch == "{") {
         ch = this.input();
         if (ch == "$") {
           this.unput(2);
           break;
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       }
     }
     if (ch == '"') {
@@ -257,7 +257,7 @@ module.exports = {
         this.unput(2);
       }
     } else {
-      this.unput(1);
+      if (ch) this.unput(1);
     }
     return this.tok.T_VARIABLE;
   },
@@ -315,7 +315,7 @@ module.exports = {
             return next;
           }
         }
-        this.unput(1);
+        continue;
       } else if (ch === "{") {
         ch = this.input();
         if (ch === "$") {
@@ -330,7 +330,7 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
-        this.unput(1);
+        continue;
       }
       ch = this.input();
     }
@@ -390,7 +390,7 @@ module.exports = {
             return next;
           }
         }
-        this.unput(1);
+        if (ch) this.unput(1);
       } else if (ch === "{") {
         ch = this.input();
         if (ch === "$") {

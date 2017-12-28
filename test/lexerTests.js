@@ -81,4 +81,12 @@ describe("Test lexer", function() {
     tokens[2][2].should.be.exactly(2);
     tokens[3][2].should.be.exactly(2);
   });
+  it('test unput on whitespace', function() {
+    var tokens = parser.tokenGetAll('<?php \r\n\t ');
+    tokens.length.should.be.exactly(2);
+    tokens[1][1].should.be.exactly('\r\n\t ');
+  });
+  it('test consume_VARIABLE unput', function() {
+    // @todo
+  });
 });
