@@ -19,7 +19,7 @@ describe("Performance tests", function() {
     var reader = new parser();
     var tokSize = reader.tokenGetAll(code).length;
     var hrTime = process.hrtime();
-    var iter = 500;
+    var iter = 100;
     var start = hrTime[0] * 1000000 + hrTime[1] / 1000;
     for (var i = 0; i < iter; i++) {
       reader.tokenGetAll(code);
@@ -78,7 +78,7 @@ describe("Performance tests", function() {
     countNode(reader.parseCode(code));
 
     var hrTime = process.hrtime();
-    var iter = 500;
+    var iter = 100;
     var start = hrTime[0] * 1000000 + hrTime[1] / 1000;
     for (var i = 0; i < iter; i++) {
       reader.parseCode(code);
