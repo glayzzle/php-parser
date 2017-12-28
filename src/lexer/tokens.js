@@ -9,7 +9,7 @@ module.exports = {
     var id = this.keywords[token];
     if (typeof id !== 'number') {
       if (token === 'yield') {
-        if (this.tryMatch(' from')) {
+        if (this.php7 && this.tryMatch(' from')) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
         } else {
@@ -151,7 +151,7 @@ module.exports = {
       return '!';
     },
     '?': function() {
-      if (this._input[this.offset] === '?') {
+      if (this.php7 && this._input[this.offset] === '?') {
         this.input();
         return this.tok.T_COALESCE;
       }
@@ -173,7 +173,7 @@ module.exports = {
         return this.tok.T_SL;
       } else if (nchar === '=') {
         this.input();
-        if (this._input[this.offset] === '>') {
+        if (this.php7 && this._input[this.offset] === '>') {
           this.input();
           return this.tok.T_SPACESHIP;
         } else {

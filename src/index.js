@@ -76,6 +76,13 @@ var engine = function(options) {
   this.ast = new AST();
   this.parser = new parser(this.lexer, this.ast);
   if (options && typeof options === 'object') {
+    // disable php7 from lexer if already disabled from parser
+    if (options.parser && options.parser.php7 === false) {
+      if (!options.lexer) {
+        options.lexer = {};
+      }
+      options.lexer.php7 = false;
+    }
     combine(options, this);
   }
 };

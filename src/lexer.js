@@ -28,6 +28,7 @@ var lexer = function(engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = true;
+  this.php7 = true;
   this.yyprevcol = 0;
   this.keywords = {
     "__class__": this.tok.T_CLASS_C,
