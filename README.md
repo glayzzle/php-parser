@@ -1,6 +1,6 @@
 <h1 align="center">php-parser</h1>
 <p align="center">
-<a href="https://travis-ci.org/glayzzle/php-parser"><img src="https://travis-ci.org/glayzzle/php-parser.svg"></a>
+<a href="https://travis-ci.org/glayzzle/php-parser"><img src="https://api.travis-ci.org/glayzzle/php-parser.svg?branch=2.2.0"></a>
 <a href="https://coveralls.io/github/glayzzle/php-parser?branch=master"><img src="https://coveralls.io/repos/github/glayzzle/php-parser/badge.svg?branch=master&v=20170115" alt="Coverage Status" /></a>
 <a title="npm version" href="https://www.npmjs.com/package/php-parser"><img src="https://badge.fury.io/js/php-parser.svg"></a>
 <a title="npm downloads" href="https://www.npmjs.com/package/php-parser"><img src="https://img.shields.io/npm/dm/php-parser.svg?style=flat"></a>
