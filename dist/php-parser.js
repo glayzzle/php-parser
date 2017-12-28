@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2017-12-27 */
+/*! php-parser - BSD3 License - 2017-12-28 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -3028,6 +3028,7 @@ var lexer = function(engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = true;
+  this.php7 = true;
   this.yyprevcol = 0;
   this.keywords = {
     "__class__": this.tok.T_CLASS_C,
@@ -4298,7 +4299,7 @@ module.exports = {
     var id = this.keywords[token];
     if (typeof id !== 'number') {
       if (token === 'yield') {
-        if (this.tryMatch(' from')) {
+        if (this.php7 && this.tryMatch(' from')) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
         } else {
@@ -4440,7 +4441,7 @@ module.exports = {
       return '!';
     },
     '?': function() {
-      if (this._input[this.offset] === '?') {
+      if (this.php7 && this._input[this.offset] === '?') {
         this.input();
         return this.tok.T_COALESCE;
       }
@@ -4462,7 +4463,7 @@ module.exports = {
         return this.tok.T_SL;
       } else if (nchar === '=') {
         this.input();
-        if (this._input[this.offset] === '>') {
+        if (this.php7 && this._input[this.offset] === '>') {
           this.input();
           return this.tok.T_SPACESHIP;
         } else {
@@ -8572,6 +8573,13 @@ var engine = function(options) {
   this.ast = new AST();
   this.parser = new parser(this.lexer, this.ast);
   if (options && typeof options === 'object') {
+    // disable php7 from lexer if already disabled from parser
+    if (options.parser && options.parser.php7 === false) {
+      if (!options.lexer) {
+        options.lexer = {};
+      }
+      options.lexer.php7 = false;
+    }
     combine(options, this);
   }
 };
