@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require("./sys");
-var KIND = "list";
+const Sys = require("./sys");
+const KIND = "list";
 
 /**
  * Defines list assignment
  * @constructor List
  * @extends {Sys}
  */
-var List = Sys.extends(function List(args, location) {
+const List = Sys.extends(function List(args, location) {
   Sys.apply(this, [KIND, args, location]);
 });
 

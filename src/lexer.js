@@ -18,7 +18,7 @@
  * @property {Object} keywords List of php keyword
  * @property {Object} castKeywords List of php keywords for type casting
  */
-var lexer = function(engine) {
+const lexer = function(engine) {
   this.engine = engine;
   this.tok = this.engine.tokens.names;
   this.EOF = 1;
@@ -157,7 +157,7 @@ lexer.prototype.setInput = function(input) {
  * consumes and returns one char from the input
  */
 lexer.prototype.input = function() {
-  var ch = this._input[this.offset];
+  const ch = this._input[this.offset];
   if (!ch) return "";
   this.yytext += ch;
   this.offset++;
@@ -207,8 +207,8 @@ lexer.prototype.unput = function(size) {
       // re-calculate position
       this.yylloc.last_line = this.yylloc.first_line;
       this.yylloc.last_column = this.yyprevcol = this.yylloc.first_column;
-      for (var i = 0; i < this.yytext.length; i++) {
-        var c = this.yytext[i];
+      for (let i = 0; i < this.yytext.length; i++) {
+        let c = this.yytext[i];
         if (c === "\r") {
           c = this.yytext[++i];
           this.yyprevcol = this.yylloc.last_column;
@@ -253,7 +253,7 @@ lexer.prototype.tryMatchCaseless = function(text) {
 
 // look ahead
 lexer.prototype.ahead = function(size) {
-  var text = this._input.substring(this.offset, this.offset + size);
+  let text = this._input.substring(this.offset, this.offset + size);
   if (
     text[text.length - 1] === "\r" &&
     this._input[this.offset + size + 1] === "\n"
@@ -265,8 +265,8 @@ lexer.prototype.ahead = function(size) {
 
 // consume the specified size
 lexer.prototype.consume = function(size) {
-  for (var i = 0; i < size; i++) {
-    var ch = this._input[this.offset];
+  for (let i = 0; i < size; i++) {
+    const ch = this._input[this.offset];
     if (!ch) break;
     this.yytext += ch;
     this.offset++;
@@ -328,7 +328,7 @@ lexer.prototype.lex = function() {
   this.yylloc.prev_offset = this.offset;
   this.yylloc.prev_line = this.yylloc.last_line;
   this.yylloc.prev_column = this.yylloc.last_column;
-  var token = this.next() || this.lex();
+  let token = this.next() || this.lex();
   if (!this.all_tokens) {
     while (
       token === this.tok.T_WHITESPACE || // ignore white space
@@ -369,8 +369,8 @@ lexer.prototype.begin = function(condition) {
 
 // pop the previously active lexer condition state off the condition stack
 lexer.prototype.popState = function() {
-  var n = this.conditionStack.length - 1;
-  var condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
+  const n = this.conditionStack.length - 1;
+  const condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
   this.stateCb = this["match" + this.curCondition];
   if (typeof this.stateCb !== "function") {
@@ -381,7 +381,7 @@ lexer.prototype.popState = function() {
 
 // return next match in input
 lexer.prototype.next = function() {
-  var token;
+  let token;
   if (!this._input) {
     this.done = true;
   }
@@ -410,13 +410,13 @@ lexer.prototype.next = function() {
     this.done = true;
   }
   if (this.debug) {
-    var tName = token;
+    let tName = token;
     if (typeof tName === "number") {
       tName = this.engine.tokens.values[tName];
     } else {
       tName = '"' + tName + '"';
     }
-    var e = new Error(
+    const e = new Error(
       tName +
         "\tfrom " +
         this.yylloc.first_line +
@@ -447,7 +447,7 @@ lexer.prototype.next = function() {
   require("./lexer/tokens.js"),
   require("./lexer/utils.js")
 ].forEach(function(ext) {
-  for (var k in ext) {
+  for (const k in ext) {
     lexer.prototype[k] = ext[k];
   }
 });

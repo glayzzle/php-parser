@@ -32,7 +32,7 @@ module.exports = {
    * ```
    */
   read_function: function(closure, flag) {
-    var result = this.read_function_declaration(
+    const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1
     );
@@ -62,19 +62,19 @@ module.exports = {
    * ```
    */
   read_function_declaration: function(type, isStatic) {
-    var nodeName = "function";
+    let nodeName = "function";
     if (type === 1) {
       nodeName = "closure";
     } else if (type === 2) {
       nodeName = "method";
     }
-    var result = this.node(nodeName);
+    const result = this.node(nodeName);
 
     if (this.expect(this.tok.T_FUNCTION)) {
       this.next().ignoreComments();
     }
-    var isRef = this.is_reference();
-    var name = false,
+    const isRef = this.is_reference();
+    let name = false,
       use = [],
       returnType = null,
       nullable = false;
@@ -97,7 +97,7 @@ module.exports = {
       }
     }
     if (this.expect("(")) this.next();
-    var params = this.read_parameter_list();
+    const params = this.read_parameter_list();
     if (this.expect(")")) this.next();
     if (type === 1 && this.token === this.tok.T_USE) {
       if (this.next().expect("(")) this.next();
@@ -123,14 +123,14 @@ module.exports = {
    * ```
    */
   read_lexical_var: function() {
-    var result = this.node("variable");
-    var isRef = false;
+    const result = this.node("variable");
+    let isRef = false;
     if (this.token === "&") {
       isRef = true;
       this.next();
     }
     this.expect(this.tok.T_VARIABLE);
-    var name = this.text().substring(1);
+    const name = this.text().substring(1);
     this.next();
     return result(name, isRef, false);
   },
@@ -141,7 +141,7 @@ module.exports = {
    * ```
    */
   read_parameter_list: function() {
-    var result = [];
+    const result = [];
     if (this.token != ")") {
       while (this.token != this.EOF) {
         result.push(this.read_parameter());
@@ -164,11 +164,11 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
   read_parameter: function() {
-    var node = this.node("parameter"),
-      name = null,
-      value = null,
-      type = null,
-      nullable = false;
+    const node = this.node("parameter");
+    let name = null;
+    let value = null;
+    let type = null;
+    let nullable = false;
     if (this.token === "?") {
       this.next();
       nullable = true;
@@ -179,8 +179,8 @@ module.exports = {
         "Expecting a type definition combined with nullable operator"
       );
     }
-    var isRef = this.is_reference();
-    var isVariadic = this.is_variadic();
+    const isRef = this.is_reference();
+    const isVariadic = this.is_variadic();
     if (this.expect(this.tok.T_VARIABLE)) {
       name = this.text().substring(1);
       this.next();
@@ -197,12 +197,12 @@ module.exports = {
    * ```
    */
   read_function_argument_list: function() {
-    var result = [];
-    var wasVariadic = false;
+    const result = [];
+    let wasVariadic = false;
     this.expect("(") && this.next();
     if (this.token !== ")") {
       while (this.token != this.EOF) {
-        var argument = this.read_argument_list();
+        const argument = this.read_argument_list();
         if (argument) {
           result.push(argument);
           if (argument.kind === "variadic") {
@@ -237,7 +237,7 @@ module.exports = {
    * ```
    */
   read_type: function() {
-    var result = this.node("identifier");
+    const result = this.node("identifier");
     switch (this.token) {
       case this.tok.T_ARRAY:
         this.next();

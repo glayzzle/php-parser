@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "traituse";
+const Node = require("./node");
+const KIND = "traituse";
 
 /**
  * Defines a trait usage
@@ -14,7 +14,7 @@ var KIND = "traituse";
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations
  */
-var TraitUse = Node.extends(function TraitUse(traits, adaptations, location) {
+const TraitUse = Node.extends(function TraitUse(traits, adaptations, location) {
   Node.apply(this, [KIND, location]);
   this.traits = traits;
   this.adaptations = adaptations;

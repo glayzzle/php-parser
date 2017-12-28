@@ -7,8 +7,8 @@
 
 module.exports = {
   read_expr: function() {
-    var result = this.node();
-    var expr = this.read_expr_item();
+    const result = this.node();
+    const expr = this.read_expr_item();
     // binary operations
     if (this.token === "|")
       return result("bin", "|", expr, this.next().read_expr());
@@ -74,7 +74,7 @@ module.exports = {
     // extra operations :
     // $username = $_GET['user'] ? true : false;
     if (this.token === "?") {
-      var trueArg = null;
+      let trueArg = null;
       if (this.next().token !== ":") {
         trueArg = this.read_expr();
       }
@@ -92,7 +92,7 @@ module.exports = {
    * ```
    */
   read_expr_item: function() {
-    var result, expr;
+    let result, expr;
     if (this.token === "@") return this.node("silent")(this.next().read_expr());
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
@@ -118,7 +118,7 @@ module.exports = {
     }
 
     if (this.token === "(") {
-      var node = this.node("parenthesis");
+      const node = this.node("parenthesis");
       expr = this.next().read_expr();
       this.expect(")") && this.next();
       expr = node(expr);
@@ -141,8 +141,8 @@ module.exports = {
     }
 
     if (this.token === this.tok.T_LIST) {
-      var assign = null;
-      var isInner = this.innerList;
+      let assign = null;
+      const isInner = this.innerList;
       result = this.node("list");
       if (!isInner) {
         assign = this.node("assign");
@@ -152,11 +152,11 @@ module.exports = {
       }
 
       if (!this.innerList) this.innerList = true;
-      var assignList = this.read_assignment_list();
+      const assignList = this.read_assignment_list();
 
       // check if contains at least one assignment statement
-      var hasItem = false;
-      for (var i = 0; i < assignList.length; i++) {
+      let hasItem = false;
+      for (let i = 0; i < assignList.length; i++) {
         if (assignList[i] !== null) {
           hasItem = true;
           break;
@@ -204,28 +204,28 @@ module.exports = {
       case this.tok.T_NEW:
         return this.next().read_new_expr();
 
-      case this.tok.T_ISSET:
+      case this.tok.T_ISSET: {
         result = this.node("isset");
         if (this.next().expect("(")) {
           this.next();
         }
-        var args = this.read_list(this.read_expr, ",");
+        const args = this.read_list(this.read_expr, ",");
         if (this.expect(")")) {
           this.next();
         }
         return result(args);
-
-      case this.tok.T_EMPTY:
+      }
+      case this.tok.T_EMPTY: {
         result = this.node("empty");
         if (this.next().expect("(")) {
           this.next();
         }
-        var arg = this.read_expr();
+        const arg = this.read_expr();
         if (this.expect(")")) {
           this.next();
         }
         return result([arg]);
-
+      }
       case this.tok.T_INCLUDE:
         return this.node("include")(false, false, this.next().read_expr());
 
@@ -270,9 +270,9 @@ module.exports = {
       case this.tok.T_UNSET_CAST:
         return this.node("cast")("unset", this.next().read_expr());
 
-      case this.tok.T_EXIT:
+      case this.tok.T_EXIT: {
         result = this.node("exit");
-        var status = null;
+        let status = null;
         if (this.next().token === "(") {
           if (this.next().token !== ")") {
             status = this.read_expr();
@@ -284,14 +284,15 @@ module.exports = {
           }
         }
         return result(status);
+      }
 
       case this.tok.T_PRINT:
         return this.node("print")(this.next().read_expr());
 
       // T_YIELD (expr (T_DOUBLE_ARROW expr)?)?
-      case this.tok.T_YIELD:
-        var value = null,
-          key = null;
+      case this.tok.T_YIELD: {
+        let value = null;
+        let key = null;
         result = this.node("yield");
         if (this.next().is("EXPR")) {
           // reads the yield return value
@@ -303,6 +304,7 @@ module.exports = {
           }
         }
         return result(value, key);
+      }
 
       // T_YIELD_FROM expr
       case this.tok.T_YIELD_FROM:
@@ -313,8 +315,8 @@ module.exports = {
       case this.tok.T_FUNCTION:
         return this.read_function(true);
 
-      case this.tok.T_STATIC:
-        var backup = [this.token, this.lexer.getState()];
+      case this.tok.T_STATIC: {
+        const backup = [this.token, this.lexer.getState()];
         if (this.next().token === this.tok.T_FUNCTION) {
           // handles static function
           return this.read_function(true, [0, 1, 0]);
@@ -323,6 +325,7 @@ module.exports = {
           this.lexer.tokens.push(backup);
           this.next();
         }
+      }
     }
 
     // SCALAR | VARIABLE
@@ -332,15 +335,15 @@ module.exports = {
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
       // should accept only a variable
-      var isConst =
+      const isConst =
         expr.kind === "constref" ||
         (expr.kind === "staticlookup" && expr.offset.kind === "constref");
 
       // VARIABLES SPECIFIC OPERATIONS
       switch (this.token) {
-        case "=":
+        case "=": {
           if (isConst) this.error("VARIABLE");
-          var right;
+          let right;
           if (this.next().token == "&") {
             if (this.next().token === this.tok.T_NEW) {
               right = this.next().read_new_expr();
@@ -351,6 +354,7 @@ module.exports = {
             right = this.read_expr();
           }
           return result("assign", expr, right, "=");
+        }
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
@@ -440,12 +444,12 @@ module.exports = {
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
   read_new_expr: function() {
-    var result = this.node("new"),
-      args = [];
+    const result = this.node("new");
+    let args = [];
     if (this.token === this.tok.T_CLASS) {
-      var what = this.node("class");
+      const what = this.node("class");
       // Annonymous class declaration
-      var propExtends = null,
+      let propExtends = null,
         propImplements = null,
         body = null;
       if (this.next().token === "(") {
@@ -466,7 +470,7 @@ module.exports = {
       );
     }
     // Already existing class
-    var name = this.read_class_name_reference();
+    const name = this.read_class_name_reference();
     if (this.token === "(") {
       args = this.read_function_argument_list();
     }
@@ -484,7 +488,7 @@ module.exports = {
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_NAMESPACE
     ) {
-      var result = this.read_namespace_name();
+      let result = this.read_namespace_name();
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
       }
@@ -511,7 +515,7 @@ module.exports = {
    */
   read_assignment_list_element: function() {
     if (this.token === "," || this.token === ")") return null;
-    var result = this.read_expr_item();
+    let result = this.read_expr_item();
     if (this.token === this.tok.T_DOUBLE_ARROW) {
       result = ["key", result, this.next().read_expr_item()];
     }

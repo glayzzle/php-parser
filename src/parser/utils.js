@@ -13,8 +13,8 @@ module.exports = {
    * @return {Block}
    */
   read_short_form: function(token) {
-    var body = this.node("block"),
-      items = [];
+    const body = this.node("block");
+    const items = [];
     if (this.expect(":")) this.next();
     while (this.token != this.EOF && this.token !== token) {
       items.push(this.read_inner_statement());
@@ -31,7 +31,7 @@ module.exports = {
    * ```
    */
   read_list: function(item, separator, preserveFirstSeparator) {
-    var result = [];
+    const result = [];
 
     if (this.token == separator) {
       if (preserveFirstSeparator) result.push("");
@@ -97,11 +97,11 @@ module.exports = {
    */
   read_variable_declarations: function() {
     return this.read_list(function() {
-      var node = this.node("assign"),
-        variable = this.node("variable");
+      const node = this.node("assign");
+      let variable = this.node("variable");
       // plain variable name
       if (this.expect(this.tok.T_VARIABLE)) {
-        var name = this.text().substring(1);
+        const name = this.text().substring(1);
         this.next();
         variable = variable(name, false, false);
       } else {

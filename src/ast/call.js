@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "call";
+const Statement = require("./statement");
+const KIND = "call";
 
 /**
  * Executes a call statement
@@ -15,7 +15,7 @@ var KIND = "call";
  * @property {Identifier|Variable|??} what
  * @property {Arguments[]} arguments
  */
-var Call = Statement.extends(function Call(what, args, location) {
+const Call = Statement.extends(function Call(what, args, location) {
   Statement.apply(this, [KIND, location]);
   this.what = what;
   this.arguments = args;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Expr = require("./expression");
-var KIND = "variable";
+const Expr = require("./expression");
+const KIND = "variable";
 
 /**
  * Any expression node. Since the left-hand side of an assignment may
@@ -26,7 +26,7 @@ var KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-var Variable = Expr.extends(function Variable(name, byref, curly, location) {
+const Variable = Expr.extends(function Variable(name, byref, curly, location) {
   Expr.apply(this, [KIND, location]);
   this.name = name;
   this.byref = byref || false;

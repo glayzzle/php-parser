@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "identifier";
+const Node = require("./node");
+const KIND = "identifier";
 
 /**
  * Defines an identifier node
@@ -14,7 +14,11 @@ var KIND = "identifier";
  * @property {string} name
  * @property {string} resolution
  */
-var Identifier = Node.extends(function Identifier(name, isRelative, location) {
+const Identifier = Node.extends(function Identifier(
+  name,
+  isRelative,
+  location
+) {
   Node.apply(this, [KIND, location]);
   if (isRelative) {
     this.resolution = Identifier.RELATIVE_NAME;

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Expression = require("./expression");
-var KIND = "yieldfrom";
+const Expression = require("./expression");
+const KIND = "yieldfrom";
 
 /**
  * Defines a yield from generator statement
@@ -15,7 +15,7 @@ var KIND = "yieldfrom";
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-var YieldFrom = Expression.extends(function YieldFrom(value, location) {
+const YieldFrom = Expression.extends(function YieldFrom(value, location) {
   Expression.apply(this, [KIND, location]);
   this.value = value;
 });

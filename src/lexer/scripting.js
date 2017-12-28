@@ -5,7 +5,7 @@
  */
 module.exports = {
   matchST_IN_SCRIPTING: function() {
-    var ch = this.input();
+    let ch = this.input();
     switch (ch) {
       case " ":
       case "\t":
@@ -33,7 +33,7 @@ module.exports = {
       case "?":
         if (!this.aspTagMode && this.tryMatch(">")) {
           this.input();
-          var nextCH = this._input[this.offset];
+          const nextCH = this._input[this.offset];
           if (nextCH === "\n" || nextCH === "\r") this.input();
           if (this.conditionStack.length > 1) {
             this.begin("INITIAL");
@@ -94,7 +94,7 @@ module.exports = {
 
   T_WHITESPACE: function() {
     while (this.offset < this.size) {
-      var ch = this.input();
+      const ch = this.input();
       if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {
         continue;
       }

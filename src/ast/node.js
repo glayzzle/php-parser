@@ -10,7 +10,7 @@
  * @property {Location|null} loc
  * @property {String} kind
  */
-var Node = function Node(kind, location) {
+const Node = function Node(kind, location) {
   this.kind = kind;
   if (location) {
     this.loc = location;

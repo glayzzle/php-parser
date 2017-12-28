@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require("./declaration");
-var KIND = "interface";
+const Declaration = require("./declaration");
+const KIND = "interface";
 
 /**
  * An interface definition
@@ -14,7 +14,7 @@ var KIND = "interface";
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
  */
-var Interface = Declaration.extends(function Interface(
+const Interface = Declaration.extends(function Interface(
   name,
   ext,
   body,

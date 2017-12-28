@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "retif";
+const Statement = require("./statement");
+const KIND = "retif";
 
 /**
  * Defines a short if statement that returns a value
@@ -16,7 +16,7 @@ var KIND = "retif";
  * @property {Expression} trueExpr
  * @property {Expression} falseExpr
  */
-var RetIf = Statement.extends(function RetIf(
+const RetIf = Statement.extends(function RetIf(
   test,
   trueExpr,
   falseExpr,

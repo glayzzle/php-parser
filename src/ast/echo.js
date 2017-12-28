@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require("./sys");
-var KIND = "echo";
+const Sys = require("./sys");
+const KIND = "echo";
 
 /**
  * Defines system based call
  * @constructor Echo
  * @extends {Sys}
  */
-var Echo = Sys.extends(function Echo(args, location) {
+const Echo = Sys.extends(function Echo(args, location) {
   Sys.apply(this, [KIND, args, location]);
 });
 

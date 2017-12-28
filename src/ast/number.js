@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require("./literal");
-var KIND = "number";
+const Literal = require("./literal");
+const KIND = "number";
 
 /**
  * Defines a numeric value
  * @constructor Number
  * @extends {Literal}
  */
-var _Number = Literal.extends(function Number(value, location) {
+const _Number = Literal.extends(function Number(value, location) {
   Literal.apply(this, [KIND, value, location]);
 });
 

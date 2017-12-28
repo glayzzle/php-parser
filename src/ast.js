@@ -4,8 +4,8 @@
  * @url http://gla*yzzle.com
  */
 
-var Location = require("./ast/location");
-var Position = require("./ast/position");
+const Location = require("./ast/location");
+const Position = require("./ast/position");
 
 /**
  * ## Class hierarchy
@@ -104,7 +104,7 @@ var Position = require("./ast/position");
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)
  */
-var AST = function(withPositions, withSource) {
+const AST = function(withPositions, withSource) {
   this.withPositions = withPositions;
   this.withSource = withSource;
 };
@@ -233,17 +233,17 @@ AST.prototype.resolvePrecedence = function(result) {
  * @return {Function}
  */
 AST.prototype.prepare = function(kind, parser) {
-  var start = null;
+  let start = null;
   if (this.withPositions || this.withSource) {
     start = this.position(parser);
   }
-  var self = this;
+  const self = this;
   // returns the node
   return function() {
-    var location = null;
-    var args = Array.prototype.slice.call(arguments);
+    let location = null;
+    const args = Array.prototype.slice.call(arguments);
     if (self.withPositions || self.withSource) {
-      var src = null;
+      let src = null;
       if (self.withSource) {
         src = parser.lexer._input.substring(
           start.offset,
@@ -271,11 +271,11 @@ AST.prototype.prepare = function(kind, parser) {
       kind = args.shift();
     }
     // build the object
-    var node = self[kind];
+    const node = self[kind];
     if (typeof node !== "function") {
       throw new Error('Undefined node "' + kind + '"');
     }
-    var result = Object.create(node.prototype);
+    const result = Object.create(node.prototype);
     node.apply(result, args);
     return self.resolvePrecedence(result);
   };
@@ -370,7 +370,7 @@ AST.prototype.prepare = function(kind, parser) {
   require("./ast/yield"),
   require("./ast/yieldfrom")
 ].forEach(function(ctor) {
-  var kind = ctor.prototype.constructor.name.toLowerCase();
+  let kind = ctor.prototype.constructor.name.toLowerCase();
   if (kind[0] === "_") kind = kind.substring(1);
   AST.prototype[kind] = ctor;
 });

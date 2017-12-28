@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require("./literal");
-var KIND = "string";
+const Literal = require("./literal");
+const KIND = "string";
 
 /**
  * Defines a string (simple ou double quoted) - chars are already escaped
@@ -14,7 +14,7 @@ var KIND = "string";
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-var String = Literal.extends(function String(isDoubleQuote, value, location) {
+const String = Literal.extends(function String(isDoubleQuote, value, location) {
   Literal.apply(this, [KIND, value, location]);
   this.isDoubleQuote = isDoubleQuote;
 });

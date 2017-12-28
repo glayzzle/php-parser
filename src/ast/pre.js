@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require("./operation");
-var KIND = "pre";
+const Operation = require("./operation");
+const KIND = "pre";
 
 /**
  * Defines a pre operation `++$i` or `--$i`
@@ -15,7 +15,7 @@ var KIND = "pre";
  * @property {String} type
  * @property {Variable} what
  */
-var Pre = Operation.extends(function Pre(type, what, location) {
+const Pre = Operation.extends(function Pre(type, what, location) {
   Operation.apply(this, [KIND, location]);
   this.type = type;
   this.what = what;

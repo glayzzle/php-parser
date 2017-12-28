@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Lookup = require("./lookup");
-var KIND = "staticlookup";
+const Lookup = require("./lookup");
+const KIND = "staticlookup";
 
 /**
  * Lookup to a static property
  * @constructor StaticLookup
  * @extends {Lookup}
  */
-var StaticLookup = Lookup.extends(function StaticLookup(
+const StaticLookup = Lookup.extends(function StaticLookup(
   what,
   offset,
   location

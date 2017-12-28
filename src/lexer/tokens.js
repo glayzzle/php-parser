@@ -5,8 +5,8 @@
  */
 module.exports = {
   T_STRING: function() {
-    var token = this.yytext.toLowerCase();
-    var id = this.keywords[token];
+    const token = this.yytext.toLowerCase();
+    let id = this.keywords[token];
     if (typeof id !== "number") {
       if (token === "yield") {
         if (this.php7 && this.tryMatch(" from")) {
@@ -18,7 +18,7 @@ module.exports = {
       } else {
         id = this.tok.T_STRING;
         if (token === "b" || token === "B") {
-          var ch = this.input(1);
+          const ch = this.input(1);
           if (ch === '"') {
             return this.ST_DOUBLE_QUOTES();
           } else if (ch === "'") {
@@ -33,8 +33,8 @@ module.exports = {
   },
   // reads a custom token
   consume_TOKEN: function() {
-    var ch = this._input[this.offset - 1];
-    var fn = this.tokenTerminals[ch];
+    const ch = this._input[this.offset - 1];
+    const fn = this.tokenTerminals[ch];
     if (fn) {
       return fn.apply(this, []);
     } else {
@@ -55,7 +55,7 @@ module.exports = {
       }
     },
     "-": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === ">") {
         this.begin("ST_LOOKING_FOR_PROPERTY").input();
         return this.tok.T_OBJECT_OPERATOR;
@@ -87,16 +87,16 @@ module.exports = {
       }
     },
     "(": function() {
-      var initial = this.offset;
+      const initial = this.offset;
       this.input();
       if (this.is_TABSPACE()) {
         this.consume_TABSPACE().input();
       }
       if (this.is_LABEL_START()) {
-        var yylen = this.yytext.length;
+        const yylen = this.yytext.length;
         this.consume_LABEL();
-        var castToken = this.yytext.substring(yylen - 1).toLowerCase();
-        var castId = this.castKeywords[castToken];
+        const castToken = this.yytext.substring(yylen - 1).toLowerCase();
+        const castId = this.castKeywords[castToken];
         if (typeof castId === "number") {
           this.input();
           if (this.is_TABSPACE()) {
@@ -112,7 +112,7 @@ module.exports = {
       return "(";
     },
     "=": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === ">") {
         this.input();
         return this.tok.T_DOUBLE_ARROW;
@@ -128,7 +128,7 @@ module.exports = {
       return "=";
     },
     "+": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === "+") {
         this.input();
         return this.tok.T_INC;
@@ -158,7 +158,7 @@ module.exports = {
       return "?";
     },
     "<": function() {
-      var nchar = this._input[this.offset];
+      let nchar = this._input[this.offset];
       if (nchar === "<") {
         nchar = this._input[this.offset + 1];
         if (nchar === "=") {
@@ -186,7 +186,7 @@ module.exports = {
       return "<";
     },
     ">": function() {
-      var nchar = this._input[this.offset];
+      let nchar = this._input[this.offset];
       if (nchar === "=") {
         this.input();
         return this.tok.T_IS_GREATER_OR_EQUAL;
@@ -203,7 +203,7 @@ module.exports = {
       return ">";
     },
     "*": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === "=") {
         this.input();
         return this.tok.T_MUL_EQUAL;
@@ -219,7 +219,7 @@ module.exports = {
       return "*";
     },
     ".": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === "=") {
         this.input();
         return this.tok.T_CONCAT_EQUAL;
@@ -237,7 +237,7 @@ module.exports = {
       return "%";
     },
     "&": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === "=") {
         this.input();
         return this.tok.T_AND_EQUAL;
@@ -248,7 +248,7 @@ module.exports = {
       return "&";
     },
     "|": function() {
-      var nchar = this._input[this.offset];
+      const nchar = this._input[this.offset];
       if (nchar === "=") {
         this.input();
         return this.tok.T_OR_EQUAL;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Expr = require("./expression");
-var KIND = "constref";
+const Expr = require("./expression");
+const KIND = "constref";
 
 /**
  * A constant reference
@@ -13,7 +13,7 @@ var KIND = "constref";
  * @extends {Expression}
  * @property {String|Node} name
  */
-var ConstRef = Expr.extends(function ConstRef(identifier, location) {
+const ConstRef = Expr.extends(function ConstRef(identifier, location) {
   Expr.apply(this, [KIND, location]);
   this.name = identifier;
 });

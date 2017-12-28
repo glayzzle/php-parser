@@ -16,15 +16,12 @@ module.exports = {
    */
   read_switch: function() {
     this.expect(this.tok.T_SWITCH) && this.next();
-    var result = this.node("switch"),
-      test,
-      body,
-      shortForm;
+    const result = this.node("switch");
     this.expect("(") && this.next();
-    test = this.read_expr();
+    const test = this.read_expr();
     this.expect(")") && this.next();
-    shortForm = this.token === ":";
-    body = this.read_switch_case_list();
+    const shortForm = this.token === ":";
+    const body = this.read_switch_case_list();
     return result(test, body, shortForm);
   },
   /**
@@ -35,9 +32,9 @@ module.exports = {
    */
   read_switch_case_list: function() {
     // DETECT SWITCH MODE
-    var expect = null,
-      result = this.node("block"),
-      items = [];
+    let expect = null;
+    const result = this.node("block");
+    const items = [];
     if (this.token === "{") {
       expect = "}";
     } else if (this.token === ":") {
@@ -71,10 +68,10 @@ module.exports = {
    * ```
    */
   read_case_list: function(stopToken) {
-    var result = this.node("case"),
-      test = null,
-      body = null,
-      items = [];
+    const result = this.node("case");
+    let test = null;
+    let body = null;
+    const items = [];
     if (this.token === this.tok.T_CASE) {
       test = this.next().read_expr();
     } else if (this.token === this.tok.T_DEFAULT) {

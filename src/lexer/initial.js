@@ -18,7 +18,7 @@ module.exports = {
   },
   matchINITIAL: function() {
     while (this.offset < this.size) {
-      var ch = this.input();
+      let ch = this.input();
       if (ch == "<") {
         ch = this.ahead(1);
         if (ch == "?") {

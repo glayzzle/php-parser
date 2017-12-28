@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "switch";
+const Statement = require("./statement");
+const KIND = "switch";
 
 /**
  * Defines a switch statement
@@ -16,7 +16,7 @@ var KIND = "switch";
  * @property {Block} body
  * @property {boolean} shortForm
  */
-var Switch = Statement.extends(function Switch(
+const Switch = Statement.extends(function Switch(
   test,
   body,
   shortForm,

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require("./declaration");
-var KIND = "class";
+const Declaration = require("./declaration");
+const KIND = "class";
 
 /**
  * A class definition
@@ -18,7 +18,7 @@ var KIND = "class";
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
-var Class = Declaration.extends(function Class(
+const Class = Declaration.extends(function Class(
   name,
   ext,
   impl,

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Block = require("./block");
-var KIND = "namespace";
+const Block = require("./block");
+const KIND = "namespace";
 
 /**
  * The main program node
@@ -14,7 +14,7 @@ var KIND = "namespace";
  * @property {String} name
  * @property {Boolean} withBrackets
  */
-var Namespace = Block.extends(function Namespace(
+const Namespace = Block.extends(function Namespace(
   name,
   children,
   withBrackets,

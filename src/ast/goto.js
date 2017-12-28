@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "goto";
+const Statement = require("./statement");
+const KIND = "goto";
 
 /**
  * Defines goto statement
@@ -15,7 +15,7 @@ var KIND = "goto";
  * @property {String} label
  * @see {Label}
  */
-var Goto = Statement.extends(function Goto(label, location) {
+const Goto = Statement.extends(function Goto(label, location) {
   Statement.apply(this, [KIND, location]);
   this.label = label;
 });

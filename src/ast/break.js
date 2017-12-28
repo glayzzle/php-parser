@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require("./node");
-var KIND = "break";
+const Node = require("./node");
+const KIND = "break";
 
 /**
  * A break statement
@@ -13,7 +13,7 @@ var KIND = "break";
  * @extends {Node}
  * @property {Number|Null} level
  */
-var Break = Node.extends(function Break(level, location) {
+const Break = Node.extends(function Break(level, location) {
   Node.apply(this, [KIND, location]);
   this.level = level;
 });

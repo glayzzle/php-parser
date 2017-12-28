@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "entry";
+const Node = require("./node");
+const KIND = "entry";
 
 /**
  * An array entry - see [Array](#array)
@@ -14,7 +14,7 @@ var KIND = "entry";
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
-var Entry = Node.extends(function Entry(key, value, location) {
+const Entry = Node.extends(function Entry(key, value, location) {
   Node.apply(this, [KIND, location]);
   this.key = key;
   this.value = value;

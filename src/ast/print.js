@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require("./sys");
-var KIND = "print";
+const Sys = require("./sys");
+const KIND = "print";
 
 /**
  * Outputs
  * @constructor Print
  * @extends {Sys}
  */
-var Print = Sys.extends(function Print(args, location) {
+const Print = Sys.extends(function Print(args, location) {
   Sys.apply(this, [KIND, args, location]);
 });
 
