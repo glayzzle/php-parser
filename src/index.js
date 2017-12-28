@@ -101,7 +101,7 @@ var getStringBuffer = function(buffer) {
  * @param {Object} options
  * @return {Engine}
  * @private
-*/
+ */
 engine.create = function(options) {
   return new engine(options);
 };

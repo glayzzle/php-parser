@@ -3,8 +3,8 @@
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-var ArrayExpr = "array";
-var ArrayEntry = "entry";
+const ArrayExpr = "array";
+const ArrayEntry = "entry";
 
 module.exports = {
   /**

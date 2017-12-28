@@ -300,8 +300,10 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
  * handling errors
  */
 parser.prototype.error = function(expect) {
-  var msg = "Parse Error : syntax error";
-  token = this.getTokenName(this.token);
+  let msg = "Parse Error : syntax error";
+  let token = this.getTokenName(this.token);
+  let msgExpect = "";
+
   if (this.token !== this.EOF) {
     if (isNumber(this.token)) {
       var symbol = this.text();
@@ -312,14 +314,12 @@ parser.prototype.error = function(expect) {
     }
     msg += ", unexpected " + token;
   }
-  var msgExpect = "";
   if (expect && !Array.isArray(expect)) {
     if (isNumber(expect) || expect.length === 1) {
       msgExpect = ", expecting " + this.getTokenName(expect);
     }
     msg += msgExpect;
   }
-  this.token !== this.EOF;
   return this.raiseError(msg, msgExpect, expect, token);
 };
 
@@ -372,7 +372,7 @@ parser.prototype.showlog = function() {
       break;
     }
   }
-
+  // eslint-disable-next-line no-console
   console.log(
     "Line " +
       this.lexer.yylloc.first_line +

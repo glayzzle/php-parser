@@ -9,7 +9,8 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    mocha: true
+    mocha: true,
+    es6: true
   },
   rules: {
     "prettier/prettier": "error"

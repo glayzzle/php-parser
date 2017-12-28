@@ -126,7 +126,7 @@ AST.prototype.position = function(parser) {
 
 // operators in ascending order of precedence
 AST.precedence = {};
-var binOperatorsPrecedence = [
+[
   ["or"],
   ["xor"],
   ["and"],
@@ -158,13 +158,13 @@ var binOperatorsPrecedence = [
  * Check and fix precence, by default using right
  */
 AST.prototype.resolvePrecedence = function(result) {
-  var buffer;
+  let buffer, lLevel, rLevel;
   // handling precendence
   if (result.kind === "bin") {
     if (result.right) {
       if (result.right.kind === "bin") {
-        var lLevel = AST.precedence[result.type];
-        var rLevel = AST.precedence[result.right.type];
+        lLevel = AST.precedence[result.type];
+        rLevel = AST.precedence[result.right.type];
         if (lLevel && rLevel && rLevel <= lLevel) {
           // https://github.com/glayzzle/php-parser/issues/79
           // shift precedence
@@ -174,8 +174,8 @@ AST.prototype.resolvePrecedence = function(result) {
           result = buffer;
         }
       } else if (result.right.kind === "retif") {
-        var lLevel = AST.precedence[result.type];
-        var rLevel = AST.precedence["?"];
+        lLevel = AST.precedence[result.type];
+        rLevel = AST.precedence["?"];
         if (lLevel && rLevel && rLevel <= lLevel) {
           buffer = result.right;
           result.right = result.right.test;
@@ -211,8 +211,8 @@ AST.prototype.resolvePrecedence = function(result) {
   } else if (result.kind === "assign") {
     // https://github.com/glayzzle/php-parser/issues/81
     if (result.right && result.right.kind === "bin") {
-      var lLevel = AST.precedence["="];
-      var rLevel = AST.precedence[result.right.type];
+      lLevel = AST.precedence["="];
+      rLevel = AST.precedence[result.right.type];
       // only shifts with and, xor, or
       if (lLevel && rLevel && rLevel < lLevel) {
         buffer = result.right;

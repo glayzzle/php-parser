@@ -156,7 +156,7 @@ lexer.prototype.setInput = function(input) {
 /**
  * consumes and returns one char from the input
  */
-lexer.prototype.input = function(size) {
+lexer.prototype.input = function() {
   var ch = this._input[this.offset];
   if (!ch) return "";
   this.yytext += ch;
@@ -430,7 +430,8 @@ lexer.prototype.next = function() {
         this.yytext +
         '"'
     );
-    console.log(e.stack);
+    // eslint-disable-next-line no-console
+    console.error(e.stack);
   }
   return token;
 };
