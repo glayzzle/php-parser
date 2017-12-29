@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "throw";
+const Statement = require("./statement");
+const KIND = "throw";
 
 /**
  * Defines a throw statement
@@ -14,7 +14,7 @@ var KIND = "throw";
  * @extends {Statement}
  * @property {Expression} what
  */
-var Throw = Statement.extends(function Throw(what, location) {
+const Throw = Statement.extends(function Throw(what, location) {
   Statement.apply(this, [KIND, location]);
   this.what = what;
 });

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require("./statement");
-var KIND = "eval";
+const Statement = require("./statement");
+const KIND = "eval";
 
 /**
  * Defines an eval statement
@@ -13,7 +13,7 @@ var KIND = "eval";
  * @extends {Statement}
  * @property {Node} source
  */
-var Eval = Statement.extends(function Eval(source, location) {
+const Eval = Statement.extends(function Eval(source, location) {
   Statement.apply(this, [KIND, location]);
   this.source = source;
 });

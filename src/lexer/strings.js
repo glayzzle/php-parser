@@ -5,7 +5,7 @@
  */
 module.exports = {
   T_CONSTANT_ENCAPSED_STRING: function() {
-    var ch;
+    let ch;
     while (this.offset < this.size) {
       ch = this.input();
       if (ch == "\\") {
@@ -18,7 +18,7 @@ module.exports = {
   },
   // check if matching a HEREDOC state
   is_HEREDOC: function() {
-    var revert = this.offset;
+    const revert = this.offset;
     if (
       this._input[this.offset - 1] === "<" &&
       this._input[this.offset] === "<" &&
@@ -37,7 +37,7 @@ module.exports = {
       }
 
       // optional quotes
-      var tChar = this._input[this.offset - 1];
+      let tChar = this._input[this.offset - 1];
       if (tChar === "'" || tChar === '"') {
         this.offset++;
       } else {
@@ -46,14 +46,14 @@ module.exports = {
 
       // required label
       if (this.is_LABEL_START()) {
-        var yyoffset = this.offset - 1;
+        let yyoffset = this.offset - 1;
         while (this.offset < this.size) {
           this.offset++;
           if (!this.is_LABEL()) {
             break;
           }
         }
-        var yylabel = this._input.substring(yyoffset, this.offset - 1);
+        const yylabel = this._input.substring(yyoffset, this.offset - 1);
         if (!tChar || tChar === this._input[this.offset - 1]) {
           // required ending quote
           if (tChar) this.offset++;
@@ -81,7 +81,7 @@ module.exports = {
     return false;
   },
   ST_DOUBLE_QUOTES: function() {
-    var ch;
+    let ch;
     while (this.offset < this.size) {
       ch = this.input();
       if (ch == "\\") {
@@ -107,7 +107,7 @@ module.exports = {
     if (ch == '"') {
       return this.tok.T_CONSTANT_ENCAPSED_STRING;
     } else {
-      var prefix = 1;
+      let prefix = 1;
       if (this.yytext[0] === "b" || this.yytext[0] === "B") {
         prefix = 2;
       }
@@ -132,7 +132,7 @@ module.exports = {
         this.offset - 1 + this.heredoc_label.length
       ) === this.heredoc_label
     ) {
-      var ch = this._input[this.offset - 1 + this.heredoc_label.length];
+      const ch = this._input[this.offset - 1 + this.heredoc_label.length];
       if (ch === "\n" || ch === "\r" || ch === ";") {
         return true;
       }
@@ -149,7 +149,7 @@ module.exports = {
       return this.tok.T_END_HEREDOC;
     }
     /** SCANNING CONTENTS **/
-    var ch = this._input[this.offset - 1];
+    let ch = this._input[this.offset - 1];
     while (this.offset < this.size) {
       if (ch === "\n" || ch === "\r") {
         ch = this.input();
@@ -168,7 +168,7 @@ module.exports = {
 
   matchST_HEREDOC: function() {
     /** edge case : empty here doc **/
-    var ch = this.input();
+    let ch = this.input();
     if (this.isDOC_MATCH()) {
       this.consume(this.heredoc_label.length - 1);
       this.popState();
@@ -204,8 +204,8 @@ module.exports = {
           }
         } else if (this.is_LABEL_START()) {
           // start of $var...
-          var yyoffset = this.offset;
-          var next = this.consume_VARIABLE();
+          const yyoffset = this.offset;
+          const next = this.consume_VARIABLE();
           if (this.yytext.length > this.offset - yyoffset + 2) {
             this.appendToken(next, this.offset - yyoffset + 2);
             this.unput(this.offset - yyoffset + 2);
@@ -240,7 +240,7 @@ module.exports = {
 
   consume_VARIABLE: function() {
     this.consume_LABEL();
-    var ch = this.input();
+    const ch = this.input();
     if (ch == "[") {
       this.unput(1);
       this.begin("ST_VAR_OFFSET");
@@ -263,14 +263,14 @@ module.exports = {
   },
   // HANDLES BACKQUOTES
   matchST_BACKQUOTE: function() {
-    var ch = this.input();
+    let ch = this.input();
     if (ch === "$") {
       ch = this.input();
       if (ch === "{") {
         this.begin("ST_LOOKING_FOR_VARNAME");
         return this.tok.T_DOLLAR_OPEN_CURLY_BRACES;
       } else if (this.is_LABEL_START()) {
-        var tok = this.consume_VARIABLE();
+        const tok = this.consume_VARIABLE();
         return tok;
       }
     } else if (ch === "{") {
@@ -305,8 +305,8 @@ module.exports = {
           }
         } else if (this.is_LABEL_START()) {
           // start of $var...
-          var yyoffset = this.offset;
-          var next = this.consume_VARIABLE();
+          const yyoffset = this.offset;
+          const next = this.consume_VARIABLE();
           if (this.yytext.length > this.offset - yyoffset + 2) {
             this.appendToken(next, this.offset - yyoffset + 2);
             this.unput(this.offset - yyoffset + 2);
@@ -338,14 +338,14 @@ module.exports = {
   },
 
   matchST_DOUBLE_QUOTES: function() {
-    var ch = this.input();
+    let ch = this.input();
     if (ch === "$") {
       ch = this.input();
       if (ch === "{") {
         this.begin("ST_LOOKING_FOR_VARNAME");
         return this.tok.T_DOLLAR_OPEN_CURLY_BRACES;
       } else if (this.is_LABEL_START()) {
-        var tok = this.consume_VARIABLE();
+        const tok = this.consume_VARIABLE();
         return tok;
       }
     } else if (ch === "{") {
@@ -380,8 +380,8 @@ module.exports = {
           }
         } else if (this.is_LABEL_START()) {
           // start of $var...
-          var yyoffset = this.offset;
-          var next = this.consume_VARIABLE();
+          const yyoffset = this.offset;
+          const next = this.consume_VARIABLE();
           if (this.yytext.length > this.offset - yyoffset + 2) {
             this.appendToken(next, this.offset - yyoffset + 2);
             this.unput(this.offset - yyoffset + 2);

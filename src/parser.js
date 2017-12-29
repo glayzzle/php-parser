@@ -21,7 +21,7 @@ function isNumber(n) {
  * @property {Boolean} suppressErrors - should ignore parsing errors and continue
  * @property {Boolean} debug - should output debug informations
  */
-var parser = function(lexer, ast) {
+const parser = function(lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
   this.tok = lexer.tok;
@@ -32,7 +32,7 @@ var parser = function(lexer, ast) {
   this.php7 = true;
   this.extractDoc = false;
   this.suppressErrors = false;
-  var mapIt = function(item) {
+  const mapIt = function(item) {
     return [item, null];
   };
   this.entries = {
@@ -253,11 +253,11 @@ parser.prototype.parse = function(code, filename) {
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
-  var program = this.ast.prepare("program", this);
-  var childs = [];
+  const program = this.ast.prepare("program", this);
+  let childs = [];
   this.nextWithComments();
   while (this.token != this.EOF) {
-    var node = this.read_start();
+    const node = this.read_start();
     if (node !== null && node !== undefined) {
       if (Array.isArray(node)) {
         childs = childs.concat(node);
@@ -275,7 +275,7 @@ parser.prototype.parse = function(code, filename) {
 parser.prototype.raiseError = function(message, msgExpect, expect, token) {
   message += " on line " + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
-    var err = new SyntaxError(
+    const err = new SyntaxError(
       message,
       this.filename,
       this.lexer.yylloc.first_line
@@ -286,7 +286,7 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     throw err;
   }
   // Error node :
-  var node = this.ast.prepare("error", this)(
+  const node = this.ast.prepare("error", this)(
     message,
     token,
     this.lexer.yylloc.first_line,
@@ -306,7 +306,7 @@ parser.prototype.error = function(expect) {
 
   if (this.token !== this.EOF) {
     if (isNumber(this.token)) {
-      var symbol = this.text();
+      let symbol = this.text();
       if (symbol.length > 10) {
         symbol = symbol.substring(0, 7) + "...";
       }
@@ -351,18 +351,18 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = [
+const ignoreStack = [
   "parser.next",
   "parser.ignoreComments",
   "parser.nextWithComments"
 ];
 parser.prototype.showlog = function() {
-  var stack = new Error().stack.split("\n");
-  var line;
-  for (var offset = 2; offset < stack.length; offset++) {
+  const stack = new Error().stack.split("\n");
+  let line;
+  for (let offset = 2; offset < stack.length; offset++) {
     line = stack[offset].trim();
-    var found = false;
-    for (var i = 0; i < ignoreStack.length; i++) {
+    let found = false;
+    for (let i = 0; i < ignoreStack.length; i++) {
       if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
         found = true;
         break;
@@ -487,7 +487,7 @@ parser.prototype.is = function(type) {
   require("./parser/utils.js"),
   require("./parser/variable.js")
 ].forEach(function(ext) {
-  for (var k in ext) {
+  for (const k in ext) {
     parser.prototype[k] = ext[k];
   }
 });

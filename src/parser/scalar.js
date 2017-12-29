@@ -4,7 +4,7 @@
  * @url http://glayzzle.com
  */
 
-var specialChar = {
+const specialChar = {
   "\\r": "\r",
   "\\n": "\n",
   "\\t": "\t",
@@ -40,13 +40,13 @@ module.exports = {
     if (this.is("T_MAGIC_CONST")) {
       return this.get_magic_constant();
     } else {
-      var value, node;
+      let value, node;
       switch (this.token) {
         // TEXTS
-        case this.tok.T_CONSTANT_ENCAPSED_STRING:
+        case this.tok.T_CONSTANT_ENCAPSED_STRING: {
           value = this.node("string");
-          var text = this.text();
-          var isDoubleQuote = text[0] === '"';
+          let text = this.text();
+          const isDoubleQuote = text[0] === '"';
           text = text.substring(1, text.length - 1);
           this.next();
           value = value(isDoubleQuote, this.resolve_special_chars(text));
@@ -57,12 +57,13 @@ module.exports = {
             // dirrect string
             return value;
           }
+        }
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
             node = this.node("nowdoc");
             value = this.next().text();
             // strip the last line return char
-            var lastCh = value[value.length - 1];
+            const lastCh = value[value.length - 1];
             if (lastCh === "\n") {
               if (value[value.length - 2] === "\r") {
                 // windows style
@@ -87,29 +88,32 @@ module.exports = {
           return this.next().read_encapsed_string('"');
 
         case 'b"':
-        case 'B"':
+        case 'B"': {
           node = this.node("cast");
-          var what = this.next().read_encapsed_string('"');
+          const what = this.next().read_encapsed_string('"');
           return node("binary", what);
+        }
 
         // NUMERIC
         case this.tok.T_LNUMBER: // long
-        case this.tok.T_DNUMBER: // double
-          var result = this.node("number");
+        case this.tok.T_DNUMBER: {
+          // double
+          const result = this.node("number");
           value = this.text();
           this.next();
-          result = result(value);
-          return result;
+          return result(value);
+        }
 
         // ARRAYS
         case this.tok.T_ARRAY: // array parser
         case "[": // short array format
           return this.read_array();
-        default:
-          var err = this.error("SCALAR");
+        default: {
+          const err = this.error("SCALAR");
           // graceful mode : ignore token & return error node
           this.next();
           return err;
+        }
       }
     }
   },
@@ -117,8 +121,8 @@ module.exports = {
    * Handles the dereferencing
    */
   read_dereferencable: function(expr) {
-    var result, offset;
-    var node = this.node("offsetlookup");
+    let result, offset;
+    const node = this.node("offsetlookup");
     if (this.token === "[") {
       offset = this.next().read_expr();
       if (this.expect("]")) this.next();
@@ -145,7 +149,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
   read_encapsed_string_item: function() {
-    var result = this.node(),
+    let result = this.node(),
       offset,
       node,
       name;
@@ -153,7 +157,7 @@ module.exports = {
     // plain text
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1222
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
-      var text = this.text();
+      const text = this.text();
       this.next();
       result = result("string", false, this.resolve_special_chars(text));
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
@@ -161,7 +165,7 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
       name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
-        var varName = this.text();
+        const varName = this.text();
         name = this.node("variable");
         this.next();
         // check if lookup an offset
@@ -201,7 +205,7 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         node = this.node("propertylookup");
-        var what = this.node("constref");
+        const what = this.node("constref");
         this.next().expect(this.tok.T_STRING);
         name = this.text();
         this.next();
@@ -211,7 +215,7 @@ module.exports = {
       // error / fallback
     } else {
       this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE);
-      var value = this.text();
+      const value = this.text();
       this.next();
       // consider it as string
       result = result("string", false, value);
@@ -223,9 +227,9 @@ module.exports = {
    * Reads an encapsed string
    */
   read_encapsed_string: function(expect) {
-    var node = this.node("encapsed"),
-      value = [],
-      type = null;
+    let node = this.node("encapsed");
+    const value = [];
+    let type = null;
 
     if (expect === "`") {
       type = this.ast.encapsed.TYPE_SHELL;
@@ -252,8 +256,8 @@ module.exports = {
    * Constant token
    */
   get_magic_constant: function() {
-    var result = this.node("magic");
-    var name = this.text();
+    const result = this.node("magic");
+    const name = this.text();
     this.next();
     return result(name);
   }

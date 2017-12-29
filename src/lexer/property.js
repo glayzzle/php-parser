@@ -5,7 +5,7 @@
  */
 module.exports = {
   matchST_LOOKING_FOR_PROPERTY: function() {
-    var ch = this.input();
+    let ch = this.input();
     if (ch === "-") {
       ch = this.input();
       if (ch === ">") {
@@ -25,7 +25,7 @@ module.exports = {
     return false;
   },
   matchST_LOOKING_FOR_VARNAME: function() {
-    var ch = this.input();
+    let ch = this.input();
 
     // SHIFT STATE
     this.popState();
@@ -49,7 +49,7 @@ module.exports = {
     return false;
   },
   matchST_VAR_OFFSET: function() {
-    var ch = this.input();
+    const ch = this.input();
     if (this.is_NUM()) {
       this.consume_NUM();
       return this.tok.T_NUM_STRING;

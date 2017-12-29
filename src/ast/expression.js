@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "expression";
+const Node = require("./node");
+const KIND = "expression";
 
 /**
  * Any expression node. Since the left-hand side of an assignment may
@@ -13,7 +13,7 @@ var KIND = "expression";
  * @constructor Expression
  * @extends {Node}
  */
-var Expression = Node.extends(function Expression(kind, location) {
+const Expression = Node.extends(function Expression(kind, location) {
   Node.apply(this, [kind || KIND, location]);
 });
 

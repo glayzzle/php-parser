@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require("./literal");
-var KIND = "boolean";
+const Literal = require("./literal");
+const KIND = "boolean";
 
 /**
  * Defines a boolean value (true/false)
  * @constructor Boolean
  * @extends {Literal}
  */
-var Boolean = Literal.extends(function Boolean(value, location) {
+const Boolean = Literal.extends(function Boolean(value, location) {
   Literal.apply(this, [KIND, value, location]);
 });
 

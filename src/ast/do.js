@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "do";
+const Statement = require("./statement");
+const KIND = "do";
 
 /**
  * Defines a do/while statement
@@ -15,7 +15,7 @@ var KIND = "do";
  * @property {Expression} test
  * @property {Statement} body
  */
-var Do = Statement.extends(function Do(test, body, location) {
+const Do = Statement.extends(function Do(test, body, location) {
   Statement.apply(this, [KIND, location]);
   this.test = test;
   this.body = body;

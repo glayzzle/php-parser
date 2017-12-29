@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require("./statement");
-var KIND = "clone";
+const Statement = require("./statement");
+const KIND = "clone";
 
 /**
  * Defines a clone call
@@ -13,7 +13,7 @@ var KIND = "clone";
  * @extends {Statement}
  * @property {Expression} what
  */
-var Clone = Statement.extends(function Clone(what, location) {
+const Clone = Statement.extends(function Clone(what, location) {
   Statement.apply(this, [KIND, location]);
   this.what = what;
 });

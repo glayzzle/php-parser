@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "doc";
+const Node = require("./node");
+const KIND = "doc";
 
 /**
  * A comment or documentation
@@ -14,7 +14,7 @@ var KIND = "doc";
  * @property {Boolean} isDoc
  * @property {String[]} lines
  */
-var Doc = Node.extends(function Doc(isDoc, lines, location) {
+const Doc = Node.extends(function Doc(isDoc, lines, location) {
   Node.apply(this, [KIND, location]);
   this.isDoc = isDoc;
   this.lines = lines;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Block = require("./block");
-var KIND = "program";
+const Block = require("./block");
+const KIND = "program";
 
 /**
  * The main program node
@@ -13,7 +13,7 @@ var KIND = "program";
  * @extends {Block}
  * @property {Error[]} errors
  */
-var Program = Block.extends(function Program(children, errors, location) {
+const Program = Block.extends(function Program(children, errors, location) {
   Block.apply(this, [KIND, children, location]);
   this.errors = errors;
 });

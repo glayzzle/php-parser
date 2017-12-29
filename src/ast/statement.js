@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "statement";
+const Node = require("./node");
+const KIND = "statement";
 
 /**
  * Any statement.
  * @constructor Statement
  * @extends {Node}
  */
-var Statement = Node.extends(function Statement(kind, location) {
+const Statement = Node.extends(function Statement(kind, location) {
   Node.apply(this, [kind || KIND, location]);
 });
 

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Expr = require("./expression");
-var KIND = "literal";
+const Expr = require("./expression");
+const KIND = "literal";
 
 /**
  * Defines an array structure
@@ -13,7 +13,7 @@ var KIND = "literal";
  * @extends {Expression}
  * @property {Node|string|number|boolean|null} value
  */
-var Literal = Expr.extends(function Literal(kind, value, location) {
+const Literal = Expr.extends(function Literal(kind, value, location) {
   Expr.apply(this, [kind || KIND, location]);
   this.value = value;
 });

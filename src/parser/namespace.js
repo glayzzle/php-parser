@@ -18,8 +18,8 @@ module.exports = {
    * @return {Namespace}
    */
   read_namespace: function() {
-    var result = this.node("namespace"),
-      body;
+    const result = this.node("namespace");
+    let body;
     this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == "{") {
       this.currentNamespace = [""];
@@ -27,7 +27,7 @@ module.exports = {
       this.expect("}") && this.nextWithComments();
       return result([""], body, true);
     } else {
-      var name = this.read_namespace_name();
+      const name = this.read_namespace_name();
       if (this.token == ";") {
         this.currentNamespace = name;
         body = this.nextWithComments().read_top_statements();
@@ -62,8 +62,8 @@ module.exports = {
    * @return {Identifier}
    */
   read_namespace_name: function() {
-    var result = this.node("identifier"),
-      relative = false;
+    const result = this.node("identifier");
+    let relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();
       relative = true;
@@ -86,12 +86,11 @@ module.exports = {
    * @return {UseGroup}
    */
   read_use_statement: function() {
-    var result = this.node("usegroup"),
-      type = null,
-      items = [],
-      name = null;
+    const result = this.node("usegroup");
+    let items = [];
+    let name = null;
     this.expect(this.tok.T_USE) && this.next();
-    type = this.read_use_type();
+    const type = this.read_use_type();
     items.push(this.read_use_declaration(false));
     if (this.token === ",") {
       items = items.concat(this.next().read_use_declarations(false));
@@ -112,11 +111,11 @@ module.exports = {
    * @return {UseItem}
    */
   read_use_declaration: function(typed) {
-    var result = this.node("useitem"),
-      type = null;
+    const result = this.node("useitem");
+    let type = null;
     if (typed) type = this.read_use_type();
-    var name = this.read_namespace_name();
-    var alias = this.read_use_alias();
+    const name = this.read_namespace_name();
+    const alias = this.read_use_alias();
     return result(name.name, alias, type);
   },
   /**
@@ -128,7 +127,7 @@ module.exports = {
    * @return {UseItem[]}
    */
   read_use_declarations: function(typed) {
-    var result = [this.read_use_declaration(typed)];
+    const result = [this.read_use_declaration(typed)];
     while (this.token === ",") {
       result.push(this.next().read_use_declaration(typed));
     }
@@ -142,7 +141,7 @@ module.exports = {
    * @return {String|null}
    */
   read_use_alias: function() {
-    var result = null;
+    let result = null;
     if (this.token === this.tok.T_AS) {
       if (this.next().expect(this.tok.T_STRING)) {
         result = this.text();

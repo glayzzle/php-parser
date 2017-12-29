@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require("./operation");
-var KIND = "cast";
+const Operation = require("./operation");
+const KIND = "cast";
 
 /**
  * Binary operations
@@ -15,7 +15,7 @@ var KIND = "cast";
  * @property {String} type
  * @property {Expression} what
  */
-var Cast = Operation.extends(function Cast(type, what, location) {
+const Cast = Operation.extends(function Cast(type, what, location) {
   Operation.apply(this, [KIND, location]);
   this.type = type;
   this.what = what;

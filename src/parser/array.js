@@ -15,10 +15,10 @@ module.exports = {
    * ```
    */
   read_array: function() {
-    var expect = null;
-    var shortForm = false;
-    var items = [];
-    var result = this.node(ArrayExpr);
+    let expect = null;
+    let shortForm = false;
+    const items = [];
+    const result = this.node(ArrayExpr);
 
     if (this.token === this.tok.T_ARRAY) {
       this.next().expect("(");
@@ -57,13 +57,13 @@ module.exports = {
    * ```
    */
   read_array_pair_list: function() {
-    var result = this.node(ArrayEntry);
-    var key = null;
-    var value = null;
+    const result = this.node(ArrayEntry);
+    let key = null;
+    let value = null;
     if (this.token === "&") {
       value = this.next().read_variable(true, false, true);
     } else {
-      var expr = this.read_expr();
+      const expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         key = expr;
         if (this.next().token === "&") {

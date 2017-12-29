@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require("./declaration");
-var KIND = "function";
+const Declaration = require("./declaration");
+const KIND = "function";
 
 /**
  * Defines a classic function
@@ -17,7 +17,7 @@ var KIND = "function";
  * @property {boolean} nullable
  * @property {Block|null} body
  */
-var fn = Declaration.extends(function _Function(
+const fn = Declaration.extends(function _Function(
   name,
   args,
   byref,

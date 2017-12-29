@@ -12,13 +12,12 @@ module.exports = {
    * ```
    */
   read_class: function(flag) {
-    var result = this.node("class");
+    const result = this.node("class");
     this.expect(this.tok.T_CLASS);
     this.next().expect(this.tok.T_STRING);
-    var propName = this.text(),
-      propExtends = null,
-      propImplements = null,
-      body;
+    const propName = this.text();
+    let propExtends = null;
+    let propImplements = null;
     if (this.next().token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
     }
@@ -26,7 +25,7 @@ module.exports = {
       propImplements = this.next().read_name_list();
     }
     this.expect("{");
-    body = this.nextWithComments().read_class_body();
+    const body = this.nextWithComments().read_class_body();
     return result(propName, propExtends, propImplements, body, flag);
   },
   /**
@@ -36,7 +35,7 @@ module.exports = {
    * ```
    */
   read_class_scope: function() {
-    var result = this.token;
+    const result = this.token;
     if (result == this.tok.T_FINAL) {
       this.next();
       return [0, 0, 2];
@@ -53,7 +52,7 @@ module.exports = {
    * ```
    */
   read_class_body: function() {
-    var result = [];
+    let result = [];
 
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
@@ -73,11 +72,11 @@ module.exports = {
       }
 
       // read member flags
-      var flags = this.read_member_flags(false);
+      const flags = this.read_member_flags(false);
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-        var constants = this.read_constant_list(flags);
+        const constants = this.read_constant_list(flags);
         this.expect(";");
         this.nextWithComments();
         result = result.concat(constants);
@@ -92,7 +91,7 @@ module.exports = {
 
       if (this.token === this.tok.T_VARIABLE) {
         // reads a variable
-        var variables = this.read_variable_list(flags);
+        const variables = this.read_variable_list(flags);
         this.expect(";");
         this.nextWithComments();
         result = result.concat(variables);
@@ -130,9 +129,9 @@ module.exports = {
        * ```
        */
       function read_variable_declaration() {
-        var result = this.node("property");
+        const result = this.node("property");
         this.expect(this.tok.T_VARIABLE);
-        var name = this.text().substring(1); // ignore $
+        const name = this.text().substring(1); // ignore $
         this.next();
         if (this.token === ";" || this.token === ",") {
           return result(name, null, flags);
@@ -167,9 +166,9 @@ module.exports = {
        * @return {Constant} [:link:](AST.md#constant)
        */
       function read_constant_declaration() {
-        var result = this.node("classconstant"),
-          name = null,
-          value = null;
+        const result = this.node("classconstant");
+        let name = null;
+        let value = null;
         if (
           this.token === this.tok.T_STRING ||
           (this.php7 && this.is("IDENTIFIER"))
@@ -195,9 +194,9 @@ module.exports = {
    *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
    */
   read_member_flags: function(asInterface) {
-    var result = [-1, -1, -1];
+    const result = [-1, -1, -1];
     if (this.is("T_MEMBER_FLAGS")) {
-      var idx = 0,
+      let idx = 0,
         val = 0;
       do {
         switch (this.token) {
@@ -258,10 +257,10 @@ module.exports = {
    * ```
    */
   read_interface: function() {
-    var result = this.node("interface"),
-      name = null,
-      body = null,
-      propExtends = null;
+    const result = this.node("interface");
+    let name = null;
+    let body = null;
+    let propExtends = null;
     if (this.expect(this.tok.T_INTERFACE)) {
       this.next();
     }
@@ -284,7 +283,7 @@ module.exports = {
    * ```
    */
   read_interface_body: function() {
-    var result = [];
+    let result = [];
 
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
@@ -298,18 +297,18 @@ module.exports = {
       }
 
       // read member flags
-      var flags = this.read_member_flags(true);
+      const flags = this.read_member_flags(true);
 
       // check constant
       if (this.token == this.tok.T_CONST) {
-        var constants = this.read_constant_list(flags);
+        const constants = this.read_constant_list(flags);
         if (this.expect(";")) {
           this.nextWithComments();
         }
         result = result.concat(constants);
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        var method = this.read_function_declaration(2, flags);
+        const method = this.read_function_declaration(2, flags);
         method.parseFlags(flags);
         result.push(method);
         if (this.expect(";")) {
@@ -333,11 +332,11 @@ module.exports = {
    * ```
    */
   read_trait: function() {
-    var result = this.node("trait"),
-      propName = null,
-      propExtends = null,
-      propImplements = null,
-      body = null;
+    const result = this.node("trait");
+    let propName = null;
+    let propExtends = null;
+    let propImplements = null;
+    let body = null;
     if (this.expect(this.tok.T_TRAIT)) {
       this.next();
     }
@@ -363,9 +362,9 @@ module.exports = {
    */
   read_trait_use_statement: function() {
     // defines use statements
-    var node = this.node("traituse");
-    var traits = [this.read_namespace_name()];
-    var adaptations = null;
+    const node = this.node("traituse");
+    const traits = [this.read_namespace_name()];
+    let adaptations = null;
     while (this.token === ",") {
       traits.push(this.next().read_namespace_name());
     }
@@ -396,9 +395,9 @@ module.exports = {
    * trait adaptation : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742
    */
   read_trait_use_alias: function() {
-    var node = this.node();
-    var trait = null;
-    var method;
+    const node = this.node();
+    let trait = null;
+    let method;
 
     if (this.is("IDENTIFIER")) {
       method = this.text();
@@ -434,8 +433,8 @@ module.exports = {
       );
     } else if (this.token === this.tok.T_AS) {
       // handle trait alias
-      var flags = false;
-      var alias = null;
+      let flags = false;
+      let alias = null;
       if (this.next().is("T_MEMBER_FLAGS")) {
         flags = this.read_member_flags();
       }

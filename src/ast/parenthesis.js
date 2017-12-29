@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require("./operation");
-var KIND = "parenthesis";
+const Operation = require("./operation");
+const KIND = "parenthesis";
 
 /**
  * Parenthesis encapsulation `(... expr ...)`
@@ -14,7 +14,7 @@ var KIND = "parenthesis";
  * @extends {Operation}
  * @property {Expression} inner
  */
-var Parenthesis = Operation.extends(function Parenthesis(inner, location) {
+const Parenthesis = Operation.extends(function Parenthesis(inner, location) {
   Operation.apply(this, [KIND, location]);
   this.inner = inner;
 });

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "silent";
+const Statement = require("./statement");
+const KIND = "silent";
 
 /**
  * Avoids to show/log warnings & notices from the inner expression
@@ -14,7 +14,7 @@ var KIND = "silent";
  * @extends {Statement}
  * @property {Expression} expr
  */
-var Silent = Statement.extends(function Silent(expr, location) {
+const Silent = Statement.extends(function Silent(expr, location) {
   Statement.apply(this, [KIND, location]);
   this.expr = expr;
 });

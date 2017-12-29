@@ -13,6 +13,8 @@ module.exports = {
     es6: true
   },
   rules: {
+    "prefer-const": "error",
+    "no-var": "error",
     "prettier/prettier": "error"
   }
 };

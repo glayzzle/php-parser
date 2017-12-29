@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require("./literal");
-var KIND = "encapsed";
+const Literal = require("./literal");
+const KIND = "encapsed";
 
 /**
  * Defines an encapsed string (contains expressions)
@@ -14,7 +14,7 @@ var KIND = "encapsed";
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
-var Encapsed = Literal.extends(function Encapsed(value, type, location) {
+const Encapsed = Literal.extends(function Encapsed(value, type, location) {
   Literal.apply(this, [KIND, value, location]);
   this.type = type;
 });

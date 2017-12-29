@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require("./statement");
-var KIND = "usegroup";
+const Statement = require("./statement");
+const KIND = "usegroup";
 
 /**
  * Defines a use statement (with a list of use items)
@@ -17,7 +17,7 @@ var KIND = "usegroup";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseGroup = Statement.extends(function UseGroup(
+const UseGroup = Statement.extends(function UseGroup(
   name,
   type,
   items,

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Expr = require("./expression");
-var KIND = "array";
+const Expr = require("./expression");
+const KIND = "array";
 
 /**
  * Defines an array structure
@@ -36,7 +36,7 @@ var KIND = "array";
  * @property {Entry[]} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
-var Array = Expr.extends(function Array(shortForm, items, location) {
+const Array = Expr.extends(function Array(shortForm, items, location) {
   Expr.apply(this, [KIND, location]);
   this.items = items;
   this.shortForm = shortForm;

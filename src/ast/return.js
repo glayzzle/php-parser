@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require("./node");
-var KIND = "return";
+const Node = require("./node");
+const KIND = "return";
 
 /**
  * A continue statement
@@ -13,7 +13,7 @@ var KIND = "return";
  * @extends {Node}
  * @property {Expression|null} expr
  */
-var Return = Node.extends(function Return(expr, location) {
+const Return = Node.extends(function Return(expr, location) {
   Node.apply(this, [KIND, location]);
   this.expr = expr;
 });

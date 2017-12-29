@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "foreach";
+const Statement = require("./statement");
+const KIND = "foreach";
 
 /**
  * Defines a foreach iterator
@@ -19,7 +19,7 @@ var KIND = "foreach";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.foreach.php
  */
-var Foreach = Statement.extends(function Foreach(
+const Foreach = Statement.extends(function Foreach(
   source,
   key,
   value,

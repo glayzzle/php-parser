@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "try";
+const Statement = require("./statement");
+const KIND = "try";
 
 /**
  * Defines a try statement
@@ -16,7 +16,7 @@ var KIND = "try";
  * @property {Catch[]} catches
  * @property {Block} allways
  */
-var Try = Statement.extends(function Try(body, catches, always, location) {
+const Try = Statement.extends(function Try(body, catches, always, location) {
   Statement.apply(this, [KIND, location]);
   this.body = body;
   this.catches = catches;

@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "for";
+const Statement = require("./statement");
+const KIND = "for";
 
 /**
  * Defines a for iterator
@@ -19,7 +19,7 @@ var KIND = "for";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.for.php
  */
-var For = Statement.extends(function For(
+const For = Statement.extends(function For(
   init,
   test,
   increment,

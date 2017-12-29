@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Node = require("./node");
-var KIND = "label";
+const Node = require("./node");
+const KIND = "label";
 
 /**
  * A label statement (referenced by goto)
@@ -13,7 +13,7 @@ var KIND = "label";
  * @extends {Node}
  * @property {String} name
  */
-var Label = Node.extends(function Label(name, location) {
+const Label = Node.extends(function Label(name, location) {
   Node.apply(this, [KIND, location]);
   this.name = name;
 });
