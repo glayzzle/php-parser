@@ -1,18 +1,28 @@
 module.exports = function(grunt) {
-
   // Project configuration.
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON("package.json"),
+    babel: {
+      options: {
+        sourceMap: true
+      },
+      dist: {
+        files: {
+          "dist/app.js": "./src/index.js"
+        }
+      }
+    },
     browserify: {
       options: {
-        banner: '/*! <%= pkg.name %> - BSD3 License - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+        banner:
+          "/*! <%= pkg.name %> - BSD3 License - <%= grunt.template.today('yyyy-mm-dd') %> */\n",
         alias: {
-          'php-parser': './src/index.js'
+          "php-parser": "./src/index.js"
         }
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.js': 'index.js' // ['src/*.js', 'src/**/*.js']
+          "dist/<%= pkg.name %>.js": "index.js" // ['src/*.js', 'src/**/*.js']
         }
       }
     },
@@ -26,9 +36,11 @@ module.exports = function(grunt) {
           filename: "AST.md",
           shallow: false
         },
-        files: [{
-          src: ['src/ast.js', 'src/ast']
-        }]
+        files: [
+          {
+            src: ["src/ast.js", "src/ast"]
+          }
+        ]
       },
       parser: {
         options: {
@@ -39,9 +51,11 @@ module.exports = function(grunt) {
           filename: "parser.md",
           shallow: false
         },
-        files: [{
-          src: ['src/parser.js','src/parser']
-        }]
+        files: [
+          {
+            src: ["src/parser.js", "src/parser"]
+          }
+        ]
       },
       lexer: {
         options: {
@@ -52,9 +66,11 @@ module.exports = function(grunt) {
           filename: "lexer.md",
           shallow: false
         },
-        files: [{
-          src: ['src/lexer.js', 'src/lexer']
-        }]
+        files: [
+          {
+            src: ["src/lexer.js", "src/lexer"]
+          }
+        ]
       },
       main: {
         options: {
@@ -65,9 +81,11 @@ module.exports = function(grunt) {
           filename: "README.md",
           shallow: true
         },
-        files: [{
-          src: ['src/index.js']
-        }]
+        files: [
+          {
+            src: ["src/index.js"]
+          }
+        ]
       }
     },
     uglify: {
@@ -80,19 +98,20 @@ module.exports = function(grunt) {
         maxLineLen: 1024
       },
       dist: {
-        src: 'dist/<%= pkg.name %>.js',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        src: "dist/<%= pkg.name %>.js",
+        dest: "dist/<%= pkg.name %>.min.js"
       }
     }
   });
 
   // Load the plugin
-  grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-documentation');
+  grunt.loadNpmTasks("grunt-browserify");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-documentation");
+  grunt.loadNpmTasks("grunt-babel");
 
   // Default task(s).
-  grunt.registerTask('default', ['browserify', 'uglify']);
-  grunt.registerTask('doc', ['documentation']);
-
+  grunt.registerTask("build", ["babel", "browserify", "uglify"]);
+  grunt.registerTask("doc", ["documentation"]);
+  grunt.registerTask("release", ["browser", "doc"]);
 };
