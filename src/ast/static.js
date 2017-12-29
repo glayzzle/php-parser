@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require("./statement");
-var KIND = "static";
+const Statement = require("./statement");
+const KIND = "static";
 
 /**
  * Declares a static variable into the current scope
@@ -13,7 +13,7 @@ var KIND = "static";
  * @extends {Statement}
  * @property {Variable[]|Assign[]} items
  */
-var Static = Statement.extends(function Static(items, location) {
+const Static = Statement.extends(function Static(items, location) {
   Statement.apply(this, [KIND, location]);
   this.items = items;
 });

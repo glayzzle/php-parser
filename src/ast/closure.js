@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require("./statement");
-var KIND = "closure";
+const Statement = require("./statement");
+const KIND = "closure";
 
 /**
  * Defines a closure
@@ -19,7 +19,7 @@ var KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
-var Closure = Statement.extends(function Closure(
+const Closure = Statement.extends(function Closure(
   args,
   byref,
   uses,

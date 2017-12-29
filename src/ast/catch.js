@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "catch";
+const Statement = require("./statement");
+const KIND = "catch";
 
 /**
  * Defines a catch statement
@@ -17,7 +17,7 @@ var KIND = "catch";
  * @property {Statement} body
  * @see http://php.net/manual/en/language.exceptions.php
  */
-var Catch = Statement.extends(function Catch(body, what, variable, location) {
+const Catch = Statement.extends(function Catch(body, what, variable, location) {
   Statement.apply(this, [KIND, location]);
   this.body = body;
   this.what = what;

@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Sys = require("./sys");
-var KIND = "isset";
+const Sys = require("./sys");
+const KIND = "isset";
 
 /**
  * Defines an isset call
  * @constructor Isset
  * @extends {Sys}
  */
-var Isset = Sys.extends(function Isset(args, location) {
+const Isset = Sys.extends(function Isset(args, location) {
   Sys.apply(this, [KIND, args, location]);
 });
 

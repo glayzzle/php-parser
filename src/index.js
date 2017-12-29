@@ -4,20 +4,20 @@
  * @url http://glayzzle.com
  */
 
-var lexer = require("./lexer");
-var parser = require("./parser");
-var tokens = require("./tokens");
-var AST = require("./ast");
+const lexer = require("./lexer");
+const parser = require("./parser");
+const tokens = require("./tokens");
+const AST = require("./ast");
 
 /**
  * @private combine structures
  */
 function combine(src, to) {
-  var keys = Object.keys(src);
-  var i = keys.length;
+  const keys = Object.keys(src);
+  let i = keys.length;
   while (i--) {
-    var k = keys[i];
-    var val = src[k];
+    const k = keys[i];
+    const val = src[k];
     if (val === null) {
       delete to[k];
     } else if (typeof val === "function") {
@@ -67,7 +67,7 @@ function combine(src, to) {
  * @property {AST} ast
  * @property {Object} tokens
  */
-var engine = function(options) {
+const engine = function(options) {
   if (typeof this === "function") {
     return new this(options);
   }
@@ -92,7 +92,7 @@ var engine = function(options) {
  * @param  {Buffer|String} buffer Input value that can be either a buffer or a string
  * @return {String}   Returns the string from input
  */
-var getStringBuffer = function(buffer) {
+const getStringBuffer = function(buffer) {
   return Buffer.isBuffer(buffer) ? buffer.toString() : buffer;
 };
 
@@ -111,7 +111,7 @@ engine.create = function(options) {
  * @private
  */
 engine.parseEval = function(buffer, options) {
-  var self = new engine(options);
+  const self = new engine(options);
   return self.parseEval(buffer);
 };
 
@@ -137,7 +137,7 @@ engine.parseCode = function(buffer, filename, options) {
     options = filename;
     filename = "unknown";
   }
-  var self = new engine(options);
+  const self = new engine(options);
   return self.parseCode(buffer, filename);
 };
 
@@ -173,7 +173,7 @@ engine.prototype.parseCode = function(buffer, filename) {
  * @private
  */
 engine.tokenGetAll = function(buffer, options) {
-  var self = new engine(options);
+  const self = new engine(options);
   return self.tokenGetAll(buffer);
 };
 
@@ -187,13 +187,13 @@ engine.prototype.tokenGetAll = function(buffer) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = true;
   buffer = getStringBuffer(buffer);
-  var EOF = this.lexer.EOF;
-  var names = this.tokens.values;
+  const EOF = this.lexer.EOF;
+  const names = this.tokens.values;
   this.lexer.setInput(buffer);
-  var token = this.lexer.lex() || EOF;
-  var result = [];
+  let token = this.lexer.lex() || EOF;
+  const result = [];
   while (token != EOF) {
-    var entry = this.lexer.yytext;
+    let entry = this.lexer.yytext;
     if (names.hasOwnProperty(token)) {
       entry = [names[token], entry, this.lexer.yylloc.first_line];
     }

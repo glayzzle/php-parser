@@ -4,15 +4,15 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require("./literal");
-var KIND = "magic";
+const Literal = require("./literal");
+const KIND = "magic";
 
 /**
  * Defines magic constant
  * @constructor Magic
  * @extends {Literal}
  */
-var Magic = Literal.extends(function Magic(value, location) {
+const Magic = Literal.extends(function Magic(value, location) {
   Literal.apply(this, [KIND, value, location]);
 });
 

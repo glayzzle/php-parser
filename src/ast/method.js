@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var fn = require("./function");
-var KIND = "method";
+const fn = require("./function");
+const KIND = "method";
 
 /**
  * Defines a class/interface/trait method
@@ -16,7 +16,7 @@ var KIND = "method";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-var Method = fn.extends(function Method() {
+const Method = fn.extends(function Method() {
   fn.apply(this, arguments);
   this.kind = KIND;
 });

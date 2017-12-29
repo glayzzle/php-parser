@@ -13,7 +13,7 @@ module.exports = {
    */
   T_COMMENT: function() {
     while (this.offset < this.size) {
-      var ch = this.input();
+      const ch = this.input();
       if (ch === "\n" || ch === "\r") {
         return this.tok.T_COMMENT;
       } else if (
@@ -38,8 +38,8 @@ module.exports = {
    * Behaviour : https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927
    */
   T_DOC_COMMENT: function() {
-    var ch = this.input();
-    var token = this.tok.T_COMMENT;
+    let ch = this.input();
+    let token = this.tok.T_COMMENT;
     if (ch === "*") {
       // started with '/*' , check is next is '*'
       ch = this.input();

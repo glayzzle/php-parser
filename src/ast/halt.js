@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "halt";
+const Statement = require("./statement");
+const KIND = "halt";
 
 /**
  * Halts the compiler execution
@@ -15,7 +15,7 @@ var KIND = "halt";
  * @property {String} after - String after the halt statement
  * @see http://php.net/manual/en/function.halt-compiler.php
  */
-var Halt = Statement.extends(function Halt(after, location) {
+const Halt = Statement.extends(function Halt(after, location) {
   Statement.apply(this, [KIND, location]);
   this.after = after;
 });

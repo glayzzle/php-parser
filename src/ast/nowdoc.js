@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Literal = require("./literal");
-var KIND = "nowdoc";
+const Literal = require("./literal");
+const KIND = "nowdoc";
 
 /**
  * Defines a nowdoc string
@@ -14,7 +14,7 @@ var KIND = "nowdoc";
  * @property {String} label
 
  */
-var Nowdoc = Literal.extends(function Nowdoc(value, label, location) {
+const Nowdoc = Literal.extends(function Nowdoc(value, label, location) {
   Literal.apply(this, [KIND, value, location]);
   this.label = label;
 });

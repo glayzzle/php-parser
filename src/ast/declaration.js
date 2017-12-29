@@ -4,12 +4,12 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require("./statement");
-var KIND = "declaration";
+const Statement = require("./statement");
+const KIND = "declaration";
 
-var IS_PUBLIC = "public";
-var IS_PROTECTED = "protected";
-var IS_PRIVATE = "private";
+const IS_PUBLIC = "public";
+const IS_PROTECTED = "protected";
+const IS_PRIVATE = "private";
 
 /**
  * A declaration statement (function, class, interface...)
@@ -17,7 +17,11 @@ var IS_PRIVATE = "private";
  * @extends {Statement}
  * @property {string} name
  */
-var Declaration = Statement.extends(function Declaration(kind, name, location) {
+const Declaration = Statement.extends(function Declaration(
+  kind,
+  name,
+  location
+) {
   Statement.apply(this, [kind || KIND, location]);
   this.name = name;
 });

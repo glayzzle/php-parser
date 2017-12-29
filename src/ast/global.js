@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require("./statement");
-var KIND = "global";
+const Statement = require("./statement");
+const KIND = "global";
 
 /**
  * Imports a variable from the global scope
@@ -13,7 +13,7 @@ var KIND = "global";
  * @extends {Statement}
  * @property {Variable[]} items
  */
-var Global = Statement.extends(function Global(items, location) {
+const Global = Statement.extends(function Global(items, location) {
   Statement.apply(this, [KIND, location]);
   this.items = items;
 });

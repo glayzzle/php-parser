@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Operation = require("./operation");
-var KIND = "bin";
+const Operation = require("./operation");
+const KIND = "bin";
 /**
  * Binary operations
  * @constructor Bin
@@ -15,7 +15,7 @@ var KIND = "bin";
  * @property {Expression} left
  * @property {Expression} right
  */
-var Bin = Operation.extends(function Bin(type, left, right, location) {
+const Bin = Operation.extends(function Bin(type, left, right, location) {
   Operation.apply(this, [KIND, location]);
   this.type = type;
   this.left = left;

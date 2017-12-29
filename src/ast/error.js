@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Node = require("./node");
-var KIND = "error";
+const Node = require("./node");
+const KIND = "error";
 
 /**
  * Defines an error node (used only on silentMode)
@@ -16,7 +16,7 @@ var KIND = "error";
  * @property {number|string} token
  * @property {string|array} expected
  */
-var Error = Node.extends(function Error(
+const Error = Node.extends(function Error(
   message,
   token,
   line,

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Block = require("./block");
-var KIND = "declare";
+const Block = require("./block");
+const KIND = "declare";
 
 /**
  * The declare construct is used to set execution directives for a block of code
@@ -15,7 +15,7 @@ var KIND = "declare";
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
-var Declare = Block.extends(function Declare(what, body, mode, location) {
+const Declare = Block.extends(function Declare(what, body, mode, location) {
   Block.apply(this, [KIND, body, location]);
   this.what = what;
   this.mode = mode;

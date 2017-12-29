@@ -13,18 +13,18 @@ module.exports = {
    * ```
    */
   read_if: function() {
-    var result = this.node("if"),
-      body = null,
-      alternate = null,
-      shortForm = false,
-      test = null;
+    const result = this.node("if");
+    let body = null;
+    let alternate = null;
+    let shortForm = false;
+    let test = null;
     test = this.read_if_expr();
 
     if (this.token === ":") {
       shortForm = true;
       this.next();
       body = this.node("block");
-      var items = [];
+      const items = [];
       while (this.token !== this.EOF && this.token !== this.tok.T_ENDIF) {
         if (this.token === this.tok.T_ELSEIF) {
           alternate = this.next().read_elseif_short();
@@ -57,7 +57,7 @@ module.exports = {
    */
   read_if_expr: function() {
     this.expect("(") && this.next();
-    var result = this.read_expr();
+    const result = this.read_expr();
     this.expect(")") && this.next();
     return result;
   },
@@ -65,11 +65,11 @@ module.exports = {
    * reads an elseif (expr): statements
    */
   read_elseif_short: function() {
-    var result = this.node("if"),
-      alternate = null,
-      test = null,
-      body = null,
-      items = [];
+    const result = this.node("if");
+    let alternate = null;
+    let test = null;
+    let body = null;
+    const items = [];
     test = this.read_if_expr();
     if (this.expect(":")) this.next();
     body = this.node("block");
@@ -91,8 +91,8 @@ module.exports = {
    */
   read_else_short: function() {
     if (this.expect(":")) this.next();
-    var body = this.node("block"),
-      items = [];
+    const body = this.node("block");
+    const items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       items.push(this.read_inner_statement());
     }

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Declaration = require("./declaration");
-var KIND = "constant";
+const Declaration = require("./declaration");
+const KIND = "constant";
 
 /**
  * Defines a namespace constant
@@ -13,7 +13,7 @@ var KIND = "constant";
  * @extends {Declaration}
  * @property {Node|null} value
  */
-var Constant = Declaration.extends(function Constant(name, value, location) {
+const Constant = Declaration.extends(function Constant(name, value, location) {
   Declaration.apply(this, [KIND, name, location]);
   this.value = value;
 });

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 "use strict";
-var Statement = require("./statement");
-var KIND = "useitem";
+const Statement = require("./statement");
+const KIND = "useitem";
 
 /**
  * Defines a use statement (from namespace)
@@ -17,7 +17,12 @@ var KIND = "useitem";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseItem = Statement.extends(function UseItem(name, alias, type, location) {
+const UseItem = Statement.extends(function UseItem(
+  name,
+  alias,
+  type,
+  location
+) {
   Statement.apply(this, [KIND, location]);
   this.name = name;
   this.alias = alias;

@@ -4,8 +4,8 @@
  * @url http://glayzzle.com
  */
 
-var Statement = require("./statement");
-var KIND = "exit";
+const Statement = require("./statement");
+const KIND = "exit";
 
 /**
  * Defines an exit / die call
@@ -13,7 +13,7 @@ var KIND = "exit";
  * @extends {Statement}
  * @property {Node|null} status
  */
-var Exit = Statement.extends(function Exit(status, location) {
+const Exit = Statement.extends(function Exit(status, location) {
   Statement.apply(this, [KIND, location]);
   this.status = status;
 });

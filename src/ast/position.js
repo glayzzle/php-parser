@@ -11,7 +11,7 @@
  * @property {Number} column
  * @property {Number} offset
  */
-var Position = function(line, column, offset) {
+const Position = function(line, column, offset) {
   this.line = line;
   this.column = column;
   this.offset = offset;

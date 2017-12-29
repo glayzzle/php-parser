@@ -5,8 +5,8 @@
  */
 "use strict";
 
-var Statement = require("./statement");
-var KIND = "new";
+const Statement = require("./statement");
+const KIND = "new";
 
 /**
  * Creates a new instance of the specified class
@@ -15,7 +15,7 @@ var KIND = "new";
  * @property {Identifier|Variable|Class} what
  * @property {Arguments[]} arguments
  */
-var New = Statement.extends(function New(what, args, location) {
+const New = Statement.extends(function New(what, args, location) {
   Statement.apply(this, [KIND, location]);
   this.what = what;
   this.arguments = args;
