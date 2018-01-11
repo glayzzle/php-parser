@@ -205,3 +205,5 @@ engine.prototype.tokenGetAll = function(buffer) {
 
 // exports the function
 module.exports = engine;
+// allow the default export in index.d.ts
+module.exports.default = engine;
