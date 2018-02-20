@@ -2,23 +2,20 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
-    babel: {
-      options: {
-        sourceMap: true
-      },
-      dist: {
-        files: {
-          "dist/app.js": "./src/index.js"
-        }
-      }
-    },
     browserify: {
       options: {
         banner:
           "/*! <%= pkg.name %> - BSD3 License - <%= grunt.template.today('yyyy-mm-dd') %> */\n",
         alias: {
           "php-parser": "./src/index.js"
-        }
+        },
+        transform: [
+          [
+            "babelify", {
+              "presets": ["es2015"]
+            }
+          ]
+        ],
       },
       dist: {
         files: {
@@ -111,7 +108,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-babel");
 
   // Default task(s).
-  grunt.registerTask("build", ["babel", "browserify", "uglify"]);
+  grunt.registerTask("build", ["browserify", "uglify"]);
   grunt.registerTask("doc", ["documentation"]);
   grunt.registerTask("release", ["browser", "doc"]);
 };
