@@ -209,8 +209,11 @@ describe("Test expressions", function() {
   it("test exit", function() {
     var ast = parser.parseEval(["exit(1);", "die();", "exit;"].join("\n"));
     ast.children[0].kind.should.be.exactly("exit");
+    ast.children[0].useDie.should.be.exactly(false);
     ast.children[1].kind.should.be.exactly("exit");
+    ast.children[1].useDie.should.be.exactly(true);
     ast.children[2].kind.should.be.exactly("exit");
+    ast.children[2].useDie.should.be.exactly(false);
   });
 
   it("test list statements", function() {
