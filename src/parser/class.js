@@ -245,7 +245,6 @@ module.exports = {
       } while (this.next().is("T_MEMBER_FLAGS"));
     }
 
-    if (result[0] == -1) result[0] = 0;
     if (result[1] == -1) result[1] = 0;
     if (result[2] == -1) result[2] = 0;
     return result;
@@ -433,7 +432,7 @@ module.exports = {
       );
     } else if (this.token === this.tok.T_AS) {
       // handle trait alias
-      let flags = false;
+      let flags = null;
       let alias = null;
       if (this.next().is("T_MEMBER_FLAGS")) {
         flags = this.read_member_flags();

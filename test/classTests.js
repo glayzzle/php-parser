@@ -16,6 +16,9 @@ describe("Test classes", function() {
         "  public function new($foo = self::list) {",
         "    return $this::list;",
         "  }",
+        "  protected $foo;",
+        "  private $bar;",
+        "  function foobar() {}",
         "}",
         "abstract class bar {",
         "  use A, B {",
@@ -59,6 +62,15 @@ describe("Test classes", function() {
       ast.children[1].isFinal.should.be.exactly(false);
       ast.children[1].isAbstract.should.be.exactly(true);
       ast.children[1].isAnonymous.should.be.exactly(false);
+    });
+
+    it("test visibility", function() {
+      var members = ast.children[0].body;
+      members[0].visibility.should.be.exactly('');
+      members[1].visibility.should.be.exactly('public');
+      members[5].visibility.should.be.exactly('protected');
+      members[6].visibility.should.be.exactly('private');
+      members[7].visibility.should.be.exactly('');
     });
 
     it("test extends", function() {
@@ -112,6 +124,7 @@ describe("Test classes", function() {
       use.adaptations[2].visibility.should.be.exactly("public");
       use.adaptations[3].visibility.should.be.exactly("protected");
       use.adaptations[4].visibility.should.be.exactly("private");
+      use.adaptations[5].visibility.should.be.exactly("");
       use.adaptations[5].trait.name.should.be.exactly("A");
       use.adaptations[5].method.should.be.exactly("new");
       use.adaptations[5].as.should.be.exactly("list");

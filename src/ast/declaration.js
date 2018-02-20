@@ -7,6 +7,7 @@
 const Statement = require("./statement");
 const KIND = "declaration";
 
+const IS_UNDEFINED = "";
 const IS_PUBLIC = "public";
 const IS_PROTECTED = "protected";
 const IS_PRIVATE = "private";
@@ -35,8 +36,10 @@ Declaration.prototype.parseFlags = function(flags) {
   this.isAbstract = flags[2] === 1;
   this.isFinal = flags[2] === 2;
   if (this.kind !== "class") {
-    if (flags[0] === 0) {
-      this.visibility = IS_PUBLIC;
+    if (flags[0] === -1) {
+      this.visibility = IS_UNDEFINED;
+    } else if (flags[0] === 0) {
+        this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
       this.visibility = IS_PROTECTED;
     } else if (flags[0] === 2) {
