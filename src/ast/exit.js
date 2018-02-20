@@ -12,10 +12,12 @@ const KIND = "exit";
  * @constructor Exit
  * @extends {Statement}
  * @property {Node|null} status
+ * @property {Boolean} useDie
  */
-const Exit = Statement.extends(function Exit(status, location) {
+const Exit = Statement.extends(function Exit(status, useDie, location) {
   Statement.apply(this, [KIND, location]);
   this.status = status;
+  this.useDie = useDie;
 });
 
 module.exports = Exit;

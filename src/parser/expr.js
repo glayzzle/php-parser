@@ -271,6 +271,7 @@ module.exports = {
         return this.node("cast")("unset", this.next().read_expr());
 
       case this.tok.T_EXIT: {
+        var useDie = this.lexer.yytext.toLowerCase() === 'die';
         result = this.node("exit");
         let status = null;
         if (this.next().token === "(") {
@@ -283,7 +284,7 @@ module.exports = {
             this.next();
           }
         }
-        return result(status);
+        return result(status, useDie);
       }
 
       case this.tok.T_PRINT:
