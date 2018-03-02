@@ -31,6 +31,7 @@ const parser = function(lexer, ast) {
   this.debug = false;
   this.php7 = true;
   this.extractDoc = false;
+  this.extractAllDocs = false;
   this.suppressErrors = false;
   const mapIt = function(item) {
     return [item, null];
@@ -249,6 +250,11 @@ parser.prototype.parse = function(code, filename) {
   this._errors = [];
   this.filename = filename || "eval";
   this.currentNamespace = [""];
+  if (this.extractAllDocs) {
+    this._docs = [];
+  } else {
+    this._docs = null;
+  }
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
@@ -266,7 +272,7 @@ parser.prototype.parse = function(code, filename) {
       }
     }
   }
-  return program(childs, this._errors);
+  return program(childs, this._errors, this._docs);
 };
 
 /**
@@ -441,8 +447,17 @@ parser.prototype.ignoreComments = function() {
     this.token === this.tok.T_COMMENT ||
     this.token === this.tok.T_DOC_COMMENT
   ) {
-    // IGNORE COMMENTS
-    this.nextWithComments();
+    if (this.extractAllDocs) {
+      // APPEND COMMENTS
+      if (this.token === this.tok.T_COMMENT) {
+        this._docs.push(this.read_comment());
+      } else {
+        this._docs.push(this.read_doc_comment());
+      }
+    } else {
+      // IGNORE COMMENTS
+      this.nextWithComments();
+    }
   }
   return this;
 };

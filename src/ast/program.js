@@ -12,10 +12,19 @@ const KIND = "program";
  * @constructor Program
  * @extends {Block}
  * @property {Error[]} errors
+ * @property {Doc[]?} comments
  */
-const Program = Block.extends(function Program(children, errors, location) {
+const Program = Block.extends(function Program(
+  children,
+  errors,
+  comments,
+  location
+) {
   Block.apply(this, [KIND, children, location]);
   this.errors = errors;
+  if (comments) {
+    this.comments = comments;
+  }
 });
 
 module.exports = Program;
