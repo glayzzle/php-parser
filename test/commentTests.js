@@ -8,23 +8,24 @@ describe("Test comments", function() {
           "if (true) {",
           "  $a = 1;",
           "}",
-          "",
           "// Don't parsed :(",
-          "if (false) {",
+          "else if (false) {",
           "  $a = 2;",
           "}"
         ].join("\n"),
         {
           parser: {
-            extractDoc: true
-            // debug: true
+            extractDoc: true,
+            extractAllDocs: true
           }
         }
       );
-      ast.children.length.should.be.exactly(3);
-      ast.children[0].kind.should.be.exactly("if");
-      ast.children[1].kind.should.be.exactly("doc");
-      ast.children[2].kind.should.be.exactly("if");
+      const ifNode = ast.children[0];
+      ast.children.length.should.be.exactly(1);
+      ifNode.kind.should.be.exactly("if");
+      ifNode.alternate.kind.should.be.exactly("if");
+      ast.comments.length.should.be.exactly(1);
+      ast.comments[0].kind.should.be.exactly("doc");
     });
     it("fix #55", function() {
       var ast = parser.parseEval(
