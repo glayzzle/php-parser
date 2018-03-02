@@ -6,6 +6,8 @@
 
 const docSplit = /^(\s*\*[ \t]*|[ \t]*)(.*)$/gm;
 
+const docSplitLeaveSpaces = /^(\s*[\*])(.*)$/gm;
+
 module.exports = {
   /**
    *  Comments with // or # or / * ... * /
@@ -23,7 +25,11 @@ module.exports = {
           line = line.substring(0, line.length - 2);
         }
       }
-      lines.push(line.trim());
+      if(this.extractDocWithIndent){
+        lines.push(line);
+      }else{
+        lines.push(line.trim());
+      }
     } while (this.nextWithComments().token === this.tok.T_COMMENT);
     return result(false, lines);
   },
@@ -35,9 +41,17 @@ module.exports = {
     let text = this.text();
     text = text.substring(2, text.length - 2);
     const lines = [];
-    text = text.split(docSplit);
+     if(this.extractDocWithIndent){
+      text = text.split(docSplitLeaveSpaces);
+    }else{
+      text = text.split(docSplit);
+    }
     for (let i = 2; i < text.length; i += 3) {
-      lines.push(text[i].trim());
+     if(this.extractDocWithIndent){
+        lines.push(text[i]);
+      }else{
+        lines.push(text[i].trim());
+      }
     }
     this.nextWithComments();
     return result(true, lines);
