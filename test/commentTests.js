@@ -2,6 +2,30 @@ var parser = require("../src/index");
 
 describe("Test comments", function() {
   describe("issues", function() {
+    it("fix #126", function() {
+      var ast = parser.parseEval(
+        [
+          "if (true) {",
+          "  $a = 1;",
+          "}",
+          "",
+          "// Don't parsed :(",
+          "if (false) {",
+          "  $a = 2;",
+          "}"
+        ].join("\n"),
+        {
+          parser: {
+            extractDoc: true
+            // debug: true
+          }
+        }
+      );
+      ast.children.length.should.be.exactly(3);
+      ast.children[0].kind.should.be.exactly("if");
+      ast.children[1].kind.should.be.exactly("doc");
+      ast.children[2].kind.should.be.exactly("if");
+    });
     it("fix #55", function() {
       var ast = parser.parseEval(
         [
