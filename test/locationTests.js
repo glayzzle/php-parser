@@ -37,40 +37,40 @@ describe("Test offsets", function() {
 
   describe("to comment node", function() {
     it("test line", function() {
-      ast.children[0].loc.start.line.should.be.exactly(1);
-      ast.children[0].loc.end.line.should.be.exactly(2);
+      ast.comments[0].loc.start.line.should.be.exactly(1);
+      ast.comments[0].loc.end.line.should.be.exactly(2);
     });
     it("test column", function() {
-      ast.children[0].loc.start.column.should.be.exactly(0);
-      ast.children[0].loc.end.column.should.be.exactly(0);
+      ast.comments[0].loc.start.column.should.be.exactly(0);
+      ast.comments[0].loc.end.column.should.be.exactly(0);
     });
     it("test offsets", function() {
-      ast.children[0].loc.start.offset.should.be.exactly(0);
-      ast.children[0].loc.end.offset.should.be.exactly(
+      ast.comments[0].loc.start.offset.should.be.exactly(0);
+      ast.comments[0].loc.end.offset.should.be.exactly(
         lines[0].length + 2 // first line + \r\n
       );
-      ast.children[0].loc.source.should.be.exactly(lines[0] + "\r\n");
+      ast.comments[0].loc.source.should.be.exactly(lines[0] + "\r\n");
     });
   });
 
   describe("on echo node", function() {
     it("test line", function() {
-      ast.children[1].loc.start.line.should.be.exactly(2);
-      ast.children[1].loc.end.line.should.be.exactly(2);
+      ast.children[0].loc.start.line.should.be.exactly(2);
+      ast.children[0].loc.end.line.should.be.exactly(2);
     });
     it("test column", function() {
-      ast.children[1].loc.start.column.should.be.exactly(0);
-      ast.children[1].loc.end.column.should.be.exactly(14);
+      ast.children[0].loc.start.column.should.be.exactly(0);
+      ast.children[0].loc.end.column.should.be.exactly(14);
     });
     it("test offsets", function() {
-      ast.children[1].loc.start.offset.should.be.exactly(14);
-      ast.children[1].loc.end.offset.should.be.exactly(28);
-      ast.children[1].loc.source.should.be.exactly(lines[1]);
+      ast.children[0].loc.start.offset.should.be.exactly(14);
+      ast.children[0].loc.end.offset.should.be.exactly(28);
+      ast.children[0].loc.source.should.be.exactly(lines[1]);
     });
   });
 
   describe("on text node", function() {
-    var arg = ast.children[1].arguments[0];
+    const arg = ast.children[0].arguments[0];
     it("test line", function() {
       arg.loc.start.line.should.be.exactly(2);
       arg.loc.end.line.should.be.exactly(2);
@@ -86,22 +86,22 @@ describe("Test offsets", function() {
 
   describe("on assign node", function() {
     it("test line", function() {
-      ast.children[2].loc.start.line.should.be.exactly(3);
-      ast.children[2].loc.end.line.should.be.exactly(3);
+      ast.children[1].loc.start.line.should.be.exactly(3);
+      ast.children[1].loc.end.line.should.be.exactly(3);
     });
     it("test column", function() {
-      ast.children[2].loc.start.column.should.be.exactly(0);
+      ast.children[1].loc.start.column.should.be.exactly(0);
       // ignored ';' because it was eaten by expr and assign
       // was retrieved by expr_item without it
-      ast.children[2].loc.end.column.should.be.exactly(9);
+      ast.children[1].loc.end.column.should.be.exactly(9);
     });
     it("test offsets", function() {
-      ast.children[2].loc.source.should.be.exactly(lines[2].substring(0, 9));
+      ast.children[1].loc.source.should.be.exactly(lines[2].substring(0, 9));
     });
   });
 
   describe("on variable node", function() {
-    var node = ast.children[2].left;
+    const node = ast.children[1].left;
     it("test line", function() {
       node.loc.start.line.should.be.exactly(3);
       node.loc.end.line.should.be.exactly(3);
@@ -116,7 +116,7 @@ describe("Test offsets", function() {
   });
 
   describe("on boolean node", function() {
-    var node = ast.children[2].right;
+    const node = ast.children[1].right;
     it("test line", function() {
       node.loc.start.line.should.be.exactly(3);
       node.loc.end.line.should.be.exactly(3);
