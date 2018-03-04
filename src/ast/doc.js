@@ -12,12 +12,12 @@ const KIND = "doc";
  * @constructor Documentation
  * @extends {Node}
  * @property {Boolean} isDoc
- * @property {String[]} lines
+ * @property {String} value
  */
-const Doc = Node.extends(function Doc(isDoc, lines, location) {
+const Doc = Node.extends(function Doc(isDoc, value, location) {
   Node.apply(this, [KIND, location]);
   this.isDoc = isDoc;
-  this.lines = lines;
+  this.value = value;
 });
 
 module.exports = Doc;
