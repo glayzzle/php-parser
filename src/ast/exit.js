@@ -14,8 +14,8 @@ const KIND = "exit";
  * @property {Node|null} status
  * @property {Boolean} useDie
  */
-const Exit = Statement.extends(function Exit(status, useDie, location) {
-  Statement.apply(this, [KIND, location]);
+const Exit = Statement.extends(function Exit(status, useDie, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.status = status;
   this.useDie = useDie;
 });

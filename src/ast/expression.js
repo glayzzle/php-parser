@@ -13,8 +13,8 @@ const KIND = "expression";
  * @constructor Expression
  * @extends {Node}
  */
-const Expression = Node.extends(function Expression(kind, location) {
-  Node.apply(this, [kind || KIND, location]);
+const Expression = Node.extends(function Expression(kind, docs, location) {
+  Node.apply(this, [kind || KIND, docs, location]);
 });
 
 module.exports = Expression;

@@ -18,9 +18,10 @@ const Namespace = Block.extends(function Namespace(
   name,
   children,
   withBrackets,
+  docs,
   location
 ) {
-  Block.apply(this, [KIND, children, location]);
+  Block.apply(this, [KIND, children, docs, location]);
   this.name = name;
   this.withBrackets = withBrackets || false;
 });

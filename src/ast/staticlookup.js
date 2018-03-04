@@ -15,9 +15,10 @@ const KIND = "staticlookup";
 const StaticLookup = Lookup.extends(function StaticLookup(
   what,
   offset,
+  docs,
   location
 ) {
-  Lookup.apply(this, [KIND, what, offset, location]);
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 module.exports = StaticLookup;

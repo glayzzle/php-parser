@@ -17,8 +17,14 @@ const KIND = "catch";
  * @property {Statement} body
  * @see http://php.net/manual/en/language.exceptions.php
  */
-const Catch = Statement.extends(function Catch(body, what, variable, location) {
-  Statement.apply(this, [KIND, location]);
+const Catch = Statement.extends(function Catch(
+  body,
+  what,
+  variable,
+  docs,
+  location
+) {
+  Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.what = what;
   this.variable = variable;

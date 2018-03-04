@@ -25,9 +25,10 @@ const For = Statement.extends(function For(
   increment,
   body,
   shortForm,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.init = init;
   this.test = test;
   this.increment = increment;

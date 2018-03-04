@@ -13,8 +13,8 @@ const KIND = "return";
  * @extends {Node}
  * @property {Expression|null} expr
  */
-const Return = Node.extends(function Return(expr, location) {
-  Node.apply(this, [KIND, location]);
+const Return = Node.extends(function Return(expr, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
 

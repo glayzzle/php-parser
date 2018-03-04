@@ -21,9 +21,10 @@ const UseGroup = Statement.extends(function UseGroup(
   name,
   type,
   items,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.type = type;
   this.items = items;

@@ -13,8 +13,8 @@ const KIND = "sys";
  * @extends {Statement}
  * @property {Node[]} arguments
  */
-const Sys = Statement.extends(function Sys(kind, args, location) {
-  Statement.apply(this, [kind || KIND, location]);
+const Sys = Statement.extends(function Sys(kind, args, docs, location) {
+  Statement.apply(this, [kind || KIND, docs, location]);
   this.arguments = args;
 });
 

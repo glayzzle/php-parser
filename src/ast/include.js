@@ -19,9 +19,10 @@ const Include = Statement.extends(function Include(
   once,
   require,
   target,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.once = once;
   this.require = require;
   this.target = target;

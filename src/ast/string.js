@@ -14,8 +14,13 @@ const KIND = "string";
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-const String = Literal.extends(function String(isDoubleQuote, value, location) {
-  Literal.apply(this, [KIND, value, location]);
+const String = Literal.extends(function String(
+  isDoubleQuote,
+  value,
+  docs,
+  location
+) {
+  Literal.apply(this, [KIND, value, docs, location]);
   this.isDoubleQuote = isDoubleQuote;
 });
 

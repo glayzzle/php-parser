@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2018-02-20 */
+/*! php-parser - BSD3 License - 2018-03-04 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -230,7 +230,9 @@ var Position = require("./ast/position");
  *   - [Entry](#entry)
  *   - [Case](#case)
  *   - [Label](#label)
- *   - [Doc](#doc)
+ *   - [Comment](#comment)
+ *     - [CommentLine](#commentline)
+ *     - [CommentBlock](#commentblock)
  *   - [Error](#error)
  *   - [Expression](#expression)
  *     - [Array](#array)
@@ -422,7 +424,7 @@ AST.prototype.resolvePrecedence = function (result) {
  * @param {Parser} parser - The parser instance (use for extracting locations)
  * @return {Function}
  */
-AST.prototype.prepare = function (kind, parser) {
+AST.prototype.prepare = function (kind, docs, parser) {
   var start = null;
   if (this.withPositions || this.withSource) {
     start = this.position(parser);
@@ -432,6 +434,7 @@ AST.prototype.prepare = function (kind, parser) {
   return function () {
     var location = null;
     var args = Array.prototype.slice.call(arguments);
+    args.push(docs);
     if (self.withPositions || self.withSource) {
       var src = null;
       if (self.withSource) {
@@ -461,7 +464,7 @@ AST.prototype.prepare = function (kind, parser) {
 };
 
 // Define all AST nodes
-[require("./ast/array"), require("./ast/assign"), require("./ast/bin"), require("./ast/block"), require("./ast/boolean"), require("./ast/break"), require("./ast/call"), require("./ast/case"), require("./ast/cast"), require("./ast/catch"), require("./ast/class"), require("./ast/classconstant"), require("./ast/clone"), require("./ast/closure"), require("./ast/constant"), require("./ast/constref"), require("./ast/continue"), require("./ast/declaration"), require("./ast/declare"), require("./ast/do"), require("./ast/doc"), require("./ast/echo"), require("./ast/empty"), require("./ast/encapsed"), require("./ast/entry"), require("./ast/error"), require("./ast/eval"), require("./ast/exit"), require("./ast/expression"), require("./ast/for"), require("./ast/foreach"), require("./ast/function"), require("./ast/global"), require("./ast/goto"), require("./ast/halt"), require("./ast/identifier"), require("./ast/if"), require("./ast/include"), require("./ast/inline"), require("./ast/interface"), require("./ast/isset"), require("./ast/label"), require("./ast/list"), require("./ast/literal"), require("./ast/lookup"), require("./ast/magic"), require("./ast/method"), require("./ast/namespace"), require("./ast/new"), require("./ast/node"), require("./ast/nowdoc"), require("./ast/number"), require("./ast/offsetlookup"), require("./ast/operation"), require("./ast/parameter"), require("./ast/parenthesis"), require("./ast/post"), require("./ast/pre"), require("./ast/print"), require("./ast/program"), require("./ast/property"), require("./ast/propertylookup"), require("./ast/retif"), require("./ast/return"), require("./ast/silent"), require("./ast/statement"), require("./ast/static"), require("./ast/staticlookup"), require("./ast/string"), require("./ast/switch"), require("./ast/sys"), require("./ast/throw"), require("./ast/trait"), require("./ast/traitalias"), require("./ast/traitprecedence"), require("./ast/traituse"), require("./ast/try"), require("./ast/unary"), require("./ast/unset"), require("./ast/usegroup"), require("./ast/useitem"), require("./ast/variable"), require("./ast/variadic"), require("./ast/while"), require("./ast/yield"), require("./ast/yieldfrom")].forEach(function (ctor) {
+[require("./ast/array"), require("./ast/assign"), require("./ast/bin"), require("./ast/block"), require("./ast/boolean"), require("./ast/break"), require("./ast/call"), require("./ast/case"), require("./ast/cast"), require("./ast/catch"), require("./ast/class"), require("./ast/classconstant"), require("./ast/clone"), require("./ast/closure"), require("./ast/comment"), require("./ast/commentblock"), require("./ast/commentline"), require("./ast/constant"), require("./ast/constref"), require("./ast/continue"), require("./ast/declaration"), require("./ast/declare"), require("./ast/do"), require("./ast/echo"), require("./ast/empty"), require("./ast/encapsed"), require("./ast/entry"), require("./ast/error"), require("./ast/eval"), require("./ast/exit"), require("./ast/expression"), require("./ast/for"), require("./ast/foreach"), require("./ast/function"), require("./ast/global"), require("./ast/goto"), require("./ast/halt"), require("./ast/identifier"), require("./ast/if"), require("./ast/include"), require("./ast/inline"), require("./ast/interface"), require("./ast/isset"), require("./ast/label"), require("./ast/list"), require("./ast/literal"), require("./ast/lookup"), require("./ast/magic"), require("./ast/method"), require("./ast/namespace"), require("./ast/new"), require("./ast/node"), require("./ast/nowdoc"), require("./ast/number"), require("./ast/offsetlookup"), require("./ast/operation"), require("./ast/parameter"), require("./ast/parenthesis"), require("./ast/post"), require("./ast/pre"), require("./ast/print"), require("./ast/program"), require("./ast/property"), require("./ast/propertylookup"), require("./ast/retif"), require("./ast/return"), require("./ast/silent"), require("./ast/statement"), require("./ast/static"), require("./ast/staticlookup"), require("./ast/string"), require("./ast/switch"), require("./ast/sys"), require("./ast/throw"), require("./ast/trait"), require("./ast/traitalias"), require("./ast/traitprecedence"), require("./ast/traituse"), require("./ast/try"), require("./ast/unary"), require("./ast/unset"), require("./ast/usegroup"), require("./ast/useitem"), require("./ast/variable"), require("./ast/variadic"), require("./ast/while"), require("./ast/yield"), require("./ast/yieldfrom")].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
   if (kind[0] === "_") kind = kind.substring(1);
   AST.prototype[kind] = ctor;
@@ -469,7 +472,7 @@ AST.prototype.prepare = function (kind, parser) {
 
 module.exports = AST;
 
-},{"./ast/array":4,"./ast/assign":5,"./ast/bin":6,"./ast/block":7,"./ast/boolean":8,"./ast/break":9,"./ast/call":10,"./ast/case":11,"./ast/cast":12,"./ast/catch":13,"./ast/class":14,"./ast/classconstant":15,"./ast/clone":16,"./ast/closure":17,"./ast/constant":18,"./ast/constref":19,"./ast/continue":20,"./ast/declaration":21,"./ast/declare":22,"./ast/do":23,"./ast/doc":24,"./ast/echo":25,"./ast/empty":26,"./ast/encapsed":27,"./ast/entry":28,"./ast/error":29,"./ast/eval":30,"./ast/exit":31,"./ast/expression":32,"./ast/for":33,"./ast/foreach":34,"./ast/function":35,"./ast/global":36,"./ast/goto":37,"./ast/halt":38,"./ast/identifier":39,"./ast/if":40,"./ast/include":41,"./ast/inline":42,"./ast/interface":43,"./ast/isset":44,"./ast/label":45,"./ast/list":46,"./ast/literal":47,"./ast/location":48,"./ast/lookup":49,"./ast/magic":50,"./ast/method":51,"./ast/namespace":52,"./ast/new":53,"./ast/node":54,"./ast/nowdoc":55,"./ast/number":56,"./ast/offsetlookup":57,"./ast/operation":58,"./ast/parameter":59,"./ast/parenthesis":60,"./ast/position":61,"./ast/post":62,"./ast/pre":63,"./ast/print":64,"./ast/program":65,"./ast/property":66,"./ast/propertylookup":67,"./ast/retif":68,"./ast/return":69,"./ast/silent":70,"./ast/statement":71,"./ast/static":72,"./ast/staticlookup":73,"./ast/string":74,"./ast/switch":75,"./ast/sys":76,"./ast/throw":77,"./ast/trait":78,"./ast/traitalias":79,"./ast/traitprecedence":80,"./ast/traituse":81,"./ast/try":82,"./ast/unary":83,"./ast/unset":84,"./ast/usegroup":85,"./ast/useitem":86,"./ast/variable":87,"./ast/variadic":88,"./ast/while":89,"./ast/yield":90,"./ast/yieldfrom":91}],4:[function(require,module,exports){
+},{"./ast/array":4,"./ast/assign":5,"./ast/bin":6,"./ast/block":7,"./ast/boolean":8,"./ast/break":9,"./ast/call":10,"./ast/case":11,"./ast/cast":12,"./ast/catch":13,"./ast/class":14,"./ast/classconstant":15,"./ast/clone":16,"./ast/closure":17,"./ast/comment":18,"./ast/commentblock":19,"./ast/commentline":20,"./ast/constant":21,"./ast/constref":22,"./ast/continue":23,"./ast/declaration":24,"./ast/declare":25,"./ast/do":26,"./ast/echo":27,"./ast/empty":28,"./ast/encapsed":29,"./ast/entry":30,"./ast/error":31,"./ast/eval":32,"./ast/exit":33,"./ast/expression":34,"./ast/for":35,"./ast/foreach":36,"./ast/function":37,"./ast/global":38,"./ast/goto":39,"./ast/halt":40,"./ast/identifier":41,"./ast/if":42,"./ast/include":43,"./ast/inline":44,"./ast/interface":45,"./ast/isset":46,"./ast/label":47,"./ast/list":48,"./ast/literal":49,"./ast/location":50,"./ast/lookup":51,"./ast/magic":52,"./ast/method":53,"./ast/namespace":54,"./ast/new":55,"./ast/node":56,"./ast/nowdoc":57,"./ast/number":58,"./ast/offsetlookup":59,"./ast/operation":60,"./ast/parameter":61,"./ast/parenthesis":62,"./ast/position":63,"./ast/post":64,"./ast/pre":65,"./ast/print":66,"./ast/program":67,"./ast/property":68,"./ast/propertylookup":69,"./ast/retif":70,"./ast/return":71,"./ast/silent":72,"./ast/statement":73,"./ast/static":74,"./ast/staticlookup":75,"./ast/string":76,"./ast/switch":77,"./ast/sys":78,"./ast/throw":79,"./ast/trait":80,"./ast/traitalias":81,"./ast/traitprecedence":82,"./ast/traituse":83,"./ast/try":84,"./ast/unary":85,"./ast/unset":86,"./ast/usegroup":87,"./ast/useitem":88,"./ast/variable":89,"./ast/variadic":90,"./ast/while":91,"./ast/yield":92,"./ast/yieldfrom":93}],4:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -510,15 +513,15 @@ var KIND = "array";
  * @property {Entry[]} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
-var Array = Expr.extends(function Array(shortForm, items, location) {
-  Expr.apply(this, [KIND, location]);
+var Array = Expr.extends(function Array(shortForm, items, docs, location) {
+  Expr.apply(this, [KIND, docs, location]);
   this.items = items;
   this.shortForm = shortForm;
 });
 
 module.exports = Array;
 
-},{"./expression":32}],5:[function(require,module,exports){
+},{"./expression":34}],5:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -538,8 +541,8 @@ var KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
-var Assign = Statement.extends(function Assign(left, right, operator, location) {
-  Statement.apply(this, [KIND, location]);
+var Assign = Statement.extends(function Assign(left, right, operator, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.operator = operator;
   this.left = left;
   this.right = right;
@@ -547,7 +550,7 @@ var Assign = Statement.extends(function Assign(left, right, operator, location) 
 
 module.exports = Assign;
 
-},{"./statement":71}],6:[function(require,module,exports){
+},{"./statement":73}],6:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -565,8 +568,8 @@ var KIND = "bin";
  * @property {Expression} left
  * @property {Expression} right
  */
-var Bin = Operation.extends(function Bin(type, left, right, location) {
-  Operation.apply(this, [KIND, location]);
+var Bin = Operation.extends(function Bin(type, left, right, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.left = left;
   this.right = right;
@@ -574,7 +577,7 @@ var Bin = Operation.extends(function Bin(type, left, right, location) {
 
 module.exports = Bin;
 
-},{"./operation":58}],7:[function(require,module,exports){
+},{"./operation":60}],7:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -592,14 +595,14 @@ var KIND = "block";
  * @extends {Statement}
  * @property {Node[]} children
  */
-var Block = Statement.extends(function Block(kind, children, location) {
-  Statement.apply(this, [kind || KIND, location]);
+var Block = Statement.extends(function Block(kind, children, docs, location) {
+  Statement.apply(this, [kind || KIND, docs, location]);
   this.children = children.filter(Boolean);
 });
 
 module.exports = Block;
 
-},{"./statement":71}],8:[function(require,module,exports){
+},{"./statement":73}],8:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -616,13 +619,13 @@ var KIND = "boolean";
  * @constructor Boolean
  * @extends {Literal}
  */
-var Boolean = Literal.extends(function Boolean(value, location) {
-  Literal.apply(this, [KIND, value, location]);
+var Boolean = Literal.extends(function Boolean(value, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
 });
 
 module.exports = Boolean;
 
-},{"./literal":47}],9:[function(require,module,exports){
+},{"./literal":49}],9:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -639,14 +642,14 @@ var KIND = "break";
  * @extends {Node}
  * @property {Number|Null} level
  */
-var Break = Node.extends(function Break(level, location) {
-  Node.apply(this, [KIND, location]);
+var Break = Node.extends(function Break(level, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
 
 module.exports = Break;
 
-},{"./node":54}],10:[function(require,module,exports){
+},{"./node":56}],10:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -664,15 +667,15 @@ var KIND = "call";
  * @property {Identifier|Variable|??} what
  * @property {Arguments[]} arguments
  */
-var Call = Statement.extends(function Call(what, args, location) {
-  Statement.apply(this, [KIND, location]);
+var Call = Statement.extends(function Call(what, args, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });
 
 module.exports = Call;
 
-},{"./statement":71}],11:[function(require,module,exports){
+},{"./statement":73}],11:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -690,15 +693,15 @@ var KIND = "case";
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body
  */
-var Case = Node.extends(function Case(test, body, location) {
-  Node.apply(this, [KIND, location]);
+var Case = Node.extends(function Case(test, body, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
 
 module.exports = Case;
 
-},{"./node":54}],12:[function(require,module,exports){
+},{"./node":56}],12:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -716,15 +719,15 @@ var KIND = "cast";
  * @property {String} type
  * @property {Expression} what
  */
-var Cast = Operation.extends(function Cast(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+var Cast = Operation.extends(function Cast(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 module.exports = Cast;
 
-},{"./operation":58}],13:[function(require,module,exports){
+},{"./operation":60}],13:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -744,8 +747,8 @@ var KIND = "catch";
  * @property {Statement} body
  * @see http://php.net/manual/en/language.exceptions.php
  */
-var Catch = Statement.extends(function Catch(body, what, variable, location) {
-  Statement.apply(this, [KIND, location]);
+var Catch = Statement.extends(function Catch(body, what, variable, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.what = what;
   this.variable = variable;
@@ -753,7 +756,7 @@ var Catch = Statement.extends(function Catch(body, what, variable, location) {
 
 module.exports = Catch;
 
-},{"./statement":71}],14:[function(require,module,exports){
+},{"./statement":73}],14:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -776,8 +779,8 @@ var KIND = "class";
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
-var Class = Declaration.extends(function Class(name, ext, impl, body, flags, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var Class = Declaration.extends(function Class(name, ext, impl, body, flags, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.isAnonymous = name ? false : true;
   this.extends = ext;
   this.implements = impl;
@@ -787,7 +790,7 @@ var Class = Declaration.extends(function Class(name, ext, impl, body, flags, loc
 
 module.exports = Class;
 
-},{"./declaration":21}],15:[function(require,module,exports){
+},{"./declaration":24}],15:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -806,15 +809,15 @@ var KIND = "classconstant";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, location) {
-  Constant.apply(this, [name, value, location]);
+var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, docs, location) {
+  Constant.apply(this, [name, value, docs, location]);
   this.kind = KIND;
   this.parseFlags(flags);
 });
 
 module.exports = ClassConstant;
 
-},{"./constant":18}],16:[function(require,module,exports){
+},{"./constant":21}],16:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -832,14 +835,14 @@ var KIND = "clone";
  * @extends {Statement}
  * @property {Expression} what
  */
-var Clone = Statement.extends(function Clone(what, location) {
-  Statement.apply(this, [KIND, location]);
+var Clone = Statement.extends(function Clone(what, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
 
 module.exports = Clone;
 
-},{"./statement":71}],17:[function(require,module,exports){
+},{"./statement":73}],17:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -862,8 +865,8 @@ var KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
-var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, isStatic, location) {
-  Statement.apply(this, [KIND, location]);
+var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;
@@ -875,7 +878,77 @@ var Closure = Statement.extends(function Closure(args, byref, uses, type, nullab
 
 module.exports = Closure;
 
-},{"./statement":71}],18:[function(require,module,exports){
+},{"./statement":73}],18:[function(require,module,exports){
+"use strict";
+
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Node = require("./node");
+
+/**
+ * Abstract documentation node (ComentLine or CommentBlock)
+ * @constructor Comment
+ * @extends {Node}
+ * @property {String} value
+ */
+var Comment = Node.extends(function Comment(kind, value, docs, location) {
+  Node.apply(this, [kind, docs, location]);
+  this.value = value;
+});
+
+module.exports = Comment;
+
+},{"./node":56}],19:[function(require,module,exports){
+"use strict";
+
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Comment = require("./comment");
+var KIND = "commentblock";
+
+/**
+ * A comment block (multiline)
+ * @constructor CommentBlock
+ * @extends {Comment}
+ */
+var CommentBlock = Comment.extends(function CommentBlock(value, docs, location) {
+  Comment.apply(this, [KIND, value, docs, location]);
+});
+
+module.exports = CommentBlock;
+
+},{"./comment":18}],20:[function(require,module,exports){
+"use strict";
+
+/*!
+ * Copyright (C) 2017 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+var Comment = require("./comment");
+var KIND = "commentline";
+
+/**
+ * A single line comment
+ * @constructor CommentLine
+ * @extends {Comment}
+ */
+var CommentLine = Comment.extends(function CommentLine(value, docs, location) {
+  Comment.apply(this, [KIND, value, docs, location]);
+});
+
+module.exports = CommentLine;
+
+},{"./comment":18}],21:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -893,14 +966,14 @@ var KIND = "constant";
  * @extends {Declaration}
  * @property {Node|null} value
  */
-var Constant = Declaration.extends(function Constant(name, value, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var Constant = Declaration.extends(function Constant(name, value, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
 });
 
 module.exports = Constant;
 
-},{"./declaration":21}],19:[function(require,module,exports){
+},{"./declaration":24}],22:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -918,14 +991,14 @@ var KIND = "constref";
  * @extends {Expression}
  * @property {String|Node} name
  */
-var ConstRef = Expr.extends(function ConstRef(identifier, location) {
-  Expr.apply(this, [KIND, location]);
+var ConstRef = Expr.extends(function ConstRef(identifier, docs, location) {
+  Expr.apply(this, [KIND, docs, location]);
   this.name = identifier;
 });
 
 module.exports = ConstRef;
 
-},{"./expression":32}],20:[function(require,module,exports){
+},{"./expression":34}],23:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -942,14 +1015,14 @@ var KIND = "continue";
  * @extends {Node}
  * @property {Number|Null} level
  */
-var Continue = Node.extends(function Continue(level, location) {
-  Node.apply(this, [KIND, location]);
+var Continue = Node.extends(function Continue(level, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
 
 module.exports = Continue;
 
-},{"./node":54}],21:[function(require,module,exports){
+},{"./node":56}],24:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -961,6 +1034,7 @@ module.exports = Continue;
 var Statement = require("./statement");
 var KIND = "declaration";
 
+var IS_UNDEFINED = "";
 var IS_PUBLIC = "public";
 var IS_PROTECTED = "protected";
 var IS_PRIVATE = "private";
@@ -971,8 +1045,8 @@ var IS_PRIVATE = "private";
  * @extends {Statement}
  * @property {string} name
  */
-var Declaration = Statement.extends(function Declaration(kind, name, location) {
-  Statement.apply(this, [kind || KIND, location]);
+var Declaration = Statement.extends(function Declaration(kind, name, docs, location) {
+  Statement.apply(this, [kind || KIND, docs, location]);
   this.name = name;
 });
 
@@ -985,7 +1059,9 @@ Declaration.prototype.parseFlags = function (flags) {
   this.isAbstract = flags[2] === 1;
   this.isFinal = flags[2] === 2;
   if (this.kind !== "class") {
-    if (flags[0] === 0) {
+    if (flags[0] === -1) {
+      this.visibility = IS_UNDEFINED;
+    } else if (flags[0] === 0) {
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
       this.visibility = IS_PROTECTED;
@@ -998,7 +1074,7 @@ Declaration.prototype.parseFlags = function (flags) {
 
 module.exports = Declaration;
 
-},{"./statement":71}],22:[function(require,module,exports){
+},{"./statement":73}],25:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1018,8 +1094,8 @@ var KIND = "declare";
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
-var Declare = Block.extends(function Declare(what, body, mode, location) {
-  Block.apply(this, [KIND, body, location]);
+var Declare = Block.extends(function Declare(what, body, mode, docs, location) {
+  Block.apply(this, [KIND, body, docs, location]);
   this.what = what;
   this.mode = mode;
 });
@@ -1065,7 +1141,7 @@ Declare.MODE_NONE = "none";
 
 module.exports = Declare;
 
-},{"./block":7}],23:[function(require,module,exports){
+},{"./block":7}],26:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1083,42 +1159,15 @@ var KIND = "do";
  * @property {Expression} test
  * @property {Statement} body
  */
-var Do = Statement.extends(function Do(test, body, location) {
-  Statement.apply(this, [KIND, location]);
+var Do = Statement.extends(function Do(test, body, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
 
 module.exports = Do;
 
-},{"./statement":71}],24:[function(require,module,exports){
-"use strict";
-
-/*!
- * Copyright (C) 2017 Glayzzle (BSD3 License)
- * @authors https://github.com/glayzzle/php-parser/graphs/contributors
- * @url http://glayzzle.com
- */
-
-var Node = require("./node");
-var KIND = "doc";
-
-/**
- * A comment or documentation
- * @constructor Documentation
- * @extends {Node}
- * @property {Boolean} isDoc
- * @property {String[]} lines
- */
-var Doc = Node.extends(function Doc(isDoc, lines, location) {
-  Node.apply(this, [KIND, location]);
-  this.isDoc = isDoc;
-  this.lines = lines;
-});
-
-module.exports = Doc;
-
-},{"./node":54}],25:[function(require,module,exports){
+},{"./statement":73}],27:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1135,13 +1184,13 @@ var KIND = "echo";
  * @constructor Echo
  * @extends {Sys}
  */
-var Echo = Sys.extends(function Echo(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var Echo = Sys.extends(function Echo(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Echo;
 
-},{"./sys":76}],26:[function(require,module,exports){
+},{"./sys":78}],28:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1158,13 +1207,13 @@ var KIND = "empty";
  * @constructor Empty
  * @extends {Sys}
  */
-var Empty = Sys.extends(function Empty(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var Empty = Sys.extends(function Empty(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Empty;
 
-},{"./sys":76}],27:[function(require,module,exports){
+},{"./sys":78}],29:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1183,8 +1232,8 @@ var KIND = "encapsed";
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
-var Encapsed = Literal.extends(function Encapsed(value, type, location) {
-  Literal.apply(this, [KIND, value, location]);
+var Encapsed = Literal.extends(function Encapsed(value, type, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
   this.type = type;
 });
 
@@ -1233,7 +1282,7 @@ Encapsed.TYPE_OFFSET = "offset";
 
 module.exports = Encapsed;
 
-},{"./literal":47}],28:[function(require,module,exports){
+},{"./literal":49}],30:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1252,15 +1301,15 @@ var KIND = "entry";
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
-var Entry = Node.extends(function Entry(key, value, location) {
-  Node.apply(this, [KIND, location]);
+var Entry = Node.extends(function Entry(key, value, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
 });
 
 module.exports = Entry;
 
-},{"./node":54}],29:[function(require,module,exports){
+},{"./node":56}],31:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1281,8 +1330,8 @@ var KIND = "error";
  * @property {number|string} token
  * @property {string|array} expected
  */
-var Error = Node.extends(function Error(message, token, line, expected, location) {
-  Node.apply(this, [KIND, location]);
+var Error = Node.extends(function Error(message, token, line, expected, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.message = message;
   this.token = token;
   this.line = line;
@@ -1291,7 +1340,7 @@ var Error = Node.extends(function Error(message, token, line, expected, location
 
 module.exports = Error;
 
-},{"./node":54}],30:[function(require,module,exports){
+},{"./node":56}],32:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1309,14 +1358,14 @@ var KIND = "eval";
  * @extends {Statement}
  * @property {Node} source
  */
-var Eval = Statement.extends(function Eval(source, location) {
-  Statement.apply(this, [KIND, location]);
+var Eval = Statement.extends(function Eval(source, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.source = source;
 });
 
 module.exports = Eval;
 
-},{"./statement":71}],31:[function(require,module,exports){
+},{"./statement":73}],33:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1335,15 +1384,15 @@ var KIND = "exit";
  * @property {Node|null} status
  * @property {Boolean} useDie
  */
-var Exit = Statement.extends(function Exit(status, useDie, location) {
-  Statement.apply(this, [KIND, location]);
+var Exit = Statement.extends(function Exit(status, useDie, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.status = status;
   this.useDie = useDie;
 });
 
 module.exports = Exit;
 
-},{"./statement":71}],32:[function(require,module,exports){
+},{"./statement":73}],34:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1361,13 +1410,13 @@ var KIND = "expression";
  * @constructor Expression
  * @extends {Node}
  */
-var Expression = Node.extends(function Expression(kind, location) {
-  Node.apply(this, [kind || KIND, location]);
+var Expression = Node.extends(function Expression(kind, docs, location) {
+  Node.apply(this, [kind || KIND, docs, location]);
 });
 
 module.exports = Expression;
 
-},{"./node":54}],33:[function(require,module,exports){
+},{"./node":56}],35:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1389,8 +1438,8 @@ var KIND = "for";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.for.php
  */
-var For = Statement.extends(function For(init, test, increment, body, shortForm, location) {
-  Statement.apply(this, [KIND, location]);
+var For = Statement.extends(function For(init, test, increment, body, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.init = init;
   this.test = test;
   this.increment = increment;
@@ -1400,7 +1449,7 @@ var For = Statement.extends(function For(init, test, increment, body, shortForm,
 
 module.exports = For;
 
-},{"./statement":71}],34:[function(require,module,exports){
+},{"./statement":73}],36:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1422,8 +1471,8 @@ var KIND = "foreach";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.foreach.php
  */
-var Foreach = Statement.extends(function Foreach(source, key, value, body, shortForm, location) {
-  Statement.apply(this, [KIND, location]);
+var Foreach = Statement.extends(function Foreach(source, key, value, body, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.source = source;
   this.key = key;
   this.value = value;
@@ -1433,7 +1482,7 @@ var Foreach = Statement.extends(function Foreach(source, key, value, body, short
 
 module.exports = Foreach;
 
-},{"./statement":71}],35:[function(require,module,exports){
+},{"./statement":73}],37:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1455,8 +1504,8 @@ var KIND = "function";
  * @property {boolean} nullable
  * @property {Block|null} body
  */
-var fn = Declaration.extends(function _Function(name, args, byref, type, nullable, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var fn = Declaration.extends(function _Function(name, args, byref, type, nullable, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.arguments = args;
   this.byref = byref;
   this.type = type;
@@ -1465,7 +1514,7 @@ var fn = Declaration.extends(function _Function(name, args, byref, type, nullabl
 });
 module.exports = fn;
 
-},{"./declaration":21}],36:[function(require,module,exports){
+},{"./declaration":24}],38:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1482,14 +1531,14 @@ var KIND = "global";
  * @extends {Statement}
  * @property {Variable[]} items
  */
-var Global = Statement.extends(function Global(items, location) {
-  Statement.apply(this, [KIND, location]);
+var Global = Statement.extends(function Global(items, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
 
 module.exports = Global;
 
-},{"./statement":71}],37:[function(require,module,exports){
+},{"./statement":73}],39:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1507,14 +1556,14 @@ var KIND = "goto";
  * @property {String} label
  * @see {Label}
  */
-var Goto = Statement.extends(function Goto(label, location) {
-  Statement.apply(this, [KIND, location]);
+var Goto = Statement.extends(function Goto(label, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.label = label;
 });
 
 module.exports = Goto;
 
-},{"./statement":71}],38:[function(require,module,exports){
+},{"./statement":73}],40:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1532,14 +1581,14 @@ var KIND = "halt";
  * @property {String} after - String after the halt statement
  * @see http://php.net/manual/en/function.halt-compiler.php
  */
-var Halt = Statement.extends(function Halt(after, location) {
-  Statement.apply(this, [KIND, location]);
+var Halt = Statement.extends(function Halt(after, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.after = after;
 });
 
 module.exports = Halt;
 
-},{"./statement":71}],39:[function(require,module,exports){
+},{"./statement":73}],41:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1558,8 +1607,8 @@ var KIND = "identifier";
  * @property {string} name
  * @property {string} resolution
  */
-var Identifier = Node.extends(function Identifier(name, isRelative, location) {
-  Node.apply(this, [KIND, location]);
+var Identifier = Node.extends(function Identifier(name, isRelative, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   if (isRelative) {
     this.resolution = Identifier.RELATIVE_NAME;
   } else if (name.length === 1) {
@@ -1597,7 +1646,7 @@ Identifier.RELATIVE_NAME = "rn";
 
 module.exports = Identifier;
 
-},{"./node":54}],40:[function(require,module,exports){
+},{"./node":56}],42:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1617,8 +1666,8 @@ var KIND = "if";
  * @property {Block|If|null} alternate
  * @property {boolean} shortForm
  */
-var If = Statement.extends(function If(test, body, alternate, shortForm, location) {
-  Statement.apply(this, [KIND, location]);
+var If = Statement.extends(function If(test, body, alternate, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.alternate = alternate;
@@ -1627,7 +1676,7 @@ var If = Statement.extends(function If(test, body, alternate, shortForm, locatio
 
 module.exports = If;
 
-},{"./statement":71}],41:[function(require,module,exports){
+},{"./statement":73}],43:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1647,8 +1696,8 @@ var KIND = "include";
  * @property {boolean} once
  * @property {boolean} require
  */
-var Include = Statement.extends(function Include(once, require, target, location) {
-  Statement.apply(this, [KIND, location]);
+var Include = Statement.extends(function Include(once, require, target, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.once = once;
   this.require = require;
   this.target = target;
@@ -1656,7 +1705,7 @@ var Include = Statement.extends(function Include(once, require, target, location
 
 module.exports = Include;
 
-},{"./statement":71}],42:[function(require,module,exports){
+},{"./statement":73}],44:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1673,13 +1722,13 @@ var KIND = "inline";
  * @constructor Inline
  * @extends {Literal}
  */
-var Inline = Literal.extends(function Inline(value, location) {
-  Literal.apply(this, [KIND, value, location]);
+var Inline = Literal.extends(function Inline(value, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
 });
 
 module.exports = Inline;
 
-},{"./literal":47}],43:[function(require,module,exports){
+},{"./literal":49}],45:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1698,15 +1747,15 @@ var KIND = "interface";
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
  */
-var Interface = Declaration.extends(function Interface(name, ext, body, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var Interface = Declaration.extends(function Interface(name, ext, body, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.body = body;
 });
 
 module.exports = Interface;
 
-},{"./declaration":21}],44:[function(require,module,exports){
+},{"./declaration":24}],46:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1723,13 +1772,13 @@ var KIND = "isset";
  * @constructor Isset
  * @extends {Sys}
  */
-var Isset = Sys.extends(function Isset(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var Isset = Sys.extends(function Isset(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Isset;
 
-},{"./sys":76}],45:[function(require,module,exports){
+},{"./sys":78}],47:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1746,14 +1795,14 @@ var KIND = "label";
  * @extends {Node}
  * @property {String} name
  */
-var Label = Node.extends(function Label(name, location) {
-  Node.apply(this, [KIND, location]);
+var Label = Node.extends(function Label(name, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.name = name;
 });
 
 module.exports = Label;
 
-},{"./node":54}],46:[function(require,module,exports){
+},{"./node":56}],48:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1770,13 +1819,13 @@ var KIND = "list";
  * @constructor List
  * @extends {Sys}
  */
-var List = Sys.extends(function List(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var List = Sys.extends(function List(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = List;
 
-},{"./sys":76}],47:[function(require,module,exports){
+},{"./sys":78}],49:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1794,14 +1843,14 @@ var KIND = "literal";
  * @extends {Expression}
  * @property {Node|string|number|boolean|null} value
  */
-var Literal = Expr.extends(function Literal(kind, value, location) {
-  Expr.apply(this, [kind || KIND, location]);
+var Literal = Expr.extends(function Literal(kind, value, docs, location) {
+  Expr.apply(this, [kind || KIND, docs, location]);
   this.value = value;
 });
 
 module.exports = Literal;
 
-},{"./expression":32}],48:[function(require,module,exports){
+},{"./expression":34}],50:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1825,7 +1874,7 @@ var Location = function Location(source, start, end) {
 
 module.exports = Location;
 
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1844,15 +1893,15 @@ var KIND = "lookup";
  * @property {Expression} what
  * @property {Expression} offset
  */
-var Lookup = Expr.extends(function Lookup(kind, what, offset, location) {
-  Expr.apply(this, [kind || KIND, location]);
+var Lookup = Expr.extends(function Lookup(kind, what, offset, docs, location) {
+  Expr.apply(this, [kind || KIND, docs, location]);
   this.what = what;
   this.offset = offset;
 });
 
 module.exports = Lookup;
 
-},{"./expression":32}],50:[function(require,module,exports){
+},{"./expression":34}],52:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1869,13 +1918,13 @@ var KIND = "magic";
  * @constructor Magic
  * @extends {Literal}
  */
-var Magic = Literal.extends(function Magic(value, location) {
-  Literal.apply(this, [KIND, value, location]);
+var Magic = Literal.extends(function Magic(value, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
 });
 
 module.exports = Magic;
 
-},{"./literal":47}],51:[function(require,module,exports){
+},{"./literal":49}],53:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1903,7 +1952,7 @@ var Method = fn.extends(function Method() {
 
 module.exports = Method;
 
-},{"./function":35}],52:[function(require,module,exports){
+},{"./function":37}],54:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1922,15 +1971,15 @@ var KIND = "namespace";
  * @property {String} name
  * @property {Boolean} withBrackets
  */
-var Namespace = Block.extends(function Namespace(name, children, withBrackets, location) {
-  Block.apply(this, [KIND, children, location]);
+var Namespace = Block.extends(function Namespace(name, children, withBrackets, docs, location) {
+  Block.apply(this, [KIND, children, docs, location]);
   this.name = name;
   this.withBrackets = withBrackets || false;
 });
 
 module.exports = Namespace;
 
-},{"./block":7}],53:[function(require,module,exports){
+},{"./block":7}],55:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -1948,15 +1997,15 @@ var KIND = "new";
  * @property {Identifier|Variable|Class} what
  * @property {Arguments[]} arguments
  */
-var New = Statement.extends(function New(what, args, location) {
-  Statement.apply(this, [KIND, location]);
+var New = Statement.extends(function New(what, args, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });
 
 module.exports = New;
 
-},{"./statement":71}],54:[function(require,module,exports){
+},{"./statement":73}],56:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -1969,10 +2018,15 @@ module.exports = New;
  * A generic AST node
  * @constructor Node
  * @property {Location|null} loc
+ * @property {Comment[]} leadingComments
+ * @property {Comment[]?} trailingComments
  * @property {String} kind
  */
-var Node = function Node(kind, location) {
+var Node = function Node(kind, docs, location) {
   this.kind = kind;
+  if (docs) {
+    this.leadingComments = docs;
+  }
   if (location) {
     this.loc = location;
   }
@@ -1992,7 +2046,7 @@ Node.extends = function (constructor) {
 
 module.exports = Node;
 
-},{}],55:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2011,14 +2065,14 @@ var KIND = "nowdoc";
  * @property {String} label
 
  */
-var Nowdoc = Literal.extends(function Nowdoc(value, label, location) {
-  Literal.apply(this, [KIND, value, location]);
+var Nowdoc = Literal.extends(function Nowdoc(value, label, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
   this.label = label;
 });
 
 module.exports = Nowdoc;
 
-},{"./literal":47}],56:[function(require,module,exports){
+},{"./literal":49}],58:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2035,13 +2089,13 @@ var KIND = "number";
  * @constructor Number
  * @extends {Literal}
  */
-var _Number = Literal.extends(function Number(value, location) {
-  Literal.apply(this, [KIND, value, location]);
+var _Number = Literal.extends(function Number(value, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
 });
 
 module.exports = _Number;
 
-},{"./literal":47}],57:[function(require,module,exports){
+},{"./literal":49}],59:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2057,13 +2111,13 @@ var KIND = "offsetlookup";
  * @constructor OffsetLookup
  * @extends {Lookup}
  */
-var OffsetLookup = Lookup.extends(function OffsetLookup(what, offset, location) {
-  Lookup.apply(this, [KIND, what, offset, location]);
+var OffsetLookup = Lookup.extends(function OffsetLookup(what, offset, docs, location) {
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 module.exports = OffsetLookup;
 
-},{"./lookup":49}],58:[function(require,module,exports){
+},{"./lookup":51}],60:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2079,13 +2133,13 @@ var KIND = "operation";
  * @constructor Operation
  * @extends {Expression}
  */
-var Operation = Expr.extends(function Operation(kind, location) {
-  Expr.apply(this, [kind || KIND, location]);
+var Operation = Expr.extends(function Operation(kind, docs, location) {
+  Expr.apply(this, [kind || KIND, docs, location]);
 });
 
 module.exports = Operation;
 
-},{"./expression":32}],59:[function(require,module,exports){
+},{"./expression":34}],61:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2107,8 +2161,8 @@ var KIND = "parameter";
  * @property {boolean} variadic
  * @property {boolean} nullable
  */
-var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, nullable, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, nullable, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.type = type;
   this.byref = isRef;
@@ -2118,7 +2172,7 @@ var Parameter = Declaration.extends(function Parameter(name, type, value, isRef,
 
 module.exports = Parameter;
 
-},{"./declaration":21}],60:[function(require,module,exports){
+},{"./declaration":24}],62:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2135,14 +2189,14 @@ var KIND = "parenthesis";
  * @extends {Operation}
  * @property {Expression} inner
  */
-var Parenthesis = Operation.extends(function Parenthesis(inner, location) {
-  Operation.apply(this, [KIND, location]);
+var Parenthesis = Operation.extends(function Parenthesis(inner, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.inner = inner;
 });
 
 module.exports = Parenthesis;
 
-},{"./operation":58}],61:[function(require,module,exports){
+},{"./operation":60}],63:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2166,7 +2220,7 @@ var Position = function Position(line, column, offset) {
 
 module.exports = Position;
 
-},{}],62:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2184,15 +2238,15 @@ var KIND = "post";
  * @property {String} type
  * @property {Variable} what
  */
-var Post = Operation.extends(function Post(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+var Post = Operation.extends(function Post(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 module.exports = Post;
 
-},{"./operation":58}],63:[function(require,module,exports){
+},{"./operation":60}],65:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2210,15 +2264,15 @@ var KIND = "pre";
  * @property {String} type
  * @property {Variable} what
  */
-var Pre = Operation.extends(function Pre(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+var Pre = Operation.extends(function Pre(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 module.exports = Pre;
 
-},{"./operation":58}],64:[function(require,module,exports){
+},{"./operation":60}],66:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2235,13 +2289,13 @@ var KIND = "print";
  * @constructor Print
  * @extends {Sys}
  */
-var Print = Sys.extends(function Print(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var Print = Sys.extends(function Print(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Print;
 
-},{"./sys":76}],65:[function(require,module,exports){
+},{"./sys":78}],67:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2258,15 +2312,19 @@ var KIND = "program";
  * @constructor Program
  * @extends {Block}
  * @property {Error[]} errors
+ * @property {Doc[]?} comments
  */
-var Program = Block.extends(function Program(children, errors, location) {
-  Block.apply(this, [KIND, children, location]);
+var Program = Block.extends(function Program(children, errors, comments, docs, location) {
+  Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
+  if (comments) {
+    this.comments = comments;
+  }
 });
 
 module.exports = Program;
 
-},{"./block":7}],66:[function(require,module,exports){
+},{"./block":7}],68:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2287,15 +2345,15 @@ var KIND = "property";
  * @property {string} visibility
  * @property {Node|null} value
  */
-var Property = Declaration.extends(function Property(name, value, flags, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var Property = Declaration.extends(function Property(name, value, flags, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.parseFlags(flags);
 });
 
 module.exports = Property;
 
-},{"./declaration":21}],67:[function(require,module,exports){
+},{"./declaration":24}],69:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2311,13 +2369,13 @@ var KIND = "propertylookup";
  * @constructor PropertyLookup
  * @extends {Lookup}
  */
-var PropertyLookup = Lookup.extends(function PropertyLookup(what, offset, location) {
-  Lookup.apply(this, [KIND, what, offset, location]);
+var PropertyLookup = Lookup.extends(function PropertyLookup(what, offset, docs, location) {
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 module.exports = PropertyLookup;
 
-},{"./lookup":49}],68:[function(require,module,exports){
+},{"./lookup":51}],70:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2336,8 +2394,8 @@ var KIND = "retif";
  * @property {Expression} trueExpr
  * @property {Expression} falseExpr
  */
-var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location) {
-  Statement.apply(this, [KIND, location]);
+var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.trueExpr = trueExpr;
   this.falseExpr = falseExpr;
@@ -2345,7 +2403,7 @@ var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, location
 
 module.exports = RetIf;
 
-},{"./statement":71}],69:[function(require,module,exports){
+},{"./statement":73}],71:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2362,14 +2420,14 @@ var KIND = "return";
  * @extends {Node}
  * @property {Expression|null} expr
  */
-var Return = Node.extends(function Return(expr, location) {
-  Node.apply(this, [KIND, location]);
+var Return = Node.extends(function Return(expr, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
 
 module.exports = Return;
 
-},{"./node":54}],70:[function(require,module,exports){
+},{"./node":56}],72:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2386,14 +2444,14 @@ var KIND = "silent";
  * @extends {Statement}
  * @property {Expression} expr
  */
-var Silent = Statement.extends(function Silent(expr, location) {
-  Statement.apply(this, [KIND, location]);
+var Silent = Statement.extends(function Silent(expr, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
 
 module.exports = Silent;
 
-},{"./statement":71}],71:[function(require,module,exports){
+},{"./statement":73}],73:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2410,13 +2468,13 @@ var KIND = "statement";
  * @constructor Statement
  * @extends {Node}
  */
-var Statement = Node.extends(function Statement(kind, location) {
-  Node.apply(this, [kind || KIND, location]);
+var Statement = Node.extends(function Statement(kind, docs, location) {
+  Node.apply(this, [kind || KIND, docs, location]);
 });
 
 module.exports = Statement;
 
-},{"./node":54}],72:[function(require,module,exports){
+},{"./node":56}],74:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2433,14 +2491,14 @@ var KIND = "static";
  * @extends {Statement}
  * @property {Variable[]|Assign[]} items
  */
-var Static = Statement.extends(function Static(items, location) {
-  Statement.apply(this, [KIND, location]);
+var Static = Statement.extends(function Static(items, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
 
 module.exports = Static;
 
-},{"./statement":71}],73:[function(require,module,exports){
+},{"./statement":73}],75:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2456,13 +2514,13 @@ var KIND = "staticlookup";
  * @constructor StaticLookup
  * @extends {Lookup}
  */
-var StaticLookup = Lookup.extends(function StaticLookup(what, offset, location) {
-  Lookup.apply(this, [KIND, what, offset, location]);
+var StaticLookup = Lookup.extends(function StaticLookup(what, offset, docs, location) {
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 module.exports = StaticLookup;
 
-},{"./lookup":49}],74:[function(require,module,exports){
+},{"./lookup":51}],76:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2481,14 +2539,14 @@ var KIND = "string";
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-var String = Literal.extends(function String(isDoubleQuote, value, location) {
-  Literal.apply(this, [KIND, value, location]);
+var String = Literal.extends(function String(isDoubleQuote, value, docs, location) {
+  Literal.apply(this, [KIND, value, docs, location]);
   this.isDoubleQuote = isDoubleQuote;
 });
 
 module.exports = String;
 
-},{"./literal":47}],75:[function(require,module,exports){
+},{"./literal":49}],77:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2507,8 +2565,8 @@ var KIND = "switch";
  * @property {Block} body
  * @property {boolean} shortForm
  */
-var Switch = Statement.extends(function Switch(test, body, shortForm, location) {
-  Statement.apply(this, [KIND, location]);
+var Switch = Statement.extends(function Switch(test, body, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.shortForm = shortForm;
@@ -2516,7 +2574,7 @@ var Switch = Statement.extends(function Switch(test, body, shortForm, location) 
 
 module.exports = Switch;
 
-},{"./statement":71}],76:[function(require,module,exports){
+},{"./statement":73}],78:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2534,14 +2592,14 @@ var KIND = "sys";
  * @extends {Statement}
  * @property {Node[]} arguments
  */
-var Sys = Statement.extends(function Sys(kind, args, location) {
-  Statement.apply(this, [kind || KIND, location]);
+var Sys = Statement.extends(function Sys(kind, args, docs, location) {
+  Statement.apply(this, [kind || KIND, docs, location]);
   this.arguments = args;
 });
 
 module.exports = Sys;
 
-},{"./statement":71}],77:[function(require,module,exports){
+},{"./statement":73}],79:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2558,14 +2616,14 @@ var KIND = "throw";
  * @extends {Statement}
  * @property {Expression} what
  */
-var Throw = Statement.extends(function Throw(what, location) {
-  Statement.apply(this, [KIND, location]);
+var Throw = Statement.extends(function Throw(what, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
 
 module.exports = Throw;
 
-},{"./statement":71}],78:[function(require,module,exports){
+},{"./statement":73}],80:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2585,8 +2643,8 @@ var KIND = "trait";
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
  */
-var Trait = Declaration.extends(function Trait(name, ext, impl, body, location) {
-  Declaration.apply(this, [KIND, name, location]);
+var Trait = Declaration.extends(function Trait(name, ext, impl, body, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.implements = impl;
   this.body = body;
@@ -2594,7 +2652,7 @@ var Trait = Declaration.extends(function Trait(name, ext, impl, body, location) 
 
 module.exports = Trait;
 
-},{"./declaration":21}],79:[function(require,module,exports){
+},{"./declaration":24}],81:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2606,6 +2664,7 @@ module.exports = Trait;
 var Node = require("./node");
 var KIND = "traitalias";
 
+var IS_UNDEFINED = "";
 var IS_PUBLIC = "public";
 var IS_PROTECTED = "protected";
 var IS_PRIVATE = "private";
@@ -2619,27 +2678,26 @@ var IS_PRIVATE = "private";
  * @property {string|null} as
  * @property {string|null} visibility
  */
-var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, location) {
-  Node.apply(this, [KIND, location]);
+var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
   this.as = as;
+  this.visibility = IS_UNDEFINED;
   if (flags) {
     if (flags[0] === 0) {
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
       this.visibility = IS_PROTECTED;
-    } else {
+    } else if (flags[0] === 2) {
       this.visibility = IS_PRIVATE;
     }
-  } else {
-    this.visibility = null;
   }
 });
 
 module.exports = TraitAlias;
 
-},{"./node":54}],80:[function(require,module,exports){
+},{"./node":56}],82:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2659,8 +2717,8 @@ var KIND = "traitprecedence";
  * @property {string} method
  * @property {Identifier[]} instead
  */
-var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, instead, location) {
-  Node.apply(this, [KIND, location]);
+var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, instead, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
   this.instead = instead;
@@ -2668,7 +2726,7 @@ var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, inste
 
 module.exports = TraitPrecedence;
 
-},{"./node":54}],81:[function(require,module,exports){
+},{"./node":56}],83:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2687,15 +2745,15 @@ var KIND = "traituse";
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations
  */
-var TraitUse = Node.extends(function TraitUse(traits, adaptations, location) {
-  Node.apply(this, [KIND, location]);
+var TraitUse = Node.extends(function TraitUse(traits, adaptations, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.traits = traits;
   this.adaptations = adaptations;
 });
 
 module.exports = TraitUse;
 
-},{"./node":54}],82:[function(require,module,exports){
+},{"./node":56}],84:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2714,8 +2772,8 @@ var KIND = "try";
  * @property {Catch[]} catches
  * @property {Block} allways
  */
-var Try = Statement.extends(function Try(body, catches, always, location) {
-  Statement.apply(this, [KIND, location]);
+var Try = Statement.extends(function Try(body, catches, always, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.catches = catches;
   this.always = always;
@@ -2723,7 +2781,7 @@ var Try = Statement.extends(function Try(body, catches, always, location) {
 
 module.exports = Try;
 
-},{"./statement":71}],83:[function(require,module,exports){
+},{"./statement":73}],85:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2741,15 +2799,15 @@ var KIND = "unary";
  * @property {String} type
  * @property {Expression} what
  */
-var Unary = Operation.extends(function Unary(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+var Unary = Operation.extends(function Unary(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 module.exports = Unary;
 
-},{"./operation":58}],84:[function(require,module,exports){
+},{"./operation":60}],86:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -2766,13 +2824,13 @@ var KIND = "unset";
  * @constructor Unset
  * @extends {Sys}
  */
-var Unset = Sys.extends(function Unset(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+var Unset = Sys.extends(function Unset(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Unset;
 
-},{"./sys":76}],85:[function(require,module,exports){
+},{"./sys":78}],87:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2793,8 +2851,8 @@ var KIND = "usegroup";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseGroup = Statement.extends(function UseGroup(name, type, items, location) {
-  Statement.apply(this, [KIND, location]);
+var UseGroup = Statement.extends(function UseGroup(name, type, items, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.type = type;
   this.items = items;
@@ -2802,7 +2860,7 @@ var UseGroup = Statement.extends(function UseGroup(name, type, items, location) 
 
 module.exports = UseGroup;
 
-},{"./statement":71}],86:[function(require,module,exports){
+},{"./statement":73}],88:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2823,8 +2881,8 @@ var KIND = "useitem";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseItem = Statement.extends(function UseItem(name, alias, type, location) {
-  Statement.apply(this, [KIND, location]);
+var UseItem = Statement.extends(function UseItem(name, alias, type, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.alias = alias;
   this.type = type;
@@ -2843,7 +2901,7 @@ UseItem.TYPE_FUNCTION = "function";
 
 module.exports = UseItem;
 
-},{"./statement":71}],87:[function(require,module,exports){
+},{"./statement":73}],89:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2873,8 +2931,8 @@ var KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-var Variable = Expr.extends(function Variable(name, byref, curly, location) {
-  Expr.apply(this, [KIND, location]);
+var Variable = Expr.extends(function Variable(name, byref, curly, docs, location) {
+  Expr.apply(this, [KIND, docs, location]);
   this.name = name;
   this.byref = byref || false;
   this.curly = curly || false;
@@ -2882,7 +2940,7 @@ var Variable = Expr.extends(function Variable(name, byref, curly, location) {
 
 module.exports = Variable;
 
-},{"./expression":32}],88:[function(require,module,exports){
+},{"./expression":34}],90:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2900,14 +2958,14 @@ var KIND = "variadic";
  * @property {Array|Expression} what
  * @see https://wiki.php.net/rfc/argument_unpacking
  */
-var variadic = Expr.extends(function variadic(what, location) {
-  Expr.apply(this, [KIND, location]);
+var variadic = Expr.extends(function variadic(what, docs, location) {
+  Expr.apply(this, [KIND, docs, location]);
   this.what = what;
 });
 
 module.exports = variadic;
 
-},{"./expression":32}],89:[function(require,module,exports){
+},{"./expression":34}],91:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2926,8 +2984,8 @@ var KIND = "while";
  * @property {Statement} body
  * @property {boolean} shortForm
  */
-var While = Statement.extends(function While(test, body, shortForm, location) {
-  Statement.apply(this, [KIND, location]);
+var While = Statement.extends(function While(test, body, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.shortForm = shortForm;
@@ -2935,7 +2993,7 @@ var While = Statement.extends(function While(test, body, shortForm, location) {
 
 module.exports = While;
 
-},{"./statement":71}],90:[function(require,module,exports){
+},{"./statement":73}],92:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2954,15 +3012,15 @@ var KIND = "yield";
  * @property {Expression|Null} key
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-var Yield = Expression.extends(function Yield(value, key, location) {
-  Expression.apply(this, [KIND, location]);
+var Yield = Expression.extends(function Yield(value, key, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.value = value;
   this.key = key;
 });
 
 module.exports = Yield;
 
-},{"./expression":32}],91:[function(require,module,exports){
+},{"./expression":34}],93:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -2980,14 +3038,14 @@ var KIND = "yieldfrom";
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-var YieldFrom = Expression.extends(function YieldFrom(value, location) {
-  Expression.apply(this, [KIND, location]);
+var YieldFrom = Expression.extends(function YieldFrom(value, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.value = value;
 });
 
 module.exports = YieldFrom;
 
-},{"./expression":32}],92:[function(require,module,exports){
+},{"./expression":34}],94:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3413,7 +3471,7 @@ lexer.prototype.next = function () {
 
 module.exports = lexer;
 
-},{"./lexer/comments.js":93,"./lexer/initial.js":94,"./lexer/numbers.js":95,"./lexer/property.js":96,"./lexer/scripting.js":97,"./lexer/strings.js":98,"./lexer/tokens.js":99,"./lexer/utils.js":100}],93:[function(require,module,exports){
+},{"./lexer/comments.js":95,"./lexer/initial.js":96,"./lexer/numbers.js":97,"./lexer/property.js":98,"./lexer/scripting.js":99,"./lexer/strings.js":100,"./lexer/tokens.js":101,"./lexer/utils.js":102}],95:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -3472,7 +3530,7 @@ module.exports = {
   }
 };
 
-},{}],94:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -3531,7 +3589,7 @@ module.exports = {
   }
 };
 
-},{}],95:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 (function (process){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
@@ -3653,7 +3711,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"_process":2}],96:[function(require,module,exports){
+},{"_process":2}],98:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -3735,7 +3793,7 @@ module.exports = {
   }
 };
 
-},{}],97:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -3837,7 +3895,7 @@ module.exports = {
   }
 };
 
-},{}],98:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -4241,7 +4299,7 @@ module.exports = {
   }
 };
 
-},{}],99:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -4514,7 +4572,7 @@ module.exports = {
   }
 };
 
-},{}],100:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -4588,7 +4646,7 @@ module.exports = {
   }
 };
 
-},{}],101:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -4663,13 +4721,19 @@ parser.prototype.parse = function (code, filename) {
   this._errors = [];
   this.filename = filename || "eval";
   this.currentNamespace = [""];
+  if (this.extractDoc) {
+    this._docs = [];
+  } else {
+    this._docs = null;
+  }
+  this._docIndex = 0;
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
-  var program = this.ast.prepare("program", this);
+  var program = this.ast.prepare("program", null, this);
   var childs = [];
-  this.nextWithComments();
+  this.next();
   while (this.token != this.EOF) {
     var node = this.read_start();
     if (node !== null && node !== undefined) {
@@ -4680,7 +4744,7 @@ parser.prototype.parse = function (code, filename) {
       }
     }
   }
-  return program(childs, this._errors);
+  return program(childs, this._errors, this._docs);
 };
 
 /**
@@ -4696,7 +4760,7 @@ parser.prototype.raiseError = function (message, msgExpect, expect, token) {
     throw err;
   }
   // Error node :
-  var node = this.ast.prepare("error", this)(message, token, this.lexer.yylloc.first_line, expect);
+  var node = this.ast.prepare("error", null, this)(message, token, this.lexer.yylloc.first_line, expect);
   this._errors.push(node);
   return node;
 };
@@ -4732,7 +4796,14 @@ parser.prototype.error = function (expect) {
  * Creates a new AST node
  */
 parser.prototype.node = function (name) {
-  return this.ast.prepare(name, this);
+  if (this.extractDoc) {
+    if (this._docIndex < this._docs.length) {
+      var docs = this._docs.slice(this._docIndex);
+      this._docIndex = this._docs.length;
+      return this.ast.prepare(name, docs, this);
+    }
+  }
+  return this.ast.prepare(name, null, this);
 };
 
 /**
@@ -4741,13 +4812,13 @@ parser.prototype.node = function (name) {
  */
 parser.prototype.expectEndOfStatement = function () {
   if (this.token === ";") {
-    this.nextWithComments();
+    this.next();
     if (this.token === this.tok.T_CLOSE_TAG) {
       // strip close tag (statement already closed with ';')
-      this.nextWithComments();
+      this.next();
     }
   } else if (this.token === this.tok.T_CLOSE_TAG) {
-    this.nextWithComments();
+    this.next();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(";");
     return false;
@@ -4756,7 +4827,7 @@ parser.prototype.expectEndOfStatement = function () {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ["parser.next", "parser.ignoreComments", "parser.nextWithComments"];
+var ignoreStack = ["parser.next"];
 parser.prototype.showlog = function () {
   var stack = new Error().stack.split("\n");
   var line = void 0;
@@ -4814,32 +4885,29 @@ parser.prototype.text = function () {
 
 /** consume the next token **/
 parser.prototype.next = function () {
+  // prepare the back command
+  this.prev = [this.lexer.yylloc.first_line, this.lexer.yylloc.first_column, this.lexer.offset];
+
+  // eating the token
+  this.token = this.lexer.lex() || this.EOF;
+
+  // showing the debug
   if (this.debug) {
     this.showlog();
-    this.debug = false;
-    this.nextWithComments().ignoreComments();
-    this.debug = true;
-  } else {
-    this.nextWithComments().ignoreComments();
   }
-  return this;
-};
 
-/** consume comments (if found) **/
-parser.prototype.ignoreComments = function () {
-  if (this.debug) this.showlog();
-  while (this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
-    // IGNORE COMMENTS
-    this.nextWithComments();
+  // handling comments
+  if (this.extractDoc) {
+    while (this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
+      // APPEND COMMENTS
+      if (this.token === this.tok.T_COMMENT) {
+        this._docs.push(this.read_comment());
+      } else {
+        this._docs.push(this.read_doc_comment());
+      }
+    }
   }
-  return this;
-};
 
-/** consume the next token (including doc) **/
-parser.prototype.nextWithComments = function () {
-  this.prev = [this.lexer.yylloc.first_line, this.lexer.yylloc.first_column, this.lexer.offset];
-  this.token = this.lexer.lex() || this.EOF;
-  if (this.debug) this.showlog();
   return this;
 };
 
@@ -4862,7 +4930,7 @@ parser.prototype.is = function (type) {
 
 module.exports = parser;
 
-},{"./parser/array.js":102,"./parser/class.js":103,"./parser/comment.js":104,"./parser/expr.js":105,"./parser/function.js":106,"./parser/if.js":107,"./parser/loops.js":108,"./parser/main.js":109,"./parser/namespace.js":110,"./parser/scalar.js":111,"./parser/statement.js":112,"./parser/switch.js":113,"./parser/try.js":114,"./parser/utils.js":115,"./parser/variable.js":116}],102:[function(require,module,exports){
+},{"./parser/array.js":104,"./parser/class.js":105,"./parser/comment.js":106,"./parser/expr.js":107,"./parser/function.js":108,"./parser/if.js":109,"./parser/loops.js":110,"./parser/main.js":111,"./parser/namespace.js":112,"./parser/scalar.js":113,"./parser/statement.js":114,"./parser/switch.js":115,"./parser/try.js":116,"./parser/utils.js":117,"./parser/variable.js":118}],104:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -4955,7 +5023,7 @@ module.exports = {
   }
 };
 
-},{}],103:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -4985,7 +5053,7 @@ module.exports = {
       propImplements = this.next().read_name_list();
     }
     this.expect("{");
-    var body = this.nextWithComments().read_class_body();
+    var body = this.next().read_class_body();
     return result(propName, propExtends, propImplements, body, flag);
   },
   /**
@@ -5037,8 +5105,9 @@ module.exports = {
       // check constant
       if (this.token === this.tok.T_CONST) {
         var constants = this.read_constant_list(flags);
-        this.expect(";");
-        this.nextWithComments();
+        if (this.expect(";")) {
+          this.next();
+        }
         result = result.concat(constants);
         continue;
       }
@@ -5053,7 +5122,7 @@ module.exports = {
         // reads a variable
         var variables = this.read_variable_list(flags);
         this.expect(";");
-        this.nextWithComments();
+        this.next();
         result = result.concat(variables);
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
@@ -5066,7 +5135,7 @@ module.exports = {
       }
     }
     this.expect("}");
-    this.nextWithComments();
+    this.next();
     return result;
   },
   /**
@@ -5194,7 +5263,6 @@ module.exports = {
       } while (this.next().is("T_MEMBER_FLAGS"));
     }
 
-    if (result[0] == -1) result[0] = 0;
     if (result[1] == -1) result[1] = 0;
     if (result[2] == -1) result[2] = 0;
     return result;
@@ -5252,7 +5320,7 @@ module.exports = {
       if (this.token == this.tok.T_CONST) {
         var constants = this.read_constant_list(flags);
         if (this.expect(";")) {
-          this.nextWithComments();
+          this.next();
         }
         result = result.concat(constants);
       } else if (this.token === this.tok.T_FUNCTION) {
@@ -5261,7 +5329,7 @@ module.exports = {
         method.parseFlags(flags);
         result.push(method);
         if (this.expect(";")) {
-          this.nextWithComments();
+          this.next();
         }
       } else {
         // raise an error
@@ -5326,11 +5394,11 @@ module.exports = {
         this.expect(";");
       }
       if (this.expect("}")) {
-        this.nextWithComments();
+        this.next();
       }
     } else {
       if (this.expect(";")) {
-        this.nextWithComments();
+        this.next();
       }
     }
     return node(traits, adaptations);
@@ -5374,7 +5442,7 @@ module.exports = {
       return node("traitprecedence", trait, method, this.next().read_name_list());
     } else if (this.token === this.tok.T_AS) {
       // handle trait alias
-      var flags = false;
+      var flags = null;
       var alias = null;
       if (this.next().is("T_MEMBER_FLAGS")) {
         flags = this.read_member_flags();
@@ -5397,7 +5465,7 @@ module.exports = {
   }
 };
 
-},{}],104:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -5406,47 +5474,28 @@ module.exports = {
  * @url http://glayzzle.com
  */
 
-var docSplit = /^(\s*\*[ \t]*|[ \t]*)(.*)$/gm;
-
 module.exports = {
   /**
    *  Comments with // or # or / * ... * /
    */
   read_comment: function read_comment() {
-    var result = this.node("doc");
-    var lines = [];
-    do {
-      var line = this.text();
-      if (line[0] === "#") {
-        line = line.substring(1);
-      } else {
-        line = line.substring(2);
-        if (line.substring(line.length - 2) === "*/") {
-          line = line.substring(0, line.length - 2);
-        }
-      }
-      lines.push(line.trim());
-    } while (this.nextWithComments().token === this.tok.T_COMMENT);
-    return result(false, lines);
+    var text = this.text();
+    var result = this.ast.prepare(text.substring(0, 2) === "/*" ? "commentblock" : "commentline", null, this);
+    this.token = this.lexer.lex() || this.EOF;
+    return result(text);
   },
   /**
    * Comments with / ** ... * /
    */
   read_doc_comment: function read_doc_comment() {
-    var result = this.node("doc");
+    var result = this.ast.prepare("commentblock", null, this);
     var text = this.text();
-    text = text.substring(2, text.length - 2);
-    var lines = [];
-    text = text.split(docSplit);
-    for (var i = 2; i < text.length; i += 3) {
-      lines.push(text[i].trim());
-    }
-    this.nextWithComments();
-    return result(true, lines);
+    this.token = this.lexer.lex() || this.EOF;
+    return result(text);
   }
 };
 
-},{}],105:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -5680,7 +5729,7 @@ module.exports = {
 
       case this.tok.T_EXIT:
         {
-          var useDie = this.lexer.yytext.toLowerCase() === 'die';
+          var useDie = this.lexer.yytext.toLowerCase() === "die";
           result = this.node("exit");
           var status = null;
           if (this.next().token === "(") {
@@ -5927,7 +5976,7 @@ module.exports = {
   }
 };
 
-},{}],106:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -5942,7 +5991,7 @@ module.exports = {
    */
   is_reference: function is_reference() {
     if (this.token == "&") {
-      this.next().ignoreComments();
+      this.next();
       return true;
     }
     return false;
@@ -5952,7 +6001,7 @@ module.exports = {
    */
   is_variadic: function is_variadic() {
     if (this.token === this.tok.T_ELLIPSIS) {
-      this.next().ignoreComments();
+      this.next();
       return true;
     }
     return false;
@@ -5969,7 +6018,7 @@ module.exports = {
       // abstract function :
       result.parseFlags(flag);
       if (this.expect(";")) {
-        this.nextWithComments();
+        this.next();
       }
     } else {
       if (this.expect("{")) {
@@ -6000,7 +6049,7 @@ module.exports = {
     var result = this.node(nodeName);
 
     if (this.expect(this.tok.T_FUNCTION)) {
-      this.next().ignoreComments();
+      this.next();
     }
     var isRef = this.is_reference();
     var name = false,
@@ -6179,7 +6228,7 @@ module.exports = {
   }
 };
 
-},{}],107:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -6224,10 +6273,6 @@ module.exports = {
       this.expectEndOfStatement();
     } else {
       body = this.read_statement();
-      /**
-       * ignore : if (..) { } /* *./ else { }
-       */
-      this.ignoreComments();
       if (this.token === this.tok.T_ELSEIF) {
         alternate = this.next().read_if();
       } else if (this.token === this.tok.T_ELSE) {
@@ -6284,7 +6329,7 @@ module.exports = {
   }
 };
 
-},{}],108:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6330,7 +6375,7 @@ module.exports = {
     var test = null;
     var body = null;
     body = this.read_statement();
-    if (this.ignoreComments().expect(this.tok.T_WHILE)) {
+    if (this.expect(this.tok.T_WHILE)) {
       if (this.next().expect("(")) this.next();
       test = this.read_expr();
       if (this.expect(")")) this.next();
@@ -6399,7 +6444,7 @@ module.exports = {
     var shortForm = false;
     if (this.expect("(")) this.next();
     source = this.read_expr();
-    if (this.ignoreComments().expect(this.tok.T_AS)) {
+    if (this.expect(this.tok.T_AS)) {
       this.next();
       value = this.read_foreach_variable();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
@@ -6443,7 +6488,7 @@ module.exports = {
   }
 };
 
-},{}],109:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -6467,7 +6512,7 @@ module.exports = {
   }
 };
 
-},{}],110:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -6493,20 +6538,20 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == "{") {
       this.currentNamespace = [""];
-      body = this.nextWithComments().read_top_statements();
-      this.expect("}") && this.nextWithComments();
+      body = this.next().read_top_statements();
+      this.expect("}") && this.next();
       return result([""], body, true);
     } else {
       var name = this.read_namespace_name();
       if (this.token == ";") {
         this.currentNamespace = name;
-        body = this.nextWithComments().read_top_statements();
+        body = this.next().read_top_statements();
         this.expect(this.EOF);
         return result(name.name, body, false);
       } else if (this.token == "{") {
         this.currentNamespace = name;
-        body = this.nextWithComments().read_top_statements();
-        this.expect("}") && this.nextWithComments();
+        body = this.next().read_top_statements();
+        this.expect("}") && this.next();
         return result(name.name, body, true);
       } else if (this.token === "(") {
         // resolve ambuiguity between namespace & function call
@@ -6566,7 +6611,7 @@ module.exports = {
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();
     }
-    this.expect(";") && this.nextWithComments();
+    this.expect(";") && this.next();
     return result(name, type, items);
   },
   /**
@@ -6637,7 +6682,7 @@ module.exports = {
   }
 };
 
-},{}],111:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -6912,7 +6957,7 @@ module.exports = {
   }
 };
 
-},{}],112:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -7174,7 +7219,7 @@ module.exports = {
           // static keyword for a class
           this.lexer.tokens.push(current);
           expr = this.next().read_expr();
-          this.expect(";") && this.nextWithComments();
+          this.expect(";") && this.next();
           return expr;
         }
         if (this.token === this.tok.T_FUNCTION) {
@@ -7205,7 +7250,7 @@ module.exports = {
         this.next().expect("(") && this.next();
         items = this.read_list(this.read_variable, ",");
         this.expect(")") && this.next();
-        this.expect(";") && this.nextWithComments();
+        this.expect(";") && this.next();
         return result(items);
 
       case this.tok.T_DECLARE:
@@ -7217,7 +7262,7 @@ module.exports = {
           var what = this.read_declare_list();
           this.expect(")") && this.next();
           if (this.token === ":") {
-            this.nextWithComments();
+            this.next();
             while (this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
               // @todo : check declare_statement from php / not valid
               body.push(this.read_top_statement());
@@ -7226,7 +7271,7 @@ module.exports = {
             this.expectEndOfStatement();
             mode = this.ast.declare.MODE_SHORT;
           } else if (this.token === "{") {
-            this.nextWithComments();
+            this.next();
             while (this.token != this.EOF && this.token !== "}") {
               // @todo : check declare_statement from php / not valid
               body.push(this.read_top_statement());
@@ -7234,7 +7279,7 @@ module.exports = {
             this.expect("}") && this.next();
             mode = this.ast.declare.MODE_BLOCK;
           } else {
-            this.expect(";") && this.nextWithComments();
+            this.expect(";") && this.next();
             while (this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
               // @todo : check declare_statement from php / not valid
               body.push(this.read_top_statement());
@@ -7298,14 +7343,14 @@ module.exports = {
    */
   read_code_block: function read_code_block(top) {
     var result = this.node("block");
-    this.expect("{") && this.nextWithComments();
+    this.expect("{") && this.next();
     var body = top ? this.read_top_statements() : this.read_inner_statements();
-    this.expect("}") && this.nextWithComments();
+    this.expect("}") && this.next();
     return result(null, body);
   }
 };
 
-},{}],113:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7397,7 +7442,7 @@ module.exports = {
   }
 };
 
-},{}],114:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -7424,7 +7469,7 @@ module.exports = {
     var catches = [];
     var body = this.next().read_statement();
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
-    while (this.ignoreComments().token === this.tok.T_CATCH) {
+    while (this.token === this.tok.T_CATCH) {
       var item = this.node("catch");
       this.next().expect("(") && this.next();
       var what = this.read_list(this.read_namespace_name, "|", false);
@@ -7439,7 +7484,7 @@ module.exports = {
   }
 };
 
-},{}],115:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 /*!
  * Defines a list of helper functions for parsing
  * Copyright (C) 2017 Glayzzle (BSD3 License)
@@ -7558,7 +7603,7 @@ module.exports = {
   }
 };
 
-},{}],116:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 /*!
  * Copyright (C) 2017 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
@@ -7884,7 +7929,7 @@ module.exports = {
   }
 };
 
-},{}],117:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 "use strict";
 
 /*!
@@ -8380,6 +8425,8 @@ engine.prototype.tokenGetAll = function (buffer) {
 
 // exports the function
 module.exports = engine;
+// allow the default export in index.d.ts
+module.exports.default = engine;
 
 }).call(this,{"isBuffer":require("../node_modules/is-buffer/index.js")})
-},{"../node_modules/is-buffer/index.js":1,"./ast":3,"./lexer":92,"./parser":101,"./tokens":117}]},{},[]);
+},{"../node_modules/is-buffer/index.js":1,"./ast":3,"./lexer":94,"./parser":103,"./tokens":119}]},{},[]);

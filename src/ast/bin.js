@@ -15,8 +15,8 @@ const KIND = "bin";
  * @property {Expression} left
  * @property {Expression} right
  */
-const Bin = Operation.extends(function Bin(type, left, right, location) {
-  Operation.apply(this, [KIND, location]);
+const Bin = Operation.extends(function Bin(type, left, right, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.left = left;
   this.right = right;

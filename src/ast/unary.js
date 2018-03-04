@@ -15,8 +15,8 @@ const KIND = "unary";
  * @property {String} type
  * @property {Expression} what
  */
-const Unary = Operation.extends(function Unary(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+const Unary = Operation.extends(function Unary(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });

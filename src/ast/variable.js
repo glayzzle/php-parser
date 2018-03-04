@@ -26,8 +26,14 @@ const KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-const Variable = Expr.extends(function Variable(name, byref, curly, location) {
-  Expr.apply(this, [KIND, location]);
+const Variable = Expr.extends(function Variable(
+  name,
+  byref,
+  curly,
+  docs,
+  location
+) {
+  Expr.apply(this, [KIND, docs, location]);
   this.name = name;
   this.byref = byref || false;
   this.curly = curly || false;

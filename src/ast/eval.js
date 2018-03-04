@@ -13,8 +13,8 @@ const KIND = "eval";
  * @extends {Statement}
  * @property {Node} source
  */
-const Eval = Statement.extends(function Eval(source, location) {
-  Statement.apply(this, [KIND, location]);
+const Eval = Statement.extends(function Eval(source, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.source = source;
 });
 

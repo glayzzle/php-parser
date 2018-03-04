@@ -25,9 +25,10 @@ const Foreach = Statement.extends(function Foreach(
   value,
   body,
   shortForm,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.source = source;
   this.key = key;
   this.value = value;

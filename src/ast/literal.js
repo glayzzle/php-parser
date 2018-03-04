@@ -13,8 +13,8 @@ const KIND = "literal";
  * @extends {Expression}
  * @property {Node|string|number|boolean|null} value
  */
-const Literal = Expr.extends(function Literal(kind, value, location) {
-  Expr.apply(this, [kind || KIND, location]);
+const Literal = Expr.extends(function Literal(kind, value, docs, location) {
+  Expr.apply(this, [kind || KIND, docs, location]);
   this.value = value;
 });
 

@@ -12,8 +12,8 @@ const KIND = "list";
  * @constructor List
  * @extends {Sys}
  */
-const List = Sys.extends(function List(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+const List = Sys.extends(function List(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = List;

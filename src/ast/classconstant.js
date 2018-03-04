@@ -18,9 +18,10 @@ const ClassConstant = Constant.extends(function ClassConstant(
   name,
   value,
   flags,
+  docs,
   location
 ) {
-  Constant.apply(this, [name, value, location]);
+  Constant.apply(this, [name, value, docs, location]);
   this.kind = KIND;
   this.parseFlags(flags);
 });

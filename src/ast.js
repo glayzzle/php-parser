@@ -234,7 +234,7 @@ AST.prototype.resolvePrecedence = function(result) {
  * @param {Parser} parser - The parser instance (use for extracting locations)
  * @return {Function}
  */
-AST.prototype.prepare = function(kind, parser) {
+AST.prototype.prepare = function(kind, docs, parser) {
   let start = null;
   if (this.withPositions || this.withSource) {
     start = this.position(parser);
@@ -244,6 +244,7 @@ AST.prototype.prepare = function(kind, parser) {
   return function() {
     let location = null;
     const args = Array.prototype.slice.call(arguments);
+    args.push(docs);
     if (self.withPositions || self.withSource) {
       let src = null;
       if (self.withSource) {

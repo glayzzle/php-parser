@@ -20,9 +20,10 @@ const Trait = Declaration.extends(function Trait(
   ext,
   impl,
   body,
+  docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, location]);
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.implements = impl;
   this.body = body;

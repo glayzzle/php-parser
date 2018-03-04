@@ -12,8 +12,11 @@
  * @property {Comment[]?} trailingComments
  * @property {String} kind
  */
-const Node = function Node(kind, location) {
+const Node = function Node(kind, docs, location) {
   this.kind = kind;
+  if (docs) {
+    this.leadingComments = docs;
+  }
   if (location) {
     this.loc = location;
   }

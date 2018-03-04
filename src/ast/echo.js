@@ -12,8 +12,8 @@ const KIND = "echo";
  * @constructor Echo
  * @extends {Sys}
  */
-const Echo = Sys.extends(function Echo(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+const Echo = Sys.extends(function Echo(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Echo;

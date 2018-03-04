@@ -26,9 +26,10 @@ const TraitAlias = Node.extends(function TraitAlias(
   method,
   as,
   flags,
+  docs,
   location
 ) {
-  Node.apply(this, [KIND, location]);
+  Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
   this.as = as;

@@ -24,9 +24,10 @@ const Parameter = Declaration.extends(function Parameter(
   isRef,
   isVariadic,
   nullable,
+  docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, location]);
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.type = type;
   this.byref = isRef;

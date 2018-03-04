@@ -13,8 +13,8 @@ const KIND = "operation";
  * @constructor Operation
  * @extends {Expression}
  */
-const Operation = Expr.extends(function Operation(kind, location) {
-  Expr.apply(this, [kind || KIND, location]);
+const Operation = Expr.extends(function Operation(kind, docs, location) {
+  Expr.apply(this, [kind || KIND, docs, location]);
 });
 
 module.exports = Operation;

@@ -20,9 +20,10 @@ const Switch = Statement.extends(function Switch(
   test,
   body,
   shortForm,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.shortForm = shortForm;

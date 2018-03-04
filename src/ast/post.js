@@ -15,8 +15,8 @@ const KIND = "post";
  * @property {String} type
  * @property {Variable} what
  */
-const Post = Operation.extends(function Post(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+const Post = Operation.extends(function Post(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });

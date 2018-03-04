@@ -22,9 +22,10 @@ const If = Statement.extends(function If(
   body,
   alternate,
   shortForm,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.alternate = alternate;

@@ -15,9 +15,10 @@ const KIND = "offsetlookup";
 const OffsetLookup = Lookup.extends(function OffsetLookup(
   what,
   offset,
+  docs,
   location
 ) {
-  Lookup.apply(this, [KIND, what, offset, location]);
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 module.exports = OffsetLookup;

@@ -23,9 +23,10 @@ const fn = Declaration.extends(function _Function(
   byref,
   type,
   nullable,
+  docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, location]);
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.arguments = args;
   this.byref = byref;
   this.type = type;

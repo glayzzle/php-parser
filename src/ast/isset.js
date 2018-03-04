@@ -12,8 +12,8 @@ const KIND = "isset";
  * @constructor Isset
  * @extends {Sys}
  */
-const Isset = Sys.extends(function Isset(args, location) {
-  Sys.apply(this, [KIND, args, location]);
+const Isset = Sys.extends(function Isset(args, docs, location) {
+  Sys.apply(this, [KIND, args, docs, location]);
 });
 
 module.exports = Isset;

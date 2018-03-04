@@ -15,8 +15,8 @@ const KIND = "do";
  * @property {Expression} test
  * @property {Statement} body
  */
-const Do = Statement.extends(function Do(test, body, location) {
-  Statement.apply(this, [KIND, location]);
+const Do = Statement.extends(function Do(test, body, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });

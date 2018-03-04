@@ -21,9 +21,10 @@ const Error = Node.extends(function Error(
   token,
   line,
   expected,
+  docs,
   location
 ) {
-  Node.apply(this, [KIND, location]);
+  Node.apply(this, [KIND, docs, location]);
   this.message = message;
   this.token = token;
   this.line = line;

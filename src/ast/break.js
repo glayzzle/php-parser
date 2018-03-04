@@ -13,8 +13,8 @@ const KIND = "break";
  * @extends {Node}
  * @property {Number|Null} level
  */
-const Break = Node.extends(function Break(level, location) {
-  Node.apply(this, [KIND, location]);
+const Break = Node.extends(function Break(level, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
 

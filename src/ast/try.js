@@ -16,8 +16,14 @@ const KIND = "try";
  * @property {Catch[]} catches
  * @property {Block} allways
  */
-const Try = Statement.extends(function Try(body, catches, always, location) {
-  Statement.apply(this, [KIND, location]);
+const Try = Statement.extends(function Try(
+  body,
+  catches,
+  always,
+  docs,
+  location
+) {
+  Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.catches = catches;
   this.always = always;

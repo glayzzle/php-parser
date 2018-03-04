@@ -20,9 +20,10 @@ const Property = Declaration.extends(function Property(
   name,
   value,
   flags,
+  docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, location]);
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.parseFlags(flags);
 });

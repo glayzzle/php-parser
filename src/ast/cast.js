@@ -15,8 +15,8 @@ const KIND = "cast";
  * @property {String} type
  * @property {Expression} what
  */
-const Cast = Operation.extends(function Cast(type, what, location) {
-  Operation.apply(this, [KIND, location]);
+const Cast = Operation.extends(function Cast(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });

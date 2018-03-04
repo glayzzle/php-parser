@@ -13,8 +13,8 @@ const KIND = "continue";
  * @extends {Node}
  * @property {Number|Null} level
  */
-const Continue = Node.extends(function Continue(level, location) {
-  Node.apply(this, [KIND, location]);
+const Continue = Node.extends(function Continue(level, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
 

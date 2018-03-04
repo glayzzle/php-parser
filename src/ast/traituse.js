@@ -14,8 +14,13 @@ const KIND = "traituse";
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations
  */
-const TraitUse = Node.extends(function TraitUse(traits, adaptations, location) {
-  Node.apply(this, [KIND, location]);
+const TraitUse = Node.extends(function TraitUse(
+  traits,
+  adaptations,
+  docs,
+  location
+) {
+  Node.apply(this, [KIND, docs, location]);
   this.traits = traits;
   this.adaptations = adaptations;
 });

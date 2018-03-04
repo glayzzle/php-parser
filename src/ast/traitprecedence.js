@@ -19,9 +19,10 @@ const TraitPrecedence = Node.extends(function TraitPrecedence(
   trait,
   method,
   instead,
+  docs,
   location
 ) {
-  Node.apply(this, [KIND, location]);
+  Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
   this.instead = instead;

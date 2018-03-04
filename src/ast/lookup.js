@@ -14,8 +14,14 @@ const KIND = "lookup";
  * @property {Expression} what
  * @property {Expression} offset
  */
-const Lookup = Expr.extends(function Lookup(kind, what, offset, location) {
-  Expr.apply(this, [kind || KIND, location]);
+const Lookup = Expr.extends(function Lookup(
+  kind,
+  what,
+  offset,
+  docs,
+  location
+) {
+  Expr.apply(this, [kind || KIND, docs, location]);
   this.what = what;
   this.offset = offset;
 });

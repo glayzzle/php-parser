@@ -13,8 +13,13 @@ const KIND = "constant";
  * @extends {Declaration}
  * @property {Node|null} value
  */
-const Constant = Declaration.extends(function Constant(name, value, location) {
-  Declaration.apply(this, [KIND, name, location]);
+const Constant = Declaration.extends(function Constant(
+  name,
+  value,
+  docs,
+  location
+) {
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
 });
 

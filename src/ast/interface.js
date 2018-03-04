@@ -18,9 +18,10 @@ const Interface = Declaration.extends(function Interface(
   name,
   ext,
   body,
+  docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, location]);
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.body = body;
 });

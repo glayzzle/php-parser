@@ -20,9 +20,10 @@ const RetIf = Statement.extends(function RetIf(
   test,
   trueExpr,
   falseExpr,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.trueExpr = trueExpr;
   this.falseExpr = falseExpr;

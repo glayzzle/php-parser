@@ -116,6 +116,7 @@ Prepares an AST node
 -   `kind` **([String](#string) | null)** Defines the node type
     (if null, the kind must be passed at the function call)
 -   `parser` **Parser** The parser instance (use for extracting locations)
+-   `docs`  
 
 Returns **[Function](#function)** 
 
@@ -150,6 +151,7 @@ Prepares an AST node
 -   `kind` **([String](#string) | null)** Defines the node type
     (if null, the kind must be passed at the function call)
 -   `parser` **Parser** The parser instance (use for extracting locations)
+-   `docs`  
 
 Returns **[Function](#function)** 
 
@@ -336,7 +338,7 @@ Defines a closure
 -   `body` **([Block](#block) | null)** 
 -   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-## Documentation
+## Comment
 
 **Extends Node**
 
@@ -346,26 +348,17 @@ Abstract documentation node (ComentLine or CommentBlock)
 
 -   `value` **[String](#string)** 
 
-## Documentation
+## CommentBlock
 
 **Extends Comment**
 
-A comment or documentation
+A comment block (multiline)
 
-**Properties**
-
--   `isDoc` **[Boolean](#boolean)** 
--   `value` **[String](#string)** 
-
-## Documentation
+## CommentLine
 
 **Extends Comment**
 
-A comment or documentation
-
-**Properties**
-
--   `value` **[String](#string)** 
+A single line comment
 
 ## Constant
 
@@ -861,12 +854,13 @@ A generic AST node
 **Parameters**
 
 -   `kind`  
+-   `docs`  
 -   `location`  
 
 **Properties**
 
 -   `loc` **([Location](#location) | null)** 
--   `leadingComments` **[Array](#array)&lt;[Comment](https://developer.mozilla.org/en-US/docs/Web/API/Comment/Comment)>** 
+-   `leadingComments` **[Array](#array)&lt;[Comment](#comment)>** 
 -   `kind` **[String](#string)** 
 
 ### extends

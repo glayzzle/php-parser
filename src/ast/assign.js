@@ -19,9 +19,10 @@ const Assign = Statement.extends(function Assign(
   left,
   right,
   operator,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.operator = operator;
   this.left = left;
   this.right = right;

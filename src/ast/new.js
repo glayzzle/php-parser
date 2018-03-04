@@ -15,8 +15,8 @@ const KIND = "new";
  * @property {Identifier|Variable|Class} what
  * @property {Arguments[]} arguments
  */
-const New = Statement.extends(function New(what, args, location) {
-  Statement.apply(this, [KIND, location]);
+const New = Statement.extends(function New(what, args, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });

@@ -24,9 +24,10 @@ const Class = Declaration.extends(function Class(
   impl,
   body,
   flags,
+  docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, location]);
+  Declaration.apply(this, [KIND, name, docs, location]);
   this.isAnonymous = name ? false : true;
   this.extends = ext;
   this.implements = impl;

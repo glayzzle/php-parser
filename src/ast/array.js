@@ -36,8 +36,8 @@ const KIND = "array";
  * @property {Entry[]} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
-const Array = Expr.extends(function Array(shortForm, items, location) {
-  Expr.apply(this, [KIND, location]);
+const Array = Expr.extends(function Array(shortForm, items, docs, location) {
+  Expr.apply(this, [KIND, docs, location]);
   this.items = items;
   this.shortForm = shortForm;
 });

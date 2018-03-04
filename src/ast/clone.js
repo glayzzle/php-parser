@@ -13,8 +13,8 @@ const KIND = "clone";
  * @extends {Statement}
  * @property {Expression} what
  */
-const Clone = Statement.extends(function Clone(what, location) {
-  Statement.apply(this, [KIND, location]);
+const Clone = Statement.extends(function Clone(what, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
 

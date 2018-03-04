@@ -254,11 +254,12 @@ parser.prototype.parse = function(code, filename) {
   } else {
     this._docs = null;
   }
+  this._docIndex = 0;
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
-  const program = this.ast.prepare("program", this);
+  const program = this.ast.prepare("program", null, this);
   let childs = [];
   this.next();
   while (this.token != this.EOF) {
@@ -291,7 +292,7 @@ parser.prototype.raiseError = function(message, msgExpect, expect, token) {
     throw err;
   }
   // Error node :
-  const node = this.ast.prepare("error", this)(
+  const node = this.ast.prepare("error", null, this)(
     message,
     token,
     this.lexer.yylloc.first_line,
@@ -332,7 +333,14 @@ parser.prototype.error = function(expect) {
  * Creates a new AST node
  */
 parser.prototype.node = function(name) {
-  return this.ast.prepare(name, this);
+  if (this.extractDoc) {
+    if (this._docIndex < this._docs.length) {
+      const docs = this._docs.slice(this._docIndex);
+      this._docIndex = this._docs.length;
+      return this.ast.prepare(name, docs, this);
+    }
+  }
+  return this.ast.prepare(name, null, this);
 };
 
 /**

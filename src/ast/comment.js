@@ -8,12 +8,12 @@ const Node = require("./node");
 
 /**
  * Abstract documentation node (ComentLine or CommentBlock)
- * @constructor Documentation
+ * @constructor Comment
  * @extends {Node}
  * @property {String} value
  */
-const Comment = Node.extends(function Comment(kind, value, location) {
-  Node.apply(this, [kind, location]);
+const Comment = Node.extends(function Comment(kind, value, docs, location) {
+  Node.apply(this, [kind, docs, location]);
   this.value = value;
 });
 

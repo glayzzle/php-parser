@@ -21,9 +21,10 @@ const IS_PRIVATE = "private";
 const Declaration = Statement.extends(function Declaration(
   kind,
   name,
+  docs,
   location
 ) {
-  Statement.apply(this, [kind || KIND, location]);
+  Statement.apply(this, [kind || KIND, docs, location]);
   this.name = name;
 });
 

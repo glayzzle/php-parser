@@ -8,14 +8,16 @@ const Comment = require("./comment");
 const KIND = "commentline";
 
 /**
- * A comment or documentation
- * @constructor Documentation
+ * A single line comment
+ * @constructor CommentLine
  * @extends {Comment}
- * @property {}
- * @property {String} value
  */
-const CommentLine = Comment.extends(function CommentLine(value, location) {
-  Comment.apply(this, [KIND, value, location]);
+const CommentLine = Comment.extends(function CommentLine(
+  value,
+  docs,
+  location
+) {
+  Comment.apply(this, [KIND, value, docs, location]);
 });
 
 module.exports = CommentLine;

@@ -21,9 +21,10 @@ const UseItem = Statement.extends(function UseItem(
   name,
   alias,
   type,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.alias = alias;
   this.type = type;

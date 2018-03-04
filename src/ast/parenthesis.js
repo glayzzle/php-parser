@@ -14,8 +14,12 @@ const KIND = "parenthesis";
  * @extends {Operation}
  * @property {Expression} inner
  */
-const Parenthesis = Operation.extends(function Parenthesis(inner, location) {
-  Operation.apply(this, [KIND, location]);
+const Parenthesis = Operation.extends(function Parenthesis(
+  inner,
+  docs,
+  location
+) {
+  Operation.apply(this, [KIND, docs, location]);
   this.inner = inner;
 });
 

@@ -17,9 +17,10 @@ const KIND = "identifier";
 const Identifier = Node.extends(function Identifier(
   name,
   isRelative,
+  docs,
   location
 ) {
-  Node.apply(this, [KIND, location]);
+  Node.apply(this, [KIND, docs, location]);
   if (isRelative) {
     this.resolution = Identifier.RELATIVE_NAME;
   } else if (name.length === 1) {

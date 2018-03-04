@@ -15,9 +15,10 @@ const KIND = "propertylookup";
 const PropertyLookup = Lookup.extends(function PropertyLookup(
   what,
   offset,
+  docs,
   location
 ) {
-  Lookup.apply(this, [KIND, what, offset, location]);
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 module.exports = PropertyLookup;

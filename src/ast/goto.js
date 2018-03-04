@@ -15,8 +15,8 @@ const KIND = "goto";
  * @property {String} label
  * @see {Label}
  */
-const Goto = Statement.extends(function Goto(label, location) {
-  Statement.apply(this, [KIND, location]);
+const Goto = Statement.extends(function Goto(label, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.label = label;
 });
 

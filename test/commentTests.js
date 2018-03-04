@@ -3,13 +3,6 @@ var parser = require("../src/index");
 describe("Test comments", function() {
   describe("issues", function() {
     it("fix #126 : new option", function() {
-      console.log(parser.parseEval("$a = 1 + /* Hello */ 3;",
-        {
-          parser: {
-            extractDoc: true
-          }
-        }
-      ));
       const ast = parser.parseEval(
         [
           "if (true) {",
@@ -29,6 +22,9 @@ describe("Test comments", function() {
       const ifNode = ast.children[0];
       ast.children.length.should.be.exactly(1);
       ifNode.kind.should.be.exactly("if");
+      ifNode.alternate.leadingComments[0].value.should.be.exactly(
+        '// Don\'t parsed :(\n'
+      );
       ifNode.alternate.kind.should.be.exactly("if");
       ast.comments.length.should.be.exactly(1);
       ast.comments[0].kind.should.be.exactly("commentline");

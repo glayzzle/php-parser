@@ -26,9 +26,10 @@ const Closure = Statement.extends(function Closure(
   type,
   nullable,
   isStatic,
+  docs,
   location
 ) {
-  Statement.apply(this, [KIND, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;

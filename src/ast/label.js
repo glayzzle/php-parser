@@ -13,8 +13,8 @@ const KIND = "label";
  * @extends {Node}
  * @property {String} name
  */
-const Label = Node.extends(function Label(name, location) {
-  Node.apply(this, [KIND, location]);
+const Label = Node.extends(function Label(name, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
   this.name = name;
 });
 
