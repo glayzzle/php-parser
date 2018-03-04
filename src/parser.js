@@ -454,8 +454,6 @@ parser.prototype.next = function() {
       } else {
         this._docs.push(this.read_doc_comment());
       }
-      // eating the token
-      this.token = this.lexer.lex() || this.EOF;
     }
   }
 
