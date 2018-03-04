@@ -42,7 +42,7 @@ module.exports = {
     let test = null;
     let body = null;
     body = this.read_statement();
-    if (this.ignoreComments().expect(this.tok.T_WHILE)) {
+    if (this.expect(this.tok.T_WHILE)) {
       if (this.next().expect("(")) this.next();
       test = this.read_expr();
       if (this.expect(")")) this.next();
@@ -111,7 +111,7 @@ module.exports = {
     let shortForm = false;
     if (this.expect("(")) this.next();
     source = this.read_expr();
-    if (this.ignoreComments().expect(this.tok.T_AS)) {
+    if (this.expect(this.tok.T_AS)) {
       this.next();
       value = this.read_foreach_variable();
       if (this.token === this.tok.T_DOUBLE_ARROW) {

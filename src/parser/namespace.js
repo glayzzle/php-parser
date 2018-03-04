@@ -23,20 +23,20 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE) && this.next();
     if (this.token == "{") {
       this.currentNamespace = [""];
-      body = this.nextWithComments().read_top_statements();
-      this.expect("}") && this.nextWithComments();
+      body = this.next().read_top_statements();
+      this.expect("}") && this.next();
       return result([""], body, true);
     } else {
       const name = this.read_namespace_name();
       if (this.token == ";") {
         this.currentNamespace = name;
-        body = this.nextWithComments().read_top_statements();
+        body = this.next().read_top_statements();
         this.expect(this.EOF);
         return result(name.name, body, false);
       } else if (this.token == "{") {
         this.currentNamespace = name;
-        body = this.nextWithComments().read_top_statements();
-        this.expect("}") && this.nextWithComments();
+        body = this.next().read_top_statements();
+        this.expect("}") && this.next();
         return result(name.name, body, true);
       } else if (this.token === "(") {
         // resolve ambuiguity between namespace & function call
@@ -99,7 +99,7 @@ module.exports = {
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();
     }
-    this.expect(";") && this.nextWithComments();
+    this.expect(";") && this.next();
     return result(name, type, items);
   },
   /**

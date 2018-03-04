@@ -31,7 +31,6 @@ const parser = function(lexer, ast) {
   this.debug = false;
   this.php7 = true;
   this.extractDoc = false;
-  this.extractAllDocs = false;
   this.suppressErrors = false;
   const mapIt = function(item) {
     return [item, null];
@@ -250,7 +249,7 @@ parser.prototype.parse = function(code, filename) {
   this._errors = [];
   this.filename = filename || "eval";
   this.currentNamespace = [""];
-  if (this.extractAllDocs) {
+  if (this.extractDoc) {
     this._docs = [];
   } else {
     this._docs = null;
@@ -261,7 +260,7 @@ parser.prototype.parse = function(code, filename) {
   this.innerList = false;
   const program = this.ast.prepare("program", this);
   let childs = [];
-  this.nextWithComments();
+  this.next();
   while (this.token != this.EOF) {
     const node = this.read_start();
     if (node !== null && node !== undefined) {
@@ -342,13 +341,13 @@ parser.prototype.node = function(name) {
  */
 parser.prototype.expectEndOfStatement = function() {
   if (this.token === ";") {
-    this.nextWithComments();
+    this.next();
     if (this.token === this.tok.T_CLOSE_TAG) {
       // strip close tag (statement already closed with ';')
-      this.nextWithComments();
+      this.next();
     }
   } else if (this.token === this.tok.T_CLOSE_TAG) {
-    this.nextWithComments();
+    this.next();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(";");
     return false;
@@ -358,9 +357,7 @@ parser.prototype.expectEndOfStatement = function() {
 
 /** outputs some debug information on current token **/
 const ignoreStack = [
-  "parser.next",
-  "parser.ignoreComments",
-  "parser.nextWithComments"
+  "parser.next"
 ];
 parser.prototype.showlog = function() {
   const stack = new Error().stack.split("\n");
@@ -429,48 +426,39 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
+
+  // prepare the back command
+  this.prev = [
+    this.lexer.yylloc.first_line,
+    this.lexer.yylloc.first_column,
+    this.lexer.offset
+  ];
+
+  // eating the token
+  this.token = this.lexer.lex() || this.EOF;
+
+  // showing the debug
   if (this.debug) {
     this.showlog();
-    this.debug = false;
-    this.nextWithComments().ignoreComments();
-    this.debug = true;
-  } else {
-    this.nextWithComments().ignoreComments();
   }
-  return this;
-};
 
-/** consume comments (if found) **/
-parser.prototype.ignoreComments = function() {
-  if (this.debug) this.showlog();
-  while (
-    this.token === this.tok.T_COMMENT ||
-    this.token === this.tok.T_DOC_COMMENT
-  ) {
-    if (this.extractAllDocs) {
+  // handling comments
+  if (this.extractDoc) {
+    while (
+      this.token === this.tok.T_COMMENT ||
+      this.token === this.tok.T_DOC_COMMENT
+    ) {
       // APPEND COMMENTS
       if (this.token === this.tok.T_COMMENT) {
         this._docs.push(this.read_comment());
       } else {
         this._docs.push(this.read_doc_comment());
       }
-    } else {
-      // IGNORE COMMENTS
-      this.nextWithComments();
+      // eating the token
+      this.token = this.lexer.lex() || this.EOF;
     }
   }
-  return this;
-};
 
-/** consume the next token (including doc) **/
-parser.prototype.nextWithComments = function() {
-  this.prev = [
-    this.lexer.yylloc.first_line,
-    this.lexer.yylloc.first_column,
-    this.lexer.offset
-  ];
-  this.token = this.lexer.lex() || this.EOF;
-  if (this.debug) this.showlog();
   return this;
 };
 

@@ -40,10 +40,6 @@ module.exports = {
       this.expectEndOfStatement();
     } else {
       body = this.read_statement();
-      /**
-       * ignore : if (..) { } /* *./ else { }
-       */
-      this.ignoreComments();
       if (this.token === this.tok.T_ELSEIF) {
         alternate = this.next().read_if();
       } else if (this.token === this.tok.T_ELSE) {

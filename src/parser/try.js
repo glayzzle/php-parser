@@ -22,7 +22,7 @@ module.exports = {
     const catches = [];
     const body = this.next().read_statement();
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
-    while (this.ignoreComments().token === this.tok.T_CATCH) {
+    while (this.token === this.tok.T_CATCH) {
       const item = this.node("catch");
       this.next().expect("(") && this.next();
       const what = this.read_list(this.read_namespace_name, "|", false);

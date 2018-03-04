@@ -256,7 +256,7 @@ module.exports = {
           // static keyword for a class
           this.lexer.tokens.push(current);
           expr = this.next().read_expr();
-          this.expect(";") && this.nextWithComments();
+          this.expect(";") && this.next();
           return expr;
         }
         if (this.token === this.tok.T_FUNCTION) {
@@ -285,7 +285,7 @@ module.exports = {
         this.next().expect("(") && this.next();
         items = this.read_list(this.read_variable, ",");
         this.expect(")") && this.next();
-        this.expect(";") && this.nextWithComments();
+        this.expect(";") && this.next();
         return result(items);
 
       case this.tok.T_DECLARE: {
@@ -296,7 +296,7 @@ module.exports = {
         const what = this.read_declare_list();
         this.expect(")") && this.next();
         if (this.token === ":") {
-          this.nextWithComments();
+          this.next();
           while (
             this.token != this.EOF &&
             this.token !== this.tok.T_ENDDECLARE
@@ -308,7 +308,7 @@ module.exports = {
           this.expectEndOfStatement();
           mode = this.ast.declare.MODE_SHORT;
         } else if (this.token === "{") {
-          this.nextWithComments();
+          this.next();
           while (this.token != this.EOF && this.token !== "}") {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());
@@ -316,7 +316,7 @@ module.exports = {
           this.expect("}") && this.next();
           mode = this.ast.declare.MODE_BLOCK;
         } else {
-          this.expect(";") && this.nextWithComments();
+          this.expect(";") && this.next();
           while (this.token != this.EOF && this.token !== this.tok.T_DECLARE) {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());
@@ -379,11 +379,11 @@ module.exports = {
    */
   read_code_block: function(top) {
     const result = this.node("block");
-    this.expect("{") && this.nextWithComments();
+    this.expect("{") && this.next();
     const body = top
       ? this.read_top_statements()
       : this.read_inner_statements();
-    this.expect("}") && this.nextWithComments();
+    this.expect("}") && this.next();
     return result(null, body);
   }
 };

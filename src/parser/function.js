@@ -10,7 +10,7 @@ module.exports = {
    */
   is_reference: function() {
     if (this.token == "&") {
-      this.next().ignoreComments();
+      this.next();
       return true;
     }
     return false;
@@ -20,7 +20,7 @@ module.exports = {
    */
   is_variadic: function() {
     if (this.token === this.tok.T_ELLIPSIS) {
-      this.next().ignoreComments();
+      this.next();
       return true;
     }
     return false;
@@ -40,7 +40,7 @@ module.exports = {
       // abstract function :
       result.parseFlags(flag);
       if (this.expect(";")) {
-        this.nextWithComments();
+        this.next();
       }
     } else {
       if (this.expect("{")) {
@@ -71,7 +71,7 @@ module.exports = {
     const result = this.node(nodeName);
 
     if (this.expect(this.tok.T_FUNCTION)) {
-      this.next().ignoreComments();
+      this.next();
     }
     const isRef = this.is_reference();
     let name = false,

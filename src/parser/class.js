@@ -25,7 +25,7 @@ module.exports = {
       propImplements = this.next().read_name_list();
     }
     this.expect("{");
-    const body = this.nextWithComments().read_class_body();
+    const body = this.next().read_class_body();
     return result(propName, propExtends, propImplements, body, flag);
   },
   /**
@@ -77,8 +77,9 @@ module.exports = {
       // check constant
       if (this.token === this.tok.T_CONST) {
         const constants = this.read_constant_list(flags);
-        this.expect(";");
-        this.nextWithComments();
+        if (this.expect(";")) {
+          this.next();
+        }
         result = result.concat(constants);
         continue;
       }
@@ -93,7 +94,7 @@ module.exports = {
         // reads a variable
         const variables = this.read_variable_list(flags);
         this.expect(";");
-        this.nextWithComments();
+        this.next();
         result = result.concat(variables);
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
@@ -110,7 +111,7 @@ module.exports = {
       }
     }
     this.expect("}");
-    this.nextWithComments();
+    this.next();
     return result;
   },
   /**
@@ -302,7 +303,7 @@ module.exports = {
       if (this.token == this.tok.T_CONST) {
         const constants = this.read_constant_list(flags);
         if (this.expect(";")) {
-          this.nextWithComments();
+          this.next();
         }
         result = result.concat(constants);
       } else if (this.token === this.tok.T_FUNCTION) {
@@ -311,7 +312,7 @@ module.exports = {
         method.parseFlags(flags);
         result.push(method);
         if (this.expect(";")) {
-          this.nextWithComments();
+          this.next();
         }
       } else {
         // raise an error
@@ -376,11 +377,11 @@ module.exports = {
         this.expect(";");
       }
       if (this.expect("}")) {
-        this.nextWithComments();
+        this.next();
       }
     } else {
       if (this.expect(";")) {
-        this.nextWithComments();
+        this.next();
       }
     }
     return node(traits, adaptations);
