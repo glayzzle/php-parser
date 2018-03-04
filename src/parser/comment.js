@@ -11,14 +11,17 @@ module.exports = {
    *  Comments with // or # or / * ... * /
    */
   read_comment: function() {
-    const result = this.node("doc");
-    return result(false, this.text());
+    const result = this.node("commentblock");
+    return result(this.text());
   },
   /**
    * Comments with / ** ... * /
    */
   read_doc_comment: function() {
-    const result = this.node("doc");
-    return result(true, this.text());
+    const text = this.text();
+    const result = this.node(
+      text.substring(0, 2) === "/*" ? "commentblock" : "commentline"
+    );
+    return result(text);
   }
 };
