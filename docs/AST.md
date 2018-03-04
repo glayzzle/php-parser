@@ -14,7 +14,9 @@
     -   [Entry](#entry)
     -   [Case](#case)
     -   [Label](#label)
-    -   [Doc](#doc)
+    -   [Comment](#comment)
+        -   [CommentLine](#commentline)
+        -   [CommentBlock](#commentblock)
     -   [Error](#error)
     -   [Expression](#expression)
         -   [Array](#array)
@@ -334,6 +336,37 @@ Defines a closure
 -   `body` **([Block](#block) | null)** 
 -   `isStatic` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+## Documentation
+
+**Extends Node**
+
+Abstract documentation node (ComentLine or CommentBlock)
+
+**Properties**
+
+-   `value` **[String](#string)** 
+
+## Documentation
+
+**Extends Comment**
+
+A comment or documentation
+
+**Properties**
+
+-   `isDoc` **[Boolean](#boolean)** 
+-   `value` **[String](#string)** 
+
+## Documentation
+
+**Extends Comment**
+
+A comment or documentation
+
+**Properties**
+
+-   `value` **[String](#string)** 
+
 ## Constant
 
 **Extends Declaration**
@@ -448,17 +481,6 @@ Defines a do/while statement
 -   `test` **[Expression](#expression)** 
 -   `body` **[Statement](#statement)** 
 
-## Documentation
-
-**Extends Node**
-
-A comment or documentation
-
-**Properties**
-
--   `isDoc` **[Boolean](#boolean)** 
--   `lines` **[Array](#array)&lt;[String](#string)>** 
-
 ## Echo
 
 **Extends Sys**
@@ -572,6 +594,7 @@ Defines an exit / die call
 **Properties**
 
 -   `status` **([Node](#node) | null)** 
+-   `useDie` **[Boolean](#boolean)** 
 
 ## Expression
 
@@ -843,6 +866,7 @@ A generic AST node
 **Properties**
 
 -   `loc` **([Location](#location) | null)** 
+-   `leadingComments` **[Array](#array)&lt;[Comment](https://developer.mozilla.org/en-US/docs/Web/API/Comment/Comment)>** 
 -   `kind` **[String](#string)** 
 
 ### extends
@@ -1216,7 +1240,7 @@ be any expression in general, an expression can also be a pattern.
 }
 ```
 
-## Variadic
+## variadic
 
 **Extends Expression**
 

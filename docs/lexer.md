@@ -32,10 +32,6 @@ Initialize the lexer with the specified input
 
 consumes and returns one char from the input
 
-**Parameters**
-
--   `size`  
-
 ### unput
 
 revert eating specified size

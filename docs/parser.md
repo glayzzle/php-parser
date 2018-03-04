@@ -99,14 +99,6 @@ Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 consume the next token \*
 
-### ignoreComments
-
-consume comments (if found) \*
-
-### nextWithComments
-
-consume the next token (including doc) \*
-
 ### is
 
 Check if token is of specified type
@@ -385,10 +377,6 @@ reads an if expression : '(' expr ')'
 reads an elseif (expr): statements
 
 ## read_else_short
-
-## ignoreComments
-
-ignore : if (..) { } /\* \*./ else { }
 
 ## read_while
 
