@@ -4,8 +4,6 @@
  * @url http://glayzzle.com
  */
 
-const docSplit = /^(\s*\*[ \t]*|[ \t]*)(.*)$/gm;
-
 module.exports = {
   /**
    *  Comments with // or # or / * ... * /

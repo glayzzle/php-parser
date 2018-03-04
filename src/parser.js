@@ -356,9 +356,7 @@ parser.prototype.expectEndOfStatement = function() {
 };
 
 /** outputs some debug information on current token **/
-const ignoreStack = [
-  "parser.next"
-];
+const ignoreStack = ["parser.next"];
 parser.prototype.showlog = function() {
   const stack = new Error().stack.split("\n");
   let line;
@@ -426,7 +424,6 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
-
   // prepare the back command
   this.prev = [
     this.lexer.yylloc.first_line,
