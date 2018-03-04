@@ -2,8 +2,15 @@ var parser = require("../src/index");
 
 describe("Test comments", function() {
   describe("issues", function() {
-    it("fix #126", function() {
-      var ast = parser.parseEval(
+    it("fix #126 : new option", function() {
+      console.log(parser.parseEval("$a = 1 + /* Hello */ 3;",
+        {
+          parser: {
+            extractDoc: true
+          }
+        }
+      ));
+      const ast = parser.parseEval(
         [
           "if (true) {",
           "  $a = 1;",
@@ -15,8 +22,7 @@ describe("Test comments", function() {
         ].join("\n"),
         {
           parser: {
-            extractDoc: true,
-            extractAllDocs: true
+            extractDoc: true
           }
         }
       );
@@ -25,7 +31,7 @@ describe("Test comments", function() {
       ifNode.kind.should.be.exactly("if");
       ifNode.alternate.kind.should.be.exactly("if");
       ast.comments.length.should.be.exactly(1);
-      ast.comments[0].kind.should.be.exactly("doc");
+      ast.comments[0].kind.should.be.exactly("commentline");
     });
     it("fix #55", function() {
       var ast = parser.parseEval(
@@ -43,16 +49,17 @@ describe("Test comments", function() {
           }
         }
       );
-      ast.children.length.should.be.exactly(2);
+      ast.children.length.should.be.exactly(1);
       ast.children[0].kind.should.be.exactly("if");
-      ast.children[0].body.children.length.should.be.exactly(2);
+      ast.children[0].body.children.length.should.be.exactly(1);
       ast.children[0].body.children[0].kind.should.be.exactly("if");
-      ast.children[0].body.children[1].kind.should.be.exactly("doc");
-      ast.children[0].body.children[1].lines[0].should.be.exactly(
-        "another comment"
-      );
-      ast.children[1].kind.should.be.exactly("doc");
-      ast.children[1].lines[0].should.be.exactly("2nd comment");
+      // @todo implement tests
+      // ast.children[0].body.children[1].kind.should.be.exactly("doc");
+      // ast.children[0].body.children[1].lines[0].should.be.exactly(
+      //  "another comment"
+      // );
+      ast.comments[2].kind.should.be.exactly("commentline");
+      ast.comments[2].value.should.be.exactly("// 2nd comment");
     });
   });
 
@@ -71,22 +78,18 @@ describe("Test comments", function() {
       }
     );
     it("test cummulative array", function() {
-      ast.children.length.should.be.exactly(3);
-      ast.children[0].kind.should.be.exactly("doc");
-      ast.children[0].isDoc.should.be.exactly(false);
-      ast.children[0].lines.length.should.be.exactly(2);
-      ast.children[0].lines[0].should.be.exactly("some information");
-      ast.children[0].lines[1].should.be.exactly("another line");
+      ast.comments.length.should.be.exactly(4);
+      ast.comments[0].kind.should.be.exactly("commentline");
+      ast.comments[3].kind.should.be.exactly("commentblock");
     });
     it("test statements", function() {
-      ast.children[2].kind.should.be.exactly("doc");
-      ast.children[2].isDoc.should.be.exactly(false);
-      ast.children[2].lines[0].should.be.exactly("done");
+      ast.comments[3].value.should.be.exactly("/* done */");
     });
     it("ignore comments in expression", function() {
-      ast.children[1].kind.should.be.exactly("assign");
-      ast.children[1].left.kind.should.be.exactly("variable");
-      ast.children[1].right.kind.should.be.exactly("number");
+      // @todo check attachments
+      ast.children[0].kind.should.be.exactly("assign");
+      ast.children[0].left.kind.should.be.exactly("variable");
+      ast.children[0].right.kind.should.be.exactly("number");
     });
   });
 
@@ -96,7 +99,7 @@ describe("Test comments", function() {
         "/**",
         " * Description",
         " */",
-        "function /* ignore */ & /* ignore */ name(/* */ $arg) {",
+        "function /* ignore */ & /* ignore */ name(/* @var something */ $arg) {",
         "// inner",
         "return $arg /* ignore */;",
         "}"
@@ -108,19 +111,17 @@ describe("Test comments", function() {
       }
     );
     it("test statements", function() {
-      ast.children[0].kind.should.be.exactly("doc");
-      ast.children[0].lines.length.should.be.exactly(3);
-      ast.children[0].lines[0].should.be.exactly("");
-      ast.children[0].lines[1].should.be.exactly("Description");
-      ast.children[0].lines[2].should.be.exactly("");
+      ast.comments[0].kind.should.be.exactly("commentblock");
+      ast.comments[0].value.should.be.exactly("/**\n * Description\n */");
     });
     it("test function", function() {
-      ast.children[1].kind.should.be.exactly("function");
-      ast.children[1].name.should.be.exactly("name");
-      ast.children[1].arguments.length.should.be.exactly(1);
-      var body = ast.children[1].body.children;
-      body[0].kind.should.be.exactly("doc");
-      // @todo body[1].kind.should.be.exactly('return');
+      ast.children[0].kind.should.be.exactly("function");
+      ast.children[0].name.should.be.exactly("name");
+      ast.children[0].arguments.length.should.be.exactly(1);
+      var body = ast.children[0].body.children;
+      body.length.should.be.exactly(1);
+      // @todo check previous statement
+      body[0].kind.should.be.exactly('return');
     });
     it("test if statements", function() {
       var ast = parser.parseEval(
@@ -137,19 +138,15 @@ describe("Test comments", function() {
           "/* ignore */ endif /* ignore */;/* ignore */"
         ].join("\n"),
         {
-          lexer: {
-            //debug: true
-          },
           parser: {
             extractDoc: true
-            // debug: true
           }
         }
       );
-      ast.children.length.should.be.exactly(3);
+      ast.children.length.should.be.exactly(2);
       ast.children[0].kind.should.be.exactly("if");
       ast.children[1].kind.should.be.exactly("if");
-      ast.children[2].kind.should.be.exactly("doc");
+      ast.comments.length.should.be.exactly(22);
     });
     it("test try statements", function() {
       var ast = parser.parseEval(
@@ -163,23 +160,20 @@ describe("Test comments", function() {
           "} // end"
         ].join("\n"),
         {
-          lexer: {
-            //debug: true
-          },
           parser: {
             extractDoc: true
-            // debug: true
           }
         }
       );
-      ast.children.length.should.be.exactly(2);
+      ast.children.length.should.be.exactly(1);
       ast.children[0].kind.should.be.exactly("try");
       ast.children[0].body.kind.should.be.exactly("block");
       ast.children[0].catches[0].kind.should.be.exactly("catch");
       ast.children[0].catches[0].what[0].name.should.be.exactly("\\Exception");
       ast.children[0].catches[0].what[1].name.should.be.exactly("\\Foo");
       ast.children[0].catches[0].variable.name.should.be.exactly("e");
-      ast.children[1].kind.should.be.exactly("doc");
+      ast.comments.length.should.be.exactly(14);
+      ast.comments[0].kind.should.be.exactly("commentblock");
     });
   });
 
@@ -209,32 +203,32 @@ describe("Test comments", function() {
       }
     );
     it("assume doc block before class", function() {
-      ast.children[0].kind.should.be.exactly("doc");
-      ast.children[1].kind.should.be.exactly("class");
+      ast.children[0].kind.should.be.exactly("class");
+      ast.comments[0].kind.should.be.exactly("commentblock");
     });
     it("test class elements", function() {
-      var body = ast.children[1].body;
+      var body = ast.children[0].body;
 
-      body[0].kind.should.be.exactly("doc");
-      body[0].lines[0].should.be.exactly("@var test");
+      //ast.comments[0].kind.should.be.exactly("commentblock");
+      //body[0].lines[0].should.be.exactly("@var test");
+
+      body[0].kind.should.be.exactly("property");
+      body[0].name.should.be.exactly("test");
 
       body[1].kind.should.be.exactly("property");
-      body[1].name.should.be.exactly("test");
+      body[1].name.should.be.exactly("toto");
+
+      //body[3].kind.should.be.exactly("doc");
+      //body[3].lines[0].should.be.exactly("ignored comment");
+
+      //body[4].kind.should.be.exactly("doc");
+      //body[4].lines[0].should.be.exactly("@var Class");
 
       body[2].kind.should.be.exactly("property");
-      body[2].name.should.be.exactly("toto");
+      body[2].name.should.be.exactly("foo");
 
-      body[3].kind.should.be.exactly("doc");
-      body[3].lines[0].should.be.exactly("ignored comment");
-
-      body[4].kind.should.be.exactly("doc");
-      body[4].lines[0].should.be.exactly("@var Class");
-
-      body[5].kind.should.be.exactly("property");
-      body[5].name.should.be.exactly("foo");
-
-      body[8].kind.should.be.exactly("method");
-      body[8].name.should.be.exactly("void");
+      body[3].kind.should.be.exactly("method");
+      body[3].name.should.be.exactly("void");
     });
   });
 });

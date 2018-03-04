@@ -11,8 +11,10 @@ module.exports = {
    *  Comments with // or # or / * ... * /
    */
   read_comment: function() {
-    const result = this.node("commentblock");
     const text = this.text();
+    const result = this.node(
+      text.substring(0, 2) === "/*" ? "commentblock" : "commentline"
+    );
     this.token = this.lexer.lex() || this.EOF;
     return result(text);
   },
@@ -20,10 +22,8 @@ module.exports = {
    * Comments with / ** ... * /
    */
   read_doc_comment: function() {
+    const result = this.node("commentblock");
     const text = this.text();
-    const result = this.node(
-      text.substring(0, 2) === "/*" ? "commentblock" : "commentline"
-    );
     this.token = this.lexer.lex() || this.EOF;
     return result(text);
   }

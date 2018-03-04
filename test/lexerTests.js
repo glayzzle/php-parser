@@ -57,8 +57,9 @@ describe("Test lexer", function() {
           }
         }
       );
-      // @fixme
-      ast.children[0].kind.should.be.exactly("doc");
+      // @todo finish to implement the test
+      ast.comments[0].kind.should.be.exactly("commentline");
+      ast.comments[0].value.should.be.exactly("// simple comment ");
       // console.log(ast.children);
     });
   });
