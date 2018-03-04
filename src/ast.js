@@ -20,7 +20,9 @@ const Position = require("./ast/position");
  *   - [Entry](#entry)
  *   - [Case](#case)
  *   - [Label](#label)
- *   - [Doc](#doc)
+ *   - [Comment](#comment)
+ *     - [CommentLine](#commentline)
+ *     - [CommentBlock](#commentblock)
  *   - [Error](#error)
  *   - [Expression](#expression)
  *     - [Array](#array)
@@ -297,13 +299,15 @@ AST.prototype.prepare = function(kind, parser) {
   require("./ast/classconstant"),
   require("./ast/clone"),
   require("./ast/closure"),
+  require("./ast/comment"),
+  require("./ast/commentblock"),
+  require("./ast/commentline"),
   require("./ast/constant"),
   require("./ast/constref"),
   require("./ast/continue"),
   require("./ast/declaration"),
   require("./ast/declare"),
   require("./ast/do"),
-  require("./ast/doc"),
   require("./ast/echo"),
   require("./ast/empty"),
   require("./ast/encapsed"),

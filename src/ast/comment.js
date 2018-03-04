@@ -5,19 +5,16 @@
  */
 
 const Node = require("./node");
-const KIND = "doc";
 
 /**
- * A comment or documentation
+ * Abstract documentation node (ComentLine or CommentBlock)
  * @constructor Documentation
  * @extends {Node}
- * @property {Boolean} isDoc
  * @property {String} value
  */
-const Doc = Node.extends(function Doc(isDoc, value, location) {
-  Node.apply(this, [KIND, location]);
-  this.isDoc = isDoc;
+const Comment = Node.extends(function Comment(kind, value, location) {
+  Node.apply(this, [kind, location]);
   this.value = value;
 });
 
-module.exports = Doc;
+module.exports = Comment;

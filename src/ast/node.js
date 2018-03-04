@@ -8,6 +8,8 @@
  * A generic AST node
  * @constructor Node
  * @property {Location|null} loc
+ * @property {Comment[]} leadingComments
+ * @property {Comment[]?} trailingComments
  * @property {String} kind
  */
 const Node = function Node(kind, location) {
