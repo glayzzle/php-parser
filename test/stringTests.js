@@ -2,7 +2,7 @@ var parser = require("../src/index");
 
 describe("Test strings", function() {
   it("fix #124", function() {
-    var ast = parser.parseEval("$string = \"He drank some $juices[koolaid1] juice.\";");
+    const ast = parser.parseEval("$string = \"He drank some $juices[koolaid1] juice.\";");
     const text = ast.children[0].right;
     text.kind.should.be.exactly('encapsed');
     text.value.length.should.be.exactly(3);
@@ -12,7 +12,13 @@ describe("Test strings", function() {
     offset.offset.kind.should.be.exactly('constref');
     offset.offset.name.should.be.exactly('koolaid1');
   });
-
+  it('fix #123', function() {
+    const ast = parser.parseEval(
+      "$string = \'Avoid converting \n chars, but \\' or \\\\ is ok.\';"
+    );
+    const text = ast.children[0].right;
+    text.value.should.be.exactly('Avoid converting \n chars, but \' or \\ is ok.');
+  });
   it("...", function() {
     var ast = parser.parseEval("$a = b'\\t\\ra';");
   });

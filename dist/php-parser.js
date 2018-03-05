@@ -6708,7 +6708,13 @@ module.exports = {
   /**
    * Unescape special chars
    */
-  resolve_special_chars: function resolve_special_chars(text) {
+  resolve_special_chars: function resolve_special_chars(text, doubleQuote) {
+    if (!doubleQuote) {
+      // single quote fix
+      return text.replace(/\\['\\]/g, function (seq) {
+        return specialChar[seq];
+      });
+    }
     return text.replace(/\\[rntvef"'\\$]/g, function (seq) {
       return specialChar[seq];
     });
@@ -6738,7 +6744,7 @@ module.exports = {
             var isDoubleQuote = text[0] === '"';
             text = text.substring(1, text.length - 1);
             this.next();
-            value = value(isDoubleQuote, this.resolve_special_chars(text));
+            value = value(isDoubleQuote, this.resolve_special_chars(text, isDoubleQuote));
             if (this.token === this.tok.T_DOUBLE_COLON) {
               // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
               return this.read_static_getter(value);
@@ -6822,7 +6828,7 @@ module.exports = {
       if (this.expect("]")) this.next();
       result = node(expr, offset);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      offset = this.read_encapsed_string_item();
+      offset = this.read_encapsed_string_item(false);
       result = node(expr, offset);
     }
     return result;
@@ -6842,7 +6848,7 @@ module.exports = {
    * @return {String|Variable|Expr|Lookup}
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
-  read_encapsed_string_item: function read_encapsed_string_item() {
+  read_encapsed_string_item: function read_encapsed_string_item(isDoubleQuote) {
     var result = this.node(),
         offset = void 0,
         node = void 0,
@@ -6853,7 +6859,7 @@ module.exports = {
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
       var text = this.text();
       this.next();
-      result = result("string", false, this.resolve_special_chars(text));
+      result = result("string", false, this.resolve_special_chars(text, isDoubleQuote));
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
@@ -6935,7 +6941,7 @@ module.exports = {
 
     // reading encapsed parts
     while (this.token !== expect && this.token !== this.EOF) {
-      value.push(this.read_encapsed_string_item());
+      value.push(this.read_encapsed_string_item(true));
     }
 
     this.expect(expect) && this.next();
