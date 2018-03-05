@@ -46,9 +46,9 @@ module.exports = {
         // @see parser.js line 130 : resolves a conflict with scalar
         const literal = name.name.toLowerCase();
         if (literal === "true") {
-          result = result("boolean", true);
+          result = result("boolean", true, name.name);
         } else if (literal === "false") {
-          result = result("boolean", false);
+          result = result("boolean", false, name.name);
         } else {
           // @todo null keyword ?
           result = result("constref", name);
@@ -173,6 +173,7 @@ module.exports = {
                 this.next();
                 what = this.node("encapsed")(
                   [what, inner(name, false, false)],
+                  null,
                   "offset"
                 );
                 if (what.loc && what.value[0].loc) {
@@ -181,7 +182,7 @@ module.exports = {
               } else if (this.token === "{") {
                 const expr = this.next().read_expr();
                 this.expect("}") && this.next();
-                what = this.node("encapsed")([what, expr], "offset");
+                what = this.node("encapsed")([what, expr], null, "offset");
                 if (what.loc && what.value[0].loc) {
                   what.loc.start = what.value[0].loc.start;
                 }
@@ -238,7 +239,7 @@ module.exports = {
     } else if (this.token === this.tok.T_NUM_STRING) {
       const num = this.text();
       this.next();
-      offset = offset("number", num);
+      offset = offset("number", num, null);
     } else if (this.token === this.tok.T_VARIABLE) {
       const name = this.text().substring(1);
       this.next();

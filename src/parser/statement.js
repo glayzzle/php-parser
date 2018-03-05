@@ -274,10 +274,18 @@ module.exports = {
       }
 
       case this.tok.T_INLINE_HTML: {
+        const start =
+          this.lexer.yylloc.prev_line != this.lexer.yylloc.first_line
+            ? this.lexer.yylloc.prev_offset
+            : this.lexer.yylloc.first_offset;
         result = this.node("inline");
         const value = this.text();
         this.next();
-        return result(value);
+        const raw = this.lexer._input.substring(
+          start,
+          this.lexer.yylloc.prev_offset
+        );
+        return result(value, raw);
       }
 
       case this.tok.T_UNSET:

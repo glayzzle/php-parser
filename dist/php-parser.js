@@ -619,8 +619,8 @@ var KIND = "boolean";
  * @constructor Boolean
  * @extends {Literal}
  */
-var Boolean = Literal.extends(function Boolean(value, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var Boolean = Literal.extends(function Boolean(value, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
 module.exports = Boolean;
@@ -1232,8 +1232,8 @@ var KIND = "encapsed";
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
-var Encapsed = Literal.extends(function Encapsed(value, type, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var Encapsed = Literal.extends(function Encapsed(value, raw, type, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
   this.type = type;
 });
 
@@ -1722,8 +1722,8 @@ var KIND = "inline";
  * @constructor Inline
  * @extends {Literal}
  */
-var Inline = Literal.extends(function Inline(value, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var Inline = Literal.extends(function Inline(value, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
 module.exports = Inline;
@@ -1841,11 +1841,15 @@ var KIND = "literal";
  * Defines an array structure
  * @constructor Literal
  * @extends {Expression}
+ * @property {string} raw
  * @property {Node|string|number|boolean|null} value
  */
-var Literal = Expr.extends(function Literal(kind, value, docs, location) {
+var Literal = Expr.extends(function Literal(kind, value, raw, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
   this.value = value;
+  if (raw) {
+    this.raw = raw;
+  }
 });
 
 module.exports = Literal;
@@ -1918,8 +1922,8 @@ var KIND = "magic";
  * @constructor Magic
  * @extends {Literal}
  */
-var Magic = Literal.extends(function Magic(value, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var Magic = Literal.extends(function Magic(value, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
 module.exports = Magic;
@@ -2065,8 +2069,8 @@ var KIND = "nowdoc";
  * @property {String} label
 
  */
-var Nowdoc = Literal.extends(function Nowdoc(value, label, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var Nowdoc = Literal.extends(function Nowdoc(value, raw, label, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
   this.label = label;
 });
 
@@ -2089,8 +2093,8 @@ var KIND = "number";
  * @constructor Number
  * @extends {Literal}
  */
-var _Number = Literal.extends(function Number(value, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var _Number = Literal.extends(function Number(value, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
 module.exports = _Number;
@@ -2539,8 +2543,8 @@ var KIND = "string";
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-var String = Literal.extends(function String(isDoubleQuote, value, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+var String = Literal.extends(function String(isDoubleQuote, value, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
   this.isDoubleQuote = isDoubleQuote;
 });
 
@@ -5574,7 +5578,7 @@ module.exports = {
       this.next();
       if (this.token === this.tok.T_LNUMBER || this.token === this.tok.T_DNUMBER) {
         // negative number
-        result = result("number", "-" + this.text());
+        result = result("number", "-" + this.text(), null);
         this.next();
         return result;
       } else {
@@ -6742,9 +6746,8 @@ module.exports = {
             value = this.node("string");
             var text = this.text();
             var isDoubleQuote = text[0] === '"';
-            text = text.substring(1, text.length - 1);
             this.next();
-            value = value(isDoubleQuote, this.resolve_special_chars(text, isDoubleQuote));
+            value = value(isDoubleQuote, this.resolve_special_chars(text.substring(1, text.length - 1), isDoubleQuote), text);
             if (this.token === this.tok.T_DOUBLE_COLON) {
               // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
               return this.read_static_getter(value);
@@ -6755,6 +6758,7 @@ module.exports = {
           }
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
+            var start = this.lexer.yylloc.first_offset;
             node = this.node("nowdoc");
             value = this.next().text();
             // strip the last line return char
@@ -6772,7 +6776,7 @@ module.exports = {
               value = value.substring(0, value.length - 1);
             }
             this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
-            node = node(value, this.lexer.heredoc_label);
+            node = node(value, this.lexer._input.substring(start, this.lexer.yylloc.last_offset), this.lexer.heredoc_label);
             this.expect(this.tok.T_END_HEREDOC) && this.next();
             return node;
           } else {
@@ -6798,7 +6802,7 @@ module.exports = {
             var result = this.node("number");
             value = this.text();
             this.next();
-            return result(value);
+            return result(value, null);
           }
 
         // ARRAYS
@@ -6859,7 +6863,7 @@ module.exports = {
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
       var text = this.text();
       this.next();
-      result = result("string", false, this.resolve_special_chars(text, isDoubleQuote));
+      result = result("string", false, this.resolve_special_chars(text, isDoubleQuote), text);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
@@ -6918,7 +6922,7 @@ module.exports = {
       var value = this.text();
       this.next();
       // consider it as string
-      result = result("string", false, value);
+      result = result("string", false, value, value);
     }
 
     return result;
@@ -6927,6 +6931,7 @@ module.exports = {
    * Reads an encapsed string
    */
   read_encapsed_string: function read_encapsed_string(expect) {
+    var start = this.lexer.yylloc.prev_offset;
     var node = this.node("encapsed");
     var value = [];
     var type = null;
@@ -6945,7 +6950,7 @@ module.exports = {
     }
 
     this.expect(expect) && this.next();
-    node = node(value, type);
+    node = node(value, this.lexer._input.substring(start, this.lexer.yylloc.first_offset), type);
 
     if (expect === this.tok.T_END_HEREDOC) {
       node.label = this.lexer.heredoc_label;
@@ -6959,7 +6964,7 @@ module.exports = {
     var result = this.node("magic");
     var name = this.text();
     this.next();
-    return result(name);
+    return result(name.toUpperCase(), name);
   }
 };
 
@@ -7245,10 +7250,12 @@ module.exports = {
 
       case this.tok.T_INLINE_HTML:
         {
+          var start = this.lexer.yylloc.prev_line != this.lexer.yylloc.first_line ? this.lexer.yylloc.prev_offset : this.lexer.yylloc.first_offset;
           result = this.node("inline");
           var value = this.text();
           this.next();
-          return result(value);
+          var raw = this.lexer._input.substring(start, this.lexer.yylloc.prev_offset);
+          return result(value, raw);
         }
 
       case this.tok.T_UNSET:
@@ -7653,9 +7660,9 @@ module.exports = {
         // @see parser.js line 130 : resolves a conflict with scalar
         var literal = name.name.toLowerCase();
         if (literal === "true") {
-          result = result("boolean", true);
+          result = result("boolean", true, name.name);
         } else if (literal === "false") {
-          result = result("boolean", false);
+          result = result("boolean", false, name.name);
         } else {
           // @todo null keyword ?
           result = result("constref", name);
@@ -7772,14 +7779,14 @@ module.exports = {
                   var inner = this.node("variable");
                   name = this.text().substring(1);
                   this.next();
-                  what = this.node("encapsed")([what, inner(name, false, false)], "offset");
+                  what = this.node("encapsed")([what, inner(name, false, false)], null, "offset");
                   if (what.loc && what.value[0].loc) {
                     what.loc.start = what.value[0].loc.start;
                   }
                 } else if (this.token === "{") {
                   var expr = this.next().read_expr();
                   this.expect("}") && this.next();
-                  what = this.node("encapsed")([what, expr], "offset");
+                  what = this.node("encapsed")([what, expr], null, "offset");
                   if (what.loc && what.value[0].loc) {
                     what.loc.start = what.value[0].loc.start;
                   }
@@ -7836,7 +7843,7 @@ module.exports = {
     } else if (this.token === this.tok.T_NUM_STRING) {
       var num = this.text();
       this.next();
-      offset = offset("number", num);
+      offset = offset("number", num, null);
     } else if (this.token === this.tok.T_VARIABLE) {
       var name = this.text().substring(1);
       this.next();

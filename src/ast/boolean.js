@@ -12,8 +12,8 @@ const KIND = "boolean";
  * @constructor Boolean
  * @extends {Literal}
  */
-const Boolean = Literal.extends(function Boolean(value, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+const Boolean = Literal.extends(function Boolean(value, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
 module.exports = Boolean;

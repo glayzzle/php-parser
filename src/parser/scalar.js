@@ -51,13 +51,16 @@ module.exports = {
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING: {
           value = this.node("string");
-          let text = this.text();
+          const text = this.text();
           const isDoubleQuote = text[0] === '"';
-          text = text.substring(1, text.length - 1);
           this.next();
           value = value(
             isDoubleQuote,
-            this.resolve_special_chars(text, isDoubleQuote)
+            this.resolve_special_chars(
+              text.substring(1, text.length - 1),
+              isDoubleQuote
+            ),
+            text
           );
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
@@ -69,6 +72,7 @@ module.exports = {
         }
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
+            const start = this.lexer.yylloc.first_offset;
             node = this.node("nowdoc");
             value = this.next().text();
             // strip the last line return char
@@ -86,7 +90,11 @@ module.exports = {
               value = value.substring(0, value.length - 1);
             }
             this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
-            node = node(value, this.lexer.heredoc_label);
+            node = node(
+              value,
+              this.lexer._input.substring(start, this.lexer.yylloc.last_offset),
+              this.lexer.heredoc_label
+            );
             this.expect(this.tok.T_END_HEREDOC) && this.next();
             return node;
           } else {
@@ -110,7 +118,7 @@ module.exports = {
           const result = this.node("number");
           value = this.text();
           this.next();
-          return result(value);
+          return result(value, null);
         }
 
         // ARRAYS
@@ -171,7 +179,8 @@ module.exports = {
       result = result(
         "string",
         false,
-        this.resolve_special_chars(text, isDoubleQuote)
+        this.resolve_special_chars(text, isDoubleQuote),
+        text
       );
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       // dynamic variable name
@@ -231,7 +240,7 @@ module.exports = {
       const value = this.text();
       this.next();
       // consider it as string
-      result = result("string", false, value);
+      result = result("string", false, value, value);
     }
 
     return result;
@@ -240,6 +249,7 @@ module.exports = {
    * Reads an encapsed string
    */
   read_encapsed_string: function(expect) {
+    const start = this.lexer.yylloc.prev_offset;
     let node = this.node("encapsed");
     const value = [];
     let type = null;
@@ -258,7 +268,11 @@ module.exports = {
     }
 
     this.expect(expect) && this.next();
-    node = node(value, type);
+    node = node(
+      value,
+      this.lexer._input.substring(start, this.lexer.yylloc.first_offset),
+      type
+    );
 
     if (expect === this.tok.T_END_HEREDOC) {
       node.label = this.lexer.heredoc_label;
@@ -272,6 +286,6 @@ module.exports = {
     const result = this.node("magic");
     const name = this.text();
     this.next();
-    return result(name);
+    return result(name.toUpperCase(), name);
   }
 };

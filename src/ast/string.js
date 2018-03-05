@@ -17,10 +17,11 @@ const KIND = "string";
 const String = Literal.extends(function String(
   isDoubleQuote,
   value,
+  raw,
   docs,
   location
 ) {
-  Literal.apply(this, [KIND, value, docs, location]);
+  Literal.apply(this, [KIND, value, raw, docs, location]);
   this.isDoubleQuote = isDoubleQuote;
 });
 

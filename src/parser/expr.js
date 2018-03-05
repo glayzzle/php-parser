@@ -109,7 +109,7 @@ module.exports = {
         this.token === this.tok.T_DNUMBER
       ) {
         // negative number
-        result = result("number", "-" + this.text());
+        result = result("number", "-" + this.text(), null);
         this.next();
         return result;
       } else {

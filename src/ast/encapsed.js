@@ -16,11 +16,12 @@ const KIND = "encapsed";
  */
 const Encapsed = Literal.extends(function Encapsed(
   value,
+  raw,
   type,
   docs,
   location
 ) {
-  Literal.apply(this, [KIND, value, docs, location]);
+  Literal.apply(this, [KIND, value, raw, docs, location]);
   this.type = type;
 });
 

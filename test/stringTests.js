@@ -19,6 +19,11 @@ describe("Test strings", function() {
     const text = ast.children[0].right;
     text.value.should.be.exactly('Avoid converting \n chars, but \' or \\ is ok.');
   });
+  it('implement #116', function() {
+    const ast = parser.parseEval("$a = \"foo\\nbar\";");
+    const text = ast.children[0].right;
+    text.raw.should.be.exactly("\"foo\\nbar\"");
+  });
   it("...", function() {
     var ast = parser.parseEval("$a = b'\\t\\ra';");
   });

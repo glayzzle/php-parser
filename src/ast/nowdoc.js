@@ -14,8 +14,14 @@ const KIND = "nowdoc";
  * @property {String} label
 
  */
-const Nowdoc = Literal.extends(function Nowdoc(value, label, docs, location) {
-  Literal.apply(this, [KIND, value, docs, location]);
+const Nowdoc = Literal.extends(function Nowdoc(
+  value,
+  raw,
+  label,
+  docs,
+  location
+) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
   this.label = label;
 });
 
