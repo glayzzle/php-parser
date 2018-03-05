@@ -230,14 +230,11 @@ module.exports = {
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   read_encaps_var_offset: function() {
-    let offset = this.node(),
-      text;
+    let offset = this.node();
     if (this.token === this.tok.T_STRING) {
-      text = this.text();
-      const isDblQuote = text[0] === '"';
-      text = text.substring(1, text.length - 1);
+      const text = this.text();
       this.next();
-      offset = offset("string", isDblQuote, this.resolve_special_chars(text));
+      offset = offset("constref", text);
     } else if (this.token === this.tok.T_NUM_STRING) {
       const num = this.text();
       this.next();
@@ -252,10 +249,10 @@ module.exports = {
         this.tok.T_NUM_STRING,
         this.tok.T_VARIABLE
       ]);
-      // fallback : consider as text
-      text = this.text();
+      // fallback : consider as constref
+      const text = this.text();
       this.next();
-      offset = offset("string", false, text);
+      offset = offset("constref", text);
     }
     return offset;
   },

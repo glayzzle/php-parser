@@ -1,6 +1,18 @@
 var parser = require("../src/index");
 
 describe("Test strings", function() {
+  it("fix #124", function() {
+    var ast = parser.parseEval("$string = \"He drank some $juices[koolaid1] juice.\";");
+    const text = ast.children[0].right;
+    text.kind.should.be.exactly('encapsed');
+    text.value.length.should.be.exactly(3);
+    const offset = text.value[1];
+    offset.kind.should.be.exactly('offsetlookup');
+    offset.what.name.should.be.exactly('juices');
+    offset.offset.kind.should.be.exactly('constref');
+    offset.offset.name.should.be.exactly('koolaid1');
+  });
+
   it("...", function() {
     var ast = parser.parseEval("$a = b'\\t\\ra';");
   });
@@ -18,7 +30,7 @@ describe("Test strings", function() {
     ast.children[0].arguments[0].value[0].kind.should.be.exactly('string');
     ast.children[0].arguments[0].value[0].value.should.be.exactly('$');
 
-    // @todo ... 
+    // @todo ...
     ast = parser.parseEval('echo `$', {
       parser: { suppressErrors: true, debug: false },
       lexer: { debug: false },

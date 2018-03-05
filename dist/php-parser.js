@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2018-03-04 */
+/*! php-parser - BSD3 License - 2018-03-05 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -7822,14 +7822,11 @@ module.exports = {
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   read_encaps_var_offset: function read_encaps_var_offset() {
-    var offset = this.node(),
-        text = void 0;
+    var offset = this.node();
     if (this.token === this.tok.T_STRING) {
-      text = this.text();
-      var isDblQuote = text[0] === '"';
-      text = text.substring(1, text.length - 1);
+      var text = this.text();
       this.next();
-      offset = offset("string", isDblQuote, this.resolve_special_chars(text));
+      offset = offset("constref", text);
     } else if (this.token === this.tok.T_NUM_STRING) {
       var num = this.text();
       this.next();
@@ -7840,10 +7837,10 @@ module.exports = {
       offset = offset("variable", name, false, false);
     } else {
       this.expect([this.tok.T_STRING, this.tok.T_NUM_STRING, this.tok.T_VARIABLE]);
-      // fallback : consider as text
-      text = this.text();
+      // fallback : consider as constref
+      var _text = this.text();
       this.next();
-      offset = offset("string", false, text);
+      offset = offset("constref", _text);
     }
     return offset;
   },
