@@ -274,18 +274,25 @@ module.exports = {
       }
 
       case this.tok.T_INLINE_HTML: {
-        const start =
-          this.lexer.yylloc.prev_line != this.lexer.yylloc.first_line
-            ? this.lexer.yylloc.prev_offset
-            : this.lexer.yylloc.first_offset;
-        result = this.node("inline");
         const value = this.text();
+        let prevChar =
+          this.lexer.yylloc.first_offset > 0
+            ? this.lexer._input[this.lexer.yylloc.first_offset - 1]
+            : null;
+        const fixFirstLine = prevChar === "\r" || prevChar === "\n";
+        // revert back the first stripped line
+        if (fixFirstLine) {
+          if (
+            prevChar === "\n" &&
+            this.lexer.yylloc.first_offset > 1 &&
+            this.lexer._input[this.lexer.yylloc.first_offset - 2] === "\r"
+          ) {
+            prevChar = "\r\n";
+          }
+        }
+        result = this.node("inline");
         this.next();
-        const raw = this.lexer._input.substring(
-          start,
-          this.lexer.yylloc.prev_offset
-        );
-        return result(value, raw);
+        return result(value, fixFirstLine ? prevChar + value : value);
       }
 
       case this.tok.T_UNSET:

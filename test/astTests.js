@@ -31,11 +31,18 @@ describe("Test AST structure", function() {
   });
 
   it("test inline", function() {
-    var ast = parser.parseCode('Hello <?php echo "World"; ?> !');
+    const ast = parser.parseCode("Hello <?php echo 'World'; ?>\n !");
     ast.children[0].kind.should.be.exactly("inline");
     ast.children[2].kind.should.be.exactly("inline");
     ast.children[0].value.should.be.exactly("Hello ");
     ast.children[2].value.should.be.exactly(" !");
+    ast.children[2].raw.should.be.exactly("\n !");
+  });
+
+  it("fix #120", function() {
+    const ast = parser.parseCode("<?php echo 'World'; ?>\r\n !");
+    ast.children[1].value.should.be.exactly(" !");
+    ast.children[1].raw.should.be.exactly("\r\n !");
   });
 
   it("test magics", function() {
