@@ -143,11 +143,12 @@ lexer.prototype.setInput = function(input) {
     last_column: 0
   };
   this.tokens = [];
-  this.conditionStack = [];
   this.done = this.offset >= this.size;
   if (!this.all_tokens && this.mode_eval) {
+    this.conditionStack = ['INITIAL'];
     this.begin("ST_IN_SCRIPTING");
   } else {
+    this.conditionStack = [];
     this.begin("INITIAL");
   }
   return this;

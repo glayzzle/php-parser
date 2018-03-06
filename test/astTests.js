@@ -1,6 +1,22 @@
 var parser = require("./main");
 
 describe("Test AST structure", function() {
+
+  it('fix #127 - echo statements', function() {
+    var ast = parser.parseEval('echo "hello"; ?> world');
+    ast.children.length.should.be.exactly(2);
+    ast.children[0].kind.should.be.exactly("echo");
+    ast.children[1].kind.should.be.exactly("inline");
+  });
+
+  it('fix #127 - inline', function() {
+    var ast = parser.parseEval('?>?>?>');
+    ast.children.length.should.be.exactly(1);
+    ast.children[0].kind.should.be.exactly("inline");
+    ast.children[0].value.should.be.exactly("?>?>");
+  });
+
+
   it("test program", function() {
     var ast = parser.parseEval("");
     ast.kind.should.be.exactly("program");
