@@ -18,6 +18,7 @@ describe("Test lexer", function() {
     });
     it("parse short echo", function() {
       ast.children[1].kind.should.be.exactly("echo");
+      ast.children[1].shortForm.should.be.exactly(true);
       ast.children[1].arguments[0].kind.should.be.exactly("variable");
       ast.children[1].arguments[0].name.should.be.exactly("a");
     });

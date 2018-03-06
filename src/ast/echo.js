@@ -10,10 +10,12 @@ const KIND = "echo";
 /**
  * Defines system based call
  * @constructor Echo
+ * @property {boolean} shortForm
  * @extends {Sys}
  */
-const Echo = Sys.extends(function Echo(args, docs, location) {
+const Echo = Sys.extends(function Echo(args, shortForm, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
+  this.shortForm = shortForm;
 });
 
 module.exports = Echo;

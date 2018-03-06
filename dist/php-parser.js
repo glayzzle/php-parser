@@ -1182,10 +1182,12 @@ var KIND = "echo";
 /**
  * Defines system based call
  * @constructor Echo
+ * @property {boolean} shortForm
  * @extends {Sys}
  */
-var Echo = Sys.extends(function Echo(args, docs, location) {
+var Echo = Sys.extends(function Echo(args, shortForm, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
+  this.shortForm = shortForm;
 });
 
 module.exports = Echo;
@@ -7242,9 +7244,11 @@ module.exports = {
       case this.tok.T_ECHO:
         {
           result = this.node("echo");
+          var text = this.text();
+          var shortForm = text === '<?=' || text === '<%=';
           var args = this.next().read_list(this.read_expr, ",");
           this.expectEndOfStatement();
-          return result(args);
+          return result(args, shortForm);
         }
 
       case this.tok.T_OPEN_TAG_WITH_ECHO:
