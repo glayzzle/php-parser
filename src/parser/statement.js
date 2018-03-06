@@ -269,18 +269,10 @@ module.exports = {
       case this.tok.T_ECHO: {
         result = this.node("echo");
         const text = this.text();
-        const shortForm = (text === '<?=' || text === '<%=');
+        const shortForm = text === "<?=" || text === "<%=";
         const args = this.next().read_list(this.read_expr, ",");
         this.expectEndOfStatement();
         return result(args, shortForm);
-      }
-
-      case this.tok.T_OPEN_TAG_WITH_ECHO: {
-        result = this.node("echo");
-        const args = this.next().read_list(this.read_expr, ",");
-        this.expectEndOfStatement();
-        return result(args);
-
       }
 
       case this.tok.T_INLINE_HTML: {

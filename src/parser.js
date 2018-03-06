@@ -168,9 +168,7 @@ const parser = function(lexer, ast) {
         this.tok.T_FINAL
       ].map(mapIt)
     ),
-    EOS: new Map(
-      [";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)
-    ),
+    EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
     EXPR: new Map(
       [
         "@",
