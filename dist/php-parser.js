@@ -3384,9 +3384,13 @@ lexer.prototype.lex = function () {
     token === this.tok.T_OPEN_TAG) {
       token = this.next() || this.lex();
     }
-    if (!this.mode_eval && token == this.tok.T_OPEN_TAG_WITH_ECHO) {
+    if (token == this.tok.T_OPEN_TAG_WITH_ECHO) {
+      // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1683
       // open tag with echo statement
       return this.tok.T_ECHO;
+    } else if (token === this.tok.T_CLOSE_TAG) {
+      // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
+      return ';'; /* implicit ; */
     }
   }
   if (!this.yylloc.prev_offset) {
@@ -4697,7 +4701,7 @@ var parser = function parser(lexer, ast) {
     SCALAR: new Map([this.tok.T_CONSTANT_ENCAPSED_STRING, this.tok.T_START_HEREDOC, this.tok.T_LNUMBER, this.tok.T_DNUMBER, this.tok.T_ARRAY, "[", this.tok.T_CLASS_C, this.tok.T_TRAIT_C, this.tok.T_FUNC_C, this.tok.T_METHOD_C, this.tok.T_LINE, this.tok.T_FILE, this.tok.T_DIR, this.tok.T_NS_C, '"', 'b"', 'B"', "-", this.tok.T_NS_SEPARATOR].map(mapIt)),
     T_MAGIC_CONST: new Map([this.tok.T_CLASS_C, this.tok.T_TRAIT_C, this.tok.T_FUNC_C, this.tok.T_METHOD_C, this.tok.T_LINE, this.tok.T_FILE, this.tok.T_DIR, this.tok.T_NS_C].map(mapIt)),
     T_MEMBER_FLAGS: new Map([this.tok.T_PUBLIC, this.tok.T_PRIVATE, this.tok.T_PROTECTED, this.tok.T_STATIC, this.tok.T_ABSTRACT, this.tok.T_FINAL].map(mapIt)),
-    EOS: new Map([";", this.tok.T_CLOSE_TAG, this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
+    EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
     EXPR: new Map(["@", "-", "+", "!", "~", "(", "`", this.tok.T_LIST, this.tok.T_CLONE, this.tok.T_INC, this.tok.T_DEC, this.tok.T_NEW, this.tok.T_ISSET, this.tok.T_EMPTY, this.tok.T_INCLUDE, this.tok.T_INCLUDE_ONCE, this.tok.T_REQUIRE, this.tok.T_REQUIRE_ONCE, this.tok.T_EVAL, this.tok.T_INT_CAST, this.tok.T_DOUBLE_CAST, this.tok.T_STRING_CAST, this.tok.T_ARRAY_CAST, this.tok.T_OBJECT_CAST, this.tok.T_BOOL_CAST, this.tok.T_UNSET_CAST, this.tok.T_EXIT, this.tok.T_PRINT, this.tok.T_YIELD, this.tok.T_STATIC, this.tok.T_FUNCTION,
     // using VARIABLES :
     this.tok.T_VARIABLE, "$", this.tok.T_NS_SEPARATOR, this.tok.T_STRING,
@@ -4817,12 +4821,6 @@ parser.prototype.node = function (name) {
  */
 parser.prototype.expectEndOfStatement = function () {
   if (this.token === ";") {
-    this.next();
-    if (this.token === this.tok.T_CLOSE_TAG) {
-      // strip close tag (statement already closed with ';')
-      this.next();
-    }
-  } else if (this.token === this.tok.T_CLOSE_TAG) {
     this.next();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(";");
@@ -7211,7 +7209,7 @@ module.exports = {
           result = this.node(this.token === this.tok.T_CONTINUE ? "continue" : "break");
           var level = null;
           this.next(); // look ahead
-          if (this.token !== ";" && this.token !== this.tok.T_CLOSE_TAG) {
+          if (this.token !== ";") {
             level = this.read_expr();
           }
           this.expectEndOfStatement();
@@ -7247,6 +7245,14 @@ module.exports = {
           var args = this.next().read_list(this.read_expr, ",");
           this.expectEndOfStatement();
           return result(args);
+        }
+
+      case this.tok.T_OPEN_TAG_WITH_ECHO:
+        {
+          result = this.node("echo");
+          var _args = this.next().read_list(this.read_expr, ",");
+          this.expectEndOfStatement();
+          return result(_args);
         }
 
       case this.tok.T_INLINE_HTML:
@@ -7318,9 +7324,8 @@ module.exports = {
         this.expectEndOfStatement();
         return result(expr);
 
-      case ";": // ignore this (extra ponctuation)
-      case this.tok.T_CLOSE_TAG:
-        // empty tag
+      case ";":
+        // ignore this (extra ponctuation)
         this.next();
         return null;
 
@@ -7418,10 +7423,6 @@ module.exports = {
     // OPTIONNAL ';'
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L570
     if (this.next().token === ";") {
-      this.next();
-    }
-    // IGNORE THE CLOSE TAG TOKEN WITH SHORT MODE
-    if (this.token === this.tok.T_CLOSE_TAG) {
       this.next();
     }
     // EXTRACTING CASES

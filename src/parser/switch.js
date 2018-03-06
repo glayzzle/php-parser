@@ -47,10 +47,6 @@ module.exports = {
     if (this.next().token === ";") {
       this.next();
     }
-    // IGNORE THE CLOSE TAG TOKEN WITH SHORT MODE
-    if (this.token === this.tok.T_CLOSE_TAG) {
-      this.next();
-    }
     // EXTRACTING CASES
     while (this.token !== this.EOF && this.token !== expect) {
       items.push(this.read_case_list(expect));

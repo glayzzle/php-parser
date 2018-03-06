@@ -169,7 +169,7 @@ const parser = function(lexer, ast) {
       ].map(mapIt)
     ),
     EOS: new Map(
-      [";", this.tok.T_CLOSE_TAG, this.EOF, this.tok.T_INLINE_HTML].map(mapIt)
+      [";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)
     ),
     EXPR: new Map(
       [
@@ -349,12 +349,6 @@ parser.prototype.node = function(name) {
  */
 parser.prototype.expectEndOfStatement = function() {
   if (this.token === ";") {
-    this.next();
-    if (this.token === this.tok.T_CLOSE_TAG) {
-      // strip close tag (statement already closed with ';')
-      this.next();
-    }
-  } else if (this.token === this.tok.T_CLOSE_TAG) {
     this.next();
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(";");

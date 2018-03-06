@@ -341,9 +341,13 @@ lexer.prototype.lex = function() {
     ) {
       token = this.next() || this.lex();
     }
-    if (!this.mode_eval && token == this.tok.T_OPEN_TAG_WITH_ECHO) {
+    if (token == this.tok.T_OPEN_TAG_WITH_ECHO) {
+      // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1683
       // open tag with echo statement
       return this.tok.T_ECHO;
+    } else if (token === this.tok.T_CLOSE_TAG) {
+      // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
+      return ';';  /* implicit ; */
     }
   }
   if (!this.yylloc.prev_offset) {

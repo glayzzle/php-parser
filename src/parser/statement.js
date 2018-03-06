@@ -236,7 +236,7 @@ module.exports = {
         );
         let level = null;
         this.next(); // look ahead
-        if (this.token !== ";" && this.token !== this.tok.T_CLOSE_TAG) {
+        if (this.token !== ";") {
           level = this.read_expr();
         }
         this.expectEndOfStatement();
@@ -271,6 +271,14 @@ module.exports = {
         const args = this.next().read_list(this.read_expr, ",");
         this.expectEndOfStatement();
         return result(args);
+      }
+
+      case this.tok.T_OPEN_TAG_WITH_ECHO: {
+        result = this.node("echo");
+        const args = this.next().read_list(this.read_expr, ",");
+        this.expectEndOfStatement();
+        return result(args);
+
       }
 
       case this.tok.T_INLINE_HTML: {
@@ -351,7 +359,6 @@ module.exports = {
         return result(expr);
 
       case ";": // ignore this (extra ponctuation)
-      case this.tok.T_CLOSE_TAG: // empty tag
         this.next();
         return null;
 

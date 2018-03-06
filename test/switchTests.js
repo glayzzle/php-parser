@@ -15,7 +15,7 @@ describe("Test SWITCH statements", function() {
       "  default:",
       "    $bar = false;",
       "}",
-      "switch(true):; ?><?php",
+      "switch(true): ?><?php",
       "  case A: ?><?php return true;",
       "  case B: ?><?php return false;",
       "endswitch;"
@@ -28,7 +28,7 @@ describe("Test SWITCH statements", function() {
   var errAst = parser.parseEval(
     [
       "switch(true);",
-      "switch(true):; ?> bug <?php",
+      "switch(true): ?> bug <?php",
       "  case A: return ?><?php true;",
       "  case B: return false  ?><?php ;",
       "endswitch;"
