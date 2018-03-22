@@ -91,4 +91,35 @@ describe("Test namespace statements", function() {
     );
     // @todo : make assertions
   });
+
+  it.only("should read usegroup location correctly", function() {
+    const testCase = [
+      "namespace Test\\test\\test;",
+      "",
+      "use Some\\other\\test;",
+      "",
+      "/**",
+      " * @property \\Test\\test $test",
+      " */",
+      "class Foo extends Bar implements Baz, Buzz {",
+      "  public $test;",
+      "",
+      "  function test() {",
+      "    return true;",
+      "  }",
+      "",
+      "  public function &passByReferenceTest() {",
+      "    $a = 1;",
+      "    return $a;",
+      "  }",
+      "}"
+    ].join("\n");
+    const ast = parser.parseEval(testCase, { ast: { withPositions: true } });
+    const astWithDocs = parser.parseEval(testCase, {
+      ast: { withPositions: true },
+      parser: { extractDoc: true }
+    });
+    ast.children[0].children[0].loc.end.line.should.be.exactly(3);
+    astWithDocs.children[0].children[0].loc.end.line.should.be.exactly(3);
+  });
 });
