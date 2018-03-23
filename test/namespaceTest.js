@@ -92,7 +92,7 @@ describe("Test namespace statements", function() {
     // @todo : make assertions
   });
 
-  it.only("should read usegroup location correctly", function() {
+  it("should read usegroup location correctly", function() {
     const testCase = [
       "namespace Test\\test\\test;",
       "",

@@ -86,7 +86,7 @@ module.exports = {
    * @return {UseGroup}
    */
   read_use_statement: function() {
-    const result = this.node("usegroup");
+    let result = this.node("usegroup");
     let items = [];
     let name = null;
     this.expect(this.tok.T_USE) && this.next();
@@ -99,8 +99,9 @@ module.exports = {
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();
     }
+    result = result(name, type, items);
     this.expect(";") && this.next();
-    return result(name, type, items);
+    return result;
   },
   /**
    * Reads a use declaration

@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2018-03-06 */
+/*! php-parser - BSD3 License - 2018-03-23 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -3202,7 +3202,7 @@ lexer.prototype.setInput = function (input) {
   this.tokens = [];
   this.done = this.offset >= this.size;
   if (!this.all_tokens && this.mode_eval) {
-    this.conditionStack = ['INITIAL'];
+    this.conditionStack = ["INITIAL"];
     this.begin("ST_IN_SCRIPTING");
   } else {
     this.conditionStack = [];
@@ -3392,7 +3392,7 @@ lexer.prototype.lex = function () {
       return this.tok.T_ECHO;
     } else if (token === this.tok.T_CLOSE_TAG) {
       // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
-      return ';'; /* implicit ; */
+      return ";"; /* implicit ; */
     }
   }
   if (!this.yylloc.prev_offset) {
@@ -6616,8 +6616,9 @@ module.exports = {
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();
     }
+    result = result(name, type, items);
     this.expect(";") && this.next();
-    return result(name, type, items);
+    return result;
   },
   /**
    * Reads a use declaration
@@ -7245,18 +7246,10 @@ module.exports = {
         {
           result = this.node("echo");
           var text = this.text();
-          var shortForm = text === '<?=' || text === '<%=';
+          var shortForm = text === "<?=" || text === "<%=";
           var args = this.next().read_list(this.read_expr, ",");
           this.expectEndOfStatement();
           return result(args, shortForm);
-        }
-
-      case this.tok.T_OPEN_TAG_WITH_ECHO:
-        {
-          result = this.node("echo");
-          var _args = this.next().read_list(this.read_expr, ",");
-          this.expectEndOfStatement();
-          return result(_args);
         }
 
       case this.tok.T_INLINE_HTML:
