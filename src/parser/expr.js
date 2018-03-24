@@ -185,6 +185,31 @@ module.exports = {
       }
     }
 
+    if (this.token === "[") {
+      expr = this.read_array();
+      if (this.token === "=") {
+        return this.node("assign")(expr, this.next().read_expr(), "=");
+      } else {
+        // handle dereferencable
+        while (this.token !== this.EOF) {
+          if (this.token === this.tok.T_OBJECT_OPERATOR) {
+            expr = this.recursive_variable_chain_scan(expr, false);
+          } else if (
+            this.token === this.tok.T_CURLY_OPEN ||
+            this.token === "["
+          ) {
+            expr = this.read_dereferencable(expr);
+          } else if (this.token === "(") {
+            // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
+            expr = this.node("call")(expr, this.read_function_argument_list());
+          } else {
+            return expr;
+          }
+        }
+        return expr;
+      }
+    }
+
     if (this.token === this.tok.T_CLONE)
       return this.node("clone")(this.next().read_expr());
 
