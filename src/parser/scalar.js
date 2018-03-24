@@ -199,7 +199,7 @@ module.exports = {
           this.expect("]") && this.next();
           name = node(name, offset);
         } else {
-          name = varName;
+          name = this.node("constref")(varName);
         }
       } else {
         name = this.read_expr();
@@ -210,6 +210,9 @@ module.exports = {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
       result = this.next().read_variable(false, false, false);
+      if (result.kind === "variable") {
+        result.curly = true;
+      }
       this.expect("}") && this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
       // plain variable
