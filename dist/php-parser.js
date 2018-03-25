@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2018-03-23 */
+/*! php-parser - BSD3 License - 2018-03-25 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -2319,12 +2319,16 @@ var KIND = "program";
  * @extends {Block}
  * @property {Error[]} errors
  * @property {Doc[]?} comments
+ * @property {String[]?} tokens
  */
-var Program = Block.extends(function Program(children, errors, comments, docs, location) {
+var Program = Block.extends(function Program(children, errors, comments, docs, tokens, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
   if (comments) {
     this.comments = comments;
+  }
+  if (tokens) {
+    this.tokens = tokens;
   }
 });
 
@@ -4680,6 +4684,7 @@ function isNumber(n) {
  * @property {AST} ast - the AST factory instance
  * @property {Integer|String} token - current token
  * @property {Boolean} extractDoc - should extract documentation as AST node
+ * @property {Boolean} extractTokens - should extract each token
  * @property {Boolean} suppressErrors - should ignore parsing errors and continue
  * @property {Boolean} debug - should output debug informations
  */
@@ -4693,6 +4698,7 @@ var parser = function parser(lexer, ast) {
   this.debug = false;
   this.php7 = true;
   this.extractDoc = false;
+  this.extractTokens = false;
   this.suppressErrors = false;
   var mapIt = function mapIt(item) {
     return [item, null];
@@ -4737,6 +4743,11 @@ parser.prototype.parse = function (code, filename) {
   } else {
     this._docs = null;
   }
+  if (this.extractTokens) {
+    this._tokens = [];
+  } else {
+    this._tokens = null;
+  }
   this._docIndex = 0;
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -4755,7 +4766,7 @@ parser.prototype.parse = function (code, filename) {
       }
     }
   }
-  return program(childs, this._errors, this._docs);
+  return program(childs, this._errors, this._docs, this._tokens);
 };
 
 /**
@@ -4890,11 +4901,8 @@ parser.prototype.text = function () {
 
 /** consume the next token **/
 parser.prototype.next = function () {
-  // prepare the back command
-  this.prev = [this.lexer.yylloc.first_line, this.lexer.yylloc.first_column, this.lexer.offset];
-
   // eating the token
-  this.token = this.lexer.lex() || this.EOF;
+  this.lex();
 
   // showing the debug
   if (this.debug) {
@@ -4913,6 +4921,27 @@ parser.prototype.next = function () {
     }
   }
 
+  return this;
+};
+
+/**
+ * Eating a token
+ */
+parser.prototype.lex = function () {
+  // prepare the back command
+  this.prev = [this.lexer.yylloc.first_line, this.lexer.yylloc.first_column, this.lexer.offset];
+
+  // the token
+  this.token = this.lexer.lex() || this.EOF;
+
+  // append on token stack
+  if (this.extractTokens && this.token !== this.EOF) {
+    var entry = this.lexer.yytext;
+    if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
+      entry = [this.lexer.engine.tokens.values[this.token], entry, this.lexer.yylloc.first_line];
+    }
+    this._tokens.push(entry);
+  }
   return this;
 };
 

@@ -18,6 +18,7 @@ function isNumber(n) {
  * @property {AST} ast - the AST factory instance
  * @property {Integer|String} token - current token
  * @property {Boolean} extractDoc - should extract documentation as AST node
+ * @property {Boolean} extractTokens - should extract each token
  * @property {Boolean} suppressErrors - should ignore parsing errors and continue
  * @property {Boolean} debug - should output debug informations
  */
@@ -31,6 +32,7 @@ const parser = function(lexer, ast) {
   this.debug = false;
   this.php7 = true;
   this.extractDoc = false;
+  this.extractTokens = false;
   this.suppressErrors = false;
   const mapIt = function(item) {
     return [item, null];
@@ -252,6 +254,11 @@ parser.prototype.parse = function(code, filename) {
   } else {
     this._docs = null;
   }
+  if (this.extractTokens) {
+    this._tokens = [];
+  } else {
+    this._tokens = null;
+  }
   this._docIndex = 0;
   this.lexer.setInput(code);
   this.lexer.comment_tokens = this.extractDoc;
@@ -270,7 +277,7 @@ parser.prototype.parse = function(code, filename) {
       }
     }
   }
-  return program(childs, this._errors, this._docs);
+  return program(childs, this._errors, this._docs, this._tokens);
 };
 
 /**
@@ -424,15 +431,8 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
-  // prepare the back command
-  this.prev = [
-    this.lexer.yylloc.first_line,
-    this.lexer.yylloc.first_column,
-    this.lexer.offset
-  ];
-
   // eating the token
-  this.token = this.lexer.lex() || this.EOF;
+  this.lex();
 
   // showing the debug
   if (this.debug) {
@@ -454,6 +454,35 @@ parser.prototype.next = function() {
     }
   }
 
+  return this;
+};
+
+/**
+ * Eating a token
+ */
+parser.prototype.lex = function() {
+  // prepare the back command
+  this.prev = [
+    this.lexer.yylloc.first_line,
+    this.lexer.yylloc.first_column,
+    this.lexer.offset
+  ];
+
+  // the token
+  this.token = this.lexer.lex() || this.EOF;
+
+  // append on token stack
+  if (this.extractTokens && this.token !== this.EOF) {
+    let entry = this.lexer.yytext;
+    if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
+      entry = [
+        this.lexer.engine.tokens.values[this.token],
+        entry,
+        this.lexer.yylloc.first_line
+      ];
+    }
+    this._tokens.push(entry);
+  }
   return this;
 };
 

@@ -17,6 +17,7 @@ Type: Parser
 -   `ast` **AST** the AST factory instance
 -   `token` **(Integer | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))** current token
 -   `extractDoc` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should extract documentation as AST node
+-   `extractTokens` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should extract each token
 -   `suppressErrors` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should ignore parsing errors and continue
 -   `debug` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** should output debug informations
 
@@ -98,6 +99,10 @@ Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 ### next
 
 consume the next token \*
+
+### lex
+
+Eating a token
 
 ### is
 

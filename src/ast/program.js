@@ -13,18 +13,23 @@ const KIND = "program";
  * @extends {Block}
  * @property {Error[]} errors
  * @property {Doc[]?} comments
+ * @property {String[]?} tokens
  */
 const Program = Block.extends(function Program(
   children,
   errors,
   comments,
   docs,
+  tokens,
   location
 ) {
   Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
   if (comments) {
     this.comments = comments;
+  }
+  if (tokens) {
+    this.tokens = tokens;
   }
 });
 

@@ -480,6 +480,10 @@ Defines a do/while statement
 
 Defines system based call
 
+**Properties**
+
+-   `shortForm` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ## Empty
 
 **Extends Sys**
