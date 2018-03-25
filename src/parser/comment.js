@@ -15,7 +15,7 @@ module.exports = {
       null,
       this
     );
-    this.token = this.lexer.lex() || this.EOF;
+    this.lex();
     return result(text);
   },
   /**
@@ -24,7 +24,7 @@ module.exports = {
   read_doc_comment: function() {
     const result = this.ast.prepare("commentblock", null, this);
     const text = this.text();
-    this.token = this.lexer.lex() || this.EOF;
+    this.lex();
     return result(text);
   }
 };
