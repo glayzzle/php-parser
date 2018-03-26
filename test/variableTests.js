@@ -1,6 +1,16 @@
 var parser = require("./main");
 
 describe("Test variables", function() {
+  describe("array destructuring", function() {
+    // Get result from parser
+    var ast = parser.parseEval("[$id1, $name1] = $data[0];");
+    it("should be assign with array", function() {
+      ast.children[0].kind.should.be.exactly("assign");
+      ast.children[0].left.kind.should.be.exactly("array");
+      ast.children[0].operator.should.be.exactly("=");
+    });
+  });
+
   describe("Default variables", function() {
     var ast = parser.parseEval(
       ['$a = "foo";', "$b = &$c;", "$a->b = true;"].join("\n")
@@ -197,11 +207,9 @@ describe("Test variables", function() {
       astErr.errors[0].line.should.be.exactly(1);
       astErr.errors[0].message.should.be.exactly(msg);
     });
-    
+
     it("should fail on property lookup on static lookup", function() {
-      var astErr = parser.parseEval([
-        "$this->foo::bar->baz;"
-      ].join('\n'), {
+      var astErr = parser.parseEval(["$this->foo::bar->baz;"].join("\n"), {
         parser: {
           suppressErrors: true
         }
@@ -213,27 +221,27 @@ describe("Test variables", function() {
       astErr.errors[0].line.should.be.exactly(1);
       astErr.errors[0].message.should.be.exactly(msg);
     });
-    
-    it('should fail $foo->bar::!', function() {
-      var errAst = parser.parseEval('$foo->bar::!', {
+
+    it("should fail $foo->bar::!", function() {
+      var errAst = parser.parseEval("$foo->bar::!", {
         parser: {
           suppressErrors: true
         }
       });
       errAst.errors.length.should.be.exactly(1);
-      errAst.errors[0].token.should.be.exactly('\'!\'');
-      errAst.children[0].kind.should.be.exactly('staticlookup');
-      errAst.children[0].offset.name.should.be.exactly('!');
+      errAst.errors[0].token.should.be.exactly("'!'");
+      errAst.children[0].kind.should.be.exactly("staticlookup");
+      errAst.children[0].offset.name.should.be.exactly("!");
     });
 
-    it('should fail foo::bar::baz', function() {
-      var errAst = parser.parseEval('foo::bar::baz', {
+    it("should fail foo::bar::baz", function() {
+      var errAst = parser.parseEval("foo::bar::baz", {
         parser: {
           suppressErrors: true
         }
       });
       errAst.errors.length.should.be.exactly(1);
-      errAst.children[0].kind.should.be.exactly('staticlookup');
+      errAst.children[0].kind.should.be.exactly("staticlookup");
     });
   });
 });
