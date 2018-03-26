@@ -19,8 +19,8 @@ const Program = Block.extends(function Program(
   children,
   errors,
   comments,
-  docs,
   tokens,
+  docs,
   location
 ) {
   Block.apply(this, [KIND, children, docs, location]);

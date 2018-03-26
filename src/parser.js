@@ -278,7 +278,7 @@ parser.prototype.parse = function(code, filename) {
       }
     }
   }
-  return program(childs, this._errors, this._docs, null, this._tokens);
+  return program(childs, this._errors, this._docs, this._tokens);
 };
 
 /**
