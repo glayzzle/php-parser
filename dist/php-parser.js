@@ -4766,7 +4766,7 @@ parser.prototype.parse = function (code, filename) {
       }
     }
   }
-  return program(childs, this._errors, this._docs, this._tokens);
+  return program(childs, this._errors, this._docs, null, this._tokens);
 };
 
 /**
@@ -4938,7 +4938,9 @@ parser.prototype.lex = function () {
   if (this.extractTokens && this.token !== this.EOF) {
     var entry = this.lexer.yytext;
     if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
-      entry = [this.lexer.engine.tokens.values[this.token], entry, this.lexer.yylloc.first_line];
+      entry = [this.lexer.engine.tokens.values[this.token], entry, this.lexer.yylloc.first_line, this.lexer.yylloc.first_offset];
+    } else {
+      entry = [null, entry, this.lexer.yylloc.first_line, this.lexer.yylloc.first_offset];
     }
     this._tokens.push(entry);
   }
