@@ -261,6 +261,7 @@ parser.prototype.parse = function(code, filename) {
   }
   this._docIndex = 0;
   this.lexer.setInput(code);
+  this.lexer.all_tokens = this.extractTokens;
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
@@ -468,30 +469,53 @@ parser.prototype.lex = function() {
     this.lexer.offset
   ];
 
-  // the token
-  this.token = this.lexer.lex() || this.EOF;
-
   // append on token stack
-  if (this.extractTokens && this.token !== this.EOF) {
-    let entry = this.lexer.yytext;
-    if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
-      entry = [
-        this.lexer.engine.tokens.values[this.token],
-        entry,
-        this.lexer.yylloc.first_line,
-        this.lexer.yylloc.first_offset,
-        this.lexer.offset
-      ];
-    } else {
-      entry = [
-        null,
-        entry,
-        this.lexer.yylloc.first_line,
-        this.lexer.yylloc.first_offset,
-        this.lexer.offset
-      ];
-    }
-    this._tokens.push(entry);
+  if (this.extractTokens) {
+    do {
+      // the token
+      this.token = this.lexer.lex() || this.EOF;
+      if (this.token === this.EOF) return this;
+      let entry = this.lexer.yytext;
+      if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
+        entry = [
+          this.lexer.engine.tokens.values[this.token],
+          entry,
+          this.lexer.yylloc.first_line,
+          this.lexer.yylloc.first_offset,
+          this.lexer.offset
+        ];
+      } else {
+        entry = [
+          null,
+          entry,
+          this.lexer.yylloc.first_line,
+          this.lexer.yylloc.first_offset,
+          this.lexer.offset
+        ];
+      }
+      this._tokens.push(entry);
+      if (this.token === this.tok.T_CLOSE_TAG) {
+        // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
+        this.token = ';';
+        return this;
+      } else if (this.token === this.tok.T_OPEN_TAG_WITH_ECHO) {
+        this.token = this.tok.T_ECHO;
+        return this;
+      }
+    } while (
+      this.token === this.tok.T_WHITESPACE || // ignore white space
+      (
+        !this.extractDoc &&
+        (
+          this.token === this.tok.T_COMMENT || // ignore single lines comments
+          this.token === this.tok.T_DOC_COMMENT // ignore doc comments
+        )
+      ) ||
+      // ignore open tags
+      this.token === this.tok.T_OPEN_TAG
+    );
+  } else {
+    this.token = this.lexer.lex() || this.EOF;
   }
   return this;
 };
