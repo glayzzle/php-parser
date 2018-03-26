@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2018-03-25 */
+/*! php-parser - BSD3 License - 2018-03-26 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -5515,7 +5515,7 @@ module.exports = {
   read_comment: function read_comment() {
     var text = this.text();
     var result = this.ast.prepare(text.substring(0, 2) === "/*" ? "commentblock" : "commentline", null, this);
-    this.token = this.lexer.lex() || this.EOF;
+    this.lex();
     return result(text);
   },
   /**
@@ -5524,7 +5524,7 @@ module.exports = {
   read_doc_comment: function read_doc_comment() {
     var result = this.ast.prepare("commentblock", null, this);
     var text = this.text();
-    this.token = this.lexer.lex() || this.EOF;
+    this.lex();
     return result(text);
   }
 };
@@ -5620,18 +5620,7 @@ module.exports = {
       var node = this.node("parenthesis");
       expr = this.next().read_expr();
       this.expect(")") && this.next();
-      expr = node(expr);
-      // handle dereferencable
-      if (this.token === this.tok.T_OBJECT_OPERATOR) {
-        return this.recursive_variable_chain_scan(expr, false);
-      } else if (this.token === this.tok.T_CURLY_OPEN || this.token === "[") {
-        return this.read_dereferencable(expr);
-      } else if (this.token === "(") {
-        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-        return this.node("call")(expr, this.read_function_argument_list());
-      } else {
-        return expr;
-      }
+      return this.handleDereferencable(node(expr));
     }
 
     if (this.token === "`") {
@@ -5678,6 +5667,15 @@ module.exports = {
         }
       } else {
         return result(assignList);
+      }
+    }
+
+    if (this.token === "[") {
+      expr = this.read_array();
+      if (this.token === "=") {
+        return this.node("assign")(expr, this.next().read_expr(), "=");
+      } else {
+        return this.handleDereferencable(expr);
       }
     }
 
@@ -5910,19 +5908,7 @@ module.exports = {
       }
     } else if (this.is("SCALAR")) {
       expr = this.read_scalar();
-      // handle dereferencable
-      while (this.token !== this.EOF) {
-        if (this.token === this.tok.T_OBJECT_OPERATOR) {
-          expr = this.recursive_variable_chain_scan(expr, false);
-        } else if (this.token === this.tok.T_CURLY_OPEN || this.token === "[") {
-          expr = this.read_dereferencable(expr);
-        } else if (this.token === "(") {
-          // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-          expr = this.node("call")(expr, this.read_function_argument_list());
-        } else {
-          return expr;
-        }
-      }
+      return this.handleDereferencable(expr);
     } else {
       this.error("EXPR");
       this.next();
@@ -6007,6 +5993,22 @@ module.exports = {
       result = ["key", result, this.next().read_expr_item()];
     }
     return result;
+  },
+
+  handleDereferencable: function handleDereferencable(expr) {
+    while (this.token !== this.EOF) {
+      if (this.token === this.tok.T_OBJECT_OPERATOR) {
+        expr = this.recursive_variable_chain_scan(expr, false);
+      } else if (this.token === this.tok.T_CURLY_OPEN || this.token === "[") {
+        expr = this.read_dereferencable(expr);
+      } else if (this.token === "(") {
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
+        expr = this.node("call")(expr, this.read_function_argument_list());
+      } else {
+        return expr;
+      }
+    }
+    return expr;
   }
 };
 
