@@ -1,4 +1,4 @@
-/*! php-parser - BSD3 License - 2018-03-26 */
+/*! php-parser - BSD3 License - 2018-03-27 */
 
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
@@ -438,10 +438,10 @@ AST.prototype.prepare = function (kind, docs, parser) {
     if (self.withPositions || self.withSource) {
       var src = null;
       if (self.withSource) {
-        src = parser.lexer._input.substring(start.offset, parser.lexer.yylloc.prev_offset);
+        src = parser.lexer._input.substring(start.offset, parser.prev[2]);
       }
       if (self.withPositions) {
-        location = new Location(src, start, new Position(parser.lexer.yylloc.prev_line, parser.lexer.yylloc.prev_column, parser.lexer.yylloc.prev_offset));
+        location = new Location(src, start, new Position(parser.prev[0], parser.prev[1], parser.prev[2]));
       } else {
         location = new Location(src, null, null);
       }
@@ -2321,7 +2321,7 @@ var KIND = "program";
  * @property {Doc[]?} comments
  * @property {String[]?} tokens
  */
-var Program = Block.extends(function Program(children, errors, comments, docs, tokens, location) {
+var Program = Block.extends(function Program(children, errors, comments, tokens, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
   if (comments) {
@@ -4767,7 +4767,7 @@ parser.prototype.parse = function (code, filename) {
       }
     }
   }
-  return program(childs, this._errors, this._docs, null, this._tokens);
+  return program(childs, this._errors, this._docs, this._tokens);
 };
 
 /**
@@ -4902,6 +4902,9 @@ parser.prototype.text = function () {
 
 /** consume the next token **/
 parser.prototype.next = function () {
+  // prepare the back command
+  this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
+
   // eating the token
   this.lex();
 
@@ -4929,9 +4932,6 @@ parser.prototype.next = function () {
  * Eating a token
  */
 parser.prototype.lex = function () {
-  // prepare the back command
-  this.prev = [this.lexer.yylloc.first_line, this.lexer.yylloc.first_column, this.lexer.offset];
-
   // append on token stack
   if (this.extractTokens) {
     do {
@@ -4947,7 +4947,7 @@ parser.prototype.lex = function () {
       this._tokens.push(entry);
       if (this.token === this.tok.T_CLOSE_TAG) {
         // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
-        this.token = ';';
+        this.token = ";";
         return this;
       } else if (this.token === this.tok.T_OPEN_TAG_WITH_ECHO) {
         this.token = this.tok.T_ECHO;
@@ -4955,8 +4955,7 @@ parser.prototype.lex = function () {
       }
     } while (this.token === this.tok.T_WHITESPACE || // ignore white space
     !this.extractDoc && (this.token === this.tok.T_COMMENT || // ignore single lines comments
-    this.token === this.tok.T_DOC_COMMENT // ignore doc comments
-    ) ||
+    this.token === this.tok.T_DOC_COMMENT) || // ignore doc comments
     // ignore open tags
     this.token === this.tok.T_OPEN_TAG);
   } else {
@@ -5535,8 +5534,13 @@ module.exports = {
   read_comment: function read_comment() {
     var text = this.text();
     var result = this.ast.prepare(text.substring(0, 2) === "/*" ? "commentblock" : "commentline", null, this);
+    // handle location on comment
+    var prev = this.prev;
+    this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
     this.lex();
-    return result(text);
+    result = result(text);
+    this.prev = prev;
+    return result;
   },
   /**
    * Comments with / ** ... * /
@@ -5544,8 +5548,12 @@ module.exports = {
   read_doc_comment: function read_doc_comment() {
     var result = this.ast.prepare("commentblock", null, this);
     var text = this.text();
+    var prev = this.prev;
+    this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
     this.lex();
-    return result(text);
+    result = result(text);
+    this.prev = prev;
+    return result;
   }
 };
 
@@ -6307,7 +6315,7 @@ module.exports = {
     var alternate = null;
     var shortForm = false;
     var test = null;
-    test = this.read_if_expr();
+    test = this.next().read_if_expr();
 
     if (this.token === ":") {
       shortForm = true;
@@ -6316,10 +6324,10 @@ module.exports = {
       var items = [];
       while (this.token !== this.EOF && this.token !== this.tok.T_ENDIF) {
         if (this.token === this.tok.T_ELSEIF) {
-          alternate = this.next().read_elseif_short();
+          alternate = this.read_elseif_short();
           break;
         } else if (this.token === this.tok.T_ELSE) {
-          alternate = this.next().read_else_short();
+          alternate = this.read_else_short();
           break;
         }
         items.push(this.read_inner_statement());
@@ -6330,7 +6338,7 @@ module.exports = {
     } else {
       body = this.read_statement();
       if (this.token === this.tok.T_ELSEIF) {
-        alternate = this.next().read_if();
+        alternate = this.read_if();
       } else if (this.token === this.tok.T_ELSE) {
         alternate = this.next().read_statement();
       }
@@ -6355,15 +6363,15 @@ module.exports = {
     var test = null;
     var body = null;
     var items = [];
-    test = this.read_if_expr();
+    test = this.next().read_if_expr();
     if (this.expect(":")) this.next();
     body = this.node("block");
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       if (this.token === this.tok.T_ELSEIF) {
-        alternate = this.next().read_elseif_short();
+        alternate = this.read_elseif_short();
         break;
       } else if (this.token === this.tok.T_ELSE) {
-        alternate = this.next().read_else_short();
+        alternate = this.read_else_short();
         break;
       }
       items.push(this.read_inner_statement());
@@ -6375,8 +6383,8 @@ module.exports = {
    *
    */
   read_else_short: function read_else_short() {
-    if (this.expect(":")) this.next();
     var body = this.node("block");
+    if (this.next().expect(":")) this.next();
     var items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       items.push(this.read_inner_statement());
@@ -7224,7 +7232,7 @@ module.exports = {
         return this.read_code_block(false);
 
       case this.tok.T_IF:
-        return this.next().read_if();
+        return this.read_if();
 
       case this.tok.T_SWITCH:
         return this.read_switch();

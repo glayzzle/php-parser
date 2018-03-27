@@ -432,7 +432,6 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
-
   // prepare the back command
   this.prev = [
     this.lexer.yylloc.last_line,
@@ -497,7 +496,7 @@ parser.prototype.lex = function() {
       this._tokens.push(entry);
       if (this.token === this.tok.T_CLOSE_TAG) {
         // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
-        this.token = ';';
+        this.token = ";";
         return this;
       } else if (this.token === this.tok.T_OPEN_TAG_WITH_ECHO) {
         this.token = this.tok.T_ECHO;
@@ -505,13 +504,9 @@ parser.prototype.lex = function() {
       }
     } while (
       this.token === this.tok.T_WHITESPACE || // ignore white space
-      (
-        !this.extractDoc &&
-        (
-          this.token === this.tok.T_COMMENT || // ignore single lines comments
-          this.token === this.tok.T_DOC_COMMENT // ignore doc comments
-        )
-      ) ||
+      (!this.extractDoc &&
+        (this.token === this.tok.T_COMMENT || // ignore single lines comments
+          this.token === this.tok.T_DOC_COMMENT)) || // ignore doc comments
       // ignore open tags
       this.token === this.tok.T_OPEN_TAG
     );

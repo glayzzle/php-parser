@@ -36,19 +36,18 @@ describe("Test offsets", function() {
   });
 
   describe("to comment node", function() {
-    console.log(ast.comments[0].loc);
     it("test line", function() {
       ast.comments[0].loc.start.line.should.be.exactly(1);
-      ast.comments[0].loc.end.line.should.be.exactly(1);
+      ast.comments[0].loc.end.line.should.be.exactly(2);
     });
     it("test column", function() {
       ast.comments[0].loc.start.column.should.be.exactly(0);
-      ast.comments[0].loc.end.column.should.be.exactly(12);
+      ast.comments[0].loc.end.column.should.be.exactly(0);
     });
     it("test offsets", function() {
       ast.comments[0].loc.start.offset.should.be.exactly(0);
-      ast.comments[0].loc.end.offset.should.be.exactly(lines[0].length);
-      ast.comments[0].loc.source.should.be.exactly(lines[0]);
+      ast.comments[0].loc.end.offset.should.be.exactly(lines[0].length + 2);
+      ast.comments[0].loc.source.should.be.exactly(lines[0] + '\r\n');
     });
   });
 

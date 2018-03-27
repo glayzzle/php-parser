@@ -248,20 +248,13 @@ AST.prototype.prepare = function(kind, docs, parser) {
     if (self.withPositions || self.withSource) {
       let src = null;
       if (self.withSource) {
-        src = parser.lexer._input.substring(
-          start.offset,
-          parser.prev[2]
-        );
+        src = parser.lexer._input.substring(start.offset, parser.prev[2]);
       }
       if (self.withPositions) {
         location = new Location(
           src,
           start,
-          new Position(
-            parser.prev[0],
-            parser.prev[1],
-            parser.prev[2]
-          )
+          new Position(parser.prev[0], parser.prev[1], parser.prev[2])
         );
       } else {
         location = new Location(src, null, null);

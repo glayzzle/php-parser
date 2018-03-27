@@ -13,7 +13,7 @@ module.exports = {
    * ```
    */
   read_if: function() {
-    let result = this.node("if");
+    const result = this.node("if");
     let body = null;
     let alternate = null;
     let shortForm = false;
