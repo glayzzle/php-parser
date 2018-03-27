@@ -1,28 +1,41 @@
 var parser = require("../src/index");
 
 describe("Test strings", function() {
-  it("fix #124", function() {
-    const ast = parser.parseEval("$string = \"He drank some $juices[koolaid1] juice.\";");
-    const text = ast.children[0].right;
-    text.kind.should.be.exactly('encapsed');
-    text.value.length.should.be.exactly(3);
-    const offset = text.value[1];
-    offset.kind.should.be.exactly('offsetlookup');
-    offset.what.name.should.be.exactly('juices');
-    offset.offset.kind.should.be.exactly('constref');
-    offset.offset.name.should.be.exactly('koolaid1');
+  it("fix #101", function() {
+    let ast = parser.parseEval('"encapsed {$var}";');
+    ast.children[0].value[1].kind.should.be.exactly("variable");
+    ast.children[0].value[1].curly.should.be.true();
+    ast = parser.parseEval('"encapsed {$arr[0]}";');
+    ast.children[0].value[1].kind.should.be.exactly("offsetlookup");
+    ast = parser.parseEval('"encapsed ${var}";');
+    ast.children[0].value[1].name.kind.should.be.exactly("constref");
   });
-  it('fix #123', function() {
+  it("fix #124", function() {
     const ast = parser.parseEval(
-      "$string = \'Avoid converting \n chars, but \\' or \\\\ is ok.\';"
+      '$string = "He drank some $juices[koolaid1] juice.";'
     );
     const text = ast.children[0].right;
-    text.value.should.be.exactly('Avoid converting \n chars, but \' or \\ is ok.');
+    text.kind.should.be.exactly("encapsed");
+    text.value.length.should.be.exactly(3);
+    const offset = text.value[1];
+    offset.kind.should.be.exactly("offsetlookup");
+    offset.what.name.should.be.exactly("juices");
+    offset.offset.kind.should.be.exactly("constref");
+    offset.offset.name.should.be.exactly("koolaid1");
   });
-  it('implement #116', function() {
-    const ast = parser.parseEval("$a = \"foo\\nbar\";");
+  it("fix #123", function() {
+    const ast = parser.parseEval(
+      "$string = 'Avoid converting \n chars, but \\' or \\\\ is ok.';"
+    );
     const text = ast.children[0].right;
-    text.raw.should.be.exactly("\"foo\\nbar\"");
+    text.value.should.be.exactly(
+      "Avoid converting \n chars, but ' or \\ is ok."
+    );
+  });
+  it("implement #116", function() {
+    const ast = parser.parseEval('$a = "foo\\nbar";');
+    const text = ast.children[0].right;
+    text.raw.should.be.exactly('"foo\\nbar"');
   });
   it("...", function() {
     var ast = parser.parseEval("$a = b'\\t\\ra';");
@@ -36,70 +49,71 @@ describe("Test strings", function() {
   it("check infinite on $", function() {
     var ast = parser.parseEval('echo "$', {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast.children[0].arguments[0].value[0].kind.should.be.exactly('string');
-    ast.children[0].arguments[0].value[0].value.should.be.exactly('$');
+    ast.children[0].arguments[0].value[0].kind.should.be.exactly("string");
+    ast.children[0].arguments[0].value[0].value.should.be.exactly("$");
 
     // @todo ...
-    ast = parser.parseEval('echo `$', {
+    ast = parser.parseEval("echo `$", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast = parser.parseEval('echo ` -> $', {
+    ast = parser.parseEval("echo ` -> $", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-
   });
   it("check infinite on {", function() {
     var ast = parser.parseEval('echo "{', {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast.children[0].arguments[0].value[0].kind.should.be.exactly('string');
-    ast.children[0].arguments[0].value[0].value.should.be.exactly('{');
-    ast = parser.parseEval('echo `{', {
+    ast.children[0].arguments[0].value[0].kind.should.be.exactly("string");
+    ast.children[0].arguments[0].value[0].value.should.be.exactly("{");
+    ast = parser.parseEval("echo `{", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast = parser.parseEval('echo ` -> {', {
+    ast = parser.parseEval("echo ` -> {", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
   });
   it("check infinite on ${", function() {
     var ast = parser.parseEval('echo "${', {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast.children[0].arguments[0].value[0].kind.should.be.exactly('variable');
-    ast = parser.parseEval('echo `${', {
+    ast.children[0].arguments[0].value[0].kind.should.be.exactly("variable");
+    ast = parser.parseEval("echo `${", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast = parser.parseEval('echo ` -> ${', {
+    ast = parser.parseEval("echo ` -> ${", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
   });
   it("check infinite on {$", function() {
     var ast = parser.parseEval('echo "{$', {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast.children[0].arguments[0].value[0].kind.should.be.exactly('variable');
-    ast = parser.parseEval('echo `{$', {
+    ast.children[0].arguments[0].value[0].kind.should.be.exactly("variable");
+    ast = parser.parseEval("echo `{$", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
-    ast = parser.parseEval('echo ` -> {$', {
+    ast = parser.parseEval("echo ` -> {$", {
       parser: { suppressErrors: true, debug: false },
-      lexer: { debug: false },
+      lexer: { debug: false }
     });
   });
   it("binary cast", function() {
-    var ast = parser.parseEval('echo (binary)"\\colors[1] contains >$colors[1]<\\n";');
+    var ast = parser.parseEval(
+      'echo (binary)"\\colors[1] contains >$colors[1]<\\n";'
+    );
     // @todo console.log(ast.children[0].arguments[0]);
   });
   it("...", function() {
@@ -150,7 +164,7 @@ describe("Test strings", function() {
     arg1.value[2].value.should.be.exactly("->name !");
     // test the varname
     arg1.value[1].kind.should.be.exactly("variable");
-    arg1.value[1].name.should.be.exactly("obj");
+    arg1.value[1].name.name.should.be.exactly("obj");
     arg1.value[1].curly.should.be.exactly(true);
   });
   it("Encapsed variable / curly constant", function() {
