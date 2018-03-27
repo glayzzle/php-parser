@@ -432,6 +432,14 @@ parser.prototype.text = function() {
 
 /** consume the next token **/
 parser.prototype.next = function() {
+
+  // prepare the back command
+  this.prev = [
+    this.lexer.yylloc.last_line,
+    this.lexer.yylloc.last_column,
+    this.lexer.offset
+  ];
+
   // eating the token
   this.lex();
 
@@ -462,13 +470,6 @@ parser.prototype.next = function() {
  * Eating a token
  */
 parser.prototype.lex = function() {
-  // prepare the back command
-  this.prev = [
-    this.lexer.yylloc.first_line,
-    this.lexer.yylloc.first_column,
-    this.lexer.offset
-  ];
-
   // append on token stack
   if (this.extractTokens) {
     do {

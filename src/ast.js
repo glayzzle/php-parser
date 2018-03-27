@@ -250,7 +250,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
       if (self.withSource) {
         src = parser.lexer._input.substring(
           start.offset,
-          parser.lexer.yylloc.prev_offset
+          parser.prev[2]
         );
       }
       if (self.withPositions) {
@@ -258,9 +258,9 @@ AST.prototype.prepare = function(kind, docs, parser) {
           src,
           start,
           new Position(
-            parser.lexer.yylloc.prev_line,
-            parser.lexer.yylloc.prev_column,
-            parser.lexer.yylloc.prev_offset
+            parser.prev[0],
+            parser.prev[1],
+            parser.prev[2]
           )
         );
       } else {

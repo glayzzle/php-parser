@@ -196,7 +196,7 @@ module.exports = {
         return this.read_code_block(false);
 
       case this.tok.T_IF:
-        return this.next().read_if();
+        return this.read_if();
 
       case this.tok.T_SWITCH:
         return this.read_switch();
@@ -394,7 +394,7 @@ module.exports = {
    * ```
    */
   read_code_block: function(top) {
-    const result = this.node("block");
+    let result = this.node("block");
     this.expect("{") && this.next();
     const body = top
       ? this.read_top_statements()
