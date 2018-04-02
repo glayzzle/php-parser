@@ -1,6 +1,11 @@
 var parser = require("../src/index");
 
 describe("Test strings", function() {
+  it("fix #144", function() {
+    let ast = parser.parseEval('"encapsed \\\" {$var}";');
+    ast.children[0].kind.should.be.exactly("encapsed");
+    ast.children[0].raw.should.be.exactly("\"encapsed \\\" {$var}\"");
+  });
   it("fix #101", function() {
     let ast = parser.parseEval('"encapsed {$var}";');
     ast.children[0].value[1].kind.should.be.exactly("variable");

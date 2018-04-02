@@ -273,7 +273,7 @@ module.exports = {
     this.expect(expect) && this.next();
     node = node(
       value,
-      this.lexer._input.substring(start, this.lexer.yylloc.first_offset),
+      this.lexer._input.substring(start - 1, this.lexer.yylloc.first_offset),
       type
     );
 
