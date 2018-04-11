@@ -1,5 +1,11 @@
 # Releases
 
+## 3.0.0-alpha1 : (2018-04-11)
+ - https://github.com/glayzzle/php-parser/milestone/10
+ - many fixes
+ - changed the way comments are handled
+ - add a new `raw` property on some nodes
+
 ## 2.2.0 : (2017-12-27)
 - Impl #108 : add an option to disable PHP7 support
 - Fix #107 : fix T_DOUBLE_COLON handler

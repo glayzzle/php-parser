@@ -102,13 +102,14 @@ Documentation
 Related projects
 ----------------
 
-- [babel-preset-php](https://gitlab.com/kornelski/babel-preset-php) : Babel preset for converting PHP syntax to JavaScript. It can run subset of PHP in the browser or in Node.js. .
+- [prettier/plugin-php](https://github.com/prettier/plugin-php) : Prettier PHP Plugin
+- [babel-preset-php](https://gitlab.com/kornelski/babel-preset-php) : Babel preset for converting PHP syntax to JavaScript. It can run subset of PHP in the browser or in Node.js
+- [wp-pot](https://github.com/rasmusbe/wp-pot) : Generate pot file for WordPress plugins and themes
+- [crane](https://github.com/HvyIndustries/crane) : PHP Intellisense/code-completion for VS Code
 - [php-unparser](https://github.com/chris-l/php-unparser) : Produce code that uses the style format recommended by PSR-1 and PSR-2.
 - [php-writer](https://github.com/glayzzle/php-writer) : Update PHP scripts from their AST
 - [ts-php-inspections](https://github.com/DaGhostman/ts-php-inspections) : Provide PHP code inspections written in typescript
 - [php-reflection](https://github.com/glayzzle/php-reflection) : Reflection API for PHP files
-- [wp-pot](https://github.com/rasmusbe/wp-pot) : Generate pot file for WordPress plugins and themes
-- [crane](https://github.com/HvyIndustries/crane) : PHP Intellisense/code-completion for VS Code
 
 > You can add here your own project by opening an issue request.
 
