@@ -90,10 +90,15 @@ module.exports = {
               value = value.substring(0, value.length - 1);
             }
             this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
+            const raw = this.lexer._input.substring(
+              start,
+              this.lexer.yylloc.last_offset
+            );
             node = node(
               value,
-              this.lexer._input.substring(start, this.lexer.yylloc.last_offset),
-              this.lexer.heredoc_label
+              raw,
+              this.lexer.heredoc_label,
+              raw[3] === '"' || raw[3] === "'"
             );
             this.expect(this.tok.T_END_HEREDOC) && this.next();
             return node;

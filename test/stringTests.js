@@ -295,6 +295,8 @@ describe("Test strings", function() {
     expr.kind.should.be.exactly("nowdoc");
     expr.label.should.be.exactly("EOF");
     expr.value.should.be.exactly("  }");
+    expr.quote.should.be.exactly(true);
+    expr.raw.should.be.exactly("<<<'EOF'\r\n  }\r\nEOF;");
   });
   it("heredoc ...", function() {
     var ast = parser.parseEval(
