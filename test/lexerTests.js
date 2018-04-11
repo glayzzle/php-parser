@@ -88,7 +88,19 @@ describe("Test lexer", function() {
     tokens.length.should.be.exactly(2);
     tokens[1][1].should.be.exactly('\r\n\t ');
   });
-  it('test consume_VARIABLE unput', function() {
-    // @todo
+  it('test unput on whitespace', function() {
+    var tokens = parser.tokenGetAll('<?php \r\n\t ');
+    tokens.length.should.be.exactly(2);
+    tokens[1][1].should.be.exactly('\r\n\t ');
+  });
+  it('test #148 - sensitive lexer', function() {
+    var tokens = parser.tokenGetAll('<?php $this-> list;');
+    tokens.length.should.be.exactly(6);
+    tokens[0][0].should.be.exactly('T_OPEN_TAG');
+    tokens[1][0].should.be.exactly('T_VARIABLE');
+    tokens[2][0].should.be.exactly('T_OBJECT_OPERATOR');
+    tokens[3][0].should.be.exactly('T_WHITESPACE');
+    tokens[4][0].should.be.exactly('T_STRING');
+    tokens[5].should.be.exactly(';');
   });
 });

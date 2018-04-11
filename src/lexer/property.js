@@ -13,6 +13,8 @@ module.exports = {
         return this.tok.T_OBJECT_OPERATOR;
       }
       if (ch) this.unput(1);
+    } else if (this.is_WHITESPACE()) {
+      return this.tok.T_WHITESPACE;
     } else if (this.is_LABEL_START()) {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1300
       this.consume_LABEL();
