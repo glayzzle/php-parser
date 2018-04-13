@@ -492,7 +492,7 @@ module.exports = {
    * ```
    */
   read_assignment_list: function() {
-    return this.read_list(this.read_assignment_list_element, ",");
+    return this.read_list(this.read_assignment_list_element, ",", true);
   },
 
   /**

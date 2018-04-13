@@ -34,7 +34,7 @@ module.exports = {
     const result = [];
 
     if (this.token == separator) {
-      if (preserveFirstSeparator) result.push("");
+      if (preserveFirstSeparator) result.push(null);
       this.next();
     }
 

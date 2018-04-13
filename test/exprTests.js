@@ -228,6 +228,20 @@ describe("Test expressions", function() {
     // @todo
   });
 
+  it("fix #137", function() {
+    var ast = parser.parseEval(
+      "list(,,$a,,$b) = [null, 1, null, 2];",
+      {
+        ast: {
+          withPositions: true
+        }
+      }
+    );
+    const list = ast.children[0].left;
+    list.arguments.length.should.be.exactly(5);
+    list.arguments[2].name.should.be.exactly('a');
+  });
+
   it("test incr/decr", function() {
     var ast = parser.parseEval(
       ["$i++;", "$i--;", "++$i;", "--$i;"].join("\n"),
