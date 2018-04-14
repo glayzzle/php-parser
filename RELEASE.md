@@ -1,5 +1,11 @@
 # Releases
 
+## 3.0.0-alpha2 : (2018-04-14)
+ - fix #137 : Bug with parsing `list`
+ - fix #149 : Binary cast: isDoubleQuote incorrect
+ - fix #150 : strange ast with list
+ - fix #151 : Declare inside if
+
 ## 3.0.0-alpha1 : (2018-04-11)
  - https://github.com/glayzzle/php-parser/milestone/10
  - many fixes
