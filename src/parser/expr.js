@@ -502,9 +502,10 @@ module.exports = {
    */
   read_assignment_list_element: function() {
     if (this.token === "," || this.token === ")") return null;
-    let result = this.read_expr_item();
+    const entry = this.node("entry");
+    const result = this.read_expr_item();
     if (this.token === this.tok.T_DOUBLE_ARROW) {
-      result = ["key", result, this.next().read_expr_item()];
+      return entry(result, this.next().read_expr_item());
     }
     return result;
   },

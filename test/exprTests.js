@@ -228,6 +228,13 @@ describe("Test expressions", function() {
     // @todo
   });
 
+  it("fix #150", function() {
+    var ast = parser.parseEval("list('foo' => $bar) = ['foo' => 'bar'];");
+    const list = ast.children[0].left;
+    list.arguments.length.should.be.exactly(1);
+    list.arguments[0].kind.should.be.exactly('entry');
+  });
+
   it("fix #137", function() {
     var ast = parser.parseEval(
       "list(,,$a,,$b) = [null, 1, null, 2];",

@@ -6020,9 +6020,10 @@ module.exports = {
    */
   read_assignment_list_element: function read_assignment_list_element() {
     if (this.token === "," || this.token === ")") return null;
+    var entry = this.node("entry");
     var result = this.read_expr_item();
     if (this.token === this.tok.T_DOUBLE_ARROW) {
-      result = ["key", result, this.next().read_expr_item()];
+      return entry(result, this.next().read_expr_item());
     }
     return result;
   },
