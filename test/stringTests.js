@@ -42,11 +42,19 @@ describe("Test strings", function() {
     const text = ast.children[0].right;
     text.raw.should.be.exactly('"foo\\nbar"');
   });
+  it("fix #149", function() {
+    const ast = parser.parseEval('$a = b"foo\\nbar";');
+    const text = ast.children[0].right;
+    text.raw.should.be.exactly('b"foo\\nbar"');
+    text.isDoubleQuote.should.be.exactly(true);
+  });
   it("...", function() {
     var ast = parser.parseEval("$a = b'\\t\\ra';");
   });
-  it("...", function() {
+  it("test binary with double quotes", function() {
     var ast = parser.parseEval('echo b"\\colors contains >$colors<\\n";');
+    const text = ast.children[0].arguments[0];
+    text.raw.should.be.exactly('b"\\colors contains >$colors<\\n"');
   });
   it("...", function() {
     var ast = parser.parseEval('echo B"\\colors[1] contains >$colors[1]<\\n";');

@@ -52,12 +52,16 @@ module.exports = {
         case this.tok.T_CONSTANT_ENCAPSED_STRING: {
           value = this.node("string");
           const text = this.text();
-          const isDoubleQuote = text[0] === '"';
+          let offset = 0;
+          if (text[0] === "b" || text[0] === "B") {
+            offset = 1;
+          }
+          const isDoubleQuote = text[offset] === '"';
           this.next();
           value = value(
             isDoubleQuote,
             this.resolve_special_chars(
-              text.substring(1, text.length - 1),
+              text.substring(offset + 1, text.length - 1),
               isDoubleQuote
             ),
             text
@@ -111,9 +115,9 @@ module.exports = {
 
         case 'b"':
         case 'B"': {
-          node = this.node("cast");
-          const what = this.next().read_encapsed_string('"');
-          return node("binary", what);
+          this.next();
+          this.lexer.yylloc.prev_offset -= 1;
+          return this.read_encapsed_string('"');
         }
 
         // NUMERIC

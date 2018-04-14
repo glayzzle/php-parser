@@ -6811,9 +6811,13 @@ module.exports = {
           {
             value = this.node("string");
             var text = this.text();
-            var isDoubleQuote = text[0] === '"';
+            var offset = 0;
+            if (text[0] === "b" || text[0] === "B") {
+              offset = 1;
+            }
+            var isDoubleQuote = text[offset] === '"';
             this.next();
-            value = value(isDoubleQuote, this.resolve_special_chars(text.substring(1, text.length - 1), isDoubleQuote), text);
+            value = value(isDoubleQuote, this.resolve_special_chars(text.substring(offset + 1, text.length - 1), isDoubleQuote), text);
             if (this.token === this.tok.T_DOUBLE_COLON) {
               // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
               return this.read_static_getter(value);
@@ -6856,9 +6860,9 @@ module.exports = {
         case 'b"':
         case 'B"':
           {
-            node = this.node("cast");
-            var what = this.next().read_encapsed_string('"');
-            return node("binary", what);
+            this.next();
+            this.lexer.yylloc.prev_offset -= 1;
+            return this.read_encapsed_string('"');
           }
 
         // NUMERIC
