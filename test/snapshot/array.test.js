@@ -35,15 +35,12 @@ describe('Array without keys', () => {
 
   it('of arrays', () => {
     expect(
-      parser.parseEval(
-        [
-          'array(',
-          '  array("item1", "item2"),',
-          '  array("item3", "item4"),',
-          '  array("item5", "item6")',
-          ')',
-        ].join('\n'),
-      ),
+      parser.parseEval(`
+        array(
+          array("item1", "item2"),
+          array("item3", "item4"),
+          array("item5", "item6")
+        )`),
     ).toMatchSnapshot();
   });
 
