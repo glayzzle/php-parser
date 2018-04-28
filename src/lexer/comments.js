@@ -5,7 +5,6 @@
  */
 "use strict";
 
-
 module.exports = {
   /**
    * Reads a single line comment
