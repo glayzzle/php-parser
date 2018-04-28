@@ -1,9 +1,10 @@
-/*!
- * Copyright (C) 2017 Glayzzle (BSD3 License)
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
 "use strict";
+
 /**
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
