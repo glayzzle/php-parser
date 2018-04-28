@@ -5,6 +5,7 @@
 <a title="npm version" href="https://www.npmjs.com/package/php-parser"><img src="https://badge.fury.io/js/php-parser.svg"></a>
 <a title="npm downloads" href="https://www.npmjs.com/package/php-parser"><img src="https://img.shields.io/npm/dm/php-parser.svg?style=flat"></a>
 <a title="Gitter" href="https://gitter.im/glayzzle/Lobby"><img src="https://img.shields.io/badge/GITTER-join%20chat-green.svg"></a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser.svg?type=shield"/></a>
 </p>
 <p align="center">This javascript library parses PHP code and convert it to AST.</p>
 
@@ -118,3 +119,7 @@ Related projects
 This library is released under BSD-3 license clause.
 
 If you want to contribute please visit this repository https://github.com/glayzzle/php-parser-dev.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser?ref=badge_large)
