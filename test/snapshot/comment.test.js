@@ -41,7 +41,7 @@ describe("Test comments", function() {
     });
   });
 
-  describe("single line comments", function() {
+  it("test single line comments", function() {
     const ast = parser.parseEval(
       `
       # some information
