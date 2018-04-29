@@ -1,0 +1,356 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test SWITCH statements parse correctly 1`] = `
+Program {
+  "children": Array [
+    Switch {
+      "body": Block {
+        "children": Array [
+          Case {
+            "body": null,
+            "kind": "case",
+            "test": Number {
+              "kind": "number",
+              "value": "1",
+            },
+          },
+          Case {
+            "body": Block {
+              "children": Array [
+                Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "foo",
+                  },
+                  "operator": "=",
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "false",
+                    "value": false,
+                  },
+                },
+                Break {
+                  "kind": "break",
+                  "level": Number {
+                    "kind": "number",
+                    "value": "10",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "case",
+            "test": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+          },
+          Case {
+            "body": Block {
+              "children": Array [
+                Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "foo",
+                  },
+                  "operator": "=",
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                },
+                Break {
+                  "kind": "break",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "case",
+            "test": ConstRef {
+              "kind": "constref",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "FOO",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Case {
+            "body": Block {
+              "children": Array [
+                Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bar",
+                  },
+                  "operator": "=",
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "false",
+                    "value": false,
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "case",
+            "test": null,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "switch",
+      "shortForm": false,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+    Switch {
+      "body": Block {
+        "children": Array [
+          Case {
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "case",
+            "test": ConstRef {
+              "kind": "constref",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "A",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Case {
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Boolean {
+                    "kind": "boolean",
+                    "raw": "false",
+                    "value": false,
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "case",
+            "test": ConstRef {
+              "kind": "constref",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "B",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "switch",
+      "shortForm": true,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test SWITCH statements test errors 1`] = `
+Program {
+  "children": Array [
+    Switch {
+      "body": Block {
+        "children": Array [
+          Case {
+            "body": Block {
+              "children": Array [
+                Switch {
+                  "body": Block {
+                    "children": Array [
+                      Case {
+                        "body": Block {
+                          "children": Array [
+                            Inline {
+                              "kind": "inline",
+                              "raw": " bug ",
+                              "value": " bug ",
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "case",
+                        "test": null,
+                      },
+                      Case {
+                        "body": Block {
+                          "children": Array [
+                            Return {
+                              "expr": null,
+                              "kind": "return",
+                            },
+                            Boolean {
+                              "kind": "boolean",
+                              "raw": "true",
+                              "value": true,
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "case",
+                        "test": ConstRef {
+                          "kind": "constref",
+                          "name": Identifier {
+                            "kind": "identifier",
+                            "name": "A",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      Case {
+                        "body": Block {
+                          "children": Array [
+                            Return {
+                              "expr": Boolean {
+                                "kind": "boolean",
+                                "raw": "false",
+                                "value": false,
+                              },
+                              "kind": "return",
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "case",
+                        "test": ConstRef {
+                          "kind": "constref",
+                          "name": Identifier {
+                            "kind": "identifier",
+                            "name": "B",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "switch",
+                  "shortForm": true,
+                  "test": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "case",
+            "test": null,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "switch",
+      "shortForm": false,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": Array [
+        "{",
+        ":",
+      ],
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected ';' on line 2",
+      "token": "';'",
+    },
+    Error {
+      "expected": Array [
+        204,
+        205,
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'switch' (T_SWITCH) on line 3",
+      "token": "'switch' (T_SWITCH)",
+    },
+    Error {
+      "expected": Array [
+        ":",
+        ";",
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'switch' (T_SWITCH) on line 3",
+      "token": "'switch' (T_SWITCH)",
+    },
+    Error {
+      "expected": Array [
+        204,
+        205,
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ' bug ' (T_INLINE_HTML) on line 3",
+      "token": "' bug ' (T_INLINE_HTML)",
+    },
+    Error {
+      "expected": Array [
+        ":",
+        ";",
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ' bug ' (T_INLINE_HTML) on line 3",
+      "token": "' bug ' (T_INLINE_HTML)",
+    },
+    Error {
+      "expected": null,
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error on line 7",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
