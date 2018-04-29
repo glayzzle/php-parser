@@ -1,0 +1,850 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+      "operator": "=",
+      "right": Number {
+        "kind": "number",
+        "value": "123",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "value": "# some information
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// another line
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// 123
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* done */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test comments issues fix #55 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [],
+              "kind": "block",
+              "leadingComments": Array [
+                CommentLine {
+                  "kind": "commentline",
+                  "value": "// inner statements
+",
+                },
+              ],
+            },
+            "kind": "if",
+            "shortForm": true,
+            "test": Boolean {
+              "kind": "boolean",
+              "raw": "true",
+              "value": true,
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": true,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "value": "// inner statements
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// another comment
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// 2nd comment
+",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test comments issues fix #126 : new option 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": If {
+        "alternate": null,
+        "body": Block {
+          "children": Array [
+            Assign {
+              "kind": "assign",
+              "left": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
+              "operator": "=",
+              "right": Number {
+                "kind": "number",
+                "value": "2",
+              },
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "leadingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "// Don't parsed :(
+",
+          },
+        ],
+        "shortForm": false,
+        "test": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+      },
+      "body": Block {
+        "children": Array [
+          Assign {
+            "kind": "assign",
+            "left": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+            "operator": "=",
+            "right": Number {
+              "kind": "number",
+              "value": "1",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "value": "// Don't parsed :(
+",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test comments multi line comments test function 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* ignore */",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* ignore */",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* @var something */",
+            },
+          ],
+          "name": "arg",
+          "nullable": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "arg",
+            },
+            "kind": "return",
+            "leadingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "value": "// inner
+",
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": true,
+      "kind": "function",
+      "leadingComments": Array [
+        CommentBlock {
+          "kind": "commentblock",
+          "value": "/**
+         * Description
+         */",
+        },
+      ],
+      "name": "name",
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/**
+         * Description
+         */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* @var something */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// inner
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test comments multi line comments test if statements 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": If {
+        "alternate": If {
+          "alternate": Block {
+            "children": Array [],
+            "kind": "block",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+            ],
+          },
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+            ],
+          },
+          "kind": "if",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* ignore */",
+            },
+          ],
+          "shortForm": false,
+          "test": Boolean {
+            "kind": "boolean",
+            "raw": "false",
+            "value": false,
+          },
+        },
+        "body": Block {
+          "children": Array [],
+          "kind": "block",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* ignore */",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* ignore */",
+            },
+          ],
+        },
+        "kind": "if",
+        "leadingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "# inner statement
+",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+          CommentLine {
+            "kind": "commentline",
+            "value": "// else with a inner if single statement :
+",
+          },
+        ],
+        "shortForm": false,
+        "test": Boolean {
+          "kind": "boolean",
+          "raw": "true",
+          "value": true,
+        },
+      },
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+        ],
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+        ],
+      },
+      "kind": "if",
+      "shortForm": true,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "false",
+        "value": false,
+      },
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "# inner statement
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// else with a inner if single statement :
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test comments multi line comments test try statements 1`] = `
+Program {
+  "children": Array [
+    Try {
+      "always": Block {
+        "children": Array [],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ee */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* zz */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* yy */",
+          },
+        ],
+      },
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+        ],
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* dd */",
+              },
+            ],
+          },
+          "kind": "catch",
+          "leadingComments": Array [
+            CommentLine {
+              "kind": "commentline",
+              "value": "# inner statement
+",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* dd */",
+            },
+          ],
+          "variable": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* aa */",
+              },
+            ],
+            "name": "e",
+          },
+          "what": Array [
+            Identifier {
+              "kind": "identifier",
+              "leadingComments": Array [
+                CommentBlock {
+                  "kind": "commentblock",
+                  "value": "/* zz */",
+                },
+              ],
+              "name": "\\\\Exception",
+              "resolution": "qn",
+            },
+            Identifier {
+              "kind": "identifier",
+              "leadingComments": Array [
+                CommentBlock {
+                  "kind": "commentblock",
+                  "value": "/* 1 */",
+                },
+                CommentBlock {
+                  "kind": "commentblock",
+                  "value": "/* 2 */",
+                },
+              ],
+              "name": "\\\\Foo",
+              "resolution": "qn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "# inner statement
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* dd */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* zz */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* 1 */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* 2 */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* aa */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* bb */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* dd */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ee */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* zz */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* yy */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// end
+",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test comments test classes 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [
+        Property {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "property",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* ignore */",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* hehe */",
+            },
+            CommentLine {
+              "kind": "commentline",
+              "value": "// @var test
+",
+            },
+          ],
+          "name": "test",
+          "value": null,
+          "visibility": "protected",
+        },
+        Property {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "property",
+          "name": "toto",
+          "value": null,
+          "visibility": "protected",
+        },
+        Property {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "property",
+          "leadingComments": Array [
+            CommentLine {
+              "kind": "commentline",
+              "value": "// ignored comment
+",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/** @var Class */",
+            },
+          ],
+          "name": "foo",
+          "value": Number {
+            "kind": "number",
+            "value": "123",
+          },
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/** ignored also **/",
+            },
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/**
+          * @return void
+          */",
+            },
+          ],
+          "name": "void",
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "leadingComments": Array [
+        CommentBlock {
+          "kind": "commentblock",
+          "value": "/**
+       * Description
+       */",
+        },
+      ],
+      "name": "name",
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/**
+       * Description
+       */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* ignore */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* hehe */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// @var test
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// ignored comment
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/** @var Class */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/** ignored also **/",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/**
+          * @return void
+          */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
