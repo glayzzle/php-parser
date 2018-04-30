@@ -206,5 +206,12 @@ engine.prototype.tokenGetAll = function(buffer) {
 
 // exports the function
 module.exports = engine;
+
+// makes libraries public
+module.exports.tokens = tokens;
+module.exports.lexer = lexer;
+module.exports.AST = AST;
+module.exports.parser = parser;
+
 // allow the default export in index.d.ts
 module.exports.default = engine;
