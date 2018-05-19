@@ -111,6 +111,7 @@ Related projects
 - [php-writer](https://github.com/glayzzle/php-writer) : Update PHP scripts from their AST
 - [ts-php-inspections](https://github.com/DaGhostman/ts-php-inspections) : Provide PHP code inspections written in typescript
 - [php-reflection](https://github.com/glayzzle/php-reflection) : Reflection API for PHP files
+- [vscode-phpunit](https://github.com/recca0120/vscode-phpunit) : vscode phpunit extension
 
 > You can add here your own project by opening an issue request.
 
