@@ -1,4 +1,4 @@
-var parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test strings", function() {
   it("fix #144", function() {

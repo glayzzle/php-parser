@@ -1,4 +1,4 @@
-const parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test IF statements", function() {
   it("test common cases", function() {

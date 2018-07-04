@@ -1,4 +1,4 @@
-const parser = require('../../src/index');
+const parser = require('../main');
 
 describe('Array without keys', () => {
   it('deference array', () => {

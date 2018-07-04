@@ -1,4 +1,4 @@
-const parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test SWITCH statements", function() {
   it("parse correctly", function() {

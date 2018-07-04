@@ -1,4 +1,4 @@
-var parser = require("../src/index");
+var parser = require("./main");
 
 /**
  * Check precedence by using parenthesis on node B

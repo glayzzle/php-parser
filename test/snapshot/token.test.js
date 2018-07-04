@@ -1,4 +1,4 @@
-const parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test tokens statements", function() {
   it("hello world", function() {

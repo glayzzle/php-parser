@@ -1,4 +1,4 @@
-var parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test scalar statements", function() {
   it("test constants", function() {

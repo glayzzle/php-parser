@@ -1,4 +1,4 @@
-var parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test loops statements (for, while)", function() {
   describe("test while", function() {

@@ -1,4 +1,4 @@
-var parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test graceful mode", function() {
   describe("to suppress errors", function() {

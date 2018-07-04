@@ -1,4 +1,4 @@
-var parser = require("../../src/index");
+const parser = require('../main');
 
 describe('Test syntax parsing without PHP7 support', function() {
 
