@@ -1,4 +1,4 @@
-const parser = require('../../src/index');
+const parser = require('../main');
 
 describe("Test AST structure", function() {
   it('fix #127 - echo statements', () => {

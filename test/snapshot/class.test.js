@@ -1,4 +1,4 @@
-const parser = require("../../src/index");
+const parser = require('../main');
 
 describe("Test classes", function() {
   it("Validate usual declarations", function() {

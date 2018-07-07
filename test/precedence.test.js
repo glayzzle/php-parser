@@ -1,10 +1,11 @@
-var parser = require("../src/index");
+var parser = require("./main");
 
 /**
  * Check precedence by using parenthesis on node B
  */
 var checkPrecedence = function(a, b) {
-  if (!a || !b) return false;
+  if (!a || !b)
+    return false;
   if (b.kind === "parenthesis") {
     // force the precendence with parenthesis
     // ignore them in test
@@ -12,11 +13,12 @@ var checkPrecedence = function(a, b) {
   }
   for (var k in b) {
     if (b.hasOwnProperty(k)) {
-      if (!a.hasOwnProperty(k)) return false;
+      if (!a.hasOwnProperty(k))
+        return false;
       if (typeof b[k] === "object") {
         checkPrecedence(a[k], b[k]);
       } else {
-        a[k].should.be.equal(b[k]);
+        expect(a[k]).toEqual(b[k]);
       }
     }
   }
@@ -24,8 +26,11 @@ var checkPrecedence = function(a, b) {
 };
 
 var shouldBeSame = function(a, b) {
-  var ast = parser.parseEval([a + ";", b + ";"].join("\n"));
-  checkPrecedence(ast.children[0], ast.children[1]).should.be.true();
+  var ast = parser.parseEval([
+    a + ";",
+    b + ";"
+  ].join("\n"));
+  expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
 };
 
 // START TESTS HERE
@@ -61,15 +66,15 @@ describe("Test precedence", function() {
   });
   it("test &&", function() {
     var ast = parser.parseEval(["1 | 2 && 3;", "(1 | 2) && 3;"].join("\n"));
-    checkPrecedence(ast.children[0], ast.children[1]).should.be.true();
+    expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
   });
   it("test ||", function() {
     var ast = parser.parseEval(["1 && 2 || 3;", "(1 && 2) || 3;"].join("\n"));
-    checkPrecedence(ast.children[0], ast.children[1]).should.be.true();
+    expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
   });
   it("test ??", function() {
     var ast = parser.parseEval(["1 || 2 ?? 3;", "(1 || 2) ?? 3;"].join("\n"));
-    checkPrecedence(ast.children[0], ast.children[1]).should.be.true();
+    expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
   });
   it("test ?:", function() {
     shouldBeSame("1 ?? 2 ? 3 : 5", "(1 ?? 2) ? 3 : 5");
@@ -101,10 +106,7 @@ describe("Test precedence", function() {
     shouldBeSame('"a"."b"."c"."d"', '((("a"."b")."c")."d")');
   });
   it("test retif", function() {
-    shouldBeSame(
-      "$a ? 1 : $b ? 2 : $c ? 3 : 4",
-      "(($a ? 1 : $b) ? 2 : $c) ? 3 : 4"
-    );
+    shouldBeSame("$a ? 1 : $b ? 2 : $c ? 3 : 4", "(($a ? 1 : $b) ? 2 : $c) ? 3 : 4");
   });
   it("test + / *", function() {
     shouldBeSame("1 + 2 * 3", "1 + (2 * 3)");

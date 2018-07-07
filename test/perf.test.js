@@ -1,19 +1,19 @@
 var parser = require("./main");
 
 describe("Performance tests", function() {
-  var code = [
-    "<?php",
-    "class foo extends bar {",
-    "  const A = 1, B = 2, C = 3;",
-    "  protected $foo = null;",
-    "  public function __construct($a, $b, $c, array $d = []) {",
-    '    echo $a . $b . $c . implode(";", $d);',
-    "  }",
-    "  static public function bar(): foo {",
-    "    return new self(1, 2, 3);",
-    "  }",
-    "}"
-  ].join("\n");
+  var code = `
+  <?php
+  class foo extends bar {
+    const A = 1, B = 2, C = 3;
+    protected $foo = null;
+    public function __construct($a, $b, $c, array $d = []) {
+      echo $a . $b . $c . implode(";", $d);
+    }
+    static public function bar(): foo {
+      return new self(1, 2, 3);
+    }
+  }
+  `;
 
   it("tokenizer", function() {
     var reader = new parser();
