@@ -1,0 +1,716 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test variables Check errors should be ? 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "?",
+      },
+      "operator": "=",
+      "right": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": Array [
+        "{",
+        "$",
+        222,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '?' on line 1",
+      "token": "'?'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Check errors should fail $foo->bar::! 1`] = `
+Program {
+  "children": Array [
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "!",
+      },
+      "what": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "bar",
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 105,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '!', expecting T_STRING on line 1",
+      "token": "'!'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Check errors should fail foo::bar::baz 1`] = `
+Program {
+  "children": Array [
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "baz",
+      },
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "bar",
+        },
+        "what": Identifier {
+          "kind": "identifier",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '::' (T_DOUBLE_COLON) on line 1",
+      "token": "'::' (T_DOUBLE_COLON)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Check errors should fail on double static lookup 1`] = `
+Program {
+  "children": Array [
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "baz",
+      },
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "bar",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "foo",
+          },
+          "what": ConstRef {
+            "kind": "constref",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "this",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '::' (T_DOUBLE_COLON) on line 1",
+      "token": "'::' (T_DOUBLE_COLON)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Check errors should fail on property lookup on static lookup 1`] = `
+Program {
+  "children": Array [
+    PropertyLookup {
+      "kind": "propertylookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "baz",
+      },
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "bar",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "foo",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "this",
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '->' (T_OBJECT_OPERATOR) on line 1",
+      "token": "'->' (T_OBJECT_OPERATOR)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Class constants 1`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": ConstRef {
+          "kind": "constref",
+          "name": "static",
+        },
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": Identifier {
+          "kind": "identifier",
+          "name": "self",
+          "resolution": "uqn",
+        },
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": Identifier {
+          "kind": "identifier",
+          "name": "parent",
+          "resolution": "uqn",
+        },
+      },
+    },
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "class",
+      },
+      "what": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+        "resolution": "uqn",
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "this",
+        },
+      },
+    },
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "bar",
+      },
+      "what": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+        "resolution": "uqn",
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "qux",
+        },
+        "what": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"baz\\"",
+            "value": "baz",
+          },
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "bar",
+            },
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": ConstRef {
+                "kind": "constref",
+                "name": "foo",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "this",
+              },
+            },
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Dynamic variables 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      },
+      "operator": "=",
+      "right": String {
+        "isDoubleQuote": true,
+        "kind": "string",
+        "raw": "\\"bar\\"",
+        "value": "bar",
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        },
+      },
+      "operator": "=",
+      "right": String {
+        "isDoubleQuote": true,
+        "kind": "string",
+        "raw": "\\"bar\\"",
+        "value": "bar",
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": true,
+        "kind": "variable",
+        "name": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bar\\"",
+            "value": "bar",
+          },
+          "type": ".",
+        },
+      },
+      "operator": "=",
+      "right": String {
+        "isDoubleQuote": true,
+        "kind": "string",
+        "raw": "\\"bar\\"",
+        "value": "bar",
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bar\\"",
+            "value": "bar",
+          },
+          "type": ".",
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+      },
+      "operator": "=",
+      "right": String {
+        "isDoubleQuote": true,
+        "kind": "string",
+        "raw": "\\"bar\\"",
+        "value": "bar",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Encaps var offset 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "operator": "=",
+      "right": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"{$a[1]}\\"",
+        "type": "string",
+        "value": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        ],
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "operator": "=",
+      "right": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"{$a[\\"a\\"]}\\"",
+        "type": "string",
+        "value": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"a\\"",
+              "value": "a",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        ],
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "operator": "=",
+      "right": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"{$a[$b]}\\"",
+        "type": "string",
+        "value": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "b",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Variable chains 1`] = `
+Program {
+  "children": Array [
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "2",
+        },
+        "what": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        },
+      },
+      "what": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+        "resolution": "uqn",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables array destructuring 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Array {
+        "items": Array [
+          Entry {
+            "key": null,
+            "kind": "entry",
+            "value": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "id1",
+            },
+          },
+          Entry {
+            "key": null,
+            "kind": "entry",
+            "value": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "name1",
+            },
+          },
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "operator": "=",
+      "right": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "0",
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables default variables 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "operator": "=",
+      "right": String {
+        "isDoubleQuote": true,
+        "kind": "string",
+        "raw": "\\"foo\\"",
+        "value": "foo",
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "b",
+      },
+      "operator": "=",
+      "right": Variable {
+        "byref": true,
+        "curly": false,
+        "kind": "variable",
+        "name": "c",
+      },
+    },
+    Assign {
+      "kind": "assign",
+      "left": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "b",
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      },
+      "operator": "=",
+      "right": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
