@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>PHP Parser</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+  <style type="text/css">
+    [v-cloak] {
+      display: none;
+    }
+
+    body,
+    #app {
+      width: 100%;
+      height: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    pre {
+      margin: 0;
+      padding: 0;
+    }
+
+    textarea {
+      min-height: 350px !important;
+      max-height: 100% !important;
+    }
+
+    .input-container {
+      margin: 0 10px 0 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <md-app md-waterfall md-mode="overlap" v-cloak>
+      <md-app-toolbar class="md-primary md-large">
+        <div class="md-toolbar-row">
+          <div class="md-toolbar-section-start">
+            <a href="https://github.com/glayzzle/php-parser">
+                <span class="md-title">
+                  <md-icon>code</md-icon> php-parser
+                </span>
+              </a>
+          </div>
+          <div class="md-toolbar-section-end">
+            <md-checkbox v-model="live" true-value="true" false-value="false">Live Mode</md-checkbox>
+            <md-button class="md-raised" @click="parseInput()">
+              <md-icon style="color: #333">play_arrow</md-icon> Parse
+            </md-button>
+          </div>
+        </div>
+      </md-app-toolbar>
+
+      <md-app-content style="min-height: 400px">
+        <div class="md-layout">
+          <div class="md-layout-item input-container">
+            <md-field style="margin: 0; padding: 0;">
+              <md-textarea v-model="input" debounce="500"></md-textarea>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-size-40 output-container">
+            <pre v-text="output"></pre>
+          </div>
+        </div>
+      </md-app-content>
+    </md-app>
+  </div>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-material@beta"></script>
+  <script type="text/javascript" src="../dist/php-parser.min.js"></script>
+  <script>
+    var engine = new PhpParser();
+
+    Vue.use(VueMaterial.default)
+    new Vue({
+      el: '#app',
+      data: {
+        live: true,
+        input: '<?php \n\necho "hello php-parser";',
+        output: ''
+      },
+      watch: {
+        input: {
+          immediate: true,
+          handler(newValue) {
+            if (!this.live) return
+            this.parseInput(newValue)
+          }
+        }
+      },
+      methods: {
+        parseInput(value) {
+          try {
+            this.output = engine.parseCode(value || this.input)
+          } catch (e) {
+            this.output = e
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
