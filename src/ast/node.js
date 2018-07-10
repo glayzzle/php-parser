@@ -24,6 +24,27 @@ const Node = function Node(kind, docs, location) {
 };
 
 /**
+ * Includes current token position of the parser
+ * @param {*} parser 
+ */
+Node.prototype.includeToken = function(parser) {
+  if (this.loc) {
+    if (this.loc.end) {
+      this.loc.end.line = parser.prev[0];
+      this.loc.end.column = parser.prev[1];
+      this.loc.end.offset = parser.prev[2];
+    }
+    if (parser.ast.withSource) {
+      this.loc.source = parser.lexer._input.substring(
+        this.loc.start.offset,
+        parser.prev[2]
+      );
+    }
+  }
+  return this;
+};
+
+/**
  * Helper for extending the Node class
  * @param {Function} constructor
  * @return {Function}
