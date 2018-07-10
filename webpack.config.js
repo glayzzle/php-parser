@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const {name, description, license, author} = require('./package.json');
+const path = require("path");
+const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const { name, description, license, author } = require("./package.json");
 
-const entry = './src/index.js';
+const entry = "./src/index.js";
 
 const entries = {
   [`${name}`]: entry,
@@ -13,15 +13,15 @@ const entries = {
 const today = `${new Date(Date.now()).toLocaleDateString()}`;
 
 module.exports = {
-  target: 'web',
-  mode: 'production',
+  target: "web",
+  mode: "production",
   entry: entries,
   output: {
     filename: `[name].js`,
-    path: path.resolve(__dirname, 'dist'),
-    library: 'PhpParser',
-    libraryExport: 'default',
-    libraryTarget: 'umd'
+    path: path.resolve(__dirname, "dist"),
+    library: "PhpParser",
+    libraryExport: "default",
+    libraryTarget: "umd"
   },
   module: {
     rules: [
@@ -29,9 +29,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader?cacheDirectory=true',
+          loader: "babel-loader?cacheDirectory=true",
           options: {
-            presets: ['es2015']
+            presets: ["es2015"]
           }
         }
       }
@@ -39,29 +39,31 @@ module.exports = {
   },
   optimization: {
     minimize: true,
-    minimizer: [new UglifyJsPlugin({
-      include: /\.min\.js$/,
-      sourceMap: true,
-      uglifyOptions: {
-        compress: {
-          keep_fnames: true
-        },
+    minimizer: [
+      new UglifyJsPlugin({
+        include: /\.min\.js$/,
         sourceMap: true,
-        mangle: false,
-        maxLineLen: 1024
-      }
-    })]
+        uglifyOptions: {
+          compress: {
+            keep_fnames: true
+          },
+          sourceMap: true,
+          mangle: false,
+          maxLineLen: 1024
+        }
+      })
+    ]
   },
   plugins: [
-		new webpack.BannerPlugin({
+    new webpack.BannerPlugin({
       entryOnly: true,
       banner: `
         Package: ${name}
         ${description}
-        Build: [hash]
+        Build: [hash] - ${today}
         License: ${license}
         Author: ${author}
       `
-		})
-	]
+    })
+  ]
 };
