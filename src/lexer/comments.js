@@ -8,7 +8,6 @@
 module.exports = {
   /**
    * Reads a single line comment
-   * @see
    */
   T_COMMENT: function() {
     while (this.offset < this.size) {

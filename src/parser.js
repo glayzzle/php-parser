@@ -6,7 +6,7 @@
 "use strict";
 
 /**
- * @private check if argument is a number
+ * @private
  */
 function isNumber(n) {
   return n != "." && n != "," && !isNaN(parseFloat(n)) && isFinite(n);
@@ -14,7 +14,8 @@ function isNumber(n) {
 
 /**
  * The PHP Parser class that build the AST tree from the lexer
- * @constructor {Parser}
+ *
+ * @class
  * @property {Lexer} lexer - current lexer instance
  * @property {AST} ast - the AST factory instance
  * @property {Integer|String} token - current token

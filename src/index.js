@@ -11,7 +11,7 @@ const tokens = require("./tokens");
 const AST = require("./ast");
 
 /**
- * @private combine structures
+ * @private
  */
 function combine(src, to) {
   const keys = Object.keys(src);
@@ -37,8 +37,9 @@ function combine(src, to) {
 /**
  * Initialise a new parser instance with the specified options
  *
- * Usage :
- * ```js
+ * @class
+ *
+ * @example
  * var parser = require('php-parser');
  * var instance = new parser({
  *   parser: {
@@ -58,11 +59,8 @@ function combine(src, to) {
  * var evalAST = instance.parseEval('some php code');
  * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
  * var tokens = instance.tokenGetAll('<?php some php code');
- * ```
  *
- * @constructor {Engine}
  * @param {Object} options - List of options
- *
  * @property {Lexer} lexer
  * @property {Parser} parser
  * @property {AST} ast
