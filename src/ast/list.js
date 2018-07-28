@@ -12,9 +12,11 @@ const KIND = "list";
  * Defines list assignment
  * @constructor List
  * @extends {Sys}
+ * @property {boolean} shortForm
  */
-const List = Sys.extends(function List(args, docs, location) {
-  Sys.apply(this, [KIND, args, docs, location]);
+const List = Sys.extends(function List(items, shortForm, docs, location) {
+  Sys.apply(this, [KIND, items, docs, location]);
+  this.shortForm = shortForm;
 });
 
 module.exports = List;

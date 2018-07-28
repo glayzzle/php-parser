@@ -266,6 +266,7 @@ parser.prototype.parse = function(code, filename) {
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
+  this.innerListForm = false;
   const program = this.ast.prepare("program", null, this);
   let childs = [];
   this.next();
