@@ -54,4 +54,13 @@ describe("Test loops statements (for, while)", function() {
       parser: { debug: false }
     })).toMatchSnapshot();
   });
+  it("fix #122", function() {
+    // https://github.com/glayzzle/php-parser/issues/122
+    expect(parser.parseEval(`
+      foreach($foo as $bar => array($foo))
+        echo "$k -> $v\n";
+    `, {
+      parser: { suppressErrors: true }
+    })).toMatchSnapshot();
+  })
 });

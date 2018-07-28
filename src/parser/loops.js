@@ -134,22 +134,24 @@ module.exports = {
   /**
    * Reads a foreach variable statement
    * ```ebnf
-   * foreach_variable = variable |
-   *  T_LIST '(' assignment_list ')' |
-   *  '[' array_pair_list ']'
+   * foreach_variable = 
+   *    variable |
+   *    '&' variable |
+   *    T_LIST '(' assignment_list ')' |
+   *    '[' assignment_list ']'
    * ```
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L544
    * @return {Expression}
    */
   read_foreach_variable: function() {
-    if (this.token === this.tok.T_LIST) {
+    if (this.token === this.tok.T_LIST || this.token === "[") {
+      const isShort = this.token === "[";
       const result = this.node("list");
-      if (this.next().expect("(")) this.next();
+      this.next();
+      if (isShort && this.expect("(")) this.next();
       const assignList = this.read_assignment_list();
-      if (this.expect(")")) this.next();
-      return result(assignList);
-    } else if (this.token === "[" || this.token === this.tok.T_ARRAY) {
-      return this.read_array();
+      if (this.expect(isShort ? "]": ")")) this.next();
+      return result(assignList, isShort);
     } else {
       return this.read_variable(false, false, false);
     }
