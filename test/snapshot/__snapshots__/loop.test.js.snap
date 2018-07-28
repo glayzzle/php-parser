@@ -118,6 +118,95 @@ Program {
 }
 `;
 
+exports[`Test loops statements (for, while) fix #122 2`] = `
+Program {
+  "children": Array [
+    Foreach {
+      "body": Echo {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"$k -> $v
+\\"",
+            "type": "string",
+            "value": Array [
+              Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "k",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " -> ",
+                "value": " -> ",
+              },
+              Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "v",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "
+",
+                "value": "
+",
+              },
+            ],
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "key": List {
+        "arguments": Array [
+          Entry {
+            "key": null,
+            "kind": "entry",
+            "value": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "bar",
+            },
+          },
+        ],
+        "kind": "list",
+        "shortForm": true,
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+      "value": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 2,
+      "message": "Fatal Error : Cannot use list as key element on line 2",
+      "token": undefined,
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test loops statements (for, while) test do 1`] = `
 Program {
   "children": Array [
@@ -388,22 +477,11 @@ Program {
         ],
         "kind": "block",
       },
-      "key": List {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "a",
-          },
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "b",
-          },
-        ],
-        "kind": "list",
+      "key": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
       },
       "kind": "foreach",
       "shortForm": true,
@@ -412,8 +490,8 @@ Program {
           Entry {
             "key": null,
             "kind": "entry",
-            "value": Array {
-              "items": Array [
+            "value": List {
+              "arguments": Array [
                 Entry {
                   "key": null,
                   "kind": "entry",
@@ -431,15 +509,15 @@ Program {
                   },
                 },
               ],
-              "kind": "array",
+              "kind": "list",
               "shortForm": true,
             },
           },
           Entry {
             "key": null,
             "kind": "entry",
-            "value": Array {
-              "items": Array [
+            "value": List {
+              "arguments": Array [
                 Entry {
                   "key": null,
                   "kind": "entry",
@@ -457,7 +535,7 @@ Program {
                   },
                 },
               ],
-              "kind": "array",
+              "kind": "list",
               "shortForm": true,
             },
           },
@@ -465,8 +543,8 @@ Program {
         "kind": "array",
         "shortForm": true,
       },
-      "value": Array {
-        "items": Array [
+      "value": List {
+        "arguments": Array [
           Entry {
             "key": null,
             "kind": "entry",
@@ -488,7 +566,7 @@ Program {
             },
           },
         ],
-        "kind": "array",
+        "kind": "list",
         "shortForm": true,
       },
     },

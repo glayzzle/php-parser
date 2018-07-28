@@ -47,7 +47,11 @@ describe("Test loops statements (for, while)", function() {
     expect(parser.parseEval(`
       foreach(&$foo as $v)
         echo "$k -> $v\n";
-      foreach([[1,2], [3,4]] as list($a, $b) => [$c, $d]):
+      foreach(
+        [[1,2], [3,4]] as 
+        $a => 
+        [$c, $d]
+      ):
         echo "$a -> $b\n";
       endforeach;
     `, {
@@ -58,6 +62,12 @@ describe("Test loops statements (for, while)", function() {
     // https://github.com/glayzzle/php-parser/issues/122
     expect(parser.parseEval(`
       foreach($foo as $bar => array($foo))
+        echo "$k -> $v\n";
+    `, {
+      parser: { suppressErrors: true }
+    })).toMatchSnapshot();
+    expect(parser.parseEval(`
+      foreach($foo as [$bar] => $foo)
         echo "$k -> $v\n";
     `, {
       parser: { suppressErrors: true }
