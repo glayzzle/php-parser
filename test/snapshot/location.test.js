@@ -13,4 +13,16 @@ describe('Test locations', function() {
       )
     ).toMatchSnapshot();
   });
+  it('#164 : expr should avoid ?>', function() {
+    expect(
+      parser.parseCode(
+        '<?php $a = $b + 1 ?>', {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });

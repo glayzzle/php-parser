@@ -30,14 +30,14 @@ const Node = function Node(kind, docs, location) {
 Node.prototype.includeToken = function(parser) {
   if (this.loc) {
     if (this.loc.end) {
-      this.loc.end.line = parser.prev[0];
-      this.loc.end.column = parser.prev[1];
-      this.loc.end.offset = parser.prev[2];
+      this.loc.end.line = parser.lexer.yylloc.last_line;
+      this.loc.end.column = parser.lexer.yylloc.last_column;
+      this.loc.end.offset = parser.lexer.offset;
     }
     if (parser.ast.withSource) {
       this.loc.source = parser.lexer._input.substring(
         this.loc.start.offset,
-        parser.prev[2]
+        parser.lexer.offset
       );
     }
   }

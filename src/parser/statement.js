@@ -382,10 +382,7 @@ module.exports = {
       default:
         // default fallback expr
         expr = this.read_expr();
-        this.expectEndOfStatement();
-        if (expr) {
-          expr.includeToken(this);
-        }
+        this.expectEndOfStatement(expr);
         return expr;
     }
   },
