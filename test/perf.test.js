@@ -67,7 +67,7 @@ describe("Performance tests", function() {
             countNode(node[k]);
           } else if (Array.isArray(node[k])) {
             for (var i = 0; i < node[k].length; i++) {
-              if (node[k][i].kind) {
+              if (node[k][i] && node[k][i].kind) {
                 countNode(node[k][i]);
               }
             }
