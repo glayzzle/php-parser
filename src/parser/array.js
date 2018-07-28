@@ -19,7 +19,6 @@ module.exports = {
   read_array: function() {
     let expect = null;
     let shortForm = false;
-    const items = [];
     const result = this.node(ArrayExpr);
 
     if (this.token === this.tok.T_ARRAY) {
@@ -29,37 +28,46 @@ module.exports = {
       shortForm = true;
       expect = "]";
     }
-
-    if (this.next().token != expect) {
-      while (this.token != this.EOF) {
-        items.push(this.read_array_pair_list());
-        if (this.token == ",") {
-          this.next();
-          if (this.token === expect) {
-            break;
-          }
-        } else break;
-      }
-    }
+    const items = this.next().read_array_pair_list(shortForm);
     this.expect(expect);
     this.next();
     return result(shortForm, items);
   },
   /**
-   * Reads an array entry item
+   * Reads an array of items
    * ```ebnf
-   * array_pair_list ::= '&' w_variable |
-   *  (
-   *    expr (
-   *      T_DOUBLE_ARROW (
-   *        expr | '&' w_variable
-   *      )
-   *    )?
-   *  )
+   * array_pair_list ::= array_pair (',' array_pair?)*
    * ```
    */
-  read_array_pair_list: function() {
-    const result = this.node(ArrayEntry);
+  read_array_pair_list: function(shortForm) {
+    const self = this;
+    return this.read_list(
+      function() {
+        return self.read_array_pair(shortForm)
+      },
+      ",",
+      true
+    );
+  },
+  /**
+   * Reads an entry
+   * array_pair:
+   *  expr T_DOUBLE_ARROW expr
+   *  | expr
+   *  | expr T_DOUBLE_ARROW '&' variable
+   *  | '&' variable
+   *  | expr T_DOUBLE_ARROW T_LIST '(' array_pair_list ')'
+   *  | T_LIST '(' array_pair_list ')'
+   */
+  read_array_pair: function(shortForm) {
+    if (
+      this.token === "," ||
+      (!shortForm && this.token === ")") ||
+      (shortForm && this.token === "]")
+    ) {
+      return null;
+    }
+    const entry = this.node(ArrayEntry);
     let key = null;
     let value = null;
     if (this.token === "&") {
@@ -77,7 +85,7 @@ module.exports = {
         value = expr;
       }
     }
-    return result(key, value);
+    return entry(key, value);
   },
   /**
    * ```ebnf
