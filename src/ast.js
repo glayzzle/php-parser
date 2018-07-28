@@ -242,7 +242,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   }
   const self = this;
   // returns the node
-  return function() {
+  const result = function() {
     let location = null;
     const args = Array.prototype.slice.call(arguments);
     args.push(docs);
@@ -276,6 +276,14 @@ AST.prototype.prepare = function(kind, docs, parser) {
     node.apply(result, args);
     return self.resolvePrecedence(result);
   };
+  /**
+   * Helper to change a node kind
+   * @param {String} newKind 
+   */
+  result.setKind = function(newKind) {
+    kind =  newKind;
+  };
+  return result;
 };
 
 // Define all AST nodes
