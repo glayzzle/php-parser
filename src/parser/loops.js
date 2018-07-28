@@ -121,6 +121,13 @@ module.exports = {
       }
     }
 
+    // grammatically correct but not supported by PHP
+    if (key && key.kind === 'list') {
+      this.raiseError(
+        "Fatal Error : Cannot use list as key element"
+      );
+    }
+
     if (this.expect(")")) this.next();
 
     if (this.token === ":") {
@@ -148,8 +155,8 @@ module.exports = {
       const isShort = this.token === "[";
       const result = this.node("list");
       this.next();
-      if (isShort && this.expect("(")) this.next();
-      const assignList = this.read_assignment_list();
+      if (!isShort && this.expect("(")) this.next();
+      const assignList = this.read_array_pair_list(isShort);
       if (this.expect(isShort ? "]": ")")) this.next();
       return result(assignList, isShort);
     } else {
