@@ -19,22 +19,18 @@ const KIND = "array";
  * {
  *  "kind": "array",
  *  "shortForm": true
- *  "items": [{
- *    "kind": "entry",
- *    "key": null,
- *    "value": {"kind": "number", "value": "1"}
- *  }, {
- *    "kind": "entry",
- *    "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
- *    "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
- *  }, {
- *    "kind": "entry",
- *    "key": null,
- *    "value": {"kind": "number", "value": "3"}
- *  }]
+ *  "items": [
+ *    {"kind": "number", "value": "1"},
+ *    {
+ *      "kind": "entry",
+ *      "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
+ *      "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
+ *    }, 
+ *    {"kind": "number", "value": "3"}
+ *  ]
  * }
  * @extends {Expression}
- * @property {Entry[]} items List of array items
+ * @property {Entry|Expr|Variable} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
 const Array = Expr.extends(function Array(shortForm, items, docs, location) {

@@ -28,7 +28,18 @@ module.exports = {
       shortForm = true;
       expect = "]";
     }
-    const items = this.next().read_array_pair_list(shortForm);
+    let items = [];
+    if (this.next().token !== expect) {
+      items = this.read_array_pair_list(shortForm);
+    }
+    // check non empty entries
+    items.forEach(function(item) {
+      if (item === null) {
+        this.raiseError(
+          "Cannot use empty array elements in arrays"
+        );
+      }
+    }.bind(this));
     this.expect(expect);
     this.next();
     return result(shortForm, items);
@@ -67,25 +78,23 @@ module.exports = {
     ) {
       return null;
     }
-    const entry = this.node(ArrayEntry);
-    let key = null;
-    let value = null;
     if (this.token === "&") {
-      value = this.next().read_variable(true, false, true);
+      return this.next().read_variable(true, false, true);
     } else {
+      const entry = this.node(ArrayEntry);
       const expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
-        key = expr;
         if (this.next().token === "&") {
-          value = this.next().read_variable(true, false, true);
+          return entry(
+            expr,
+            this.next().read_variable(true, false, true)
+          );
         } else {
-          value = this.read_expr();
+          return entry(expr, this.read_expr());
         }
-      } else {
-        value = expr;
       }
+      return expr;
     }
-    return entry(key, value);
   },
   /**
    * ```ebnf
