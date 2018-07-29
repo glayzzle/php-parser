@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: f51f84a34978762ac856
+ *         Build: de17d352b01518bc053a - 2018-7-29
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -3111,6 +3111,7 @@ var Position = __webpack_require__(88);
 /**
  * The AST builder class
  * @constructor AST
+ * @tutorial AST
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)
  */
@@ -3282,7 +3283,10 @@ module.exports = AST;
  */
 
 
-// exports token index
+/**
+ * PHP AST Tokens
+ * @type {Object}
+ */
 
 module.exports = {
   values: {
@@ -6648,7 +6652,7 @@ module.exports = {
 
 
 /**
- * @private check if argument is a number
+ * @private
  */
 
 function isNumber(n) {
@@ -6657,7 +6661,9 @@ function isNumber(n) {
 
 /**
  * The PHP Parser class that build the AST tree from the lexer
- * @constructor {Parser}
+ *
+ * @class
+ * @tutorial Parser
  * @property {Lexer} lexer - current lexer instance
  * @property {AST} ast - the AST factory instance
  * @property {Integer|String} token - current token
@@ -8310,7 +8316,6 @@ module.exports = {
 module.exports = {
   /**
    * Reads a single line comment
-   * @see
    */
   T_COMMENT: function T_COMMENT() {
     while (this.offset < this.size) {
@@ -8373,7 +8378,7 @@ module.exports = {
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
  *
- * @public @constructor {Lexer}
+ * @class
  * @property {Integer} EOF
  * @property {Boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
  * @property {Boolean} comment_tokens extracts comments tokens
@@ -10895,7 +10900,7 @@ var tokens = __webpack_require__(91);
 var AST = __webpack_require__(90);
 
 /**
- * @private combine structures
+ * @private
  */
 function combine(src, to) {
   var keys = Object.keys(src);
@@ -10921,8 +10926,9 @@ function combine(src, to) {
 /**
  * Initialise a new parser instance with the specified options
  *
- * Usage :
- * ```js
+ * @class
+ * @tutorial Engine
+ * @example
  * var parser = require('php-parser');
  * var instance = new parser({
  *   parser: {
@@ -10942,11 +10948,8 @@ function combine(src, to) {
  * var evalAST = instance.parseEval('some php code');
  * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
  * var tokens = instance.tokenGetAll('<?php some php code');
- * ```
  *
- * @constructor {Engine}
  * @param {Object} options - List of options
- *
  * @property {Lexer} lexer
  * @property {Parser} parser
  * @property {AST} ast
