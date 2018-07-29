@@ -141,7 +141,8 @@ next:
   endif;
 
   // list version
-  list($a, list($b, $c)) = [1, [2, 3]];
+  list(,$a, list($b, $c)) = [1, [2, 3]];
+  [,$a,[$b, ,$c]] = $f;
   print(<<<BAZ
   Hello world
 BAZ

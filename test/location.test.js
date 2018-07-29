@@ -91,10 +91,10 @@ describe("Test offsets", function() {
       expect(ast.children[1].loc.start.column).toBe(0);
       // ignored ';' because it was eaten by expr and assign
       // was retrieved by expr_item without it
-      expect(ast.children[1].loc.end.column).toBe(9);
+      expect(ast.children[1].loc.end.column).toBe(10);
     });
     it("test offsets", function() {
-      expect(ast.children[1].loc.source).toBe(lines[2].substring(0, 9));
+      expect(ast.children[1].loc.source).toBe(lines[2].substring(0, 10));
     });
   });
 

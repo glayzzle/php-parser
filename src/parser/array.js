@@ -19,7 +19,6 @@ module.exports = {
   read_array: function() {
     let expect = null;
     let shortForm = false;
-    const items = [];
     const result = this.node(ArrayExpr);
 
     if (this.token === this.tok.T_ARRAY) {
@@ -29,55 +28,70 @@ module.exports = {
       shortForm = true;
       expect = "]";
     }
-
-    if (this.next().token != expect) {
-      while (this.token != this.EOF) {
-        items.push(this.read_array_pair_list());
-        if (this.token == ",") {
-          this.next();
-          if (this.token === expect) {
-            break;
-          }
-        } else break;
-      }
+    let items = [];
+    if (this.next().token !== expect) {
+      items = this.read_array_pair_list(shortForm);
     }
+    // check non empty entries
+    items.forEach(
+      function(item) {
+        if (item === null) {
+          this.raiseError("Cannot use empty array elements in arrays");
+        }
+      }.bind(this)
+    );
     this.expect(expect);
     this.next();
     return result(shortForm, items);
   },
   /**
-   * Reads an array entry item
+   * Reads an array of items
    * ```ebnf
-   * array_pair_list ::= '&' w_variable |
-   *  (
-   *    expr (
-   *      T_DOUBLE_ARROW (
-   *        expr | '&' w_variable
-   *      )
-   *    )?
-   *  )
+   * array_pair_list ::= array_pair (',' array_pair?)*
    * ```
    */
-  read_array_pair_list: function() {
-    const result = this.node(ArrayEntry);
-    let key = null;
-    let value = null;
+  read_array_pair_list: function(shortForm) {
+    const self = this;
+    return this.read_list(
+      function() {
+        return self.read_array_pair(shortForm);
+      },
+      ",",
+      true
+    );
+  },
+  /**
+   * Reads an entry
+   * array_pair:
+   *  expr T_DOUBLE_ARROW expr
+   *  | expr
+   *  | expr T_DOUBLE_ARROW '&' variable
+   *  | '&' variable
+   *  | expr T_DOUBLE_ARROW T_LIST '(' array_pair_list ')'
+   *  | T_LIST '(' array_pair_list ')'
+   */
+  read_array_pair: function(shortForm) {
+    if (
+      this.token === "," ||
+      (!shortForm && this.token === ")") ||
+      (shortForm && this.token === "]")
+    ) {
+      return null;
+    }
     if (this.token === "&") {
-      value = this.next().read_variable(true, false, true);
+      return this.next().read_variable(true, false, true);
     } else {
+      const entry = this.node(ArrayEntry);
       const expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
-        key = expr;
         if (this.next().token === "&") {
-          value = this.next().read_variable(true, false, true);
+          return entry(expr, this.next().read_variable(true, false, true));
         } else {
-          value = this.read_expr();
+          return entry(expr, this.read_expr());
         }
-      } else {
-        value = expr;
       }
+      return expr;
     }
-    return result(key, value);
   },
   /**
    * ```ebnf

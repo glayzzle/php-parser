@@ -37,6 +37,14 @@ describe("Test variables", function() {
     )).toMatchSnapshot();
   });
 
+  it("Chained encapsed vars", function() {
+    expect(parser.parseEval(
+    `
+      $a = "{$a->foo()[$bar[$foo]]}";
+    `
+    )).toMatchSnapshot();
+  });
+
   it("Dynamic variables", function() {
     expect(parser.parseEval(`
       $$a = "bar";

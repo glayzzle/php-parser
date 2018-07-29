@@ -1,5 +1,204 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Test loops statements (for, while) fix #122 1`] = `
+Program {
+  "children": Array [
+    Foreach {
+      "body": Array {
+        "items": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+        ],
+        "kind": "array",
+        "shortForm": false,
+      },
+      "key": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "bar",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+      "value": undefined,
+    },
+    Echo {
+      "arguments": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"$k -> $v
+\\"",
+          "type": "string",
+          "value": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "k",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": " -> ",
+              "value": " -> ",
+            },
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "v",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "
+",
+              "value": "
+",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "VARIABLE",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected 'array' (T_ARRAY) on line 2",
+      "token": "'array' (T_ARRAY)",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected 'array' (T_ARRAY), expecting ')' on line 2",
+      "token": "'array' (T_ARRAY)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected ')', expecting ';' on line 2",
+      "token": "')'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected ')' on line 2",
+      "token": "')'",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'echo' (T_ECHO), expecting ';' on line 3",
+      "token": "'echo' (T_ECHO)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test loops statements (for, while) fix #122 2`] = `
+Program {
+  "children": Array [
+    Foreach {
+      "body": Echo {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"$k -> $v
+\\"",
+            "type": "string",
+            "value": Array [
+              Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "k",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " -> ",
+                "value": " -> ",
+              },
+              Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "v",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "
+",
+                "value": "
+",
+              },
+            ],
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "key": List {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "bar",
+          },
+        ],
+        "kind": "list",
+        "shortForm": true,
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+      "value": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 2,
+      "message": "Fatal Error : Cannot use list as key element on line 2",
+      "token": undefined,
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test loops statements (for, while) test do 1`] = `
 Program {
   "children": Array [
@@ -270,107 +469,64 @@ Program {
         ],
         "kind": "block",
       },
-      "key": List {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "a",
-          },
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "b",
-          },
-        ],
-        "kind": "list",
+      "key": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
       },
       "kind": "foreach",
       "shortForm": true,
       "source": Array {
         "items": Array [
-          Entry {
-            "key": null,
-            "kind": "entry",
-            "value": Array {
-              "items": Array [
-                Entry {
-                  "key": null,
-                  "kind": "entry",
-                  "value": Number {
-                    "kind": "number",
-                    "value": "1",
-                  },
-                },
-                Entry {
-                  "key": null,
-                  "kind": "entry",
-                  "value": Number {
-                    "kind": "number",
-                    "value": "2",
-                  },
-                },
-              ],
-              "kind": "array",
-              "shortForm": true,
-            },
+          List {
+            "arguments": Array [
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+              Number {
+                "kind": "number",
+                "value": "2",
+              },
+            ],
+            "kind": "list",
+            "shortForm": true,
           },
-          Entry {
-            "key": null,
-            "kind": "entry",
-            "value": Array {
-              "items": Array [
-                Entry {
-                  "key": null,
-                  "kind": "entry",
-                  "value": Number {
-                    "kind": "number",
-                    "value": "3",
-                  },
-                },
-                Entry {
-                  "key": null,
-                  "kind": "entry",
-                  "value": Number {
-                    "kind": "number",
-                    "value": "4",
-                  },
-                },
-              ],
-              "kind": "array",
-              "shortForm": true,
-            },
+          List {
+            "arguments": Array [
+              Number {
+                "kind": "number",
+                "value": "3",
+              },
+              Number {
+                "kind": "number",
+                "value": "4",
+              },
+            ],
+            "kind": "list",
+            "shortForm": true,
           },
         ],
         "kind": "array",
         "shortForm": true,
       },
-      "value": Array {
-        "items": Array [
-          Entry {
-            "key": null,
-            "kind": "entry",
-            "value": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "c",
-            },
+      "value": List {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
           },
-          Entry {
-            "key": null,
-            "kind": "entry",
-            "value": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "d",
-            },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "d",
           },
         ],
-        "kind": "array",
+        "kind": "list",
         "shortForm": true,
       },
     },

@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: de17d352b01518bc053a - 2018-7-29
+ *         Build: 638e56ff062f9db65357 - 2018-7-29
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -158,6 +158,24 @@ var Node = function Node(kind, docs, location) {
   if (location) {
     this.loc = location;
   }
+};
+
+/**
+ * Includes current token position of the parser
+ * @param {*} parser
+ */
+Node.prototype.includeToken = function (parser) {
+  if (this.loc) {
+    if (this.loc.end) {
+      this.loc.end.line = parser.lexer.yylloc.last_line;
+      this.loc.end.column = parser.lexer.yylloc.last_column;
+      this.loc.end.offset = parser.lexer.offset;
+    }
+    if (parser.ast.withSource) {
+      this.loc.source = parser.lexer._input.substring(this.loc.start.offset, parser.lexer.offset);
+    }
+  }
+  return this;
 };
 
 /**
@@ -1657,9 +1675,11 @@ var KIND = "list";
  * Defines list assignment
  * @constructor List
  * @extends {Sys}
+ * @property {boolean} shortForm
  */
-var List = Sys.extends(function List(args, docs, location) {
-  Sys.apply(this, [KIND, args, docs, location]);
+var List = Sys.extends(function List(items, shortForm, docs, location) {
+  Sys.apply(this, [KIND, items, docs, location]);
+  this.shortForm = shortForm;
 });
 
 module.exports = List;
@@ -2918,22 +2938,18 @@ var KIND = "array";
  * {
  *  "kind": "array",
  *  "shortForm": true
- *  "items": [{
- *    "kind": "entry",
- *    "key": null,
- *    "value": {"kind": "number", "value": "1"}
- *  }, {
- *    "kind": "entry",
- *    "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
- *    "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
- *  }, {
- *    "kind": "entry",
- *    "key": null,
- *    "value": {"kind": "number", "value": "3"}
- *  }]
+ *  "items": [
+ *    {"kind": "number", "value": "1"},
+ *    {
+ *      "kind": "entry",
+ *      "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
+ *      "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
+ *    },
+ *    {"kind": "number", "value": "3"}
+ *  ]
  * }
  * @extends {Expression}
- * @property {Entry[]} items List of array items
+ * @property {Entry|Expr|Variable} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
 var Array = Expr.extends(function Array(shortForm, items, docs, location) {
@@ -3230,7 +3246,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
   }
   var self = this;
   // returns the node
-  return function () {
+  var result = function result() {
     var location = null;
     var args = Array.prototype.slice.call(arguments);
     args.push(docs);
@@ -3260,6 +3276,14 @@ AST.prototype.prepare = function (kind, docs, parser) {
     node.apply(result, args);
     return self.resolvePrecedence(result);
   };
+  /**
+   * Helper to change a node kind
+   * @param {String} newKind
+   */
+  result.setKind = function (newKind) {
+    kind = newKind;
+  };
+  return result;
 };
 
 // Define all AST nodes
@@ -4532,7 +4556,7 @@ module.exports = {
       default:
         // default fallback expr
         expr = this.read_expr();
-        this.expectEndOfStatement();
+        this.expectEndOfStatement(expr);
         return expr;
     }
   },
@@ -5173,6 +5197,11 @@ module.exports = {
       }
     }
 
+    // grammatically correct but not supported by PHP
+    if (key && key.kind === "list") {
+      this.raiseError("Fatal Error : Cannot use list as key element");
+    }
+
     if (this.expect(")")) this.next();
 
     if (this.token === ":") {
@@ -5186,22 +5215,24 @@ module.exports = {
   /**
    * Reads a foreach variable statement
    * ```ebnf
-   * foreach_variable = variable |
-   *  T_LIST '(' assignment_list ')' |
-   *  '[' array_pair_list ']'
+   * foreach_variable =
+   *    variable |
+   *    '&' variable |
+   *    T_LIST '(' assignment_list ')' |
+   *    '[' assignment_list ']'
    * ```
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L544
    * @return {Expression}
    */
   read_foreach_variable: function read_foreach_variable() {
-    if (this.token === this.tok.T_LIST) {
+    if (this.token === this.tok.T_LIST || this.token === "[") {
+      var isShort = this.token === "[";
       var result = this.node("list");
-      if (this.next().expect("(")) this.next();
-      var assignList = this.read_assignment_list();
-      if (this.expect(")")) this.next();
-      return result(assignList);
-    } else if (this.token === "[" || this.token === this.tok.T_ARRAY) {
-      return this.read_array();
+      this.next();
+      if (!isShort && this.expect("(")) this.next();
+      var assignList = this.read_array_pair_list(isShort);
+      if (this.expect(isShort ? "]" : ")")) this.next();
+      return result(assignList, isShort);
     } else {
       return this.read_variable(false, false, false);
     }
@@ -5670,54 +5701,68 @@ module.exports = {
       return this.next().read_encapsed_string("`");
     }
 
-    if (this.token === this.tok.T_LIST) {
+    if (this.token === this.tok.T_LIST || this.token === "[") {
       var assign = null;
+      var isShort = this.token === "[";
       var isInner = this.innerList;
       result = this.node("list");
       if (!isInner) {
+        this.innerListForm = isShort;
         assign = this.node("assign");
+      } else if (this.innerListForm !== isShort) {
+        // Both due to implementation issues,
+        // and for consistency's sake, list()
+        // cannot be nested inside [], nor vice-versa
+        this.expect(isShort ? "list" : "[");
       }
-      if (this.next().expect("(")) {
+      this.next();
+      if (!isShort && this.expect("(")) {
         this.next();
       }
 
       if (!this.innerList) this.innerList = true;
-      var assignList = this.read_assignment_list();
 
-      // check if contains at least one assignment statement
-      var hasItem = false;
-      for (var i = 0; i < assignList.length; i++) {
-        if (assignList[i] !== null) {
-          hasItem = true;
-          break;
-        }
-      }
-      if (!hasItem) {
-        this.raiseError("Fatal Error :  Cannot use empty list on line " + this.lexer.yylloc.first_line);
-      }
-      if (this.expect(")")) {
+      // reads inner items
+      var assignList = this.read_array_pair_list(isShort);
+      if (this.expect(isShort ? "]" : ")")) {
         this.next();
       }
 
+      // check if contains at least one assignment statement
+      if (!isShort) {
+        var hasItem = false;
+        for (var i = 0; i < assignList.length; i++) {
+          if (assignList[i] !== null) {
+            hasItem = true;
+            break;
+          }
+        }
+        if (!hasItem) {
+          this.raiseError("Fatal Error :  Cannot use empty list on line " + this.lexer.yylloc.first_line);
+        }
+      }
+
+      // handles the node resolution
       if (!isInner) {
         this.innerList = false;
-        if (this.expect("=")) {
-          return assign(result(assignList), this.next().read_expr(), "=");
+        if (isShort) {
+          if (this.token === "=") {
+            return assign(result(assignList, isShort), this.next().read_expr(), "=");
+          } else {
+            // handles as an array declaration
+            result.setKind("array");
+            return this.handleDereferencable(result(isShort, assignList));
+          }
         } else {
-          // fallback : list($a, $b);
-          return result(assignList);
+          if (this.expect("=")) {
+            return assign(result(assignList, isShort), this.next().read_expr(), "=");
+          } else {
+            // error fallback : list($a, $b);
+            return result(assignList, isShort);
+          }
         }
       } else {
-        return result(assignList);
-      }
-    }
-
-    if (this.token === "[") {
-      expr = this.read_array();
-      if (this.token === "=") {
-        return this.node("assign")(expr, this.next().read_expr(), "=");
-      } else {
-        return this.handleDereferencable(expr);
+        return result(assignList, isShort);
       }
     }
 
@@ -6014,30 +6059,6 @@ module.exports = {
       this.expect([this.tok.T_STRING, "VARIABLE"]);
     }
   },
-  /**
-   * ```ebnf
-   *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
-   * ```
-   */
-  read_assignment_list: function read_assignment_list() {
-    return this.read_list(this.read_assignment_list_element, ",", true);
-  },
-
-  /**
-   * ```ebnf
-   *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
-   * ```
-   */
-  read_assignment_list_element: function read_assignment_list_element() {
-    if (this.token === "," || this.token === ")") return null;
-    var entry = this.node("entry");
-    var result = this.read_expr_item();
-    if (this.token === this.tok.T_DOUBLE_ARROW) {
-      return entry(result, this.next().read_expr_item());
-    }
-    return result;
-  },
-
   handleDereferencable: function handleDereferencable(expr) {
     while (this.token !== this.EOF) {
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
@@ -6568,7 +6589,6 @@ module.exports = {
   read_array: function read_array() {
     var expect = null;
     var shortForm = false;
-    var items = [];
     var result = this.node(ArrayExpr);
 
     if (this.token === this.tok.T_ARRAY) {
@@ -6578,55 +6598,60 @@ module.exports = {
       shortForm = true;
       expect = "]";
     }
-
-    if (this.next().token != expect) {
-      while (this.token != this.EOF) {
-        items.push(this.read_array_pair_list());
-        if (this.token == ",") {
-          this.next();
-          if (this.token === expect) {
-            break;
-          }
-        } else break;
-      }
+    var items = [];
+    if (this.next().token !== expect) {
+      items = this.read_array_pair_list(shortForm);
     }
+    // check non empty entries
+    items.forEach(function (item) {
+      if (item === null) {
+        this.raiseError("Cannot use empty array elements in arrays");
+      }
+    }.bind(this));
     this.expect(expect);
     this.next();
     return result(shortForm, items);
   },
   /**
-   * Reads an array entry item
+   * Reads an array of items
    * ```ebnf
-   * array_pair_list ::= '&' w_variable |
-   *  (
-   *    expr (
-   *      T_DOUBLE_ARROW (
-   *        expr | '&' w_variable
-   *      )
-   *    )?
-   *  )
+   * array_pair_list ::= array_pair (',' array_pair?)*
    * ```
    */
-  read_array_pair_list: function read_array_pair_list() {
-    var result = this.node(ArrayEntry);
-    var key = null;
-    var value = null;
+  read_array_pair_list: function read_array_pair_list(shortForm) {
+    var self = this;
+    return this.read_list(function () {
+      return self.read_array_pair(shortForm);
+    }, ",", true);
+  },
+  /**
+   * Reads an entry
+   * array_pair:
+   *  expr T_DOUBLE_ARROW expr
+   *  | expr
+   *  | expr T_DOUBLE_ARROW '&' variable
+   *  | '&' variable
+   *  | expr T_DOUBLE_ARROW T_LIST '(' array_pair_list ')'
+   *  | T_LIST '(' array_pair_list ')'
+   */
+  read_array_pair: function read_array_pair(shortForm) {
+    if (this.token === "," || !shortForm && this.token === ")" || shortForm && this.token === "]") {
+      return null;
+    }
     if (this.token === "&") {
-      value = this.next().read_variable(true, false, true);
+      return this.next().read_variable(true, false, true);
     } else {
+      var entry = this.node(ArrayEntry);
       var expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
-        key = expr;
         if (this.next().token === "&") {
-          value = this.next().read_variable(true, false, true);
+          return entry(expr, this.next().read_variable(true, false, true));
         } else {
-          value = this.read_expr();
+          return entry(expr, this.read_expr());
         }
-      } else {
-        value = expr;
       }
+      return expr;
     }
-    return result(key, value);
   },
   /**
    * ```ebnf
@@ -6738,6 +6763,7 @@ parser.prototype.parse = function (code, filename) {
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
+  this.innerListForm = false;
   var program = this.ast.prepare("program", null, this);
   var childs = [];
   this.next();
@@ -6817,13 +6843,18 @@ parser.prototype.node = function (name) {
  * expects an end of statement or end of file
  * @return {boolean}
  */
-parser.prototype.expectEndOfStatement = function () {
+parser.prototype.expectEndOfStatement = function (node) {
   if (this.token === ";") {
-    this.next();
+    // include only real ';' statements
+    // https://github.com/glayzzle/php-parser/issues/164
+    if (node && this.lexer.yytext === ";") {
+      node.includeToken(this);
+    }
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(";");
     return false;
   }
+  this.next();
   return true;
 };
 

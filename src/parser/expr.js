@@ -129,57 +129,79 @@ module.exports = {
       return this.next().read_encapsed_string("`");
     }
 
-    if (this.token === this.tok.T_LIST) {
+    if (this.token === this.tok.T_LIST || this.token === "[") {
       let assign = null;
+      const isShort = this.token === "[";
       const isInner = this.innerList;
       result = this.node("list");
       if (!isInner) {
+        this.innerListForm = isShort;
         assign = this.node("assign");
+      } else if (this.innerListForm !== isShort) {
+        // Both due to implementation issues,
+        // and for consistency's sake, list()
+        // cannot be nested inside [], nor vice-versa
+        this.expect(isShort ? "list" : "[");
       }
-      if (this.next().expect("(")) {
+      this.next();
+      if (!isShort && this.expect("(")) {
         this.next();
       }
 
       if (!this.innerList) this.innerList = true;
-      const assignList = this.read_assignment_list();
 
-      // check if contains at least one assignment statement
-      let hasItem = false;
-      for (let i = 0; i < assignList.length; i++) {
-        if (assignList[i] !== null) {
-          hasItem = true;
-          break;
-        }
-      }
-      if (!hasItem) {
-        this.raiseError(
-          "Fatal Error :  Cannot use empty list on line " +
-            this.lexer.yylloc.first_line
-        );
-      }
-      if (this.expect(")")) {
+      // reads inner items
+      const assignList = this.read_array_pair_list(isShort);
+      if (this.expect(isShort ? "]" : ")")) {
         this.next();
       }
 
+      // check if contains at least one assignment statement
+      if (!isShort) {
+        let hasItem = false;
+        for (let i = 0; i < assignList.length; i++) {
+          if (assignList[i] !== null) {
+            hasItem = true;
+            break;
+          }
+        }
+        if (!hasItem) {
+          this.raiseError(
+            "Fatal Error :  Cannot use empty list on line " +
+              this.lexer.yylloc.first_line
+          );
+        }
+      }
+
+      // handles the node resolution
       if (!isInner) {
         this.innerList = false;
-        if (this.expect("=")) {
-          return assign(result(assignList), this.next().read_expr(), "=");
+        if (isShort) {
+          if (this.token === "=") {
+            return assign(
+              result(assignList, isShort),
+              this.next().read_expr(),
+              "="
+            );
+          } else {
+            // handles as an array declaration
+            result.setKind("array");
+            return this.handleDereferencable(result(isShort, assignList));
+          }
         } else {
-          // fallback : list($a, $b);
-          return result(assignList);
+          if (this.expect("=")) {
+            return assign(
+              result(assignList, isShort),
+              this.next().read_expr(),
+              "="
+            );
+          } else {
+            // error fallback : list($a, $b);
+            return result(assignList, isShort);
+          }
         }
       } else {
-        return result(assignList);
-      }
-    }
-
-    if (this.token === "[") {
-      expr = this.read_array();
-      if (this.token === "=") {
-        return this.node("assign")(expr, this.next().read_expr(), "=");
-      } else {
-        return this.handleDereferencable(expr);
+        return result(assignList, isShort);
       }
     }
 
@@ -486,30 +508,6 @@ module.exports = {
       this.expect([this.tok.T_STRING, "VARIABLE"]);
     }
   },
-  /**
-   * ```ebnf
-   *   assignment_list ::= assignment_list_element (',' assignment_list_element?)*
-   * ```
-   */
-  read_assignment_list: function() {
-    return this.read_list(this.read_assignment_list_element, ",", true);
-  },
-
-  /**
-   * ```ebnf
-   *  assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr
-   * ```
-   */
-  read_assignment_list_element: function() {
-    if (this.token === "," || this.token === ")") return null;
-    const entry = this.node("entry");
-    const result = this.read_expr_item();
-    if (this.token === this.tok.T_DOUBLE_ARROW) {
-      return entry(result, this.next().read_expr_item());
-    }
-    return result;
-  },
-
   handleDereferencable: function(expr) {
     while (this.token !== this.EOF) {
       if (this.token === this.tok.T_OBJECT_OPERATOR) {

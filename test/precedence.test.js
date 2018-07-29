@@ -62,19 +62,16 @@ describe("Test precedence", function() {
     shouldBeSame("1 & 2 ^ 3", "(1 & 2) ^ 3");
   });
   it("test |", function() {
-    shouldBeSame("1 ^ 2 | 3", "(1 ^ 2) | 3;");
+    shouldBeSame("1 ^ 2 | 3", "(1 ^ 2) | 3");
   });
   it("test &&", function() {
-    var ast = parser.parseEval(["1 | 2 && 3;", "(1 | 2) && 3;"].join("\n"));
-    expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
+    shouldBeSame("1 | 2 && 3", "(1 | 2) && 3");
   });
   it("test ||", function() {
-    var ast = parser.parseEval(["1 && 2 || 3;", "(1 && 2) || 3;"].join("\n"));
-    expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
+    shouldBeSame("1 && 2 || 3", "(1 && 2) || 3");
   });
   it("test ??", function() {
-    var ast = parser.parseEval(["1 || 2 ?? 3;", "(1 || 2) ?? 3;"].join("\n"));
-    expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
+    shouldBeSame("1 || 2 ?? 3", "(1 || 2) ?? 3");
   });
   it("test ?:", function() {
     shouldBeSame("1 ?? 2 ? 3 : 5", "(1 ?? 2) ? 3 : 5");

@@ -1,5 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Test variables Chained encapsed vars 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "operator": "=",
+      "right": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"{$a->foo()[$bar[$foo]]}\\"",
+        "type": "string",
+        "value": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "foo",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "bar",
+              },
+            },
+            "what": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": ConstRef {
+                  "kind": "constref",
+                  "name": "foo",
+                },
+                "what": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test variables Check errors should be ? 1`] = `
 Program {
   "children": Array [
@@ -605,30 +666,22 @@ Program {
   "children": Array [
     Assign {
       "kind": "assign",
-      "left": Array {
-        "items": Array [
-          Entry {
-            "key": null,
-            "kind": "entry",
-            "value": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "id1",
-            },
+      "left": List {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "id1",
           },
-          Entry {
-            "key": null,
-            "kind": "entry",
-            "value": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "name1",
-            },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "name1",
           },
         ],
-        "kind": "array",
+        "kind": "list",
         "shortForm": true,
       },
       "operator": "=",

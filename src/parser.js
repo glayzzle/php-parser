@@ -268,6 +268,7 @@ parser.prototype.parse = function(code, filename) {
   this.lexer.comment_tokens = this.extractDoc;
   this.length = this.lexer._input.length;
   this.innerList = false;
+  this.innerListForm = false;
   const program = this.ast.prepare("program", null, this);
   let childs = [];
   this.next();
@@ -356,13 +357,18 @@ parser.prototype.node = function(name) {
  * expects an end of statement or end of file
  * @return {boolean}
  */
-parser.prototype.expectEndOfStatement = function() {
+parser.prototype.expectEndOfStatement = function(node) {
   if (this.token === ";") {
-    this.next();
+    // include only real ';' statements
+    // https://github.com/glayzzle/php-parser/issues/164
+    if (node && this.lexer.yytext === ";") {
+      node.includeToken(this);
+    }
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
     this.error(";");
     return false;
   }
+  this.next();
   return true;
 };
 

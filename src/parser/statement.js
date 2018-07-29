@@ -382,7 +382,7 @@ module.exports = {
       default:
         // default fallback expr
         expr = this.read_expr();
-        this.expectEndOfStatement();
+        this.expectEndOfStatement(expr);
         return expr;
     }
   },
