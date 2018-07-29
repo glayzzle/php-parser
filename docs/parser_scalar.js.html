@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      parser/scalar.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Braintree SDK Client Reference
+    </h3>
+
+    <h3>Classes</h3><ul><li id="Array-nav"><a href="Array.html">Array</a></li><li id="Assign-nav"><a href="Assign.html">Assign</a></li><li id="AST-nav"><a href="AST.html">AST</a><ul class='methods'><li data-type="method" id="AST-prepare-nav"><a href="AST.html#prepare">prepare</a></li><li data-type="method" id="AST-resolvePrecedence-nav"><a href="AST.html#resolvePrecedence">resolvePrecedence</a></li></ul></li><li id="Bin-nav"><a href="Bin.html">Bin</a></li><li id="Block-nav"><a href="Block.html">Block</a></li><li id="Boolean-nav"><a href="Boolean.html">Boolean</a></li><li id="Break-nav"><a href="Break.html">Break</a></li><li id="Call-nav"><a href="Call.html">Call</a></li><li id="Case-nav"><a href="Case.html">Case</a></li><li id="Cast-nav"><a href="Cast.html">Cast</a></li><li id="Catch-nav"><a href="Catch.html">Catch</a></li><li id="Class-nav"><a href="Class.html">Class</a><ul class='methods'><li data-type="method" id="Class-parseFlags-nav"><a href="Class.html#parseFlags">parseFlags</a></li></ul></li><li id="ClassConstant-nav"><a href="ClassConstant.html">ClassConstant</a><ul class='methods'><li data-type="method" id="ClassConstant-parseFlags-nav"><a href="ClassConstant.html#parseFlags">parseFlags</a></li></ul></li><li id="Clone-nav"><a href="Clone.html">Clone</a></li><li id="Closure-nav"><a href="Closure.html">Closure</a></li><li id="Comment-nav"><a href="Comment.html">Comment</a></li><li id="CommentBlock-nav"><a href="CommentBlock.html">CommentBlock</a></li><li id="CommentLine-nav"><a href="CommentLine.html">CommentLine</a></li><li id="Constant-nav"><a href="Constant.html">Constant</a><ul class='methods'><li data-type="method" id="Constant-parseFlags-nav"><a href="Constant.html#parseFlags">parseFlags</a></li></ul></li><li id="ConstRef-nav"><a href="ConstRef.html">ConstRef</a></li><li id="Continue-nav"><a href="Continue.html">Continue</a></li><li id="Declaration-nav"><a href="Declaration.html">Declaration</a><ul class='methods'><li data-type="method" id="Declaration-parseFlags-nav"><a href="Declaration.html#parseFlags">parseFlags</a></li></ul></li><li id="Declare-nav"><a href="Declare.html">Declare</a></li><li id="Do-nav"><a href="Do.html">Do</a></li><li id="Echo-nav"><a href="Echo.html">Echo</a></li><li id="Empty-nav"><a href="Empty.html">Empty</a></li><li id="Encapsed-nav"><a href="Encapsed.html">Encapsed</a></li><li id="engine-nav"><a href="engine.html">engine</a><ul class='methods'><li data-type="method" id="engine-parseCode-nav"><a href="engine.html#parseCode">parseCode</a></li><li data-type="method" id="engine-parseEval-nav"><a href="engine.html#parseEval">parseEval</a></li><li data-type="method" id="engine-tokenGetAll-nav"><a href="engine.html#tokenGetAll">tokenGetAll</a></li></ul></li><li id="Entry-nav"><a href="Entry.html">Entry</a></li><li id="Error-nav"><a href="Error.html">Error</a></li><li id="Eval-nav"><a href="Eval.html">Eval</a></li><li id="Exit-nav"><a href="Exit.html">Exit</a></li><li id="Expression-nav"><a href="Expression.html">Expression</a></li><li id="For-nav"><a href="For.html">For</a></li><li id="Foreach-nav"><a href="Foreach.html">Foreach</a></li><li id="Function-nav"><a href="Function.html">Function</a><ul class='methods'><li data-type="method" id="Function-parseFlags-nav"><a href="Function.html#parseFlags">parseFlags</a></li></ul></li><li id="Global-nav"><a href="Global_.html">Global</a></li><li id="Goto-nav"><a href="Goto.html">Goto</a></li><li id="Halt-nav"><a href="Halt.html">Halt</a></li><li id="Identifier-nav"><a href="Identifier.html">Identifier</a></li><li id="If-nav"><a href="If.html">If</a></li><li id="Include-nav"><a href="Include.html">Include</a></li><li id="Inline-nav"><a href="Inline.html">Inline</a></li><li id="Interface-nav"><a href="Interface.html">Interface</a><ul class='methods'><li data-type="method" id="Interface-parseFlags-nav"><a href="Interface.html#parseFlags">parseFlags</a></li></ul></li><li id="Isset-nav"><a href="Isset.html">Isset</a></li><li id="Label-nav"><a href="Label.html">Label</a></li><li id="lexer-nav"><a href="lexer.html">lexer</a><ul class='methods'><li data-type="method" id="lexer-getState-nav"><a href="lexer.html#getState">getState</a></li><li data-type="method" id="lexer-input-nav"><a href="lexer.html#input">input</a></li><li data-type="method" id="lexer-setInput-nav"><a href="lexer.html#setInput">setInput</a></li><li data-type="method" id="lexer-setState-nav"><a href="lexer.html#setState">setState</a></li><li data-type="method" id="lexer-unput-nav"><a href="lexer.html#unput">unput</a></li></ul></li><li id="List-nav"><a href="List.html">List</a></li><li id="Literal-nav"><a href="Literal.html">Literal</a></li><li id="Location-nav"><a href="Location.html">Location</a></li><li id="Lookup-nav"><a href="Lookup.html">Lookup</a></li><li id="Magic-nav"><a href="Magic.html">Magic</a></li><li id="Method-nav"><a href="Method.html">Method</a><ul class='methods'><li data-type="method" id="Method-parseFlags-nav"><a href="Method.html#parseFlags">parseFlags</a></li></ul></li><li id="Namespace-nav"><a href="Namespace.html">Namespace</a></li><li id="New-nav"><a href="New.html">New</a></li><li id="Node-nav"><a href="Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-extends-nav"><a href="Node.html#.extends">extends</a></li></ul></li><li id="Number-nav"><a href="Number.html">Number</a></li><li id="OffsetLookup-nav"><a href="OffsetLookup.html">OffsetLookup</a></li><li id="Operation-nav"><a href="Operation.html">Operation</a></li><li id="Parameter-nav"><a href="Parameter.html">Parameter</a><ul class='methods'><li data-type="method" id="Parameter-parseFlags-nav"><a href="Parameter.html#parseFlags">parseFlags</a></li></ul></li><li id="Parenthesis-nav"><a href="Parenthesis.html">Parenthesis</a></li><li id="parser-nav"><a href="parser.html">parser</a><ul class='methods'><li data-type="method" id="parser-error-nav"><a href="parser.html#error">error</a></li><li data-type="method" id="parser-expect-nav"><a href="parser.html#expect">expect</a></li><li data-type="method" id="parser-expectEndOfStatement-nav"><a href="parser.html#expectEndOfStatement">expectEndOfStatement</a></li><li data-type="method" id="parser-getTokenName-nav"><a href="parser.html#getTokenName">getTokenName</a></li><li data-type="method" id="parser-is-nav"><a href="parser.html#is">is</a></li><li data-type="method" id="parser-lex-nav"><a href="parser.html#lex">lex</a></li><li data-type="method" id="parser-next-nav"><a href="parser.html#next">next</a></li><li data-type="method" id="parser-node-nav"><a href="parser.html#node">node</a></li><li data-type="method" id="parser-parse-nav"><a href="parser.html#parse">parse</a></li><li data-type="method" id="parser-raiseError-nav"><a href="parser.html#raiseError">raiseError</a></li><li data-type="method" id="parser-text-nav"><a href="parser.html#text">text</a></li></ul></li><li id="Position-nav"><a href="Position.html">Position</a></li><li id="Post-nav"><a href="Post.html">Post</a></li><li id="Pre-nav"><a href="Pre.html">Pre</a></li><li id="Print-nav"><a href="Print.html">Print</a></li><li id="Program-nav"><a href="Program.html">Program</a></li><li id="Property-nav"><a href="Property.html">Property</a><ul class='methods'><li data-type="method" id="Property-parseFlags-nav"><a href="Property.html#parseFlags">parseFlags</a></li></ul></li><li id="PropertyLookup-nav"><a href="PropertyLookup.html">PropertyLookup</a></li><li id="RetIf-nav"><a href="RetIf.html">RetIf</a></li><li id="Return-nav"><a href="Return.html">Return</a></li><li id="Silent-nav"><a href="Silent.html">Silent</a></li><li id="Statement-nav"><a href="Statement.html">Statement</a></li><li id="Static-nav"><a href="Static.html">Static</a></li><li id="StaticLookup-nav"><a href="StaticLookup.html">StaticLookup</a></li><li id="String-nav"><a href="String.html">String</a></li><li id="Switch-nav"><a href="Switch.html">Switch</a></li><li id="Sys-nav"><a href="Sys.html">Sys</a></li><li id="Throw-nav"><a href="Throw.html">Throw</a></li><li id="Trait-nav"><a href="Trait.html">Trait</a><ul class='methods'><li data-type="method" id="Trait-parseFlags-nav"><a href="Trait.html#parseFlags">parseFlags</a></li></ul></li><li id="TraitAlias-nav"><a href="TraitAlias.html">TraitAlias</a></li><li id="TraitPrecedence-nav"><a href="TraitPrecedence.html">TraitPrecedence</a></li><li id="TraitUse-nav"><a href="TraitUse.html">TraitUse</a></li><li id="Try-nav"><a href="Try.html">Try</a></li><li id="Unary-nav"><a href="Unary.html">Unary</a></li><li id="Unset-nav"><a href="Unset.html">Unset</a></li><li id="UseGroup-nav"><a href="UseGroup.html">UseGroup</a></li><li id="UseItem-nav"><a href="UseItem.html">UseItem</a></li><li id="Variable-nav"><a href="Variable.html">Variable</a></li><li id="variadic-nav"><a href="variadic.html">variadic</a></li><li id="While-nav"><a href="While.html">While</a></li><li id="Yield-nav"><a href="Yield.html">Yield</a></li><li id="YieldFrom-nav"><a href="YieldFrom.html">YieldFrom</a></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#FULL_QUALIFIED_NAME">FULL_QUALIFIED_NAME</a></li><li><a href="global.html#getStringBuffer">getStringBuffer</a></li><li><a href="global.html#ignoreStack">ignoreStack</a></li><li><a href="global.html#MODE_BLOCK">MODE_BLOCK</a></li><li><a href="global.html#MODE_NONE">MODE_NONE</a></li><li><a href="global.html#MODE_SHORT">MODE_SHORT</a></li><li><a href="global.html#QUALIFIED_NAME">QUALIFIED_NAME</a></li><li><a href="global.html#RELATIVE_NAME">RELATIVE_NAME</a></li><li><a href="global.html#TYPE_CONST">TYPE_CONST</a></li><li><a href="global.html#TYPE_FUNC">TYPE_FUNC</a></li><li><a href="global.html#TYPE_HEREDOC">TYPE_HEREDOC</a></li><li><a href="global.html#TYPE_OFFSET">TYPE_OFFSET</a></li><li><a href="global.html#TYPE_SHELL">TYPE_SHELL</a></li><li><a href="global.html#TYPE_STRING">TYPE_STRING</a></li><li><a href="global.html#UNQUALIFIED_NAME">UNQUALIFIED_NAME</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        parser/scalar.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+"use strict";
+
+const specialChar = {
+  "\\r": "\r",
+  "\\n": "\n",
+  "\\t": "\t",
+  "\\v": String.fromCharCode(11),
+  "\\e": String.fromCharCode(27),
+  "\\f": String.fromCharCode(12),
+  "\\\\": "\\",
+  "\\$": "$",
+  '\\"': '"',
+  "\\'": "'"
+};
+
+module.exports = {
+  /**
+   * Unescape special chars
+   */
+  resolve_special_chars: function(text, doubleQuote) {
+    if (!doubleQuote) {
+      // single quote fix
+      return text.replace(/\\['\\]/g, function(seq) {
+        return specialChar[seq];
+      });
+    }
+    return text.replace(/\\[rntvef"'\\$]/g, function(seq) {
+      return specialChar[seq];
+    });
+  },
+  /**
+   * ```ebnf
+   *  scalar ::= T_MAGIC_CONST
+   *       | T_LNUMBER | T_DNUMBER
+   *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
+   *       | '"' encaps_list '"'
+   *       | T_START_HEREDOC encaps_list T_END_HEREDOC
+   *       | namespace_name (T_DOUBLE_COLON T_STRING)?
+   * ```
+   */
+  read_scalar: function() {
+    if (this.is("T_MAGIC_CONST")) {
+      return this.get_magic_constant();
+    } else {
+      let value, node;
+      switch (this.token) {
+        // TEXTS
+        case this.tok.T_CONSTANT_ENCAPSED_STRING: {
+          value = this.node("string");
+          const text = this.text();
+          let offset = 0;
+          if (text[0] === "b" || text[0] === "B") {
+            offset = 1;
+          }
+          const isDoubleQuote = text[offset] === '"';
+          this.next();
+          value = value(
+            isDoubleQuote,
+            this.resolve_special_chars(
+              text.substring(offset + 1, text.length - 1),
+              isDoubleQuote
+            ),
+            text
+          );
+          if (this.token === this.tok.T_DOUBLE_COLON) {
+            // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
+            return this.read_static_getter(value);
+          } else {
+            // dirrect string
+            return value;
+          }
+        }
+        case this.tok.T_START_HEREDOC:
+          if (this.lexer.curCondition === "ST_NOWDOC") {
+            const start = this.lexer.yylloc.first_offset;
+            node = this.node("nowdoc");
+            value = this.next().text();
+            // strip the last line return char
+            const lastCh = value[value.length - 1];
+            if (lastCh === "\n") {
+              if (value[value.length - 2] === "\r") {
+                // windows style
+                value = value.substring(0, value.length - 2);
+              } else {
+                // linux style
+                value = value.substring(0, value.length - 1);
+              }
+            } else if (lastCh === "\r") {
+              // mac style
+              value = value.substring(0, value.length - 1);
+            }
+            this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) &amp;&amp; this.next();
+            const raw = this.lexer._input.substring(
+              start,
+              this.lexer.yylloc.last_offset
+            );
+            node = node(
+              value,
+              raw,
+              this.lexer.heredoc_label,
+              raw[3] === '"' || raw[3] === "'"
+            );
+            this.expect(this.tok.T_END_HEREDOC) &amp;&amp; this.next();
+            return node;
+          } else {
+            return this.next().read_encapsed_string(this.tok.T_END_HEREDOC);
+          }
+
+        case '"':
+          return this.next().read_encapsed_string('"');
+
+        case 'b"':
+        case 'B"': {
+          this.next();
+          this.lexer.yylloc.prev_offset -= 1;
+          return this.read_encapsed_string('"');
+        }
+
+        // NUMERIC
+        case this.tok.T_LNUMBER: // long
+        case this.tok.T_DNUMBER: {
+          // double
+          const result = this.node("number");
+          value = this.text();
+          this.next();
+          return result(value, null);
+        }
+
+        // ARRAYS
+        case this.tok.T_ARRAY: // array parser
+        case "[": // short array format
+          return this.read_array();
+        default: {
+          const err = this.error("SCALAR");
+          // graceful mode : ignore token &amp; return error node
+          this.next();
+          return err;
+        }
+      }
+    }
+  },
+  /**
+   * Handles the dereferencing
+   */
+  read_dereferencable: function(expr) {
+    let result, offset;
+    const node = this.node("offsetlookup");
+    if (this.token === "[") {
+      offset = this.next().read_expr();
+      if (this.expect("]")) this.next();
+      result = node(expr, offset);
+    } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      offset = this.read_encapsed_string_item(false);
+      result = node(expr, offset);
+    }
+    return result;
+  },
+  /**
+   * Reads and extracts an encapsed item
+   * ```ebnf
+   * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+   *  | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+   *  | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+   *  | T_CURLY_OPEN variable '}'
+   *  | variable
+   *  | variable '[' expr ']'
+   *  | variable T_OBJECT_OPERATOR T_STRING
+   * ```
+   * @return {String|Variable|Expr|Lookup}
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
+   */
+  read_encapsed_string_item: function(isDoubleQuote) {
+    let result = this.node(),
+      offset,
+      node,
+      name;
+
+    // plain text
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1222
+    if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
+      const text = this.text();
+      this.next();
+      result = result(
+        "string",
+        false,
+        this.resolve_special_chars(text, isDoubleQuote),
+        text
+      );
+    } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      // dynamic variable name
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
+      name = null;
+      if (this.next().token === this.tok.T_STRING_VARNAME) {
+        const varName = this.text();
+        name = this.node("variable");
+        this.next();
+        // check if lookup an offset
+        // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
+        if (this.token === "[") {
+          name = name(varName, false);
+          node = this.node("offsetlookup");
+          offset = this.next().read_expr();
+          this.expect("]") &amp;&amp; this.next();
+          name = node(name, offset);
+        } else {
+          name = this.node("constref")(varName);
+        }
+      } else {
+        name = this.read_expr();
+      }
+      this.expect("}") &amp;&amp; this.next();
+      result = result("variable", name, false, true);
+    } else if (this.token === this.tok.T_CURLY_OPEN) {
+      // expression
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
+      result = this.next().read_variable(false, false, false);
+      if (result.kind === "variable") {
+        result.curly = true;
+      }
+      this.expect("}") &amp;&amp; this.next();
+    } else if (this.token === this.tok.T_VARIABLE) {
+      // plain variable
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
+      result = this.read_simple_variable(false);
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
+      if (this.token === "[") {
+        node = this.node("offsetlookup");
+        offset = this.next().read_encaps_var_offset();
+        this.expect("]") &amp;&amp; this.next();
+        result = node(result, offset);
+      }
+
+      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
+      if (this.token === this.tok.T_OBJECT_OPERATOR) {
+        node = this.node("propertylookup");
+        const what = this.node("constref");
+        this.next().expect(this.tok.T_STRING);
+        name = this.text();
+        this.next();
+        result = node(result, what(name));
+      }
+
+      // error / fallback
+    } else {
+      this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE);
+      const value = this.text();
+      this.next();
+      // consider it as string
+      result = result("string", false, value, value);
+    }
+
+    return result;
+  },
+  /**
+   * Reads an encapsed string
+   */
+  read_encapsed_string: function(expect) {
+    const start = this.lexer.yylloc.prev_offset;
+    let node = this.node("encapsed");
+    const value = [];
+    let type = null;
+
+    if (expect === "`") {
+      type = this.ast.encapsed.TYPE_SHELL;
+    } else if (expect === '"') {
+      type = this.ast.encapsed.TYPE_STRING;
+    } else {
+      type = this.ast.encapsed.TYPE_HEREDOC;
+    }
+
+    // reading encapsed parts
+    while (this.token !== expect &amp;&amp; this.token !== this.EOF) {
+      value.push(this.read_encapsed_string_item(true));
+    }
+
+    this.expect(expect) &amp;&amp; this.next();
+    node = node(
+      value,
+      this.lexer._input.substring(start - 1, this.lexer.yylloc.first_offset),
+      type
+    );
+
+    if (expect === this.tok.T_END_HEREDOC) {
+      node.label = this.lexer.heredoc_label;
+    }
+    return node;
+  },
+  /**
+   * Constant token
+   */
+  get_magic_constant: function() {
+    const result = this.node("magic");
+    const name = this.text();
+    this.next();
+    return result(name.toUpperCase(), name);
+  }
+};
+</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+  
+</body>
+</html>
