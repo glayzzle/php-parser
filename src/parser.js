@@ -16,6 +16,7 @@ function isNumber(n) {
  * The PHP Parser class that build the AST tree from the lexer
  *
  * @class
+ * @tutorial Parser
  * @property {Lexer} lexer - current lexer instance
  * @property {AST} ast - the AST factory instance
  * @property {Integer|String} token - current token

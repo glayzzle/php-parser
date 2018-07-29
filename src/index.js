@@ -38,7 +38,7 @@ function combine(src, to) {
  * Initialise a new parser instance with the specified options
  *
  * @class
- *
+ * @tutorial Engine
  * @example
  * var parser = require('php-parser');
  * var instance = new parser({
