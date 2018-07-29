@@ -25,7 +25,7 @@ const Node = function Node(kind, docs, location) {
 
 /**
  * Includes current token position of the parser
- * @param {*} parser
+ * @param {*} parser 
  */
 Node.prototype.includeToken = function(parser) {
   if (this.loc) {

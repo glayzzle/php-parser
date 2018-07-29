@@ -33,13 +33,13 @@ module.exports = {
       items = this.read_array_pair_list(shortForm);
     }
     // check non empty entries
-    items.forEach(
-      function(item) {
-        if (item === null) {
-          this.raiseError("Cannot use empty array elements in arrays");
-        }
-      }.bind(this)
-    );
+    items.forEach(function(item) {
+      if (item === null) {
+        this.raiseError(
+          "Cannot use empty array elements in arrays"
+        );
+      }
+    }.bind(this));
     this.expect(expect);
     this.next();
     return result(shortForm, items);
@@ -54,7 +54,7 @@ module.exports = {
     const self = this;
     return this.read_list(
       function() {
-        return self.read_array_pair(shortForm);
+        return self.read_array_pair(shortForm)
       },
       ",",
       true
@@ -85,7 +85,10 @@ module.exports = {
       const expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         if (this.next().token === "&") {
-          return entry(expr, this.next().read_variable(true, false, true));
+          return entry(
+            expr,
+            this.next().read_variable(true, false, true)
+          );
         } else {
           return entry(expr, this.read_expr());
         }

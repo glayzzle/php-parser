@@ -138,7 +138,7 @@ module.exports = {
         this.innerListForm = isShort;
         assign = this.node("assign");
       } else if (this.innerListForm !== isShort) {
-        // Both due to implementation issues,
+        // Both due to implementation issues, 
         // and for consistency's sake, list()
         // cannot be nested inside [], nor vice-versa
         this.expect(isShort ? "list" : "[");
@@ -177,24 +177,16 @@ module.exports = {
       if (!isInner) {
         this.innerList = false;
         if (isShort) {
-          if (this.token === "=") {
-            return assign(
-              result(assignList, isShort),
-              this.next().read_expr(),
-              "="
-            );
+          if (this.token === '=') {
+            return assign(result(assignList, isShort), this.next().read_expr(), "=");
           } else {
             // handles as an array declaration
-            result.setKind("array");
+            result.setKind('array');
             return this.handleDereferencable(result(isShort, assignList));
           }
         } else {
           if (this.expect("=")) {
-            return assign(
-              result(assignList, isShort),
-              this.next().read_expr(),
-              "="
-            );
+            return assign(result(assignList, isShort), this.next().read_expr(), "=");
           } else {
             // error fallback : list($a, $b);
             return result(assignList, isShort);

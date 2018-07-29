@@ -25,7 +25,7 @@ const KIND = "array";
  *      "kind": "entry",
  *      "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
  *      "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
- *    },
+ *    }, 
  *    {"kind": "number", "value": "3"}
  *  ]
  * }
