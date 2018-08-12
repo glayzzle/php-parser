@@ -75,4 +75,46 @@ describe("Test IF statements", function() {
     );
     expect(ast).toMatchSnapshot();
   });
+  it("test issue #168", () => {
+    
+    // should be ok
+    let ast = parser.parseCode(
+      `<?php if ($foo); ?>
+      `,
+      {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+
+    // should ignore ?>
+    ast = parser.parseCode(
+      `<?php if ($foo) ?>
+      `,
+      {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+
+    // should include ';'
+    ast = parser.parseCode(
+      `<?php if ($foo)
+      ;`,
+      {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+
+  });
 });

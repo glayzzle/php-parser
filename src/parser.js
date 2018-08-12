@@ -440,11 +440,15 @@ parser.prototype.text = function() {
 /** consume the next token **/
 parser.prototype.next = function() {
   // prepare the back command
-  this.prev = [
-    this.lexer.yylloc.last_line,
-    this.lexer.yylloc.last_column,
-    this.lexer.offset
-  ];
+  if (this.token !== ';' || this.lexer.yytext === ';') {
+    // ignore '?>' from automated resolution
+    // https://github.com/glayzzle/php-parser/issues/168
+    this.prev = [
+      this.lexer.yylloc.last_line,
+      this.lexer.yylloc.last_column,
+      this.lexer.offset
+    ];
+  }
 
   // eating the token
   this.lex();
