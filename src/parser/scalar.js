@@ -133,6 +133,7 @@ module.exports = {
 
         // ARRAYS
         case this.tok.T_ARRAY: // array parser
+          return this.read_array();
         case "[": // short array format
           return this.read_array();
         default: {

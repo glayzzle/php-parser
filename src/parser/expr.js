@@ -129,71 +129,55 @@ module.exports = {
       return this.next().read_encapsed_string("`");
     }
 
-    if (this.token === this.tok.T_LIST || this.token === "[") {
+    if (this.token === this.tok.T_LIST) {
       let assign = null;
-      const isShort = this.token === "[";
       const isInner = this.innerList;
       result = this.node("list");
       if (!isInner) {
-        this.innerListForm = isShort;
         assign = this.node("assign");
-      } else if (this.innerListForm !== isShort) {
-        // Both due to implementation issues, 
-        // and for consistency's sake, list()
-        // cannot be nested inside [], nor vice-versa
-        this.expect(isShort ? "list" : "[");
       }
-      this.next();
-      if (!isShort && this.expect("(")) {
+      if (this.next().expect("(")) {
         this.next();
       }
 
       if (!this.innerList) this.innerList = true;
 
       // reads inner items
-      const assignList = this.read_array_pair_list(isShort);
-      if (this.expect(isShort ? "]" : ")")) {
+      const assignList = this.read_array_pair_list(false);
+      if (this.expect(")")) {
         this.next();
       }
 
       // check if contains at least one assignment statement
-      if (!isShort) {
-        let hasItem = false;
-        for (let i = 0; i < assignList.length; i++) {
-          if (assignList[i] !== null) {
-            hasItem = true;
-            break;
-          }
+      let hasItem = false;
+      for (let i = 0; i < assignList.length; i++) {
+        if (assignList[i] !== null) {
+          hasItem = true;
+          break;
         }
-        if (!hasItem) {
-          this.raiseError(
-            "Fatal Error :  Cannot use empty list on line " +
-              this.lexer.yylloc.first_line
-          );
-        }
+      }
+      if (!hasItem) {
+        this.raiseError(
+          "Fatal Error :  Cannot use empty list on line " +
+            this.lexer.yylloc.first_line
+        );
       }
 
       // handles the node resolution
       if (!isInner) {
         this.innerList = false;
-        if (isShort) {
-          if (this.token === '=') {
-            return assign(result(assignList, isShort), this.next().read_expr(), "=");
-          } else {
-            // handles as an array declaration
-            result.setKind('array');
-            return this.handleDereferencable(result(isShort, assignList));
-          }
+        if (this.expect("=")) {
+          return assign(
+            result(assignList, false), 
+            this.next().read_expr(), 
+            "="
+          );
         } else {
-          if (this.expect("=")) {
-            return assign(result(assignList, isShort), this.next().read_expr(), "=");
-          } else {
-            // error fallback : list($a, $b);
-            return result(assignList, isShort);
-          }
+          // error fallback : list($a, $b);
+          return result(assignList, false);
         }
       } else {
-        return result(assignList, isShort);
+        return result(assignList, false);
       }
     }
 
@@ -428,7 +412,16 @@ module.exports = {
           return result("post", "-", expr);
       }
     } else if (this.is("SCALAR")) {
+      result = this.node();
       expr = this.read_scalar();
+      if (expr.kind === 'array' && expr.shortForm && this.token === '=') {
+        // list assign
+        let list = this.node('list')(expr.items, true);
+        if (expr.loc) list.loc = expr.loc;
+        let right = this.next().read_expr();
+        return result("assign", list, right, "=");
+      }
+      // classic array
       return this.handleDereferencable(expr);
     } else {
       this.error("EXPR");

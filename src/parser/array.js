@@ -33,13 +33,13 @@ module.exports = {
       items = this.read_array_pair_list(shortForm);
     }
     // check non empty entries
-    for(let i = 0, size = items.length - 1; i < size; i++) {
+    /*for(let i = 0, size = items.length - 1; i < size; i++) {
       if (items[i] === null) {
         this.raiseError(
           "Cannot use empty array elements in arrays"
         );
       }
-    }
+    }*/
     this.expect(expect);
     this.next();
     return result(shortForm, items);
