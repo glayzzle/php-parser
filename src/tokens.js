@@ -5,7 +5,10 @@
  */
 "use strict";
 
-// exports token index
+/**
+ * PHP AST Tokens
+ * @type {Object}
+ */
 module.exports = {
   values: {
     101: "T_HALT_COMPILER",

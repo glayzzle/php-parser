@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>PHP Parser</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+  <link rel="stylesheet" href="https://unpkg.com/vue-json-tree@0.3.3/dist/json-tree.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="app">
+    <md-app md-waterfall md-mode="overlap" v-cloak>
+      <md-app-toolbar class="md-primary md-large md-dense">
+        <div class="md-toolbar-row">
+          <div class="md-toolbar-section-start">
+            <a href="https://github.com/glayzzle/php-parser">
+              <span class="md-title">
+                <img src="https://avatars3.githubusercontent.com/u/7166545?s=200&v=4" width="32" height="32" alt="Glayzzle" /> php-parser
+              </span>
+            </a>
+          </div>
+
+          <div class="md-toolbar-section-center">
+            <md-switch v-model="parserOptions.parser.debug">
+              Debug
+              <md-tooltip md-delay="500">Show debug logs</md-tooltip>
+            </md-switch>
+            <md-switch v-model="parserOptions.parser.extractDoc">
+              Comments
+              <md-tooltip md-delay="500">Extract comments</md-tooltip>
+            </md-switch>
+            <md-switch v-model="parserOptions.parser.extractTokens">
+              Tokens
+              <md-tooltip md-delay="500">Extract code tokens</md-tooltip>
+            </md-switch>
+            <md-switch v-model="parserOptions.ast.withPositions">
+              Positions
+              <md-tooltip md-delay="500">AST positions</md-tooltip>
+            </md-switch>
+            <md-switch v-model="parserOptions.ast.withSource">
+              Source
+              <md-tooltip md-delay="500">Extract AST source</md-tooltip>
+            </md-switch>
+          </div>
+
+          <div class="md-toolbar-section-end">
+            <md-switch class="md-accent" v-model="live">
+              Live Mode
+              <md-tooltip>Parse while typing</md-tooltip>
+            </md-switch>
+            <md-button class="md-raised" @click="parseInput()">
+              <md-icon style="color: #333">play_arrow</md-icon> Parse
+              <md-tooltip>Parse code</md-tooltip>
+            </md-button>
+          </div>
+        </div>
+      </md-app-toolbar>
+
+      <md-app-content>
+        <div class="md-layout md-gutter">
+          <div class="md-layout-item input-container md-size-50" :class="{'md-invalid': output.errors.length}">
+            <md-field>
+              <md-textarea :value="codeInput" @input.native="event => codeInput = event.target.value"></md-textarea>
+            </md-field>
+            <json-tree class="errors-box" :data="{errors: output.errors}" :level="3"></json-tree>
+          </div>
+
+          <div class="md-layout-item output-container md-size-50">
+            <json-tree :data="output" :level="2"></json-tree>
+          </div>
+        </div>
+      </md-app-content>
+    </md-app>
+  </div>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-material@beta"></script>
+  <script src="https://unpkg.com/vue-json-tree@0.3.3/dist/json-tree.js"></script>
+  <script type="text/javascript" src="../dist/php-parser.min.js"></script>
+  <script type="text/javascript">
+    var parser = PhpParser;
+
+    Vue.use(VueMaterial.default);
+
+    new Vue({
+      el: "#app",
+      data: {
+        live: true,
+        parserOptions: {
+          parser: {
+            debug: false,
+            extractDoc: true,
+            suppressErrors: true,
+            extractTokens: true
+          },
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        },
+        codeInput: '<?php \n\n// Echo statement\necho "hello php-parser";',
+        output: {
+          errors: []
+        }
+      },
+      watch: {
+        parserOptions: {
+          handler() {
+            this.parseInput();
+          },
+          deep: true
+        },
+        codeInput: {
+          immediate: true,
+          handler(newValue) {
+            if (!this.live) return;
+            this.parseInput(newValue);
+          }
+        }
+      },
+      methods: {
+        parseInput(value) {
+          this.output = parser.parseCode(
+            value || this.codeInput,
+            this.parserOptions
+          );
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
  *
- * @public @constructor {Lexer}
+ * @class
  * @property {Integer} EOF
  * @property {Boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
  * @property {Boolean} comment_tokens extracts comments tokens
