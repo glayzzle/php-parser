@@ -168,8 +168,8 @@ module.exports = {
         this.innerList = false;
         if (this.expect("=")) {
           return assign(
-            result(assignList, false), 
-            this.next().read_expr(), 
+            result(assignList, false),
+            this.next().read_expr(),
             "="
           );
         } else {
@@ -414,9 +414,9 @@ module.exports = {
     } else if (this.is("SCALAR")) {
       result = this.node();
       expr = this.read_scalar();
-      if (expr.kind === 'array' && expr.shortForm && this.token === '=') {
+      if (expr.kind === "array" && expr.shortForm && this.token === "=") {
         // list assign
-        let list = this.node('list')(expr.items, true);
+        let list = this.node("list")(expr.items, true);
         if (expr.loc) list.loc = expr.loc;
         let right = this.next().read_expr();
         return result("assign", list, right, "=");

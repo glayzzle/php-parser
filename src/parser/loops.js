@@ -122,10 +122,8 @@ module.exports = {
     }
 
     // grammatically correct but not supported by PHP
-    if (key && key.kind === 'list') {
-      this.raiseError(
-        "Fatal Error : Cannot use list as key element"
-      );
+    if (key && key.kind === "list") {
+      this.raiseError("Fatal Error : Cannot use list as key element");
     }
 
     if (this.expect(")")) this.next();
@@ -141,7 +139,7 @@ module.exports = {
   /**
    * Reads a foreach variable statement
    * ```ebnf
-   * foreach_variable = 
+   * foreach_variable =
    *    variable |
    *    '&' variable |
    *    T_LIST '(' assignment_list ')' |
@@ -157,7 +155,7 @@ module.exports = {
       this.next();
       if (!isShort && this.expect("(")) this.next();
       const assignList = this.read_array_pair_list(isShort);
-      if (this.expect(isShort ? "]": ")")) this.next();
+      if (this.expect(isShort ? "]" : ")")) this.next();
       return result(assignList, isShort);
     } else {
       return this.read_variable(false, false, false);

@@ -279,10 +279,10 @@ AST.prototype.prepare = function(kind, docs, parser) {
   };
   /**
    * Helper to change a node kind
-   * @param {String} newKind 
+   * @param {String} newKind
    */
   result.setKind = function(newKind) {
-    kind =  newKind;
+    kind = newKind;
   };
   return result;
 };

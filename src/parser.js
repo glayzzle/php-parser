@@ -361,7 +361,7 @@ parser.prototype.expectEndOfStatement = function(node) {
   if (this.token === ";") {
     // include only real ';' statements
     // https://github.com/glayzzle/php-parser/issues/164
-    if (node && this.lexer.yytext === ';') {
+    if (node && this.lexer.yytext === ";") {
       node.includeToken(this);
     }
   } else if (this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
@@ -442,7 +442,7 @@ parser.prototype.text = function() {
 /** consume the next token **/
 parser.prototype.next = function() {
   // prepare the back command
-  if (this.token !== ';' || this.lexer.yytext === ';') {
+  if (this.token !== ";" || this.lexer.yytext === ";") {
     // ignore '?>' from automated resolution
     // https://github.com/glayzzle/php-parser/issues/168
     this.prev = [
