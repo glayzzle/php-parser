@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 638e56ff062f9db65357 - 2018-7-29
+ *         Build: 65fd01ae827233e0f643 - 2018-8-15
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -4702,7 +4702,9 @@ module.exports = {
           }
 
         // ARRAYS
-        case this.tok.T_ARRAY: // array parser
+        case this.tok.T_ARRAY:
+          // array parser
+          return this.read_array();
         case "[":
           // short array format
           return this.read_array();
@@ -5701,68 +5703,48 @@ module.exports = {
       return this.next().read_encapsed_string("`");
     }
 
-    if (this.token === this.tok.T_LIST || this.token === "[") {
+    if (this.token === this.tok.T_LIST) {
       var assign = null;
-      var isShort = this.token === "[";
       var isInner = this.innerList;
       result = this.node("list");
       if (!isInner) {
-        this.innerListForm = isShort;
         assign = this.node("assign");
-      } else if (this.innerListForm !== isShort) {
-        // Both due to implementation issues,
-        // and for consistency's sake, list()
-        // cannot be nested inside [], nor vice-versa
-        this.expect(isShort ? "list" : "[");
       }
-      this.next();
-      if (!isShort && this.expect("(")) {
+      if (this.next().expect("(")) {
         this.next();
       }
 
       if (!this.innerList) this.innerList = true;
 
       // reads inner items
-      var assignList = this.read_array_pair_list(isShort);
-      if (this.expect(isShort ? "]" : ")")) {
+      var assignList = this.read_array_pair_list(false);
+      if (this.expect(")")) {
         this.next();
       }
 
       // check if contains at least one assignment statement
-      if (!isShort) {
-        var hasItem = false;
-        for (var i = 0; i < assignList.length; i++) {
-          if (assignList[i] !== null) {
-            hasItem = true;
-            break;
-          }
+      var hasItem = false;
+      for (var i = 0; i < assignList.length; i++) {
+        if (assignList[i] !== null) {
+          hasItem = true;
+          break;
         }
-        if (!hasItem) {
-          this.raiseError("Fatal Error :  Cannot use empty list on line " + this.lexer.yylloc.first_line);
-        }
+      }
+      if (!hasItem) {
+        this.raiseError("Fatal Error :  Cannot use empty list on line " + this.lexer.yylloc.first_line);
       }
 
       // handles the node resolution
       if (!isInner) {
         this.innerList = false;
-        if (isShort) {
-          if (this.token === "=") {
-            return assign(result(assignList, isShort), this.next().read_expr(), "=");
-          } else {
-            // handles as an array declaration
-            result.setKind("array");
-            return this.handleDereferencable(result(isShort, assignList));
-          }
+        if (this.expect("=")) {
+          return assign(result(assignList, false), this.next().read_expr(), "=");
         } else {
-          if (this.expect("=")) {
-            return assign(result(assignList, isShort), this.next().read_expr(), "=");
-          } else {
-            // error fallback : list($a, $b);
-            return result(assignList, isShort);
-          }
+          // error fallback : list($a, $b);
+          return result(assignList, false);
         }
       } else {
-        return result(assignList, isShort);
+        return result(assignList, false);
       }
     }
 
@@ -5994,7 +5976,16 @@ module.exports = {
           return result("post", "-", expr);
       }
     } else if (this.is("SCALAR")) {
+      result = this.node();
       expr = this.read_scalar();
+      if (expr.kind === "array" && expr.shortForm && this.token === "=") {
+        // list assign
+        var list = this.node("list")(expr.items, true);
+        if (expr.loc) list.loc = expr.loc;
+        var _right = this.next().read_expr();
+        return result("assign", list, _right, "=");
+      }
+      // classic array
       return this.handleDereferencable(expr);
     } else {
       this.error("EXPR");
@@ -6603,11 +6594,13 @@ module.exports = {
       items = this.read_array_pair_list(shortForm);
     }
     // check non empty entries
-    items.forEach(function (item) {
-      if (item === null) {
-        this.raiseError("Cannot use empty array elements in arrays");
+    /*for(let i = 0, size = items.length - 1; i < size; i++) {
+      if (items[i] === null) {
+        this.raiseError(
+          "Cannot use empty array elements in arrays"
+        );
       }
-    }.bind(this));
+    }*/
     this.expect(expect);
     this.next();
     return result(shortForm, items);
@@ -6918,7 +6911,11 @@ parser.prototype.text = function () {
 /** consume the next token **/
 parser.prototype.next = function () {
   // prepare the back command
-  this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
+  if (this.token !== ";" || this.lexer.yytext === ";") {
+    // ignore '?>' from automated resolution
+    // https://github.com/glayzzle/php-parser/issues/168
+    this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
+  }
 
   // eating the token
   this.lex();
