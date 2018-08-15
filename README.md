@@ -76,7 +76,7 @@ Sample AST output
 }
 ```
 
-- Try it online (demo) : http://glayzzle.com/php-parser/#demo
+- Try it online (demo) : http://glayzzle.com/php-parser/
 - Or from AST Explorer : https://astexplorer.net/
 
 
@@ -115,12 +115,8 @@ Related projects
 
 > You can add here your own project by opening an issue request.
 
-# Misc
+## License
 
 This library is released under BSD-3 license clause.
 
-If you want to contribute please visit this repository https://github.com/glayzzle/php-parser-dev.
-
-
-## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser?ref=badge_large)

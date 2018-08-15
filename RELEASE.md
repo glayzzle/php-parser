@@ -1,5 +1,13 @@
 # Releases
 
+## 3.0.0-alpha3 : (2018-08-15)
+ - fix #168 : End location of `if` without semicolon
+ - impl #147 : Node informations about Binary and unicode strings
+ - impl #83 : Adding full support for PHP 7.2
+ - fix #122 : Detect foreach bad syntax
+ - impl #152 : Improve tests with JEST
+ - fix #164 : Fixing some location issues (partial)
+
 ## 3.0.0-alpha2 : (2018-04-14)
  - fix #137 : Bug with parsing `list`
  - fix #149 : Binary cast: isDoubleQuote incorrect
