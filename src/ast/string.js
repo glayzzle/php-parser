@@ -12,17 +12,20 @@ const KIND = "string";
  * Defines a string (simple ou double quoted) - chars are already escaped
  * @constructor String
  * @extends {Literal}
+ * @property {boolean} unicode
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
 const String = Literal.extends(function String(
   isDoubleQuote,
   value,
+  unicode,
   raw,
   docs,
   location
 ) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
+  this.unicode = unicode;
   this.isDoubleQuote = isDoubleQuote;
 });
 

@@ -65,6 +65,7 @@ module.exports = {
               text.substring(offset + 1, text.length - 1),
               isDoubleQuote
             ),
+            offset === 1, // unicode flag
             text
           );
           if (this.token === this.tok.T_DOUBLE_COLON) {
@@ -191,6 +192,7 @@ module.exports = {
         "string",
         false,
         this.resolve_special_chars(text, isDoubleQuote),
+        false,
         text
       );
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
@@ -254,7 +256,7 @@ module.exports = {
       const value = this.text();
       this.next();
       // consider it as string
-      result = result("string", false, value, value);
+      result = result("string", false, value, false, value);
     }
 
     return result;
