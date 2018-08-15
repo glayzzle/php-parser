@@ -4,6 +4,10 @@
   "description": "Parse PHP code and returns its AST",
   "main": "src/index.js",
   "browser": "dist/php-parser.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
     "lint": "prettier --write src/*.js src/**/*.js",
     "pretest": "npm run lint",
@@ -12,6 +16,7 @@
     "build": "webpack --config webpack.config.js",
     "postbuild": "npm run build-docs",
     "build-docs": "jsdoc -c .jsdoc.json",
+    "publish-docs": "git subtree push --prefix docs origin gh-pages",
     "cover": "jest --coverage --coverageDirectory=coverage/"
   },
   "repository": {
