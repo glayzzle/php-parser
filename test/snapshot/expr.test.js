@@ -117,6 +117,7 @@ describe("Test expressions", function() {
         (double)$var;
         (real)$var;
         (string)$var;
+        (binary)$var;
         (array)$var;
         (object)$var;
         (unset)$var;

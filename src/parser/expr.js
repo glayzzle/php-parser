@@ -252,7 +252,10 @@ module.exports = {
         return this.node("cast")("float", this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
-        return this.node("cast")("string", this.next().read_expr());
+        return this.node("cast")(
+          this.text() === "(binary)" ? "binary" : "string",
+          this.next().read_expr()
+        );
 
       case this.tok.T_ARRAY_CAST:
         return this.node("cast")("array", this.next().read_expr());
