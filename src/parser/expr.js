@@ -246,28 +246,33 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_INT_CAST:
-        return this.node("cast")("int", this.next().read_expr());
+        return this.node("cast")("int", this.text(), this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return this.node("cast")("float", this.next().read_expr());
+        return this.node("cast")("float", this.text(), this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
         return this.node("cast")(
-          this.text() === "(binary)" ? "binary" : "string",
+          this.text().indexOf("binary") !== -1 ? "binary" : "string",
+          this.text(),
           this.next().read_expr()
         );
 
       case this.tok.T_ARRAY_CAST:
-        return this.node("cast")("array", this.next().read_expr());
+        return this.node("cast")("array", this.text(), this.next().read_expr());
 
       case this.tok.T_OBJECT_CAST:
-        return this.node("cast")("object", this.next().read_expr());
+        return this.node("cast")(
+          "object",
+          this.text(),
+          this.next().read_expr()
+        );
 
       case this.tok.T_BOOL_CAST:
-        return this.node("cast")("bool", this.next().read_expr());
+        return this.node("cast")("bool", this.text(), this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
-        return this.node("cast")("unset", this.next().read_expr());
+        return this.node("cast")("unset", this.text(), this.next().read_expr());
 
       case this.tok.T_EXIT: {
         const useDie = this.lexer.yytext.toLowerCase() === "die";
