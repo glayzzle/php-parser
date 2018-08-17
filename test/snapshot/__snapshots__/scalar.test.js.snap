@@ -99,17 +99,15 @@ Program {
             "kind": "constref",
             "name": "foo",
           },
-          "what": Parenthesis {
-            "inner": New {
-              "arguments": Array [],
-              "kind": "new",
-              "what": Identifier {
-                "kind": "identifier",
-                "name": "test",
-                "resolution": "uqn",
-              },
+          "what": New {
+            "arguments": Array [],
+            "kind": "new",
+            "parenthesizedExpression": true,
+            "what": Identifier {
+              "kind": "identifier",
+              "name": "test",
+              "resolution": "uqn",
             },
-            "kind": "parenthesis",
           },
         },
       },
@@ -129,17 +127,15 @@ Program {
           "kind": "number",
           "value": "5",
         },
-        "what": Parenthesis {
-          "inner": Call {
-            "arguments": Array [],
-            "kind": "call",
-            "what": Identifier {
-              "kind": "identifier",
-              "name": "foo",
-              "resolution": "uqn",
-            },
+        "what": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "parenthesizedExpression": true,
+          "what": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+            "resolution": "uqn",
           },
-          "kind": "parenthesis",
         },
       },
     },
@@ -160,49 +156,47 @@ Program {
           },
         ],
         "kind": "call",
-        "what": Parenthesis {
-          "inner": Closure {
-            "arguments": Array [
-              Parameter {
-                "byref": false,
-                "kind": "parameter",
-                "name": "a",
-                "nullable": false,
-                "type": null,
-                "value": null,
-                "variadic": false,
+        "what": Closure {
+          "arguments": Array [
+            Parameter {
+              "byref": false,
+              "kind": "parameter",
+              "name": "a",
+              "nullable": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "type": "*",
+                },
+                "kind": "return",
               },
             ],
-            "body": Block {
-              "children": Array [
-                Return {
-                  "expr": Bin {
-                    "kind": "bin",
-                    "left": Variable {
-                      "byref": false,
-                      "curly": false,
-                      "kind": "variable",
-                      "name": "a",
-                    },
-                    "right": Number {
-                      "kind": "number",
-                      "value": "2",
-                    },
-                    "type": "*",
-                  },
-                  "kind": "return",
-                },
-              ],
-              "kind": "block",
-            },
-            "byref": false,
-            "isStatic": false,
-            "kind": "closure",
-            "nullable": false,
-            "type": null,
-            "uses": Array [],
+            "kind": "block",
           },
-          "kind": "parenthesis",
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "parenthesizedExpression": true,
+          "type": null,
+          "uses": Array [],
         },
       },
     },

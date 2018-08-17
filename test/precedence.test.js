@@ -6,12 +6,8 @@ var parser = require("./main");
 var checkPrecedence = function(a, b) {
   if (!a || !b)
     return false;
-  if (b.kind === "parenthesis") {
-    // force the precendence with parenthesis
-    // ignore them in test
-    b = b.inner;
-  }
   for (var k in b) {
+    if (k === 'parenthesizedExpression') continue;
     if (b.hasOwnProperty(k)) {
       if (!a.hasOwnProperty(k))
         return false;
@@ -30,7 +26,12 @@ var shouldBeSame = function(a, b) {
     a + ";",
     b + ";"
   ].join("\n"));
-  expect(checkPrecedence(ast.children[0], ast.children[1])).toBeTruthy();
+  let result = checkPrecedence(ast.children[0], ast.children[1]);
+  if (!result) {
+    console.log("Parsed :", ast.children[0]);
+    console.log("Expected :", ast.children[1]);
+  }
+  expect(result).toBeTruthy();
 };
 
 // START TESTS HERE

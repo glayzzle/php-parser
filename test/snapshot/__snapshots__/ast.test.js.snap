@@ -190,14 +190,12 @@ Program {
             "value": "ko",
           },
           "kind": "retif",
-          "test": Parenthesis {
-            "inner": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "expr",
-            },
-            "kind": "parenthesis",
+          "test": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "expr",
+            "parenthesizedExpression": true,
           },
           "trueExpr": String {
             "isDoubleQuote": true,
@@ -304,27 +302,25 @@ Program {
       "kind": "include",
       "once": true,
       "require": false,
-      "target": Parenthesis {
-        "inner": Bin {
-          "kind": "bin",
-          "left": ConstRef {
-            "kind": "constref",
-            "name": Identifier {
-              "kind": "identifier",
-              "name": "PATH",
-              "resolution": "uqn",
-            },
+      "target": Bin {
+        "kind": "bin",
+        "left": ConstRef {
+          "kind": "constref",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "PATH",
+            "resolution": "uqn",
           },
-          "right": String {
-            "isDoubleQuote": true,
-            "kind": "string",
-            "raw": "\\"/file.php\\"",
-            "unicode": false,
-            "value": "/file.php",
-          },
-          "type": ".",
         },
-        "kind": "parenthesis",
+        "parenthesizedExpression": true,
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"/file.php\\"",
+          "unicode": false,
+          "value": "/file.php",
+        },
+        "type": ".",
       },
     },
     Include {

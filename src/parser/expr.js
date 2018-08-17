@@ -118,10 +118,10 @@ module.exports = {
     }
 
     if (this.token === "(") {
-      const node = this.node("parenthesis");
       expr = this.next().read_expr();
+      expr.parenthesizedExpression = true;
       this.expect(")") && this.next();
-      return this.handleDereferencable(node(expr));
+      return this.handleDereferencable(expr);
     }
 
     if (this.token === "`") {
