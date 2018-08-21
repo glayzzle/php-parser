@@ -482,6 +482,7 @@ Program {
   "children": Array [
     Cast {
       "kind": "cast",
+      "raw": "(int)",
       "type": "int",
       "what": Variable {
         "byref": false,
@@ -492,6 +493,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(integer)",
       "type": "int",
       "what": Variable {
         "byref": false,
@@ -502,6 +504,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(bool)",
       "type": "bool",
       "what": Variable {
         "byref": false,
@@ -512,6 +515,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(boolean)",
       "type": "bool",
       "what": Variable {
         "byref": false,
@@ -522,6 +526,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(float)",
       "type": "float",
       "what": Variable {
         "byref": false,
@@ -532,6 +537,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(double)",
       "type": "float",
       "what": Variable {
         "byref": false,
@@ -542,6 +548,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(real)",
       "type": "float",
       "what": Variable {
         "byref": false,
@@ -552,6 +559,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(string)",
       "type": "string",
       "what": Variable {
         "byref": false,
@@ -562,6 +570,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(binary)",
       "type": "binary",
       "what": Variable {
         "byref": false,
@@ -572,6 +581,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(array)",
       "type": "array",
       "what": Variable {
         "byref": false,
@@ -582,6 +592,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(object)",
       "type": "object",
       "what": Variable {
         "byref": false,
@@ -592,6 +603,7 @@ Program {
     },
     Cast {
       "kind": "cast",
+      "raw": "(unset)",
       "type": "unset",
       "what": Variable {
         "byref": false,
@@ -599,6 +611,111 @@ Program {
         "kind": "variable",
         "name": "var",
       },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions test cast extension - #171 1`] = `
+Program {
+  "children": Array [
+    Variable {
+      "byref": false,
+      "cast": "int",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(int)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "int",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(integer)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "bool",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(bool)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "bool",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(boolean)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "float",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(float)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "float",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(double)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "float",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(real)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "string",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(string)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "binary",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(binary)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "array",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(array)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "object",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(object)",
+    },
+    Variable {
+      "byref": false,
+      "cast": "unset",
+      "curly": false,
+      "kind": "variable",
+      "name": "var",
+      "rawCast": "(unset)",
     },
   ],
   "errors": Array [],
@@ -1217,20 +1334,18 @@ Program {
           "kind": "number",
           "value": "5",
         },
-        "right": Parenthesis {
-          "inner": Bin {
-            "kind": "bin",
-            "left": Number {
-              "kind": "number",
-              "value": "2",
-            },
-            "right": Number {
-              "kind": "number",
-              "value": "1",
-            },
-            "type": "+",
+        "right": Bin {
+          "kind": "bin",
+          "left": Number {
+            "kind": "number",
+            "value": "2",
           },
-          "kind": "parenthesis",
+          "parenthesizedExpression": true,
+          "right": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "type": "+",
         },
         "type": "*",
       },

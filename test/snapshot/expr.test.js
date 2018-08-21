@@ -126,6 +126,37 @@ describe("Test expressions", function() {
     expect(ast).toMatchSnapshot();
   });
 
+
+  it("test cast extension - #171", function() {
+    const ast = parser.parseEval(
+      `
+        (int)$var;
+        (integer)$var;
+        (bool)$var;
+        (boolean)$var;
+        (float)$var;
+        (double)$var;
+        (real)$var;
+        (string)$var;
+        (binary)$var;
+        (array)$var;
+        (object)$var;
+        (unset)$var;
+      `, {
+        parser: {
+          read_expr_cast: function(cast) {
+            const rawCast = this.text();
+            const expr = this.next().read_expr();
+            expr.cast = cast;
+            expr.rawCast = rawCast;
+            return expr;
+          }
+        }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("test exit", function() {
     const ast = parser.parseEval(
       `

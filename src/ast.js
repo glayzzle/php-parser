@@ -40,7 +40,6 @@ const Position = require("./ast/position");
  *       - [Pre](#pre)
  *       - [Post](#post)
  *       - [Bin](#bin)
- *       - [Parenthesis](#parenthesis)
  *       - [Unary](#unary)
  *       - [Cast](#cast)
  *     - [Literal](#literal)
@@ -165,7 +164,7 @@ AST.prototype.resolvePrecedence = function(result) {
   let buffer, lLevel, rLevel;
   // handling precendence
   if (result.kind === "bin") {
-    if (result.right) {
+    if (result.right && !result.right.parenthesizedExpression) {
       if (result.right.kind === "bin") {
         lLevel = AST.precedence[result.type];
         rLevel = AST.precedence[result.right.type];
@@ -190,7 +189,7 @@ AST.prototype.resolvePrecedence = function(result) {
     }
   } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
-    if (result.what) {
+    if (result.what && !result.what.parenthesizedExpression) {
       // unary precedence is allways lower
       if (result.what.kind === "bin") {
         buffer = result.what;
@@ -206,7 +205,11 @@ AST.prototype.resolvePrecedence = function(result) {
     }
   } else if (result.kind === "retif") {
     // https://github.com/glayzzle/php-parser/issues/77
-    if (result.falseExpr && result.falseExpr.kind === "retif") {
+    if (
+      result.falseExpr &&
+      result.falseExpr.kind === "retif" &&
+      !result.falseExpr.parenthesizedExpression
+    ) {
       buffer = result.falseExpr;
       result.falseExpr = buffer.test;
       buffer.test = this.resolvePrecedence(result);
@@ -214,7 +217,11 @@ AST.prototype.resolvePrecedence = function(result) {
     }
   } else if (result.kind === "assign") {
     // https://github.com/glayzzle/php-parser/issues/81
-    if (result.right && result.right.kind === "bin") {
+    if (
+      result.right &&
+      result.right.kind === "bin" &&
+      !result.right.parenthesizedExpression
+    ) {
       lLevel = AST.precedence["="];
       rLevel = AST.precedence[result.right.type];
       // only shifts with and, xor, or
@@ -346,7 +353,6 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/offsetlookup"),
   require("./ast/operation"),
   require("./ast/parameter"),
-  require("./ast/parenthesis"),
   require("./ast/post"),
   require("./ast/pre"),
   require("./ast/print"),

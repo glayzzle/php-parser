@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 65fd01ae827233e0f643 - 2018-8-15
+ *         Build: 40e3f5cb8f8a414e42e0 - 2018-8-17
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -100,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 123);
+/******/ 	return __webpack_require__(__webpack_require__.s = 122);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1060,11 +1060,13 @@ var KIND = "string";
  * Defines a string (simple ou double quoted) - chars are already escaped
  * @constructor String
  * @extends {Literal}
+ * @property {boolean} unicode
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-var String = Literal.extends(function String(isDoubleQuote, value, raw, docs, location) {
+var String = Literal.extends(function String(isDoubleQuote, value, unicode, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
+  this.unicode = unicode;
   this.isDoubleQuote = isDoubleQuote;
 });
 
@@ -1404,34 +1406,6 @@ module.exports = Post;
  */
 
 
-var Operation = __webpack_require__(6);
-var KIND = "parenthesis";
-
-/**
- * Parenthesis encapsulation `(... expr ...)`
- * @constructor Parenthesis
- * @extends {Operation}
- * @property {Expression} inner
- */
-var Parenthesis = Operation.extends(function Parenthesis(inner, docs, location) {
-  Operation.apply(this, [KIND, docs, location]);
-  this.inner = inner;
-});
-
-module.exports = Parenthesis;
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (C) 2018 Glayzzle (BSD3 License)
- * @authors https://github.com/glayzzle/php-parser/graphs/contributors
- * @url http://glayzzle.com
- */
-
-
 var Declaration = __webpack_require__(3);
 var KIND = "parameter";
 
@@ -1457,7 +1431,7 @@ var Parameter = Declaration.extends(function Parameter(name, type, value, isRef,
 module.exports = Parameter;
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1483,7 +1457,7 @@ var OffsetLookup = Lookup.extends(function OffsetLookup(what, offset, docs, loca
 module.exports = OffsetLookup;
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1509,7 +1483,7 @@ var _Number = Literal.extends(function Number(value, raw, docs, location) {
 module.exports = _Number;
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1540,7 +1514,7 @@ var Nowdoc = Literal.extends(function Nowdoc(value, raw, label, quote, docs, loc
 module.exports = Nowdoc;
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1570,7 +1544,7 @@ var New = Statement.extends(function New(what, args, docs, location) {
 module.exports = New;
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1600,7 +1574,7 @@ var Namespace = Block.extends(function Namespace(name, children, withBrackets, d
 module.exports = Namespace;
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1631,7 +1605,7 @@ var Method = fn.extends(function Method() {
 module.exports = Method;
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1657,7 +1631,7 @@ var Magic = Literal.extends(function Magic(value, raw, docs, location) {
 module.exports = Magic;
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1685,7 +1659,7 @@ var List = Sys.extends(function List(items, shortForm, docs, location) {
 module.exports = List;
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1713,7 +1687,7 @@ var Label = Node.extends(function Label(name, docs, location) {
 module.exports = Label;
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1739,7 +1713,7 @@ var Isset = Sys.extends(function Isset(args, docs, location) {
 module.exports = Isset;
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1769,7 +1743,7 @@ var Interface = Declaration.extends(function Interface(name, ext, body, docs, lo
 module.exports = Interface;
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1795,7 +1769,7 @@ var Inline = Literal.extends(function Inline(value, raw, docs, location) {
 module.exports = Inline;
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1827,7 +1801,7 @@ var Include = Statement.extends(function Include(once, require, target, docs, lo
 module.exports = Include;
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1861,7 +1835,7 @@ var If = Statement.extends(function If(test, body, alternate, shortForm, docs, l
 module.exports = If;
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1922,7 +1896,7 @@ Identifier.RELATIVE_NAME = "rn";
 module.exports = Identifier;
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1951,7 +1925,7 @@ var Halt = Statement.extends(function Halt(after, docs, location) {
 module.exports = Halt;
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1980,7 +1954,7 @@ var Goto = Statement.extends(function Goto(label, docs, location) {
 module.exports = Goto;
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2008,7 +1982,7 @@ var Global = Statement.extends(function Global(items, docs, location) {
 module.exports = Global;
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2045,7 +2019,7 @@ var Foreach = Statement.extends(function Foreach(source, key, value, body, short
 module.exports = Foreach;
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2082,7 +2056,7 @@ var For = Statement.extends(function For(init, test, increment, body, shortForm,
 module.exports = For;
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2112,7 +2086,7 @@ var Exit = Statement.extends(function Exit(status, useDie, docs, location) {
 module.exports = Exit;
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2140,7 +2114,7 @@ var Eval = Statement.extends(function Eval(source, docs, location) {
 module.exports = Eval;
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2174,7 +2148,7 @@ var Error = Node.extends(function Error(message, token, line, expected, docs, lo
 module.exports = Error;
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2204,7 +2178,7 @@ var Entry = Node.extends(function Entry(key, value, docs, location) {
 module.exports = Entry;
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2276,7 +2250,7 @@ Encapsed.TYPE_OFFSET = "offset";
 module.exports = Encapsed;
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2302,7 +2276,7 @@ var Empty = Sys.extends(function Empty(args, docs, location) {
 module.exports = Empty;
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2330,7 +2304,7 @@ var Echo = Sys.extends(function Echo(args, shortForm, docs, location) {
 module.exports = Echo;
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2360,7 +2334,7 @@ var Do = Statement.extends(function Do(test, body, docs, location) {
 module.exports = Do;
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2430,7 +2404,7 @@ Declare.MODE_NONE = "none";
 module.exports = Declare;
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2458,7 +2432,7 @@ var Continue = Node.extends(function Continue(level, docs, location) {
 module.exports = Continue;
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2486,7 +2460,7 @@ var ConstRef = Expr.extends(function ConstRef(identifier, docs, location) {
 module.exports = ConstRef;
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2512,7 +2486,7 @@ var CommentLine = Comment.extends(function CommentLine(value, docs, location) {
 module.exports = CommentLine;
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2538,7 +2512,7 @@ var CommentBlock = Comment.extends(function CommentBlock(value, docs, location) 
 module.exports = CommentBlock;
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2578,7 +2552,7 @@ var Closure = Statement.extends(function Closure(args, byref, uses, type, nullab
 module.exports = Closure;
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2606,7 +2580,7 @@ var Clone = Statement.extends(function Clone(what, docs, location) {
 module.exports = Clone;
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2636,7 +2610,7 @@ var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, 
 module.exports = ClassConstant;
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2673,7 +2647,7 @@ var Class = Declaration.extends(function Class(name, ext, impl, body, flags, doc
 module.exports = Class;
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2706,7 +2680,7 @@ var Catch = Statement.extends(function Catch(body, what, variable, docs, locatio
 module.exports = Catch;
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2725,18 +2699,20 @@ var KIND = "cast";
  * @constructor Cast
  * @extends {Operation}
  * @property {String} type
+ * @property {String} raw
  * @property {Expression} what
  */
-var Cast = Operation.extends(function Cast(type, what, docs, location) {
+var Cast = Operation.extends(function Cast(type, raw, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
+  this.raw = raw;
   this.what = what;
 });
 
 module.exports = Cast;
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2766,7 +2742,7 @@ var Case = Node.extends(function Case(test, body, docs, location) {
 module.exports = Case;
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2796,7 +2772,7 @@ var Call = Statement.extends(function Call(what, args, docs, location) {
 module.exports = Call;
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2824,7 +2800,7 @@ var Break = Node.extends(function Break(level, docs, location) {
 module.exports = Break;
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2850,7 +2826,7 @@ var Boolean = Literal.extends(function Boolean(value, raw, docs, location) {
 module.exports = Boolean;
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2881,7 +2857,7 @@ var Bin = Operation.extends(function Bin(type, left, right, docs, location) {
 module.exports = Bin;
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2913,7 +2889,7 @@ var Assign = Statement.extends(function Assign(left, right, operator, docs, loca
 module.exports = Assign;
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2961,7 +2937,7 @@ var Array = Expr.extends(function Array(shortForm, items, docs, location) {
 module.exports = Array;
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2989,7 +2965,7 @@ var Position = function Position(line, column, offset) {
 module.exports = Position;
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3017,7 +2993,7 @@ var Location = function Location(source, start, end) {
 module.exports = Location;
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3028,8 +3004,8 @@ module.exports = Location;
  */
 
 
-var Location = __webpack_require__(89);
-var Position = __webpack_require__(88);
+var Location = __webpack_require__(88);
+var Position = __webpack_require__(87);
 
 /**
  * ## Class hierarchy
@@ -3063,7 +3039,6 @@ var Position = __webpack_require__(88);
  *       - [Pre](#pre)
  *       - [Post](#post)
  *       - [Bin](#bin)
- *       - [Parenthesis](#parenthesis)
  *       - [Unary](#unary)
  *       - [Cast](#cast)
  *     - [Literal](#literal)
@@ -3168,7 +3143,7 @@ AST.prototype.resolvePrecedence = function (result) {
       rLevel = void 0;
   // handling precendence
   if (result.kind === "bin") {
-    if (result.right) {
+    if (result.right && !result.right.parenthesizedExpression) {
       if (result.right.kind === "bin") {
         lLevel = AST.precedence[result.type];
         rLevel = AST.precedence[result.right.type];
@@ -3193,7 +3168,7 @@ AST.prototype.resolvePrecedence = function (result) {
     }
   } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
-    if (result.what) {
+    if (result.what && !result.what.parenthesizedExpression) {
       // unary precedence is allways lower
       if (result.what.kind === "bin") {
         buffer = result.what;
@@ -3209,7 +3184,7 @@ AST.prototype.resolvePrecedence = function (result) {
     }
   } else if (result.kind === "retif") {
     // https://github.com/glayzzle/php-parser/issues/77
-    if (result.falseExpr && result.falseExpr.kind === "retif") {
+    if (result.falseExpr && result.falseExpr.kind === "retif" && !result.falseExpr.parenthesizedExpression) {
       buffer = result.falseExpr;
       result.falseExpr = buffer.test;
       buffer.test = this.resolvePrecedence(result);
@@ -3217,7 +3192,7 @@ AST.prototype.resolvePrecedence = function (result) {
     }
   } else if (result.kind === "assign") {
     // https://github.com/glayzzle/php-parser/issues/81
-    if (result.right && result.right.kind === "bin") {
+    if (result.right && result.right.kind === "bin" && !result.right.parenthesizedExpression) {
       lLevel = AST.precedence["="];
       rLevel = AST.precedence[result.right.type];
       // only shifts with and, xor, or
@@ -3287,7 +3262,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 };
 
 // Define all AST nodes
-[__webpack_require__(87), __webpack_require__(86), __webpack_require__(85), __webpack_require__(8), __webpack_require__(84), __webpack_require__(83), __webpack_require__(82), __webpack_require__(81), __webpack_require__(80), __webpack_require__(79), __webpack_require__(78), __webpack_require__(77), __webpack_require__(76), __webpack_require__(75), __webpack_require__(9), __webpack_require__(74), __webpack_require__(73), __webpack_require__(11), __webpack_require__(72), __webpack_require__(71), __webpack_require__(3), __webpack_require__(70), __webpack_require__(69), __webpack_require__(68), __webpack_require__(67), __webpack_require__(66), __webpack_require__(65), __webpack_require__(64), __webpack_require__(63), __webpack_require__(62), __webpack_require__(2), __webpack_require__(61), __webpack_require__(60), __webpack_require__(10), __webpack_require__(59), __webpack_require__(58), __webpack_require__(57), __webpack_require__(56), __webpack_require__(55), __webpack_require__(54), __webpack_require__(53), __webpack_require__(52), __webpack_require__(51), __webpack_require__(50), __webpack_require__(49), __webpack_require__(4), __webpack_require__(7), __webpack_require__(48), __webpack_require__(47), __webpack_require__(46), __webpack_require__(45), __webpack_require__(1), __webpack_require__(44), __webpack_require__(43), __webpack_require__(42), __webpack_require__(6), __webpack_require__(41), __webpack_require__(40), __webpack_require__(39), __webpack_require__(38), __webpack_require__(37), __webpack_require__(36), __webpack_require__(35), __webpack_require__(34), __webpack_require__(33), __webpack_require__(32), __webpack_require__(31), __webpack_require__(0), __webpack_require__(30), __webpack_require__(29), __webpack_require__(28), __webpack_require__(27), __webpack_require__(5), __webpack_require__(26), __webpack_require__(25), __webpack_require__(24), __webpack_require__(23), __webpack_require__(22), __webpack_require__(21), __webpack_require__(20), __webpack_require__(19), __webpack_require__(18), __webpack_require__(17), __webpack_require__(16), __webpack_require__(15), __webpack_require__(14), __webpack_require__(13), __webpack_require__(12)].forEach(function (ctor) {
+[__webpack_require__(86), __webpack_require__(85), __webpack_require__(84), __webpack_require__(8), __webpack_require__(83), __webpack_require__(82), __webpack_require__(81), __webpack_require__(80), __webpack_require__(79), __webpack_require__(78), __webpack_require__(77), __webpack_require__(76), __webpack_require__(75), __webpack_require__(74), __webpack_require__(9), __webpack_require__(73), __webpack_require__(72), __webpack_require__(11), __webpack_require__(71), __webpack_require__(70), __webpack_require__(3), __webpack_require__(69), __webpack_require__(68), __webpack_require__(67), __webpack_require__(66), __webpack_require__(65), __webpack_require__(64), __webpack_require__(63), __webpack_require__(62), __webpack_require__(61), __webpack_require__(2), __webpack_require__(60), __webpack_require__(59), __webpack_require__(10), __webpack_require__(58), __webpack_require__(57), __webpack_require__(56), __webpack_require__(55), __webpack_require__(54), __webpack_require__(53), __webpack_require__(52), __webpack_require__(51), __webpack_require__(50), __webpack_require__(49), __webpack_require__(48), __webpack_require__(4), __webpack_require__(7), __webpack_require__(47), __webpack_require__(46), __webpack_require__(45), __webpack_require__(44), __webpack_require__(1), __webpack_require__(43), __webpack_require__(42), __webpack_require__(41), __webpack_require__(6), __webpack_require__(40), __webpack_require__(39), __webpack_require__(38), __webpack_require__(37), __webpack_require__(36), __webpack_require__(35), __webpack_require__(34), __webpack_require__(33), __webpack_require__(32), __webpack_require__(31), __webpack_require__(0), __webpack_require__(30), __webpack_require__(29), __webpack_require__(28), __webpack_require__(27), __webpack_require__(5), __webpack_require__(26), __webpack_require__(25), __webpack_require__(24), __webpack_require__(23), __webpack_require__(22), __webpack_require__(21), __webpack_require__(20), __webpack_require__(19), __webpack_require__(18), __webpack_require__(17), __webpack_require__(16), __webpack_require__(15), __webpack_require__(14), __webpack_require__(13), __webpack_require__(12)].forEach(function (ctor) {
   var kind = ctor.prototype.constructor.name.toLowerCase();
   if (kind[0] === "_") kind = kind.substring(1);
   AST.prototype[kind] = ctor;
@@ -3296,7 +3271,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 module.exports = AST;
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3586,7 +3561,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3913,7 +3888,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4035,7 +4010,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4081,7 +4056,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4173,7 +4148,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4575,7 +4550,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4642,7 +4617,8 @@ module.exports = {
             }
             var isDoubleQuote = text[offset] === '"';
             this.next();
-            value = value(isDoubleQuote, this.resolve_special_chars(text.substring(offset + 1, text.length - 1), isDoubleQuote), text);
+            value = value(isDoubleQuote, this.resolve_special_chars(text.substring(offset + 1, text.length - 1), isDoubleQuote), offset === 1, // unicode flag
+            text);
             if (this.token === this.tok.T_DOUBLE_COLON) {
               // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
               return this.read_static_getter(value);
@@ -4761,7 +4737,7 @@ module.exports = {
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
       var text = this.text();
       this.next();
-      result = result("string", false, this.resolve_special_chars(text, isDoubleQuote), text);
+      result = result("string", false, this.resolve_special_chars(text, isDoubleQuote), false, text);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
@@ -4823,7 +4799,7 @@ module.exports = {
       var value = this.text();
       this.next();
       // consider it as string
-      result = result("string", false, value, value);
+      result = result("string", false, value, false, value);
     }
 
     return result;
@@ -4870,7 +4846,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5045,7 +5021,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5072,7 +5048,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5242,7 +5218,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5346,7 +5322,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5601,7 +5577,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5692,10 +5668,10 @@ module.exports = {
     }
 
     if (this.token === "(") {
-      var node = this.node("parenthesis");
       expr = this.next().read_expr();
+      expr.parenthesizedExpression = true;
       this.expect(")") && this.next();
-      return this.handleDereferencable(node(expr));
+      return this.handleDereferencable(expr);
     }
 
     if (this.token === "`") {
@@ -5808,25 +5784,25 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_INT_CAST:
-        return this.node("cast")("int", this.next().read_expr());
+        return this.node("cast")("int", this.text(), this.next().read_expr());
 
       case this.tok.T_DOUBLE_CAST:
-        return this.node("cast")("float", this.next().read_expr());
+        return this.node("cast")("float", this.text(), this.next().read_expr());
 
       case this.tok.T_STRING_CAST:
-        return this.node("cast")("string", this.next().read_expr());
+        return this.node("cast")(this.text().indexOf("binary") !== -1 ? "binary" : "string", this.text(), this.next().read_expr());
 
       case this.tok.T_ARRAY_CAST:
-        return this.node("cast")("array", this.next().read_expr());
+        return this.node("cast")("array", this.text(), this.next().read_expr());
 
       case this.tok.T_OBJECT_CAST:
-        return this.node("cast")("object", this.next().read_expr());
+        return this.node("cast")("object", this.text(), this.next().read_expr());
 
       case this.tok.T_BOOL_CAST:
-        return this.node("cast")("bool", this.next().read_expr());
+        return this.node("cast")("bool", this.text(), this.next().read_expr());
 
       case this.tok.T_UNSET_CAST:
-        return this.node("cast")("unset", this.next().read_expr());
+        return this.node("cast")("unset", this.text(), this.next().read_expr());
 
       case this.tok.T_EXIT:
         {
@@ -6068,7 +6044,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6110,7 +6086,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6555,7 +6531,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6658,7 +6634,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6987,7 +6963,7 @@ parser.prototype.is = function (type) {
 };
 
 // extends the parser with syntax files
-[__webpack_require__(106), __webpack_require__(105), __webpack_require__(104), __webpack_require__(103), __webpack_require__(102), __webpack_require__(101), __webpack_require__(100), __webpack_require__(99), __webpack_require__(98), __webpack_require__(97), __webpack_require__(96), __webpack_require__(95), __webpack_require__(94), __webpack_require__(93), __webpack_require__(92)].forEach(function (ext) {
+[__webpack_require__(105), __webpack_require__(104), __webpack_require__(103), __webpack_require__(102), __webpack_require__(101), __webpack_require__(100), __webpack_require__(99), __webpack_require__(98), __webpack_require__(97), __webpack_require__(96), __webpack_require__(95), __webpack_require__(94), __webpack_require__(93), __webpack_require__(92), __webpack_require__(91)].forEach(function (ext) {
   for (var k in ext) {
     parser.prototype[k] = ext[k];
   }
@@ -6996,7 +6972,7 @@ parser.prototype.is = function (type) {
 module.exports = parser;
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7074,7 +7050,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7351,7 +7327,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7759,7 +7735,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7865,7 +7841,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7953,7 +7929,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -8143,7 +8119,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8264,10 +8240,10 @@ module.exports = {
     return this.tok.T_LNUMBER;
   }
 };
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(113)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(112)))
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8330,7 +8306,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8391,7 +8367,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8818,7 +8794,7 @@ lexer.prototype.next = function () {
 };
 
 // extends the lexer with states
-[__webpack_require__(116), __webpack_require__(115), __webpack_require__(114), __webpack_require__(112), __webpack_require__(111), __webpack_require__(110), __webpack_require__(109), __webpack_require__(108)].forEach(function (ext) {
+[__webpack_require__(115), __webpack_require__(114), __webpack_require__(113), __webpack_require__(111), __webpack_require__(110), __webpack_require__(109), __webpack_require__(108), __webpack_require__(107)].forEach(function (ext) {
   for (var k in ext) {
     lexer.prototype[k] = ext[k];
   }
@@ -8827,7 +8803,7 @@ lexer.prototype.next = function () {
 module.exports = lexer;
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -8838,7 +8814,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -8928,7 +8904,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9086,7 +9062,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports) {
 
 var g;
@@ -9112,7 +9088,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9126,9 +9102,9 @@ module.exports = g;
 
 
 
-var base64 = __webpack_require__(120)
-var ieee754 = __webpack_require__(119)
-var isArray = __webpack_require__(118)
+var base64 = __webpack_require__(119)
+var ieee754 = __webpack_require__(118)
+var isArray = __webpack_require__(117)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -10906,10 +10882,10 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(121)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(120)))
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10922,10 +10898,10 @@ function isnan (val) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var lexer = __webpack_require__(117);
-var parser = __webpack_require__(107);
-var tokens = __webpack_require__(91);
-var AST = __webpack_require__(90);
+var lexer = __webpack_require__(116);
+var parser = __webpack_require__(106);
+var tokens = __webpack_require__(90);
+var AST = __webpack_require__(89);
 
 /**
  * @private
@@ -11131,7 +11107,7 @@ module.exports.combine = combine;
 
 // allow the default export in index.d.ts
 module.exports.default = engine;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(122).Buffer))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(121).Buffer))
 
 /***/ })
 /******/ ])["default"];
