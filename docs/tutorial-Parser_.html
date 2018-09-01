@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      Tutorial: Parser - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+      <li>
+        <div class="search-wrapper">
+          <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+
+          </svg>
+          <input type="text" placeholder="Search" class="search-input">
+        </div>
+      </li>
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      php-parser
+    </h3>
+
+    <h3>Classes</h3><ul><li id="Array-nav"><a href="Array.html">Array</a><ul class='methods'><li data-type="method" id="Array-includeToken-nav"><a href="Array.html#includeToken">includeToken</a></li></ul></li><li id="Assign-nav"><a href="Assign.html">Assign</a><ul class='methods'><li data-type="method" id="Assign-includeToken-nav"><a href="Assign.html#includeToken">includeToken</a></li></ul></li><li id="AST-nav"><a href="AST.html">AST</a><ul class='methods'><li data-type="method" id="AST-prepare-nav"><a href="AST.html#prepare">prepare</a></li><li data-type="method" id="AST-resolvePrecedence-nav"><a href="AST.html#resolvePrecedence">resolvePrecedence</a></li></ul></li><li id="Bin-nav"><a href="Bin.html">Bin</a><ul class='methods'><li data-type="method" id="Bin-includeToken-nav"><a href="Bin.html#includeToken">includeToken</a></li></ul></li><li id="Block-nav"><a href="Block.html">Block</a><ul class='methods'><li data-type="method" id="Block-includeToken-nav"><a href="Block.html#includeToken">includeToken</a></li></ul></li><li id="Boolean-nav"><a href="Boolean.html">Boolean</a><ul class='methods'><li data-type="method" id="Boolean-includeToken-nav"><a href="Boolean.html#includeToken">includeToken</a></li></ul></li><li id="Break-nav"><a href="Break.html">Break</a><ul class='methods'><li data-type="method" id="Break-includeToken-nav"><a href="Break.html#includeToken">includeToken</a></li></ul></li><li id="Call-nav"><a href="Call.html">Call</a><ul class='methods'><li data-type="method" id="Call-includeToken-nav"><a href="Call.html#includeToken">includeToken</a></li></ul></li><li id="Case-nav"><a href="Case.html">Case</a><ul class='methods'><li data-type="method" id="Case-includeToken-nav"><a href="Case.html#includeToken">includeToken</a></li></ul></li><li id="Cast-nav"><a href="Cast.html">Cast</a><ul class='methods'><li data-type="method" id="Cast-includeToken-nav"><a href="Cast.html#includeToken">includeToken</a></li></ul></li><li id="Catch-nav"><a href="Catch.html">Catch</a><ul class='methods'><li data-type="method" id="Catch-includeToken-nav"><a href="Catch.html#includeToken">includeToken</a></li></ul></li><li id="Class-nav"><a href="Class.html">Class</a><ul class='methods'><li data-type="method" id="Class-includeToken-nav"><a href="Class.html#includeToken">includeToken</a></li><li data-type="method" id="Class-parseFlags-nav"><a href="Class.html#parseFlags">parseFlags</a></li></ul></li><li id="ClassConstant-nav"><a href="ClassConstant.html">ClassConstant</a><ul class='methods'><li data-type="method" id="ClassConstant-includeToken-nav"><a href="ClassConstant.html#includeToken">includeToken</a></li><li data-type="method" id="ClassConstant-parseFlags-nav"><a href="ClassConstant.html#parseFlags">parseFlags</a></li></ul></li><li id="Clone-nav"><a href="Clone.html">Clone</a><ul class='methods'><li data-type="method" id="Clone-includeToken-nav"><a href="Clone.html#includeToken">includeToken</a></li></ul></li><li id="Closure-nav"><a href="Closure.html">Closure</a><ul class='methods'><li data-type="method" id="Closure-includeToken-nav"><a href="Closure.html#includeToken">includeToken</a></li></ul></li><li id="Comment-nav"><a href="Comment.html">Comment</a><ul class='methods'><li data-type="method" id="Comment-includeToken-nav"><a href="Comment.html#includeToken">includeToken</a></li></ul></li><li id="CommentBlock-nav"><a href="CommentBlock.html">CommentBlock</a><ul class='methods'><li data-type="method" id="CommentBlock-includeToken-nav"><a href="CommentBlock.html#includeToken">includeToken</a></li></ul></li><li id="CommentLine-nav"><a href="CommentLine.html">CommentLine</a><ul class='methods'><li data-type="method" id="CommentLine-includeToken-nav"><a href="CommentLine.html#includeToken">includeToken</a></li></ul></li><li id="Constant-nav"><a href="Constant.html">Constant</a><ul class='methods'><li data-type="method" id="Constant-includeToken-nav"><a href="Constant.html#includeToken">includeToken</a></li><li data-type="method" id="Constant-parseFlags-nav"><a href="Constant.html#parseFlags">parseFlags</a></li></ul></li><li id="ConstRef-nav"><a href="ConstRef.html">ConstRef</a><ul class='methods'><li data-type="method" id="ConstRef-includeToken-nav"><a href="ConstRef.html#includeToken">includeToken</a></li></ul></li><li id="Continue-nav"><a href="Continue.html">Continue</a><ul class='methods'><li data-type="method" id="Continue-includeToken-nav"><a href="Continue.html#includeToken">includeToken</a></li></ul></li><li id="Declaration-nav"><a href="Declaration.html">Declaration</a><ul class='methods'><li data-type="method" id="Declaration-includeToken-nav"><a href="Declaration.html#includeToken">includeToken</a></li><li data-type="method" id="Declaration-parseFlags-nav"><a href="Declaration.html#parseFlags">parseFlags</a></li></ul></li><li id="Declare-nav"><a href="Declare.html">Declare</a><ul class='methods'><li data-type="method" id="Declare-includeToken-nav"><a href="Declare.html#includeToken">includeToken</a></li></ul></li><li id="Do-nav"><a href="Do.html">Do</a><ul class='methods'><li data-type="method" id="Do-includeToken-nav"><a href="Do.html#includeToken">includeToken</a></li></ul></li><li id="Echo-nav"><a href="Echo.html">Echo</a><ul class='methods'><li data-type="method" id="Echo-includeToken-nav"><a href="Echo.html#includeToken">includeToken</a></li></ul></li><li id="Empty-nav"><a href="Empty.html">Empty</a><ul class='methods'><li data-type="method" id="Empty-includeToken-nav"><a href="Empty.html#includeToken">includeToken</a></li></ul></li><li id="Encapsed-nav"><a href="Encapsed.html">Encapsed</a><ul class='methods'><li data-type="method" id="Encapsed-includeToken-nav"><a href="Encapsed.html#includeToken">includeToken</a></li></ul></li><li id="engine-nav"><a href="engine.html">engine</a><ul class='methods'><li data-type="method" id="engine-parseCode-nav"><a href="engine.html#parseCode">parseCode</a></li><li data-type="method" id="engine-parseEval-nav"><a href="engine.html#parseEval">parseEval</a></li><li data-type="method" id="engine-tokenGetAll-nav"><a href="engine.html#tokenGetAll">tokenGetAll</a></li></ul></li><li id="Entry-nav"><a href="Entry.html">Entry</a><ul class='methods'><li data-type="method" id="Entry-includeToken-nav"><a href="Entry.html#includeToken">includeToken</a></li></ul></li><li id="Error-nav"><a href="Error.html">Error</a><ul class='methods'><li data-type="method" id="Error-includeToken-nav"><a href="Error.html#includeToken">includeToken</a></li></ul></li><li id="Eval-nav"><a href="Eval.html">Eval</a><ul class='methods'><li data-type="method" id="Eval-includeToken-nav"><a href="Eval.html#includeToken">includeToken</a></li></ul></li><li id="Exit-nav"><a href="Exit.html">Exit</a><ul class='methods'><li data-type="method" id="Exit-includeToken-nav"><a href="Exit.html#includeToken">includeToken</a></li></ul></li><li id="Expression-nav"><a href="Expression.html">Expression</a><ul class='methods'><li data-type="method" id="Expression-includeToken-nav"><a href="Expression.html#includeToken">includeToken</a></li></ul></li><li id="For-nav"><a href="For.html">For</a><ul class='methods'><li data-type="method" id="For-includeToken-nav"><a href="For.html#includeToken">includeToken</a></li></ul></li><li id="Foreach-nav"><a href="Foreach.html">Foreach</a><ul class='methods'><li data-type="method" id="Foreach-includeToken-nav"><a href="Foreach.html#includeToken">includeToken</a></li></ul></li><li id="Function-nav"><a href="Function.html">Function</a><ul class='methods'><li data-type="method" id="Function-includeToken-nav"><a href="Function.html#includeToken">includeToken</a></li><li data-type="method" id="Function-parseFlags-nav"><a href="Function.html#parseFlags">parseFlags</a></li></ul></li><li id="Global-nav"><a href="Global_.html">Global</a><ul class='methods'><li data-type="method" id="Global-includeToken-nav"><a href="Global_.html#includeToken">includeToken</a></li></ul></li><li id="Goto-nav"><a href="Goto.html">Goto</a><ul class='methods'><li data-type="method" id="Goto-includeToken-nav"><a href="Goto.html#includeToken">includeToken</a></li></ul></li><li id="Halt-nav"><a href="Halt.html">Halt</a><ul class='methods'><li data-type="method" id="Halt-includeToken-nav"><a href="Halt.html#includeToken">includeToken</a></li></ul></li><li id="Identifier-nav"><a href="Identifier.html">Identifier</a><ul class='methods'><li data-type="method" id="Identifier-includeToken-nav"><a href="Identifier.html#includeToken">includeToken</a></li></ul></li><li id="If-nav"><a href="If.html">If</a><ul class='methods'><li data-type="method" id="If-includeToken-nav"><a href="If.html#includeToken">includeToken</a></li></ul></li><li id="Include-nav"><a href="Include.html">Include</a><ul class='methods'><li data-type="method" id="Include-includeToken-nav"><a href="Include.html#includeToken">includeToken</a></li></ul></li><li id="Inline-nav"><a href="Inline.html">Inline</a><ul class='methods'><li data-type="method" id="Inline-includeToken-nav"><a href="Inline.html#includeToken">includeToken</a></li></ul></li><li id="Interface-nav"><a href="Interface.html">Interface</a><ul class='methods'><li data-type="method" id="Interface-includeToken-nav"><a href="Interface.html#includeToken">includeToken</a></li><li data-type="method" id="Interface-parseFlags-nav"><a href="Interface.html#parseFlags">parseFlags</a></li></ul></li><li id="Isset-nav"><a href="Isset.html">Isset</a><ul class='methods'><li data-type="method" id="Isset-includeToken-nav"><a href="Isset.html#includeToken">includeToken</a></li></ul></li><li id="Label-nav"><a href="Label.html">Label</a><ul class='methods'><li data-type="method" id="Label-includeToken-nav"><a href="Label.html#includeToken">includeToken</a></li></ul></li><li id="lexer-nav"><a href="lexer.html">lexer</a><ul class='methods'><li data-type="method" id="lexer-getState-nav"><a href="lexer.html#getState">getState</a></li><li data-type="method" id="lexer-input-nav"><a href="lexer.html#input">input</a></li><li data-type="method" id="lexer-setInput-nav"><a href="lexer.html#setInput">setInput</a></li><li data-type="method" id="lexer-setState-nav"><a href="lexer.html#setState">setState</a></li><li data-type="method" id="lexer-unput-nav"><a href="lexer.html#unput">unput</a></li></ul></li><li id="List-nav"><a href="List.html">List</a><ul class='methods'><li data-type="method" id="List-includeToken-nav"><a href="List.html#includeToken">includeToken</a></li></ul></li><li id="Literal-nav"><a href="Literal.html">Literal</a><ul class='methods'><li data-type="method" id="Literal-includeToken-nav"><a href="Literal.html#includeToken">includeToken</a></li></ul></li><li id="Location-nav"><a href="Location.html">Location</a></li><li id="Lookup-nav"><a href="Lookup.html">Lookup</a><ul class='methods'><li data-type="method" id="Lookup-includeToken-nav"><a href="Lookup.html#includeToken">includeToken</a></li></ul></li><li id="Magic-nav"><a href="Magic.html">Magic</a><ul class='methods'><li data-type="method" id="Magic-includeToken-nav"><a href="Magic.html#includeToken">includeToken</a></li></ul></li><li id="Method-nav"><a href="Method.html">Method</a><ul class='methods'><li data-type="method" id="Method-includeToken-nav"><a href="Method.html#includeToken">includeToken</a></li><li data-type="method" id="Method-parseFlags-nav"><a href="Method.html#parseFlags">parseFlags</a></li></ul></li><li id="Namespace-nav"><a href="Namespace.html">Namespace</a><ul class='methods'><li data-type="method" id="Namespace-includeToken-nav"><a href="Namespace.html#includeToken">includeToken</a></li></ul></li><li id="New-nav"><a href="New.html">New</a><ul class='methods'><li data-type="method" id="New-includeToken-nav"><a href="New.html#includeToken">includeToken</a></li></ul></li><li id="Node-nav"><a href="Node.html">Node</a><ul class='methods'><li data-type="method" id="Node-extends-nav"><a href="Node.html#.extends">extends</a></li><li data-type="method" id="Node-includeToken-nav"><a href="Node.html#includeToken">includeToken</a></li></ul></li><li id="Number-nav"><a href="Number.html">Number</a><ul class='methods'><li data-type="method" id="Number-includeToken-nav"><a href="Number.html#includeToken">includeToken</a></li></ul></li><li id="OffsetLookup-nav"><a href="OffsetLookup.html">OffsetLookup</a><ul class='methods'><li data-type="method" id="OffsetLookup-includeToken-nav"><a href="OffsetLookup.html#includeToken">includeToken</a></li></ul></li><li id="Operation-nav"><a href="Operation.html">Operation</a><ul class='methods'><li data-type="method" id="Operation-includeToken-nav"><a href="Operation.html#includeToken">includeToken</a></li></ul></li><li id="Parameter-nav"><a href="Parameter.html">Parameter</a><ul class='methods'><li data-type="method" id="Parameter-includeToken-nav"><a href="Parameter.html#includeToken">includeToken</a></li><li data-type="method" id="Parameter-parseFlags-nav"><a href="Parameter.html#parseFlags">parseFlags</a></li></ul></li><li id="parser-nav"><a href="parser.html">parser</a><ul class='methods'><li data-type="method" id="parser-error-nav"><a href="parser.html#error">error</a></li><li data-type="method" id="parser-expect-nav"><a href="parser.html#expect">expect</a></li><li data-type="method" id="parser-expectEndOfStatement-nav"><a href="parser.html#expectEndOfStatement">expectEndOfStatement</a></li><li data-type="method" id="parser-getTokenName-nav"><a href="parser.html#getTokenName">getTokenName</a></li><li data-type="method" id="parser-is-nav"><a href="parser.html#is">is</a></li><li data-type="method" id="parser-lex-nav"><a href="parser.html#lex">lex</a></li><li data-type="method" id="parser-next-nav"><a href="parser.html#next">next</a></li><li data-type="method" id="parser-node-nav"><a href="parser.html#node">node</a></li><li data-type="method" id="parser-parse-nav"><a href="parser.html#parse">parse</a></li><li data-type="method" id="parser-raiseError-nav"><a href="parser.html#raiseError">raiseError</a></li><li data-type="method" id="parser-text-nav"><a href="parser.html#text">text</a></li></ul></li><li id="Position-nav"><a href="Position.html">Position</a></li><li id="Post-nav"><a href="Post.html">Post</a><ul class='methods'><li data-type="method" id="Post-includeToken-nav"><a href="Post.html#includeToken">includeToken</a></li></ul></li><li id="Pre-nav"><a href="Pre.html">Pre</a><ul class='methods'><li data-type="method" id="Pre-includeToken-nav"><a href="Pre.html#includeToken">includeToken</a></li></ul></li><li id="Print-nav"><a href="Print.html">Print</a><ul class='methods'><li data-type="method" id="Print-includeToken-nav"><a href="Print.html#includeToken">includeToken</a></li></ul></li><li id="Program-nav"><a href="Program.html">Program</a><ul class='methods'><li data-type="method" id="Program-includeToken-nav"><a href="Program.html#includeToken">includeToken</a></li></ul></li><li id="Property-nav"><a href="Property.html">Property</a><ul class='methods'><li data-type="method" id="Property-includeToken-nav"><a href="Property.html#includeToken">includeToken</a></li><li data-type="method" id="Property-parseFlags-nav"><a href="Property.html#parseFlags">parseFlags</a></li></ul></li><li id="PropertyLookup-nav"><a href="PropertyLookup.html">PropertyLookup</a><ul class='methods'><li data-type="method" id="PropertyLookup-includeToken-nav"><a href="PropertyLookup.html#includeToken">includeToken</a></li></ul></li><li id="RetIf-nav"><a href="RetIf.html">RetIf</a><ul class='methods'><li data-type="method" id="RetIf-includeToken-nav"><a href="RetIf.html#includeToken">includeToken</a></li></ul></li><li id="Return-nav"><a href="Return.html">Return</a><ul class='methods'><li data-type="method" id="Return-includeToken-nav"><a href="Return.html#includeToken">includeToken</a></li></ul></li><li id="Silent-nav"><a href="Silent.html">Silent</a><ul class='methods'><li data-type="method" id="Silent-includeToken-nav"><a href="Silent.html#includeToken">includeToken</a></li></ul></li><li id="Statement-nav"><a href="Statement.html">Statement</a><ul class='methods'><li data-type="method" id="Statement-includeToken-nav"><a href="Statement.html#includeToken">includeToken</a></li></ul></li><li id="Static-nav"><a href="Static.html">Static</a><ul class='methods'><li data-type="method" id="Static-includeToken-nav"><a href="Static.html#includeToken">includeToken</a></li></ul></li><li id="StaticLookup-nav"><a href="StaticLookup.html">StaticLookup</a><ul class='methods'><li data-type="method" id="StaticLookup-includeToken-nav"><a href="StaticLookup.html#includeToken">includeToken</a></li></ul></li><li id="String-nav"><a href="String.html">String</a><ul class='methods'><li data-type="method" id="String-includeToken-nav"><a href="String.html#includeToken">includeToken</a></li></ul></li><li id="Switch-nav"><a href="Switch.html">Switch</a><ul class='methods'><li data-type="method" id="Switch-includeToken-nav"><a href="Switch.html#includeToken">includeToken</a></li></ul></li><li id="Sys-nav"><a href="Sys.html">Sys</a><ul class='methods'><li data-type="method" id="Sys-includeToken-nav"><a href="Sys.html#includeToken">includeToken</a></li></ul></li><li id="Throw-nav"><a href="Throw.html">Throw</a><ul class='methods'><li data-type="method" id="Throw-includeToken-nav"><a href="Throw.html#includeToken">includeToken</a></li></ul></li><li id="Trait-nav"><a href="Trait.html">Trait</a><ul class='methods'><li data-type="method" id="Trait-includeToken-nav"><a href="Trait.html#includeToken">includeToken</a></li><li data-type="method" id="Trait-parseFlags-nav"><a href="Trait.html#parseFlags">parseFlags</a></li></ul></li><li id="TraitAlias-nav"><a href="TraitAlias.html">TraitAlias</a><ul class='methods'><li data-type="method" id="TraitAlias-includeToken-nav"><a href="TraitAlias.html#includeToken">includeToken</a></li></ul></li><li id="TraitPrecedence-nav"><a href="TraitPrecedence.html">TraitPrecedence</a><ul class='methods'><li data-type="method" id="TraitPrecedence-includeToken-nav"><a href="TraitPrecedence.html#includeToken">includeToken</a></li></ul></li><li id="TraitUse-nav"><a href="TraitUse.html">TraitUse</a><ul class='methods'><li data-type="method" id="TraitUse-includeToken-nav"><a href="TraitUse.html#includeToken">includeToken</a></li></ul></li><li id="Try-nav"><a href="Try.html">Try</a><ul class='methods'><li data-type="method" id="Try-includeToken-nav"><a href="Try.html#includeToken">includeToken</a></li></ul></li><li id="Unary-nav"><a href="Unary.html">Unary</a><ul class='methods'><li data-type="method" id="Unary-includeToken-nav"><a href="Unary.html#includeToken">includeToken</a></li></ul></li><li id="Unset-nav"><a href="Unset.html">Unset</a><ul class='methods'><li data-type="method" id="Unset-includeToken-nav"><a href="Unset.html#includeToken">includeToken</a></li></ul></li><li id="UseGroup-nav"><a href="UseGroup.html">UseGroup</a><ul class='methods'><li data-type="method" id="UseGroup-includeToken-nav"><a href="UseGroup.html#includeToken">includeToken</a></li></ul></li><li id="UseItem-nav"><a href="UseItem.html">UseItem</a><ul class='methods'><li data-type="method" id="UseItem-includeToken-nav"><a href="UseItem.html#includeToken">includeToken</a></li></ul></li><li id="Variable-nav"><a href="Variable.html">Variable</a><ul class='methods'><li data-type="method" id="Variable-includeToken-nav"><a href="Variable.html#includeToken">includeToken</a></li></ul></li><li id="variadic-nav"><a href="variadic.html">variadic</a><ul class='methods'><li data-type="method" id="variadic-includeToken-nav"><a href="variadic.html#includeToken">includeToken</a></li></ul></li><li id="While-nav"><a href="While.html">While</a><ul class='methods'><li data-type="method" id="While-includeToken-nav"><a href="While.html#includeToken">includeToken</a></li></ul></li><li id="Yield-nav"><a href="Yield.html">Yield</a><ul class='methods'><li data-type="method" id="Yield-includeToken-nav"><a href="Yield.html#includeToken">includeToken</a></li></ul></li><li id="YieldFrom-nav"><a href="YieldFrom.html">YieldFrom</a><ul class='methods'><li data-type="method" id="YieldFrom-includeToken-nav"><a href="YieldFrom.html#includeToken">includeToken</a></li></ul></li></ul><h3 id="global-nav">Global</h3><ul><li><a href="global.html#FULL_QUALIFIED_NAME">FULL_QUALIFIED_NAME</a></li><li><a href="global.html#getStringBuffer">getStringBuffer</a></li><li><a href="global.html#ignoreStack">ignoreStack</a></li><li><a href="global.html#MODE_BLOCK">MODE_BLOCK</a></li><li><a href="global.html#MODE_NONE">MODE_NONE</a></li><li><a href="global.html#MODE_SHORT">MODE_SHORT</a></li><li><a href="global.html#QUALIFIED_NAME">QUALIFIED_NAME</a></li><li><a href="global.html#RELATIVE_NAME">RELATIVE_NAME</a></li><li><a href="global.html#TYPE_CONST">TYPE_CONST</a></li><li><a href="global.html#TYPE_FUNC">TYPE_FUNC</a></li><li><a href="global.html#TYPE_HEREDOC">TYPE_HEREDOC</a></li><li><a href="global.html#TYPE_OFFSET">TYPE_OFFSET</a></li><li><a href="global.html#TYPE_SHELL">TYPE_SHELL</a></li><li><a href="global.html#TYPE_STRING">TYPE_STRING</a></li><li><a href="global.html#UNQUALIFIED_NAME">UNQUALIFIED_NAME</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        Tutorial: Parser
+      </h1>
+    
+
+    <section>
+  <header>
+    
+
+    <h2>
+      Parser
+    </h2>
+  </header>
+
+  <article>
+    <p>The PHP Parser class that build the AST tree from the lexer</p>
+<p>Type: Parser</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>lexer</code></li>
+<li><code>ast</code></li>
+</ul>
+<p><strong>Properties</strong></p>
+<ul>
+<li><code>lexer</code> <strong>Lexer</strong> current lexer instance</li>
+<li><code>ast</code> <strong>AST</strong> the AST factory instance</li>
+<li><code>token</code> <strong>(Integer | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong> current token</li>
+<li><code>extractDoc</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> should extract documentation as AST node</li>
+<li><code>extractTokens</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> should extract each token</li>
+<li><code>suppressErrors</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> should ignore parsing errors and continue</li>
+<li><code>debug</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> should output debug informations</li>
+</ul>
+<h3 id="gettokenname">getTokenName</h3>
+<p>helper : gets a token name</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>token</code></li>
+</ul>
+<h3 id="parse">parse</h3>
+<p>main entry point : converts a source code to AST</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>code</code></li>
+<li><code>filename</code></li>
+</ul>
+<h3 id="raiseerror">raiseError</h3>
+<p>Raise an error</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>message</code></li>
+<li><code>msgExpect</code></li>
+<li><code>expect</code></li>
+<li><code>token</code></li>
+</ul>
+<h3 id="error">error</h3>
+<p>handling errors</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>expect</code></li>
+</ul>
+<h3 id="node">node</h3>
+<p>Creates a new AST node</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>name</code></li>
+</ul>
+<h3 id="expectendofstatement">expectEndOfStatement</h3>
+<p>expects an end of statement or end of file</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h3 id="expect">expect</h3>
+<p>Force the parser to check the current token.</p>
+<p>If the current token does not match to expected token,
+the an error will be raised.</p>
+<p>If the suppressError mode is activated, then the error will
+be added to the program error stack and this function will return <code>false</code>.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><p><code>token</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong></p>
+</li>
+<li><p>Throws <strong>any</strong> Error</p>
+</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h3 id="text">text</h3>
+<p>Returns the current token contents</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h3 id="next">next</h3>
+<p>consume the next token *</p>
+<h3 id="lex">lex</h3>
+<p>Eating a token</p>
+<h3 id="is">is</h3>
+<p>Check if token is of specified type</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>type</code></li>
+</ul>
+<h2 id="ignorestack">ignoreStack</h2>
+<p>outputs some debug information on current token *</p>
+<h2 id="read_array">read_array</h2>
+<p>Parse an array</p>
+<pre class="prettyprint source lang-ebnf"><code>array ::= T_ARRAY '(' array_pair_list ')' |
+  '[' array_pair_list ']'</code></pre><h2 id="read_array_pair_list">read_array_pair_list</h2>
+<p>Reads an array entry item</p>
+<pre class="prettyprint source lang-ebnf"><code>array_pair_list ::= '&' w_variable |
+ (
+   expr (
+     T_DOUBLE_ARROW (
+       expr | '&' w_variable
+     )
+   )?
+ )</code></pre><h2 id="read_dim_offset">read_dim_offset</h2>
+<pre class="prettyprint source lang-ebnf"><code> dim_offset ::= expr?</code></pre><h2 id="read_class">read_class</h2>
+<p>reading a class</p>
+<pre class="prettyprint source lang-ebnf"><code>class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'</code></pre><h2 id="read_class_scope">read_class_scope</h2>
+<p>Read the class visibility</p>
+<pre class="prettyprint source lang-ebnf"><code>  class_scope ::= (T_FINAL | T_ABSTRACT)?</code></pre><h2 id="read_class_body">read_class_body</h2>
+<p>Reads a class body</p>
+<pre class="prettyprint source lang-ebnf"><code>  class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*</code></pre><h2 id="read_variable_list">read_variable_list</h2>
+<p>Reads variable list</p>
+<pre class="prettyprint source lang-ebnf"><code> variable_list ::= (variable_declaration ',')* variable_declaration</code></pre><h2 id="read_constant_list">read_constant_list</h2>
+<p>Reads constant list</p>
+<pre class="prettyprint source lang-ebnf"><code> constant_list ::= T_CONST (constant_declaration ',')* constant_declaration</code></pre><h2 id="read_member_flags">read_member_flags</h2>
+<p>Read member flags</p>
+<p>Returns <strong>any</strong> array
+1st index : 0 =&gt; public, 1 =&gt; protected, 2 =&gt; private
+2nd index : 0 =&gt; instance member, 1 =&gt; static member
+3rd index : 0 =&gt; normal, 1 =&gt; abstract member, 2 =&gt; final member</p>
+<h2 id="read_interface">read_interface</h2>
+<p>reading an interface</p>
+<pre class="prettyprint source lang-ebnf"><code>interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'</code></pre><h2 id="read_interface_body">read_interface_body</h2>
+<p>Reads an interface body</p>
+<pre class="prettyprint source lang-ebnf"><code>  interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*</code></pre><h2 id="read_trait">read_trait</h2>
+<p>reading a trait</p>
+<pre class="prettyprint source lang-ebnf"><code>trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'</code></pre><h2 id="read_trait_use_statement">read_trait_use_statement</h2>
+<p>reading a use statement</p>
+<pre class="prettyprint source lang-ebnf"><code>trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?</code></pre><h2 id="read_trait_use_alias">read_trait_use_alias</h2>
+<p>Reading trait alias</p>
+<pre class="prettyprint source lang-ebnf"><code>trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)</code></pre><p>name list : <a href="https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303">https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303</a>
+trait adaptation : <a href="https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742">https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742</a></p>
+<h2 id="read_variable_declaration">read_variable_declaration</h2>
+<p>Reads a variable declaration</p>
+<pre class="prettyprint source lang-ebnf"><code> variable_declaration ::= T_VARIABLE '=' scalar</code></pre><h2 id="read_constant_declaration">read_constant_declaration</h2>
+<p>Reads a constant declaration</p>
+<pre class="prettyprint source lang-ebnf"><code> constant_declaration ::= (T_STRING | IDENTIFIER) '=' expr</code></pre><p>Returns <strong>Constant</strong> <a href="AST.md#constant">:link:</a></p>
+<h2 id="read_comment">read_comment</h2>
+<p>Comments with // or # or / _ ... _ /</p>
+<h2 id="read_doc_comment">read_doc_comment</h2>
+<p>Comments with / *_ ... _ /</p>
+<h2 id="read_expr_item">read_expr_item</h2>
+<pre class="prettyprint source lang-ebnf"><code>Reads an expression
+ expr ::= @todo</code></pre><h2 id="read_new_expr">read_new_expr</h2>
+<pre class="prettyprint source lang-ebnf"><code>   new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)</code></pre><p><a href="https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850">https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850</a></p>
+<h2 id="read_class_name_reference">read_class_name_reference</h2>
+<p>Reads a class name</p>
+<pre class="prettyprint source lang-ebnf"><code>class_name_reference ::= namespace_name | variable</code></pre><h2 id="read_assignment_list">read_assignment_list</h2>
+<pre class="prettyprint source lang-ebnf"><code>  assignment_list ::= assignment_list_element (',' assignment_list_element?)*</code></pre><h2 id="read_assignment_list_element">read_assignment_list_element</h2>
+<pre class="prettyprint source lang-ebnf"><code> assignment_list_element ::= expr | expr T_DOUBLE_ARROW expr</code></pre><h2 id="is_reference">is_reference</h2>
+<p>checks if current token is a reference keyword</p>
+<h2 id="is_variadic">is_variadic</h2>
+<p>checks if current token is a variadic keyword</p>
+<h2 id="read_function">read_function</h2>
+<p>reading a function</p>
+<pre class="prettyprint source lang-ebnf"><code>function ::= function_declaration code_block</code></pre><h2 id="read_function_declaration">read_function_declaration</h2>
+<p>reads a function declaration (without his body)</p>
+<pre class="prettyprint source lang-ebnf"><code>function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'</code></pre><h2 id="read_lexical_var">read_lexical_var</h2>
+<pre class="prettyprint source lang-ebnf"><code>lexical_var ::= '&'? T_VARIABLE</code></pre><h2 id="read_parameter_list">read_parameter_list</h2>
+<p>reads a list of parameters</p>
+<pre class="prettyprint source lang-ebnf"><code> parameter_list ::= (parameter ',')* parameter?</code></pre><h2 id="read_parameter">read_parameter</h2>
+<pre class="prettyprint source lang-ebnf"><code> parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?</code></pre><h2 id="read_function_argument_list">read_function_argument_list</h2>
+<p>Reads a list of arguments</p>
+<pre class="prettyprint source lang-ebnf"><code> function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'</code></pre><h2 id="read_argument_list">read_argument_list</h2>
+<pre class="prettyprint source lang-ebnf"><code>   argument_list ::= T_ELLIPSIS? expr</code></pre><h2 id="read_type">read_type</h2>
+<p>read type hinting</p>
+<pre class="prettyprint source lang-ebnf"><code> type ::= T_ARRAY | T_CALLABLE | namespace_name</code></pre><h2 id="read_if">read_if</h2>
+<p>Reads an IF statement</p>
+<pre class="prettyprint source lang-ebnf"><code> if ::= T_IF '(' expr ')' ':' ...</code></pre><h2 id="read_if_expr">read_if_expr</h2>
+<p>reads an if expression : '(' expr ')'</p>
+<h2 id="read_elseif_short">read_elseif_short</h2>
+<p>reads an elseif (expr): statements</p>
+<h2 id="read_else_short">read_else_short</h2>
+<h2 id="read_while">read_while</h2>
+<p>Reads a while statement</p>
+<pre class="prettyprint source lang-ebnf"><code>while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')</code></pre><p>Returns <strong>While</strong></p>
+<h2 id="read_do">read_do</h2>
+<p>Reads a do / while loop</p>
+<pre class="prettyprint source lang-ebnf"><code>do ::= T_DO statement T_WHILE '(' expr ')' ';'</code></pre><p>Returns <strong>Do</strong></p>
+<h2 id="read_for">read_for</h2>
+<p>Read a for incremental loop</p>
+<pre class="prettyprint source lang-ebnf"><code>for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
+for_statement ::= statement | ':' inner_statement_list T_ENDFOR ';'
+for_exprs ::= expr? (',' expr)*</code></pre><p>Returns <strong>For</strong></p>
+<h2 id="read_foreach">read_foreach</h2>
+<p>Reads a foreach loop</p>
+<pre class="prettyprint source lang-ebnf"><code>foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement</code></pre><p>Returns <strong>Foreach</strong></p>
+<h2 id="read_foreach_variable">read_foreach_variable</h2>
+<p>Reads a foreach variable statement</p>
+<pre class="prettyprint source lang-ebnf"><code>foreach_variable = variable |
+ T_LIST '(' assignment_list ')' |
+ '[' array_pair_list ']'</code></pre><p>Returns <strong>Expression</strong></p>
+<h2 id="read_start">read_start</h2>
+<pre class="prettyprint source lang-ebnf"><code>start ::= (namespace | top_statement)*</code></pre><h2 id="read_namespace">read_namespace</h2>
+<p>Reads a namespace declaration block</p>
+<pre class="prettyprint source lang-ebnf"><code>namespace ::= T_NAMESPACE namespace_name? '{'
+   top_statements
+'}'
+| T_NAMESPACE namespace_name ';' top_statements</code></pre><p>Returns <strong>Namespace</strong></p>
+<h2 id="read_namespace_name">read_namespace_name</h2>
+<p>Reads a namespace name</p>
+<pre class="prettyprint source lang-ebnf"><code> namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING</code></pre><p>Returns <strong>Identifier</strong></p>
+<h2 id="read_use_statement">read_use_statement</h2>
+<p>Reads a use statement</p>
+<pre class="prettyprint source lang-ebnf"><code>use_statement ::= T_USE
+  use_type? use_declarations |
+  use_type use_statement '{' use_declarations '}' |
+  use_statement '{' use_declarations(=>typed) '}'
+';'</code></pre><p>Returns <strong>UseGroup</strong></p>
+<h2 id="read_use_declaration">read_use_declaration</h2>
+<p>Reads a use declaration</p>
+<pre class="prettyprint source lang-ebnf"><code>use_declaration ::= use_type? namespace_name use_alias</code></pre><p>Returns <strong>UseItem</strong></p>
+<h2 id="read_use_declarations">read_use_declarations</h2>
+<p>Reads a list of use declarations</p>
+<pre class="prettyprint source lang-ebnf"><code>use_declarations ::= use_declaration (',' use_declaration)*</code></pre><p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;UseItem&gt;</strong></p>
+<h2 id="read_use_alias">read_use_alias</h2>
+<p>Reads a use statement</p>
+<pre class="prettyprint source lang-ebnf"><code>use_alias ::= (T_AS T_STRING)?</code></pre><p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | null)</strong></p>
+<h2 id="read_use_type">read_use_type</h2>
+<p>Reads the namespace type declaration</p>
+<pre class="prettyprint source lang-ebnf"><code>use_type ::= (T_FUNCTION | T_CONST)?</code></pre><p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | null)</strong> Possible values : function, const</p>
+<h2 id="resolve_special_chars">resolve_special_chars</h2>
+<p>Unescape special chars</p>
+<h2 id="read_scalar">read_scalar</h2>
+<pre class="prettyprint source lang-ebnf"><code> scalar ::= T_MAGIC_CONST
+      | T_LNUMBER | T_DNUMBER
+      | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
+      | '&quot;' encaps_list '&quot;'
+      | T_START_HEREDOC encaps_list T_END_HEREDOC
+      | namespace_name (T_DOUBLE_COLON T_STRING)?</code></pre><h2 id="read_dereferencable">read_dereferencable</h2>
+<p>Handles the dereferencing</p>
+<h2 id="read_encapsed_string_item">read_encapsed_string_item</h2>
+<p>Reads and extracts an encapsed item</p>
+<pre class="prettyprint source lang-ebnf"><code>encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
+ | T_DOLLAR_OPEN_CURLY_BRACES expr '}'
+ | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '}'
+ | T_DOLLAR_OPEN_CURLY_BRACES T_STRING_VARNAME '[' expr ']' '}'
+ | T_CURLY_OPEN variable '}'
+ | variable
+ | variable '[' expr ']'
+ | variable T_OBJECT_OPERATOR T_STRING</code></pre><p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | Variable | Expr | Lookup)</strong></p>
+<h2 id="read_encapsed_string">read_encapsed_string</h2>
+<p>Reads an encapsed string</p>
+<h2 id="get_magic_constant">get_magic_constant</h2>
+<p>Constant token</p>
+<h2 id="read_top_statements">read_top_statements</h2>
+<p>reading a list of top statements (helper for top_statement*)</p>
+<pre class="prettyprint source lang-ebnf"><code> top_statements ::= top_statement*</code></pre><h2 id="read_top_statement">read_top_statement</h2>
+<p>reading a top statement</p>
+<pre class="prettyprint source lang-ebnf"><code> top_statement ::=
+      namespace | function | class
+      | interface | trait
+      | use_statements | const_list
+      | statement</code></pre><h2 id="read_inner_statements">read_inner_statements</h2>
+<p>reads a list of simple inner statements (helper for inner_statement*)</p>
+<pre class="prettyprint source lang-ebnf"><code> inner_statements ::= inner_statement*</code></pre><h2 id="read_const_list">read_const_list</h2>
+<p>Reads a list of constants declaration</p>
+<pre class="prettyprint source lang-ebnf"><code>  const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'</code></pre><h2 id="read_declare_list">read_declare_list</h2>
+<p>Reads a list of constants declaration</p>
+<pre class="prettyprint source lang-ebnf"><code>  declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*</code></pre><h2 id="read_inner_statement">read_inner_statement</h2>
+<p>reads a simple inner statement</p>
+<pre class="prettyprint source lang-ebnf"><code> inner_statement ::= '{' inner_statements '}' | token</code></pre><h2 id="read_statement">read_statement</h2>
+<p>Reads statements</p>
+<h2 id="read_code_block">read_code_block</h2>
+<pre class="prettyprint source lang-ebnf"><code> code_block ::= '{' (inner_statements | top_statements) '}'</code></pre><h2 id="read_switch">read_switch</h2>
+<p>Reads a switch statement</p>
+<pre class="prettyprint source lang-ebnf"><code> switch ::= T_SWITCH '(' expr ')' switch_case_list</code></pre><p>Returns <strong>Switch</strong></p>
+<h2 id="read_switch_case_list">read_switch_case_list</h2>
+<pre class="prettyprint source lang-ebnf"><code> switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'</code></pre><h2 id="read_case_list">read_case_list</h2>
+<pre class="prettyprint source lang-ebnf"><code>  case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*</code></pre><h2 id="read_try">read_try</h2>
+<pre class="prettyprint source lang-ebnf"><code> try ::= T_TRY '{' inner_statement* '}'
+         (
+             T_CATCH '(' namespace_name variable ')' '{'  inner_statement* '}'
+         )*
+         (T_FINALLY '{' inner_statement* '}')?</code></pre><p>Returns <strong>Try</strong></p>
+<h2 id="read_short_form">read_short_form</h2>
+<p>Reads a short form of tokens</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>token</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> The ending token</li>
+</ul>
+<p>Returns <strong>Block</strong></p>
+<h2 id="read_list">read_list</h2>
+<p>Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...</p>
+<pre class="prettyprint source lang-ebnf"><code>list ::= separator? ( item separator )* item</code></pre><h2 id="read_name_list">read_name_list</h2>
+<p>Reads a list of names separated by a comma</p>
+<pre class="prettyprint source lang-ebnf"><code>name_list ::= namespace (',' namespace)*</code></pre><p>Sample code :</p>
+<pre class="prettyprint source lang-php"><code>&lt;?php class foo extends bar, baz { }</code></pre><p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;Identifier&gt;</strong></p>
+<h2 id="read_variable_declarations">read_variable_declarations</h2>
+<p>Reads a list of variables declarations</p>
+<pre class="prettyprint source lang-ebnf"><code>variable_declaration ::= T_VARIABLE ('=' expr)?*
+variable_declarations ::= variable_declaration (',' variable_declaration)*</code></pre><p>Sample code :</p>
+<pre class="prettyprint source lang-php"><code>&lt;?php class foo extends bar, baz { }</code></pre><p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;Variable&gt; | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;Assign&gt;)</strong> Returns an array composed by a list of variables, or
+assign values</p>
+<h2 id="read_variable">read_variable</h2>
+<p>Reads a variable</p>
+<pre class="prettyprint source lang-ebnf"><code>  variable ::= &? ...complex @todo</code></pre><p>Some samples of parsed code :</p>
+<pre class="prettyprint source lang-php"><code> &$var                      // simple var
+ $var                      // simple var
+ classname::CONST_NAME     // dynamic class name with const retrieval
+ foo()                     // function call
+ $var->func()->property    // chained calls</code></pre><h2 id="read_encaps_var_offset">read_encaps_var_offset</h2>
+<p><a href="https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231">https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231</a></p>
+<h2 id="read_reference_variable">read_reference_variable</h2>
+<pre class="prettyprint source lang-ebnf"><code> reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'</code></pre><p><code>
+ $foo[123];      // foo is an array ==&gt; gets its entry
+ $foo{1};        // foo is a string ==&gt; get the 2nd char offset
+ ${'foo'}[123];  // get the dynamic var $foo
+ $foo[123]{1};   // gets the 2nd char from the 123 array entry
+</code></p>
+<h2 id="read_simple_variable">read_simple_variable</h2>
+<pre class="prettyprint source lang-ebnf"><code> simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable</code></pre>
+  </article>
+</section>
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+  <script>
+    $(function () {
+      window.docsearch({
+        apiKey: 'd7422763b31425c3da8b220f22ff04d2',
+        indexName: 'glayzzle',
+        inputSelector: '.search-input',
+        debug: false, // Set debug to true if you want to inspect the dropdown
+        algoliaOptions: {
+          hitsPerPage: 7
+        }
+      });
+    });
+  </script>
+  
+  
+</body>
+</html>
