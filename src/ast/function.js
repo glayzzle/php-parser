@@ -18,7 +18,7 @@ const KIND = "function";
  * @property {boolean} nullable
  * @property {Block|null} body
  */
-const fn = Declaration.extends(function _Function(
+module.exports = Declaration.extends(KIND, function _Function(
   name,
   args,
   byref,
@@ -34,4 +34,3 @@ const fn = Declaration.extends(function _Function(
   this.nullable = nullable;
   this.body = null;
 });
-module.exports = fn;

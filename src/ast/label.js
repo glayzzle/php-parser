@@ -14,9 +14,7 @@ const KIND = "label";
  * @extends {Node}
  * @property {String} name
  */
-const Label = Node.extends(function Label(name, docs, location) {
+module.exports = Node.extends(KIND, function Label(name, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.name = name;
 });
-
-module.exports = Label;

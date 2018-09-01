@@ -14,9 +14,7 @@ const KIND = "silent";
  * @extends {Statement}
  * @property {Expression} expr
  */
-const Silent = Statement.extends(function Silent(expr, docs, location) {
+module.exports = Statement.extends(KIND, function Silent(expr, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
-
-module.exports = Silent;

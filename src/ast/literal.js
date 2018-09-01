@@ -15,7 +15,7 @@ const KIND = "literal";
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value
  */
-const Literal = Expr.extends(function Literal(
+module.exports = Expr.extends(KIND, function Literal(
   kind,
   value,
   raw,
@@ -28,5 +28,3 @@ const Literal = Expr.extends(function Literal(
     this.raw = raw;
   }
 });
-
-module.exports = Literal;

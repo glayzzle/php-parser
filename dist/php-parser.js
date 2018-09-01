@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 40e3f5cb8f8a414e42e0 - 2018-8-17
+ *         Build: ed57def5bfcb3d7f7105 - 9/1/2018
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -123,11 +123,9 @@ var KIND = "statement";
  * @constructor Statement
  * @extends {Node}
  */
-var Statement = Node.extends(function Statement(kind, docs, location) {
+module.exports = Node.extends(KIND, function Statement(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
-
-module.exports = Statement;
 
 /***/ }),
 /* 1 */
@@ -180,13 +178,15 @@ Node.prototype.includeToken = function (parser) {
 
 /**
  * Helper for extending the Node class
+ * @param {String} type
  * @param {Function} constructor
  * @return {Function}
  */
-Node.extends = function (constructor) {
+Node.extends = function (type, constructor) {
   constructor.prototype = Object.create(this.prototype);
   constructor.extends = this.extends;
   constructor.prototype.constructor = constructor;
+  constructor.kind = type;
   return constructor;
 };
 
@@ -213,11 +213,9 @@ var KIND = "expression";
  * @constructor Expression
  * @extends {Node}
  */
-var Expression = Node.extends(function Expression(kind, docs, location) {
+module.exports = Node.extends(KIND, function Expression(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
-
-module.exports = Expression;
 
 /***/ }),
 /* 3 */
@@ -245,7 +243,7 @@ var IS_PRIVATE = "private";
  * @extends {Statement}
  * @property {string} name
  */
-var Declaration = Statement.extends(function Declaration(kind, name, docs, location) {
+var Declaration = Statement.extends(KIND, function Declaration(kind, name, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.name = name;
 });
@@ -296,15 +294,13 @@ var KIND = "literal";
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value
  */
-var Literal = Expr.extends(function Literal(kind, value, raw, docs, location) {
+module.exports = Expr.extends(KIND, function Literal(kind, value, raw, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
   this.value = value;
   if (raw) {
     this.raw = raw;
   }
 });
-
-module.exports = Literal;
 
 /***/ }),
 /* 5 */
@@ -327,12 +323,10 @@ var KIND = "sys";
  * @extends {Statement}
  * @property {Node[]} arguments
  */
-var Sys = Statement.extends(function Sys(kind, args, docs, location) {
+module.exports = Statement.extends(KIND, function Sys(kind, args, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.arguments = args;
 });
-
-module.exports = Sys;
 
 /***/ }),
 /* 6 */
@@ -354,11 +348,9 @@ var KIND = "operation";
  * @constructor Operation
  * @extends {Expression}
  */
-var Operation = Expr.extends(function Operation(kind, docs, location) {
+module.exports = Expr.extends(KIND, function Operation(kind, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
 });
-
-module.exports = Operation;
 
 /***/ }),
 /* 7 */
@@ -382,13 +374,11 @@ var KIND = "lookup";
  * @property {Expression} what
  * @property {Expression} offset
  */
-var Lookup = Expr.extends(function Lookup(kind, what, offset, docs, location) {
+module.exports = Expr.extends(KIND, function Lookup(kind, what, offset, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
   this.what = what;
   this.offset = offset;
 });
-
-module.exports = Lookup;
 
 /***/ }),
 /* 8 */
@@ -411,12 +401,10 @@ var KIND = "block";
  * @extends {Statement}
  * @property {Node[]} children
  */
-var Block = Statement.extends(function Block(kind, children, docs, location) {
+module.exports = Statement.extends(KIND, function Block(kind, children, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.children = children.filter(Boolean);
 });
-
-module.exports = Block;
 
 /***/ }),
 /* 9 */
@@ -438,12 +426,10 @@ var Node = __webpack_require__(1);
  * @extends {Node}
  * @property {String} value
  */
-var Comment = Node.extends(function Comment(kind, value, docs, location) {
+module.exports = Node.extends("comment", function Comment(kind, value, docs, location) {
   Node.apply(this, [kind, docs, location]);
   this.value = value;
 });
-
-module.exports = Comment;
 
 /***/ }),
 /* 10 */
@@ -470,7 +456,7 @@ var KIND = "function";
  * @property {boolean} nullable
  * @property {Block|null} body
  */
-var fn = Declaration.extends(function _Function(name, args, byref, type, nullable, docs, location) {
+module.exports = Declaration.extends(KIND, function _Function(name, args, byref, type, nullable, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.arguments = args;
   this.byref = byref;
@@ -478,7 +464,6 @@ var fn = Declaration.extends(function _Function(name, args, byref, type, nullabl
   this.nullable = nullable;
   this.body = null;
 });
-module.exports = fn;
 
 /***/ }),
 /* 11 */
@@ -501,12 +486,10 @@ var KIND = "constant";
  * @extends {Declaration}
  * @property {Node|null} value
  */
-var Constant = Declaration.extends(function Constant(name, value, docs, location) {
+module.exports = Declaration.extends(KIND, function Constant(name, value, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
 });
-
-module.exports = Constant;
 
 /***/ }),
 /* 12 */
@@ -530,12 +513,10 @@ var KIND = "yieldfrom";
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-var YieldFrom = Expression.extends(function YieldFrom(value, docs, location) {
+module.exports = Expression.extends(KIND, function YieldFrom(value, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.value = value;
 });
-
-module.exports = YieldFrom;
 
 /***/ }),
 /* 13 */
@@ -560,13 +541,11 @@ var KIND = "yield";
  * @property {Expression|Null} key
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-var Yield = Expression.extends(function Yield(value, key, docs, location) {
+module.exports = Expression.extends(KIND, function Yield(value, key, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.value = value;
   this.key = key;
 });
-
-module.exports = Yield;
 
 /***/ }),
 /* 14 */
@@ -591,14 +570,12 @@ var KIND = "while";
  * @property {Statement} body
  * @property {boolean} shortForm
  */
-var While = Statement.extends(function While(test, body, shortForm, docs, location) {
+module.exports = Statement.extends(KIND, function While(test, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.shortForm = shortForm;
 });
-
-module.exports = While;
 
 /***/ }),
 /* 15 */
@@ -622,12 +599,10 @@ var KIND = "variadic";
  * @property {Array|Expression} what
  * @see https://wiki.php.net/rfc/argument_unpacking
  */
-var variadic = Expr.extends(function variadic(what, docs, location) {
+module.exports = Expr.extends(KIND, function variadic(what, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.what = what;
 });
-
-module.exports = variadic;
 
 /***/ }),
 /* 16 */
@@ -663,14 +638,12 @@ var KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-var Variable = Expr.extends(function Variable(name, byref, curly, docs, location) {
+module.exports = Expr.extends(KIND, function Variable(name, byref, curly, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.name = name;
   this.byref = byref || false;
   this.curly = curly || false;
 });
-
-module.exports = Variable;
 
 /***/ }),
 /* 17 */
@@ -697,7 +670,7 @@ var KIND = "useitem";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseItem = Statement.extends(function UseItem(name, alias, type, docs, location) {
+var UseItem = Statement.extends(KIND, function UseItem(name, alias, type, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.alias = alias;
@@ -742,14 +715,12 @@ var KIND = "usegroup";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseGroup = Statement.extends(function UseGroup(name, type, items, docs, location) {
+module.exports = Statement.extends(KIND, function UseGroup(name, type, items, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.type = type;
   this.items = items;
 });
-
-module.exports = UseGroup;
 
 /***/ }),
 /* 19 */
@@ -771,11 +742,9 @@ var KIND = "unset";
  * @constructor Unset
  * @extends {Sys}
  */
-var Unset = Sys.extends(function Unset(args, docs, location) {
+module.exports = Sys.extends(KIND, function Unset(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Unset;
 
 /***/ }),
 /* 20 */
@@ -799,13 +768,11 @@ var KIND = "unary";
  * @property {String} type
  * @property {Expression} what
  */
-var Unary = Operation.extends(function Unary(type, what, docs, location) {
+module.exports = Operation.extends(KIND, function Unary(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
-
-module.exports = Unary;
 
 /***/ }),
 /* 21 */
@@ -830,14 +797,12 @@ var KIND = "try";
  * @property {Catch[]} catches
  * @property {Block} allways
  */
-var Try = Statement.extends(function Try(body, catches, always, docs, location) {
+module.exports = Statement.extends(KIND, function Try(body, catches, always, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.catches = catches;
   this.always = always;
 });
-
-module.exports = Try;
 
 /***/ }),
 /* 22 */
@@ -861,13 +826,11 @@ var KIND = "traituse";
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations
  */
-var TraitUse = Node.extends(function TraitUse(traits, adaptations, docs, location) {
+module.exports = Node.extends(KIND, function TraitUse(traits, adaptations, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.traits = traits;
   this.adaptations = adaptations;
 });
-
-module.exports = TraitUse;
 
 /***/ }),
 /* 23 */
@@ -892,14 +855,12 @@ var KIND = "traitprecedence";
  * @property {string} method
  * @property {Identifier[]} instead
  */
-var TraitPrecedence = Node.extends(function TraitPrecedence(trait, method, instead, docs, location) {
+module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, instead, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
   this.instead = instead;
 });
-
-module.exports = TraitPrecedence;
 
 /***/ }),
 /* 24 */
@@ -930,7 +891,7 @@ var IS_PRIVATE = "private";
  * @property {string|null} as
  * @property {string|null} visibility
  */
-var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, docs, location) {
+module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
@@ -946,8 +907,6 @@ var TraitAlias = Node.extends(function TraitAlias(trait, method, as, flags, docs
     }
   }
 });
-
-module.exports = TraitAlias;
 
 /***/ }),
 /* 25 */
@@ -972,14 +931,12 @@ var KIND = "trait";
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
  */
-var Trait = Declaration.extends(function Trait(name, ext, impl, body, docs, location) {
+module.exports = Declaration.extends(KIND, function Trait(name, ext, impl, body, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.implements = impl;
   this.body = body;
 });
-
-module.exports = Trait;
 
 /***/ }),
 /* 26 */
@@ -1002,12 +959,10 @@ var KIND = "throw";
  * @extends {Statement}
  * @property {Expression} what
  */
-var Throw = Statement.extends(function Throw(what, docs, location) {
+module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
-
-module.exports = Throw;
 
 /***/ }),
 /* 27 */
@@ -1032,14 +987,12 @@ var KIND = "switch";
  * @property {Block} body
  * @property {boolean} shortForm
  */
-var Switch = Statement.extends(function Switch(test, body, shortForm, docs, location) {
+module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.shortForm = shortForm;
 });
-
-module.exports = Switch;
 
 /***/ }),
 /* 28 */
@@ -1064,13 +1017,11 @@ var KIND = "string";
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-var String = Literal.extends(function String(isDoubleQuote, value, unicode, raw, docs, location) {
+module.exports = Literal.extends(KIND, function String(isDoubleQuote, value, unicode, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.unicode = unicode;
   this.isDoubleQuote = isDoubleQuote;
 });
-
-module.exports = String;
 
 /***/ }),
 /* 29 */
@@ -1092,11 +1043,9 @@ var KIND = "staticlookup";
  * @constructor StaticLookup
  * @extends {Lookup}
  */
-var StaticLookup = Lookup.extends(function StaticLookup(what, offset, docs, location) {
+module.exports = Lookup.extends(KIND, function StaticLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
-
-module.exports = StaticLookup;
 
 /***/ }),
 /* 30 */
@@ -1119,12 +1068,10 @@ var KIND = "static";
  * @extends {Statement}
  * @property {Variable[]|Assign[]} items
  */
-var Static = Statement.extends(function Static(items, docs, location) {
+module.exports = Statement.extends(KIND, function Static(items, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
-
-module.exports = Static;
 
 /***/ }),
 /* 31 */
@@ -1147,12 +1094,10 @@ var KIND = "silent";
  * @extends {Statement}
  * @property {Expression} expr
  */
-var Silent = Statement.extends(function Silent(expr, docs, location) {
+module.exports = Statement.extends(KIND, function Silent(expr, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
-
-module.exports = Silent;
 
 /***/ }),
 /* 32 */
@@ -1175,12 +1120,10 @@ var KIND = "return";
  * @extends {Node}
  * @property {Expression|null} expr
  */
-var Return = Node.extends(function Return(expr, docs, location) {
+module.exports = Node.extends(KIND, function Return(expr, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
-
-module.exports = Return;
 
 /***/ }),
 /* 33 */
@@ -1205,14 +1148,12 @@ var KIND = "retif";
  * @property {Expression} trueExpr
  * @property {Expression} falseExpr
  */
-var RetIf = Statement.extends(function RetIf(test, trueExpr, falseExpr, docs, location) {
+module.exports = Statement.extends(KIND, function RetIf(test, trueExpr, falseExpr, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.trueExpr = trueExpr;
   this.falseExpr = falseExpr;
 });
-
-module.exports = RetIf;
 
 /***/ }),
 /* 34 */
@@ -1234,11 +1175,9 @@ var KIND = "propertylookup";
  * @constructor PropertyLookup
  * @extends {Lookup}
  */
-var PropertyLookup = Lookup.extends(function PropertyLookup(what, offset, docs, location) {
+module.exports = Lookup.extends(KIND, function PropertyLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
-
-module.exports = PropertyLookup;
 
 /***/ }),
 /* 35 */
@@ -1264,13 +1203,11 @@ var KIND = "property";
  * @property {string} visibility
  * @property {Node|null} value
  */
-var Property = Declaration.extends(function Property(name, value, flags, docs, location) {
+module.exports = Declaration.extends(KIND, function Property(name, value, flags, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.parseFlags(flags);
 });
-
-module.exports = Property;
 
 /***/ }),
 /* 36 */
@@ -1295,7 +1232,7 @@ var KIND = "program";
  * @property {Doc[]?} comments
  * @property {String[]?} tokens
  */
-var Program = Block.extends(function Program(children, errors, comments, tokens, docs, location) {
+module.exports = Block.extends(KIND, function Program(children, errors, comments, tokens, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
   if (comments) {
@@ -1305,8 +1242,6 @@ var Program = Block.extends(function Program(children, errors, comments, tokens,
     this.tokens = tokens;
   }
 });
-
-module.exports = Program;
 
 /***/ }),
 /* 37 */
@@ -1328,11 +1263,9 @@ var KIND = "print";
  * @constructor Print
  * @extends {Sys}
  */
-var Print = Sys.extends(function Print(args, docs, location) {
+module.exports = Sys.extends(KIND, function Print(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Print;
 
 /***/ }),
 /* 38 */
@@ -1356,13 +1289,11 @@ var KIND = "pre";
  * @property {String} type
  * @property {Variable} what
  */
-var Pre = Operation.extends(function Pre(type, what, docs, location) {
+module.exports = Operation.extends(KIND, function Pre(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
-
-module.exports = Pre;
 
 /***/ }),
 /* 39 */
@@ -1386,13 +1317,11 @@ var KIND = "post";
  * @property {String} type
  * @property {Variable} what
  */
-var Post = Operation.extends(function Post(type, what, docs, location) {
+module.exports = Operation.extends(KIND, function Post(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
-
-module.exports = Post;
 
 /***/ }),
 /* 40 */
@@ -1419,7 +1348,7 @@ var KIND = "parameter";
  * @property {boolean} variadic
  * @property {boolean} nullable
  */
-var Parameter = Declaration.extends(function Parameter(name, type, value, isRef, isVariadic, nullable, docs, location) {
+module.exports = Declaration.extends(KIND, function Parameter(name, type, value, isRef, isVariadic, nullable, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.type = type;
@@ -1427,8 +1356,6 @@ var Parameter = Declaration.extends(function Parameter(name, type, value, isRef,
   this.variadic = isVariadic;
   this.nullable = nullable;
 });
-
-module.exports = Parameter;
 
 /***/ }),
 /* 41 */
@@ -1450,11 +1377,9 @@ var KIND = "offsetlookup";
  * @constructor OffsetLookup
  * @extends {Lookup}
  */
-var OffsetLookup = Lookup.extends(function OffsetLookup(what, offset, docs, location) {
+module.exports = Lookup.extends(KIND, function OffsetLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
-
-module.exports = OffsetLookup;
 
 /***/ }),
 /* 42 */
@@ -1476,11 +1401,9 @@ var KIND = "number";
  * @constructor Number
  * @extends {Literal}
  */
-var _Number = Literal.extends(function Number(value, raw, docs, location) {
+module.exports = Literal.extends(KIND, function Number(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
-
-module.exports = _Number;
 
 /***/ }),
 /* 43 */
@@ -1499,19 +1422,17 @@ var KIND = "nowdoc";
 
 /**
  * Defines a nowdoc string
- * @constructor String
+ * @constructor NowDoc
  * @extends {Literal}
  * @property {String} label
  * @property {String} raw
  * @property {Boolean} quote
  */
-var Nowdoc = Literal.extends(function Nowdoc(value, raw, label, quote, docs, location) {
+module.exports = Literal.extends(KIND, function Nowdoc(value, raw, label, quote, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.label = label;
   this.quote = quote;
 });
-
-module.exports = Nowdoc;
 
 /***/ }),
 /* 44 */
@@ -1535,13 +1456,11 @@ var KIND = "new";
  * @property {Identifier|Variable|Class} what
  * @property {Arguments[]} arguments
  */
-var New = Statement.extends(function New(what, args, docs, location) {
+module.exports = Statement.extends(KIND, function New(what, args, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });
-
-module.exports = New;
 
 /***/ }),
 /* 45 */
@@ -1565,13 +1484,11 @@ var KIND = "namespace";
  * @property {String} name
  * @property {Boolean} withBrackets
  */
-var Namespace = Block.extends(function Namespace(name, children, withBrackets, docs, location) {
+module.exports = Block.extends(KIND, function Namespace(name, children, withBrackets, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.name = name;
   this.withBrackets = withBrackets || false;
 });
-
-module.exports = Namespace;
 
 /***/ }),
 /* 46 */
@@ -1597,12 +1514,10 @@ var KIND = "method";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-var Method = fn.extends(function Method() {
+module.exports = fn.extends(KIND, function Method() {
   fn.apply(this, arguments);
   this.kind = KIND;
 });
-
-module.exports = Method;
 
 /***/ }),
 /* 47 */
@@ -1624,11 +1539,9 @@ var KIND = "magic";
  * @constructor Magic
  * @extends {Literal}
  */
-var Magic = Literal.extends(function Magic(value, raw, docs, location) {
+module.exports = Literal.extends(KIND, function Magic(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
-
-module.exports = Magic;
 
 /***/ }),
 /* 48 */
@@ -1651,12 +1564,10 @@ var KIND = "list";
  * @extends {Sys}
  * @property {boolean} shortForm
  */
-var List = Sys.extends(function List(items, shortForm, docs, location) {
+module.exports = Sys.extends(KIND, function List(items, shortForm, docs, location) {
   Sys.apply(this, [KIND, items, docs, location]);
   this.shortForm = shortForm;
 });
-
-module.exports = List;
 
 /***/ }),
 /* 49 */
@@ -1679,12 +1590,10 @@ var KIND = "label";
  * @extends {Node}
  * @property {String} name
  */
-var Label = Node.extends(function Label(name, docs, location) {
+module.exports = Node.extends(KIND, function Label(name, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.name = name;
 });
-
-module.exports = Label;
 
 /***/ }),
 /* 50 */
@@ -1706,11 +1615,9 @@ var KIND = "isset";
  * @constructor Isset
  * @extends {Sys}
  */
-var Isset = Sys.extends(function Isset(args, docs, location) {
+module.exports = Sys.extends(KIND, function Isset(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Isset;
 
 /***/ }),
 /* 51 */
@@ -1734,13 +1641,11 @@ var KIND = "interface";
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
  */
-var Interface = Declaration.extends(function Interface(name, ext, body, docs, location) {
+module.exports = Declaration.extends(KIND, function Interface(name, ext, body, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.body = body;
 });
-
-module.exports = Interface;
 
 /***/ }),
 /* 52 */
@@ -1762,11 +1667,9 @@ var KIND = "inline";
  * @constructor Inline
  * @extends {Literal}
  */
-var Inline = Literal.extends(function Inline(value, raw, docs, location) {
+module.exports = Literal.extends(KIND, function Inline(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
-
-module.exports = Inline;
 
 /***/ }),
 /* 53 */
@@ -1791,14 +1694,12 @@ var KIND = "include";
  * @property {boolean} once
  * @property {boolean} require
  */
-var Include = Statement.extends(function Include(once, require, target, docs, location) {
+module.exports = Statement.extends(KIND, function Include(once, require, target, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.once = once;
   this.require = require;
   this.target = target;
 });
-
-module.exports = Include;
 
 /***/ }),
 /* 54 */
@@ -1824,15 +1725,13 @@ var KIND = "if";
  * @property {Block|If|null} alternate
  * @property {boolean} shortForm
  */
-var If = Statement.extends(function If(test, body, alternate, shortForm, docs, location) {
+module.exports = Statement.extends(KIND, function If(test, body, alternate, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
   this.alternate = alternate;
   this.shortForm = shortForm;
 });
-
-module.exports = If;
 
 /***/ }),
 /* 55 */
@@ -1856,7 +1755,7 @@ var KIND = "identifier";
  * @property {string} name
  * @property {string} resolution
  */
-var Identifier = Node.extends(function Identifier(name, isRelative, docs, location) {
+var Identifier = Node.extends(KIND, function Identifier(name, isRelative, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   if (isRelative) {
     this.resolution = Identifier.RELATIVE_NAME;
@@ -1917,12 +1816,10 @@ var KIND = "halt";
  * @property {String} after - String after the halt statement
  * @see http://php.net/manual/en/function.halt-compiler.php
  */
-var Halt = Statement.extends(function Halt(after, docs, location) {
+module.exports = Statement.extends(KIND, function Halt(after, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.after = after;
 });
-
-module.exports = Halt;
 
 /***/ }),
 /* 57 */
@@ -1946,12 +1843,10 @@ var KIND = "goto";
  * @property {String} label
  * @see {Label}
  */
-var Goto = Statement.extends(function Goto(label, docs, location) {
+module.exports = Statement.extends(KIND, function Goto(label, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.label = label;
 });
-
-module.exports = Goto;
 
 /***/ }),
 /* 58 */
@@ -1974,12 +1869,10 @@ var KIND = "global";
  * @extends {Statement}
  * @property {Variable[]} items
  */
-var Global = Statement.extends(function Global(items, docs, location) {
+module.exports = Statement.extends(KIND, function Global(items, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
-
-module.exports = Global;
 
 /***/ }),
 /* 59 */
@@ -2007,7 +1900,7 @@ var KIND = "foreach";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.foreach.php
  */
-var Foreach = Statement.extends(function Foreach(source, key, value, body, shortForm, docs, location) {
+module.exports = Statement.extends(KIND, function Foreach(source, key, value, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.source = source;
   this.key = key;
@@ -2015,8 +1908,6 @@ var Foreach = Statement.extends(function Foreach(source, key, value, body, short
   this.shortForm = shortForm;
   this.body = body;
 });
-
-module.exports = Foreach;
 
 /***/ }),
 /* 60 */
@@ -2044,7 +1935,7 @@ var KIND = "for";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.for.php
  */
-var For = Statement.extends(function For(init, test, increment, body, shortForm, docs, location) {
+module.exports = Statement.extends(KIND, function For(init, test, increment, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.init = init;
   this.test = test;
@@ -2052,8 +1943,6 @@ var For = Statement.extends(function For(init, test, increment, body, shortForm,
   this.shortForm = shortForm;
   this.body = body;
 });
-
-module.exports = For;
 
 /***/ }),
 /* 61 */
@@ -2077,13 +1966,11 @@ var KIND = "exit";
  * @property {Node|null} status
  * @property {Boolean} useDie
  */
-var Exit = Statement.extends(function Exit(status, useDie, docs, location) {
+module.exports = Statement.extends(KIND, function Exit(status, useDie, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.status = status;
   this.useDie = useDie;
 });
-
-module.exports = Exit;
 
 /***/ }),
 /* 62 */
@@ -2106,12 +1993,10 @@ var KIND = "eval";
  * @extends {Statement}
  * @property {Node} source
  */
-var Eval = Statement.extends(function Eval(source, docs, location) {
+module.exports = Statement.extends(KIND, function Eval(source, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.source = source;
 });
-
-module.exports = Eval;
 
 /***/ }),
 /* 63 */
@@ -2137,15 +2022,13 @@ var KIND = "error";
  * @property {number|string} token
  * @property {string|array} expected
  */
-var Error = Node.extends(function Error(message, token, line, expected, docs, location) {
+module.exports = Node.extends(KIND, function Error(message, token, line, expected, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.message = message;
   this.token = token;
   this.line = line;
   this.expected = expected;
 });
-
-module.exports = Error;
 
 /***/ }),
 /* 64 */
@@ -2169,13 +2052,11 @@ var KIND = "entry";
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
-var Entry = Node.extends(function Entry(key, value, docs, location) {
+module.exports = Node.extends(KIND, function Entry(key, value, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
 });
-
-module.exports = Entry;
 
 /***/ }),
 /* 65 */
@@ -2199,7 +2080,7 @@ var KIND = "encapsed";
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
-var Encapsed = Literal.extends(function Encapsed(value, raw, type, docs, location) {
+var Encapsed = Literal.extends(KIND, function Encapsed(value, raw, type, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.type = type;
 });
@@ -2269,11 +2150,9 @@ var KIND = "empty";
  * @constructor Empty
  * @extends {Sys}
  */
-var Empty = Sys.extends(function Empty(args, docs, location) {
+module.exports = Sys.extends(KIND, function Empty(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Empty;
 
 /***/ }),
 /* 67 */
@@ -2296,12 +2175,10 @@ var KIND = "echo";
  * @property {boolean} shortForm
  * @extends {Sys}
  */
-var Echo = Sys.extends(function Echo(args, shortForm, docs, location) {
+module.exports = Sys.extends(KIND, function Echo(args, shortForm, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
   this.shortForm = shortForm;
 });
-
-module.exports = Echo;
 
 /***/ }),
 /* 68 */
@@ -2325,13 +2202,11 @@ var KIND = "do";
  * @property {Expression} test
  * @property {Statement} body
  */
-var Do = Statement.extends(function Do(test, body, docs, location) {
+module.exports = Statement.extends(KIND, function Do(test, body, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
-
-module.exports = Do;
 
 /***/ }),
 /* 69 */
@@ -2356,7 +2231,7 @@ var KIND = "declare";
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
-var Declare = Block.extends(function Declare(what, body, mode, docs, location) {
+var Declare = Block.extends(KIND, function Declare(what, body, mode, docs, location) {
   Block.apply(this, [KIND, body, docs, location]);
   this.what = what;
   this.mode = mode;
@@ -2424,12 +2299,10 @@ var KIND = "continue";
  * @extends {Node}
  * @property {Number|Null} level
  */
-var Continue = Node.extends(function Continue(level, docs, location) {
+module.exports = Node.extends(KIND, function Continue(level, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
-
-module.exports = Continue;
 
 /***/ }),
 /* 71 */
@@ -2452,12 +2325,10 @@ var KIND = "constref";
  * @extends {Expression}
  * @property {String|Node} name
  */
-var ConstRef = Expr.extends(function ConstRef(identifier, docs, location) {
+module.exports = Expr.extends(KIND, function ConstRef(identifier, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.name = identifier;
 });
-
-module.exports = ConstRef;
 
 /***/ }),
 /* 72 */
@@ -2479,11 +2350,9 @@ var KIND = "commentline";
  * @constructor CommentLine
  * @extends {Comment}
  */
-var CommentLine = Comment.extends(function CommentLine(value, docs, location) {
+module.exports = Comment.extends(KIND, function CommentLine(value, docs, location) {
   Comment.apply(this, [KIND, value, docs, location]);
 });
-
-module.exports = CommentLine;
 
 /***/ }),
 /* 73 */
@@ -2505,11 +2374,9 @@ var KIND = "commentblock";
  * @constructor CommentBlock
  * @extends {Comment}
  */
-var CommentBlock = Comment.extends(function CommentBlock(value, docs, location) {
+module.exports = Comment.extends(KIND, function CommentBlock(value, docs, location) {
   Comment.apply(this, [KIND, value, docs, location]);
 });
-
-module.exports = CommentBlock;
 
 /***/ }),
 /* 74 */
@@ -2538,7 +2405,7 @@ var KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
-var Closure = Statement.extends(function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
+module.exports = Statement.extends(KIND, function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.uses = uses;
   this.arguments = args;
@@ -2548,8 +2415,6 @@ var Closure = Statement.extends(function Closure(args, byref, uses, type, nullab
   this.isStatic = isStatic || false;
   this.body = null;
 });
-
-module.exports = Closure;
 
 /***/ }),
 /* 75 */
@@ -2572,12 +2437,10 @@ var KIND = "clone";
  * @extends {Statement}
  * @property {Expression} what
  */
-var Clone = Statement.extends(function Clone(what, docs, location) {
+module.exports = Statement.extends(KIND, function Clone(what, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
-
-module.exports = Clone;
 
 /***/ }),
 /* 76 */
@@ -2601,13 +2464,11 @@ var KIND = "classconstant";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-var ClassConstant = Constant.extends(function ClassConstant(name, value, flags, docs, location) {
+module.exports = Constant.extends(KIND, function ClassConstant(name, value, flags, docs, location) {
   Constant.apply(this, [name, value, docs, location]);
   this.kind = KIND;
   this.parseFlags(flags);
 });
-
-module.exports = ClassConstant;
 
 /***/ }),
 /* 77 */
@@ -2635,7 +2496,7 @@ var KIND = "class";
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
-var Class = Declaration.extends(function Class(name, ext, impl, body, flags, docs, location) {
+module.exports = Declaration.extends(KIND, function Class(name, ext, impl, body, flags, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.isAnonymous = name ? false : true;
   this.extends = ext;
@@ -2643,8 +2504,6 @@ var Class = Declaration.extends(function Class(name, ext, impl, body, flags, doc
   this.body = body;
   this.parseFlags(flags);
 });
-
-module.exports = Class;
 
 /***/ }),
 /* 78 */
@@ -2670,14 +2529,12 @@ var KIND = "catch";
  * @property {Statement} body
  * @see http://php.net/manual/en/language.exceptions.php
  */
-var Catch = Statement.extends(function Catch(body, what, variable, docs, location) {
+module.exports = Statement.extends(KIND, function Catch(body, what, variable, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.what = what;
   this.variable = variable;
 });
-
-module.exports = Catch;
 
 /***/ }),
 /* 79 */
@@ -2702,14 +2559,12 @@ var KIND = "cast";
  * @property {String} raw
  * @property {Expression} what
  */
-var Cast = Operation.extends(function Cast(type, raw, what, docs, location) {
+module.exports = Operation.extends(KIND, function Cast(type, raw, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.raw = raw;
   this.what = what;
 });
-
-module.exports = Cast;
 
 /***/ }),
 /* 80 */
@@ -2733,13 +2588,11 @@ var KIND = "case";
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body
  */
-var Case = Node.extends(function Case(test, body, docs, location) {
+module.exports = Node.extends(KIND, function Case(test, body, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
-
-module.exports = Case;
 
 /***/ }),
 /* 81 */
@@ -2763,13 +2616,11 @@ var KIND = "call";
  * @property {Identifier|Variable|??} what
  * @property {Arguments[]} arguments
  */
-var Call = Statement.extends(function Call(what, args, docs, location) {
+module.exports = Statement.extends(KIND, function Call(what, args, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });
-
-module.exports = Call;
 
 /***/ }),
 /* 82 */
@@ -2792,12 +2643,10 @@ var KIND = "break";
  * @extends {Node}
  * @property {Number|Null} level
  */
-var Break = Node.extends(function Break(level, docs, location) {
+module.exports = Node.extends(KIND, function Break(level, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
-
-module.exports = Break;
 
 /***/ }),
 /* 83 */
@@ -2819,11 +2668,9 @@ var KIND = "boolean";
  * @constructor Boolean
  * @extends {Literal}
  */
-var Boolean = Literal.extends(function Boolean(value, raw, docs, location) {
+module.exports = Literal.extends(KIND, function Boolean(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
-
-module.exports = Boolean;
 
 /***/ }),
 /* 84 */
@@ -2847,14 +2694,12 @@ var KIND = "bin";
  * @property {Expression} left
  * @property {Expression} right
  */
-var Bin = Operation.extends(function Bin(type, left, right, docs, location) {
+module.exports = Operation.extends(KIND, function Bin(type, left, right, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.left = left;
   this.right = right;
 });
-
-module.exports = Bin;
 
 /***/ }),
 /* 85 */
@@ -2879,14 +2724,12 @@ var KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
-var Assign = Statement.extends(function Assign(left, right, operator, docs, location) {
+module.exports = Statement.extends(KIND, function Assign(left, right, operator, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.operator = operator;
   this.left = left;
   this.right = right;
 });
-
-module.exports = Assign;
 
 /***/ }),
 /* 86 */
@@ -2928,13 +2771,11 @@ var KIND = "array";
  * @property {Entry|Expr|Variable} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
-var Array = Expr.extends(function Array(shortForm, items, docs, location) {
+module.exports = Expr.extends(KIND, function Array(shortForm, items, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.items = items;
   this.shortForm = shortForm;
 });
-
-module.exports = Array;
 
 /***/ }),
 /* 87 */
@@ -3263,9 +3104,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 
 // Define all AST nodes
 [__webpack_require__(86), __webpack_require__(85), __webpack_require__(84), __webpack_require__(8), __webpack_require__(83), __webpack_require__(82), __webpack_require__(81), __webpack_require__(80), __webpack_require__(79), __webpack_require__(78), __webpack_require__(77), __webpack_require__(76), __webpack_require__(75), __webpack_require__(74), __webpack_require__(9), __webpack_require__(73), __webpack_require__(72), __webpack_require__(11), __webpack_require__(71), __webpack_require__(70), __webpack_require__(3), __webpack_require__(69), __webpack_require__(68), __webpack_require__(67), __webpack_require__(66), __webpack_require__(65), __webpack_require__(64), __webpack_require__(63), __webpack_require__(62), __webpack_require__(61), __webpack_require__(2), __webpack_require__(60), __webpack_require__(59), __webpack_require__(10), __webpack_require__(58), __webpack_require__(57), __webpack_require__(56), __webpack_require__(55), __webpack_require__(54), __webpack_require__(53), __webpack_require__(52), __webpack_require__(51), __webpack_require__(50), __webpack_require__(49), __webpack_require__(48), __webpack_require__(4), __webpack_require__(7), __webpack_require__(47), __webpack_require__(46), __webpack_require__(45), __webpack_require__(44), __webpack_require__(1), __webpack_require__(43), __webpack_require__(42), __webpack_require__(41), __webpack_require__(6), __webpack_require__(40), __webpack_require__(39), __webpack_require__(38), __webpack_require__(37), __webpack_require__(36), __webpack_require__(35), __webpack_require__(34), __webpack_require__(33), __webpack_require__(32), __webpack_require__(31), __webpack_require__(0), __webpack_require__(30), __webpack_require__(29), __webpack_require__(28), __webpack_require__(27), __webpack_require__(5), __webpack_require__(26), __webpack_require__(25), __webpack_require__(24), __webpack_require__(23), __webpack_require__(22), __webpack_require__(21), __webpack_require__(20), __webpack_require__(19), __webpack_require__(18), __webpack_require__(17), __webpack_require__(16), __webpack_require__(15), __webpack_require__(14), __webpack_require__(13), __webpack_require__(12)].forEach(function (ctor) {
-  var kind = ctor.prototype.constructor.name.toLowerCase();
-  if (kind[0] === "_") kind = kind.substring(1);
-  AST.prototype[kind] = ctor;
+  AST.prototype[ctor.kind] = ctor;
 });
 
 module.exports = AST;
@@ -5641,6 +5480,13 @@ module.exports = {
   },
 
   /**
+   * Reads a cast expression
+   */
+  read_expr_cast: function read_expr_cast(type) {
+    return this.node("cast")(type, this.text(), this.next().read_expr());
+  },
+
+  /**
    * ```ebnf
    * Reads an expression
    *  expr ::= @todo
@@ -5784,25 +5630,25 @@ module.exports = {
         return result(expr);
 
       case this.tok.T_INT_CAST:
-        return this.node("cast")("int", this.text(), this.next().read_expr());
+        return this.read_expr_cast("int");
 
       case this.tok.T_DOUBLE_CAST:
-        return this.node("cast")("float", this.text(), this.next().read_expr());
+        return this.read_expr_cast("float");
 
       case this.tok.T_STRING_CAST:
-        return this.node("cast")(this.text().indexOf("binary") !== -1 ? "binary" : "string", this.text(), this.next().read_expr());
+        return this.read_expr_cast(this.text().indexOf("binary") !== -1 ? "binary" : "string");
 
       case this.tok.T_ARRAY_CAST:
-        return this.node("cast")("array", this.text(), this.next().read_expr());
+        return this.read_expr_cast("array");
 
       case this.tok.T_OBJECT_CAST:
-        return this.node("cast")("object", this.text(), this.next().read_expr());
+        return this.read_expr_cast("object");
 
       case this.tok.T_BOOL_CAST:
-        return this.node("cast")("bool", this.text(), this.next().read_expr());
+        return this.read_expr_cast("bool");
 
       case this.tok.T_UNSET_CAST:
-        return this.node("cast")("unset", this.text(), this.next().read_expr());
+        return this.read_expr_cast("unset");
 
       case this.tok.T_EXIT:
         {

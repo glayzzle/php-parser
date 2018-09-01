@@ -15,9 +15,7 @@ const KIND = "halt";
  * @property {String} after - String after the halt statement
  * @see http://php.net/manual/en/function.halt-compiler.php
  */
-const Halt = Statement.extends(function Halt(after, docs, location) {
+module.exports = Statement.extends(KIND, function Halt(after, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.after = after;
 });
-
-module.exports = Halt;

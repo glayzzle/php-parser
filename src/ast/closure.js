@@ -20,7 +20,7 @@ const KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
-const Closure = Statement.extends(function Closure(
+module.exports = Statement.extends(KIND, function Closure(
   args,
   byref,
   uses,
@@ -39,5 +39,3 @@ const Closure = Statement.extends(function Closure(
   this.isStatic = isStatic || false;
   this.body = null;
 });
-
-module.exports = Closure;

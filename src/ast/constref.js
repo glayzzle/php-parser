@@ -14,9 +14,11 @@ const KIND = "constref";
  * @extends {Expression}
  * @property {String|Node} name
  */
-const ConstRef = Expr.extends(function ConstRef(identifier, docs, location) {
+module.exports = Expr.extends(KIND, function ConstRef(
+  identifier,
+  docs,
+  location
+) {
   Expr.apply(this, [KIND, docs, location]);
   this.name = identifier;
 });
-
-module.exports = ConstRef;

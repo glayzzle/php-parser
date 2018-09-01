@@ -16,7 +16,7 @@ const KIND = "program";
  * @property {Doc[]?} comments
  * @property {String[]?} tokens
  */
-const Program = Block.extends(function Program(
+module.exports = Block.extends(KIND, function Program(
   children,
   errors,
   comments,
@@ -33,5 +33,3 @@ const Program = Block.extends(function Program(
     this.tokens = tokens;
   }
 });
-
-module.exports = Program;

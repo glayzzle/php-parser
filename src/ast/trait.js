@@ -16,7 +16,7 @@ const KIND = "trait";
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
  */
-const Trait = Declaration.extends(function Trait(
+module.exports = Declaration.extends(KIND, function Trait(
   name,
   ext,
   impl,
@@ -29,5 +29,3 @@ const Trait = Declaration.extends(function Trait(
   this.implements = impl;
   this.body = body;
 });
-
-module.exports = Trait;

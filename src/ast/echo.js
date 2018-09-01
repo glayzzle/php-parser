@@ -14,9 +14,12 @@ const KIND = "echo";
  * @property {boolean} shortForm
  * @extends {Sys}
  */
-const Echo = Sys.extends(function Echo(args, shortForm, docs, location) {
+module.exports = Sys.extends(KIND, function Echo(
+  args,
+  shortForm,
+  docs,
+  location
+) {
   Sys.apply(this, [KIND, args, docs, location]);
   this.shortForm = shortForm;
 });
-
-module.exports = Echo;

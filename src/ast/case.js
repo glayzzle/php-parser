@@ -15,10 +15,8 @@ const KIND = "case";
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body
  */
-const Case = Node.extends(function Case(test, body, docs, location) {
+module.exports = Node.extends(KIND, function Case(test, body, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
-
-module.exports = Case;

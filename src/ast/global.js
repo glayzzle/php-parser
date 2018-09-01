@@ -14,9 +14,11 @@ const KIND = "global";
  * @extends {Statement}
  * @property {Variable[]} items
  */
-const Global = Statement.extends(function Global(items, docs, location) {
+module.exports = Statement.extends(KIND, function Global(
+  items,
+  docs,
+  location
+) {
   Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
-
-module.exports = Global;

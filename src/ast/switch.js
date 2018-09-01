@@ -16,7 +16,7 @@ const KIND = "switch";
  * @property {Block} body
  * @property {boolean} shortForm
  */
-const Switch = Statement.extends(function Switch(
+module.exports = Statement.extends(KIND, function Switch(
   test,
   body,
   shortForm,
@@ -28,5 +28,3 @@ const Switch = Statement.extends(function Switch(
   this.body = body;
   this.shortForm = shortForm;
 });
-
-module.exports = Switch;

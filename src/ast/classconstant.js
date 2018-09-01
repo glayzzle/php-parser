@@ -15,7 +15,7 @@ const KIND = "classconstant";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-const ClassConstant = Constant.extends(function ClassConstant(
+module.exports = Constant.extends(KIND, function ClassConstant(
   name,
   value,
   flags,
@@ -26,5 +26,3 @@ const ClassConstant = Constant.extends(function ClassConstant(
   this.kind = KIND;
   this.parseFlags(flags);
 });
-
-module.exports = ClassConstant;

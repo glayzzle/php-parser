@@ -14,9 +14,7 @@ const KIND = "throw";
  * @extends {Statement}
  * @property {Expression} what
  */
-const Throw = Statement.extends(function Throw(what, docs, location) {
+module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
-
-module.exports = Throw;

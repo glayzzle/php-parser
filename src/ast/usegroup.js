@@ -18,7 +18,7 @@ const KIND = "usegroup";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-const UseGroup = Statement.extends(function UseGroup(
+module.exports = Statement.extends(KIND, function UseGroup(
   name,
   type,
   items,
@@ -30,5 +30,3 @@ const UseGroup = Statement.extends(function UseGroup(
   this.type = type;
   this.items = items;
 });
-
-module.exports = UseGroup;

@@ -17,7 +17,7 @@ const KIND = "error";
  * @property {number|string} token
  * @property {string|array} expected
  */
-const Error = Node.extends(function Error(
+module.exports = Node.extends(KIND, function Error(
   message,
   token,
   line,
@@ -31,5 +31,3 @@ const Error = Node.extends(function Error(
   this.line = line;
   this.expected = expected;
 });
-
-module.exports = Error;

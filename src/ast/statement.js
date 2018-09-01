@@ -13,8 +13,6 @@ const KIND = "statement";
  * @constructor Statement
  * @extends {Node}
  */
-const Statement = Node.extends(function Statement(kind, docs, location) {
+module.exports = Node.extends(KIND, function Statement(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
-
-module.exports = Statement;

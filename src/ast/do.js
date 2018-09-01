@@ -15,10 +15,13 @@ const KIND = "do";
  * @property {Expression} test
  * @property {Statement} body
  */
-const Do = Statement.extends(function Do(test, body, docs, location) {
+module.exports = Statement.extends(KIND, function Do(
+  test,
+  body,
+  docs,
+  location
+) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
-
-module.exports = Do;

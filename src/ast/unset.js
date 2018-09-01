@@ -13,8 +13,6 @@ const KIND = "unset";
  * @constructor Unset
  * @extends {Sys}
  */
-const Unset = Sys.extends(function Unset(args, docs, location) {
+module.exports = Sys.extends(KIND, function Unset(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Unset;

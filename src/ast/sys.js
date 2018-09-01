@@ -14,9 +14,12 @@ const KIND = "sys";
  * @extends {Statement}
  * @property {Node[]} arguments
  */
-const Sys = Statement.extends(function Sys(kind, args, docs, location) {
+module.exports = Statement.extends(KIND, function Sys(
+  kind,
+  args,
+  docs,
+  location
+) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.arguments = args;
 });
-
-module.exports = Sys;

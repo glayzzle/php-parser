@@ -14,9 +14,11 @@ const KIND = "static";
  * @extends {Statement}
  * @property {Variable[]|Assign[]} items
  */
-const Static = Statement.extends(function Static(items, docs, location) {
+module.exports = Statement.extends(KIND, function Static(
+  items,
+  docs,
+  location
+) {
   Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
-
-module.exports = Static;

@@ -13,8 +13,11 @@ const KIND = "inline";
  * @constructor Inline
  * @extends {Literal}
  */
-const Inline = Literal.extends(function Inline(value, raw, docs, location) {
+module.exports = Literal.extends(KIND, function Inline(
+  value,
+  raw,
+  docs,
+  location
+) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
-
-module.exports = Inline;

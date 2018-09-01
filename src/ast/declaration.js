@@ -19,7 +19,7 @@ const IS_PRIVATE = "private";
  * @extends {Statement}
  * @property {string} name
  */
-const Declaration = Statement.extends(function Declaration(
+const Declaration = Statement.extends(KIND, function Declaration(
   kind,
   name,
   docs,

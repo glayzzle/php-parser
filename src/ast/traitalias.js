@@ -22,7 +22,7 @@ const IS_PRIVATE = "private";
  * @property {string|null} as
  * @property {string|null} visibility
  */
-const TraitAlias = Node.extends(function TraitAlias(
+module.exports = Node.extends(KIND, function TraitAlias(
   trait,
   method,
   as,
@@ -45,5 +45,3 @@ const TraitAlias = Node.extends(function TraitAlias(
     }
   }
 });
-
-module.exports = TraitAlias;

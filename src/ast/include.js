@@ -16,7 +16,7 @@ const KIND = "include";
  * @property {boolean} once
  * @property {boolean} require
  */
-const Include = Statement.extends(function Include(
+module.exports = Statement.extends(KIND, function Include(
   once,
   require,
   target,
@@ -28,5 +28,3 @@ const Include = Statement.extends(function Include(
   this.require = require;
   this.target = target;
 });
-
-module.exports = Include;

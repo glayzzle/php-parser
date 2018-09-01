@@ -16,11 +16,15 @@ const KIND = "cast";
  * @property {String} raw
  * @property {Expression} what
  */
-const Cast = Operation.extends(function Cast(type, raw, what, docs, location) {
+module.exports = Operation.extends(KIND, function Cast(
+  type,
+  raw,
+  what,
+  docs,
+  location
+) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.raw = raw;
   this.what = what;
 });
-
-module.exports = Cast;

@@ -19,7 +19,7 @@ const KIND = "for";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.for.php
  */
-const For = Statement.extends(function For(
+module.exports = Statement.extends(KIND, function For(
   init,
   test,
   increment,
@@ -35,5 +35,3 @@ const For = Statement.extends(function For(
   this.shortForm = shortForm;
   this.body = body;
 });
-
-module.exports = For;

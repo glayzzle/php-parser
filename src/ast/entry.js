@@ -15,10 +15,8 @@ const KIND = "entry";
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
-const Entry = Node.extends(function Entry(key, value, docs, location) {
+module.exports = Node.extends(KIND, function Entry(key, value, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
 });
-
-module.exports = Entry;

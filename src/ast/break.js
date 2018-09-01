@@ -14,9 +14,7 @@ const KIND = "break";
  * @extends {Node}
  * @property {Number|Null} level
  */
-const Break = Node.extends(function Break(level, docs, location) {
+module.exports = Node.extends(KIND, function Break(level, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
-
-module.exports = Break;

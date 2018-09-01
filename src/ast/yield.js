@@ -16,10 +16,13 @@ const KIND = "yield";
  * @property {Expression|Null} key
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-const Yield = Expression.extends(function Yield(value, key, docs, location) {
+module.exports = Expression.extends(KIND, function Yield(
+  value,
+  key,
+  docs,
+  location
+) {
   Expression.apply(this, [KIND, docs, location]);
   this.value = value;
   this.key = key;
 });
-
-module.exports = Yield;

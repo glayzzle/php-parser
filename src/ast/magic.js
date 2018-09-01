@@ -13,8 +13,11 @@ const KIND = "magic";
  * @constructor Magic
  * @extends {Literal}
  */
-const Magic = Literal.extends(function Magic(value, raw, docs, location) {
+module.exports = Literal.extends(KIND, function Magic(
+  value,
+  raw,
+  docs,
+  location
+) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
-
-module.exports = Magic;

@@ -16,7 +16,7 @@ const KIND = "declare";
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
-const Declare = Block.extends(function Declare(
+const Declare = Block.extends(KIND, function Declare(
   what,
   body,
   mode,

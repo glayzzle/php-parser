@@ -46,13 +46,15 @@ Node.prototype.includeToken = function(parser) {
 
 /**
  * Helper for extending the Node class
+ * @param {String} type
  * @param {Function} constructor
  * @return {Function}
  */
-Node.extends = function(constructor) {
+Node.extends = function(type, constructor) {
   constructor.prototype = Object.create(this.prototype);
   constructor.extends = this.extends;
   constructor.prototype.constructor = constructor;
+  constructor.kind = type;
   return constructor;
 };
 

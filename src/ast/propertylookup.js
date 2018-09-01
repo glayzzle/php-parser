@@ -13,7 +13,7 @@ const KIND = "propertylookup";
  * @constructor PropertyLookup
  * @extends {Lookup}
  */
-const PropertyLookup = Lookup.extends(function PropertyLookup(
+module.exports = Lookup.extends(KIND, function PropertyLookup(
   what,
   offset,
   docs,
@@ -21,5 +21,3 @@ const PropertyLookup = Lookup.extends(function PropertyLookup(
 ) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
-
-module.exports = PropertyLookup;

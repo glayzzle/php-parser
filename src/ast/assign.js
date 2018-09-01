@@ -16,7 +16,7 @@ const KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
-const Assign = Statement.extends(function Assign(
+module.exports = Statement.extends(KIND, function Assign(
   left,
   right,
   operator,
@@ -28,5 +28,3 @@ const Assign = Statement.extends(function Assign(
   this.left = left;
   this.right = right;
 });
-
-module.exports = Assign;

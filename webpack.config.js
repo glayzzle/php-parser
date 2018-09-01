@@ -42,7 +42,7 @@ module.exports = {
         sourceMap: true,
         uglifyOptions: {
           compress: {
-            keep_fnames: true
+            keep_fnames: false
           },
           sourceMap: true,
           mangle: false,

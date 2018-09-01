@@ -14,7 +14,7 @@ const KIND = "constant";
  * @extends {Declaration}
  * @property {Node|null} value
  */
-const Constant = Declaration.extends(function Constant(
+module.exports = Declaration.extends(KIND, function Constant(
   name,
   value,
   docs,
@@ -23,5 +23,3 @@ const Constant = Declaration.extends(function Constant(
   Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
 });
-
-module.exports = Constant;

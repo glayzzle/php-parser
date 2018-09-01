@@ -14,9 +14,7 @@ const KIND = "return";
  * @extends {Node}
  * @property {Expression|null} expr
  */
-const Return = Node.extends(function Return(expr, docs, location) {
+module.exports = Node.extends(KIND, function Return(expr, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
-
-module.exports = Return;

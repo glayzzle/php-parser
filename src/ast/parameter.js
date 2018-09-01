@@ -18,7 +18,7 @@ const KIND = "parameter";
  * @property {boolean} variadic
  * @property {boolean} nullable
  */
-const Parameter = Declaration.extends(function Parameter(
+module.exports = Declaration.extends(KIND, function Parameter(
   name,
   type,
   value,
@@ -35,5 +35,3 @@ const Parameter = Declaration.extends(function Parameter(
   this.variadic = isVariadic;
   this.nullable = nullable;
 });
-
-module.exports = Parameter;

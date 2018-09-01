@@ -18,7 +18,7 @@ const KIND = "useitem";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-const UseItem = Statement.extends(function UseItem(
+const UseItem = Statement.extends(KIND, function UseItem(
   name,
   alias,
   type,

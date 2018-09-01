@@ -15,7 +15,7 @@ const KIND = "lookup";
  * @property {Expression} what
  * @property {Expression} offset
  */
-const Lookup = Expr.extends(function Lookup(
+module.exports = Expr.extends(KIND, function Lookup(
   kind,
   what,
   offset,
@@ -26,5 +26,3 @@ const Lookup = Expr.extends(function Lookup(
   this.what = what;
   this.offset = offset;
 });
-
-module.exports = Lookup;

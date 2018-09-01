@@ -384,9 +384,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/yield"),
   require("./ast/yieldfrom")
 ].forEach(function(ctor) {
-  let kind = ctor.prototype.constructor.name.toLowerCase();
-  if (kind[0] === "_") kind = kind.substring(1);
-  AST.prototype[kind] = ctor;
+  AST.prototype[ctor.kind] = ctor;
 });
 
 module.exports = AST;

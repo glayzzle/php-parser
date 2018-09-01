@@ -15,10 +15,13 @@ const KIND = "pre";
  * @property {String} type
  * @property {Variable} what
  */
-const Pre = Operation.extends(function Pre(type, what, docs, location) {
+module.exports = Operation.extends(KIND, function Pre(
+  type,
+  what,
+  docs,
+  location
+) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
-
-module.exports = Pre;

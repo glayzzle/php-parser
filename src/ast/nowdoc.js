@@ -10,13 +10,13 @@ const KIND = "nowdoc";
 
 /**
  * Defines a nowdoc string
- * @constructor String
+ * @constructor NowDoc
  * @extends {Literal}
  * @property {String} label
  * @property {String} raw
  * @property {Boolean} quote
  */
-const Nowdoc = Literal.extends(function Nowdoc(
+module.exports = Literal.extends(KIND, function Nowdoc(
   value,
   raw,
   label,
@@ -28,5 +28,3 @@ const Nowdoc = Literal.extends(function Nowdoc(
   this.label = label;
   this.quote = quote;
 });
-
-module.exports = Nowdoc;

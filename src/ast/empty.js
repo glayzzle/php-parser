@@ -13,8 +13,6 @@ const KIND = "empty";
  * @constructor Empty
  * @extends {Sys}
  */
-const Empty = Sys.extends(function Empty(args, docs, location) {
+module.exports = Sys.extends(KIND, function Empty(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Empty;

@@ -15,7 +15,7 @@ const KIND = "traituse";
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations
  */
-const TraitUse = Node.extends(function TraitUse(
+module.exports = Node.extends(KIND, function TraitUse(
   traits,
   adaptations,
   docs,
@@ -25,5 +25,3 @@ const TraitUse = Node.extends(function TraitUse(
   this.traits = traits;
   this.adaptations = adaptations;
 });
-
-module.exports = TraitUse;

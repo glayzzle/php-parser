@@ -15,7 +15,7 @@ const KIND = "interface";
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
  */
-const Interface = Declaration.extends(function Interface(
+module.exports = Declaration.extends(KIND, function Interface(
   name,
   ext,
   body,
@@ -26,5 +26,3 @@ const Interface = Declaration.extends(function Interface(
   this.extends = ext;
   this.body = body;
 });
-
-module.exports = Interface;

@@ -13,7 +13,7 @@ const KIND = "staticlookup";
  * @constructor StaticLookup
  * @extends {Lookup}
  */
-const StaticLookup = Lookup.extends(function StaticLookup(
+module.exports = Lookup.extends(KIND, function StaticLookup(
   what,
   offset,
   docs,
@@ -21,5 +21,3 @@ const StaticLookup = Lookup.extends(function StaticLookup(
 ) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
-
-module.exports = StaticLookup;

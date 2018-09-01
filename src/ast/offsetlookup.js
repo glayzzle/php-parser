@@ -13,7 +13,7 @@ const KIND = "offsetlookup";
  * @constructor OffsetLookup
  * @extends {Lookup}
  */
-const OffsetLookup = Lookup.extends(function OffsetLookup(
+module.exports = Lookup.extends(KIND, function OffsetLookup(
   what,
   offset,
   docs,
@@ -21,5 +21,3 @@ const OffsetLookup = Lookup.extends(function OffsetLookup(
 ) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
-
-module.exports = OffsetLookup;

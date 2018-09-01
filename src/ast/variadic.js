@@ -15,9 +15,7 @@ const KIND = "variadic";
  * @property {Array|Expression} what
  * @see https://wiki.php.net/rfc/argument_unpacking
  */
-const variadic = Expr.extends(function variadic(what, docs, location) {
+module.exports = Expr.extends(KIND, function variadic(what, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.what = what;
 });
-
-module.exports = variadic;

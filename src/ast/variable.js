@@ -27,7 +27,7 @@ const KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-const Variable = Expr.extends(function Variable(
+module.exports = Expr.extends(KIND, function Variable(
   name,
   byref,
   curly,
@@ -39,5 +39,3 @@ const Variable = Expr.extends(function Variable(
   this.byref = byref || false;
   this.curly = curly || false;
 });
-
-module.exports = Variable;

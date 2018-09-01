@@ -17,7 +17,7 @@ const KIND = "property";
  * @property {string} visibility
  * @property {Node|null} value
  */
-const Property = Declaration.extends(function Property(
+module.exports = Declaration.extends(KIND, function Property(
   name,
   value,
   flags,
@@ -28,5 +28,3 @@ const Property = Declaration.extends(function Property(
   this.value = value;
   this.parseFlags(flags);
 });
-
-module.exports = Property;

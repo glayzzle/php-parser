@@ -16,7 +16,7 @@ const KIND = "retif";
  * @property {Expression} trueExpr
  * @property {Expression} falseExpr
  */
-const RetIf = Statement.extends(function RetIf(
+module.exports = Statement.extends(KIND, function RetIf(
   test,
   trueExpr,
   falseExpr,
@@ -28,5 +28,3 @@ const RetIf = Statement.extends(function RetIf(
   this.trueExpr = trueExpr;
   this.falseExpr = falseExpr;
 });
-
-module.exports = RetIf;

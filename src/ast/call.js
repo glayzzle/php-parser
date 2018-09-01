@@ -15,10 +15,13 @@ const KIND = "call";
  * @property {Identifier|Variable|??} what
  * @property {Arguments[]} arguments
  */
-const Call = Statement.extends(function Call(what, args, docs, location) {
+module.exports = Statement.extends(KIND, function Call(
+  what,
+  args,
+  docs,
+  location
+) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });
-
-module.exports = Call;

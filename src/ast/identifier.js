@@ -15,7 +15,7 @@ const KIND = "identifier";
  * @property {string} name
  * @property {string} resolution
  */
-const Identifier = Node.extends(function Identifier(
+const Identifier = Node.extends(KIND, function Identifier(
   name,
   isRelative,
   docs,

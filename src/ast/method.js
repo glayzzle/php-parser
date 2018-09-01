@@ -17,9 +17,7 @@ const KIND = "method";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-const Method = fn.extends(function Method() {
+module.exports = fn.extends(KIND, function Method() {
   fn.apply(this, arguments);
   this.kind = KIND;
 });
-
-module.exports = Method;

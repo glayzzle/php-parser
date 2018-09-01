@@ -13,8 +13,6 @@ const KIND = "print";
  * @constructor Print
  * @extends {Sys}
  */
-const Print = Sys.extends(function Print(args, docs, location) {
+module.exports = Sys.extends(KIND, function Print(args, docs, location) {
   Sys.apply(this, [KIND, args, docs, location]);
 });
-
-module.exports = Print;

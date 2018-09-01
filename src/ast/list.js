@@ -14,9 +14,12 @@ const KIND = "list";
  * @extends {Sys}
  * @property {boolean} shortForm
  */
-const List = Sys.extends(function List(items, shortForm, docs, location) {
+module.exports = Sys.extends(KIND, function List(
+  items,
+  shortForm,
+  docs,
+  location
+) {
   Sys.apply(this, [KIND, items, docs, location]);
   this.shortForm = shortForm;
 });
-
-module.exports = List;

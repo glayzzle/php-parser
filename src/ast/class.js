@@ -19,7 +19,7 @@ const KIND = "class";
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
-const Class = Declaration.extends(function Class(
+module.exports = Declaration.extends(KIND, function Class(
   name,
   ext,
   impl,
@@ -35,5 +35,3 @@ const Class = Declaration.extends(function Class(
   this.body = body;
   this.parseFlags(flags);
 });
-
-module.exports = Class;

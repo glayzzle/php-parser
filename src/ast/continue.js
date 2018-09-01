@@ -14,9 +14,7 @@ const KIND = "continue";
  * @extends {Node}
  * @property {Number|Null} level
  */
-const Continue = Node.extends(function Continue(level, docs, location) {
+module.exports = Node.extends(KIND, function Continue(level, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.level = level;
 });
-
-module.exports = Continue;

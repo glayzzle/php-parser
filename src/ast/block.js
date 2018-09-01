@@ -14,9 +14,12 @@ const KIND = "block";
  * @extends {Statement}
  * @property {Node[]} children
  */
-const Block = Statement.extends(function Block(kind, children, docs, location) {
+module.exports = Statement.extends(KIND, function Block(
+  kind,
+  children,
+  docs,
+  location
+) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.children = children.filter(Boolean);
 });
-
-module.exports = Block;
