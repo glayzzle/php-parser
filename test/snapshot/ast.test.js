@@ -9,6 +9,17 @@ describe("Test AST structure", function() {
     expect(parser.parseEval('?>?>?>')).toMatchSnapshot();
   });
 
+  it("#176 - lost `?>` in program node", function() {
+    expect(parser.parseCode(`<?php
+    __LINE__
+    ?>`, null, {
+      ast: {
+        withPositions: true,
+        withSource: true
+      }
+    })).toMatchSnapshot();
+  })
+
   it('test program', function() {
     expect(parser.parseEval('')).toMatchSnapshot();
   });

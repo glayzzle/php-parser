@@ -282,6 +282,12 @@ parser.prototype.parse = function(code, filename) {
       }
     }
   }
+  // #176 : register latest position
+  this.prev = [
+    this.lexer.yylloc.last_line,
+    this.lexer.yylloc.last_column,
+    this.lexer.offset
+  ];
   return program(childs, this._errors, this._docs, this._tokens);
 };
 
