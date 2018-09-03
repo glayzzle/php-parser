@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: ed57def5bfcb3d7f7105 - 9/1/2018
+ *         Build: 3a77549cb15446749700 - 2018-9-3
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -4818,7 +4818,15 @@ module.exports = {
   read_use_declarations: function read_use_declarations(typed) {
     var result = [this.read_use_declaration(typed)];
     while (this.token === ",") {
-      result.push(this.next().read_use_declaration(typed));
+      this.next();
+      if (typed) {
+        if (this.token !== this.tok.T_FUNCTION && this.token !== this.tok.T_CONST && this.token !== this.tok.T_STRING) {
+          break;
+        }
+      } else if (this.token !== this.tok.T_STRING) {
+        break;
+      }
+      result.push(this.read_use_declaration(typed));
     }
     return result;
   },
@@ -6592,6 +6600,8 @@ parser.prototype.parse = function (code, filename) {
       }
     }
   }
+  // #176 : register latest position
+  this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
   return program(childs, this._errors, this._docs, this._tokens);
 };
 
@@ -10870,7 +10880,7 @@ engine.prototype.parseEval = function (buffer) {
  * @private
  */
 engine.parseCode = function (buffer, filename, options) {
-  if ((typeof filename === "undefined" ? "undefined" : _typeof(filename)) === "object") {
+  if ((typeof filename === "undefined" ? "undefined" : _typeof(filename)) === "object" && !options) {
     // retro-compatibility
     options = filename;
     filename = "unknown";
