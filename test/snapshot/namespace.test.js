@@ -1,7 +1,14 @@
 const parser = require('../main');
 
 describe("Test namespace statements", function() {
-
+  it("allow trailing comma for grouped namespaces #177", function() {
+    expect(parser.parseEval(`
+    use Foo\\Bar\\ {
+      Foo,
+      Bar,
+      Baz,
+    };`)).toMatchSnapshot();
+  });
   it("test single namespace", function() {
     expect(parser.parseEval(`
       namespace foo;

@@ -130,7 +130,19 @@ module.exports = {
   read_use_declarations: function(typed) {
     const result = [this.read_use_declaration(typed)];
     while (this.token === ",") {
-      result.push(this.next().read_use_declaration(typed));
+      this.next();
+      if (typed) {
+        if (
+          this.token !== this.tok.T_FUNCTION &&
+          this.token !== this.tok.T_CONST &&
+          this.token !== this.tok.T_STRING
+        ) {
+          break;
+        }
+      } else if (this.token !== this.tok.T_STRING) {
+        break;
+      }
+      result.push(this.read_use_declaration(typed));
     }
     return result;
   },
