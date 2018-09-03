@@ -131,7 +131,7 @@ engine.prototype.parseEval = function(buffer) {
  * @private
  */
 engine.parseCode = function(buffer, filename, options) {
-  if (typeof filename === "object") {
+  if (typeof filename === "object" && !options) {
     // retro-compatibility
     options = filename;
     filename = "unknown";
