@@ -1,5 +1,256 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Test expressions chaining calls (derefenceable) 1`] = `
+Program {
+  "children": Array [
+    PropertyLookup {
+      "kind": "propertylookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "bar",
+      },
+      "what": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "10",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "foo",
+          },
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": ConstRef {
+                "kind": "constref",
+                "name": "call",
+              },
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": ConstRef {
+                  "kind": "constref",
+                  "name": "b",
+                },
+                "parenthesizedExpression": true,
+                "what": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions chaining calls (derefenceable) 2`] = `
+Program {
+  "children": Array [
+    PropertyLookup {
+      "kind": "propertylookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "foo",
+      },
+      "what": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "0",
+        },
+        "what": Array {
+          "items": Array [
+            Number {
+              "kind": "number",
+              "value": "1",
+            },
+            Number {
+              "kind": "number",
+              "value": "2",
+            },
+            Number {
+              "kind": "number",
+              "value": "3",
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions chaining calls (derefenceable) 3`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Encapsed {
+            "kind": "encapsed",
+            "type": "offset",
+            "value": Array [
+              ConstRef {
+                "kind": "constref",
+                "name": "bar",
+              },
+              Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "baz",
+              },
+            ],
+          },
+          "what": Call {
+            "arguments": Array [
+              Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "foo",
+              },
+            ],
+            "kind": "call",
+            "what": Post {
+              "kind": "post",
+              "parenthesizedExpression": true,
+              "type": "+",
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
+            },
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions chaining calls (derefenceable) 4`] = `
+Program {
+  "children": Array [
+    Post {
+      "kind": "post",
+      "parenthesizedExpression": true,
+      "type": "+",
+      "what": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+    },
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": ConstRef {
+        "kind": "constref",
+        "name": "baz",
+      },
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": Identifier {
+          "kind": "identifier",
+          "name": "bar",
+          "resolution": "uqn",
+        },
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'bar' (T_STRING), expecting ';' on line 1",
+      "token": "'bar' (T_STRING)",
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '::' (T_DOUBLE_COLON) on line 1",
+      "token": "'::' (T_DOUBLE_COLON)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions chaining calls (derefenceable) 5`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "baz",
+        },
+        "what": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "foo",
+            },
+            "what": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test expressions should assign class static 1`] = `
 Program {
   "children": Array [

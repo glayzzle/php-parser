@@ -504,8 +504,11 @@ module.exports = {
   },
   handleDereferencable: function(expr) {
     while (this.token !== this.EOF) {
-      if (this.token === this.tok.T_OBJECT_OPERATOR) {
-        expr = this.recursive_variable_chain_scan(expr, false);
+      if (
+        this.token === this.tok.T_OBJECT_OPERATOR ||
+        this.token === this.tok.T_DOUBLE_COLON
+      ) {
+        expr = this.recursive_variable_chain_scan(expr, false, false, true);
       } else if (this.token === this.tok.T_CURLY_OPEN || this.token === "[") {
         expr = this.read_dereferencable(expr);
       } else if (this.token === "(") {

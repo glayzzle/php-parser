@@ -235,4 +235,19 @@ describe("Test expressions", function() {
     );
     expect(ast).toMatchSnapshot();
   });
+
+
+  it("chaining calls (derefenceable)", function() {
+    expect(parser.parseEval(`($a->b)::call()->foo[10]->bar;`)).toMatchSnapshot();
+    expect(parser.parseEval(`array(1, 2, 3)[0]->foo;`)).toMatchSnapshot();
+    expect(parser.parseEval(`($a++)($foo)->bar{$baz}::foo();`)).toMatchSnapshot();
+    // expect error :
+    expect(parser.parseEval(`($a++)bar::foo::baz;`, {
+      parser: {
+        suppressErrors: true
+      }
+    })).toMatchSnapshot();
+    // should pass
+    expect(parser.parseEval(`bar()::foo()::baz();`)).toMatchSnapshot();
+  });
 });
