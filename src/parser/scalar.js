@@ -222,6 +222,7 @@ module.exports = {
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
+      result.destroy();
       result = this.next().read_variable(false, false, false);
       if (result.kind === "variable") {
         result.curly = true;
@@ -230,6 +231,7 @@ module.exports = {
     } else if (this.token === this.tok.T_VARIABLE) {
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
+      result.destroy();
       result = this.read_simple_variable(false);
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
@@ -243,8 +245,8 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         node = this.node("propertylookup");
-        const what = this.node("constref");
         this.next().expect(this.tok.T_STRING);
+        const what = this.node("constref");
         name = this.text();
         this.next();
         result = node(result, what(name));

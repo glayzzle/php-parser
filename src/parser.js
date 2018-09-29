@@ -353,6 +353,10 @@ parser.prototype.node = function(name) {
     if (this._docIndex < this._docs.length) {
       const docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
+      if (this.debug) {
+        console.log(new Error("Append docs on " + name));
+        console.log(docs);
+      }
       return this.ast.prepare(name, docs, this);
     }
   }
@@ -379,7 +383,7 @@ parser.prototype.expectEndOfStatement = function(node) {
 };
 
 /** outputs some debug information on current token **/
-const ignoreStack = ["parser.next"];
+const ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
 parser.prototype.showlog = function() {
   const stack = new Error().stack.split("\n");
   let line;

@@ -55,6 +55,7 @@ module.exports = {
           result = result("constref", name);
         }
       } else {
+        // @fixme possible #193 bug
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
@@ -296,7 +297,10 @@ module.exports = {
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);
-      } else break;
+      } else {
+        node.destroy();
+        break;
+      }
     }
     return result;
   },

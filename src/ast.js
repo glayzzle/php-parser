@@ -291,6 +291,15 @@ AST.prototype.prepare = function(kind, docs, parser) {
   result.setKind = function(newKind) {
     kind = newKind;
   };
+  /**
+   * Release a node without using it on the AST
+   */
+  result.destroy = function() {
+    if (docs) {
+      // release current docs stack
+      parser._docIndex = parser._docs.length - docs.length;
+    }
+  };
   return result;
 };
 

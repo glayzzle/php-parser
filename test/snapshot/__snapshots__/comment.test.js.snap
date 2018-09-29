@@ -142,6 +142,68 @@ Program {
 }
 `;
 
+exports[`Test comments issues fix #193 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "operator": "=",
+      "right": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "leadingComments": Array [
+            CommentLine {
+              "kind": "commentline",
+              "value": "// Comment Before
+",
+            },
+          ],
+          "offset": ConstRef {
+            "kind": "constref",
+            "leadingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "value": "// Comment After
+",
+              },
+            ],
+            "name": "each",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "var",
+          },
+        },
+      },
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "value": "// Comment Before
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// Comment After
+",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test comments multi line comments test function 1`] = `
 Program {
   "children": Array [
@@ -347,6 +409,14 @@ Program {
             "kind": "commentblock",
             "value": "/* ignore */",
           },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
         ],
       },
       "kind": "if",
@@ -525,6 +595,10 @@ Program {
             "children": Array [],
             "kind": "block",
             "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* bb */",
+              },
               CommentBlock {
                 "kind": "commentblock",
                 "value": "/* dd */",

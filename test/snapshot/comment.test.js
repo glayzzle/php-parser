@@ -39,6 +39,25 @@ describe("Test comments", function() {
       );
       expect(ast).toMatchSnapshot();
     });
+    
+    it("fix #193", function() {
+      const ast = parser.parseEval(
+        `
+        $a = $var
+          // Comment Before
+          ->
+          // Comment After
+          each();
+        `,
+        {
+          parser: {
+            extractDoc: true,
+            // debug: true
+          }
+        }
+      );
+      expect(ast).toMatchSnapshot();
+    });
   });
 
   it("test single line comments", function() {

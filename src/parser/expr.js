@@ -80,6 +80,9 @@ module.exports = {
       }
       this.expect(":") && this.next();
       return result("retif", expr, trueArg, this.read_expr());
+    } else {
+      // see #193
+      result.destroy();
     }
 
     return expr;
@@ -419,6 +422,9 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           this.next();
           return result("post", "-", expr);
+        default:
+          // see #193
+          result.destroy();
       }
     } else if (this.is("SCALAR")) {
       result = this.node();
@@ -429,6 +435,9 @@ module.exports = {
         if (expr.loc) list.loc = expr.loc;
         let right = this.next().read_expr();
         return result("assign", list, right, "=");
+      } else {
+        // see #193
+        result.destroy();
       }
       // classic array
       return this.handleDereferencable(expr);
