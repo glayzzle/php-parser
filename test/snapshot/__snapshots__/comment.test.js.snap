@@ -142,6 +142,90 @@ Program {
 }
 `;
 
+exports[`Test comments issues fix #189 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+      },
+      "operator": "=",
+      "right": Bin {
+        "kind": "bin",
+        "leadingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "// Comment 1
+",
+          },
+        ],
+        "left": Bin {
+          "kind": "bin",
+          "left": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'string1'",
+            "unicode": false,
+            "value": "string1",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'string2'",
+            "unicode": false,
+            "value": "string2",
+          },
+          "type": ".",
+        },
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "leadingComments": Array [
+            CommentLine {
+              "kind": "commentline",
+              "value": "// Comment 2
+",
+            },
+            CommentLine {
+              "kind": "commentline",
+              "value": "// Comment 3
+",
+            },
+          ],
+          "raw": "'string3'",
+          "unicode": false,
+          "value": "string3",
+        },
+        "type": ".",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "value": "// Comment 1
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// Comment 2
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// Comment 3
+",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test comments issues fix #193 1`] = `
 Program {
   "children": Array [
@@ -355,6 +439,16 @@ Program {
           "shortForm": false,
           "test": Boolean {
             "kind": "boolean",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ignore */",
+              },
+            ],
             "raw": "false",
             "value": false,
           },
@@ -409,20 +503,22 @@ Program {
             "kind": "commentblock",
             "value": "/* ignore */",
           },
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* */",
-          },
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* ignore */",
-          },
         ],
       },
       "kind": "if",
       "shortForm": false,
       "test": Boolean {
         "kind": "boolean",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* */",
+          },
+        ],
         "raw": "true",
         "value": true,
       },
@@ -884,6 +980,18 @@ Program {
   "children": Array [
     Assign {
       "kind": "assign",
+      "leadingComments": Array [
+        CommentLine {
+          "kind": "commentline",
+          "value": "# some information
+",
+        },
+        CommentLine {
+          "kind": "commentline",
+          "value": "// another line
+",
+        },
+      ],
       "left": Variable {
         "byref": false,
         "curly": false,

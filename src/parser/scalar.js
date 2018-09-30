@@ -258,6 +258,7 @@ module.exports = {
       const value = this.text();
       this.next();
       // consider it as string
+      result.destroy();
       result = result("string", false, value, false, value);
     }
 

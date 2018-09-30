@@ -82,7 +82,7 @@ module.exports = {
       return result("retif", expr, trueArg, this.read_expr());
     } else {
       // see #193
-      result.destroy();
+      result.destroy(expr);
     }
 
     return expr;
@@ -122,9 +122,8 @@ module.exports = {
         result = result("number", "-" + this.text(), null);
         this.next();
         return result;
-      } else {
-        return result("unary", "-", this.read_expr());
       }
+      return result("unary", "-", this.read_expr());
     }
 
     if (this.token === "(") {
@@ -424,7 +423,7 @@ module.exports = {
           return result("post", "-", expr);
         default:
           // see #193
-          result.destroy();
+          result.destroy(expr);
       }
     } else if (this.is("SCALAR")) {
       result = this.node();
@@ -436,8 +435,8 @@ module.exports = {
         let right = this.next().read_expr();
         return result("assign", list, right, "=");
       } else {
-        // see #193
-        result.destroy();
+        // see #189 - swap docs on nodes
+        result.destroy(expr);
       }
       // classic array
       return this.handleDereferencable(expr);

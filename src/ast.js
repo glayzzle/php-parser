@@ -294,10 +294,18 @@ AST.prototype.prepare = function(kind, docs, parser) {
   /**
    * Release a node without using it on the AST
    */
-  result.destroy = function() {
+  result.destroy = function(target) {
     if (docs) {
       // release current docs stack
-      parser._docIndex = parser._docs.length - docs.length;
+      if (target) {
+        if (!target.leadingComments) {
+          target.leadingComments = docs;
+        } else {
+          target.leadingComments = docs.concat(target.leadingComments);
+        }
+      } else {
+        parser._docIndex = parser._docs.length - docs.length;
+      }
     }
   };
   return result;

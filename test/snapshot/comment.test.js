@@ -39,6 +39,25 @@ describe("Test comments", function() {
       );
       expect(ast).toMatchSnapshot();
     });
+
+    it("fix #189", function() {
+      const ast = parser.parseEval(
+        `
+      $var = 'string1'
+      // Comment 1
+      . 'string2' // Comment 2
+      // Comment 3
+      . 'string3';
+      `,
+        {
+          parser: {
+            extractDoc: true,
+            // debug: true
+          }
+        }
+      );
+      expect(ast).toMatchSnapshot();
+    });
     
     it("fix #193", function() {
       const ast = parser.parseEval(
