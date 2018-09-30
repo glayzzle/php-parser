@@ -40,6 +40,8 @@ Declaration.prototype.parseFlags = function(flags) {
   if (this.kind !== "class") {
     if (flags[0] === -1) {
       this.visibility = IS_UNDEFINED;
+    } else if (flags[0] === null) {
+      this.visibility = null;
     } else if (flags[0] === 0) {
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
