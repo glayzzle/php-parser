@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 3a77549cb15446749700 - 2018-9-3
+ *         Build: 800b5c0abc57980b33d2 - 2018-9-30
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -3099,6 +3099,23 @@ AST.prototype.prepare = function (kind, docs, parser) {
   result.setKind = function (newKind) {
     kind = newKind;
   };
+  /**
+   * Release a node without using it on the AST
+   */
+  result.destroy = function (target) {
+    if (docs) {
+      // release current docs stack
+      if (target) {
+        if (!target.leadingComments) {
+          target.leadingComments = docs;
+        } else {
+          target.leadingComments = docs.concat(target.leadingComments);
+        }
+      } else {
+        parser._docIndex = parser._docs.length - docs.length;
+      }
+    }
+  };
   return result;
 };
 
@@ -3455,6 +3472,7 @@ module.exports = {
           result = result("constref", name);
         }
       } else {
+        // @fixme possible #193 bug
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
@@ -3496,7 +3514,7 @@ module.exports = {
     return result(what, offset);
   },
 
-  recursive_variable_chain_scan: function recursive_variable_chain_scan(result, read_only, encapsed) {
+  recursive_variable_chain_scan: function recursive_variable_chain_scan(result, read_only, encapsed, dereferencable) {
     var name = void 0,
         node = void 0,
         offset = void 0;
@@ -3551,6 +3569,10 @@ module.exports = {
             this.next();
           }
           result = node(result, offset);
+          // static lookup dereferencables are limited to staticlookup over functions
+          if (dereferencable && this.token !== "(") {
+            this.error("(");
+          }
           break;
         case this.tok.T_OBJECT_OPERATOR:
           {
@@ -3673,7 +3695,10 @@ module.exports = {
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);
-      } else break;
+      } else {
+        node.destroy();
+        break;
+      }
     }
     return result;
   },
@@ -4604,6 +4629,7 @@ module.exports = {
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
+      result.destroy();
       result = this.next().read_variable(false, false, false);
       if (result.kind === "variable") {
         result.curly = true;
@@ -4612,6 +4638,7 @@ module.exports = {
     } else if (this.token === this.tok.T_VARIABLE) {
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
+      result.destroy();
       result = this.read_simple_variable(false);
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
@@ -4625,8 +4652,8 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         node = this.node("propertylookup");
-        var what = this.node("constref");
         this.next().expect(this.tok.T_STRING);
+        var what = this.node("constref");
         name = this.text();
         this.next();
         result = node(result, what(name));
@@ -4638,6 +4665,7 @@ module.exports = {
       var value = this.text();
       this.next();
       // consider it as string
+      result.destroy();
       result = result("string", false, value, false, value);
     }
 
@@ -5482,6 +5510,9 @@ module.exports = {
       }
       this.expect(":") && this.next();
       return result("retif", expr, trueArg, this.read_expr());
+    } else {
+      // see #193
+      result.destroy(expr);
     }
 
     return expr;
@@ -5516,9 +5547,8 @@ module.exports = {
         result = result("number", "-" + this.text(), null);
         this.next();
         return result;
-      } else {
-        return result("unary", "-", this.read_expr());
       }
+      return result("unary", "-", this.read_expr());
     }
 
     if (this.token === "(") {
@@ -5804,6 +5834,9 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           this.next();
           return result("post", "-", expr);
+        default:
+          // see #193
+          result.destroy(expr);
       }
     } else if (this.is("SCALAR")) {
       result = this.node();
@@ -5814,6 +5847,9 @@ module.exports = {
         if (expr.loc) list.loc = expr.loc;
         var _right = this.next().read_expr();
         return result("assign", list, _right, "=");
+      } else {
+        // see #189 - swap docs on nodes
+        result.destroy(expr);
       }
       // classic array
       return this.handleDereferencable(expr);
@@ -5882,8 +5918,8 @@ module.exports = {
   },
   handleDereferencable: function handleDereferencable(expr) {
     while (this.token !== this.EOF) {
-      if (this.token === this.tok.T_OBJECT_OPERATOR) {
-        expr = this.recursive_variable_chain_scan(expr, false);
+      if (this.token === this.tok.T_OBJECT_OPERATOR || this.token === this.tok.T_DOUBLE_COLON) {
+        expr = this.recursive_variable_chain_scan(expr, false, false, true);
       } else if (this.token === this.tok.T_CURLY_OPEN || this.token === "[") {
         expr = this.read_dereferencable(expr);
       } else if (this.token === "(") {
@@ -6658,6 +6694,10 @@ parser.prototype.node = function (name) {
     if (this._docIndex < this._docs.length) {
       var docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
+      if (this.debug) {
+        console.log(new Error("Append docs on " + name));
+        console.log(docs);
+      }
       return this.ast.prepare(name, docs, this);
     }
   }
@@ -6684,7 +6724,7 @@ parser.prototype.expectEndOfStatement = function (node) {
 };
 
 /** outputs some debug information on current token **/
-var ignoreStack = ["parser.next"];
+var ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
 parser.prototype.showlog = function () {
   var stack = new Error().stack.split("\n");
   var line = void 0;
