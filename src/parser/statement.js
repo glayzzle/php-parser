@@ -381,9 +381,10 @@ module.exports = {
 
       default:
         // default fallback expr
+        let statement = this.node("expressionstatement");
         expr = this.read_expr();
         this.expectEndOfStatement(expr);
-        return expr;
+        return statement(expr);
     }
   },
   /**

@@ -364,6 +364,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/eval"),
   require("./ast/exit"),
   require("./ast/expression"),
+  require("./ast/expressionstatement"),
   require("./ast/for"),
   require("./ast/foreach"),
   require("./ast/function"),
