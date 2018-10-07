@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: aee66c9552f6f0b5f9e3 - 2018-10-7
+ *         Build: 67f5ebe24bdcc4f22eb8 - 2018-10-7
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -156,6 +156,14 @@ var Node = function Node(kind, docs, location) {
   if (location) {
     this.loc = location;
   }
+};
+
+/**
+ * Attach comments to current node
+ * @param {*} docs
+ */
+Node.prototype.setTrailingComments = function (docs) {
+  this.trailingComments = docs;
 };
 
 /**
@@ -3097,6 +3105,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
     node.apply(astNode, args);
     result.instance = astNode;
     if (result.trailingComments) {
+      // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
     }
     return self.resolvePrecedence(astNode);
@@ -3115,7 +3124,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
   result.setTrailingComments = function (docs) {
     if (result.instance) {
       // already created
-      result.instance.trailingComments = docs;
+      result.instance.setTrailingComments(docs);
     } else {
       result.trailingComments = docs;
     }
@@ -6648,8 +6657,7 @@ parser.prototype.parse = function (code, filename) {
   this.length = this.lexer._input.length;
   this.innerList = false;
   this.innerListForm = false;
-  var program = this.ast.prepare("program", null, this);
-  this._nodeStack = [program];
+  var program = this.node("program");
   var childs = [];
   this.next();
   while (this.token != this.EOF) {
@@ -6727,12 +6735,36 @@ parser.prototype.node = function (name) {
       }
     }
     var node = this.ast.prepare(name, docs, this);
-    this._nodeStack.push(node);
+    /**
+     * TOKENS :
+     * node1 commentA token commmentB node2 commentC token commentD node3 commentE token
+     *
+     * AST :
+     * structure:S1 [
+     *    left: node1 ( trail: commentA ),
+     *    right: structure:S2 [
+     *       node2 (lead: commentB, trail: commentC),
+     *       node3 (lead: commentD)
+     *    ],
+     *    trail: commentE
+     * ]
+     *
+     * Algorithm :
+     *
+     * Attach the last comments on parent of current node
+     * If a new node is started and the parent has a trailing comment
+     * the move it on previous node
+     *
+     * start S2
+     * start node1
+     * consume node1 & set commentA as trailingComment on S2
+     * start S2
+     * S1 has a trailingComment, attach it on node1
+     * ...
+     * NOTE : As the trailingComment Behavior depends on AST, it will be build on
+     * the AST layer - last child node will keep it's trailingComment nodes
+     */
     node.preBuild = function () {
-      var index = this._nodeStack.indexOf(node);
-      if (index > -1) {
-        this._nodeStack = this._nodeStack.slice(0, index);
-      }
       // inject leading comment on current node
       if (this._docIndex < this._docs.length) {
         node.setTrailingComments(this._docs.slice(this._docIndex));
