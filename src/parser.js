@@ -269,7 +269,7 @@ parser.prototype.parse = function(code, filename) {
   this.length = this.lexer._input.length;
   this.innerList = false;
   this.innerListForm = false;
-  const program = this.ast.prepare("program", null, this);
+  const program = this.node("program");
   let childs = [];
   this.next();
   while (this.token != this.EOF) {
@@ -350,15 +350,53 @@ parser.prototype.error = function(expect) {
  */
 parser.prototype.node = function(name) {
   if (this.extractDoc) {
+    let docs = null;
     if (this._docIndex < this._docs.length) {
-      const docs = this._docs.slice(this._docIndex);
+      docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
       if (this.debug) {
         console.log(new Error("Append docs on " + name));
         console.log(docs);
       }
-      return this.ast.prepare(name, docs, this);
     }
+    const node = this.ast.prepare(name, docs, this);
+    /**
+     * TOKENS :
+     * node1 commentA token commmentB node2 commentC token commentD node3 commentE token
+     *
+     * AST :
+     * structure:S1 [
+     *    left: node1 ( trail: commentA ),
+     *    right: structure:S2 [
+     *       node2 (lead: commentB, trail: commentC),
+     *       node3 (lead: commentD)
+     *    ],
+     *    trail: commentE
+     * ]
+     *
+     * Algorithm :
+     *
+     * Attach the last comments on parent of current node
+     * If a new node is started and the parent has a trailing comment
+     * the move it on previous node
+     *
+     * start S2
+     * start node1
+     * consume node1 & set commentA as trailingComment on S2
+     * start S2
+     * S1 has a trailingComment, attach it on node1
+     * ...
+     * NOTE : As the trailingComment Behavior depends on AST, it will be build on
+     * the AST layer - last child node will keep it's trailingComment nodes
+     */
+    node.preBuild = function() {
+      // inject leading comment on current node
+      if (this._docIndex < this._docs.length) {
+        node.setTrailingComments(this._docs.slice(this._docIndex));
+        this._docIndex = this._docs.length;
+      }
+    }.bind(this);
+    return node;
   }
   return this.ast.prepare(name, null, this);
 };
