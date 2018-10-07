@@ -27,6 +27,13 @@ Program {
               "raw": "true",
               "value": true,
             },
+            "trailingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "value": "// another comment
+",
+              },
+            ],
           },
         ],
         "kind": "block",
@@ -38,6 +45,13 @@ Program {
         "raw": "true",
         "value": true,
       },
+      "trailingComments": Array [
+        CommentLine {
+          "kind": "commentline",
+          "value": "// 2nd comment
+",
+        },
+      ],
     },
   ],
   "comments": Array [
@@ -88,13 +102,6 @@ Program {
           "kind": "block",
         },
         "kind": "if",
-        "leadingComments": Array [
-          CommentLine {
-            "kind": "commentline",
-            "value": "// Don't parsed :(
-",
-          },
-        ],
         "shortForm": false,
         "test": Boolean {
           "kind": "boolean",
@@ -120,6 +127,13 @@ Program {
           },
         ],
         "kind": "block",
+        "trailingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "// Don't parsed :(
+",
+          },
+        ],
       },
       "kind": "if",
       "shortForm": false,
@@ -156,19 +170,19 @@ Program {
       "operator": "=",
       "right": Bin {
         "kind": "bin",
-        "leadingComments": Array [
-          CommentLine {
-            "kind": "commentline",
-            "value": "// Comment 1
-",
-          },
-        ],
         "left": Bin {
           "kind": "bin",
           "left": String {
             "isDoubleQuote": false,
             "kind": "string",
             "raw": "'string1'",
+            "trailingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "value": "// Comment 1
+",
+              },
+            ],
             "unicode": false,
             "value": "string1",
           },
@@ -176,6 +190,18 @@ Program {
             "isDoubleQuote": false,
             "kind": "string",
             "raw": "'string2'",
+            "trailingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "value": "// Comment 2
+",
+              },
+              CommentLine {
+                "kind": "commentline",
+                "value": "// Comment 3
+",
+              },
+            ],
             "unicode": false,
             "value": "string2",
           },
@@ -184,18 +210,6 @@ Program {
         "right": String {
           "isDoubleQuote": false,
           "kind": "string",
-          "leadingComments": Array [
-            CommentLine {
-              "kind": "commentline",
-              "value": "// Comment 2
-",
-            },
-            CommentLine {
-              "kind": "commentline",
-              "value": "// Comment 3
-",
-            },
-          ],
           "raw": "'string3'",
           "unicode": false,
           "value": "string3",
@@ -243,13 +257,6 @@ Program {
         "kind": "call",
         "what": PropertyLookup {
           "kind": "propertylookup",
-          "leadingComments": Array [
-            CommentLine {
-              "kind": "commentline",
-              "value": "// Comment Before
-",
-            },
-          ],
           "offset": ConstRef {
             "kind": "constref",
             "leadingComments": Array [
@@ -266,6 +273,13 @@ Program {
             "curly": false,
             "kind": "variable",
             "name": "var",
+            "trailingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "value": "// Comment Before
+",
+              },
+            ],
           },
         },
       },
@@ -285,6 +299,142 @@ Program {
   ],
   "errors": Array [],
   "kind": "program",
+}
+`;
+
+exports[`Test comments issues impl #194 1`] = `
+Program {
+  "children": Array [
+    Assign {
+      "kind": "assign",
+      "leadingComments": Array [
+        CommentLine {
+          "kind": "commentline",
+          "value": "// lead assign
+",
+        },
+      ],
+      "left": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+        "trailingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* trail foo */",
+          },
+        ],
+      },
+      "operator": "=",
+      "right": Number {
+        "kind": "number",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* lead 1 */",
+          },
+        ],
+        "trailingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* trail assign */",
+          },
+        ],
+        "value": "1",
+      },
+    },
+    Call {
+      "arguments": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* lead arg */",
+            },
+          ],
+          "raw": "\\"arg\\"",
+          "trailingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* trail arg */",
+            },
+          ],
+          "unicode": false,
+          "value": "arg",
+        },
+      ],
+      "kind": "call",
+      "leadingComments": Array [
+        CommentLine {
+          "kind": "commentline",
+          "value": "// lead call
+",
+        },
+      ],
+      "trailingComments": Array [
+        CommentBlock {
+          "kind": "commentblock",
+          "value": "/* trail call */",
+        },
+      ],
+      "what": Identifier {
+        "kind": "identifier",
+        "name": "callback",
+        "resolution": "uqn",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "value": "// lead assign
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* trail foo */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* lead 1 */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* trail assign */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "value": "// lead call
+",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* lead arg */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* trail arg */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* trail call */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* trail program */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "trailingComments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* trail program */",
+    },
+  ],
 }
 `;
 
@@ -325,6 +475,12 @@ Program {
               "curly": false,
               "kind": "variable",
               "name": "arg",
+              "trailingComments": Array [
+                CommentBlock {
+                  "kind": "commentblock",
+                  "value": "/* ignore */",
+                },
+              ],
             },
             "kind": "return",
             "leadingComments": Array [
@@ -401,10 +557,6 @@ Program {
                 "kind": "commentblock",
                 "value": "/* ignore */",
               },
-              CommentBlock {
-                "kind": "commentblock",
-                "value": "/* ignore */",
-              },
             ],
           },
           "body": Block {
@@ -419,10 +571,8 @@ Program {
                 "kind": "commentblock",
                 "value": "/* ignore */",
               },
-              CommentBlock {
-                "kind": "commentblock",
-                "value": "/* ignore */",
-              },
+            ],
+            "trailingComments": Array [
               CommentBlock {
                 "kind": "commentblock",
                 "value": "/* ignore */",
@@ -430,12 +580,6 @@ Program {
             ],
           },
           "kind": "if",
-          "leadingComments": Array [
-            CommentBlock {
-              "kind": "commentblock",
-              "value": "/* ignore */",
-            },
-          ],
           "shortForm": false,
           "test": Boolean {
             "kind": "boolean",
@@ -461,6 +605,8 @@ Program {
               "kind": "commentblock",
               "value": "/* ignore */",
             },
+          ],
+          "trailingComments": Array [
             CommentBlock {
               "kind": "commentblock",
               "value": "/* ignore */",
@@ -469,15 +615,6 @@ Program {
         },
         "kind": "if",
         "leadingComments": Array [
-          CommentLine {
-            "kind": "commentline",
-            "value": "# inner statement
-",
-          },
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* ignore */",
-          },
           CommentBlock {
             "kind": "commentblock",
             "value": "/* ignore */",
@@ -499,6 +636,17 @@ Program {
         "children": Array [],
         "kind": "block",
         "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+        ],
+        "trailingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "# inner statement
+",
+          },
           CommentBlock {
             "kind": "commentblock",
             "value": "/* ignore */",
@@ -550,6 +698,16 @@ Program {
         "raw": "false",
         "value": false,
       },
+      "trailingComments": Array [
+        CommentBlock {
+          "kind": "commentblock",
+          "value": "/* ignore */",
+        },
+        CommentBlock {
+          "kind": "commentblock",
+          "value": "/* ignore */",
+        },
+      ],
     },
   ],
   "comments": Array [
@@ -663,15 +821,18 @@ Program {
         "leadingComments": Array [
           CommentBlock {
             "kind": "commentblock",
-            "value": "/* ee */",
-          },
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* zz */",
-          },
-          CommentBlock {
-            "kind": "commentblock",
             "value": "/* yy */",
+          },
+        ],
+        "trailingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+          CommentLine {
+            "kind": "commentline",
+            "value": "// end
+",
           },
         ],
       },
@@ -684,6 +845,17 @@ Program {
             "value": "/* ignore */",
           },
         ],
+        "trailingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "# inner statement
+",
+          },
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* dd */",
+          },
+        ],
       },
       "catches": Array [
         Catch {
@@ -693,37 +865,32 @@ Program {
             "leadingComments": Array [
               CommentBlock {
                 "kind": "commentblock",
-                "value": "/* bb */",
+                "value": "/* dd */",
+              },
+            ],
+            "trailingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* ee */",
               },
               CommentBlock {
                 "kind": "commentblock",
-                "value": "/* dd */",
+                "value": "/* zz */",
               },
             ],
           },
           "kind": "catch",
-          "leadingComments": Array [
-            CommentLine {
-              "kind": "commentline",
-              "value": "# inner statement
-",
-            },
-            CommentBlock {
-              "kind": "commentblock",
-              "value": "/* dd */",
-            },
-          ],
           "variable": Variable {
             "byref": false,
             "curly": false,
             "kind": "variable",
-            "leadingComments": Array [
+            "name": "e",
+            "trailingComments": Array [
               CommentBlock {
                 "kind": "commentblock",
-                "value": "/* aa */",
+                "value": "/* bb */",
               },
             ],
-            "name": "e",
           },
           "what": Array [
             Identifier {
@@ -736,14 +903,16 @@ Program {
               ],
               "name": "\\\\Exception",
               "resolution": "qn",
-            },
-            Identifier {
-              "kind": "identifier",
-              "leadingComments": Array [
+              "trailingComments": Array [
                 CommentBlock {
                   "kind": "commentblock",
                   "value": "/* 1 */",
                 },
+              ],
+            },
+            Identifier {
+              "kind": "identifier",
+              "leadingComments": Array [
                 CommentBlock {
                   "kind": "commentblock",
                   "value": "/* 2 */",
@@ -751,6 +920,12 @@ Program {
               ],
               "name": "\\\\Foo",
               "resolution": "qn",
+              "trailingComments": Array [
+                CommentBlock {
+                  "kind": "commentblock",
+                  "value": "/* aa */",
+                },
+              ],
             },
           ],
         },
@@ -1001,6 +1176,13 @@ Program {
       "operator": "=",
       "right": Number {
         "kind": "number",
+        "trailingComments": Array [
+          CommentLine {
+            "kind": "commentline",
+            "value": "// 123
+",
+          },
+        ],
         "value": "123",
       },
     },
@@ -1028,5 +1210,11 @@ Program {
   ],
   "errors": Array [],
   "kind": "program",
+  "trailingComments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "value": "/* done */",
+    },
+  ],
 }
 `;

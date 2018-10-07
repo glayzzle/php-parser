@@ -77,6 +77,25 @@ describe("Test comments", function() {
       );
       expect(ast).toMatchSnapshot();
     });
+
+    it("impl #194", function() {
+      const ast = parser.parseEval(
+        `
+        // lead assign
+        $foo /* trail foo */ = /* lead 1 */ 1 /* trail assign */;
+        // lead call
+        callback(/* lead arg */ "arg" /* trail arg */ ) /* trail call */ ;
+        /* trail program */
+        `,
+        {
+          parser: {
+            extractDoc: true,
+            debug: true
+          }
+        }
+      );
+      expect(ast).toMatchSnapshot();
+    });
   });
 
   it("test single line comments", function() {
