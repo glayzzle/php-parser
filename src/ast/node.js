@@ -24,6 +24,14 @@ const Node = function Node(kind, docs, location) {
 };
 
 /**
+ * Attach comments to current node
+ * @param {*} docs
+ */
+Node.prototype.setTrailingComments = function(docs) {
+  this.trailingComments = docs;
+};
+
+/**
  * Includes current token position of the parser
  * @param {*} parser
  */

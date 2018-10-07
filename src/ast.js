@@ -287,6 +287,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
     node.apply(astNode, args);
     result.instance = astNode;
     if (result.trailingComments) {
+      // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
     }
     return self.resolvePrecedence(astNode);
@@ -305,7 +306,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   result.setTrailingComments = function(docs) {
     if (result.instance) {
       // already created
-      result.instance.trailingComments = docs;
+      result.instance.setTrailingComments(docs);
     } else {
       result.trailingComments = docs;
     }
