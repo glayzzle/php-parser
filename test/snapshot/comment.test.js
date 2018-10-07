@@ -10,8 +10,10 @@ describe("Test comments", function() {
         }
         // Don't parsed :(
         else if (false) {
-          $a = 2;
+          $a = 2 /* trailing 2 */ ;
+          // trailing assing
         }
+        // trailing elseif
         `,
         {
           parser: {
@@ -82,7 +84,7 @@ describe("Test comments", function() {
       const ast = parser.parseEval(
         `
         // lead assign
-        $foo /* trail foo */ = /* lead 1 */ 1 /* trail assign */;
+        $foo /* trail foo */ = /* lead 1 */ 1 /* trail 1 */;
         // lead call
         callback(/* lead arg */ "arg" /* trail arg */ ) /* trail call */ ;
         /* trail program */

@@ -14,6 +14,20 @@ describe("Function tests", function() {
     expect(ast).toMatchSnapshot();
   });
 
+  it("implement #196 : set function name as identifier", function() {
+    const ast = parser.parseEval(
+      `
+      function f /* f */($a) {}
+      `,
+      {
+        parser: {
+          extractDoc: true
+        }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("test variadic error", function() {
     const astErr = parser.parseEval(`$b = foo(...[1, 2, 3], $a);`, {
       parser: {

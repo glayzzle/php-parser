@@ -80,6 +80,7 @@ module.exports = {
       returnType = null,
       nullable = false;
     if (type !== 1) {
+      let nameNode = this.node("identifier");
       if (type === 2) {
         if (
           this.token === this.tok.T_STRING ||
@@ -96,6 +97,7 @@ module.exports = {
         }
         this.next();
       }
+      name = nameNode([name], true);
     }
     if (this.expect("(")) this.next();
     const params = this.read_parameter_list();
