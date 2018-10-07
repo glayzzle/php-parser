@@ -3,8 +3,26 @@
 exports[`Test AST structure #176 - lost \`?>\` in program node 1`] = `
 Program {
   "children": Array [
-    Magic {
-      "kind": "magic",
+    ExpressionStatement {
+      "expression": Magic {
+        "kind": "magic",
+        "loc": Location {
+          "end": Position {
+            "column": 12,
+            "line": 2,
+            "offset": 18,
+          },
+          "source": "__LINE__",
+          "start": Position {
+            "column": 4,
+            "line": 2,
+            "offset": 10,
+          },
+        },
+        "raw": "__LINE__",
+        "value": "__LINE__",
+      },
+      "kind": "expressionstatement",
       "loc": Location {
         "end": Position {
           "column": 12,
@@ -18,8 +36,6 @@ Program {
           "offset": 10,
         },
       },
-      "raw": "__LINE__",
-      "value": "__LINE__",
     },
   ],
   "errors": Array [],
@@ -114,24 +130,27 @@ Program {
 exports[`Test AST structure test clone 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Clone {
-        "kind": "clone",
-        "what": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
-          "name": "var",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Clone {
+          "kind": "clone",
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "var",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -142,30 +161,33 @@ Program {
 exports[`Test AST structure test coalesce operator 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
         "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
-          "name": "a",
+          "name": "var",
         },
-        "right": Boolean {
-          "kind": "boolean",
-          "raw": "true",
-          "value": true,
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          "right": Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+          "type": "??",
         },
-        "type": "??",
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -193,24 +215,30 @@ Program {
 exports[`Test AST structure test die/exit 1`] = `
 Program {
   "children": Array [
-    Exit {
-      "kind": "exit",
-      "status": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"bye\\"",
-        "unicode": false,
-        "value": "bye",
+    ExpressionStatement {
+      "expression": Exit {
+        "kind": "exit",
+        "status": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"bye\\"",
+          "unicode": false,
+          "value": "bye",
+        },
+        "useDie": true,
       },
-      "useDie": true,
+      "kind": "expressionstatement",
     },
-    Exit {
-      "kind": "exit",
-      "status": Number {
-        "kind": "number",
-        "value": "-1",
+    ExpressionStatement {
+      "expression": Exit {
+        "kind": "exit",
+        "status": Number {
+          "kind": "number",
+          "value": "-1",
+        },
+        "useDie": false,
       },
-      "useDie": false,
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -251,32 +279,38 @@ Program {
       "kind": "echo",
       "shortForm": false,
     },
-    Print {
-      "arguments": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"some text\\"",
-        "unicode": false,
-        "value": "some text",
+    ExpressionStatement {
+      "expression": Print {
+        "arguments": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"some text\\"",
+          "unicode": false,
+          "value": "some text",
+        },
+        "kind": "print",
       },
-      "kind": "print",
+      "kind": "expressionstatement",
     },
-    Isset {
-      "arguments": Array [
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "foo",
-        },
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "bar",
-        },
-      ],
-      "kind": "isset",
+    ExpressionStatement {
+      "expression": Isset {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "bar",
+          },
+        ],
+        "kind": "isset",
+      },
+      "kind": "expressionstatement",
     },
     Unset {
       "arguments": Array [
@@ -289,16 +323,19 @@ Program {
       ],
       "kind": "unset",
     },
-    Empty {
-      "arguments": Array [
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "var",
-        },
-      ],
-      "kind": "empty",
+    ExpressionStatement {
+      "expression": Empty {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "var",
+          },
+        ],
+        "kind": "empty",
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -309,15 +346,18 @@ Program {
 exports[`Test AST structure test eval 1`] = `
 Program {
   "children": Array [
-    Eval {
-      "kind": "eval",
-      "source": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"return true;\\"",
-        "unicode": false,
-        "value": "return true;",
+    ExpressionStatement {
+      "expression": Eval {
+        "kind": "eval",
+        "source": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"return true;\\"",
+          "unicode": false,
+          "value": "return true;",
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -328,66 +368,78 @@ Program {
 exports[`Test AST structure test include / require 1`] = `
 Program {
   "children": Array [
-    Include {
-      "kind": "include",
-      "once": false,
-      "require": false,
-      "target": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"file.php\\"",
-        "unicode": false,
-        "value": "file.php",
-      },
-    },
-    Include {
-      "kind": "include",
-      "once": true,
-      "require": false,
-      "target": Bin {
-        "kind": "bin",
-        "left": ConstRef {
-          "kind": "constref",
-          "name": Identifier {
-            "kind": "identifier",
-            "name": "PATH",
-            "resolution": "uqn",
-          },
-        },
-        "parenthesizedExpression": true,
-        "right": String {
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
           "isDoubleQuote": true,
           "kind": "string",
-          "raw": "\\"/file.php\\"",
+          "raw": "\\"file.php\\"",
           "unicode": false,
-          "value": "/file.php",
+          "value": "file.php",
         },
-        "type": ".",
       },
+      "kind": "expressionstatement",
     },
-    Include {
-      "kind": "include",
-      "once": false,
-      "require": true,
-      "target": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"req.php\\"",
-        "unicode": false,
-        "value": "req.php",
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": false,
+        "target": Bin {
+          "kind": "bin",
+          "left": ConstRef {
+            "kind": "constref",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "PATH",
+              "resolution": "uqn",
+            },
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/file.php\\"",
+            "unicode": false,
+            "value": "/file.php",
+          },
+          "type": ".",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Include {
-      "kind": "include",
-      "once": true,
-      "require": true,
-      "target": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"file.php\\"",
-        "unicode": false,
-        "value": "file.php",
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"req.php\\"",
+          "unicode": false,
+          "value": "req.php",
+        },
       },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"file.php\\"",
+          "unicode": false,
+          "value": "file.php",
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

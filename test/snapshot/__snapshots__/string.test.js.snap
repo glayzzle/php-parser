@@ -740,25 +740,28 @@ Program {
 exports[`Test strings fix #101 case 1 1`] = `
 Program {
   "children": Array [
-    Encapsed {
-      "kind": "encapsed",
-      "raw": "\\"encapsed {$var}\\"",
-      "type": "string",
-      "value": Array [
-        String {
-          "isDoubleQuote": false,
-          "kind": "string",
-          "raw": "encapsed ",
-          "unicode": false,
-          "value": "encapsed ",
-        },
-        Variable {
-          "byref": false,
-          "curly": true,
-          "kind": "variable",
-          "name": "var",
-        },
-      ],
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"encapsed {$var}\\"",
+        "type": "string",
+        "value": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "encapsed ",
+            "unicode": false,
+            "value": "encapsed ",
+          },
+          Variable {
+            "byref": false,
+            "curly": true,
+            "kind": "variable",
+            "name": "var",
+          },
+        ],
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -769,32 +772,35 @@ Program {
 exports[`Test strings fix #101 case 2 1`] = `
 Program {
   "children": Array [
-    Encapsed {
-      "kind": "encapsed",
-      "raw": "\\"encapsed {$arr[0]}\\"",
-      "type": "string",
-      "value": Array [
-        String {
-          "isDoubleQuote": false,
-          "kind": "string",
-          "raw": "encapsed ",
-          "unicode": false,
-          "value": "encapsed ",
-        },
-        OffsetLookup {
-          "kind": "offsetlookup",
-          "offset": Number {
-            "kind": "number",
-            "value": "0",
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"encapsed {$arr[0]}\\"",
+        "type": "string",
+        "value": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "encapsed ",
+            "unicode": false,
+            "value": "encapsed ",
           },
-          "what": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "arr",
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "arr",
+            },
           },
-        },
-      ],
+        ],
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -805,334 +811,19 @@ Program {
 exports[`Test strings fix #101 case 3 1`] = `
 Program {
   "children": Array [
-    Encapsed {
-      "kind": "encapsed",
-      "raw": "\\"encapsed \${var}\\"",
-      "type": "string",
-      "value": Array [
-        String {
-          "isDoubleQuote": false,
-          "kind": "string",
-          "raw": "encapsed ",
-          "unicode": false,
-          "value": "encapsed ",
-        },
-        Variable {
-          "byref": false,
-          "curly": true,
-          "kind": "variable",
-          "name": ConstRef {
-            "kind": "constref",
-            "name": "var",
-          },
-        },
-      ],
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test strings fix #123 1`] = `
-Program {
-  "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "string",
-      },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": false,
-        "kind": "string",
-        "raw": "'Avoid converting 
- chars, but \\\\' or \\\\\\\\ is ok.'",
-        "unicode": false,
-        "value": "Avoid converting 
- chars, but ' or \\\\ is ok.",
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test strings fix #124 1`] = `
-Program {
-  "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "string",
-      },
-      "operator": "=",
-      "right": Encapsed {
+    ExpressionStatement {
+      "expression": Encapsed {
         "kind": "encapsed",
-        "raw": "\\"He drank some $juices[koolaid1] juice.\\"",
+        "raw": "\\"encapsed \${var}\\"",
         "type": "string",
         "value": Array [
           String {
             "isDoubleQuote": false,
             "kind": "string",
-            "raw": "He drank some ",
+            "raw": "encapsed ",
             "unicode": false,
-            "value": "He drank some ",
+            "value": "encapsed ",
           },
-          OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": ConstRef {
-              "kind": "constref",
-              "name": "koolaid1",
-            },
-            "what": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "juices",
-            },
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": " juice.",
-            "unicode": false,
-            "value": " juice.",
-          },
-        ],
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test strings fix #144 1`] = `
-Program {
-  "children": Array [
-    Encapsed {
-      "kind": "encapsed",
-      "raw": "\\"encapsed \\\\\\" {$var}\\"",
-      "type": "string",
-      "value": Array [
-        String {
-          "isDoubleQuote": false,
-          "kind": "string",
-          "raw": "encapsed \\\\\\" ",
-          "unicode": false,
-          "value": "encapsed \\" ",
-        },
-        Variable {
-          "byref": false,
-          "curly": true,
-          "kind": "variable",
-          "name": "var",
-        },
-      ],
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test strings fix #149 1`] = `
-Program {
-  "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "b\\"foo\\\\nbar\\"",
-        "unicode": true,
-        "value": "foo
-bar",
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test strings implement #116 1`] = `
-Program {
-  "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"foo\\\\nbar\\"",
-        "unicode": false,
-        "value": "foo
-bar",
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test strings test backquotes 1`] = `
-Program {
-  "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`ls $cwd\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "ls ",
-            "unicode": false,
-            "value": "ls ",
-          },
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "cwd",
-          },
-        ],
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`ls \${$cwd}\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "ls ",
-            "unicode": false,
-            "value": "ls ",
-          },
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "cwd",
-            },
-          },
-        ],
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`ls {$cwd}\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "ls ",
-            "unicode": false,
-            "value": "ls ",
-          },
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": "cwd",
-          },
-        ],
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`$var\`",
-        "type": "shell",
-        "value": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "var",
-          },
-        ],
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`\${var}\`",
-        "type": "shell",
-        "value": Array [
           Variable {
             "byref": false,
             "curly": true,
@@ -1144,21 +835,117 @@ Program {
           },
         ],
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings fix #123 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "string",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'Avoid converting 
+ chars, but \\\\' or \\\\\\\\ is ok.'",
+          "unicode": false,
+          "value": "Avoid converting 
+ chars, but ' or \\\\ is ok.",
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings fix #124 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "string",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"He drank some $juices[koolaid1] juice.\\"",
+          "type": "string",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "He drank some ",
+              "unicode": false,
+              "value": "He drank some ",
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": ConstRef {
+                "kind": "constref",
+                "name": "koolaid1",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "juices",
+              },
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": " juice.",
+              "unicode": false,
+              "value": " juice.",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings fix #144 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Encapsed {
         "kind": "encapsed",
-        "raw": "\`{$var}\`",
-        "type": "shell",
+        "raw": "\\"encapsed \\\\\\" {$var}\\"",
+        "type": "string",
         "value": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "encapsed \\\\\\" ",
+            "unicode": false,
+            "value": "encapsed \\" ",
+          },
           Variable {
             "byref": false,
             "curly": true,
@@ -1167,142 +954,415 @@ Program {
           },
         ],
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings fix #149 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "b\\"foo\\\\nbar\\"",
+          "unicode": true,
+          "value": "foo
+bar",
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`\`",
-        "type": "shell",
-        "value": Array [],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings implement #116 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"foo\\\\nbar\\"",
+          "unicode": false,
+          "value": "foo
+bar",
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`\\\\\`\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "\\\\\`",
-            "unicode": false,
-            "value": "\\\\\`",
-          },
-        ],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings test backquotes 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`ls $cwd\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "ls ",
+              "unicode": false,
+              "value": "ls ",
+            },
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "cwd",
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`{\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "{",
-            "unicode": false,
-            "value": "{",
-          },
-        ],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`ls \${$cwd}\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "ls ",
+              "unicode": false,
+              "value": "ls ",
+            },
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "cwd",
+              },
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`-{\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "-{",
-            "unicode": false,
-            "value": "-{",
-          },
-        ],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`ls {$cwd}\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "ls ",
+              "unicode": false,
+              "value": "ls ",
+            },
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": "cwd",
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`-$\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "-$",
-            "unicode": false,
-            "value": "-$",
-          },
-        ],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`$var\`",
+          "type": "shell",
+          "value": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\`$\`",
-        "type": "shell",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "$",
-            "unicode": false,
-            "value": "$",
-          },
-        ],
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`\${var}\`",
+          "type": "shell",
+          "value": Array [
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": ConstRef {
+                "kind": "constref",
+                "name": "var",
+              },
+            },
+          ],
+        },
       },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`{$var}\`",
+          "type": "shell",
+          "value": Array [
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": "var",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`\`",
+          "type": "shell",
+          "value": Array [],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`\\\\\`\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "\\\\\`",
+              "unicode": false,
+              "value": "\\\\\`",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`{\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "{",
+              "unicode": false,
+              "value": "{",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`-{\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "-{",
+              "unicode": false,
+              "value": "-{",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`-$\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "-$",
+              "unicode": false,
+              "value": "-$",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\`$\`",
+          "type": "shell",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "$",
+              "unicode": false,
+              "value": "$",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1356,283 +1416,319 @@ Program {
 exports[`Test strings test double quotes 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"$\\"",
+          "unicode": false,
+          "value": "$",
+        },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"$\\"",
-        "unicode": false,
-        "value": "$",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"{\\"",
+          "unicode": false,
+          "value": "{",
+        },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"{\\"",
-        "unicode": false,
-        "value": "{",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"-$-\\"",
+          "unicode": false,
+          "value": "-$-",
+        },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"-$-\\"",
-        "unicode": false,
-        "value": "-$-",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"-{\\"",
+          "unicode": false,
+          "value": "-{",
+        },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"-{\\"",
-        "unicode": false,
-        "value": "-{",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"$b\\"",
-        "type": "string",
-        "value": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "b",
-          },
-        ],
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"{$b}\\"",
-        "type": "string",
-        "value": Array [
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": "b",
-          },
-        ],
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"\${$b}\\"",
-        "type": "string",
-        "value": Array [
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"$b\\"",
+          "type": "string",
+          "value": Array [
+            Variable {
               "byref": false,
               "curly": false,
               "kind": "variable",
               "name": "b",
             },
-          },
-        ],
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$b}\\"",
+          "type": "string",
+          "value": Array [
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": "b",
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"-$b?\\"",
-        "type": "string",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "-",
-            "unicode": false,
-            "value": "-",
-          },
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "b",
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "?",
-            "unicode": false,
-            "value": "?",
-          },
-        ],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"\${$b}\\"",
+          "type": "string",
+          "value": Array [
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"-{$b}\\"",
-        "type": "string",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "-",
-            "unicode": false,
-            "value": "-",
-          },
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": "b",
-          },
-        ],
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"-\${$b}\\"",
-        "type": "string",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "-",
-            "unicode": false,
-            "value": "-",
-          },
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"-$b?\\"",
+          "type": "string",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "-",
+              "unicode": false,
+              "value": "-",
+            },
+            Variable {
               "byref": false,
               "curly": false,
               "kind": "variable",
               "name": "b",
             },
-          },
-        ],
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "?",
+              "unicode": false,
+              "value": "?",
+            },
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"-{$b}\\"",
+          "type": "string",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "-",
+              "unicode": false,
+              "value": "-",
+            },
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": "b",
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"\\"",
-        "unicode": false,
-        "value": "",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"-\${$b}\\"",
+          "type": "string",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "-",
+              "unicode": false,
+              "value": "-",
+            },
+            Variable {
+              "byref": false,
+              "curly": true,
+              "kind": "variable",
+              "name": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+            },
+          ],
+        },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"\\\\\\"\\"",
-        "unicode": false,
-        "value": "\\"",
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\"",
+          "unicode": false,
+          "value": "",
+        },
       },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\\\"\\"",
+          "unicode": false,
+          "value": "\\"",
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1697,74 +1793,98 @@ Program {
 exports[`Test strings test encapsed elements 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "code",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "label": "EOFX",
-        "raw": "
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "code",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOFX",
+          "raw": "
 {$this->docStar}
 \${$foo}
 \${targetDirs[1]}
 $test[1]
 $test->foo
 EOFX",
-        "type": "heredoc",
-        "value": Array [
-          PropertyLookup {
-            "kind": "propertylookup",
-            "offset": ConstRef {
-              "kind": "constref",
-              "name": "docStar",
+          "type": "heredoc",
+          "value": Array [
+            PropertyLookup {
+              "kind": "propertylookup",
+              "offset": ConstRef {
+                "kind": "constref",
+                "name": "docStar",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "this",
+              },
             },
-            "what": Variable {
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "
+",
+              "unicode": false,
+              "value": "
+",
+            },
+            Variable {
               "byref": false,
-              "curly": false,
+              "curly": true,
               "kind": "variable",
-              "name": "this",
+              "name": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "foo",
+              },
             },
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "
 ",
-            "unicode": false,
-            "value": "
+              "unicode": false,
+              "value": "
 ",
-          },
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": Variable {
+            },
+            Variable {
               "byref": false,
-              "curly": false,
+              "curly": true,
               "kind": "variable",
-              "name": "foo",
+              "name": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "targetDirs",
+                },
+              },
             },
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "
 ",
-            "unicode": false,
-            "value": "
+              "unicode": false,
+              "value": "
 ",
-          },
-          Variable {
-            "byref": false,
-            "curly": true,
-            "kind": "variable",
-            "name": OffsetLookup {
+            },
+            OffsetLookup {
               "kind": "offsetlookup",
               "offset": Number {
                 "kind": "number",
@@ -1774,65 +1894,44 @@ EOFX",
                 "byref": false,
                 "curly": false,
                 "kind": "variable",
-                "name": "targetDirs",
+                "name": "test",
               },
             },
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "
 ",
-            "unicode": false,
-            "value": "
+              "unicode": false,
+              "value": "
 ",
-          },
-          OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": Number {
-              "kind": "number",
-              "value": "1",
             },
-            "what": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "test",
+            PropertyLookup {
+              "kind": "propertylookup",
+              "offset": ConstRef {
+                "kind": "constref",
+                "name": "foo",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "test",
+              },
             },
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "
 ",
-            "unicode": false,
-            "value": "
+              "unicode": false,
+              "value": "
 ",
-          },
-          PropertyLookup {
-            "kind": "propertylookup",
-            "offset": ConstRef {
-              "kind": "constref",
-              "name": "foo",
             },
-            "what": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "test",
-            },
-          },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "
-",
-            "unicode": false,
-            "value": "
-",
-          },
-        ],
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1972,31 +2071,34 @@ Program {
 exports[`Test strings test heredoc end of doc 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "label": "EOF2",
-        "raw": "
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOF2",
+          "raw": "
 SOMETHING",
-        "type": "heredoc",
-        "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "SOMETHING",
-            "unicode": false,
-            "value": "SOMETHING",
-          },
-        ],
+          "type": "heredoc",
+          "value": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "SOMETHING",
+              "unicode": false,
+              "value": "SOMETHING",
+            },
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -2015,23 +2117,26 @@ SOMETHING",
 exports[`Test strings test nowdoc end of doc 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Nowdoc {
-        "kind": "nowdoc",
-        "label": "EOF2",
-        "quote": true,
-        "raw": "<<<'EOF2'
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "EOF2",
+          "quote": true,
+          "raw": "<<<'EOF2'
 FOO",
-        "value": "FOO",
+          "value": "FOO",
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -2050,24 +2155,27 @@ FOO",
 exports[`Test strings test nowdoc label and contents 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "code",
-      },
-      "operator": ".=",
-      "right": Nowdoc {
-        "kind": "nowdoc",
-        "label": "EOF",
-        "quote": true,
-        "raw": "<<<'EOF'
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "code",
+        },
+        "operator": ".=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "EOF",
+          "quote": true,
+          "raw": "<<<'EOF'
   }
 EOF;",
-        "value": "  }",
+          "value": "  }",
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

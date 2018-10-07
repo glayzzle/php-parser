@@ -84,19 +84,22 @@ Program {
         "alternate": null,
         "body": Block {
           "children": Array [
-            Assign {
-              "kind": "assign",
-              "left": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "a",
+            ExpressionStatement {
+              "expression": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "2",
+                },
               },
-              "operator": "=",
-              "right": Number {
-                "kind": "number",
-                "value": "2",
-              },
+              "kind": "expressionstatement",
             },
           ],
           "kind": "block",
@@ -111,19 +114,22 @@ Program {
       },
       "body": Block {
         "children": Array [
-          Assign {
-            "kind": "assign",
-            "left": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "a",
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
+              "operator": "=",
+              "right": Number {
+                "kind": "number",
+                "value": "1",
+              },
             },
-            "operator": "=",
-            "right": Number {
-              "kind": "number",
-              "value": "1",
-            },
+            "kind": "expressionstatement",
           },
         ],
         "kind": "block",
@@ -159,63 +165,66 @@ Program {
 exports[`Test comments issues fix #189 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
-        "left": Bin {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Bin {
           "kind": "bin",
-          "left": String {
-            "isDoubleQuote": false,
-            "kind": "string",
-            "raw": "'string1'",
-            "trailingComments": Array [
-              CommentLine {
-                "kind": "commentline",
-                "value": "// Comment 1
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'string1'",
+              "trailingComments": Array [
+                CommentLine {
+                  "kind": "commentline",
+                  "value": "// Comment 1
 ",
-              },
-            ],
-            "unicode": false,
-            "value": "string1",
+                },
+              ],
+              "unicode": false,
+              "value": "string1",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'string2'",
+              "trailingComments": Array [
+                CommentLine {
+                  "kind": "commentline",
+                  "value": "// Comment 2
+",
+                },
+                CommentLine {
+                  "kind": "commentline",
+                  "value": "// Comment 3
+",
+                },
+              ],
+              "unicode": false,
+              "value": "string2",
+            },
+            "type": ".",
           },
           "right": String {
             "isDoubleQuote": false,
             "kind": "string",
-            "raw": "'string2'",
-            "trailingComments": Array [
-              CommentLine {
-                "kind": "commentline",
-                "value": "// Comment 2
-",
-              },
-              CommentLine {
-                "kind": "commentline",
-                "value": "// Comment 3
-",
-              },
-            ],
+            "raw": "'string3'",
             "unicode": false,
-            "value": "string2",
+            "value": "string3",
           },
           "type": ".",
         },
-        "right": String {
-          "isDoubleQuote": false,
-          "kind": "string",
-          "raw": "'string3'",
-          "unicode": false,
-          "value": "string3",
-        },
-        "type": ".",
       },
+      "kind": "expressionstatement",
     },
   ],
   "comments": Array [
@@ -243,46 +252,49 @@ Program {
 exports[`Test comments issues fix #193 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Call {
-        "arguments": Array [],
-        "kind": "call",
-        "what": PropertyLookup {
-          "kind": "propertylookup",
-          "offset": ConstRef {
-            "kind": "constref",
-            "leadingComments": Array [
-              CommentLine {
-                "kind": "commentline",
-                "value": "// Comment After
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "leadingComments": Array [
+                CommentLine {
+                  "kind": "commentline",
+                  "value": "// Comment After
 ",
-              },
-            ],
-            "name": "each",
-          },
-          "what": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "var",
-            "trailingComments": Array [
-              CommentLine {
-                "kind": "commentline",
-                "value": "// Comment Before
+                },
+              ],
+              "name": "each",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+              "trailingComments": Array [
+                CommentLine {
+                  "kind": "commentline",
+                  "value": "// Comment Before
 ",
-              },
-            ],
+                },
+              ],
+            },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "comments": Array [
@@ -305,8 +317,40 @@ Program {
 exports[`Test comments issues impl #194 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+          "trailingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* trail foo */",
+            },
+          ],
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* lead 1 */",
+            },
+          ],
+          "trailingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "value": "/* trail assign */",
+            },
+          ],
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
       "leadingComments": Array [
         CommentLine {
           "kind": "commentline",
@@ -314,35 +358,13 @@ Program {
 ",
         },
       ],
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "foo",
-        "trailingComments": Array [
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* trail foo */",
-          },
-        ],
-      },
-      "operator": "=",
-      "right": Number {
-        "kind": "number",
-        "leadingComments": Array [
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* lead 1 */",
-          },
-        ],
-        "trailingComments": Array [
-          CommentBlock {
-            "kind": "commentblock",
-            "value": "/* trail assign */",
-          },
-        ],
-        "value": "1",
-      },
+      "trailingComments": Array [
+        CommentLine {
+          "kind": "commentline",
+          "value": "// lead call
+",
+        },
+      ],
     },
     Call {
       "arguments": Array [
@@ -367,13 +389,6 @@ Program {
         },
       ],
       "kind": "call",
-      "leadingComments": Array [
-        CommentLine {
-          "kind": "commentline",
-          "value": "// lead call
-",
-        },
-      ],
       "trailingComments": Array [
         CommentBlock {
           "kind": "commentblock",
@@ -1153,8 +1168,29 @@ Program {
 exports[`Test comments test single line comments 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "trailingComments": Array [
+            CommentLine {
+              "kind": "commentline",
+              "value": "// 123
+",
+            },
+          ],
+          "value": "123",
+        },
+      },
+      "kind": "expressionstatement",
       "leadingComments": Array [
         CommentLine {
           "kind": "commentline",
@@ -1167,24 +1203,12 @@ Program {
 ",
         },
       ],
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "foo",
-      },
-      "operator": "=",
-      "right": Number {
-        "kind": "number",
-        "trailingComments": Array [
-          CommentLine {
-            "kind": "commentline",
-            "value": "// 123
-",
-          },
-        ],
-        "value": "123",
-      },
+      "trailingComments": Array [
+        CommentBlock {
+          "kind": "commentblock",
+          "value": "/* done */",
+        },
+      ],
     },
   ],
   "comments": Array [
@@ -1210,11 +1234,5 @@ Program {
   ],
   "errors": Array [],
   "kind": "program",
-  "trailingComments": Array [
-    CommentBlock {
-      "kind": "commentblock",
-      "value": "/* done */",
-    },
-  ],
 }
 `;

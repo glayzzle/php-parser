@@ -99,7 +99,7 @@ describe("Test offsets", function() {
   });
 
   describe("on variable node", function() {
-    const node = ast.children[1].left;
+    const node = ast.children[1].expression.left;
     it("test line", function() {
       expect(node.loc.start.line).toBe(3);
       expect(node.loc.end.line).toBe(3);
@@ -114,7 +114,7 @@ describe("Test offsets", function() {
   });
 
   describe("on boolean node", function() {
-    const node = ast.children[1].right;
+    const node = ast.children[1].expression.right;
     it("test line", function() {
       expect(node.loc.start.line).toBe(3);
       expect(node.loc.end.line).toBe(3);

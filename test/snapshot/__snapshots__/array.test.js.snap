@@ -3,84 +3,87 @@
 exports[`Array without keys deference array 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Call {
-        "arguments": Array [],
-        "kind": "call",
-        "what": PropertyLookup {
-          "kind": "propertylookup",
-          "offset": ConstRef {
-            "kind": "constref",
-            "name": "foo",
-          },
-          "what": OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": OffsetLookup {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "foo",
+            },
+            "what": OffsetLookup {
               "kind": "offsetlookup",
-              "offset": Number {
-                "kind": "number",
-                "value": "1",
+              "offset": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": ConstRef {
+                      "kind": "constref",
+                      "name": "bar",
+                    },
+                    "what": Variable {
+                      "byref": false,
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "foo",
+                    },
+                  },
+                },
               },
               "what": Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": PropertyLookup {
-                  "kind": "propertylookup",
-                  "offset": ConstRef {
-                    "kind": "constref",
-                    "name": "bar",
-                  },
-                  "what": Variable {
+                "arguments": Array [
+                  Variable {
                     "byref": false,
                     "curly": false,
                     "kind": "variable",
                     "name": "foo",
                   },
-                },
-              },
-            },
-            "what": Call {
-              "arguments": Array [
-                Variable {
-                  "byref": false,
-                  "curly": false,
-                  "kind": "variable",
-                  "name": "foo",
-                },
-              ],
-              "kind": "call",
-              "what": Array {
-                "items": Array [
-                  String {
-                    "isDoubleQuote": true,
-                    "kind": "string",
-                    "raw": "\\"a\\"",
-                    "unicode": false,
-                    "value": "a",
-                  },
-                  String {
-                    "isDoubleQuote": true,
-                    "kind": "string",
-                    "raw": "\\"b\\"",
-                    "unicode": false,
-                    "value": "b",
-                  },
                 ],
-                "kind": "array",
-                "shortForm": true,
+                "kind": "call",
+                "what": Array {
+                  "items": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"a\\"",
+                      "unicode": false,
+                      "value": "a",
+                    },
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"b\\"",
+                      "unicode": false,
+                      "value": "b",
+                    },
+                  ],
+                  "kind": "array",
+                  "shortForm": true,
+                },
               },
             },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -91,35 +94,41 @@ Program {
 exports[`Array without keys mixed tests / coverage test empty array 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": true,
+        },
       },
-      "operator": "=",
-      "right": Array {
-        "items": Array [],
-        "kind": "array",
-        "shortForm": true,
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": false,
+        },
       },
-      "operator": "=",
-      "right": Array {
-        "items": Array [],
-        "kind": "array",
-        "shortForm": false,
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -130,40 +139,43 @@ Program {
 exports[`Array without keys mixed tests / coverage test short form / keys 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        Entry {
-          "key": Number {
-            "kind": "number",
-            "value": "0",
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          Entry {
+            "key": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "kind": "entry",
+            "value": Variable {
+              "byref": true,
+              "curly": false,
+              "kind": "variable",
+              "name": "foo",
+            },
           },
-          "kind": "entry",
-          "value": Variable {
-            "byref": true,
-            "curly": false,
-            "kind": "variable",
-            "name": "foo",
+          Entry {
+            "key": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "bar",
+            },
+            "kind": "entry",
+            "value": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"foobar\\"",
+              "unicode": false,
+              "value": "foobar",
+            },
           },
-        },
-        Entry {
-          "key": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "bar",
-          },
-          "kind": "entry",
-          "value": String {
-            "isDoubleQuote": true,
-            "kind": "string",
-            "raw": "\\"foobar\\"",
-            "unicode": false,
-            "value": "foobar",
-          },
-        },
-      ],
-      "kind": "array",
-      "shortForm": true,
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -174,71 +186,74 @@ Program {
 exports[`Array without keys of arrays 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        Array {
-          "items": Array [
-            String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"item1\\"",
-              "unicode": false,
-              "value": "item1",
-            },
-            String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"item2\\"",
-              "unicode": false,
-              "value": "item2",
-            },
-          ],
-          "kind": "array",
-          "shortForm": false,
-        },
-        Array {
-          "items": Array [
-            String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"item3\\"",
-              "unicode": false,
-              "value": "item3",
-            },
-            String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"item4\\"",
-              "unicode": false,
-              "value": "item4",
-            },
-          ],
-          "kind": "array",
-          "shortForm": false,
-        },
-        Array {
-          "items": Array [
-            String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"item5\\"",
-              "unicode": false,
-              "value": "item5",
-            },
-            String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"item6\\"",
-              "unicode": false,
-              "value": "item6",
-            },
-          ],
-          "kind": "array",
-          "shortForm": false,
-        },
-      ],
-      "kind": "array",
-      "shortForm": false,
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          Array {
+            "items": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"item1\\"",
+                "unicode": false,
+                "value": "item1",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"item2\\"",
+                "unicode": false,
+                "value": "item2",
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+          Array {
+            "items": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"item3\\"",
+                "unicode": false,
+                "value": "item3",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"item4\\"",
+                "unicode": false,
+                "value": "item4",
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+          Array {
+            "items": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"item5\\"",
+                "unicode": false,
+                "value": "item5",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"item6\\"",
+                "unicode": false,
+                "value": "item6",
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "array",
+        "shortForm": false,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -249,23 +264,26 @@ Program {
 exports[`Array without keys of numbers 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        Number {
-          "kind": "number",
-          "value": "1",
-        },
-        Number {
-          "kind": "number",
-          "value": "2.5",
-        },
-        Number {
-          "kind": "number",
-          "value": "0x1000",
-        },
-      ],
-      "kind": "array",
-      "shortForm": false,
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+          Number {
+            "kind": "number",
+            "value": "2.5",
+          },
+          Number {
+            "kind": "number",
+            "value": "0x1000",
+          },
+        ],
+        "kind": "array",
+        "shortForm": false,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -276,38 +294,41 @@ Program {
 exports[`Array without keys of objects 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        New {
-          "arguments": Array [],
-          "kind": "new",
-          "what": Identifier {
-            "kind": "identifier",
-            "name": "foo",
-            "resolution": "uqn",
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          New {
+            "arguments": Array [],
+            "kind": "new",
+            "what": Identifier {
+              "kind": "identifier",
+              "name": "foo",
+              "resolution": "uqn",
+            },
           },
-        },
-        New {
-          "arguments": Array [],
-          "kind": "new",
-          "what": Identifier {
-            "kind": "identifier",
-            "name": "stdClass",
-            "resolution": "uqn",
+          New {
+            "arguments": Array [],
+            "kind": "new",
+            "what": Identifier {
+              "kind": "identifier",
+              "name": "stdClass",
+              "resolution": "uqn",
+            },
           },
-        },
-        New {
-          "arguments": Array [],
-          "kind": "new",
-          "what": Identifier {
-            "kind": "identifier",
-            "name": "bar",
-            "resolution": "uqn",
+          New {
+            "arguments": Array [],
+            "kind": "new",
+            "what": Identifier {
+              "kind": "identifier",
+              "name": "bar",
+              "resolution": "uqn",
+            },
           },
-        },
-      ],
-      "kind": "array",
-      "shortForm": true,
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -318,32 +339,35 @@ Program {
 exports[`Array without keys of strings 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        String {
-          "isDoubleQuote": true,
-          "kind": "string",
-          "raw": "\\"item1\\"",
-          "unicode": false,
-          "value": "item1",
-        },
-        String {
-          "isDoubleQuote": true,
-          "kind": "string",
-          "raw": "\\"item2\\"",
-          "unicode": false,
-          "value": "item2",
-        },
-        String {
-          "isDoubleQuote": true,
-          "kind": "string",
-          "raw": "\\"item3\\"",
-          "unicode": false,
-          "value": "item3",
-        },
-      ],
-      "kind": "array",
-      "shortForm": false,
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"item1\\"",
+            "unicode": false,
+            "value": "item1",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"item2\\"",
+            "unicode": false,
+            "value": "item2",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"item3\\"",
+            "unicode": false,
+            "value": "item3",
+          },
+        ],
+        "kind": "array",
+        "shortForm": false,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -354,33 +378,36 @@ Program {
 exports[`Array without keys of strings and numbers 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        Number {
-          "kind": "number",
-          "value": "1",
-        },
-        String {
-          "isDoubleQuote": true,
-          "kind": "string",
-          "raw": "\\"item2\\"",
-          "unicode": false,
-          "value": "item2",
-        },
-        Number {
-          "kind": "number",
-          "value": "3",
-        },
-        String {
-          "isDoubleQuote": true,
-          "kind": "string",
-          "raw": "\\"item4\\"",
-          "unicode": false,
-          "value": "item4",
-        },
-      ],
-      "kind": "array",
-      "shortForm": false,
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"item2\\"",
+            "unicode": false,
+            "value": "item2",
+          },
+          Number {
+            "kind": "number",
+            "value": "3",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"item4\\"",
+            "unicode": false,
+            "value": "item4",
+          },
+        ],
+        "kind": "array",
+        "shortForm": false,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -391,29 +418,32 @@ Program {
 exports[`Array without keys of variables 1`] = `
 Program {
   "children": Array [
-    Array {
-      "items": Array [
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "obj1",
-        },
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "obj2",
-        },
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "obj3",
-        },
-      ],
-      "kind": "array",
-      "shortForm": false,
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "obj1",
+          },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "obj2",
+          },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "obj3",
+          },
+        ],
+        "kind": "array",
+        "shortForm": false,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

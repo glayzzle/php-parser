@@ -3,40 +3,150 @@
 exports[`Test expressions chaining calls (derefenceable) 1`] = `
 Program {
   "children": Array [
-    PropertyLookup {
-      "kind": "propertylookup",
-      "offset": ConstRef {
-        "kind": "constref",
-        "name": "bar",
-      },
-      "what": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Number {
-          "kind": "number",
-          "value": "10",
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "bar",
         },
-        "what": PropertyLookup {
-          "kind": "propertylookup",
+        "what": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "10",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "foo",
+            },
+            "what": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": StaticLookup {
+                "kind": "staticlookup",
+                "offset": ConstRef {
+                  "kind": "constref",
+                  "name": "call",
+                },
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": ConstRef {
+                    "kind": "constref",
+                    "name": "b",
+                  },
+                  "parenthesizedExpression": true,
+                  "what": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions chaining calls (derefenceable) 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "foo",
+        },
+        "what": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "what": Array {
+            "items": Array [
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+              Number {
+                "kind": "number",
+                "value": "2",
+              },
+              Number {
+                "kind": "number",
+                "value": "3",
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions chaining calls (derefenceable) 3`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
           "offset": ConstRef {
             "kind": "constref",
             "name": "foo",
           },
-          "what": Call {
-            "arguments": Array [],
-            "kind": "call",
-            "what": StaticLookup {
-              "kind": "staticlookup",
-              "offset": ConstRef {
-                "kind": "constref",
-                "name": "call",
-              },
-              "what": PropertyLookup {
-                "kind": "propertylookup",
-                "offset": ConstRef {
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Encapsed {
+              "kind": "encapsed",
+              "type": "offset",
+              "value": Array [
+                ConstRef {
                   "kind": "constref",
-                  "name": "b",
+                  "name": "bar",
                 },
+                Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "baz",
+                },
+              ],
+            },
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "foo",
+                },
+              ],
+              "kind": "call",
+              "what": Post {
+                "kind": "post",
                 "parenthesizedExpression": true,
+                "type": "+",
                 "what": Variable {
                   "byref": false,
                   "curly": false,
@@ -48,108 +158,7 @@ Program {
           },
         },
       },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test expressions chaining calls (derefenceable) 2`] = `
-Program {
-  "children": Array [
-    PropertyLookup {
-      "kind": "propertylookup",
-      "offset": ConstRef {
-        "kind": "constref",
-        "name": "foo",
-      },
-      "what": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Number {
-          "kind": "number",
-          "value": "0",
-        },
-        "what": Array {
-          "items": Array [
-            Number {
-              "kind": "number",
-              "value": "1",
-            },
-            Number {
-              "kind": "number",
-              "value": "2",
-            },
-            Number {
-              "kind": "number",
-              "value": "3",
-            },
-          ],
-          "kind": "array",
-          "shortForm": false,
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test expressions chaining calls (derefenceable) 3`] = `
-Program {
-  "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": ConstRef {
-          "kind": "constref",
-          "name": "foo",
-        },
-        "what": PropertyLookup {
-          "kind": "propertylookup",
-          "offset": Encapsed {
-            "kind": "encapsed",
-            "type": "offset",
-            "value": Array [
-              ConstRef {
-                "kind": "constref",
-                "name": "bar",
-              },
-              Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "baz",
-              },
-            ],
-          },
-          "what": Call {
-            "arguments": Array [
-              Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "foo",
-              },
-            ],
-            "kind": "call",
-            "what": Post {
-              "kind": "post",
-              "parenthesizedExpression": true,
-              "type": "+",
-              "what": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "a",
-              },
-            },
-          },
-        },
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -160,16 +169,19 @@ Program {
 exports[`Test expressions chaining calls (derefenceable) 4`] = `
 Program {
   "children": Array [
-    Post {
-      "kind": "post",
-      "parenthesizedExpression": true,
-      "type": "+",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
+        "parenthesizedExpression": true,
+        "type": "+",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
       },
+      "kind": "expressionstatement",
     },
     StaticLookup {
       "kind": "staticlookup",
@@ -355,213 +367,252 @@ Program {
 exports[`Test expressions test assignements 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": ".=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": ".=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "+=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "+=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "-=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "-=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "*=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "*=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "**=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "**=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "/=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "/=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "&=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "&=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "|=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "|=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "%=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "%=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "^=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "^=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "<<=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": "<<=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": ">>=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
       },
-      "operator": ">>=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -572,155 +623,191 @@ Program {
 exports[`Test expressions test binary 1`] = `
 Program {
   "children": Array [
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "|",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "|",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "&",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "&",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "^",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "^",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"1\\"",
-        "unicode": false,
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"1\\"",
+          "unicode": false,
+          "value": "1",
+        },
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"3\\"",
+          "unicode": false,
+          "value": "3",
+        },
+        "type": ".",
       },
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"3\\"",
-        "unicode": false,
-        "value": "3",
-      },
-      "type": ".",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "+",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "+",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "-",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "-",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "*",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "*",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "/",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "/",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "%",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "%",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "**",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "**",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": "<<",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": "<<",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": ">>",
       },
-      "right": Number {
-        "kind": "number",
-        "value": "3",
-      },
-      "type": ">>",
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -731,137 +818,173 @@ Program {
 exports[`Test expressions test cast 1`] = `
 Program {
   "children": Array [
-    Cast {
-      "kind": "cast",
-      "raw": "(int)",
-      "type": "int",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(int)",
+        "type": "int",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(integer)",
-      "type": "int",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(integer)",
+        "type": "int",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(bool)",
-      "type": "bool",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(bool)",
+        "type": "bool",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(boolean)",
-      "type": "bool",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(boolean)",
+        "type": "bool",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(float)",
-      "type": "float",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(float)",
+        "type": "float",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(double)",
-      "type": "float",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(double)",
+        "type": "float",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(real)",
-      "type": "float",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(real)",
+        "type": "float",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(string)",
-      "type": "string",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(string)",
+        "type": "string",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(binary)",
-      "type": "binary",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(binary)",
+        "type": "binary",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(array)",
-      "type": "array",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(array)",
+        "type": "array",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(object)",
-      "type": "object",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(object)",
+        "type": "object",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Cast {
-      "kind": "cast",
-      "raw": "(unset)",
-      "type": "unset",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Cast {
+        "kind": "cast",
+        "raw": "(unset)",
+        "type": "unset",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -872,101 +995,137 @@ Program {
 exports[`Test expressions test cast extension - #171 1`] = `
 Program {
   "children": Array [
-    Variable {
-      "byref": false,
-      "cast": "int",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(int)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "int",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(int)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "int",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(integer)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "int",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(integer)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "bool",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(bool)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "bool",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(bool)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "bool",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(boolean)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "bool",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(boolean)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "float",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(float)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "float",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(float)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "float",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(double)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "float",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(double)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "float",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(real)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "float",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(real)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "string",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(string)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "string",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(string)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "binary",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(binary)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "binary",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(binary)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "array",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(array)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "array",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(array)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "object",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(object)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "object",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(object)",
+      },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "cast": "unset",
-      "curly": false,
-      "kind": "variable",
-      "name": "var",
-      "rawCast": "(unset)",
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "cast": "unset",
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+        "rawCast": "(unset)",
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -977,23 +1136,32 @@ Program {
 exports[`Test expressions test exit 1`] = `
 Program {
   "children": Array [
-    Exit {
-      "kind": "exit",
-      "status": Number {
-        "kind": "number",
-        "value": "1",
+    ExpressionStatement {
+      "expression": Exit {
+        "kind": "exit",
+        "status": Number {
+          "kind": "number",
+          "value": "1",
+        },
+        "useDie": false,
       },
-      "useDie": false,
+      "kind": "expressionstatement",
     },
-    Exit {
-      "kind": "exit",
-      "status": null,
-      "useDie": true,
+    ExpressionStatement {
+      "expression": Exit {
+        "kind": "exit",
+        "status": null,
+        "useDie": true,
+      },
+      "kind": "expressionstatement",
     },
-    Exit {
-      "kind": "exit",
-      "status": null,
-      "useDie": false,
+    ExpressionStatement {
+      "expression": Exit {
+        "kind": "exit",
+        "status": null,
+        "useDie": false,
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1008,38 +1176,47 @@ Program {
       "arguments": Array [],
       "body": Block {
         "children": Array [
-          Yield {
-            "key": null,
-            "kind": "yield",
-            "value": Number {
-              "kind": "number",
-              "value": "0",
-            },
-          },
-          YieldFrom {
-            "kind": "yieldfrom",
-            "value": Call {
-              "arguments": Array [],
-              "kind": "call",
-              "what": Identifier {
-                "kind": "identifier",
-                "name": "foo",
-                "resolution": "uqn",
+          ExpressionStatement {
+            "expression": Yield {
+              "key": null,
+              "kind": "yield",
+              "value": Number {
+                "kind": "number",
+                "value": "0",
               },
             },
+            "kind": "expressionstatement",
           },
-          Yield {
-            "key": Number {
-              "kind": "number",
-              "value": "1",
+          ExpressionStatement {
+            "expression": YieldFrom {
+              "kind": "yieldfrom",
+              "value": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Identifier {
+                  "kind": "identifier",
+                  "name": "foo",
+                  "resolution": "uqn",
+                },
+              },
             },
-            "kind": "yield",
-            "value": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "a",
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Yield {
+              "key": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "kind": "yield",
+              "value": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
             },
+            "kind": "expressionstatement",
           },
         ],
         "kind": "block",
@@ -1059,29 +1236,8 @@ Program {
 exports[`Test expressions test if based returns 1`] = `
 Program {
   "children": Array [
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "right": Boolean {
-        "kind": "boolean",
-        "raw": "false",
-        "value": false,
-      },
-      "type": "??",
-    },
-    RetIf {
-      "falseExpr": Boolean {
-        "kind": "boolean",
-        "raw": "false",
-        "value": false,
-      },
-      "kind": "retif",
-      "test": Bin {
+    ExpressionStatement {
+      "expression": Bin {
         "kind": "bin",
         "left": Variable {
           "byref": false,
@@ -1089,32 +1245,62 @@ Program {
           "kind": "variable",
           "name": "a",
         },
-        "right": Number {
-          "kind": "number",
-          "value": "5",
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
         },
-        "type": ">",
+        "type": "??",
       },
-      "trueExpr": Boolean {
-        "kind": "boolean",
-        "raw": "true",
-        "value": true,
-      },
+      "kind": "expressionstatement",
     },
-    RetIf {
-      "falseExpr": Boolean {
-        "kind": "boolean",
-        "raw": "false",
-        "value": false,
+    ExpressionStatement {
+      "expression": RetIf {
+        "falseExpr": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "kind": "retif",
+        "test": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "5",
+          },
+          "type": ">",
+        },
+        "trueExpr": Boolean {
+          "kind": "boolean",
+          "raw": "true",
+          "value": true,
+        },
       },
-      "kind": "retif",
-      "test": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": RetIf {
+        "falseExpr": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "kind": "retif",
+        "test": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "trueExpr": null,
       },
-      "trueExpr": null,
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1125,8 +1311,44 @@ Program {
 exports[`Test expressions test incr/decr 1`] = `
 Program {
   "children": Array [
-    Post {
-      "kind": "post",
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
+        "loc": Location {
+          "end": Position {
+            "column": 11,
+            "line": 2,
+            "offset": 12,
+          },
+          "source": null,
+          "start": Position {
+            "column": 6,
+            "line": 2,
+            "offset": 7,
+          },
+        },
+        "type": "+",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 8,
+              "line": 2,
+              "offset": 9,
+            },
+            "source": null,
+            "start": Position {
+              "column": 6,
+              "line": 2,
+              "offset": 7,
+            },
+          },
+          "name": "i",
+        },
+      },
+      "kind": "expressionstatement",
       "loc": Location {
         "end": Position {
           "column": 11,
@@ -1140,29 +1362,45 @@ Program {
           "offset": 7,
         },
       },
-      "type": "+",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
+    },
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
         "loc": Location {
           "end": Position {
-            "column": 8,
-            "line": 2,
-            "offset": 9,
+            "column": 11,
+            "line": 3,
+            "offset": 24,
           },
           "source": null,
           "start": Position {
             "column": 6,
-            "line": 2,
-            "offset": 7,
+            "line": 3,
+            "offset": 19,
           },
         },
-        "name": "i",
+        "type": "-",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 8,
+              "line": 3,
+              "offset": 21,
+            },
+            "source": null,
+            "start": Position {
+              "column": 6,
+              "line": 3,
+              "offset": 19,
+            },
+          },
+          "name": "i",
+        },
       },
-    },
-    Post {
-      "kind": "post",
+      "kind": "expressionstatement",
       "loc": Location {
         "end": Position {
           "column": 11,
@@ -1176,29 +1414,45 @@ Program {
           "offset": 19,
         },
       },
-      "type": "-",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
+    },
+    ExpressionStatement {
+      "expression": Pre {
+        "kind": "pre",
         "loc": Location {
           "end": Position {
-            "column": 8,
-            "line": 3,
-            "offset": 21,
+            "column": 11,
+            "line": 4,
+            "offset": 36,
           },
           "source": null,
           "start": Position {
             "column": 6,
-            "line": 3,
-            "offset": 19,
+            "line": 4,
+            "offset": 31,
           },
         },
-        "name": "i",
+        "type": "+",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 10,
+              "line": 4,
+              "offset": 35,
+            },
+            "source": null,
+            "start": Position {
+              "column": 8,
+              "line": 4,
+              "offset": 33,
+            },
+          },
+          "name": "i",
+        },
       },
-    },
-    Pre {
-      "kind": "pre",
+      "kind": "expressionstatement",
       "loc": Location {
         "end": Position {
           "column": 11,
@@ -1212,29 +1466,45 @@ Program {
           "offset": 31,
         },
       },
-      "type": "+",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
+    },
+    ExpressionStatement {
+      "expression": Pre {
+        "kind": "pre",
         "loc": Location {
           "end": Position {
-            "column": 10,
-            "line": 4,
-            "offset": 35,
+            "column": 11,
+            "line": 5,
+            "offset": 48,
           },
           "source": null,
           "start": Position {
-            "column": 8,
-            "line": 4,
-            "offset": 33,
+            "column": 6,
+            "line": 5,
+            "offset": 43,
           },
         },
-        "name": "i",
+        "type": "-",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 10,
+              "line": 5,
+              "offset": 47,
+            },
+            "source": null,
+            "start": Position {
+              "column": 8,
+              "line": 5,
+              "offset": 45,
+            },
+          },
+          "name": "i",
+        },
       },
-    },
-    Pre {
-      "kind": "pre",
+      "kind": "expressionstatement",
       "loc": Location {
         "end": Position {
           "column": 11,
@@ -1247,26 +1517,6 @@ Program {
           "line": 5,
           "offset": 43,
         },
-      },
-      "type": "-",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "loc": Location {
-          "end": Position {
-            "column": 10,
-            "line": 5,
-            "offset": 47,
-          },
-          "source": null,
-          "start": Position {
-            "column": 8,
-            "line": 5,
-            "offset": 45,
-          },
-        },
-        "name": "i",
       },
     },
   ],
@@ -1291,245 +1541,290 @@ Program {
 exports[`Test expressions test more binary ops (formerly bool) 1`] = `
 Program {
   "children": Array [
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "&&",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "&&",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "and",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "and",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "||",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "||",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "or",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "or",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "xor",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "xor",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "===",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "===",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "!==",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "!==",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "==",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "==",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "!=",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "!=",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": ">",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": ">",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "<",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "<",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": ">=",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": ">=",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "<=",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "<=",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "<=>",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "<=>",
+      "kind": "expressionstatement",
     },
-    Bin {
-      "kind": "bin",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "type": "instanceof",
       },
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "type": "instanceof",
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1540,83 +1835,54 @@ Program {
 exports[`Test expressions test nested expressions precedence 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
-        "left": Bin {
-          "kind": "bin",
-          "left": Number {
-            "kind": "number",
-            "value": "5",
-          },
-          "right": Number {
-            "kind": "number",
-            "value": "2",
-          },
-          "type": "*",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
         },
-        "right": Number {
-          "kind": "number",
-          "value": "1",
-        },
-        "type": "+",
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
-        "left": Number {
-          "kind": "number",
-          "value": "5",
-        },
+        "operator": "=",
         "right": Bin {
           "kind": "bin",
-          "left": Number {
-            "kind": "number",
-            "value": "2",
+          "left": Bin {
+            "kind": "bin",
+            "left": Number {
+              "kind": "number",
+              "value": "5",
+            },
+            "right": Number {
+              "kind": "number",
+              "value": "2",
+            },
+            "type": "*",
           },
-          "parenthesizedExpression": true,
           "right": Number {
             "kind": "number",
             "value": "1",
           },
           "type": "+",
         },
-        "type": "*",
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "c",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
-        "left": Bin {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Bin {
           "kind": "bin",
           "left": Number {
             "kind": "number",
-            "value": "1",
+            "value": "5",
           },
           "right": Bin {
             "kind": "bin",
@@ -1624,50 +1890,91 @@ Program {
               "kind": "number",
               "value": "2",
             },
+            "parenthesizedExpression": true,
             "right": Number {
               "kind": "number",
-              "value": "3",
+              "value": "1",
             },
-            "type": "/",
+            "type": "+",
           },
-          "type": "+",
+          "type": "*",
         },
-        "right": Number {
-          "kind": "number",
-          "value": "4",
-        },
-        "type": "+",
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "d",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
-        "left": Bin {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Bin {
           "kind": "bin",
-          "left": Number {
-            "kind": "number",
-            "value": "1",
+          "left": Bin {
+            "kind": "bin",
+            "left": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "right": Bin {
+              "kind": "bin",
+              "left": Number {
+                "kind": "number",
+                "value": "2",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "3",
+              },
+              "type": "/",
+            },
+            "type": "+",
           },
           "right": Number {
             "kind": "number",
-            "value": "2",
+            "value": "4",
           },
-          "type": "!==",
+          "type": "+",
         },
-        "right": Number {
-          "kind": "number",
-          "value": "3",
-        },
-        "type": "&&",
       },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "d",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "right": Number {
+              "kind": "number",
+              "value": "2",
+            },
+            "type": "!==",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "3",
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1678,104 +1985,116 @@ Program {
 exports[`Test expressions test new 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": New {
-        "arguments": Array [],
-        "kind": "new",
-        "what": Identifier {
-          "kind": "identifier",
-          "name": "\\\\foo",
-          "resolution": "qn",
-        },
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": New {
-        "arguments": Array [],
-        "kind": "new",
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": ConstRef {
-            "kind": "constref",
-            "name": "class",
-          },
-          "what": Identifier {
-            "kind": "identifier",
-            "name": "foo",
-            "resolution": "rn",
-          },
-        },
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": New {
-        "arguments": Array [],
-        "kind": "new",
-        "what": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
-          "name": "foo",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Identifier {
+            "kind": "identifier",
+            "name": "\\\\foo",
+            "resolution": "qn",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": New {
-        "arguments": Array [],
-        "kind": "new",
-        "what": Class {
-          "body": Array [],
-          "extends": Identifier {
-            "kind": "identifier",
-            "name": "foo",
-            "resolution": "uqn",
-          },
-          "implements": Array [
-            Identifier {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "class",
+            },
+            "what": Identifier {
               "kind": "identifier",
-              "name": "bar",
+              "name": "foo",
+              "resolution": "rn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Class {
+            "body": Array [],
+            "extends": Identifier {
+              "kind": "identifier",
+              "name": "foo",
               "resolution": "uqn",
             },
-          ],
-          "isAbstract": false,
-          "isAnonymous": true,
-          "isFinal": false,
-          "kind": "class",
-          "name": null,
+            "implements": Array [
+              Identifier {
+                "kind": "identifier",
+                "name": "bar",
+                "resolution": "uqn",
+              },
+            ],
+            "isAbstract": false,
+            "isAnonymous": true,
+            "isFinal": false,
+            "kind": "class",
+            "name": null,
+          },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1786,17 +2105,20 @@ Program {
 exports[`Test expressions test silent 1`] = `
 Program {
   "children": Array [
-    Silent {
-      "expr": Call {
-        "arguments": Array [],
-        "kind": "call",
-        "what": Identifier {
-          "kind": "identifier",
-          "name": "trigger_error",
-          "resolution": "uqn",
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Identifier {
+            "kind": "identifier",
+            "name": "trigger_error",
+            "resolution": "uqn",
+          },
         },
+        "kind": "silent",
       },
-      "kind": "silent",
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1807,45 +2129,57 @@ Program {
 exports[`Test expressions test unary 1`] = `
 Program {
   "children": Array [
-    Unary {
-      "kind": "unary",
-      "type": "+",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Unary {
+        "kind": "unary",
+        "type": "+",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Unary {
-      "kind": "unary",
-      "type": "~",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Unary {
+        "kind": "unary",
+        "type": "~",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Unary {
-      "kind": "unary",
-      "type": "!",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Unary {
-      "kind": "unary",
-      "type": "-",
-      "what": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
+    ExpressionStatement {
+      "expression": Unary {
+        "kind": "unary",
+        "type": "-",
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

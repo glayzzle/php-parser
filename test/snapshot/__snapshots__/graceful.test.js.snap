@@ -3,40 +3,46 @@
 exports[`Test graceful mode to suppress errors should contain 2 errors 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "var",
-      },
-      "operator": "=",
-      "right": Closure {
-        "arguments": Array [],
-        "body": Block {
-          "children": Array [
-            Assign {
-              "kind": "assign",
-              "left": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "foo",
-              },
-              "operator": "=",
-              "right": undefined,
-            },
-          ],
-          "kind": "block",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
         },
-        "byref": false,
-        "isStatic": false,
-        "kind": "closure",
-        "nullable": false,
-        "type": null,
-        "uses": Array [],
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "foo",
+                  },
+                  "operator": "=",
+                  "right": undefined,
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [],
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -120,42 +126,48 @@ Program {
 exports[`Test graceful mode to suppress errors test expr 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Bin {
-        "kind": "bin",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
         "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
-          "name": "b",
+          "name": "a",
         },
-        "right": undefined,
-        "type": "-",
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+          "right": undefined,
+          "type": "-",
+        },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "foo",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
       },
-      "operator": "=",
-      "right": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -239,61 +251,74 @@ Program {
 exports[`Test graceful mode to suppress errors test function arguments 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "arg",
-        },
-      ],
-      "kind": "call",
-      "what": PropertyLookup {
-        "kind": "propertylookup",
-        "offset": ConstRef {
-          "kind": "constref",
-          "name": "bar",
-        },
-        "what": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "foo",
-        },
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "foo",
-      },
-      "operator": "=",
-      "right": New {
+    ExpressionStatement {
+      "expression": Call {
         "arguments": Array [
           Variable {
             "byref": false,
             "curly": false,
             "kind": "variable",
-            "name": "baz",
+            "name": "arg",
           },
         ],
-        "kind": "new",
-        "what": Identifier {
-          "kind": "identifier",
-          "name": "bar",
-          "resolution": "uqn",
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "bar",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
-    Variable {
-      "byref": false,
-      "curly": false,
-      "kind": "variable",
-      "name": "foo",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "baz",
+            },
+          ],
+          "kind": "new",
+          "what": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Variable {
+        "byref": false,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -354,47 +379,50 @@ Program {
 exports[`Test graceful mode to suppress errors test method chains 1`] = `
 Program {
   "children": Array [
-    PropertyLookup {
-      "kind": "propertylookup",
-      "offset": ConstRef {
-        "kind": "constref",
-        "name": "",
-      },
-      "what": Call {
-        "arguments": Array [
-          Call {
-            "arguments": Array [],
-            "kind": "call",
-            "what": PropertyLookup {
-              "kind": "propertylookup",
-              "offset": ConstRef {
-                "kind": "constref",
-                "name": "once",
-              },
-              "what": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "this",
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": ConstRef {
+          "kind": "constref",
+          "name": "",
+        },
+        "what": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": ConstRef {
+                  "kind": "constref",
+                  "name": "once",
+                },
+                "what": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "this",
+                },
               },
             },
-          },
-        ],
-        "kind": "call",
-        "what": PropertyLookup {
-          "kind": "propertylookup",
-          "offset": ConstRef {
-            "kind": "constref",
-            "name": "expects",
-          },
-          "what": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "controller",
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "expects",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "controller",
+            },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [

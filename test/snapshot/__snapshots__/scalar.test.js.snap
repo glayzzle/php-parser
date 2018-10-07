@@ -3,34 +3,37 @@
 exports[`Test scalar statements test constants 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Number {
-          "kind": "number",
-          "value": "-5",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
         },
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": ConstRef {
-            "kind": "constref",
-            "name": "ref",
+        "operator": "=",
+        "right": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "-5",
           },
-          "what": Identifier {
-            "kind": "identifier",
-            "name": "foo",
-            "resolution": "uqn",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "ref",
+            },
+            "what": Identifier {
+              "kind": "identifier",
+              "name": "foo",
+              "resolution": "uqn",
+            },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -41,22 +44,94 @@ Program {
 exports[`Test scalar statements test dereferencable 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": PropertyLookup {
-        "kind": "propertylookup",
-        "offset": ConstRef {
-          "kind": "constref",
-          "name": "test",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
         },
-        "what": OffsetLookup {
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "test",
+          },
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "5",
+            },
+            "what": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": StaticLookup {
+                "kind": "staticlookup",
+                "offset": ConstRef {
+                  "kind": "constref",
+                  "name": "bar",
+                },
+                "what": Identifier {
+                  "kind": "identifier",
+                  "name": "foo",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "foo",
+            },
+            "what": New {
+              "arguments": Array [],
+              "kind": "new",
+              "parenthesizedExpression": true,
+              "what": Identifier {
+                "kind": "identifier",
+                "name": "test",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": OffsetLookup {
           "kind": "offsetlookup",
           "offset": Number {
             "kind": "number",
@@ -65,140 +140,80 @@ Program {
           "what": Call {
             "arguments": Array [],
             "kind": "call",
-            "what": StaticLookup {
-              "kind": "staticlookup",
-              "offset": ConstRef {
-                "kind": "constref",
-                "name": "bar",
-              },
-              "what": Identifier {
-                "kind": "identifier",
-                "name": "foo",
-                "resolution": "uqn",
-              },
-            },
-          },
-        },
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "operator": "=",
-      "right": Call {
-        "arguments": Array [],
-        "kind": "call",
-        "what": PropertyLookup {
-          "kind": "propertylookup",
-          "offset": ConstRef {
-            "kind": "constref",
-            "name": "foo",
-          },
-          "what": New {
-            "arguments": Array [],
-            "kind": "new",
             "parenthesizedExpression": true,
             "what": Identifier {
               "kind": "identifier",
-              "name": "test",
+              "name": "foo",
               "resolution": "uqn",
             },
           },
         },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "c",
-      },
-      "operator": "=",
-      "right": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Number {
-          "kind": "number",
-          "value": "5",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "d",
         },
-        "what": Call {
-          "arguments": Array [],
-          "kind": "call",
-          "parenthesizedExpression": true,
-          "what": Identifier {
-            "kind": "identifier",
-            "name": "foo",
-            "resolution": "uqn",
-          },
-        },
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "d",
-      },
-      "operator": "=",
-      "right": Call {
-        "arguments": Array [
-          Number {
-            "kind": "number",
-            "value": "5",
-          },
-        ],
-        "kind": "call",
-        "what": Closure {
+        "operator": "=",
+        "right": Call {
           "arguments": Array [
-            Parameter {
-              "byref": false,
-              "kind": "parameter",
-              "name": "a",
-              "nullable": false,
-              "type": null,
-              "value": null,
-              "variadic": false,
+            Number {
+              "kind": "number",
+              "value": "5",
             },
           ],
-          "body": Block {
-            "children": Array [
-              Return {
-                "expr": Bin {
-                  "kind": "bin",
-                  "left": Variable {
-                    "byref": false,
-                    "curly": false,
-                    "kind": "variable",
-                    "name": "a",
-                  },
-                  "right": Number {
-                    "kind": "number",
-                    "value": "2",
-                  },
-                  "type": "*",
-                },
-                "kind": "return",
+          "kind": "call",
+          "what": Closure {
+            "arguments": Array [
+              Parameter {
+                "byref": false,
+                "kind": "parameter",
+                "name": "a",
+                "nullable": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
               },
             ],
-            "kind": "block",
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "byref": false,
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                    "type": "*",
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "parenthesizedExpression": true,
+            "type": null,
+            "uses": Array [],
           },
-          "byref": false,
-          "isStatic": false,
-          "kind": "closure",
-          "nullable": false,
-          "parenthesizedExpression": true,
-          "type": null,
-          "uses": Array [],
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

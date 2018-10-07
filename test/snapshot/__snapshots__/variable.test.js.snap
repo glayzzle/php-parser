@@ -3,57 +3,60 @@
 exports[`Test variables Chained encapsed vars 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"{$a->foo()[$bar[$foo]]}\\"",
-        "type": "string",
-        "value": Array [
-          OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": OffsetLookup {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$a->foo()[$bar[$foo]]}\\"",
+          "type": "string",
+          "value": Array [
+            OffsetLookup {
               "kind": "offsetlookup",
-              "offset": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "foo",
-              },
-              "what": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "bar",
-              },
-            },
-            "what": Call {
-              "arguments": Array [],
-              "kind": "call",
-              "what": PropertyLookup {
-                "kind": "propertylookup",
-                "offset": ConstRef {
-                  "kind": "constref",
+              "offset": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
                   "name": "foo",
                 },
                 "what": Variable {
                   "byref": false,
                   "curly": false,
                   "kind": "variable",
-                  "name": "a",
+                  "name": "bar",
+                },
+              },
+              "what": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": ConstRef {
+                    "kind": "constref",
+                    "name": "foo",
+                  },
+                  "what": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
                 },
               },
             },
-          },
-        ],
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -64,20 +67,23 @@ Program {
 exports[`Test variables Check errors should be ? 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "?",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "?",
+        },
+        "operator": "=",
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "true",
+          "value": true,
+        },
       },
-      "operator": "=",
-      "right": Boolean {
-        "kind": "boolean",
-        "raw": "true",
-        "value": true,
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -100,25 +106,28 @@ Program {
 exports[`Test variables Check errors should fail $foo->bar::! 1`] = `
 Program {
   "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": ConstRef {
-        "kind": "constref",
-        "name": "!",
-      },
-      "what": PropertyLookup {
-        "kind": "propertylookup",
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
         "offset": ConstRef {
           "kind": "constref",
-          "name": "bar",
+          "name": "!",
         },
-        "what": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "foo",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "bar",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -219,32 +228,35 @@ Program {
 exports[`Test variables Check errors should fail on property lookup on static lookup 1`] = `
 Program {
   "children": Array [
-    PropertyLookup {
-      "kind": "propertylookup",
-      "offset": ConstRef {
-        "kind": "constref",
-        "name": "baz",
-      },
-      "what": StaticLookup {
-        "kind": "staticlookup",
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
         "offset": ConstRef {
           "kind": "constref",
-          "name": "bar",
+          "name": "baz",
         },
-        "what": PropertyLookup {
-          "kind": "propertylookup",
+        "what": StaticLookup {
+          "kind": "staticlookup",
           "offset": ConstRef {
             "kind": "constref",
-            "name": "foo",
+            "name": "bar",
           },
-          "what": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "this",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": ConstRef {
+              "kind": "constref",
+              "name": "foo",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "this",
+            },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -322,22 +334,25 @@ Program {
         "resolution": "uqn",
       },
     },
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": PropertyLookup {
-        "kind": "propertylookup",
-        "offset": ConstRef {
-          "kind": "constref",
-          "name": "foo",
-        },
-        "what": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "this",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "foo",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "this",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
     StaticLookup {
       "kind": "staticlookup",
@@ -353,46 +368,49 @@ Program {
         "resolution": "uqn",
       },
     },
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": ConstRef {
-          "kind": "constref",
-          "name": "qux",
-        },
-        "what": OffsetLookup {
-          "kind": "offsetlookup",
-          "offset": String {
-            "isDoubleQuote": true,
-            "kind": "string",
-            "raw": "\\"baz\\"",
-            "unicode": false,
-            "value": "baz",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "qux",
           },
-          "what": StaticLookup {
-            "kind": "staticlookup",
-            "offset": ConstRef {
-              "kind": "constref",
-              "name": "bar",
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"baz\\"",
+              "unicode": false,
+              "value": "baz",
             },
-            "what": PropertyLookup {
-              "kind": "propertylookup",
+            "what": StaticLookup {
+              "kind": "staticlookup",
               "offset": ConstRef {
                 "kind": "constref",
-                "name": "foo",
+                "name": "bar",
               },
-              "what": Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "this",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": ConstRef {
+                  "kind": "constref",
+                  "name": "foo",
+                },
+                "what": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "this",
+                },
               },
             },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -403,35 +421,10 @@ Program {
 exports[`Test variables Dynamic variables 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "a",
-        },
-      },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"bar\\"",
-        "unicode": false,
-        "value": "bar",
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
@@ -442,85 +435,122 @@ Program {
             "name": "a",
           },
         },
-      },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"bar\\"",
-        "unicode": false,
-        "value": "bar",
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": true,
-        "kind": "variable",
-        "name": Bin {
-          "kind": "bin",
-          "left": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "a",
-          },
-          "right": String {
-            "isDoubleQuote": true,
-            "kind": "string",
-            "raw": "\\"bar\\"",
-            "unicode": false,
-            "value": "bar",
-          },
-          "type": ".",
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"bar\\"",
+          "unicode": false,
+          "value": "bar",
         },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"bar\\"",
-        "unicode": false,
-        "value": "bar",
-      },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Bin {
-          "kind": "bin",
-          "left": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "a",
-          },
-          "right": String {
-            "isDoubleQuote": true,
-            "kind": "string",
-            "raw": "\\"bar\\"",
-            "unicode": false,
-            "value": "bar",
-          },
-          "type": ".",
-        },
-        "what": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
-          "name": "foo",
+          "name": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"bar\\"",
+          "unicode": false,
+          "value": "bar",
         },
       },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"bar\\"",
-        "unicode": false,
-        "value": "bar",
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": true,
+          "kind": "variable",
+          "name": Bin {
+            "kind": "bin",
+            "left": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"bar\\"",
+              "unicode": false,
+              "value": "bar",
+            },
+            "type": ".",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"bar\\"",
+          "unicode": false,
+          "value": "bar",
+        },
       },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Bin {
+            "kind": "bin",
+            "left": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"bar\\"",
+              "unicode": false,
+              "value": "bar",
+            },
+            "type": ".",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"bar\\"",
+          "unicode": false,
+          "value": "bar",
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -531,100 +561,109 @@ Program {
 exports[`Test variables Encaps var offset 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"{$a[1]}\\"",
-        "type": "string",
-        "value": Array [
-          OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": Number {
-              "kind": "number",
-              "value": "1",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$a[1]}\\"",
+          "type": "string",
+          "value": Array [
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
             },
-            "what": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "a",
-            },
-          },
-        ],
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"{$a[\\"a\\"]}\\"",
-        "type": "string",
-        "value": Array [
-          OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": String {
-              "isDoubleQuote": true,
-              "kind": "string",
-              "raw": "\\"a\\"",
-              "unicode": false,
-              "value": "a",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$a[\\"a\\"]}\\"",
+          "type": "string",
+          "value": Array [
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"a\\"",
+                "unicode": false,
+                "value": "a",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
             },
-            "what": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "a",
-            },
-          },
-        ],
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": Encapsed {
-        "kind": "encapsed",
-        "raw": "\\"{$a[$b]}\\"",
-        "type": "string",
-        "value": Array [
-          OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "b",
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$a[$b]}\\"",
+          "type": "string",
+          "value": Array [
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
             },
-            "what": Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "a",
-            },
-          },
-        ],
+          ],
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -672,40 +711,43 @@ Program {
 exports[`Test variables array destructuring 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": List {
-        "arguments": Array [
-          Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": List {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "id1",
+            },
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "name1",
+            },
+          ],
+          "kind": "list",
+          "shortForm": true,
+        },
+        "operator": "=",
+        "right": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "what": Variable {
             "byref": false,
             "curly": false,
             "kind": "variable",
-            "name": "id1",
+            "name": "data",
           },
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "name1",
-          },
-        ],
-        "kind": "list",
-        "shortForm": true,
-      },
-      "operator": "=",
-      "right": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Number {
-          "kind": "number",
-          "value": "0",
-        },
-        "what": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "data",
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -716,60 +758,69 @@ Program {
 exports[`Test variables default variables 1`] = `
 Program {
   "children": Array [
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "a",
-      },
-      "operator": "=",
-      "right": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"foo\\"",
-        "unicode": false,
-        "value": "foo",
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "b",
-      },
-      "operator": "=",
-      "right": Variable {
-        "byref": true,
-        "curly": false,
-        "kind": "variable",
-        "name": "c",
-      },
-    },
-    Assign {
-      "kind": "assign",
-      "left": PropertyLookup {
-        "kind": "propertylookup",
-        "offset": ConstRef {
-          "kind": "constref",
-          "name": "b",
-        },
-        "what": Variable {
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
           "byref": false,
           "curly": false,
           "kind": "variable",
           "name": "a",
         },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"foo\\"",
+          "unicode": false,
+          "value": "foo",
+        },
       },
-      "operator": "=",
-      "right": Boolean {
-        "kind": "boolean",
-        "raw": "true",
-        "value": true,
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Variable {
+          "byref": true,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
       },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": ConstRef {
+            "kind": "constref",
+            "name": "b",
+          },
+          "what": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        },
+        "operator": "=",
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "true",
+          "value": true,
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
