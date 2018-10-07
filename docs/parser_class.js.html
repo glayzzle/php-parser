@@ -191,7 +191,8 @@ module.exports = {
       // jump over T_VAR then land on T_VARIABLE
       if (this.token === this.tok.T_VAR) {
         this.next().expect(this.tok.T_VARIABLE);
-        flags[0] = flags[1] = 0; // public &amp; non static var
+        flags[0] = null; // public (as null)
+        flags[1] = 0; // non static var
       }
 
       if (this.token === this.tok.T_VARIABLE) {

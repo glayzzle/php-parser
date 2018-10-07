@@ -357,6 +357,9 @@ AST.prototype.prepare = function(kind, docs, parser) {
     let location = null;
     const args = Array.prototype.slice.call(arguments);
     args.push(docs);
+    if (typeof result.preBuild === "function") {
+      result.preBuild(arguments);
+    }
     if (self.withPositions || self.withSource) {
       let src = null;
       if (self.withSource) {
@@ -383,9 +386,13 @@ AST.prototype.prepare = function(kind, docs, parser) {
     if (typeof node !== "function") {
       throw new Error('Undefined node "' + kind + '"');
     }
-    const result = Object.create(node.prototype);
-    node.apply(result, args);
-    return self.resolvePrecedence(result);
+    const astNode = Object.create(node.prototype);
+    node.apply(astNode, args);
+    result.instance = astNode;
+    if (result.trailingComments) {
+      astNode.trailingComments = result.trailingComments;
+    }
+    return self.resolvePrecedence(astNode);
   };
   /**
    * Helper to change a node kind
@@ -393,6 +400,35 @@ AST.prototype.prepare = function(kind, docs, parser) {
    */
   result.setKind = function(newKind) {
     kind = newKind;
+  };
+  /**
+   * Sets a list of trailing comments
+   * @param {*} docs
+   */
+  result.setTrailingComments = function(docs) {
+    if (result.instance) {
+      // already created
+      result.instance.trailingComments = docs;
+    } else {
+      result.trailingComments = docs;
+    }
+  };
+  /**
+   * Release a node without using it on the AST
+   */
+  result.destroy = function(target) {
+    if (docs) {
+      // release current docs stack
+      if (target) {
+        if (!target.leadingComments) {
+          target.leadingComments = docs;
+        } else {
+          target.leadingComments = docs.concat(target.leadingComments);
+        }
+      } else {
+        parser._docIndex = parser._docs.length - docs.length;
+      }
+    }
   };
   return result;
 };

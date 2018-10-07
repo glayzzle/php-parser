@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 800b5c0abc57980b33d2 - 2018-9-30
+ *         Build: aee66c9552f6f0b5f9e3 - 2018-10-7
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -259,6 +259,8 @@ Declaration.prototype.parseFlags = function (flags) {
   if (this.kind !== "class") {
     if (flags[0] === -1) {
       this.visibility = IS_UNDEFINED;
+    } else if (flags[0] === null) {
+      this.visibility = null;
     } else if (flags[0] === 0) {
       this.visibility = IS_PUBLIC;
     } else if (flags[0] === 1) {
@@ -3066,6 +3068,9 @@ AST.prototype.prepare = function (kind, docs, parser) {
     var location = null;
     var args = Array.prototype.slice.call(arguments);
     args.push(docs);
+    if (typeof result.preBuild === "function") {
+      result.preBuild(arguments);
+    }
     if (self.withPositions || self.withSource) {
       var src = null;
       if (self.withSource) {
@@ -3088,9 +3093,13 @@ AST.prototype.prepare = function (kind, docs, parser) {
     if (typeof node !== "function") {
       throw new Error('Undefined node "' + kind + '"');
     }
-    var result = Object.create(node.prototype);
-    node.apply(result, args);
-    return self.resolvePrecedence(result);
+    var astNode = Object.create(node.prototype);
+    node.apply(astNode, args);
+    result.instance = astNode;
+    if (result.trailingComments) {
+      astNode.trailingComments = result.trailingComments;
+    }
+    return self.resolvePrecedence(astNode);
   };
   /**
    * Helper to change a node kind
@@ -3098,6 +3107,18 @@ AST.prototype.prepare = function (kind, docs, parser) {
    */
   result.setKind = function (newKind) {
     kind = newKind;
+  };
+  /**
+   * Sets a list of trailing comments
+   * @param {*} docs
+   */
+  result.setTrailingComments = function (docs) {
+    if (result.instance) {
+      // already created
+      result.instance.trailingComments = docs;
+    } else {
+      result.trailingComments = docs;
+    }
   };
   /**
    * Release a node without using it on the AST
@@ -4394,8 +4415,11 @@ module.exports = {
 
       default:
         // default fallback expr
+        //let statement = this.node('statement');
         expr = this.read_expr();
         this.expectEndOfStatement(expr);
+        /*statement = statement();
+        statement.expression = expr;*/
         return expr;
     }
   },
@@ -6070,7 +6094,8 @@ module.exports = {
       // jump over T_VAR then land on T_VARIABLE
       if (this.token === this.tok.T_VAR) {
         this.next().expect(this.tok.T_VARIABLE);
-        flags[0] = flags[1] = 0; // public & non static var
+        flags[0] = null; // public (as null)
+        flags[1] = 0; // non static var
       }
 
       if (this.token === this.tok.T_VARIABLE) {
@@ -6624,6 +6649,7 @@ parser.prototype.parse = function (code, filename) {
   this.innerList = false;
   this.innerListForm = false;
   var program = this.ast.prepare("program", null, this);
+  this._nodeStack = [program];
   var childs = [];
   this.next();
   while (this.token != this.EOF) {
@@ -6691,15 +6717,29 @@ parser.prototype.error = function (expect) {
  */
 parser.prototype.node = function (name) {
   if (this.extractDoc) {
+    var docs = null;
     if (this._docIndex < this._docs.length) {
-      var docs = this._docs.slice(this._docIndex);
+      docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
       if (this.debug) {
         console.log(new Error("Append docs on " + name));
         console.log(docs);
       }
-      return this.ast.prepare(name, docs, this);
     }
+    var node = this.ast.prepare(name, docs, this);
+    this._nodeStack.push(node);
+    node.preBuild = function () {
+      var index = this._nodeStack.indexOf(node);
+      if (index > -1) {
+        this._nodeStack = this._nodeStack.slice(0, index);
+      }
+      // inject leading comment on current node
+      if (this._docIndex < this._docs.length) {
+        node.setTrailingComments(this._docs.slice(this._docIndex));
+        this._docIndex = this._docs.length;
+      }
+    }.bind(this);
+    return node;
   }
   return this.ast.prepare(name, null, this);
 };

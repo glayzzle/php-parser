@@ -373,6 +373,7 @@ parser.prototype.parse = function(code, filename) {
   this.innerList = false;
   this.innerListForm = false;
   const program = this.ast.prepare("program", null, this);
+  this._nodeStack = [program];
   let childs = [];
   this.next();
   while (this.token != this.EOF) {
@@ -453,11 +454,29 @@ parser.prototype.error = function(expect) {
  */
 parser.prototype.node = function(name) {
   if (this.extractDoc) {
+    let docs = null;
     if (this._docIndex &lt; this._docs.length) {
-      const docs = this._docs.slice(this._docIndex);
+      docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
-      return this.ast.prepare(name, docs, this);
+      if (this.debug) {
+        console.log(new Error("Append docs on " + name));
+        console.log(docs);
+      }
     }
+    const node = this.ast.prepare(name, docs, this);
+    this._nodeStack.push(node);
+    node.preBuild = function() {
+      const index = this._nodeStack.indexOf(node);
+      if (index > -1) {
+        this._nodeStack = this._nodeStack.slice(0, index);
+      }
+      // inject leading comment on current node
+      if (this._docIndex &lt; this._docs.length) {
+        node.setTrailingComments(this._docs.slice(this._docIndex));
+        this._docIndex = this._docs.length;
+      }
+    }.bind(this);
+    return node;
   }
   return this.ast.prepare(name, null, this);
 };
@@ -482,7 +501,7 @@ parser.prototype.expectEndOfStatement = function(node) {
 };
 
 /** outputs some debug information on current token **/
-const ignoreStack = ["parser.next"];
+const ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
 parser.prototype.showlog = function() {
   const stack = new Error().stack.split("\n");
   let line;
