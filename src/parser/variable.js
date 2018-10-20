@@ -52,16 +52,17 @@ module.exports = {
           result = result("boolean", false, name.name);
         } else {
           // @todo null keyword ?
-          result = result("constref", name);
+          result = result("identifier", name);
         }
       } else {
         // @fixme possible #193 bug
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
-      result = this.node("constref");
+      result = this.node("identifier");
+      let name = this.text();
       this.next();
-      result = result("static");
+      result = result(name);
     } else {
       this.expect("VARIABLE");
     }
@@ -85,14 +86,14 @@ module.exports = {
       this.token === this.tok.T_CLASS ||
       (this.php7 && this.is("IDENTIFIER"))
     ) {
-      offset = this.node("constref");
+      offset = this.node("identifier");
       name = this.text();
       this.next();
       offset = offset(name);
     } else {
       this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
       // graceful mode : set getter as error node and continue
-      offset = this.node("constref");
+      offset = this.node("identifier");
       name = this.text();
       this.next();
       offset = offset(name);
@@ -149,7 +150,7 @@ module.exports = {
             this.next().token === this.tok.T_STRING ||
             (this.php7 && this.is("IDENTIFIER"))
           ) {
-            offset = this.node("constref");
+            offset = this.node("identifier");
             name = this.text();
             this.next();
             offset = offset(name);
@@ -159,9 +160,11 @@ module.exports = {
             }
           } else {
             this.error(this.tok.T_STRING);
-            // fallback on a constref node
-            offset = this.node("constref")(this.text());
+            // fallback on an identifier node
+            offset = this.node("identifier");
+            name = this.text();
             this.next();
+            offset = offset(name);
           }
           result = node(result, offset);
           // static lookup dereferencables are limited to staticlookup over functions
@@ -174,7 +177,7 @@ module.exports = {
           let what = null;
           switch (this.next().token) {
             case this.tok.T_STRING:
-              what = this.node("constref");
+              what = this.node("identifier");
               name = this.text();
               this.next();
               what = what(name);
@@ -223,7 +226,7 @@ module.exports = {
             default:
               this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
               // graceful mode : set what as error mode & continue
-              what = this.node("constref");
+              what = this.node("identifier");
               name = this.text();
               this.next();
               what = what(name);
@@ -246,7 +249,7 @@ module.exports = {
     if (this.token === this.tok.T_STRING) {
       const text = this.text();
       this.next();
-      offset = offset("constref", text);
+      offset = offset("identifier", text);
     } else if (this.token === this.tok.T_NUM_STRING) {
       const num = this.text();
       this.next();
@@ -261,10 +264,10 @@ module.exports = {
         this.tok.T_NUM_STRING,
         this.tok.T_VARIABLE
       ]);
-      // fallback : consider as constref
+      // fallback : consider as identifier
       const text = this.text();
       this.next();
-      offset = offset("constref", text);
+      offset = offset("identifier", text);
     }
     return offset;
   },

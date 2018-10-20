@@ -6,8 +6,8 @@ Program {
     ExpressionStatement {
       "expression": PropertyLookup {
         "kind": "propertylookup",
-        "offset": ConstRef {
-          "kind": "constref",
+        "offset": Identifier {
+          "kind": "identifier",
           "name": "bar",
         },
         "what": OffsetLookup {
@@ -18,8 +18,8 @@ Program {
           },
           "what": PropertyLookup {
             "kind": "propertylookup",
-            "offset": ConstRef {
-              "kind": "constref",
+            "offset": Identifier {
+              "kind": "identifier",
               "name": "foo",
             },
             "what": Call {
@@ -27,14 +27,14 @@ Program {
               "kind": "call",
               "what": StaticLookup {
                 "kind": "staticlookup",
-                "offset": ConstRef {
-                  "kind": "constref",
+                "offset": Identifier {
+                  "kind": "identifier",
                   "name": "call",
                 },
                 "what": PropertyLookup {
                   "kind": "propertylookup",
-                  "offset": ConstRef {
-                    "kind": "constref",
+                  "offset": Identifier {
+                    "kind": "identifier",
                     "name": "b",
                   },
                   "parenthesizedExpression": true,
@@ -64,8 +64,8 @@ Program {
     ExpressionStatement {
       "expression": PropertyLookup {
         "kind": "propertylookup",
-        "offset": ConstRef {
-          "kind": "constref",
+        "offset": Identifier {
+          "kind": "identifier",
           "name": "foo",
         },
         "what": OffsetLookup {
@@ -111,8 +111,8 @@ Program {
         "kind": "call",
         "what": StaticLookup {
           "kind": "staticlookup",
-          "offset": ConstRef {
-            "kind": "constref",
+          "offset": Identifier {
+            "kind": "identifier",
             "name": "foo",
           },
           "what": PropertyLookup {
@@ -121,8 +121,8 @@ Program {
               "kind": "encapsed",
               "type": "offset",
               "value": Array [
-                ConstRef {
-                  "kind": "constref",
+                Identifier {
+                  "kind": "identifier",
                   "name": "bar",
                 },
                 Variable {
@@ -185,18 +185,18 @@ Program {
     },
     StaticLookup {
       "kind": "staticlookup",
-      "offset": ConstRef {
-        "kind": "constref",
+      "offset": Identifier {
+        "kind": "identifier",
         "name": "baz",
       },
       "what": StaticLookup {
         "kind": "staticlookup",
-        "offset": ConstRef {
-          "kind": "constref",
+        "offset": Identifier {
+          "kind": "identifier",
           "name": "foo",
         },
-        "what": Identifier {
-          "kind": "identifier",
+        "what": Reference {
+          "kind": "reference",
           "name": "bar",
           "resolution": "uqn",
         },
@@ -231,8 +231,8 @@ Program {
       "kind": "call",
       "what": StaticLookup {
         "kind": "staticlookup",
-        "offset": ConstRef {
-          "kind": "constref",
+        "offset": Identifier {
+          "kind": "identifier",
           "name": "baz",
         },
         "what": Call {
@@ -240,15 +240,15 @@ Program {
           "kind": "call",
           "what": StaticLookup {
             "kind": "staticlookup",
-            "offset": ConstRef {
-              "kind": "constref",
+            "offset": Identifier {
+              "kind": "identifier",
               "name": "foo",
             },
             "what": Call {
               "arguments": Array [],
               "kind": "call",
-              "what": Identifier {
-                "kind": "identifier",
+              "what": Reference {
+                "kind": "reference",
                 "name": "bar",
                 "resolution": "uqn",
               },
@@ -276,8 +276,8 @@ Program {
           "kind": "variable",
           "name": "b",
         },
-        "what": Identifier {
-          "kind": "identifier",
+        "what": Reference {
+          "kind": "reference",
           "name": "a",
           "resolution": "uqn",
         },
@@ -301,12 +301,12 @@ Program {
       "kind": "assign",
       "left": StaticLookup {
         "kind": "staticlookup",
-        "offset": ConstRef {
-          "kind": "constref",
+        "offset": Identifier {
+          "kind": "identifier",
           "name": "b",
         },
-        "what": Identifier {
-          "kind": "identifier",
+        "what": Reference {
+          "kind": "reference",
           "name": "foo",
           "resolution": "uqn",
         },
@@ -336,10 +336,10 @@ Program {
   "children": Array [
     Assign {
       "kind": "assign",
-      "left": ConstRef {
-        "kind": "constref",
-        "name": Identifier {
-          "kind": "identifier",
+      "left": Identifier {
+        "kind": "identifier",
+        "name": Reference {
+          "kind": "reference",
           "name": "a",
           "resolution": "uqn",
         },
@@ -1193,8 +1193,8 @@ Program {
               "value": Call {
                 "arguments": Array [],
                 "kind": "call",
-                "what": Identifier {
-                  "kind": "identifier",
+                "what": Reference {
+                  "kind": "reference",
                   "name": "foo",
                   "resolution": "uqn",
                 },
@@ -1226,7 +1226,6 @@ Program {
       "name": Identifier {
         "kind": "identifier",
         "name": "gen",
-        "resolution": "rn",
       },
       "nullable": false,
       "type": null,
@@ -2002,8 +2001,8 @@ Program {
         "right": New {
           "arguments": Array [],
           "kind": "new",
-          "what": Identifier {
-            "kind": "identifier",
+          "what": Reference {
+            "kind": "reference",
             "name": "\\\\foo",
             "resolution": "qn",
           },
@@ -2026,12 +2025,12 @@ Program {
           "kind": "new",
           "what": StaticLookup {
             "kind": "staticlookup",
-            "offset": ConstRef {
-              "kind": "constref",
+            "offset": Identifier {
+              "kind": "identifier",
               "name": "class",
             },
-            "what": Identifier {
-              "kind": "identifier",
+            "what": Reference {
+              "kind": "reference",
               "name": "foo",
               "resolution": "rn",
             },
@@ -2078,14 +2077,14 @@ Program {
           "kind": "new",
           "what": Class {
             "body": Array [],
-            "extends": Identifier {
-              "kind": "identifier",
+            "extends": Reference {
+              "kind": "reference",
               "name": "foo",
               "resolution": "uqn",
             },
             "implements": Array [
-              Identifier {
-                "kind": "identifier",
+              Reference {
+                "kind": "reference",
                 "name": "bar",
                 "resolution": "uqn",
               },
@@ -2114,8 +2113,8 @@ Program {
         "expr": Call {
           "arguments": Array [],
           "kind": "call",
-          "what": Identifier {
-            "kind": "identifier",
+          "what": Reference {
+            "kind": "reference",
             "name": "trigger_error",
             "resolution": "uqn",
           },

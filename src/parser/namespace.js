@@ -40,7 +40,7 @@ module.exports = {
         return result(name.name, body, true);
       } else if (this.token === "(") {
         // resolve ambuiguity between namespace & function call
-        name.resolution = this.ast.identifier.RELATIVE_NAME;
+        name.resolution = this.ast.reference.RELATIVE_NAME;
         name.name = name.name.substring(1);
         return this.node("call")(name, this.read_function_argument_list());
       } else {
@@ -59,10 +59,10 @@ module.exports = {
    *  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
    * ```
    * @see http://php.net/manual/en/language.namespaces.rules.php
-   * @return {Identifier}
+   * @return {Reference}
    */
   read_namespace_name: function() {
-    const result = this.node("identifier");
+    const result = this.node("reference");
     let relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();

@@ -97,7 +97,7 @@ module.exports = {
         }
         this.next();
       }
-      name = nameNode([name], true);
+      name = nameNode(name);
     }
     if (this.expect("(")) this.next();
     const params = this.read_parameter_list();
@@ -240,7 +240,7 @@ module.exports = {
    * ```
    */
   read_type: function() {
-    const result = this.node("identifier");
+    const result = this.node("reference");
     switch (this.token) {
       case this.tok.T_ARRAY:
         this.next();

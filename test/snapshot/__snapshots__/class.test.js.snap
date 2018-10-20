@@ -9,8 +9,8 @@ Program {
           "adaptations": null,
           "kind": "traituse",
           "traits": Array [
-            Identifier {
-              "kind": "identifier",
+            Reference {
+              "kind": "reference",
               "name": "A",
               "resolution": "uqn",
             },
@@ -46,8 +46,8 @@ Program {
             },
           ],
           "traits": Array [
-            Identifier {
-              "kind": "identifier",
+            Reference {
+              "kind": "reference",
               "name": "B",
               "resolution": "uqn",
             },
@@ -80,7 +80,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "__construct",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -100,7 +99,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "boo",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -109,8 +107,8 @@ Program {
       ],
       "extends": null,
       "implements": Array [
-        Identifier {
-          "kind": "identifier",
+        Reference {
+          "kind": "reference",
           "name": "boo",
           "resolution": "uqn",
         },
@@ -159,7 +157,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "foo",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -167,8 +164,8 @@ Program {
         },
       ],
       "extends": Array [
-        Identifier {
-          "kind": "identifier",
+        Reference {
+          "kind": "reference",
           "name": "something",
           "resolution": "uqn",
         },
@@ -208,21 +205,20 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "foo",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
           "visibility": "protected",
         },
       ],
-      "extends": Identifier {
-        "kind": "identifier",
+      "extends": Reference {
+        "kind": "reference",
         "name": "foo",
         "resolution": "uqn",
       },
       "implements": Array [
-        Identifier {
-          "kind": "identifier",
+        Reference {
+          "kind": "reference",
           "name": "boo",
           "resolution": "uqn",
         },
@@ -268,6 +264,129 @@ Program {
 }
 `;
 
+exports[`Test classes Implement #183 : static keyword as identifier 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "foo",
+                  },
+                  "what": Reference {
+                    "kind": "reference",
+                    "name": "parent",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "bar",
+                  },
+                  "what": Reference {
+                    "kind": "reference",
+                    "name": "self",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "baz",
+                  },
+                  "what": Identifier {
+                    "kind": "identifier",
+                    "name": "static",
+                  },
+                },
+              },
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "fooBar",
+                  },
+                  "what": Reference {
+                    "kind": "reference",
+                    "name": "A",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "fooBaz",
+                    },
+                    "what": Variable {
+                      "byref": false,
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": "A",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test classes Test js properties 1`] = `
 Program {
   "children": Array [
@@ -296,7 +415,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "constructor",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -311,8 +429,8 @@ Program {
                   "kind": "assign",
                   "left": PropertyLookup {
                     "kind": "propertylookup",
-                    "offset": ConstRef {
-                      "kind": "constref",
+                    "offset": Identifier {
+                      "kind": "identifier",
                       "name": "constructor",
                     },
                     "what": Variable {
@@ -323,10 +441,10 @@ Program {
                     },
                   },
                   "operator": "=",
-                  "right": ConstRef {
-                    "kind": "constref",
-                    "name": Identifier {
-                      "kind": "identifier",
+                  "right": Identifier {
+                    "kind": "identifier",
+                    "name": Reference {
+                      "kind": "reference",
                       "name": "null",
                       "resolution": "uqn",
                     },
@@ -344,17 +462,17 @@ Program {
                     "kind": "variable",
                     "name": "constructor",
                   },
-                  "what": Identifier {
-                    "kind": "identifier",
+                  "what": Reference {
+                    "kind": "reference",
                     "name": "self",
                     "resolution": "uqn",
                   },
                 },
                 "operator": "=",
-                "right": ConstRef {
-                  "kind": "constref",
-                  "name": Identifier {
-                    "kind": "identifier",
+                "right": Identifier {
+                  "kind": "identifier",
+                  "name": Reference {
+                    "kind": "reference",
                     "name": "null",
                     "resolution": "uqn",
                   },
@@ -371,7 +489,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "__proto__",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -401,8 +518,8 @@ Program {
           "adaptations": null,
           "kind": "traituse",
           "traits": Array [
-            Identifier {
-              "kind": "identifier",
+            Reference {
+              "kind": "reference",
               "name": "A",
               "resolution": "uqn",
             },
@@ -427,8 +544,8 @@ Program {
           ],
           "kind": "traituse",
           "traits": Array [
-            Identifier {
-              "kind": "identifier",
+            Reference {
+              "kind": "reference",
               "name": "B",
               "resolution": "uqn",
             },
@@ -534,15 +651,15 @@ Program {
               "kind": "parameter",
               "name": "data",
               "nullable": false,
-              "type": Identifier {
-                "kind": "identifier",
+              "type": Reference {
+                "kind": "reference",
                 "name": "\\\\array",
                 "resolution": "fqn",
               },
-              "value": ConstRef {
-                "kind": "constref",
-                "name": Identifier {
-                  "kind": "identifier",
+              "value": Identifier {
+                "kind": "identifier",
+                "name": Reference {
+                  "kind": "reference",
                   "name": "null",
                   "resolution": "uqn",
                 },
@@ -557,8 +674,8 @@ Program {
                   "kind": "assign",
                   "left": PropertyLookup {
                     "kind": "propertylookup",
-                    "offset": ConstRef {
-                      "kind": "constref",
+                    "offset": Identifier {
+                      "kind": "identifier",
                       "name": "data",
                     },
                     "what": Variable {
@@ -589,7 +706,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "__construct",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -620,12 +736,12 @@ Program {
               "type": null,
               "value": StaticLookup {
                 "kind": "staticlookup",
-                "offset": ConstRef {
-                  "kind": "constref",
+                "offset": Identifier {
+                  "kind": "identifier",
                   "name": "list",
                 },
-                "what": Identifier {
-                  "kind": "identifier",
+                "what": Reference {
+                  "kind": "reference",
                   "name": "self",
                   "resolution": "uqn",
                 },
@@ -638,8 +754,8 @@ Program {
               Return {
                 "expr": StaticLookup {
                   "kind": "staticlookup",
-                  "offset": ConstRef {
-                    "kind": "constref",
+                  "offset": Identifier {
+                    "kind": "identifier",
                     "name": "list",
                   },
                   "what": Variable {
@@ -662,7 +778,6 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "new",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
@@ -700,31 +815,30 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "foobar",
-            "resolution": "rn",
           },
           "nullable": false,
           "type": null,
           "visibility": "",
         },
       ],
-      "extends": Identifier {
-        "kind": "identifier",
+      "extends": Reference {
+        "kind": "reference",
         "name": "bar",
         "resolution": "uqn",
       },
       "implements": Array [
-        Identifier {
-          "kind": "identifier",
+        Reference {
+          "kind": "reference",
           "name": "bim",
           "resolution": "uqn",
         },
-        Identifier {
-          "kind": "identifier",
+        Reference {
+          "kind": "reference",
           "name": "bam",
           "resolution": "uqn",
         },
-        Identifier {
-          "kind": "identifier",
+        Reference {
+          "kind": "reference",
           "name": "boum",
           "resolution": "uqn",
         },
@@ -741,37 +855,37 @@ Program {
           "adaptations": Array [
             TraitPrecedence {
               "instead": Array [
-                Identifier {
-                  "kind": "identifier",
+                Reference {
+                  "kind": "reference",
                   "name": "A",
                   "resolution": "uqn",
                 },
               ],
               "kind": "traitprecedence",
               "method": "smallTalk",
-              "trait": Identifier {
-                "kind": "identifier",
+              "trait": Reference {
+                "kind": "reference",
                 "name": "B",
                 "resolution": "uqn",
               },
             },
             TraitPrecedence {
               "instead": Array [
-                Identifier {
-                  "kind": "identifier",
+                Reference {
+                  "kind": "reference",
                   "name": "B",
                   "resolution": "uqn",
                 },
-                Identifier {
-                  "kind": "identifier",
+                Reference {
+                  "kind": "reference",
                   "name": "C",
                   "resolution": "uqn",
                 },
               ],
               "kind": "traitprecedence",
               "method": "bigTalk",
-              "trait": Identifier {
-                "kind": "identifier",
+              "trait": Reference {
+                "kind": "reference",
                 "name": "A",
                 "resolution": "uqn",
               },
@@ -780,8 +894,8 @@ Program {
               "as": "talk",
               "kind": "traitalias",
               "method": "bigTalk",
-              "trait": Identifier {
-                "kind": "identifier",
+              "trait": Reference {
+                "kind": "reference",
                 "name": "B",
                 "resolution": "uqn",
               },
@@ -791,8 +905,8 @@ Program {
               "as": "talk",
               "kind": "traitalias",
               "method": "bigTalk",
-              "trait": Identifier {
-                "kind": "identifier",
+              "trait": Reference {
+                "kind": "reference",
                 "name": "B",
                 "resolution": "uqn",
               },
@@ -802,8 +916,8 @@ Program {
               "as": "talk",
               "kind": "traitalias",
               "method": "bigTalk",
-              "trait": Identifier {
-                "kind": "identifier",
+              "trait": Reference {
+                "kind": "reference",
                 "name": "B",
                 "resolution": "uqn",
               },
@@ -813,8 +927,8 @@ Program {
               "as": "list",
               "kind": "traitalias",
               "method": "new",
-              "trait": Identifier {
-                "kind": "identifier",
+              "trait": Reference {
+                "kind": "reference",
                 "name": "A",
                 "resolution": "uqn",
               },
@@ -830,13 +944,13 @@ Program {
           ],
           "kind": "traituse",
           "traits": Array [
-            Identifier {
-              "kind": "identifier",
+            Reference {
+              "kind": "reference",
               "name": "A",
               "resolution": "uqn",
             },
-            Identifier {
-              "kind": "identifier",
+            Reference {
+              "kind": "reference",
               "name": "B",
               "resolution": "uqn",
             },
@@ -853,11 +967,10 @@ Program {
           "name": Identifier {
             "kind": "identifier",
             "name": "foo",
-            "resolution": "rn",
           },
           "nullable": false,
-          "type": Identifier {
-            "kind": "identifier",
+          "type": Reference {
+            "kind": "reference",
             "name": "bar",
             "resolution": "uqn",
           },

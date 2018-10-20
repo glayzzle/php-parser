@@ -200,8 +200,8 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
       name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
-        const varName = this.text();
         name = this.node("variable");
+        const varName = this.text();
         this.next();
         // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243

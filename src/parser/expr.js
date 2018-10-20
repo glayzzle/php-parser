@@ -344,8 +344,8 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
       // should accept only a variable
       const isConst =
-        expr.kind === "constref" ||
-        (expr.kind === "staticlookup" && expr.offset.kind === "constref");
+        expr.kind === "identifier" ||
+        (expr.kind === "staticlookup" && expr.offset.kind === "identifier");
 
       // VARIABLES SPECIFIC OPERATIONS
       switch (this.token) {

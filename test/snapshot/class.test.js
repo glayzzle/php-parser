@@ -1,6 +1,21 @@
 const parser = require('../main');
 
 describe("Test classes", function() {
+
+  it('Implement #183 : static keyword as identifier', function() {
+    expect(parser.parseEval(`
+    class A {
+      public static function test() {
+        parent::foo();
+        self::bar();
+        static::baz();
+        A::fooBar();
+        $this->fooBaz();
+      }
+    }
+    `)).toMatchSnapshot();
+  });
+
   it("Validate usual declarations", function() {
     expect(parser.parseEval(`
       final class foo extends bar implements

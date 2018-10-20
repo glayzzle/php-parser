@@ -397,6 +397,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/program"),
   require("./ast/property"),
   require("./ast/propertylookup"),
+  require("./ast/reference"),
   require("./ast/retif"),
   require("./ast/return"),
   require("./ast/silent"),

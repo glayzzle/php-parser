@@ -73,7 +73,7 @@ module.exports = {
    * ```
    *
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L726
-   * @return {Identifier[]}
+   * @return {Reference[]}
    */
   read_name_list: function() {
     return this.read_list(this.read_namespace_name, ",", false);
