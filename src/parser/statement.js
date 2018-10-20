@@ -253,20 +253,20 @@ module.exports = {
 
       case this.tok.T_STATIC:
         current = [this.token, this.lexer.getState()];
-        result = this.node("static");
+        result = this.node();
         if (this.next().token === this.tok.T_DOUBLE_COLON) {
           // static keyword for a class
           this.lexer.tokens.push(current);
           expr = this.next().read_expr();
-          this.expect(";") && this.next();
-          return expr;
+          this.expectEndOfStatement(expr);
+          return result("expressionstatement", expr);
         }
         if (this.token === this.tok.T_FUNCTION) {
           return this.read_function(true, [0, 1, 0]);
         }
         items = this.read_variable_declarations();
         this.expectEndOfStatement();
-        return result(items);
+        return result("static", items);
 
       case this.tok.T_ECHO: {
         result = this.node("echo");
