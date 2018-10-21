@@ -62,16 +62,25 @@ module.exports = {
    * @return {Reference}
    */
   read_namespace_name: function() {
-    const result = this.node("reference");
+    const result = this.node();
     let relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();
       relative = true;
     }
-    return result(
-      this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true),
-      relative
+    const names = this.read_list(
+      this.tok.T_STRING,
+      this.tok.T_NS_SEPARATOR,
+      true
     );
+    if (!relative && names.length === 1) {
+      if (names[0] === "parent") {
+        return result("parentreference");
+      } else if (names[0] === "self") {
+        return result("selfreference");
+      }
+    }
+    return result("classreference", names, relative);
   },
   /**
    * Reads a use statement

@@ -15,6 +15,12 @@ const Position = require("./ast/position");
  * - [Position](#position)
  * - [Node](#node)
  *   - [Identifier](#identifier)
+ *   - [Reference](#reference)
+ *     - [TypeReference](#classreference)
+ *     - [ParentReference](#classreference)
+ *     - [StaticReference](#classreference)
+ *     - [SelfReference](#classreference)
+ *     - [ClassReference](#classreference)
  *   - [TraitUse](#traituse)
  *   - [TraitAlias](#traitalias)
  *   - [TraitPrecedence](#traitprecedence)
@@ -345,6 +351,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/catch"),
   require("./ast/class"),
   require("./ast/classconstant"),
+  require("./ast/classreference"),
   require("./ast/clone"),
   require("./ast/closure"),
   require("./ast/comment"),
@@ -391,6 +398,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/offsetlookup"),
   require("./ast/operation"),
   require("./ast/parameter"),
+  require("./ast/parentreference"),
   require("./ast/post"),
   require("./ast/pre"),
   require("./ast/print"),
@@ -400,10 +408,12 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/reference"),
   require("./ast/retif"),
   require("./ast/return"),
+  require("./ast/selfreference"),
   require("./ast/silent"),
   require("./ast/statement"),
   require("./ast/static"),
   require("./ast/staticlookup"),
+  require("./ast/staticreference"),
   require("./ast/string"),
   require("./ast/switch"),
   require("./ast/sys"),

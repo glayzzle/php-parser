@@ -240,7 +240,7 @@ module.exports = {
    * ```
    */
   read_type: function() {
-    const result = this.node("reference");
+    const result = this.node("classreference");
     switch (this.token) {
       case this.tok.T_ARRAY:
         this.next();
