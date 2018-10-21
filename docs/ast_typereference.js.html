@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>
-      ast/try.js - Documentation
+      ast/typereference.js - Documentation
   </title>
 
   <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
@@ -92,7 +92,7 @@
   <div id="main">
     
       <h1 class="page-title">
-        ast/try.js
+        ast/typereference.js
       </h1>
     
 
@@ -108,29 +108,27 @@
  */
 "use strict";
 
-const Statement = require("./statement");
-const KIND = "try";
+const Reference = require("./reference");
+const KIND = "typereference";
 
 /**
- * Defines a try statement
- * @constructor Try
- * @extends {Statement}
- * @property {Block} body
- * @property {Catch[]} catches
- * @property {Block} allways
+ * Defines a class reference node
+ * @constructor TypeReference
+ * @extends {Reference}
+ * @property {string} name
  */
-module.exports = Statement.extends(KIND, function Try(
-  body,
-  catches,
-  always,
+const TypeReference = Reference.extends(KIND, function TypeReference(
+  name,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.body = body;
-  this.catches = catches;
-  this.always = always;
+  Reference.apply(this, [KIND, docs, location]);
+  this.name = name;
 });
+
+TypeReference.types = ["int", "float", "string", "bool", "object", "array"];
+
+module.exports = TypeReference;
 </code></pre>
   </article>
 </section>

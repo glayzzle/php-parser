@@ -1,5 +1,11 @@
 # Releases
 
+## 3.0.0-prerelease.6 : (2018-10-21)
+ - fix #113 : Unhandled native identifiers
+ - fix #183 : `static` parsed as constref
+ - fix #188 : `constref` vs `identifier`
+ - impl #196 : identifier for function/method name
+
 ## 3.0.0-alpha3 : (2018-08-15)
  - fix #168 : End location of `if` without semicolon
  - impl #147 : Node informations about Binary and unicode strings
