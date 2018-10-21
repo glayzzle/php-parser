@@ -14,6 +14,16 @@ describe("Function tests", function() {
     expect(ast).toMatchSnapshot();
   });
 
+  it("implement #113 : typehint nodes", function() {
+    expect(parser.parseEval(
+      `
+      function &foo(int $a = 1, float $b = 1, bool $c = 1, string $d, callable $e, int\\bar $f, ?array &...$params) : ?object {
+        // inner comment
+      }
+      `
+    )).toMatchSnapshot();
+  });
+
   it("implement #196 : set function name as identifier", function() {
     const ast = parser.parseEval(
       `

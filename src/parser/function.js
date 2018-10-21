@@ -240,20 +240,33 @@ module.exports = {
    * ```
    */
   read_type: function() {
-    const result = this.node("classreference");
-    switch (this.token) {
-      case this.tok.T_ARRAY:
+    const result = this.node("typereference");
+    let type = null;
+    if (this.token === this.tok.T_ARRAY || this.token === this.tok.T_CALLABLE) {
+      let type = this.text();
+      this.next();
+      return result(type);
+    } else if (this.token === this.tok.T_STRING) {
+      let type = this.text();
+      const backup = [this.token, this.lexer.getState()];
+      this.next();
+      if (
+        this.token !== this.tok.T_NS_SEPARATOR &&
+        this.ast.typereference.types.indexOf(type.toLowerCase()) > -1
+      ) {
+        return result(type);
+      } else {
+        // rollback a classic namespace
+        this.lexer.tokens.push(backup);
         this.next();
-        return result(["", "array"], false);
-      case this.tok.T_NAMESPACE:
-      case this.tok.T_NS_SEPARATOR:
-      case this.tok.T_STRING:
         return this.read_namespace_name();
-      case this.tok.T_CALLABLE:
-        this.next();
-        return result(["", "callable"], false);
-      default:
-        return null;
+      }
+    } else if (
+      this.token === this.tok.T_NAMESPACE ||
+      this.token === this.tok.T_NS_SEPARATOR
+    ) {
+      return this.read_namespace_name();
     }
+    return null;
   }
 };

@@ -423,6 +423,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/traitprecedence"),
   require("./ast/traituse"),
   require("./ast/try"),
+  require("./ast/typereference"),
   require("./ast/unary"),
   require("./ast/unset"),
   require("./ast/usegroup"),
