@@ -204,16 +204,16 @@ module.exports = {
         return this.read_switch();
 
       case this.tok.T_FOR:
-        return this.next().read_for();
+        return this.read_for();
 
       case this.tok.T_FOREACH:
-        return this.next().read_foreach();
+        return this.read_foreach();
 
       case this.tok.T_WHILE:
-        return this.next().read_while();
+        return this.read_while();
 
       case this.tok.T_DO:
-        return this.next().read_do();
+        return this.read_do();
 
       case this.tok.T_COMMENT:
         return this.read_comment();

@@ -15,8 +15,8 @@ module.exports = {
    * @see http://php.net/manual/en/control-structures.switch.php
    */
   read_switch: function() {
-    this.expect(this.tok.T_SWITCH) && this.next();
     const result = this.node("switch");
+    this.expect(this.tok.T_SWITCH) && this.next();
     this.expect("(") && this.next();
     const test = this.read_expr();
     this.expect(")") && this.next();
