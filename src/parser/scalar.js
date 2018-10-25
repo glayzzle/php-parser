@@ -100,26 +100,24 @@ module.exports = {
               start,
               this.lexer.yylloc.last_offset
             );
+            this.expect(this.tok.T_END_HEREDOC) && this.next();
             node = node(
               value,
               raw,
               this.lexer.heredoc_label,
               raw[3] === '"' || raw[3] === "'"
             );
-            this.expect(this.tok.T_END_HEREDOC) && this.next();
             return node;
           } else {
-            return this.next().read_encapsed_string(this.tok.T_END_HEREDOC);
+            return this.read_encapsed_string(this.tok.T_END_HEREDOC);
           }
 
         case '"':
-          return this.next().read_encapsed_string('"');
+          return this.read_encapsed_string('"');
 
         case 'b"':
         case 'B"': {
-          this.next();
-          this.lexer.yylloc.prev_offset -= 1;
-          return this.read_encapsed_string('"');
+          return this.read_encapsed_string('"', true);
         }
 
         // NUMERIC
@@ -267,9 +265,10 @@ module.exports = {
   /**
    * Reads an encapsed string
    */
-  read_encapsed_string: function(expect) {
-    const start = this.lexer.yylloc.prev_offset;
+  read_encapsed_string: function(expect, isBinary = false) {
     let node = this.node("encapsed");
+    this.next();
+    const start = this.lexer.yylloc.prev_offset - (isBinary ? 1 : 0);
     const value = [];
     let type = null;
 

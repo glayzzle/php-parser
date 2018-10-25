@@ -64,6 +64,32 @@ describe('Test locations', function() {
       )
     ).toMatchSnapshot();
   });
+  it('switch case', function() {
+    expect(
+      parser.parseEval(
+        'switch ($i) { case 0: echo "something"; break; }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('switch default', function() {
+    expect(
+      parser.parseEval(
+        'switch ($i) { default: echo "something"; }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it('for', function() {
     expect(
       parser.parseEval(
@@ -326,6 +352,32 @@ describe('Test locations', function() {
       )
     ).toMatchSnapshot();
   });
+  it('interface', function() {
+    expect(
+      parser.parseEval(
+        'interface Foo {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('trait', function() {
+    expect(
+      parser.parseEval(
+        'trait Foo {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it('namespace', function() {
     expect(
       parser.parseEval(
@@ -343,6 +395,631 @@ describe('Test locations', function() {
     expect(
       parser.parseEval(
         'namespace my\\name { echo "something"; }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('string double quotes', function() {
+    expect(
+      parser.parseEval(
+        '"string";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('string single quotes', function() {
+    expect(
+      parser.parseEval(
+        '\'string\';',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('number', function() {
+    expect(
+      parser.parseEval(
+        '2112;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('negative number', function() {
+    expect(
+      parser.parseEval(
+        '-2112;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('magic', function() {
+    expect(
+      parser.parseEval(
+        '__DIR__;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('ternary', function() {
+    expect(
+      parser.parseEval(
+        '$valid ? "yes" : "no";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('ternary no true expression', function() {
+    expect(
+      parser.parseEval(
+        '$valid ?: "no";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('variable', function() {
+    expect(
+      parser.parseEval(
+        '$var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('assign', function() {
+    expect(
+      parser.parseEval(
+        '$var = true;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('assign mutliple', function() {
+    expect(
+      parser.parseEval(
+        '$var = $other = true;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('unary', function() {
+    expect(
+      parser.parseEval(
+        '!$var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('pre', function() {
+    expect(
+      parser.parseEval(
+        '++$var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('post', function() {
+    expect(
+      parser.parseEval(
+        '$var++;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('yield', function() {
+    expect(
+      parser.parseEval(
+        'yield $var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('yield from', function() {
+    expect(
+      parser.parseEval(
+        'yield from from();',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('bin', function() {
+    expect(
+      parser.parseEval(
+        '$var = $var + 100;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('array', function() {
+    expect(
+      parser.parseEval(
+        'array(1, 2, 3);',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('array nested', function() {
+    expect(
+      parser.parseEval(
+        'array(array(1, 2, 3));',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('array short form', function() {
+    expect(
+      parser.parseEval(
+        '[1, 2, 3];',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('array short form nested', function() {
+    expect(
+      parser.parseEval(
+        '[[1, 2, 3]];',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('clone', function() {
+    expect(
+      parser.parseEval(
+        'clone $var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('new', function() {
+    expect(
+      parser.parseEval(
+        'new Foo();',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('new anonymous class', function() {
+    expect(
+      parser.parseEval(
+        '$var = new class {};',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('eval', function() {
+    expect(
+      parser.parseEval(
+        'eval("code");',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('exit', function() {
+    expect(
+      parser.parseEval(
+        'exit(1);',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('print', function() {
+    expect(
+      parser.parseEval(
+        'print "something";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('include', function() {
+    expect(
+      parser.parseEval(
+        'include "something";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('isset', function() {
+    expect(
+      parser.parseEval(
+        '$var = isset($var);',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('empty', function() {
+    expect(
+      parser.parseEval(
+        '$var = empty($var);',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('silent', function() {
+    expect(
+      parser.parseEval(
+        '$var = @call();',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('variadic', function() {
+    expect(
+      parser.parseEval(
+        'call(...$var);',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('try/catch/finally', function() {
+    expect(
+      parser.parseEval(
+        'try {} catch (Exception $e) {} finally {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('nowdoc', function() {
+    expect(
+      parser.parseEval(
+        `<<<'EOD'
+Text
+EOD;`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('nowdoc assign', function() {
+    expect(
+      parser.parseEval(
+        `$var = <<<'EOD'
+Text
+EOD;`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed heredoc', function() {
+    expect(
+      parser.parseEval(
+        `<<<EOD
+Text
+EOD;`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed heredoc assign', function() {
+    expect(
+      parser.parseEval(
+        `$var = <<<EOD
+Text
+EOD;`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed shell', function() {
+    expect(
+      parser.parseEval(
+        '$var = `command`;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed shell multiline', function() {
+    expect(
+      parser.parseEval(
+        `$var = \`
+command;
+command;
+command;
+\`;`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed string', function() {
+    expect(
+      parser.parseEval(
+        '"string $var string";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed string assign', function() {
+    expect(
+      parser.parseEval(
+        '$var = "string $var string";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('encapsed string multiline', function() {
+    expect(
+      parser.parseEval(
+        `$var = "string
+$var
+string";`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('list', function() {
+    expect(
+      parser.parseEval(
+        'list($a, $b, $c) = $var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('list short form', function() {
+    expect(
+      parser.parseEval(
+        '[$a, $b, $c] = $var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('traituse', function() {
+    expect(
+      parser.parseEval(
+        'class Foo { use Hello; }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('traituse multiple', function() {
+    expect(
+      parser.parseEval(
+        'class Foo { use Hello, World; }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('traituse adaptations', function() {
+    expect(
+      parser.parseEval(
+        'class Foo { use A, B { B::smallTalk insteadof A;  B::bigTalk as talk; sayHello as protected; sayHello as private myPrivateHello; } }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('method', function() {
+    expect(
+      parser.parseEval(
+        'class Foo { function method() {} }',
         {
           ast: {
             withPositions: true,

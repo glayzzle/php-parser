@@ -135,7 +135,7 @@ module.exports = {
 
     if (this.token === "`") {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1048
-      return this.next().read_encapsed_string("`");
+      return this.read_encapsed_string("`");
     }
 
     if (this.token === this.tok.T_LIST) {
@@ -207,7 +207,7 @@ module.exports = {
         );
 
       case this.tok.T_NEW:
-        return this.next().read_new_expr();
+        return this.read_new_expr();
 
       case this.tok.T_ISSET: {
         result = this.node("isset");
@@ -354,7 +354,7 @@ module.exports = {
           let right;
           if (this.next().token == "&") {
             if (this.next().token === this.tok.T_NEW) {
-              right = this.next().read_new_expr();
+              right = this.read_new_expr();
             } else {
               right = this.read_variable(false, false, true);
             }
@@ -456,6 +456,7 @@ module.exports = {
    */
   read_new_expr: function() {
     const result = this.node("new");
+    this.expect(this.tok.T_NEW) && this.next();
     let args = [];
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
