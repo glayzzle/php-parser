@@ -16,6 +16,7 @@ module.exports = {
    */
   read_while: function() {
     const result = this.node("while");
+    this.expect(this.tok.T_WHILE) && this.next();
     let test = null;
     let body = null;
     let shortForm = false;
@@ -40,6 +41,7 @@ module.exports = {
    */
   read_do: function() {
     const result = this.node("do");
+    this.expect(this.tok.T_DO) && this.next();
     let test = null;
     let body = null;
     body = this.read_statement();
@@ -63,6 +65,7 @@ module.exports = {
    */
   read_for: function() {
     const result = this.node("for");
+    this.expect(this.tok.T_FOR) && this.next();
     let init = [];
     let test = [];
     let increment = [];
@@ -105,6 +108,7 @@ module.exports = {
    */
   read_foreach: function() {
     const result = this.node("foreach");
+    this.expect(this.tok.T_FOREACH) && this.next();
     let source = null;
     let key = null;
     let value = null;
