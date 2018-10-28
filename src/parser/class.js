@@ -68,7 +68,7 @@ module.exports = {
 
       // check T_USE trait
       if (this.token === this.tok.T_USE) {
-        result = result.concat(this.next().read_trait_use_statement());
+        result = result.concat(this.read_trait_use_statement());
         continue;
       }
 
@@ -365,6 +365,7 @@ module.exports = {
   read_trait_use_statement: function() {
     // defines use statements
     const node = this.node("traituse");
+    this.expect(this.tok.T_USE) && this.next();
     const traits = [this.read_namespace_name()];
     let adaptations = null;
     while (this.token === ",") {
