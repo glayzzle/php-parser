@@ -254,6 +254,151 @@ Program {
 }
 `;
 
+exports[`Test locations abstract class (inner statement) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "body": Block {
+        "children": Array [
+          Class {
+            "body": Array [],
+            "extends": null,
+            "implements": null,
+            "isAbstract": true,
+            "isAnonymous": false,
+            "isFinal": false,
+            "kind": "class",
+            "loc": Location {
+              "end": Position {
+                "column": 37,
+                "line": 1,
+                "offset": 37,
+              },
+              "source": "abstract class Foo {}",
+              "start": Position {
+                "column": 16,
+                "line": 1,
+                "offset": 16,
+              },
+            },
+            "name": "Foo",
+          },
+        ],
+        "kind": "block",
+        "loc": Location {
+          "end": Position {
+            "column": 39,
+            "line": 1,
+            "offset": 39,
+          },
+          "source": "{ abstract class Foo {} }",
+          "start": Position {
+            "column": 14,
+            "line": 1,
+            "offset": 14,
+          },
+        },
+      },
+      "byref": false,
+      "kind": "function",
+      "loc": Location {
+        "end": Position {
+          "column": 39,
+          "line": 1,
+          "offset": 39,
+        },
+        "source": "function fn()",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": Identifier {
+        "kind": "identifier",
+        "loc": Location {
+          "end": Position {
+            "column": 11,
+            "line": 1,
+            "offset": 11,
+          },
+          "source": "fn",
+          "start": Position {
+            "column": 9,
+            "line": 1,
+            "offset": 9,
+          },
+        },
+        "name": "fn",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 39,
+      "line": 1,
+      "offset": 39,
+    },
+    "source": "function fn() { abstract class Foo {} }",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations abstract class 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": true,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "loc": Location {
+        "end": Position {
+          "column": 21,
+          "line": 1,
+          "offset": 21,
+        },
+        "source": "abstract class Foo {}",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": "Foo",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 21,
+      "line": 1,
+      "offset": 21,
+    },
+    "source": "abstract class Foo {}",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations array 1`] = `
 Program {
   "children": Array [
@@ -1071,6 +1216,351 @@ Program {
 }
 `;
 
+exports[`Test locations bin 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 4,
+              "line": 1,
+              "offset": 4,
+            },
+            "source": "$var",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "name": "var",
+        },
+        "loc": Location {
+          "end": Position {
+            "column": 12,
+            "line": 1,
+            "offset": 12,
+          },
+          "source": "$var + 2112;",
+          "start": Position {
+            "column": 0,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "loc": Location {
+            "end": Position {
+              "column": 11,
+              "line": 1,
+              "offset": 11,
+            },
+            "source": "2112",
+            "start": Position {
+              "column": 7,
+              "line": 1,
+              "offset": 7,
+            },
+          },
+          "value": "2112",
+        },
+        "type": "+",
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 12,
+          "line": 1,
+          "offset": 12,
+        },
+        "source": "$var + 2112;",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 12,
+      "line": 1,
+      "offset": 12,
+    },
+    "source": "$var + 2112;",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations bin nested (2) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "loc": Location {
+              "end": Position {
+                "column": 4,
+                "line": 1,
+                "offset": 4,
+              },
+              "source": "$var",
+              "start": Position {
+                "column": 0,
+                "line": 1,
+                "offset": 0,
+              },
+            },
+            "name": "var",
+          },
+          "loc": Location {
+            "end": Position {
+              "column": 18,
+              "line": 1,
+              "offset": 18,
+            },
+            "source": "$var + $var + 2112",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "right": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "loc": Location {
+              "end": Position {
+                "column": 11,
+                "line": 1,
+                "offset": 11,
+              },
+              "source": "$var",
+              "start": Position {
+                "column": 7,
+                "line": 1,
+                "offset": 7,
+              },
+            },
+            "name": "var",
+          },
+          "type": "+",
+        },
+        "loc": Location {
+          "end": Position {
+            "column": 19,
+            "line": 1,
+            "offset": 19,
+          },
+          "source": "$var + 2112;",
+          "start": Position {
+            "column": 7,
+            "line": 1,
+            "offset": 7,
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "loc": Location {
+            "end": Position {
+              "column": 18,
+              "line": 1,
+              "offset": 18,
+            },
+            "source": "2112",
+            "start": Position {
+              "column": 14,
+              "line": 1,
+              "offset": 14,
+            },
+          },
+          "value": "2112",
+        },
+        "type": "+",
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 19,
+          "line": 1,
+          "offset": 19,
+        },
+        "source": "$var + $var + 2112;",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 19,
+      "line": 1,
+      "offset": 19,
+    },
+    "source": "$var + $var + 2112;",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations bin nested 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "loc": Location {
+              "end": Position {
+                "column": 4,
+                "line": 1,
+                "offset": 4,
+              },
+              "source": "$var",
+              "start": Position {
+                "column": 0,
+                "line": 1,
+                "offset": 0,
+              },
+            },
+            "name": "var",
+          },
+          "loc": Location {
+            "end": Position {
+              "column": 18,
+              "line": 1,
+              "offset": 18,
+            },
+            "source": "$var + 2112 + $var",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "right": Number {
+            "kind": "number",
+            "loc": Location {
+              "end": Position {
+                "column": 11,
+                "line": 1,
+                "offset": 11,
+              },
+              "source": "2112",
+              "start": Position {
+                "column": 7,
+                "line": 1,
+                "offset": 7,
+              },
+            },
+            "value": "2112",
+          },
+          "type": "+",
+        },
+        "loc": Location {
+          "end": Position {
+            "column": 19,
+            "line": 1,
+            "offset": 19,
+          },
+          "source": "2112 + $var;",
+          "start": Position {
+            "column": 7,
+            "line": 1,
+            "offset": 7,
+          },
+        },
+        "right": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 18,
+              "line": 1,
+              "offset": 18,
+            },
+            "source": "$var",
+            "start": Position {
+              "column": 14,
+              "line": 1,
+              "offset": 14,
+            },
+          },
+          "name": "var",
+        },
+        "type": "+",
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 19,
+          "line": 1,
+          "offset": 19,
+        },
+        "source": "$var + 2112 + $var;",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 19,
+      "line": 1,
+      "offset": 19,
+    },
+    "source": "$var + 2112 + $var;",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations break 1`] = `
 Program {
   "children": Array [
@@ -1101,6 +1591,218 @@ Program {
       "offset": 6,
     },
     "source": "break;",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations cast 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 4,
+              "line": 1,
+              "offset": 4,
+            },
+            "source": "$var",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "name": "var",
+        },
+        "loc": Location {
+          "end": Position {
+            "column": 19,
+            "line": 1,
+            "offset": 19,
+          },
+          "source": "$var = (int) \\"2112\\"",
+          "start": Position {
+            "column": 0,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "operator": "=",
+        "right": Cast {
+          "kind": "cast",
+          "loc": Location {
+            "end": Position {
+              "column": 19,
+              "line": 1,
+              "offset": 19,
+            },
+            "source": "(int) \\"2112\\"",
+            "start": Position {
+              "column": 7,
+              "line": 1,
+              "offset": 7,
+            },
+          },
+          "raw": "(int)",
+          "type": "int",
+          "what": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "loc": Location {
+              "end": Position {
+                "column": 19,
+                "line": 1,
+                "offset": 19,
+              },
+              "source": "\\"2112\\"",
+              "start": Position {
+                "column": 13,
+                "line": 1,
+                "offset": 13,
+              },
+            },
+            "raw": "\\"2112\\"",
+            "unicode": false,
+            "value": "2112",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 19,
+          "line": 1,
+          "offset": 19,
+        },
+        "source": "$var = (int) \\"2112\\"",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 19,
+      "line": 1,
+      "offset": 19,
+    },
+    "source": "$var = (int) \\"2112\\"",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations class (inner statement) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "body": Block {
+        "children": Array [
+          Class {
+            "body": Array [],
+            "extends": null,
+            "implements": null,
+            "isAbstract": false,
+            "isAnonymous": false,
+            "isFinal": false,
+            "kind": "class",
+            "loc": Location {
+              "end": Position {
+                "column": 28,
+                "line": 1,
+                "offset": 28,
+              },
+              "source": "class Foo {}",
+              "start": Position {
+                "column": 16,
+                "line": 1,
+                "offset": 16,
+              },
+            },
+            "name": "Foo",
+          },
+        ],
+        "kind": "block",
+        "loc": Location {
+          "end": Position {
+            "column": 30,
+            "line": 1,
+            "offset": 30,
+          },
+          "source": "{ class Foo {} }",
+          "start": Position {
+            "column": 14,
+            "line": 1,
+            "offset": 14,
+          },
+        },
+      },
+      "byref": false,
+      "kind": "function",
+      "loc": Location {
+        "end": Position {
+          "column": 30,
+          "line": 1,
+          "offset": 30,
+        },
+        "source": "function fn()",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": Identifier {
+        "kind": "identifier",
+        "loc": Location {
+          "end": Position {
+            "column": 11,
+            "line": 1,
+            "offset": 11,
+          },
+          "source": "fn",
+          "start": Position {
+            "column": 9,
+            "line": 1,
+            "offset": 9,
+          },
+        },
+        "name": "fn",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 30,
+      "line": 1,
+      "offset": 30,
+    },
+    "source": "function fn() { class Foo {} }",
     "start": Position {
       "column": 0,
       "line": 1,
@@ -2763,6 +3465,151 @@ Program {
       "offset": 8,
     },
     "source": "exit(1);",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations final class (inner statement) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "body": Block {
+        "children": Array [
+          Class {
+            "body": Array [],
+            "extends": null,
+            "implements": null,
+            "isAbstract": false,
+            "isAnonymous": false,
+            "isFinal": true,
+            "kind": "class",
+            "loc": Location {
+              "end": Position {
+                "column": 34,
+                "line": 1,
+                "offset": 34,
+              },
+              "source": "final class Foo {}",
+              "start": Position {
+                "column": 16,
+                "line": 1,
+                "offset": 16,
+              },
+            },
+            "name": "Foo",
+          },
+        ],
+        "kind": "block",
+        "loc": Location {
+          "end": Position {
+            "column": 36,
+            "line": 1,
+            "offset": 36,
+          },
+          "source": "{ final class Foo {} }",
+          "start": Position {
+            "column": 14,
+            "line": 1,
+            "offset": 14,
+          },
+        },
+      },
+      "byref": false,
+      "kind": "function",
+      "loc": Location {
+        "end": Position {
+          "column": 36,
+          "line": 1,
+          "offset": 36,
+        },
+        "source": "function fn()",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": Identifier {
+        "kind": "identifier",
+        "loc": Location {
+          "end": Position {
+            "column": 11,
+            "line": 1,
+            "offset": 11,
+          },
+          "source": "fn",
+          "start": Position {
+            "column": 9,
+            "line": 1,
+            "offset": 9,
+          },
+        },
+        "name": "fn",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 36,
+      "line": 1,
+      "offset": 36,
+    },
+    "source": "function fn() { final class Foo {} }",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations final class 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": true,
+      "kind": "class",
+      "loc": Location {
+        "end": Position {
+          "column": 18,
+          "line": 1,
+          "offset": 18,
+        },
+        "source": "final class Foo {}",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": "Foo",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 18,
+      "line": 1,
+      "offset": 18,
+    },
+    "source": "final class Foo {}",
     "start": Position {
       "column": 0,
       "line": 1,
@@ -4556,6 +5403,84 @@ Program {
 }
 `;
 
+exports[`Test locations label 1`] = `
+Program {
+  "children": Array [
+    Label {
+      "kind": "label",
+      "loc": Location {
+        "end": Position {
+          "column": 2,
+          "line": 1,
+          "offset": 2,
+        },
+        "source": "a:",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": "a",
+    },
+    Echo {
+      "arguments": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "loc": Location {
+            "end": Position {
+              "column": 19,
+              "line": 1,
+              "offset": 19,
+            },
+            "source": "\\"something\\"",
+            "start": Position {
+              "column": 8,
+              "line": 1,
+              "offset": 8,
+            },
+          },
+          "raw": "\\"something\\"",
+          "unicode": false,
+          "value": "something",
+        },
+      ],
+      "kind": "echo",
+      "loc": Location {
+        "end": Position {
+          "column": 20,
+          "line": 1,
+          "offset": 20,
+        },
+        "source": "echo \\"something\\";",
+        "start": Position {
+          "column": 3,
+          "line": 1,
+          "offset": 3,
+        },
+      },
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 20,
+      "line": 1,
+      "offset": 20,
+    },
+    "source": "a: echo \\"something\\";",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations list 1`] = `
 Program {
   "children": Array [
@@ -4903,6 +5828,110 @@ Program {
       "offset": 8,
     },
     "source": "__DIR__;",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations method (public) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+            "loc": Location {
+              "end": Position {
+                "column": 39,
+                "line": 1,
+                "offset": 39,
+              },
+              "source": "{}",
+              "start": Position {
+                "column": 37,
+                "line": 1,
+                "offset": 37,
+              },
+            },
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "loc": Location {
+            "end": Position {
+              "column": 39,
+              "line": 1,
+              "offset": 39,
+            },
+            "source": "function method()",
+            "start": Position {
+              "column": 19,
+              "line": 1,
+              "offset": 19,
+            },
+          },
+          "name": Identifier {
+            "kind": "identifier",
+            "loc": Location {
+              "end": Position {
+                "column": 34,
+                "line": 1,
+                "offset": 34,
+              },
+              "source": "method",
+              "start": Position {
+                "column": 28,
+                "line": 1,
+                "offset": 28,
+              },
+            },
+            "name": "method",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "loc": Location {
+        "end": Position {
+          "column": 41,
+          "line": 1,
+          "offset": 41,
+        },
+        "source": "class Foo { public function method() {} }",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": "Foo",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 41,
+      "line": 1,
+      "offset": 41,
+    },
+    "source": "class Foo { public function method() {} }",
     "start": Position {
       "column": 0,
       "line": 1,
@@ -5605,6 +6634,137 @@ Program {
 }
 `;
 
+exports[`Test locations parameter 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "loc": Location {
+            "end": Position {
+              "column": 28,
+              "line": 1,
+              "offset": 28,
+            },
+            "source": "?int $foo = 2112",
+            "start": Position {
+              "column": 12,
+              "line": 1,
+              "offset": 12,
+            },
+          },
+          "name": "foo",
+          "nullable": true,
+          "type": TypeReference {
+            "kind": "typereference",
+            "loc": Location {
+              "end": Position {
+                "column": 16,
+                "line": 1,
+                "offset": 16,
+              },
+              "source": "int",
+              "start": Position {
+                "column": 13,
+                "line": 1,
+                "offset": 13,
+              },
+            },
+            "name": "int",
+          },
+          "value": Number {
+            "kind": "number",
+            "loc": Location {
+              "end": Position {
+                "column": 28,
+                "line": 1,
+                "offset": 28,
+              },
+              "source": "2112",
+              "start": Position {
+                "column": 24,
+                "line": 1,
+                "offset": 24,
+              },
+            },
+            "value": "2112",
+          },
+          "variadic": false,
+        },
+      ],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+        "loc": Location {
+          "end": Position {
+            "column": 32,
+            "line": 1,
+            "offset": 32,
+          },
+          "source": "{}",
+          "start": Position {
+            "column": 30,
+            "line": 1,
+            "offset": 30,
+          },
+        },
+      },
+      "byref": false,
+      "kind": "function",
+      "loc": Location {
+        "end": Position {
+          "column": 32,
+          "line": 1,
+          "offset": 32,
+        },
+        "source": "function fn(?int $foo = 2112)",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": Identifier {
+        "kind": "identifier",
+        "loc": Location {
+          "end": Position {
+            "column": 11,
+            "line": 1,
+            "offset": 11,
+          },
+          "source": "fn",
+          "start": Position {
+            "column": 9,
+            "line": 1,
+            "offset": 9,
+          },
+        },
+        "name": "fn",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 32,
+      "line": 1,
+      "offset": 32,
+    },
+    "source": "function fn(?int $foo = 2112) {}",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations post 1`] = `
 Program {
   "children": Array [
@@ -5827,6 +6987,457 @@ Program {
 }
 `;
 
+exports[`Test locations retif 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 4,
+              "line": 1,
+              "offset": 4,
+            },
+            "source": "$var",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "name": "var",
+        },
+        "loc": Location {
+          "end": Position {
+            "column": 27,
+            "line": 1,
+            "offset": 27,
+          },
+          "source": "$var = $var ? true : false;",
+          "start": Position {
+            "column": 0,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "operator": "=",
+        "right": RetIf {
+          "falseExpr": Boolean {
+            "kind": "boolean",
+            "loc": Location {
+              "end": Position {
+                "column": 26,
+                "line": 1,
+                "offset": 26,
+              },
+              "source": "false",
+              "start": Position {
+                "column": 21,
+                "line": 1,
+                "offset": 21,
+              },
+            },
+            "raw": "false",
+            "value": false,
+          },
+          "kind": "retif",
+          "loc": Location {
+            "end": Position {
+              "column": 26,
+              "line": 1,
+              "offset": 26,
+            },
+            "source": "$var ? true : false",
+            "start": Position {
+              "column": 7,
+              "line": 1,
+              "offset": 7,
+            },
+          },
+          "test": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "loc": Location {
+              "end": Position {
+                "column": 11,
+                "line": 1,
+                "offset": 11,
+              },
+              "source": "$var",
+              "start": Position {
+                "column": 7,
+                "line": 1,
+                "offset": 7,
+              },
+            },
+            "name": "var",
+          },
+          "trueExpr": Boolean {
+            "kind": "boolean",
+            "loc": Location {
+              "end": Position {
+                "column": 18,
+                "line": 1,
+                "offset": 18,
+              },
+              "source": "true",
+              "start": Position {
+                "column": 14,
+                "line": 1,
+                "offset": 14,
+              },
+            },
+            "raw": "true",
+            "value": true,
+          },
+        },
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 27,
+          "line": 1,
+          "offset": 27,
+        },
+        "source": "$var = $var ? true : false;",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 27,
+      "line": 1,
+      "offset": 27,
+    },
+    "source": "$var = $var ? true : false;",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations retif nested 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "loc": Location {
+            "end": Position {
+              "column": 4,
+              "line": 1,
+              "offset": 4,
+            },
+            "source": "$var",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "name": "var",
+        },
+        "loc": Location {
+          "end": Position {
+            "column": 79,
+            "line": 1,
+            "offset": 79,
+          },
+          "source": "$var = ($one ? true : false) ? ($two ? true : false) : ($three ? true : false);",
+          "start": Position {
+            "column": 0,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "operator": "=",
+        "right": RetIf {
+          "falseExpr": RetIf {
+            "falseExpr": Boolean {
+              "kind": "boolean",
+              "loc": Location {
+                "end": Position {
+                  "column": 77,
+                  "line": 1,
+                  "offset": 77,
+                },
+                "source": "false",
+                "start": Position {
+                  "column": 72,
+                  "line": 1,
+                  "offset": 72,
+                },
+              },
+              "raw": "false",
+              "value": false,
+            },
+            "kind": "retif",
+            "loc": Location {
+              "end": Position {
+                "column": 77,
+                "line": 1,
+                "offset": 77,
+              },
+              "source": "$three ? true : false",
+              "start": Position {
+                "column": 56,
+                "line": 1,
+                "offset": 56,
+              },
+            },
+            "parenthesizedExpression": true,
+            "test": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "loc": Location {
+                "end": Position {
+                  "column": 62,
+                  "line": 1,
+                  "offset": 62,
+                },
+                "source": "$three",
+                "start": Position {
+                  "column": 56,
+                  "line": 1,
+                  "offset": 56,
+                },
+              },
+              "name": "three",
+            },
+            "trueExpr": Boolean {
+              "kind": "boolean",
+              "loc": Location {
+                "end": Position {
+                  "column": 69,
+                  "line": 1,
+                  "offset": 69,
+                },
+                "source": "true",
+                "start": Position {
+                  "column": 65,
+                  "line": 1,
+                  "offset": 65,
+                },
+              },
+              "raw": "true",
+              "value": true,
+            },
+          },
+          "kind": "retif",
+          "loc": Location {
+            "end": Position {
+              "column": 78,
+              "line": 1,
+              "offset": 78,
+            },
+            "source": "($one ? true : false) ? ($two ? true : false) : ($three ? true : false)",
+            "start": Position {
+              "column": 7,
+              "line": 1,
+              "offset": 7,
+            },
+          },
+          "test": RetIf {
+            "falseExpr": Boolean {
+              "kind": "boolean",
+              "loc": Location {
+                "end": Position {
+                  "column": 27,
+                  "line": 1,
+                  "offset": 27,
+                },
+                "source": "false",
+                "start": Position {
+                  "column": 22,
+                  "line": 1,
+                  "offset": 22,
+                },
+              },
+              "raw": "false",
+              "value": false,
+            },
+            "kind": "retif",
+            "loc": Location {
+              "end": Position {
+                "column": 27,
+                "line": 1,
+                "offset": 27,
+              },
+              "source": "$one ? true : false",
+              "start": Position {
+                "column": 8,
+                "line": 1,
+                "offset": 8,
+              },
+            },
+            "parenthesizedExpression": true,
+            "test": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "loc": Location {
+                "end": Position {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 12,
+                },
+                "source": "$one",
+                "start": Position {
+                  "column": 8,
+                  "line": 1,
+                  "offset": 8,
+                },
+              },
+              "name": "one",
+            },
+            "trueExpr": Boolean {
+              "kind": "boolean",
+              "loc": Location {
+                "end": Position {
+                  "column": 19,
+                  "line": 1,
+                  "offset": 19,
+                },
+                "source": "true",
+                "start": Position {
+                  "column": 15,
+                  "line": 1,
+                  "offset": 15,
+                },
+              },
+              "raw": "true",
+              "value": true,
+            },
+          },
+          "trueExpr": RetIf {
+            "falseExpr": Boolean {
+              "kind": "boolean",
+              "loc": Location {
+                "end": Position {
+                  "column": 51,
+                  "line": 1,
+                  "offset": 51,
+                },
+                "source": "false",
+                "start": Position {
+                  "column": 46,
+                  "line": 1,
+                  "offset": 46,
+                },
+              },
+              "raw": "false",
+              "value": false,
+            },
+            "kind": "retif",
+            "loc": Location {
+              "end": Position {
+                "column": 51,
+                "line": 1,
+                "offset": 51,
+              },
+              "source": "$two ? true : false",
+              "start": Position {
+                "column": 32,
+                "line": 1,
+                "offset": 32,
+              },
+            },
+            "parenthesizedExpression": true,
+            "test": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "loc": Location {
+                "end": Position {
+                  "column": 36,
+                  "line": 1,
+                  "offset": 36,
+                },
+                "source": "$two",
+                "start": Position {
+                  "column": 32,
+                  "line": 1,
+                  "offset": 32,
+                },
+              },
+              "name": "two",
+            },
+            "trueExpr": Boolean {
+              "kind": "boolean",
+              "loc": Location {
+                "end": Position {
+                  "column": 43,
+                  "line": 1,
+                  "offset": 43,
+                },
+                "source": "true",
+                "start": Position {
+                  "column": 39,
+                  "line": 1,
+                  "offset": 39,
+                },
+              },
+              "raw": "true",
+              "value": true,
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 79,
+          "line": 1,
+          "offset": 79,
+        },
+        "source": "$var = ($one ? true : false) ? ($two ? true : false) : ($three ? true : false);",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 79,
+      "line": 1,
+      "offset": 79,
+    },
+    "source": "$var = ($one ? true : false) ? ($two ? true : false) : ($three ? true : false);",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations return 1`] = `
 Program {
   "children": Array [
@@ -5998,6 +7609,95 @@ Program {
       "offset": 15,
     },
     "source": "$var = @call();",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations silent 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "loc": Location {
+            "end": Position {
+              "column": 7,
+              "line": 1,
+              "offset": 7,
+            },
+            "source": "()",
+            "start": Position {
+              "column": 5,
+              "line": 1,
+              "offset": 5,
+            },
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "loc": Location {
+              "end": Position {
+                "column": 5,
+                "line": 1,
+                "offset": 5,
+              },
+              "source": "call",
+              "start": Position {
+                "column": 1,
+                "line": 1,
+                "offset": 1,
+              },
+            },
+            "name": "call",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+        "loc": Location {
+          "end": Position {
+            "column": 8,
+            "line": 1,
+            "offset": 8,
+          },
+          "source": "@call();",
+          "start": Position {
+            "column": 0,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 8,
+          "line": 1,
+          "offset": 8,
+        },
+        "source": "@call();",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 8,
+      "line": 1,
+      "offset": 8,
+    },
+    "source": "@call();",
     "start": Position {
       "column": 0,
       "line": 1,
