@@ -42,18 +42,9 @@ module.exports = {
         return this.read_function(false, false);
       // optional flags
       case this.tok.T_ABSTRACT:
-      case this.tok.T_FINAL: {
-        const flag = this.read_class_scope();
-        if (this.token === this.tok.T_CLASS) {
-          return this.read_class(flag);
-        } else {
-          this.error(this.tok.T_CLASS);
-          this.next();
-          return null;
-        }
-      }
+      case this.tok.T_FINAL:
       case this.tok.T_CLASS:
-        return this.read_class([0, 0, 0]);
+        return this.read_class();
       case this.tok.T_INTERFACE:
         return this.read_interface();
       case this.tok.T_TRAIT:
@@ -155,19 +146,9 @@ module.exports = {
         return this.read_function(false, false);
       // optional flags
       case this.tok.T_ABSTRACT:
-      case this.tok.T_FINAL: {
-        const flag = this.read_class_scope();
-        if (this.token === this.tok.T_CLASS) {
-          return this.read_class(flag);
-        } else {
-          this.error(this.tok.T_CLASS);
-          // graceful mode : ignore token & go next
-          this.next();
-          return null;
-        }
-      }
+      case this.tok.T_FINAL:
       case this.tok.T_CLASS:
-        return this.read_class([0, 0, 0]);
+        return this.read_class();
       case this.tok.T_INTERFACE:
         return this.read_interface();
       case this.tok.T_TRAIT:
@@ -355,13 +336,13 @@ module.exports = {
         return null;
 
       case this.tok.T_STRING:
+        let result = this.node();
         current = [this.token, this.lexer.getState()];
         label = this.text();
         // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
         if (this.next().token === ":") {
-          result = this.node("label");
           this.next();
-          return result(label);
+          return result("label", label);
         }
 
         // default fallback expr / T_STRING '::' (etc...)

@@ -12,9 +12,15 @@ module.exports = {
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
    * ```
    */
-  read_class: function(flag) {
+  read_class: function() {
     const result = this.node("class");
-    this.expect(this.tok.T_CLASS);
+    const flag = this.read_class_scope();
+    // graceful mode : ignore token & go next
+    if (this.token !== this.tok.T_CLASS) {
+      this.error(this.tok.T_CLASS);
+      this.next();
+      return null;
+    }
     this.next().expect(this.tok.T_STRING);
     const propName = this.text();
     let propExtends = null;

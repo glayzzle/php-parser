@@ -326,6 +326,19 @@ describe('Test locations', function() {
       )
     ).toMatchSnapshot();
   });
+  it('label', function() {
+    expect(
+      parser.parseEval(
+        'a: echo "something";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it('function', function() {
     expect(
       parser.parseEval(
@@ -343,6 +356,71 @@ describe('Test locations', function() {
     expect(
       parser.parseEval(
         'class Foo {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('abstract class', function() {
+    expect(
+      parser.parseEval(
+        'abstract class Foo {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('final class', function() {
+    expect(
+      parser.parseEval(
+        'final class Foo {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('class (inner statement)', function() {
+    expect(
+      parser.parseEval(
+        'function fn() { class Foo {} }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('abstract class (inner statement)', function() {
+    expect(
+      parser.parseEval(
+        'function fn() { abstract class Foo {} }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('final class (inner statement)', function() {
+    expect(
+      parser.parseEval(
+        'function fn() { final class Foo {} }',
         {
           ast: {
             withPositions: true,
@@ -1020,6 +1098,123 @@ string";`,
     expect(
       parser.parseEval(
         'class Foo { function method() {} }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('method (public)', function() {
+    expect(
+      parser.parseEval(
+        'class Foo { public function method() {} }',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('cast', function() {
+    expect(
+      parser.parseEval(
+        '$var = (int) "2112"',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('retif', function() {
+    expect(
+      parser.parseEval(
+        '$var = $var ? true : false;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('retif nested', function() {
+    expect(
+      parser.parseEval(
+        '$var = ($one ? true : false) ? ($two ? true : false) : ($three ? true : false);',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('parameter', function() {
+    expect(
+      parser.parseEval(
+        'function fn(?int $foo = 2112) {}',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('bin', function() {
+    expect(
+      parser.parseEval(
+        '$var + 2112;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('bin nested', function() {
+    expect(
+      parser.parseEval(
+        '$var + 2112 + $var;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('bin nested (2)', function() {
+    expect(
+      parser.parseEval(
+        '$var + $var + 2112;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('silent', function() {
+    expect(
+      parser.parseEval(
+        '@call();',
         {
           ast: {
             withPositions: true,
