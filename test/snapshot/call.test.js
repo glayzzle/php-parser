@@ -181,4 +181,103 @@ describe("Test call", function() {
     );
     expect(ast).toMatchSnapshot();
   });
+  it("inside offsetlookup", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)["offset"];',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside propertylookup", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)->property;',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)::call();',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (2)", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)::call()::call()::call();',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (3)", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)::$property;',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (4)", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)::$property::$property::$property;',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (5)", function() {
+    const ast = parser.parseEval(
+      'get_class($obj)::CONSTANT;',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (6)", function() {
+    const ast = parser.parseEval(
+      'get_class($var)::${$property};',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (7)", function() {
+    const ast = parser.parseEval(
+      'get_class($var)::${$property}::${$property}::${$property};',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (8)", function() {
+    const ast = parser.parseEval(
+      'get_class($var)::${"property"};',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (9)", function() {
+    const ast = parser.parseEval(
+      'get_class($var)::${$property};',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
 });
