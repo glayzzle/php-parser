@@ -100,6 +100,75 @@ module.exports = {
     return result(what, offset);
   },
 
+  read_what: function(is_static_lookup = false) {
+    let what = null;
+    let name = null;
+    switch (this.next().token) {
+      case this.tok.T_STRING:
+        what = this.node("identifier");
+        name = this.text();
+        this.next();
+        what = what(name);
+
+        if (is_static_lookup && this.token === this.tok.T_OBJECT_OPERATOR) {
+          this.error();
+        }
+
+        if (this.token === this.tok.T_VARIABLE) {
+          const inner = this.node("variable");
+          name = this.text().substring(1);
+          this.next();
+          what = this.node("encapsed")(
+            [what, inner(name, false, false)],
+            null,
+            "offset"
+          );
+          if (what.loc && what.value[0].loc) {
+            what.loc.start = what.value[0].loc.start;
+          }
+        } else if (this.token === "{") {
+          const expr = this.next().read_expr();
+          this.expect("}") && this.next();
+          what = this.node("encapsed")([what, expr], null, "offset");
+          if (what.loc && what.value[0].loc) {
+            what.loc.start = what.value[0].loc.start;
+          }
+        }
+        break;
+      case this.tok.T_VARIABLE:
+        what = this.node("variable");
+        name = this.text().substring(1);
+        this.next();
+        what = what(name, false, false);
+        break;
+      case "$":
+        this.next().expect(["{", this.tok.T_VARIABLE]);
+        if (this.token === "{") {
+          // $obj->${$varname}
+          what = this.next().read_expr();
+          this.expect("}") && this.next();
+        } else {
+          // $obj->$$varname
+          what = this.read_expr();
+        }
+        break;
+      case "{":
+        what = this.next().read_expr();
+        this.expect("}") && this.next();
+        break;
+      default:
+        this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]);
+        // graceful mode : set what as error mode & continue
+        what = this.node("identifier");
+        name = this.text();
+        this.next();
+        what = what(name);
+        break;
+    }
+
+    return what;
+  },
+
   recursive_variable_chain_scan: function(
     result,
     read_only,
@@ -140,32 +209,16 @@ module.exports = {
           break;
         case this.tok.T_DOUBLE_COLON:
           // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
-          if (result.kind === "staticlookup") {
+          if (
+            result.kind === "staticlookup" &&
+            result.offset.kind === "identifier"
+          ) {
             this.error();
           }
 
           node = this.node("staticlookup");
-          if (
-            this.next().token === this.tok.T_STRING ||
-            (this.php7 && this.is("IDENTIFIER"))
-          ) {
-            offset = this.node("identifier");
-            name = this.text();
-            this.next();
-            offset = offset(name);
+          result = node(result, this.read_what(true));
 
-            if (this.token === this.tok.T_OBJECT_OPERATOR) {
-              this.error();
-            }
-          } else {
-            this.error(this.tok.T_STRING);
-            // fallback on an identifier node
-            offset = this.node("identifier");
-            name = this.text();
-            this.next();
-            offset = offset(name);
-          }
-          result = node(result, offset);
           // static lookup dereferencables are limited to staticlookup over functions
           if (dereferencable && this.token !== "(") {
             this.error("(");
@@ -173,65 +226,7 @@ module.exports = {
           break;
         case this.tok.T_OBJECT_OPERATOR: {
           node = this.node("propertylookup");
-          let what = null;
-          switch (this.next().token) {
-            case this.tok.T_STRING:
-              what = this.node("identifier");
-              name = this.text();
-              this.next();
-              what = what(name);
-              if (this.token === this.tok.T_VARIABLE) {
-                const inner = this.node("variable");
-                name = this.text().substring(1);
-                this.next();
-                what = this.node("encapsed")(
-                  [what, inner(name, false, false)],
-                  null,
-                  "offset"
-                );
-                if (what.loc && what.value[0].loc) {
-                  what.loc.start = what.value[0].loc.start;
-                }
-              } else if (this.token === "{") {
-                const expr = this.next().read_expr();
-                this.expect("}") && this.next();
-                what = this.node("encapsed")([what, expr], null, "offset");
-                if (what.loc && what.value[0].loc) {
-                  what.loc.start = what.value[0].loc.start;
-                }
-              }
-              break;
-            case this.tok.T_VARIABLE:
-              what = this.node("variable");
-              name = this.text().substring(1);
-              this.next();
-              what = what(name, false, false);
-              break;
-            case "$":
-              this.next().expect(["{", this.tok.T_VARIABLE]);
-              if (this.token === "{") {
-                // $obj->${$varname}
-                what = this.next().read_expr();
-                this.expect("}") && this.next();
-              } else {
-                // $obj->$$varname
-                what = this.read_expr();
-              }
-              break;
-            case "{":
-              what = this.next().read_expr();
-              this.expect("}") && this.next();
-              break;
-            default:
-              this.error([this.tok.T_STRING, this.tok.T_VARIABLE]);
-              // graceful mode : set what as error mode & continue
-              what = this.node("identifier");
-              name = this.text();
-              this.next();
-              what = what(name);
-              break;
-          }
-          result = node(result, what);
+          result = node(result, this.read_what());
           break;
         }
         default:
