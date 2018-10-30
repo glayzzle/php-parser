@@ -106,25 +106,12 @@ module.exports = {
     if (this.token === "@") return this.node("silent")(this.next().read_expr());
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
+    if (this.token === "-")
+      return this.node("unary")("-", this.next().read_expr());
     if (this.token === "!")
       return this.node("unary")("!", this.next().read_expr());
     if (this.token === "~")
       return this.node("unary")("~", this.next().read_expr());
-
-    if (this.token === "-") {
-      result = this.node();
-      this.next();
-      if (
-        this.token === this.tok.T_LNUMBER ||
-        this.token === this.tok.T_DNUMBER
-      ) {
-        // negative number
-        result = result("number", "-" + this.text(), null);
-        this.next();
-        return result;
-      }
-      return result("unary", "-", this.read_expr());
-    }
 
     if (this.token === "(") {
       expr = this.next().read_expr();
