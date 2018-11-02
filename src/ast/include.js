@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "include";
 
 /**
@@ -16,14 +16,14 @@ const KIND = "include";
  * @property {boolean} once
  * @property {boolean} require
  */
-module.exports = Statement.extends(KIND, function Include(
+module.exports = Expression.extends(KIND, function Include(
   once,
   require,
   target,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.once = once;
   this.require = require;
   this.target = target;
