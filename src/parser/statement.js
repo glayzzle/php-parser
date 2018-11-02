@@ -283,10 +283,10 @@ module.exports = {
       case this.tok.T_UNSET:
         result = this.node("unset");
         this.next().expect("(") && this.next();
-        items = this.read_list(this.read_variable, ",");
+        const vars = this.read_list(this.read_variable, ",");
         this.expect(")") && this.next();
         this.expect(";") && this.next();
-        return result(items);
+        return result(vars);
 
       case this.tok.T_DECLARE: {
         result = this.node("declare");

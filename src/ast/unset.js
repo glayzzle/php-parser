@@ -5,14 +5,15 @@
  */
 "use strict";
 
-const Sys = require("./sys");
+const Statement = require("./statement");
 const KIND = "unset";
 
 /**
  * Deletes references to a list of variables
  * @constructor Unset
- * @extends {Sys}
+ * @extends {Statement}
  */
-module.exports = Sys.extends(KIND, function Unset(args, docs, location) {
-  Sys.apply(this, [KIND, args, docs, location]);
+module.exports = Statement.extends(KIND, function Unset(vars, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.vars = vars;
 });
