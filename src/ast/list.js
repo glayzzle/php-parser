@@ -5,21 +5,22 @@
  */
 "use strict";
 
-const Sys = require("./sys");
+const Expression = require("./expression");
 const KIND = "list";
 
 /**
  * Defines list assignment
  * @constructor List
- * @extends {Sys}
+ * @extends {Expression}
  * @property {boolean} shortForm
  */
-module.exports = Sys.extends(KIND, function List(
+module.exports = Expression.extends(KIND, function List(
   items,
   shortForm,
   docs,
   location
 ) {
-  Sys.apply(this, [KIND, items, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
+  this.items = items;
   this.shortForm = shortForm;
 });

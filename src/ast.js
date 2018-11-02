@@ -33,11 +33,15 @@ const Position = require("./ast/position");
  *   - [Error](#error)
  *   - [Expression](#expression)
  *     - [Array](#array)
+ *     - [List](#list)
  *     - [Variable](#variable)
  *     - [Variadic](#variadic)
  *     - [ConstRef](#constref)
  *     - [Yield](#yield)
  *     - [YieldFrom](#yieldfrom)
+ *     - [Print](#print)
+ *     - [Isset](#isset)
+ *     - [Empty](#empty)
  *     - [Lookup](#lookup)
  *       - [PropertyLookup](#propertylookup)
  *       - [StaticLookup](#staticlookup)
@@ -57,6 +61,8 @@ const Position = require("./ast/position");
  *       - [Nowdoc](#nowdoc)
  *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
+ *     - [Echo](#echo)
+ *     - [Unset](#unset)
  *     - [Eval](#eval)
  *     - [Exit](#exit)
  *     - [Halt](#halt)
@@ -86,13 +92,6 @@ const Position = require("./ast/position");
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
- *     - [Sys](#sys)
- *       - [Echo](#echo)
- *       - [List](#list)
- *       - [Print](#print)
- *       - [Isset](#isset)
- *       - [Unset](#unset)
- *       - [Empty](#empty)
  *     - [Declaration](#declaration)
  *       - [Class](#class)
  *       - [Interface](#interface)
@@ -416,7 +415,6 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/staticreference"),
   require("./ast/string"),
   require("./ast/switch"),
-  require("./ast/sys"),
   require("./ast/throw"),
   require("./ast/trait"),
   require("./ast/traitalias"),
