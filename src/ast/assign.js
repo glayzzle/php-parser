@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "assign";
 
 /**
@@ -16,14 +16,14 @@ const KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
-module.exports = Statement.extends(KIND, function Assign(
+module.exports = Expression.extends(KIND, function Assign(
   left,
   right,
   operator,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.operator = operator;
   this.left = left;
   this.right = right;

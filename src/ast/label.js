@@ -5,16 +5,16 @@
  */
 "use strict";
 
-const Node = require("./node");
+const Statement = require("./statement");
 const KIND = "label";
 
 /**
  * A label statement (referenced by goto)
  * @constructor Label
- * @extends {Node}
+ * @extends {Statement}
  * @property {String} name
  */
-module.exports = Node.extends(KIND, function Label(name, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Statement.extends(KIND, function Label(name, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.name = name;
 });

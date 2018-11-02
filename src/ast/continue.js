@@ -5,16 +5,16 @@
  */
 "use strict";
 
-const Node = require("./node");
+const Statement = require("./statement");
 const KIND = "continue";
 
 /**
  * A continue statement
  * @constructor Continue
- * @extends {Node}
+ * @extends {Statement}
  * @property {Number|Null} level
  */
-module.exports = Node.extends(KIND, function Continue(level, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Statement.extends(KIND, function Continue(level, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.level = level;
 });

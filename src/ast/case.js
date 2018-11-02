@@ -5,18 +5,18 @@
  */
 "use strict";
 
-const Node = require("./node");
+const Statement = require("./statement");
 const KIND = "case";
 
 /**
  * A switch case statement
  * @constructor Case
- * @extends {Node}
+ * @extends {Statement}
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body
  */
-module.exports = Node.extends(KIND, function Case(test, body, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Statement.extends(KIND, function Case(test, body, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
 });
