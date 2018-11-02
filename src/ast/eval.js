@@ -5,16 +5,16 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "eval";
 
 /**
  * Defines an eval statement
  * @constructor Eval
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Node} source
  */
-module.exports = Statement.extends(KIND, function Eval(source, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Eval(source, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.source = source;
 });
