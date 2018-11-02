@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "silent";
 
 /**
@@ -14,7 +14,7 @@ const KIND = "silent";
  * @extends {Statement}
  * @property {Expression} expr
  */
-module.exports = Statement.extends(KIND, function Silent(expr, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Silent(expr, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
