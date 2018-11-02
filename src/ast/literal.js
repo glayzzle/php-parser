@@ -15,14 +15,14 @@ const KIND = "literal";
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value
  */
-module.exports = Expr.extends(KIND, function Literal(
+module.exports = Expression.extends(KIND, function Literal(
   kind,
   value,
   raw,
   docs,
   location
 ) {
-  Expr.apply(this, [kind || KIND, docs, location]);
+  Expression.apply(this, [kind || KIND, docs, location]);
   this.value = value;
   if (raw) {
     this.raw = raw;

@@ -5,19 +5,19 @@
  */
 "use strict";
 
-const Function = require("./function");
+const _Function = require("./function");
 const KIND = "method";
 
 /**
  * Defines a class/interface/trait method
  * @constructor Method
- * @extends {Function}
+ * @extends {_Function}
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  * @property {boolean} isStatic
  * @property {string} visibility
  */
-module.exports = fn.extends(KIND, function Method() {
-  fn.apply(this, arguments);
+module.exports = _Function.extends(KIND, function Method() {
+  _Function.apply(this, arguments);
   this.kind = KIND;
 });

@@ -14,7 +14,11 @@ const KIND = "silent";
  * @extends {Expression}
  * @property {Expression} expr
  */
-module.exports = Expression.extends(KIND, function Silent(expr, docs, location) {
+module.exports = Expression.extends(KIND, function Silent(
+  expr,
+  docs,
+  location
+) {
   Expression.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
