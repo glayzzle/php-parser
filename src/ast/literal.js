@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Expr = require("./expression");
+const Expression = require("./expression");
 const KIND = "literal";
 
 /**

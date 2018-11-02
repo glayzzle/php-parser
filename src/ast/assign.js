@@ -11,7 +11,7 @@ const KIND = "assign";
 /**
  * Assigns a value to the specified target
  * @constructor Assign
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Expression} left
  * @property {Expression} right
  * @property {String} operator

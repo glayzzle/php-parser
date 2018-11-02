@@ -11,7 +11,7 @@ const KIND = "silent";
 /**
  * Avoids to show/log warnings & notices from the inner expression
  * @constructor Silent
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Expression} expr
  */
 module.exports = Expression.extends(KIND, function Silent(expr, docs, location) {

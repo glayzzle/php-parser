@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const fn = require("./function");
+const Function = require("./function");
 const KIND = "method";
 
 /**

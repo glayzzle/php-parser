@@ -11,7 +11,7 @@ const KIND = "exit";
 /**
  * Defines an exit / die call
  * @constructor Exit
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Node|null} status
  * @property {Boolean} useDie
  */

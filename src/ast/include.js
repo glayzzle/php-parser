@@ -11,7 +11,7 @@ const KIND = "include";
 /**
  * Defines system include call
  * @constructor Include
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Node} target
  * @property {boolean} once
  * @property {boolean} require
