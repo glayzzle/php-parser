@@ -14,7 +14,11 @@ const KIND = "continue";
  * @extends {Statement}
  * @property {Number|Null} level
  */
-module.exports = Statement.extends(KIND, function Continue(level, docs, location) {
+module.exports = Statement.extends(KIND, function Continue(
+  level,
+  docs,
+  location
+) {
   Statement.apply(this, [KIND, docs, location]);
   this.level = level;
 });
