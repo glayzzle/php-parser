@@ -212,11 +212,11 @@ module.exports = {
         if (this.next().expect("(")) {
           this.next();
         }
-        const arg = this.read_expr();
+        const expression = this.read_expr();
         if (this.expect(")")) {
           this.next();
         }
-        return result([arg]);
+        return result(expression);
       }
       case this.tok.T_INCLUDE:
         return this.node("include")(false, false, this.next().read_expr());
