@@ -253,9 +253,9 @@ module.exports = {
         result = this.node("echo");
         const text = this.text();
         const shortForm = text === "<?=" || text === "<%=";
-        const args = this.next().read_list(this.read_expr, ",");
+        const expressions = this.next().read_list(this.read_expr, ",");
         this.expectEndOfStatement();
-        return result(args, shortForm);
+        return result(expressions, shortForm);
       }
 
       case this.tok.T_INLINE_HTML: {
@@ -283,10 +283,10 @@ module.exports = {
       case this.tok.T_UNSET:
         result = this.node("unset");
         this.next().expect("(") && this.next();
-        const vars = this.read_list(this.read_variable, ",");
+        const variables = this.read_list(this.read_variable, ",");
         this.expect(")") && this.next();
         this.expect(";") && this.next();
-        return result(vars);
+        return result(variables);
 
       case this.tok.T_DECLARE: {
         result = this.node("declare");

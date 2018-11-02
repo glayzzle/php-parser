@@ -201,11 +201,11 @@ module.exports = {
         if (this.next().expect("(")) {
           this.next();
         }
-        const vars = this.read_list(this.read_expr, ",");
+        const variables = this.read_list(this.read_expr, ",");
         if (this.expect(")")) {
           this.next();
         }
-        return result(vars);
+        return result(variables);
       }
       case this.tok.T_EMPTY: {
         result = this.node("empty");

@@ -13,7 +13,11 @@ const KIND = "isset";
  * @constructor Isset
  * @extends {Expression}
  */
-module.exports = Expression.extends(KIND, function Isset(vars, docs, location) {
+module.exports = Expression.extends(KIND, function Isset(
+  variables,
+  docs,
+  location
+) {
   Expression.apply(this, [KIND, docs, location]);
-  this.vars = vars;
+  this.variables = variables;
 });

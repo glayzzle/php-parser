@@ -68,7 +68,7 @@ describe("Test offsets", function() {
   });
 
   describe("on text node", function() {
-    const arg = ast.children[0].arguments[0];
+    const arg = ast.children[0].expressions[0];
     it("test line", function() {
       expect(arg.loc.start.line).toBe(2);
       expect(arg.loc.end.line).toBe(2);
