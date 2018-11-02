@@ -5,14 +5,19 @@
  */
 "use strict";
 
-const Sys = require("./sys");
+const Expression = require("./expression");
 const KIND = "print";
 
 /**
  * Outputs
  * @constructor Print
- * @extends {Sys}
+ * @extends {Expression}
  */
-module.exports = Sys.extends(KIND, function Print(args, docs, location) {
-  Sys.apply(this, [KIND, args, docs, location]);
+module.exports = Expression.extends(KIND, function Print(
+  expression,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.expression = expression;
 });
