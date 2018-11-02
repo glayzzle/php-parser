@@ -5,14 +5,15 @@
  */
 "use strict";
 
-const Sys = require("./sys");
+const Expression = require("./expression");
 const KIND = "isset";
 
 /**
  * Defines an isset call
  * @constructor Isset
- * @extends {Sys}
+ * @extends {Expression}
  */
-module.exports = Sys.extends(KIND, function Isset(args, docs, location) {
-  Sys.apply(this, [KIND, args, docs, location]);
+module.exports = Expression.extends(KIND, function Isset(vars, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.vars = vars;
 });
