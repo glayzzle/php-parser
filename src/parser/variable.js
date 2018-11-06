@@ -43,7 +43,11 @@ module.exports = {
     ) {
       result = this.node();
       const name = this.read_namespace_name();
-      if (this.token != this.tok.T_DOUBLE_COLON && this.token != "(") {
+      if (
+        this.token != this.tok.T_DOUBLE_COLON &&
+        this.token != "(" &&
+        ["parentreference", "selfreference"].indexOf(name.kind) === -1
+      ) {
         // @see parser.js line 130 : resolves a conflict with scalar
         const literal = name.name.toLowerCase();
         if (literal === "true") {
@@ -60,8 +64,9 @@ module.exports = {
       }
     } else if (this.token === this.tok.T_STATIC) {
       result = this.node("staticreference");
+      const raw = this.text();
       this.next();
-      result = result();
+      result = result(raw);
     } else {
       this.expect("VARIABLE");
     }

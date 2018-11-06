@@ -14,9 +14,11 @@ const KIND = "selfreference";
  * @extends {Reference}
  */
 const SelfReference = Reference.extends(KIND, function SelfReference(
+  raw,
   docs,
   location
 ) {
   Reference.apply(this, [KIND, docs, location]);
+  this.raw = raw;
 });
 module.exports = SelfReference;
