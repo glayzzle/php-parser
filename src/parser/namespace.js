@@ -74,10 +74,10 @@ module.exports = {
       true
     );
     if (!relative && names.length === 1) {
-      if (names[0] === "parent") {
-        return result("parentreference");
-      } else if (names[0] === "self") {
-        return result("selfreference");
+      if (names[0].toLowerCase() === "parent") {
+        return result("parentreference", names[0]);
+      } else if (names[0].toLowerCase() === "self") {
+        return result("selfreference", names[0]);
       }
     }
     return result("classreference", names, relative);
