@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Expr = require("./expression");
+const Expression = require("./expression");
 const KIND = "variable";
 
 /**
@@ -27,14 +27,14 @@ const KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
-module.exports = Expr.extends(KIND, function Variable(
+module.exports = Expression.extends(KIND, function Variable(
   name,
   byref,
   curly,
   docs,
   location
 ) {
-  Expr.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.name = name;
   this.byref = byref || false;
   this.curly = curly || false;

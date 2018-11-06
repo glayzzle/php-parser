@@ -62,7 +62,7 @@ exports[`Test AST structure fix #120 1`] = `
 Program {
   "children": Array [
     Echo {
-      "arguments": Array [
+      "expressions": Array [
         String {
           "isDoubleQuote": false,
           "kind": "string",
@@ -90,7 +90,7 @@ exports[`Test AST structure fix #127 - echo statements 1`] = `
 Program {
   "children": Array [
     Echo {
-      "arguments": Array [
+      "expressions": Array [
         String {
           "isDoubleQuote": true,
           "kind": "string",
@@ -254,7 +254,7 @@ exports[`Test AST structure test echo, isset, unset, empty 1`] = `
 Program {
   "children": Array [
     Echo {
-      "arguments": Array [
+      "expressions": Array [
         RetIf {
           "falseExpr": String {
             "isDoubleQuote": true,
@@ -285,7 +285,7 @@ Program {
     },
     ExpressionStatement {
       "expression": Print {
-        "arguments": String {
+        "expression": String {
           "isDoubleQuote": true,
           "kind": "string",
           "raw": "\\"some text\\"",
@@ -298,7 +298,8 @@ Program {
     },
     ExpressionStatement {
       "expression": Isset {
-        "arguments": Array [
+        "kind": "isset",
+        "variables": Array [
           Variable {
             "byref": false,
             "curly": false,
@@ -312,12 +313,12 @@ Program {
             "name": "bar",
           },
         ],
-        "kind": "isset",
       },
       "kind": "expressionstatement",
     },
     Unset {
-      "arguments": Array [
+      "kind": "unset",
+      "variables": Array [
         Variable {
           "byref": false,
           "curly": false,
@@ -325,18 +326,15 @@ Program {
           "name": "var",
         },
       ],
-      "kind": "unset",
     },
     ExpressionStatement {
       "expression": Empty {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "var",
-          },
-        ],
+        "expression": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
         "kind": "empty",
       },
       "kind": "expressionstatement",
@@ -460,7 +458,7 @@ Program {
       "value": "Hello ",
     },
     Echo {
-      "arguments": Array [
+      "expressions": Array [
         String {
           "isDoubleQuote": false,
           "kind": "string",
@@ -488,7 +486,7 @@ exports[`Test AST structure test magics 1`] = `
 Program {
   "children": Array [
     Echo {
-      "arguments": Array [
+      "expressions": Array [
         Magic {
           "kind": "magic",
           "raw": "__FILE__",
@@ -521,7 +519,7 @@ exports[`Test AST structure test shell 1`] = `
 Program {
   "children": Array [
     Echo {
-      "arguments": Array [
+      "expressions": Array [
         Encapsed {
           "kind": "encapsed",
           "raw": "\`ls -larth\`",

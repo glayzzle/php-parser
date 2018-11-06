@@ -5,16 +5,16 @@
  */
 "use strict";
 
-const Node = require("./node");
+const Statement = require("./statement");
 const KIND = "return";
 
 /**
  * A continue statement
  * @constructor Return
- * @extends {Node}
+ * @extends {Statement}
  * @property {Expression|null} expr
  */
-module.exports = Node.extends(KIND, function Return(expr, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Statement.extends(KIND, function Return(expr, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });

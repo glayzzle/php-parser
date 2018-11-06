@@ -5,16 +5,16 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "clone";
 
 /**
  * Defines a clone call
  * @constructor Clone
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Expression} what
  */
-module.exports = Statement.extends(KIND, function Clone(what, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Clone(what, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.what = what;
 });

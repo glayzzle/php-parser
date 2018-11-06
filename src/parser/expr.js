@@ -201,22 +201,22 @@ module.exports = {
         if (this.next().expect("(")) {
           this.next();
         }
-        const args = this.read_list(this.read_expr, ",");
+        const variables = this.read_list(this.read_expr, ",");
         if (this.expect(")")) {
           this.next();
         }
-        return result(args);
+        return result(variables);
       }
       case this.tok.T_EMPTY: {
         result = this.node("empty");
         if (this.next().expect("(")) {
           this.next();
         }
-        const arg = this.read_expr();
+        const expression = this.read_expr();
         if (this.expect(")")) {
           this.next();
         }
-        return result([arg]);
+        return result(expression);
       }
       case this.tok.T_INCLUDE:
         return this.node("include")(false, false, this.next().read_expr());

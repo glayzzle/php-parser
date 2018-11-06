@@ -5,23 +5,23 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "call";
 
 /**
  * Executes a call statement
  * @constructor Call
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Identifier|Variable|??} what
  * @property {Arguments[]} arguments
  */
-module.exports = Statement.extends(KIND, function Call(
+module.exports = Expression.extends(KIND, function Call(
   what,
   args,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });

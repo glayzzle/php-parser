@@ -5,16 +5,20 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "silent";
 
 /**
  * Avoids to show/log warnings & notices from the inner expression
  * @constructor Silent
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Expression} expr
  */
-module.exports = Statement.extends(KIND, function Silent(expr, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Silent(
+  expr,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });

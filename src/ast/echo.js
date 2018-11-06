@@ -5,21 +5,22 @@
  */
 "use strict";
 
-const Sys = require("./sys");
+const Statement = require("./statement");
 const KIND = "echo";
 
 /**
  * Defines system based call
  * @constructor Echo
  * @property {boolean} shortForm
- * @extends {Sys}
+ * @extends {Statement}
  */
-module.exports = Sys.extends(KIND, function Echo(
-  args,
+module.exports = Statement.extends(KIND, function Echo(
+  expressions,
   shortForm,
   docs,
   location
 ) {
-  Sys.apply(this, [KIND, args, docs, location]);
+  Statement.apply(this, [KIND, docs, location]);
   this.shortForm = shortForm;
+  this.expressions = expressions;
 });

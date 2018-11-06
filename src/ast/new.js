@@ -5,23 +5,23 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "new";
 
 /**
  * Creates a new instance of the specified class
  * @constructor New
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Identifier|Variable|Class} what
  * @property {Arguments[]} arguments
  */
-module.exports = Statement.extends(KIND, function New(
+module.exports = Expression.extends(KIND, function New(
   what,
   args,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
 });

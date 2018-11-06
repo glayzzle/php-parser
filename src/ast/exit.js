@@ -5,23 +5,23 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "exit";
 
 /**
  * Defines an exit / die call
  * @constructor Exit
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Node|null} status
  * @property {Boolean} useDie
  */
-module.exports = Statement.extends(KIND, function Exit(
+module.exports = Expression.extends(KIND, function Exit(
   status,
   useDie,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.status = status;
   this.useDie = useDie;
 });

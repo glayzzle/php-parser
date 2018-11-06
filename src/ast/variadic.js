@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Expr = require("./expression");
+const Expression = require("./expression");
 const KIND = "variadic";
 
 /**
@@ -15,7 +15,11 @@ const KIND = "variadic";
  * @property {Array|Expression} what
  * @see https://wiki.php.net/rfc/argument_unpacking
  */
-module.exports = Expr.extends(KIND, function variadic(what, docs, location) {
-  Expr.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function variadic(
+  what,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
   this.what = what;
 });

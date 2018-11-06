@@ -5,16 +5,16 @@
  */
 "use strict";
 
-const Node = require("./node");
+const Statement = require("./statement");
 const KIND = "break";
 
 /**
  * A break statement
  * @constructor Break
- * @extends {Node}
+ * @extends {Statement}
  * @property {Number|Null} level
  */
-module.exports = Node.extends(KIND, function Break(level, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Statement.extends(KIND, function Break(level, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
   this.level = level;
 });

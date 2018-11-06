@@ -11,7 +11,7 @@ const KIND = "classreference";
 /**
  * Defines a class reference node
  * @constructor ClassReference
- * @extends {Node}
+ * @extends {Reference}
  * @property {string} name
  * @property {string} resolution
  */

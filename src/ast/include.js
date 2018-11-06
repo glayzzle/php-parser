@@ -5,25 +5,25 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "include";
 
 /**
  * Defines system include call
  * @constructor Include
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Node} target
  * @property {boolean} once
  * @property {boolean} require
  */
-module.exports = Statement.extends(KIND, function Include(
+module.exports = Expression.extends(KIND, function Include(
   once,
   require,
   target,
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.once = once;
   this.require = require;
   this.target = target;
