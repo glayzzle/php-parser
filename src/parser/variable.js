@@ -60,8 +60,9 @@ module.exports = {
       }
     } else if (this.token === this.tok.T_STATIC) {
       result = this.node("staticreference");
+      const raw = this.text();
       this.next();
-      result = result();
+      result = result(raw);
     } else {
       this.expect("VARIABLE");
     }
