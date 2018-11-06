@@ -175,7 +175,7 @@ module.exports = {
     encapsed,
     dereferencable
   ) {
-    let name, node, offset;
+    let node, offset;
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
         case "(":

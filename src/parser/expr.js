@@ -417,9 +417,9 @@ module.exports = {
       expr = this.read_scalar();
       if (expr.kind === "array" && expr.shortForm && this.token === "=") {
         // list assign
-        let list = this.node("list")(expr.items, true);
+        const list = this.node("list")(expr.items, true);
         if (expr.loc) list.loc = expr.loc;
-        let right = this.next().read_expr();
+        const right = this.next().read_expr();
         return result("assign", list, right, "=");
       } else {
         // see #189 - swap docs on nodes

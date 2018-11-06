@@ -355,7 +355,9 @@ parser.prototype.node = function(name) {
       docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
       if (this.debug) {
+        // eslint-disable-next-line no-console
         console.log(new Error("Append docs on " + name));
+        // eslint-disable-next-line no-console
         console.log(docs);
       }
     }
