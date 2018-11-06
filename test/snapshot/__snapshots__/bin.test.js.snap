@@ -919,6 +919,48 @@ Program {
 }
 `;
 
+exports[`bin multiple instanceof static 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+          "right": StaticReference {
+            "kind": "staticreference",
+          },
+          "type": "instanceof",
+        },
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "bar",
+          },
+          "right": SelfReference {
+            "kind": "selfreference",
+          },
+          "type": "instanceof",
+        },
+        "type": "&&",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`bin or 1`] = `
 Program {
   "children": Array [
