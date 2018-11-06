@@ -13,10 +13,16 @@ describe("parentreference", function() {
   it("uppercase", function() {
     expect(parser.parseEval('PARENT::call();')).toMatchSnapshot();
   });
-  it("parent", function() {
+  it("argument", function() {
     expect(parser.parseEval('function fn(parent $arg) {}')).toMatchSnapshot();
   });
-  it("parent (uppercase)", function() {
+  it("argument (uppercase)", function() {
     expect(parser.parseEval('function fn(PARENT $arg) {}')).toMatchSnapshot();
+  });
+  it("return type declarations", function() {
+    expect(parser.parseEval('function fn($arg): parent {}')).toMatchSnapshot();
+  });
+  it("return type declarations (uppercase)", function() {
+    expect(parser.parseEval('function fn($arg): PARENT {}')).toMatchSnapshot();
   });
 });

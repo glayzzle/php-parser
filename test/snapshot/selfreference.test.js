@@ -13,10 +13,16 @@ describe("selfreference", function() {
   it("uppercase", function() {
     expect(parser.parseEval('SELF::call();')).toMatchSnapshot();
   });
-  it("parent", function() {
+  it("argument", function() {
     expect(parser.parseEval('function fn(self $arg) {}')).toMatchSnapshot();
   });
-  it("parent (uppercase)", function() {
+  it("argument (uppercase)", function() {
     expect(parser.parseEval('function fn(SELF $arg) {}')).toMatchSnapshot();
+  });
+  it("return type declarations", function() {
+    expect(parser.parseEval('function fn($arg): self {}')).toMatchSnapshot();
+  });
+  it("return type declarations (uppercase)", function() {
+    expect(parser.parseEval('function fn($arg): SELF {}')).toMatchSnapshot();
   });
 });
