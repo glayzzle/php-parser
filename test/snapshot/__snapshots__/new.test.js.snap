@@ -137,10 +137,53 @@ Program {
       "expression": New {
         "arguments": Array [],
         "kind": "new",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "Foo",
-          "resolution": "uqn",
+        "what": Identifier {
+          "kind": "identifier",
+          "name": ClassReference {
+            "kind": "classreference",
+            "name": "Foo",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`new parent 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": ParentReference {
+          "kind": "parentreference",
+          "raw": "parent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`new self 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": SelfReference {
+          "kind": "selfreference",
+          "raw": "self",
         },
       },
       "kind": "expressionstatement",
@@ -225,6 +268,26 @@ Program {
           "kind": "classreference",
           "name": "Foo",
           "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`new static 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": StaticReference {
+          "kind": "staticreference",
+          "raw": "static",
         },
       },
       "kind": "expressionstatement",

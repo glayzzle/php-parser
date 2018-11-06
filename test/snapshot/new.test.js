@@ -31,4 +31,13 @@ describe("new", function() {
   it("anonymous with multiple argument", function() {
     expect(parser.parseEval('new class($one, $two, $three) {};')).toMatchSnapshot();
   });
+  it("parent", function() {
+    expect(parser.parseEval('new parent();')).toMatchSnapshot();
+  });
+  it("self", function() {
+    expect(parser.parseEval('new self();')).toMatchSnapshot();
+  });
+  it("static", function() {
+    expect(parser.parseEval('new static();')).toMatchSnapshot();
+  });
 });
