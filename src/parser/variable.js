@@ -93,6 +93,10 @@ module.exports = {
       name = this.text();
       this.next();
       offset = offset(name);
+    } else if (this.token === "{") {
+      offset = this.next().read_expr();
+      this.expect("}") && this.next();
+      this.expect("(");
     } else {
       this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
       // graceful mode : set getter as error node and continue

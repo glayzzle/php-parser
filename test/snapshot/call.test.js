@@ -280,4 +280,22 @@ describe("Test call", function() {
     );
     expect(ast).toMatchSnapshot();
   });
+  it("inside staticlookup (10)", function() {
+    const ast = parser.parseEval(
+      'Order::call()();',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("inside staticlookup (11)", function() {
+    const ast = parser.parseEval(
+      'Order::{call()}();',
+      {
+        parser: { debug: false }
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
 });

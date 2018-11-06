@@ -46,5 +46,9 @@ describe("Test graceful mode", function() {
         ->
       `)).toMatchSnapshot();
     });
+
+    it("staticlookup", function() {
+      expect(test.parseEval('Order::{call()};')).toMatchSnapshot();
+    });
   });
 });

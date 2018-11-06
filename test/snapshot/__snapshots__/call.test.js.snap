@@ -471,6 +471,65 @@ Program {
 }
 `;
 
+exports[`Test call inside staticlookup (10) 1`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "call",
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "Order",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (11) 1`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "call",
+            "resolution": "uqn",
+          },
+        },
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "Order",
+          "resolution": "uqn",
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test call inside staticlookup 1`] = `
 Program {
   "children": Array [
