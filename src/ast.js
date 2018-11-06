@@ -35,7 +35,6 @@ const Position = require("./ast/position");
  *     - [Array](#array)
  *     - [Variable](#variable)
  *     - [Variadic](#variadic)
- *     - [ConstRef](#constref)
  *     - [Yield](#yield)
  *     - [YieldFrom](#yieldfrom)
  *     - [Lookup](#lookup)
@@ -358,7 +357,6 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/commentblock"),
   require("./ast/commentline"),
   require("./ast/constant"),
-  require("./ast/constref"),
   require("./ast/continue"),
   require("./ast/declaration"),
   require("./ast/declare"),

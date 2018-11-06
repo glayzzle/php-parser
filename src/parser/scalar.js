@@ -210,7 +210,7 @@ module.exports = {
           this.expect("]") && this.next();
           name = node(name, offset);
         } else {
-          name = this.node("constref")(varName);
+          name = varName;
         }
       } else {
         name = this.read_expr();
@@ -244,7 +244,7 @@ module.exports = {
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         node = this.node("propertylookup");
         this.next().expect(this.tok.T_STRING);
-        const what = this.node("constref");
+        const what = this.node("identifier");
         name = this.text();
         this.next();
         result = node(result, what(name));
