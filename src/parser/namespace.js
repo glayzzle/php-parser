@@ -113,6 +113,14 @@ module.exports = {
     return result;
   },
   /**
+   *
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
+   */
+  read_class_name_reference: function() {
+    // resolved as the same
+    return this.read_variable(true, false, false);
+  },
+  /**
    * Reads a use declaration
    * ```ebnf
    * use_declaration ::= use_type? namespace_name use_alias

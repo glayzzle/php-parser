@@ -64,7 +64,12 @@ module.exports = {
     if (this.token === this.tok.T_SPACESHIP)
       return result("bin", "<=>", expr, this.next().read_expr());
     if (this.token === this.tok.T_INSTANCEOF)
-      return result("bin", "instanceof", expr, this.next().read_expr());
+      return result(
+        "bin",
+        "instanceof",
+        expr,
+        this.next().read_class_name_reference()
+      );
 
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';

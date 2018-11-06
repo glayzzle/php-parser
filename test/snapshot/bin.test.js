@@ -91,6 +91,10 @@ describe('bin', () => {
   it('instanceof self', () => {
     expect(parser.parseEval('$foo instanceof self;')).toMatchSnapshot();
   });
+  it('instanceof static', () => {
+    expect(parser.parseEval('$foo instanceof static;')).toMatchSnapshot();
+  });
+
   it('??', () => {
     expect(parser.parseEval('$foo ?? $bar;')).toMatchSnapshot();
   });
