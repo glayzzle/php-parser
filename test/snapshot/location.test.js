@@ -1224,4 +1224,30 @@ string";`,
       )
     ).toMatchSnapshot();
   });
+  it('conststatement', function() {
+    expect(
+      parser.parseEval(
+        'const CONSTANT = "Hello world!";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('conststatement multiple', function() {
+    expect(
+      parser.parseEval(
+        'const CONSTANT = "Hello world!", OTHER_CONSTANT = "Other hello world!";',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });

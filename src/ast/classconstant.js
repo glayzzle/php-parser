@@ -5,24 +5,48 @@
  */
 "use strict";
 
-const Constant = require("./constant");
+const ConstantStatement = require("./constantstatement");
 const KIND = "classconstant";
+
+const IS_UNDEFINED = "";
+const IS_PUBLIC = "public";
+const IS_PROTECTED = "protected";
+const IS_PRIVATE = "private";
 
 /**
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
- * @extends {Constant}
- * @property {boolean} isStatic
+ * @extends {ConstantStatement}
  * @property {string} visibility
  */
-module.exports = Constant.extends(KIND, function ClassConstant(
-  name,
-  value,
+const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
+  kind,
+  items,
   flags,
   docs,
   location
 ) {
-  Constant.apply(this, [name, value, docs, location]);
-  this.kind = KIND;
+  ConstantStatement.apply(this, [kind || KIND, items, docs, location]);
   this.parseFlags(flags);
 });
+
+/**
+ * Generic flags parser
+ * @param {Integer[]} flags
+ * @return {void}
+ */
+ClassConstant.prototype.parseFlags = function(flags) {
+  if (flags[0] === -1) {
+    this.visibility = IS_UNDEFINED;
+  } else if (flags[0] === null) {
+    this.visibility = null;
+  } else if (flags[0] === 0) {
+    this.visibility = IS_PUBLIC;
+  } else if (flags[0] === 1) {
+    this.visibility = IS_PROTECTED;
+  } else if (flags[0] === 2) {
+    this.visibility = IS_PRIVATE;
+  }
+};
+
+module.exports = ClassConstant;

@@ -51,8 +51,12 @@ module.exports = {
         return this.read_trait();
       case this.tok.T_USE:
         return this.read_use_statement();
-      case this.tok.T_CONST:
-        return this.next().read_const_list();
+      case this.tok.T_CONST: {
+        const result = this.node("constantstatement");
+        const items = this.next().read_const_list();
+        this.expectEndOfStatement();
+        return result(null, items);
+      }
       case this.tok.T_NAMESPACE:
         return this.read_namespace();
       case this.tok.T_HALT_COMPILER: {
@@ -109,7 +113,6 @@ module.exports = {
       ",",
       false
     );
-    this.expectEndOfStatement();
     return result;
   },
   /**

@@ -5,21 +5,23 @@
  */
 "use strict";
 
-const Declaration = require("./declaration");
+const Node = require("./node");
 const KIND = "constant";
 
 /**
- * Defines a namespace constant
+ * Defines a constant
  * @constructor Constant
- * @extends {Declaration}
- * @property {Node|null} value
+ * @extends {Node}
+ * @property {string} name
+ * @property {Node|string|number|boolean|null} value
  */
-module.exports = Declaration.extends(KIND, function Constant(
+module.exports = Node.extends(KIND, function Constant(
   name,
   value,
   docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, docs, location]);
+  Node.apply(this, [KIND, docs, location]);
+  this.name = name;
   this.value = value;
 });
