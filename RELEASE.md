@@ -1,5 +1,15 @@
 # Releases
 
+## 3.0.0-prerelease.7 : (2018-11-10)
+ - #201 : [bug] curly in staticlookup bug
+ - #175 : impossible detect curly in `encapsed` AST enhancement
+ - #210 : [bug] invalid ast for `const` enhancement
+ - #220 : regression in `rc-6`
+ - #204 : [bug] invalid start offset encapsed AST bug
+ - #165 : declare doesn't support inline nodes investigating
+
+Many thanks to @evilebottnawi for his help
+
 ## 3.0.0-prerelease.6 : (2018-10-21)
  - fix #113 : Unhandled native identifiers
  - fix #183 : `static` parsed as constref
