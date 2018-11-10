@@ -176,6 +176,8 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
   read_encapsed_string_item: function(isDoubleQuote) {
+    const encapsedPart = this.node("encapsedpart");
+    let curly = false;
     let result = this.node(),
       offset,
       node,
@@ -220,11 +222,9 @@ module.exports = {
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
+      curly = true;
       result.destroy();
       result = this.next().read_variable(false, false, false);
-      if (result.kind === "variable") {
-        result.curly = true;
-      }
       this.expect("}") && this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
       // plain variable
@@ -260,7 +260,7 @@ module.exports = {
       result = result("string", false, value, false, value);
     }
 
-    return result;
+    return encapsedPart(result, curly);
   },
   /**
    * Reads an encapsed string

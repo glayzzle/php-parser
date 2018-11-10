@@ -198,13 +198,18 @@ Program {
 exports[`Test AST structure test constants 1`] = `
 Program {
   "children": Array [
-    Constant {
-      "kind": "constant",
-      "name": "FOO",
-      "value": Number {
-        "kind": "number",
-        "value": "3.14",
-      },
+    ConstantStatement {
+      "items": Array [
+        Constant {
+          "kind": "constant",
+          "name": "FOO",
+          "value": Number {
+            "kind": "number",
+            "value": "3.14",
+          },
+        },
+      ],
+      "kind": "constantstatement",
     },
   ],
   "errors": Array [],
@@ -525,12 +530,16 @@ Program {
           "raw": "\`ls -larth\`",
           "type": "shell",
           "value": Array [
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
-              "raw": "ls -larth",
-              "unicode": false,
-              "value": "ls -larth",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "ls -larth",
+                "unicode": false,
+                "value": "ls -larth",
+              },
+              "kind": "encapsedpart",
             },
           ],
         },

@@ -64,8 +64,9 @@ module.exports = {
       }
     } else if (this.token === this.tok.T_STATIC) {
       result = this.node("staticreference");
+      const raw = this.text();
       this.next();
-      result = result();
+      result = result(raw);
     } else {
       this.expect("VARIABLE");
     }
@@ -183,7 +184,7 @@ module.exports = {
     encapsed,
     dereferencable
   ) {
-    let name, node, offset;
+    let node, offset;
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
         case "(":

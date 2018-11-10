@@ -165,7 +165,8 @@ module.exports = {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
-    return this.read_list(
+    const result = this.node("classconstant");
+    const items = this.read_list(
       /**
        * Reads a constant declaration
        *
@@ -175,7 +176,7 @@ module.exports = {
        * @return {Constant} [:link:](AST.md#constant)
        */
       function read_constant_declaration() {
-        const result = this.node("classconstant");
+        const result = this.node("constant");
         let name = null;
         let value = null;
         if (
@@ -190,10 +191,12 @@ module.exports = {
         if (this.expect("=")) {
           value = this.next().read_expr();
         }
-        return result(name, value, flags);
+        return result(name, value);
       },
       ","
     );
+
+    return result(null, items, flags);
   },
   /**
    * Read member flags

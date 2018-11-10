@@ -74,10 +74,10 @@ module.exports = {
       true
     );
     if (!relative && names.length === 1) {
-      if (names[0] === "parent") {
-        return result("parentreference");
-      } else if (names[0] === "self") {
-        return result("selfreference");
+      if (names[0].toLowerCase() === "parent") {
+        return result("parentreference", names[0]);
+      } else if (names[0].toLowerCase() === "self") {
+        return result("selfreference", names[0]);
       }
     }
     return result("classreference", names, relative);
@@ -111,6 +111,14 @@ module.exports = {
     result = result(name, type, items);
     this.expect(";") && this.next();
     return result;
+  },
+  /**
+   *
+   * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
+   */
+  read_class_name_reference: function() {
+    // resolved as the same
+    return this.read_variable(true, false, false);
   },
   /**
    * Reads a use declaration

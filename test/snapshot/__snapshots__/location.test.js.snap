@@ -1930,6 +1930,197 @@ Program {
 }
 `;
 
+exports[`Test locations conststatement 1`] = `
+Program {
+  "children": Array [
+    ConstantStatement {
+      "items": Array [
+        Constant {
+          "kind": "constant",
+          "loc": Location {
+            "end": Position {
+              "column": 31,
+              "line": 1,
+              "offset": 31,
+            },
+            "source": "CONSTANT = \\"Hello world!\\"",
+            "start": Position {
+              "column": 6,
+              "line": 1,
+              "offset": 6,
+            },
+          },
+          "name": "CONSTANT",
+          "value": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "loc": Location {
+              "end": Position {
+                "column": 31,
+                "line": 1,
+                "offset": 31,
+              },
+              "source": "\\"Hello world!\\"",
+              "start": Position {
+                "column": 17,
+                "line": 1,
+                "offset": 17,
+              },
+            },
+            "raw": "\\"Hello world!\\"",
+            "unicode": false,
+            "value": "Hello world!",
+          },
+        },
+      ],
+      "kind": "constantstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 32,
+          "line": 1,
+          "offset": 32,
+        },
+        "source": "const CONSTANT = \\"Hello world!\\";",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 32,
+      "line": 1,
+      "offset": 32,
+    },
+    "source": "const CONSTANT = \\"Hello world!\\";",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
+exports[`Test locations conststatement multiple 1`] = `
+Program {
+  "children": Array [
+    ConstantStatement {
+      "items": Array [
+        Constant {
+          "kind": "constant",
+          "loc": Location {
+            "end": Position {
+              "column": 31,
+              "line": 1,
+              "offset": 31,
+            },
+            "source": "CONSTANT = \\"Hello world!\\"",
+            "start": Position {
+              "column": 6,
+              "line": 1,
+              "offset": 6,
+            },
+          },
+          "name": "CONSTANT",
+          "value": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "loc": Location {
+              "end": Position {
+                "column": 31,
+                "line": 1,
+                "offset": 31,
+              },
+              "source": "\\"Hello world!\\"",
+              "start": Position {
+                "column": 17,
+                "line": 1,
+                "offset": 17,
+              },
+            },
+            "raw": "\\"Hello world!\\"",
+            "unicode": false,
+            "value": "Hello world!",
+          },
+        },
+        Constant {
+          "kind": "constant",
+          "loc": Location {
+            "end": Position {
+              "column": 70,
+              "line": 1,
+              "offset": 70,
+            },
+            "source": "OTHER_CONSTANT = \\"Other hello world!\\"",
+            "start": Position {
+              "column": 33,
+              "line": 1,
+              "offset": 33,
+            },
+          },
+          "name": "OTHER_CONSTANT",
+          "value": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "loc": Location {
+              "end": Position {
+                "column": 70,
+                "line": 1,
+                "offset": 70,
+              },
+              "source": "\\"Other hello world!\\"",
+              "start": Position {
+                "column": 50,
+                "line": 1,
+                "offset": 50,
+              },
+            },
+            "raw": "\\"Other hello world!\\"",
+            "unicode": false,
+            "value": "Other hello world!",
+          },
+        },
+      ],
+      "kind": "constantstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 71,
+          "line": 1,
+          "offset": 71,
+        },
+        "source": "const CONSTANT = \\"Hello world!\\", OTHER_CONSTANT = \\"Other hello world!\\";",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 71,
+      "line": 1,
+      "offset": 71,
+    },
+    "source": "const CONSTANT = \\"Hello world!\\", OTHER_CONSTANT = \\"Other hello world!\\";",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations continue 1`] = `
 Program {
   "children": Array [
@@ -2436,9 +2627,32 @@ Text
 EOD",
         "type": "heredoc",
         "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "loc": Location {
+                "end": Position {
+                  "column": 0,
+                  "line": 3,
+                  "offset": 12,
+                },
+                "source": "Text
+",
+                "start": Position {
+                  "column": 0,
+                  "line": 2,
+                  "offset": 7,
+                },
+              },
+              "raw": "Text
+",
+              "unicode": false,
+              "value": "Text
+",
+            },
+            "kind": "encapsedpart",
             "loc": Location {
               "end": Position {
                 "column": 0,
@@ -2453,11 +2667,6 @@ EOD",
                 "offset": 7,
               },
             },
-            "raw": "Text
-",
-            "unicode": false,
-            "value": "Text
-",
           },
         ],
       },
@@ -2563,9 +2772,32 @@ Text
 EOD",
           "type": "heredoc",
           "value": Array [
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 0,
+                    "line": 3,
+                    "offset": 19,
+                  },
+                  "source": "Text
+",
+                  "start": Position {
+                    "column": 0,
+                    "line": 2,
+                    "offset": 14,
+                  },
+                },
+                "raw": "Text
+",
+                "unicode": false,
+                "value": "Text
+",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 0,
@@ -2580,11 +2812,6 @@ EOD",
                   "offset": 14,
                 },
               },
-              "raw": "Text
-",
-              "unicode": false,
-              "value": "Text
-",
             },
           ],
         },
@@ -2684,9 +2911,29 @@ Program {
           "raw": "\`command\`",
           "type": "shell",
           "value": Array [
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 15,
+                    "line": 1,
+                    "offset": 15,
+                  },
+                  "source": "command",
+                  "start": Position {
+                    "column": 8,
+                    "line": 1,
+                    "offset": 8,
+                  },
+                },
+                "raw": "command",
+                "unicode": false,
+                "value": "command",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 15,
@@ -2700,9 +2947,6 @@ Program {
                   "offset": 8,
                 },
               },
-              "raw": "command",
-              "unicode": false,
-              "value": "command",
             },
           ],
         },
@@ -2810,9 +3054,41 @@ command;
 \`",
           "type": "shell",
           "value": Array [
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 0,
+                    "line": 5,
+                    "offset": 36,
+                  },
+                  "source": "
+command;
+command;
+command;
+",
+                  "start": Position {
+                    "column": 8,
+                    "line": 1,
+                    "offset": 8,
+                  },
+                },
+                "raw": "
+command;
+command;
+command;
+",
+                "unicode": false,
+                "value": "
+command;
+command;
+command;
+",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 0,
@@ -2830,17 +3106,6 @@ command;
                   "offset": 8,
                 },
               },
-              "raw": "
-command;
-command;
-command;
-",
-              "unicode": false,
-              "value": "
-command;
-command;
-command;
-",
             },
           ],
         },
@@ -2909,9 +3174,29 @@ Program {
         "raw": "\\"string $var string\\"",
         "type": "string",
         "value": Array [
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "loc": Location {
+                "end": Position {
+                  "column": 8,
+                  "line": 1,
+                  "offset": 8,
+                },
+                "source": "string ",
+                "start": Position {
+                  "column": 1,
+                  "line": 1,
+                  "offset": 1,
+                },
+              },
+              "raw": "string ",
+              "unicode": false,
+              "value": "string ",
+            },
+            "kind": "encapsedpart",
             "loc": Location {
               "end": Position {
                 "column": 8,
@@ -2925,14 +3210,29 @@ Program {
                 "offset": 1,
               },
             },
-            "raw": "string ",
-            "unicode": false,
-            "value": "string ",
           },
-          Variable {
-            "byref": false,
+          EncapsedPart {
             "curly": false,
-            "kind": "variable",
+            "expression": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "loc": Location {
+                "end": Position {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 12,
+                },
+                "source": "$var",
+                "start": Position {
+                  "column": 8,
+                  "line": 1,
+                  "offset": 8,
+                },
+              },
+              "name": "var",
+            },
+            "kind": "encapsedpart",
             "loc": Location {
               "end": Position {
                 "column": 12,
@@ -2946,11 +3246,30 @@ Program {
                 "offset": 8,
               },
             },
-            "name": "var",
           },
-          String {
-            "isDoubleQuote": false,
-            "kind": "string",
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "loc": Location {
+                "end": Position {
+                  "column": 19,
+                  "line": 1,
+                  "offset": 19,
+                },
+                "source": " string",
+                "start": Position {
+                  "column": 12,
+                  "line": 1,
+                  "offset": 12,
+                },
+              },
+              "raw": " string",
+              "unicode": false,
+              "value": " string",
+            },
+            "kind": "encapsedpart",
             "loc": Location {
               "end": Position {
                 "column": 19,
@@ -2964,9 +3283,6 @@ Program {
                 "offset": 12,
               },
             },
-            "raw": " string",
-            "unicode": false,
-            "value": " string",
           },
         ],
       },
@@ -3061,9 +3377,29 @@ Program {
           "raw": "\\"string $var string\\"",
           "type": "string",
           "value": Array [
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 15,
+                    "line": 1,
+                    "offset": 15,
+                  },
+                  "source": "string ",
+                  "start": Position {
+                    "column": 8,
+                    "line": 1,
+                    "offset": 8,
+                  },
+                },
+                "raw": "string ",
+                "unicode": false,
+                "value": "string ",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 15,
@@ -3077,14 +3413,29 @@ Program {
                   "offset": 8,
                 },
               },
-              "raw": "string ",
-              "unicode": false,
-              "value": "string ",
             },
-            Variable {
-              "byref": false,
+            EncapsedPart {
               "curly": false,
-              "kind": "variable",
+              "expression": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "loc": Location {
+                  "end": Position {
+                    "column": 19,
+                    "line": 1,
+                    "offset": 19,
+                  },
+                  "source": "$var",
+                  "start": Position {
+                    "column": 15,
+                    "line": 1,
+                    "offset": 15,
+                  },
+                },
+                "name": "var",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 19,
@@ -3098,11 +3449,30 @@ Program {
                   "offset": 15,
                 },
               },
-              "name": "var",
             },
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 26,
+                    "line": 1,
+                    "offset": 26,
+                  },
+                  "source": " string",
+                  "start": Position {
+                    "column": 19,
+                    "line": 1,
+                    "offset": 19,
+                  },
+                },
+                "raw": " string",
+                "unicode": false,
+                "value": " string",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 26,
@@ -3116,9 +3486,6 @@ Program {
                   "offset": 19,
                 },
               },
-              "raw": " string",
-              "unicode": false,
-              "value": " string",
             },
           ],
         },
@@ -3220,9 +3587,32 @@ $var
 string\\"",
           "type": "string",
           "value": Array [
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 0,
+                    "line": 2,
+                    "offset": 15,
+                  },
+                  "source": "string
+",
+                  "start": Position {
+                    "column": 8,
+                    "line": 1,
+                    "offset": 8,
+                  },
+                },
+                "raw": "string
+",
+                "unicode": false,
+                "value": "string
+",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 0,
@@ -3237,16 +3627,29 @@ string\\"",
                   "offset": 8,
                 },
               },
-              "raw": "string
-",
-              "unicode": false,
-              "value": "string
-",
             },
-            Variable {
-              "byref": false,
+            EncapsedPart {
               "curly": false,
-              "kind": "variable",
+              "expression": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "loc": Location {
+                  "end": Position {
+                    "column": 4,
+                    "line": 2,
+                    "offset": 19,
+                  },
+                  "source": "$var",
+                  "start": Position {
+                    "column": 0,
+                    "line": 2,
+                    "offset": 15,
+                  },
+                },
+                "name": "var",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 4,
@@ -3260,11 +3663,33 @@ string\\"",
                   "offset": 15,
                 },
               },
-              "name": "var",
             },
-            String {
-              "isDoubleQuote": false,
-              "kind": "string",
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "loc": Location {
+                  "end": Position {
+                    "column": 6,
+                    "line": 3,
+                    "offset": 26,
+                  },
+                  "source": "
+string",
+                  "start": Position {
+                    "column": 4,
+                    "line": 2,
+                    "offset": 19,
+                  },
+                },
+                "raw": "
+string",
+                "unicode": false,
+                "value": "
+string",
+              },
+              "kind": "encapsedpart",
               "loc": Location {
                 "end": Position {
                   "column": 6,
@@ -3279,11 +3704,6 @@ string",
                   "offset": 19,
                 },
               },
-              "raw": "
-string",
-              "unicode": false,
-              "value": "
-string",
             },
           ],
         },
@@ -6688,6 +7108,7 @@ Program {
               },
             },
             "name": "int",
+            "raw": "int",
           },
           "value": Number {
             "kind": "number",

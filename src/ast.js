@@ -14,6 +14,8 @@ const Position = require("./ast/position");
  * - [Location](#location)
  * - [Position](#position)
  * - [Node](#node)
+ *   - [EncapsedPart](#encapsedpart)
+ *   - [Constant](#constant)
  *   - [Identifier](#identifier)
  *   - [Reference](#reference)
  *     - [TypeReference](#classreference)
@@ -67,6 +69,8 @@ const Position = require("./ast/position");
  *       - [Nowdoc](#nowdoc)
  *       - [Encapsed](#encapsed)
  *   - [Statement](#statement)
+ *     - [ConstantStatement](#constantstatement)
+ *       - [ClassConstant](#classconstant)
  *     - [Return](#return)
  *     - [Label](#label)
  *     - [Continue](#continue)
@@ -98,8 +102,6 @@ const Position = require("./ast/position");
  *       - [Class](#class)
  *       - [Interface](#interface)
  *       - [Trait](#trait)
- *       - [Constant](#constant)
- *         - [ClassConstant](#classconstant)
  *       - [Function](#function)
  *         - [Method](#method)
  *       - [Parameter](#parameter)
@@ -359,6 +361,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/commentblock"),
   require("./ast/commentline"),
   require("./ast/constant"),
+  require("./ast/constantstatement"),
   require("./ast/continue"),
   require("./ast/declaration"),
   require("./ast/declare"),
@@ -366,6 +369,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/echo"),
   require("./ast/empty"),
   require("./ast/encapsed"),
+  require("./ast/encapsedpart"),
   require("./ast/entry"),
   require("./ast/error"),
   require("./ast/eval"),

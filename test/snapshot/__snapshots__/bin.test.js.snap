@@ -782,6 +782,7 @@ Program {
         },
         "right": ParentReference {
           "kind": "parentreference",
+          "raw": "parent",
         },
         "type": "instanceof",
       },
@@ -807,6 +808,33 @@ Program {
         },
         "right": SelfReference {
           "kind": "selfreference",
+          "raw": "self",
+        },
+        "type": "instanceof",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`bin instanceof static 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "right": StaticReference {
+          "kind": "staticreference",
+          "raw": "static",
         },
         "type": "instanceof",
       },
@@ -885,6 +913,50 @@ Program {
           },
           "type": "+",
         },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`bin multiple instanceof static 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+          "right": StaticReference {
+            "kind": "staticreference",
+            "raw": "static",
+          },
+          "type": "instanceof",
+        },
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "bar",
+          },
+          "right": SelfReference {
+            "kind": "selfreference",
+            "raw": "self",
+          },
+          "type": "instanceof",
+        },
+        "type": "&&",
       },
       "kind": "expressionstatement",
     },

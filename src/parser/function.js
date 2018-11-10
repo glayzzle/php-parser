@@ -80,7 +80,7 @@ module.exports = {
       returnType = null,
       nullable = false;
     if (type !== 1) {
-      let nameNode = this.node("identifier");
+      const nameNode = this.node("identifier");
       if (type === 2) {
         if (
           this.token === this.tok.T_STRING ||
@@ -240,21 +240,20 @@ module.exports = {
    * ```
    */
   read_type: function() {
-    const result = this.node("typereference");
-    let type = null;
+    const result = this.node();
     if (this.token === this.tok.T_ARRAY || this.token === this.tok.T_CALLABLE) {
-      let type = this.text();
+      const type = this.text();
       this.next();
-      return result(type);
+      return result("typereference", type.toLowerCase(), type);
     } else if (this.token === this.tok.T_STRING) {
-      let type = this.text();
+      const type = this.text();
       const backup = [this.token, this.lexer.getState()];
       this.next();
       if (
         this.token !== this.tok.T_NS_SEPARATOR &&
         this.ast.typereference.types.indexOf(type.toLowerCase()) > -1
       ) {
-        return result(type);
+        return result("typereference", type.toLowerCase(), type);
       } else {
         // rollback a classic namespace
         this.lexer.tokens.push(backup);

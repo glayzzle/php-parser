@@ -48,7 +48,7 @@ describe("Test precedence", function() {
     shouldBeSame("5 % 3 . 2", "(5 % 3) . 2");
   });
   it("test instanceof", function() {
-    shouldBeSame("3 instanceof 2 * 5", "(3 instanceof 2) * 5");
+    shouldBeSame("$a instanceof $b && $c", "($a instanceof $b) && $c");
   });
   it("test <<", function() {
     shouldBeSame("1 + 3 << 5", "(1 + 3) << 5");
@@ -95,8 +95,8 @@ describe("Test precedence", function() {
     shouldBeSame("5 AND 4 + 3", "5 AND (4 + 3)");
   });
   it("test unary : !", function() {
-    shouldBeSame("!4 instanceof 3", "(!4) instanceof 3");
-    shouldBeSame("!4 + 5 instanceof 3", "(!4) + (5 instanceof 3)");
+    shouldBeSame("!$a instanceof $b", "(!$a) instanceof $b");
+    shouldBeSame("!$a + $b instanceof $c", "(!$a) + ($b instanceof $c)");
     shouldBeSame("6 + !4 + 5", "6 + (!4) + 5");
     shouldBeSame("if($a && !$b) {}", "if($a && (!$b)) {}");
   });

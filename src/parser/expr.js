@@ -6,9 +6,11 @@
 "use strict";
 
 module.exports = {
-  read_expr: function() {
+  read_expr: function(expr) {
     const result = this.node();
-    const expr = this.read_expr_item();
+    if (!expr) {
+      expr = this.read_expr_item();
+    }
     // binary operations
     if (this.token === "|")
       return result("bin", "|", expr, this.next().read_expr());
@@ -63,8 +65,21 @@ module.exports = {
       return result("bin", ">=", expr, this.next().read_expr());
     if (this.token === this.tok.T_SPACESHIP)
       return result("bin", "<=>", expr, this.next().read_expr());
-    if (this.token === this.tok.T_INSTANCEOF)
-      return result("bin", "instanceof", expr, this.next().read_expr());
+    if (this.token === this.tok.T_INSTANCEOF) {
+      expr = result(
+        "bin",
+        "instanceof",
+        expr,
+        this.next().read_class_name_reference()
+      );
+      if (
+        this.token !== ";" &&
+        this.token !== this.tok.T_INLINE_HTML &&
+        this.token !== this.EOF
+      ) {
+        expr = this.read_expr(expr);
+      }
+    }
 
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
@@ -417,9 +432,9 @@ module.exports = {
       expr = this.read_scalar();
       if (expr.kind === "array" && expr.shortForm && this.token === "=") {
         // list assign
-        let list = this.node("list")(expr.items, true);
+        const list = this.node("list")(expr.items, true);
         if (expr.loc) list.loc = expr.loc;
-        let right = this.next().read_expr();
+        const right = this.next().read_expr();
         return result("assign", list, right, "=");
       } else {
         // see #189 - swap docs on nodes
