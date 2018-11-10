@@ -65,6 +65,73 @@ Program {
 }
 `;
 
+exports[`Test graceful mode to suppress errors should fail ! 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "call",
+              "resolution": "uqn",
+            },
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "Foo",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test graceful mode to suppress errors staticlookup 1`] = `
+Program {
+  "children": Array [
+    StaticLookup {
+      "kind": "staticlookup",
+      "offset": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "call",
+          "resolution": "uqn",
+        },
+      },
+      "what": ClassReference {
+        "kind": "classreference",
+        "name": "Order",
+        "resolution": "uqn",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "(",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ';', expecting '(' on line 1",
+      "token": "';'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test graceful mode to suppress errors test class 1`] = `
 Program {
   "children": Array [

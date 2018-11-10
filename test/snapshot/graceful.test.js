@@ -46,5 +46,14 @@ describe("Test graceful mode", function() {
         ->
       `)).toMatchSnapshot();
     });
+
+    it("staticlookup", function() {
+      expect(test.parseEval('Order::{call()};')).toMatchSnapshot();
+    });
+
+    it("should fail !", function() {
+      expect(test.parseEval('new Foo::{call()}();')).toMatchSnapshot();
+    });
+
   });
 });
