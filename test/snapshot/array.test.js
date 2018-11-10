@@ -54,4 +54,8 @@ describe('Array without keys', () => {
       ).toMatchSnapshot();
     });
   });
+
+  it('fix #174', () => {
+    expect(parser.parseEval('array($obj1, $obj2, $obj3,)')).toMatchSnapshot();
+  });
 });

@@ -1,4 +1,4 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("Test list expressions", function() {
   it("test list statements", function() {
@@ -11,11 +11,16 @@ describe("Test list expressions", function() {
   });
 
   it("test short list", function() {
-    expect(parser.parseEval(`[$a => [$c,$d,,$e,], $b] = [1 => [5, 6, 7, 8, 9,], 2];`, {
-      ast: {
-        withPositions: true
-      }
-    })).toMatchSnapshot();
+    expect(
+      parser.parseEval(
+        `[$a => [$c,$d,,$e,], $b] = [1 => [5, 6, 7, 8, 9,], 2];`,
+        {
+          ast: {
+            withPositions: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("fix #150", function() {
@@ -30,5 +35,27 @@ describe("Test list expressions", function() {
       }
     });
     expect(ast).toMatchSnapshot();
+  });
+
+  it("fix #174", function() {
+    expect(
+      parser.parseEval("list(, $foo,,, $bar,) = $array;")
+    ).toMatchSnapshot();
+  });
+
+  it("fix #174 (2)", function() {
+    expect(
+      parser.parseEval(
+        "list($foo, $bar, $baz, list(, $nestedFoo,,, $nestedBar,)) = $array;"
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("fix #174", function() {
+    expect(parser.parseEval("list($var,,,,,) = $array;")).toMatchSnapshot();
+  });
+
+  it("fix #174", function() {
+    expect(parser.parseEval("list(,,,,,$var) = $array;")).toMatchSnapshot();
   });
 });

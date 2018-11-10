@@ -52,13 +52,19 @@ module.exports = {
    */
   read_array_pair_list: function(shortForm) {
     const self = this;
-    return this.read_list(
+    const list = this.read_list(
       function() {
         return self.read_array_pair(shortForm);
       },
       ",",
       true
     );
+
+    if (list[list.length - 1] === null) {
+      list.pop();
+    }
+
+    return list;
   },
   /**
    * Reads an entry
