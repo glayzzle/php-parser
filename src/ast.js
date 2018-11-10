@@ -14,6 +14,7 @@ const Position = require("./ast/position");
  * - [Location](#location)
  * - [Position](#position)
  * - [Node](#node)
+ *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
  *   - [Identifier](#identifier)
  *   - [Reference](#reference)
@@ -368,6 +369,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/echo"),
   require("./ast/empty"),
   require("./ast/encapsed"),
+  require("./ast/encapsedpart"),
   require("./ast/entry"),
   require("./ast/error"),
   require("./ast/eval"),
