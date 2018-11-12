@@ -12,13 +12,13 @@ const KIND = "static";
  * Declares a static variable into the current scope
  * @constructor Static
  * @extends {Statement}
- * @property {Variable[]|Assign[]} items
+ * @property {StaticVariable[]} variables
  */
 module.exports = Statement.extends(KIND, function Static(
-  items,
+  variables,
   docs,
   location
 ) {
   Statement.apply(this, [KIND, docs, location]);
-  this.items = items;
+  this.variables = variables;
 });
