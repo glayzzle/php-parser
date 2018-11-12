@@ -12,19 +12,19 @@ const KIND = "declare";
  * The declare construct is used to set execution directives for a block of code
  * @constructor Declare
  * @extends {Block}
- * @property {Expression[]} what
+ * @property {Array[]} directives
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
 const Declare = Block.extends(KIND, function Declare(
-  what,
+  directives,
   body,
   mode,
   docs,
   location
 ) {
   Block.apply(this, [KIND, body, docs, location]);
-  this.what = what;
+  this.directives = directives;
   this.mode = mode;
 });
 
