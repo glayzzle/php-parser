@@ -10,4 +10,40 @@ describe('assign', () => {
   it('multiple', () => {
     expect(parser.parseEval("$var = $var = $var;")).toMatchSnapshot();
   });
+  it('+=', () => {
+    expect(parser.parseEval("$var += $var;")).toMatchSnapshot();
+  });
+  it('-=', () => {
+    expect(parser.parseEval("$var -= $var;")).toMatchSnapshot();
+  });
+  it('*=', () => {
+    expect(parser.parseEval("$var *= $var;")).toMatchSnapshot();
+  });
+  it('**=', () => {
+    expect(parser.parseEval("$var **= $var;")).toMatchSnapshot();
+  });
+  it('/=', () => {
+    expect(parser.parseEval("$var /= $var;")).toMatchSnapshot();
+  });
+  it('.=', () => {
+    expect(parser.parseEval("$var .= $var;")).toMatchSnapshot();
+  });
+  it('%=', () => {
+    expect(parser.parseEval("$var %= $var;")).toMatchSnapshot();
+  });
+  it('&=', () => {
+    expect(parser.parseEval("$var &= $var;")).toMatchSnapshot();
+  });
+  it('|=', () => {
+    expect(parser.parseEval("$var |= $var;")).toMatchSnapshot();
+  });
+  it('^=', () => {
+    expect(parser.parseEval("$var ^= $var;")).toMatchSnapshot();
+  });
+  it('<<=', () => {
+    expect(parser.parseEval("$var <<= $var;")).toMatchSnapshot();
+  });
+  it('>>=', () => {
+    expect(parser.parseEval("$var >>= $var;")).toMatchSnapshot();
+  });
 });

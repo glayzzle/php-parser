@@ -5,18 +5,23 @@
  */
 "use strict";
 
-const Node = require("./node");
+const Expression = require("./expression");
 const KIND = "entry";
 
 /**
  * An array entry - see [Array](#array)
  * @constructor Entry
- * @extends {Node}
+ * @extends {Expression}
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
-module.exports = Node.extends(KIND, function Entry(key, value, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Entry(
+  key,
+  value,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
 });

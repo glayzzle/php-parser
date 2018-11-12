@@ -1,9 +1,9 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("Test classes", function() {
-
-  it('Implement #183 : static keyword as identifier', function() {
-    expect(parser.parseEval(`
+  it("Implement #183 : static keyword as identifier", function() {
+    expect(
+      parser.parseEval(`
     class A {
       public static function test() {
         parent::foo();
@@ -13,11 +13,13 @@ describe("Test classes", function() {
         $this->fooBaz();
       }
     }
-    `)).toMatchSnapshot();
+    `)
+    ).toMatchSnapshot();
   });
 
   it("Validate usual declarations", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(`
       final class foo extends bar implements
         bim, bam, boum {
         const FOO = "azerty";
@@ -47,12 +49,14 @@ describe("Test classes", function() {
          * Some informations
          */
         abstract protected function &foo() : bar;
-      }`
-    )).toMatchSnapshot();
+      }`)
+    ).toMatchSnapshot();
   });
 
   it("Advanced tests", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       class foo implements boo {
         use A;
         use B { foo as bar; }
@@ -77,25 +81,32 @@ describe("Test classes", function() {
         const A = 1.5;
         abstract protected function foo();
       }
-    `, {
-      parser: { extractDoc: true }
-    })).toMatchSnapshot();
+    `,
+        {
+          parser: { extractDoc: true }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("Test of silent mode", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       class foo {
         use A
         use B { foo };
       }`,
-      {
-        parser: { suppressErrors: true }
-      }
-    )).toMatchSnapshot();
+        {
+          parser: { suppressErrors: true }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("Test js properties", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(`
       class __proto__ {
         static $constructor;
         public function constructor() {}
@@ -103,7 +114,11 @@ describe("Test classes", function() {
           $this->constructor = null;
           self::$constructor = null;
         }
-      }`
-    )).toMatchSnapshot();
+      }`)
+    ).toMatchSnapshot();
+  });
+
+  it("empty", function() {
+    expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
 });
