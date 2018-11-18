@@ -715,32 +715,32 @@ exports[`Test variables Variable chains 1`] = `
 Program {
   "children": Array [
     ExpressionStatement {
-      "expression": StaticLookup {
-        "kind": "staticlookup",
-        "offset": OffsetLookup {
+      "expression": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "2",
+        },
+        "what": OffsetLookup {
           "kind": "offsetlookup",
           "offset": Number {
             "kind": "number",
-            "value": "2",
+            "value": "1",
           },
-          "what": OffsetLookup {
-            "kind": "offsetlookup",
-            "offset": Number {
-              "kind": "number",
-              "value": "1",
-            },
-            "what": Variable {
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
               "byref": false,
               "curly": false,
               "kind": "variable",
               "name": "a",
             },
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "foo",
+              "resolution": "uqn",
+            },
           },
-        },
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "foo",
-          "resolution": "uqn",
         },
       },
       "kind": "expressionstatement",
@@ -861,6 +861,87 @@ Program {
           "kind": "boolean",
           "raw": "true",
           "value": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables fix #167 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'baz'",
+                "unicode": false,
+                "value": "baz",
+              },
+              "what": Variable {
+                "byref": false,
+                "curly": false,
+                "kind": "variable",
+                "name": "bar",
+              },
+            },
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'baz'",
+            "unicode": false,
+            "value": "baz",
+          },
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "bar",
+            },
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+          },
         },
       },
       "kind": "expressionstatement",

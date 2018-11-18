@@ -17,7 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-true;
+Foo::$bar['baz']();
 `, { 
     parser: {
       debug: true
@@ -25,5 +25,5 @@ true;
   }
 );
 console.log(
-  util.inspect(ast, false, 5, true)
+  util.inspect(ast, false, 10, true)
 );

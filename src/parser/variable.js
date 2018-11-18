@@ -290,6 +290,7 @@ module.exports = {
     let offset;
     while (this.token != this.EOF) {
       const node = this.node();
+      /*
       if (this.token == "[") {
         offset = null;
         if (encapsed) {
@@ -299,7 +300,8 @@ module.exports = {
         }
         this.expect("]") && this.next();
         result = node("offsetlookup", result, offset);
-      } else if (this.token == "{" && !encapsed) {
+      } else */
+      if (this.token == "{" && !encapsed) {
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);

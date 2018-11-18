@@ -17,6 +17,10 @@ describe("Test variables", function() {
     expect(parser.parseEval("foo::$a[1][2];")).toMatchSnapshot();
   });
 
+  it("fix #167", function() {
+    expect(parser.parseEval("$var = Foo::{$bar['baz']}();Foo::$bar['baz']();")).toMatchSnapshot();
+  });
+
   it("Class constants", function() {
     expect(parser.parseEval(`
       static::foo();
