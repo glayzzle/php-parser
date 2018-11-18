@@ -502,7 +502,7 @@ module.exports = {
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_NAMESPACE
     ) {
-      let result = this.read_namespace_name();
+      let result = this.read_namespace_name(true);
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
       }

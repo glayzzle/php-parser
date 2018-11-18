@@ -228,6 +228,28 @@ describe("Test expressions", function() {
     `, { parser: { debug: false } })).toMatchSnapshot();
   });
 
+  it("fix #235", function() {
+    expect(parser.parseEval(`
+    self();
+    sElF();
+    parent();
+    pArEnT();
+    parent::foo();
+    new self();
+    new static();
+    new parent();
+    `, { parser: { debug: false } })).toMatchSnapshot();
+  });
+
+  it("test node references", function() {
+    expect(parser.parseEval(`
+    parent::foo();
+    new self();
+    new static();
+    new parent();
+    `, { parser: { debug: false } })).toMatchSnapshot();
+  });
+
   it("test fail new", function() {
     expect(parser.parseEval(`
       $a = new foo[0];

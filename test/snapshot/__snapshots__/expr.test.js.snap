@@ -314,6 +314,99 @@ Program {
 }
 `;
 
+exports[`Test expressions fix #235 1`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": ClassReference {
+        "kind": "classreference",
+        "name": "self",
+        "resolution": "uqn",
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": ClassReference {
+        "kind": "classreference",
+        "name": "sElF",
+        "resolution": "uqn",
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": ClassReference {
+        "kind": "classreference",
+        "name": "parent",
+        "resolution": "uqn",
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": ClassReference {
+        "kind": "classreference",
+        "name": "pArEnT",
+        "resolution": "uqn",
+      },
+    },
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "foo",
+        },
+        "what": ParentReference {
+          "kind": "parentreference",
+          "raw": "parent",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": SelfReference {
+          "kind": "selfreference",
+          "raw": "self",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": StaticReference {
+          "kind": "staticreference",
+          "raw": "static",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": ParentReference {
+          "kind": "parentreference",
+          "raw": "parent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test expressions should assign class static 1`] = `
 Program {
   "children": Array [
@@ -2198,6 +2291,63 @@ Program {
             "kind": "class",
             "name": null,
           },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions test node references 1`] = `
+Program {
+  "children": Array [
+    Call {
+      "arguments": Array [],
+      "kind": "call",
+      "what": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "foo",
+        },
+        "what": ParentReference {
+          "kind": "parentreference",
+          "raw": "parent",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": SelfReference {
+          "kind": "selfreference",
+          "raw": "self",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": StaticReference {
+          "kind": "staticreference",
+          "raw": "static",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": ParentReference {
+          "kind": "parentreference",
+          "raw": "parent",
         },
       },
       "kind": "expressionstatement",

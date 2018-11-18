@@ -14,13 +14,14 @@
   ]
 }
  */
-var parser = require("../src/index");
-parser.parseEval(`
-new foo;
-$a = (new foo)[0];
+const parser = require("../src/index");
+const ast = parser.parseEval(`
+self();
+paRenT();
 `, { 
     parser: {
       debug: true
     }
   }
 );
+console.log(ast);
