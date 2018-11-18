@@ -5,13 +5,13 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Expression = require("./expression");
 const KIND = "closure";
 
 /**
  * Defines a closure
  * @constructor Closure
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Variable[]} uses
  * @property {Identifier} type
@@ -20,7 +20,7 @@ const KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
-module.exports = Statement.extends(KIND, function Closure(
+module.exports = Expression.extends(KIND, function Closure(
   args,
   byref,
   uses,
@@ -30,7 +30,7 @@ module.exports = Statement.extends(KIND, function Closure(
   docs,
   location
 ) {
-  Statement.apply(this, [KIND, docs, location]);
+  Expression.apply(this, [KIND, docs, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;
