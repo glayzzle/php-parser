@@ -484,7 +484,7 @@ module.exports = {
       );
     }
     // Already existing class
-    const name = this.read_class_name_reference();
+    const name = this.read_new_class_name();
     if (this.token === "(") {
       args = this.read_function_argument_list();
     }
@@ -493,10 +493,10 @@ module.exports = {
   /**
    * Reads a class name
    * ```ebnf
-   * class_name_reference ::= namespace_name | variable
+   * read_new_class_name ::= namespace_name | variable
    * ```
    */
-  read_class_name_reference: function() {
+  read_new_class_name: function() {
     if (
       this.token === this.tok.T_NS_SEPARATOR ||
       this.token === this.tok.T_STRING ||
