@@ -263,6 +263,57 @@ Program {
 }
 `;
 
+exports[`Test expressions fix #234 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "what": New {
+            "arguments": Array [],
+            "kind": "new",
+            "parenthesizedExpression": true,
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "foo",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test expressions should assign class static 1`] = `
 Program {
   "children": Array [
@@ -1165,6 +1216,58 @@ Program {
     },
   ],
   "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test expressions test fail new 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "foo",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Array {
+        "items": Array [
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected '[', expecting ';' on line 2",
+      "token": "'['",
+    },
+  ],
   "kind": "program",
 }
 `;

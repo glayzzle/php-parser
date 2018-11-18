@@ -221,6 +221,20 @@ describe("Test expressions", function() {
     expect(ast).toMatchSnapshot();
   });
 
+  it("fix #234", function() {
+    expect(parser.parseEval(`
+      new foo;
+      $a = (new foo)[0];
+    `, { parser: { debug: false } })).toMatchSnapshot();
+  });
+
+  it("test fail new", function() {
+    expect(parser.parseEval(`
+      $a = new foo[0];
+    `, { parser: { suppressErrors: true } })).toMatchSnapshot();
+  });
+
+
   it("test nested expressions precedence", function() {
     const ast = parser.parseEval(
       `
