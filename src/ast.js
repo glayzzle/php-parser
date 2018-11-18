@@ -14,6 +14,7 @@ const Position = require("./ast/position");
  * - [Location](#location)
  * - [Position](#position)
  * - [Node](#node)
+ *   - [DeclareDirective](#declaredirective)
  *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
  *   - [Identifier](#identifier)
@@ -365,6 +366,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   require("./ast/continue"),
   require("./ast/declaration"),
   require("./ast/declare"),
+  require("./ast/declaredirective"),
   require("./ast/do"),
   require("./ast/echo"),
   require("./ast/empty"),

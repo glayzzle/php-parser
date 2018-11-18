@@ -1250,4 +1250,10 @@ string";`,
       )
     ).toMatchSnapshot();
   });
+  it("declare directive", function() {
+    expect(parser.parseEval("declare (strict_types=1);")).toMatchSnapshot();
+  });
+  it("declare directive (multiple)", function() {
+    expect(parser.parseEval("declare (A='B', C='D') { }")).toMatchSnapshot();
+  });
 });
