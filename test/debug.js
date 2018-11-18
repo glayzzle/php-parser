@@ -17,7 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-Foo::$bar['baz']();
+get_class($var)::$$$$$property;
 `, { 
     parser: {
       debug: true

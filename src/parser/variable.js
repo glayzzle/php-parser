@@ -151,7 +151,7 @@ module.exports = {
         what = what(name, false, false);
         break;
       case "$":
-        this.next().expect(["{", this.tok.T_VARIABLE]);
+        this.next().expect(["$", "{", this.tok.T_VARIABLE]);
         if (this.token === "{") {
           // $obj->${$varname}
           what = this.next().read_expr();

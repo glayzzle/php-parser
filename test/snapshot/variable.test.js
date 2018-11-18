@@ -21,6 +21,11 @@ describe("Test variables", function() {
     expect(parser.parseEval("$var = Foo::{$bar['baz']}();Foo::$bar['baz']();")).toMatchSnapshot();
   });
 
+  it("valid offset lookup", function() {
+    expect(parser.parseEval("get_class($var)::$$$$$property;")).toMatchSnapshot();
+  });
+
+
   it("Class constants", function() {
     expect(parser.parseEval(`
       static::foo();
