@@ -25,6 +25,18 @@ describe("Test variables", function() {
     expect(parser.parseEval("get_class($var)::$$$$$property;")).toMatchSnapshot();
   });
 
+  it('fix #185', function() {
+    expect(parser.parseEval(`
+    $var = ($var[0])::foo;
+    $var = ($var[0][1])::foo;
+    $var = ($var[0])[1]::foo;
+    $var = (($var[0])[1])::foo;
+    $var = (new Foo())::bar;
+    get_class($this->resource)::$wrap;    
+    `)).toMatchSnapshot();
+    
+  });
+
 
   it("Class constants", function() {
     expect(parser.parseEval(`

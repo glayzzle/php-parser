@@ -178,12 +178,7 @@ module.exports = {
     return what;
   },
 
-  recursive_variable_chain_scan: function(
-    result,
-    read_only,
-    encapsed,
-    dereferencable
-  ) {
+  recursive_variable_chain_scan: function(result, read_only, encapsed) {
     let node, offset;
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
@@ -228,10 +223,11 @@ module.exports = {
           node = this.node("staticlookup");
           result = node(result, this.read_what(true));
 
+          // fix 185
           // static lookup dereferencables are limited to staticlookup over functions
-          if (dereferencable && this.token !== "(") {
+          /*if (dereferencable && this.token !== "(") {
             this.error("(");
-          }
+          }*/
           break;
         case this.tok.T_OBJECT_OPERATOR: {
           node = this.node("propertylookup");
