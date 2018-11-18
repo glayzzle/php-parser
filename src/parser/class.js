@@ -22,12 +22,15 @@ module.exports = {
       return null;
     }
     this.next().expect(this.tok.T_STRING);
-    const propName = this.text();
+    let propName = this.node("identifier");
+    const name = this.text();
+    this.next();
+    propName = propName(name);
     let propExtends = null;
-    let propImplements = null;
-    if (this.next().token == this.tok.T_EXTENDS) {
+    if (this.token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
     }
+    let propImplements = null;
     if (this.token == this.tok.T_IMPLEMENTS) {
       propImplements = this.next().read_name_list();
     }
@@ -269,23 +272,23 @@ module.exports = {
    */
   read_interface: function() {
     const result = this.node("interface");
-    let name = null;
-    let body = null;
+    if (this.token !== this.tok.T_INTERFACE) {
+      this.error(this.tok.T_INTERFACE);
+      this.next();
+      return null;
+    }
+    this.next().expect(this.tok.T_STRING);
+    let propName = this.node("identifier");
+    const name = this.text();
+    this.next();
+    propName = propName(name);
     let propExtends = null;
-    if (this.expect(this.tok.T_INTERFACE)) {
-      this.next();
-    }
-    if (this.expect(this.tok.T_STRING)) {
-      name = this.text();
-      this.next();
-    }
     if (this.token === this.tok.T_EXTENDS) {
       propExtends = this.next().read_name_list();
     }
-    if (this.expect("{")) {
-      body = this.next().read_interface_body();
-    }
-    return result(name, propExtends, body);
+    this.expect("{");
+    const body = this.next().read_interface_body();
+    return result(propName, propExtends, body);
   },
   /**
    * Reads an interface body
@@ -344,26 +347,20 @@ module.exports = {
    */
   read_trait: function() {
     const result = this.node("trait");
-    let propName = null;
-    let propExtends = null;
-    let propImplements = null;
-    let body = null;
-    if (this.expect(this.tok.T_TRAIT)) {
+    // graceful mode : ignore token & go next
+    if (this.token !== this.tok.T_TRAIT) {
+      this.error(this.tok.T_TRAIT);
       this.next();
+      return null;
     }
-    if (this.expect(this.tok.T_STRING)) {
-      propName = this.text();
-    }
-    if (this.next().token == this.tok.T_EXTENDS) {
-      propExtends = this.next().read_namespace_name();
-    }
-    if (this.token == this.tok.T_IMPLEMENTS) {
-      propImplements = this.next().read_name_list();
-    }
-    if (this.expect("{")) {
-      body = this.next().read_class_body();
-    }
-    return result(propName, propExtends, propImplements, body);
+    this.next().expect(this.tok.T_STRING);
+    let propName = this.node("identifier");
+    const name = this.text();
+    this.next();
+    propName = propName(name);
+    this.expect("{");
+    const body = this.next().read_class_body();
+    return result(propName, body);
   },
   /**
    * reading a use statement

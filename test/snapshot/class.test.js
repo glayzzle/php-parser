@@ -72,7 +72,7 @@ describe("Test classes", function() {
         /** foo */
         protected function foo();
       }
-      trait line extends foo implements boo {
+      trait line {
         // some doc
         const A = 1.5;
         abstract protected function foo();
@@ -105,5 +105,9 @@ describe("Test classes", function() {
         }
       }`
     )).toMatchSnapshot();
+  });
+
+  it('class name as identifier', function() {
+    expect(parser.parseEval('class A {}')).toMatchSnapshot();
   });
 });

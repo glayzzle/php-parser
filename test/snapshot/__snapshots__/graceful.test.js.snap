@@ -1,5 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Test graceful mode to suppress errors interface 1`] = `
+Program {
+  "children": Array [
+    Interface {
+      "body": Array [],
+      "extends": null,
+      "kind": "interface",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "{",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'implement' (T_STRING), expecting '{' on line 1",
+      "token": "'implement' (T_STRING)",
+    },
+    Error {
+      "expected": Array [
+        198,
+        182,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'baz' (T_STRING) on line 1",
+      "token": "'baz' (T_STRING)",
+    },
+    Error {
+      "expected": Array [
+        198,
+        182,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '{' on line 1",
+      "token": "'{'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test graceful mode to suppress errors should contain 2 errors 1`] = `
 Program {
   "children": Array [
@@ -158,7 +204,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
     },
   ],
   "errors": Array [
@@ -259,6 +308,123 @@ Program {
 }
 `;
 
+exports[`Test graceful mode to suppress errors test flags (2) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "body": null,
+          "byref": false,
+          "isAbstract": true,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "func",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 187,
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected 'final' (T_FINAL), expecting T_CLASS on line 2",
+      "token": "'final' (T_FINAL)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 4,
+      "message": "Parse Error : syntax error, expecting ';' on line 4",
+      "token": "the end of file (EOF)",
+    },
+    Error {
+      "expected": "}",
+      "kind": "error",
+      "line": 4,
+      "message": "Parse Error : syntax error, expecting '}' on line 4",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test graceful mode to suppress errors test flags (3) 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "body": null,
+          "byref": false,
+          "isAbstract": true,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "func",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 187,
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected 'final' (T_FINAL), expecting T_CLASS on line 2",
+      "token": "'final' (T_FINAL)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 4,
+      "message": "Parse Error : syntax error, expecting ';' on line 4",
+      "token": "the end of file (EOF)",
+    },
+    Error {
+      "expected": "}",
+      "kind": "error",
+      "line": 4,
+      "message": "Parse Error : syntax error, expecting '}' on line 4",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test graceful mode to suppress errors test flags 1`] = `
 Program {
   "children": Array [
@@ -283,7 +449,10 @@ Program {
       ],
       "extends": null,
       "kind": "interface",
-      "name": "foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
     },
   ],
   "errors": Array [
@@ -509,6 +678,75 @@ Program {
       "line": 4,
       "message": "Parse Error : syntax error on line 4",
       "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test graceful mode to suppress errors trait 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "{",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'extends' (T_EXTENDS), expecting '{' on line 1",
+      "token": "'extends' (T_EXTENDS)",
+    },
+    Error {
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'bar' (T_STRING) on line 1",
+      "token": "'bar' (T_STRING)",
+    },
+    Error {
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'implement' (T_STRING) on line 1",
+      "token": "'implement' (T_STRING)",
+    },
+    Error {
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'baz' (T_STRING) on line 1",
+      "token": "'baz' (T_STRING)",
+    },
+    Error {
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '{' on line 1",
+      "token": "'{'",
     },
   ],
   "kind": "program",
