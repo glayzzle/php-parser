@@ -608,6 +608,10 @@ parser.prototype.is = function(type) {
   require("./parser/variable.js")
 ].forEach(function(ext) {
   for (const k in ext) {
+    if (parser.prototype.hasOwnProperty(k)) {
+      // @see https://github.com/glayzzle/php-parser/issues/234
+      throw new Error("Function " + k + " is already defined - collision");
+    }
     parser.prototype[k] = ext[k];
   }
 });
