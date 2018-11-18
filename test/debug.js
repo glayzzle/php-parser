@@ -14,14 +14,16 @@
   ]
 }
  */
+const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-call();
-Foo::$var;
+true;
 `, { 
     parser: {
       debug: true
     }
   }
 );
-console.log(ast);
+console.log(
+  util.inspect(ast, false, 5, true)
+);
