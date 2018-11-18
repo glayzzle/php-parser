@@ -16,8 +16,8 @@
  */
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-self();
-paRenT();
+call();
+Foo::$var;
 `, { 
     parser: {
       debug: true

@@ -360,9 +360,10 @@ module.exports = {
 
         // default fallback expr / T_STRING '::' (etc...)
         this.lexer.tokens.push(current);
+        const statement = this.node("expressionstatement");
         const expr = this.next().read_expr();
-        this.expectEndOfStatement();
-        return expr;
+        this.expectEndOfStatement(expr);
+        return statement(expr);
       }
 
       case this.tok.T_GOTO: {

@@ -274,35 +274,41 @@ Program {
           "arguments": Array [],
           "body": Block {
             "children": Array [
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "foo",
-                  },
-                  "what": ParentReference {
-                    "kind": "parentreference",
-                    "raw": "parent",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "foo",
+                    },
+                    "what": ParentReference {
+                      "kind": "parentreference",
+                      "raw": "parent",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "bar",
-                  },
-                  "what": SelfReference {
-                    "kind": "selfreference",
-                    "raw": "self",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "bar",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
               ExpressionStatement {
                 "expression": Call {
@@ -322,21 +328,24 @@ Program {
                 },
                 "kind": "expressionstatement",
               },
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "fooBar",
-                  },
-                  "what": ClassReference {
-                    "kind": "classreference",
-                    "name": "A",
-                    "resolution": "uqn",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "fooBar",
+                    },
+                    "what": ClassReference {
+                      "kind": "classreference",
+                      "name": "A",
+                      "resolution": "uqn",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
               ExpressionStatement {
                 "expression": Call {
@@ -457,30 +466,33 @@ Program {
                 },
                 "kind": "expressionstatement",
               },
-              Assign {
-                "kind": "assign",
-                "left": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Variable {
-                    "byref": false,
-                    "curly": false,
-                    "kind": "variable",
-                    "name": "constructor",
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Variable {
+                      "byref": false,
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "constructor",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
                   },
-                  "what": SelfReference {
-                    "kind": "selfreference",
-                    "raw": "self",
+                  "operator": "=",
+                  "right": Identifier {
+                    "kind": "identifier",
+                    "name": ClassReference {
+                      "kind": "classreference",
+                      "name": "null",
+                      "resolution": "uqn",
+                    },
                   },
                 },
-                "operator": "=",
-                "right": Identifier {
-                  "kind": "identifier",
-                  "name": ClassReference {
-                    "kind": "classreference",
-                    "name": "null",
-                    "resolution": "uqn",
-                  },
-                },
+                "kind": "expressionstatement",
               },
             ],
             "kind": "block",
@@ -1043,7 +1055,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "Foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
     },
   ],
   "errors": Array [],

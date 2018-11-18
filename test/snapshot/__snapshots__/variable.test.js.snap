@@ -155,24 +155,27 @@ Program {
 exports[`Test variables Check errors should fail foo::bar::baz 1`] = `
 Program {
   "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Identifier {
-        "kind": "identifier",
-        "name": "baz",
-      },
-      "what": StaticLookup {
+    ExpressionStatement {
+      "expression": StaticLookup {
         "kind": "staticlookup",
         "offset": Identifier {
           "kind": "identifier",
-          "name": "bar",
+          "name": "baz",
         },
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "foo",
-          "resolution": "uqn",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "foo",
+            "resolution": "uqn",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -191,34 +194,37 @@ Program {
 exports[`Test variables Check errors should fail on double static lookup 1`] = `
 Program {
   "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Identifier {
-        "kind": "identifier",
-        "name": "baz",
-      },
-      "what": StaticLookup {
+    ExpressionStatement {
+      "expression": StaticLookup {
         "kind": "staticlookup",
         "offset": Identifier {
           "kind": "identifier",
-          "name": "bar",
+          "name": "baz",
         },
-        "what": PropertyLookup {
-          "kind": "propertylookup",
+        "what": StaticLookup {
+          "kind": "staticlookup",
           "offset": Identifier {
             "kind": "identifier",
-            "name": "foo",
+            "name": "bar",
           },
-          "what": Identifier {
-            "kind": "identifier",
-            "name": ClassReference {
-              "kind": "classreference",
-              "name": "this",
-              "resolution": "uqn",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "foo",
+            },
+            "what": Identifier {
+              "kind": "identifier",
+              "name": ClassReference {
+                "kind": "classreference",
+                "name": "this",
+                "resolution": "uqn",
+              },
             },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [
@@ -302,47 +308,56 @@ Program {
       },
       "kind": "expressionstatement",
     },
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "what": SelfReference {
+            "kind": "selfreference",
+            "raw": "self",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "what": ParentReference {
+            "kind": "parentreference",
+            "raw": "parent",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": StaticLookup {
         "kind": "staticlookup",
         "offset": Identifier {
           "kind": "identifier",
+          "name": "class",
+        },
+        "what": ClassReference {
+          "kind": "classreference",
           "name": "foo",
-        },
-        "what": SelfReference {
-          "kind": "selfreference",
-          "raw": "self",
+          "resolution": "uqn",
         },
       },
-    },
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Identifier {
-          "kind": "identifier",
-          "name": "foo",
-        },
-        "what": ParentReference {
-          "kind": "parentreference",
-          "raw": "parent",
-        },
-      },
-    },
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Identifier {
-        "kind": "identifier",
-        "name": "class",
-      },
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "foo",
-        "resolution": "uqn",
-      },
+      "kind": "expressionstatement",
     },
     ExpressionStatement {
       "expression": Call {
@@ -364,19 +379,22 @@ Program {
       },
       "kind": "expressionstatement",
     },
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "bar",
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
+        },
       },
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "foo",
-        "resolution": "uqn",
-      },
+      "kind": "expressionstatement",
     },
     ExpressionStatement {
       "expression": Call {
@@ -696,33 +714,36 @@ Program {
 exports[`Test variables Variable chains 1`] = `
 Program {
   "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": OffsetLookup {
-        "kind": "offsetlookup",
-        "offset": Number {
-          "kind": "number",
-          "value": "2",
-        },
-        "what": OffsetLookup {
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": OffsetLookup {
           "kind": "offsetlookup",
           "offset": Number {
             "kind": "number",
-            "value": "1",
+            "value": "2",
           },
-          "what": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "a",
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
           },
         },
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
+        },
       },
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "foo",
-        "resolution": "uqn",
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
