@@ -157,7 +157,8 @@ AST.precedence = {};
   ["+", "-", "."],
   ["*", "/", "%"],
   ["!"],
-  ["instanceof"]
+  ["instanceof"],
+  ["cast"]
   // TODO: typecasts
   // TODO: [ (array)
   // TODO: clone, new
@@ -196,6 +197,23 @@ AST.prototype.resolvePrecedence = function(result) {
           result = buffer;
         }
       }
+    }
+  } else if (
+    result.kind === "cast" &&
+    result.what &&
+    !result.what.parenthesizedExpression
+  ) {
+    // https://github.com/glayzzle/php-parser/issues/172
+    if (result.what.kind === "bin") {
+      buffer = result.what;
+      result.what = result.what.left;
+      buffer.left = this.resolvePrecedence(result);
+      result = buffer;
+    } else if (result.what.kind === "retif") {
+      buffer = result.what;
+      result.what = result.what.test;
+      buffer.test = this.resolvePrecedence(result);
+      result = buffer;
     }
   } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
