@@ -169,7 +169,7 @@ AST.precedence = {};
 });
 
 /**
- * Change parent node informations after swapping childs  
+ * Change parent node informations after swapping childs
  */
 AST.prototype.swapLocations = function(target, first, last, parser) {
   if (this.withPositions) {
@@ -180,7 +180,7 @@ AST.prototype.swapLocations = function(target, first, last, parser) {
         target.loc.start.offset,
         target.loc.end.offset
       );
-    }  
+    }
   }
 };
 
