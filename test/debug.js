@@ -16,11 +16,13 @@
  */
 const util = require('util');
 const parser = require("../src/index");
-const ast = parser.parseEval(`
-get_class($var)::$$$$$property;
-`, { 
+const ast = parser.parseEval(`$var1 + $var2 + $var3;`, { 
     parser: {
       debug: true
+    },
+    ast: {
+      withPositions: true,
+      withSource: true
     }
   }
 );

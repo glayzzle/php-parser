@@ -1,6 +1,42 @@
 const parser = require('../main');
 
 describe('Test locations', function() {
+  it('#230 : check location', function() {
+    expect(
+      parser.parseEval(
+        '$var1 + $var2 + $var3;', {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('#230 : check location on retif', function() {
+    expect(
+      parser.parseEval(
+        '$var1 + $var2 ? true : $false ? $innerTrue : $innerFalse;', {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+  it('#230 : check location on cast', function() {
+    expect(
+      parser.parseEval(
+        '(string)$var1 + $var2;', {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it('#164 : expr must include ;', function() {
     expect(
       parser.parseEval(

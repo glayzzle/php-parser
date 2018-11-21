@@ -169,9 +169,25 @@ AST.precedence = {};
 });
 
 /**
+ * Change parent node informations after swapping childs  
+ */
+AST.prototype.swapLocations = function(target, first, last, parser) {
+  if (this.withPositions) {
+    target.loc.start = first.loc.start;
+    target.loc.end = last.loc.end;
+    if (this.withSource) {
+      target.loc.source = parser.lexer._input.substring(
+        target.loc.start.offset,
+        target.loc.end.offset
+      );
+    }  
+  }
+};
+
+/**
  * Check and fix precence, by default using right
  */
-AST.prototype.resolvePrecedence = function(result) {
+AST.prototype.resolvePrecedence = function(result, parser) {
   let buffer, lLevel, rLevel;
   // handling precendence
   if (result.kind === "bin") {
@@ -184,7 +200,8 @@ AST.prototype.resolvePrecedence = function(result) {
           // shift precedence
           buffer = result.right;
           result.right = result.right.left;
-          buffer.left = this.resolvePrecedence(result);
+          this.swapLocations(result, result.left, result.right, parser);
+          buffer.left = this.resolvePrecedence(result, parser);
           result = buffer;
         }
       } else if (result.right.kind === "retif") {
@@ -193,7 +210,9 @@ AST.prototype.resolvePrecedence = function(result) {
         if (lLevel && rLevel && rLevel <= lLevel) {
           buffer = result.right;
           result.right = result.right.test;
-          buffer.test = this.resolvePrecedence(result);
+          this.swapLocations(result, result.left, result.right, parser);
+          buffer.test = this.resolvePrecedence(result, parser);
+          this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
           result = buffer;
         }
       }
@@ -207,12 +226,16 @@ AST.prototype.resolvePrecedence = function(result) {
     if (result.what.kind === "bin") {
       buffer = result.what;
       result.what = result.what.left;
-      buffer.left = this.resolvePrecedence(result);
+      this.swapLocations(result, result, result.what, parser);
+      buffer.left = this.resolvePrecedence(result, parser);
+      this.swapLocations(buffer, buffer.left, buffer.right, parser);
       result = buffer;
     } else if (result.what.kind === "retif") {
       buffer = result.what;
       result.what = result.what.test;
-      buffer.test = this.resolvePrecedence(result);
+      this.swapLocations(result, result, result.what, parser);
+      buffer.test = this.resolvePrecedence(result, parser);
+      this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
       result = buffer;
     }
   } else if (result.kind === "unary") {
@@ -222,12 +245,16 @@ AST.prototype.resolvePrecedence = function(result) {
       if (result.what.kind === "bin") {
         buffer = result.what;
         result.what = result.what.left;
-        buffer.left = this.resolvePrecedence(result);
+        this.swapLocations(result, result, result.what, parser);
+        buffer.left = this.resolvePrecedence(result, parser);
+        this.swapLocations(buffer, buffer.left, buffer.right, parser);
         result = buffer;
       } else if (result.what.kind === "retif") {
         buffer = result.what;
         result.what = result.what.test;
-        buffer.test = this.resolvePrecedence(result);
+        this.swapLocations(result, result, result.what, parser);
+        buffer.test = this.resolvePrecedence(result, parser);
+        this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
         result = buffer;
       }
     }
@@ -240,7 +267,9 @@ AST.prototype.resolvePrecedence = function(result) {
     ) {
       buffer = result.falseExpr;
       result.falseExpr = buffer.test;
-      buffer.test = this.resolvePrecedence(result);
+      this.swapLocations(result, result.test, result.falseExpr, parser);
+      buffer.test = this.resolvePrecedence(result, parser);
+      this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
       result = buffer;
     }
   } else if (result.kind === "assign") {
@@ -257,6 +286,7 @@ AST.prototype.resolvePrecedence = function(result) {
         buffer = result.right;
         result.right = result.right.left;
         buffer.left = result;
+        this.swapLocations(buffer, buffer.left, result.right, parser);
         result = buffer;
       }
     }
@@ -318,7 +348,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
       // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
     }
-    return self.resolvePrecedence(astNode);
+    return self.resolvePrecedence(astNode, parser);
   };
   /**
    * Helper to change a node kind
