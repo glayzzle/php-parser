@@ -37,6 +37,18 @@ describe('Test locations', function() {
       )
     ).toMatchSnapshot();
   });
+  it('#202 : include calling argument', function() {
+    expect(
+      parser.parseEval(
+        '$foo->bar->baz($arg);', {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it('#164 : expr must include ;', function() {
     expect(
       parser.parseEval(

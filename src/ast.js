@@ -190,7 +190,13 @@ AST.prototype.swapLocations = function(target, first, last, parser) {
 AST.prototype.resolvePrecedence = function(result, parser) {
   let buffer, lLevel, rLevel;
   // handling precendence
-  if (result.kind === "bin") {
+  if (result.kind === "call") {
+    // including what argument into location
+    this.swapLocations(result, result.what, result, parser);
+  } else if (result.kind === "propertylookup") {
+    // including what argument into location
+    this.swapLocations(result, result.what, result.offset, parser);
+  } else if (result.kind === "bin") {
     if (result.right && !result.right.parenthesizedExpression) {
       if (result.right.kind === "bin") {
         lLevel = AST.precedence[result.type];

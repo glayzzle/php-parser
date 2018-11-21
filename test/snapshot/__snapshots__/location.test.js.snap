@@ -254,6 +254,166 @@ Program {
 }
 `;
 
+exports[`Test locations #202 : include calling argument 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "loc": Location {
+              "end": Position {
+                "column": 19,
+                "line": 1,
+                "offset": 19,
+              },
+              "source": "$arg",
+              "start": Position {
+                "column": 15,
+                "line": 1,
+                "offset": 15,
+              },
+            },
+            "name": "arg",
+          },
+        ],
+        "kind": "call",
+        "loc": Location {
+          "end": Position {
+            "column": 21,
+            "line": 1,
+            "offset": 21,
+          },
+          "source": "$foo->bar->baz($arg);",
+          "start": Position {
+            "column": 0,
+            "line": 1,
+            "offset": 0,
+          },
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "loc": Location {
+            "end": Position {
+              "column": 14,
+              "line": 1,
+              "offset": 14,
+            },
+            "source": "$foo->bar->baz",
+            "start": Position {
+              "column": 0,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "offset": Identifier {
+            "kind": "identifier",
+            "loc": Location {
+              "end": Position {
+                "column": 14,
+                "line": 1,
+                "offset": 14,
+              },
+              "source": "baz",
+              "start": Position {
+                "column": 11,
+                "line": 1,
+                "offset": 11,
+              },
+            },
+            "name": "baz",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "loc": Location {
+              "end": Position {
+                "column": 9,
+                "line": 1,
+                "offset": 9,
+              },
+              "source": "$foo->bar",
+              "start": Position {
+                "column": 0,
+                "line": 1,
+                "offset": 0,
+              },
+            },
+            "offset": Identifier {
+              "kind": "identifier",
+              "loc": Location {
+                "end": Position {
+                  "column": 9,
+                  "line": 1,
+                  "offset": 9,
+                },
+                "source": "bar",
+                "start": Position {
+                  "column": 6,
+                  "line": 1,
+                  "offset": 6,
+                },
+              },
+              "name": "bar",
+            },
+            "what": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "loc": Location {
+                "end": Position {
+                  "column": 4,
+                  "line": 1,
+                  "offset": 4,
+                },
+                "source": "$foo",
+                "start": Position {
+                  "column": 0,
+                  "line": 1,
+                  "offset": 0,
+                },
+              },
+              "name": "foo",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+      "loc": Location {
+        "end": Position {
+          "column": 21,
+          "line": 1,
+          "offset": 21,
+        },
+        "source": "$foo->bar->baz($arg);",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 21,
+      "line": 1,
+      "offset": 21,
+    },
+    "source": "$foo->bar->baz($arg);",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations #230 : check location 1`] = `
 Program {
   "children": Array [
@@ -8699,11 +8859,11 @@ Program {
                 "line": 1,
                 "offset": 14,
               },
-              "source": "()",
+              "source": "call()",
               "start": Position {
-                "column": 12,
+                "column": 8,
                 "line": 1,
-                "offset": 12,
+                "offset": 8,
               },
             },
             "what": ClassReference {
@@ -8789,11 +8949,11 @@ Program {
               "line": 1,
               "offset": 7,
             },
-            "source": "()",
+            "source": "call()",
             "start": Position {
-              "column": 5,
+              "column": 1,
               "line": 1,
-              "offset": 5,
+              "offset": 1,
             },
           },
           "what": ClassReference {
@@ -10686,11 +10846,11 @@ Program {
             "line": 1,
             "offset": 14,
           },
-          "source": "(...$var);",
+          "source": "call(...$var);",
           "start": Position {
-            "column": 4,
+            "column": 0,
             "line": 1,
-            "offset": 4,
+            "offset": 0,
           },
         },
         "what": ClassReference {
@@ -11058,11 +11218,11 @@ Program {
               "line": 1,
               "offset": 17,
             },
-            "source": "()",
+            "source": "from()",
             "start": Position {
-              "column": 15,
+              "column": 11,
               "line": 1,
-              "offset": 15,
+              "offset": 11,
             },
           },
           "what": ClassReference {
