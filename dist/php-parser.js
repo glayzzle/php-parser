@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 186d03c4b22c6a2881d6 - 11/10/2018
+ *         Build: 677b389626c2ff14bcde - 1/7/2019
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -279,7 +279,7 @@ var IS_PRIVATE = "private";
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
  * @extends {Statement}
- * @property {string} name
+ * @property {Identifier|string} name
  */
 var Declaration = Statement.extends(KIND, function Declaration(kind, name, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
@@ -5017,6 +5017,10 @@ parser.prototype.is = function (type) {
 // extends the parser with syntax files
 [__webpack_require__(29), __webpack_require__(30), __webpack_require__(31), __webpack_require__(32), __webpack_require__(33), __webpack_require__(34), __webpack_require__(35), __webpack_require__(36), __webpack_require__(37), __webpack_require__(38), __webpack_require__(39), __webpack_require__(40), __webpack_require__(41), __webpack_require__(42), __webpack_require__(43)].forEach(function (ext) {
   for (var k in ext) {
+    if (parser.prototype.hasOwnProperty(k)) {
+      // @see https://github.com/glayzzle/php-parser/issues/234
+      throw new Error("Function " + k + " is already defined - collision");
+    }
     parser.prototype[k] = ext[k];
   }
 });
@@ -5155,12 +5159,15 @@ module.exports = {
       return null;
     }
     this.next().expect(this.tok.T_STRING);
-    var propName = this.text();
+    var propName = this.node("identifier");
+    var name = this.text();
+    this.next();
+    propName = propName(name);
     var propExtends = null;
-    var propImplements = null;
-    if (this.next().token == this.tok.T_EXTENDS) {
+    if (this.token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
     }
+    var propImplements = null;
     if (this.token == this.tok.T_IMPLEMENTS) {
       propImplements = this.next().read_name_list();
     }
@@ -5391,23 +5398,23 @@ module.exports = {
    */
   read_interface: function read_interface() {
     var result = this.node("interface");
-    var name = null;
-    var body = null;
+    if (this.token !== this.tok.T_INTERFACE) {
+      this.error(this.tok.T_INTERFACE);
+      this.next();
+      return null;
+    }
+    this.next().expect(this.tok.T_STRING);
+    var propName = this.node("identifier");
+    var name = this.text();
+    this.next();
+    propName = propName(name);
     var propExtends = null;
-    if (this.expect(this.tok.T_INTERFACE)) {
-      this.next();
-    }
-    if (this.expect(this.tok.T_STRING)) {
-      name = this.text();
-      this.next();
-    }
     if (this.token === this.tok.T_EXTENDS) {
       propExtends = this.next().read_name_list();
     }
-    if (this.expect("{")) {
-      body = this.next().read_interface_body();
-    }
-    return result(name, propExtends, body);
+    this.expect("{");
+    var body = this.next().read_interface_body();
+    return result(propName, propExtends, body);
   },
   /**
    * Reads an interface body
@@ -5466,26 +5473,20 @@ module.exports = {
    */
   read_trait: function read_trait() {
     var result = this.node("trait");
-    var propName = null;
-    var propExtends = null;
-    var propImplements = null;
-    var body = null;
-    if (this.expect(this.tok.T_TRAIT)) {
+    // graceful mode : ignore token & go next
+    if (this.token !== this.tok.T_TRAIT) {
+      this.error(this.tok.T_TRAIT);
       this.next();
+      return null;
     }
-    if (this.expect(this.tok.T_STRING)) {
-      propName = this.text();
-    }
-    if (this.next().token == this.tok.T_EXTENDS) {
-      propExtends = this.next().read_namespace_name();
-    }
-    if (this.token == this.tok.T_IMPLEMENTS) {
-      propImplements = this.next().read_name_list();
-    }
-    if (this.expect("{")) {
-      body = this.next().read_class_body();
-    }
-    return result(propName, propExtends, propImplements, body);
+    this.next().expect(this.tok.T_STRING);
+    var propName = this.node("identifier");
+    var name = this.text();
+    this.next();
+    propName = propName(name);
+    this.expect("{");
+    var body = this.next().read_class_body();
+    return result(propName, body);
   },
   /**
    * reading a use statement
@@ -6061,7 +6062,7 @@ module.exports = {
       return result(what(null, propExtends, propImplements, body, [0, 0, 0]), args);
     }
     // Already existing class
-    var name = this.read_class_name_reference();
+    var name = this.read_new_class_name();
     if (this.token === "(") {
       args = this.read_function_argument_list();
     }
@@ -6070,12 +6071,12 @@ module.exports = {
   /**
    * Reads a class name
    * ```ebnf
-   * class_name_reference ::= namespace_name | variable
+   * read_new_class_name ::= namespace_name | variable
    * ```
    */
-  read_class_name_reference: function read_class_name_reference() {
+  read_new_class_name: function read_new_class_name() {
     if (this.token === this.tok.T_NS_SEPARATOR || this.token === this.tok.T_STRING || this.token === this.tok.T_NAMESPACE) {
-      var result = this.read_namespace_name();
+      var result = this.read_namespace_name(true);
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
       }
@@ -6739,7 +6740,7 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.rules.php
    * @return {Reference}
    */
-  read_namespace_name: function read_namespace_name() {
+  read_namespace_name: function read_namespace_name(resolveReference) {
     var result = this.node();
     var relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
@@ -6747,7 +6748,7 @@ module.exports = {
       relative = true;
     }
     var names = this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
-    if (!relative && names.length === 1) {
+    if (!relative && names.length === 1 && (resolveReference || this.token !== "(")) {
       if (names[0].toLowerCase() === "parent") {
         return result("parentreference", names[0]);
       } else if (names[0].toLowerCase() === "self") {
@@ -7293,20 +7294,24 @@ module.exports = {
   /**
    * Reads a list of constants declaration
    * ```ebnf
-   *   declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
+   *   declare_list ::= IDENTIFIER '=' expr (',' IDENTIFIER '=' expr)*
    * ```
-   * @retrurn {Object}
+   * @retrurn {Array}
    */
   read_declare_list: function read_declare_list() {
-    var result = {};
+    var result = [];
     while (this.token != this.EOF && this.token !== ")") {
       this.expect(this.tok.T_STRING);
-      var name = this.text().toLowerCase();
-      if (this.next().expect("=")) {
-        result[name] = this.next().read_expr();
-      } else {
-        result[name] = null;
+      var directive = this.node("declaredirective");
+      var key = this.node("identifier");
+      var name = this.text();
+      this.next();
+      key = key(name);
+      var value = null;
+      if (this.expect("=")) {
+        value = this.next().read_expr();
       }
+      result.push(directive(key, value));
       if (this.token !== ",") break;
       this.next();
     }
@@ -7472,7 +7477,7 @@ module.exports = {
           var body = [];
           var mode = void 0;
           this.next().expect("(") && this.next();
-          var what = this.read_declare_list();
+          var directives = this.read_declare_list();
           this.expect(")") && this.next();
           if (this.token === ":") {
             this.next();
@@ -7495,7 +7500,7 @@ module.exports = {
             this.expect(";") && this.next();
             mode = this.ast.declare.MODE_NONE;
           }
-          return _result8(what, body, mode);
+          return _result8(directives, body, mode);
         }
 
       case this.tok.T_TRY:
@@ -7529,9 +7534,10 @@ module.exports = {
 
           // default fallback expr / T_STRING '::' (etc...)
           this.lexer.tokens.push(_current);
+          var statement = this.node("expressionstatement");
           var _expr3 = this.next().read_expr();
-          this.expectEndOfStatement();
-          return _expr3;
+          this.expectEndOfStatement(_expr3);
+          return statement(_expr3);
         }
 
       case this.tok.T_GOTO:
@@ -7548,10 +7554,10 @@ module.exports = {
       default:
         {
           // default fallback expr
-          var statement = this.node("expressionstatement");
+          var _statement = this.node("expressionstatement");
           var _expr4 = this.read_expr();
           this.expectEndOfStatement(_expr4);
-          return statement(_expr4);
+          return _statement(_expr4);
         }
     }
   },
@@ -7972,7 +7978,7 @@ module.exports = {
         what = what(name, false, false);
         break;
       case "$":
-        this.next().expect(["{", this.tok.T_VARIABLE]);
+        this.next().expect(["$", "{", this.tok.T_VARIABLE]);
         if (this.token === "{") {
           // $obj->${$varname}
           what = this.next().read_expr();
@@ -7999,7 +8005,7 @@ module.exports = {
     return what;
   },
 
-  recursive_variable_chain_scan: function recursive_variable_chain_scan(result, read_only, encapsed, dereferencable) {
+  recursive_variable_chain_scan: function recursive_variable_chain_scan(result, read_only, encapsed) {
     var node = void 0,
         offset = void 0;
     recursive_scan_loop: while (this.token != this.EOF) {
@@ -8039,10 +8045,11 @@ module.exports = {
           node = this.node("staticlookup");
           result = node(result, this.read_what(true));
 
+          // fix 185
           // static lookup dereferencables are limited to staticlookup over functions
-          if (dereferencable && this.token !== "(") {
+          /*if (dereferencable && this.token !== "(") {
             this.error("(");
-          }
+          }*/
           break;
         case this.tok.T_OBJECT_OPERATOR:
           {
@@ -8098,6 +8105,7 @@ module.exports = {
     var offset = void 0;
     while (this.token != this.EOF) {
       var node = this.node();
+      /*
       if (this.token == "[") {
         offset = null;
         if (encapsed) {
@@ -8107,7 +8115,8 @@ module.exports = {
         }
         this.expect("]") && this.next();
         result = node("offsetlookup", result, offset);
-      } else if (this.token == "{" && !encapsed) {
+      } else */
+      if (this.token == "{" && !encapsed) {
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);
@@ -8478,6 +8487,7 @@ var Position = __webpack_require__(47);
  * - [Location](#location)
  * - [Position](#position)
  * - [Node](#node)
+ *   - [DeclareDirective](#declaredirective)
  *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
  *   - [Identifier](#identifier)
@@ -8490,12 +8500,13 @@ var Position = __webpack_require__(47);
  *   - [TraitUse](#traituse)
  *   - [TraitAlias](#traitalias)
  *   - [TraitPrecedence](#traitprecedence)
- *   - [Entry](#entry)
  *   - [Comment](#comment)
  *     - [CommentLine](#commentline)
  *     - [CommentBlock](#commentblock)
  *   - [Error](#error)
  *   - [Expression](#expression)
+ *     - [Entry](#entry)
+ *     - [Closure](#closure)
  *     - [Silent](#silent)
  *     - [RetIf](#retif)
  *     - [New](#new)
@@ -8556,7 +8567,6 @@ var Position = __webpack_require__(47);
  *     - [Try](#try)
  *     - [Catch](#catch)
  *     - [Throw](#throw)
- *     - [Closure](#closure)
  *     - [UseGroup](#usegroup)
  *     - [UseItem](#useitem)
  *     - [Block](#block)
@@ -8598,7 +8608,7 @@ AST.prototype.position = function (parser) {
 
 // operators in ascending order of precedence
 AST.precedence = {};
-[["or"], ["xor"], ["and"], ["="], ["?"], ["??"], ["||"], ["&&"], ["|"], ["^"], ["&"], ["==", "!=", "===", "!==", /* '<>', */"<=>"], ["<", "<=", ">", ">="], ["<<", ">>"], ["+", "-", "."], ["*", "/", "%"], ["!"], ["instanceof"]
+[["or"], ["xor"], ["and"], ["="], ["?"], ["??"], ["||"], ["&&"], ["|"], ["^"], ["&"], ["==", "!=", "===", "!==", /* '<>', */"<=>"], ["<", "<=", ">", ">="], ["<<", ">>"], ["+", "-", "."], ["*", "/", "%"], ["!"], ["instanceof"], ["cast"]
 // TODO: typecasts
 // TODO: [ (array)
 // TODO: clone, new
@@ -8609,14 +8619,33 @@ AST.precedence = {};
 });
 
 /**
+ * Change parent node informations after swapping childs
+ */
+AST.prototype.swapLocations = function (target, first, last, parser) {
+  if (this.withPositions) {
+    target.loc.start = first.loc.start;
+    target.loc.end = last.loc.end;
+    if (this.withSource) {
+      target.loc.source = parser.lexer._input.substring(target.loc.start.offset, target.loc.end.offset);
+    }
+  }
+};
+
+/**
  * Check and fix precence, by default using right
  */
-AST.prototype.resolvePrecedence = function (result) {
+AST.prototype.resolvePrecedence = function (result, parser) {
   var buffer = void 0,
       lLevel = void 0,
       rLevel = void 0;
   // handling precendence
-  if (result.kind === "bin") {
+  if (result.kind === "call") {
+    // including what argument into location
+    this.swapLocations(result, result.what, result, parser);
+  } else if (result.kind === "propertylookup") {
+    // including what argument into location
+    this.swapLocations(result, result.what, result.offset, parser);
+  } else if (result.kind === "bin") {
     if (result.right && !result.right.parenthesizedExpression) {
       if (result.right.kind === "bin") {
         lLevel = AST.precedence[result.type];
@@ -8626,7 +8655,8 @@ AST.prototype.resolvePrecedence = function (result) {
           // shift precedence
           buffer = result.right;
           result.right = result.right.left;
-          buffer.left = this.resolvePrecedence(result);
+          this.swapLocations(result, result.left, result.right, parser);
+          buffer.left = this.resolvePrecedence(result, parser);
           result = buffer;
         }
       } else if (result.right.kind === "retif") {
@@ -8635,10 +8665,29 @@ AST.prototype.resolvePrecedence = function (result) {
         if (lLevel && rLevel && rLevel <= lLevel) {
           buffer = result.right;
           result.right = result.right.test;
-          buffer.test = this.resolvePrecedence(result);
+          this.swapLocations(result, result.left, result.right, parser);
+          buffer.test = this.resolvePrecedence(result, parser);
+          this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
           result = buffer;
         }
       }
+    }
+  } else if (result.kind === "cast" && result.what && !result.what.parenthesizedExpression) {
+    // https://github.com/glayzzle/php-parser/issues/172
+    if (result.what.kind === "bin") {
+      buffer = result.what;
+      result.what = result.what.left;
+      this.swapLocations(result, result, result.what, parser);
+      buffer.left = this.resolvePrecedence(result, parser);
+      this.swapLocations(buffer, buffer.left, buffer.right, parser);
+      result = buffer;
+    } else if (result.what.kind === "retif") {
+      buffer = result.what;
+      result.what = result.what.test;
+      this.swapLocations(result, result, result.what, parser);
+      buffer.test = this.resolvePrecedence(result, parser);
+      this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
+      result = buffer;
     }
   } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
@@ -8647,12 +8696,16 @@ AST.prototype.resolvePrecedence = function (result) {
       if (result.what.kind === "bin") {
         buffer = result.what;
         result.what = result.what.left;
-        buffer.left = this.resolvePrecedence(result);
+        this.swapLocations(result, result, result.what, parser);
+        buffer.left = this.resolvePrecedence(result, parser);
+        this.swapLocations(buffer, buffer.left, buffer.right, parser);
         result = buffer;
       } else if (result.what.kind === "retif") {
         buffer = result.what;
         result.what = result.what.test;
-        buffer.test = this.resolvePrecedence(result);
+        this.swapLocations(result, result, result.what, parser);
+        buffer.test = this.resolvePrecedence(result, parser);
+        this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
         result = buffer;
       }
     }
@@ -8661,7 +8714,9 @@ AST.prototype.resolvePrecedence = function (result) {
     if (result.falseExpr && result.falseExpr.kind === "retif" && !result.falseExpr.parenthesizedExpression) {
       buffer = result.falseExpr;
       result.falseExpr = buffer.test;
-      buffer.test = this.resolvePrecedence(result);
+      this.swapLocations(result, result.test, result.falseExpr, parser);
+      buffer.test = this.resolvePrecedence(result, parser);
+      this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
       result = buffer;
     }
   } else if (result.kind === "assign") {
@@ -8674,6 +8729,7 @@ AST.prototype.resolvePrecedence = function (result) {
         buffer = result.right;
         result.right = result.right.left;
         buffer.left = result;
+        this.swapLocations(buffer, buffer.left, result.right, parser);
         result = buffer;
       }
     }
@@ -8731,7 +8787,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
       // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
     }
-    return self.resolvePrecedence(astNode);
+    return self.resolvePrecedence(astNode, parser);
   };
   /**
    * Helper to change a node kind
@@ -8773,7 +8829,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 };
 
 // Define all AST nodes
-[__webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(7), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(9), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(10), __webpack_require__(65), __webpack_require__(4), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74), __webpack_require__(75), __webpack_require__(1), __webpack_require__(76), __webpack_require__(77), __webpack_require__(78), __webpack_require__(11), __webpack_require__(79), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(3), __webpack_require__(8), __webpack_require__(90), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(2), __webpack_require__(94), __webpack_require__(95), __webpack_require__(96), __webpack_require__(5), __webpack_require__(97), __webpack_require__(98), __webpack_require__(99), __webpack_require__(100), __webpack_require__(101), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(6), __webpack_require__(105), __webpack_require__(106), __webpack_require__(107), __webpack_require__(108), __webpack_require__(0), __webpack_require__(109), __webpack_require__(110), __webpack_require__(111), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121), __webpack_require__(122), __webpack_require__(123), __webpack_require__(124), __webpack_require__(125), __webpack_require__(126), __webpack_require__(127), __webpack_require__(128), __webpack_require__(129)].forEach(function (ctor) {
+[__webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(7), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(9), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(10), __webpack_require__(65), __webpack_require__(4), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74), __webpack_require__(75), __webpack_require__(76), __webpack_require__(1), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(11), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(3), __webpack_require__(8), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94), __webpack_require__(2), __webpack_require__(95), __webpack_require__(96), __webpack_require__(97), __webpack_require__(5), __webpack_require__(98), __webpack_require__(99), __webpack_require__(100), __webpack_require__(101), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(105), __webpack_require__(6), __webpack_require__(106), __webpack_require__(107), __webpack_require__(108), __webpack_require__(109), __webpack_require__(0), __webpack_require__(110), __webpack_require__(111), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121), __webpack_require__(122), __webpack_require__(123), __webpack_require__(124), __webpack_require__(125), __webpack_require__(126), __webpack_require__(127), __webpack_require__(128), __webpack_require__(129), __webpack_require__(130)].forEach(function (ctor) {
   AST.prototype[ctor.kind] = ctor;
 });
 
@@ -9293,13 +9349,13 @@ module.exports = Expression.extends(KIND, function Clone(what, docs, location) {
  */
 
 
-var Statement = __webpack_require__(0);
+var Expression = __webpack_require__(1);
 var KIND = "closure";
 
 /**
  * Defines a closure
  * @constructor Closure
- * @extends {Statement}
+ * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Variable[]} uses
  * @property {Identifier} type
@@ -9308,8 +9364,8 @@ var KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
-module.exports = Statement.extends(KIND, function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.uses = uses;
   this.arguments = args;
   this.byref = byref;
@@ -9440,13 +9496,13 @@ var KIND = "declare";
  * The declare construct is used to set execution directives for a block of code
  * @constructor Declare
  * @extends {Block}
- * @property {Expression[]} what
+ * @property {Array[]} directives
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
-var Declare = Block.extends(KIND, function Declare(what, body, mode, docs, location) {
+var Declare = Block.extends(KIND, function Declare(directives, body, mode, docs, location) {
   Block.apply(this, [KIND, body, docs, location]);
-  this.what = what;
+  this.directives = directives;
   this.mode = mode;
 });
 
@@ -9503,6 +9559,34 @@ module.exports = Declare;
  */
 
 
+var Node = __webpack_require__(2);
+var KIND = "declaredirective";
+
+/**
+ * Defines a constant
+ * @constructor DeclareDirective
+ * @extends {Node}
+ * @property {Identifier} name
+ * @property {Node|string|number|boolean|null} value
+ */
+module.exports = Node.extends(KIND, function DeclareDirective(key, value, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
+  this.key = key;
+  this.value = value;
+});
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+
 var Statement = __webpack_require__(0);
 var KIND = "do";
 
@@ -9520,7 +9604,7 @@ module.exports = Statement.extends(KIND, function Do(test, body, docs, location)
 });
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9547,7 +9631,7 @@ module.exports = Statement.extends(KIND, function Echo(expressions, shortForm, d
 });
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9572,7 +9656,7 @@ module.exports = Expression.extends(KIND, function Empty(expression, docs, locat
 });
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9644,7 +9728,7 @@ Encapsed.TYPE_OFFSET = "offset";
 module.exports = Encapsed;
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9671,7 +9755,7 @@ module.exports = Expression.extends(KIND, function EncapsedPart(expression, curl
 });
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9682,24 +9766,24 @@ module.exports = Expression.extends(KIND, function EncapsedPart(expression, curl
  */
 
 
-var Node = __webpack_require__(2);
+var Expression = __webpack_require__(1);
 var KIND = "entry";
 
 /**
  * An array entry - see [Array](#array)
  * @constructor Entry
- * @extends {Node}
+ * @extends {Expression}
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
-module.exports = Node.extends(KIND, function Entry(key, value, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
+module.exports = Expression.extends(KIND, function Entry(key, value, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
 });
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9731,7 +9815,7 @@ module.exports = Node.extends(KIND, function Error(message, token, line, expecte
 });
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9757,7 +9841,7 @@ module.exports = Expression.extends(KIND, function Eval(source, docs, location) 
 });
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9785,7 +9869,7 @@ module.exports = Expression.extends(KIND, function Exit(status, useDie, docs, lo
 });
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9811,7 +9895,7 @@ module.exports = Statement.extends(KIND, function ExpressionStatement(expr, docs
 });
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9846,7 +9930,7 @@ module.exports = Statement.extends(KIND, function For(init, test, increment, bod
 });
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9881,7 +9965,7 @@ module.exports = Statement.extends(KIND, function Foreach(source, key, value, bo
 });
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9907,7 +9991,7 @@ module.exports = Statement.extends(KIND, function Global(items, docs, location) 
 });
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9934,7 +10018,7 @@ module.exports = Statement.extends(KIND, function Goto(label, docs, location) {
 });
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9961,7 +10045,7 @@ module.exports = Statement.extends(KIND, function Halt(after, docs, location) {
 });
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9989,7 +10073,7 @@ var Identifier = Node.extends(KIND, function Identifier(name, docs, location) {
 module.exports = Identifier;
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10021,7 +10105,7 @@ module.exports = Statement.extends(KIND, function If(test, body, alternate, shor
 });
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10051,7 +10135,7 @@ module.exports = Expression.extends(KIND, function Include(once, require, target
 });
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10075,7 +10159,7 @@ module.exports = Literal.extends(KIND, function Inline(value, raw, docs, locatio
 });
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10103,7 +10187,7 @@ module.exports = Declaration.extends(KIND, function Interface(name, ext, body, d
 });
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10128,7 +10212,7 @@ module.exports = Expression.extends(KIND, function Isset(variables, docs, locati
 });
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10154,7 +10238,7 @@ module.exports = Statement.extends(KIND, function Label(name, docs, location) {
 });
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10181,7 +10265,7 @@ module.exports = Expression.extends(KIND, function List(items, shortForm, docs, 
 });
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10205,7 +10289,7 @@ module.exports = Literal.extends(KIND, function Magic(value, raw, docs, location
 });
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10234,7 +10318,7 @@ module.exports = _Function.extends(KIND, function Method() {
 });
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10262,7 +10346,7 @@ module.exports = Block.extends(KIND, function Namespace(name, children, withBrac
 });
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10290,7 +10374,7 @@ module.exports = Expression.extends(KIND, function New(what, args, docs, locatio
 });
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10319,7 +10403,7 @@ module.exports = Literal.extends(KIND, function Nowdoc(value, raw, label, quote,
 });
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10343,7 +10427,7 @@ module.exports = Literal.extends(KIND, function Number(value, raw, docs, locatio
 });
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10367,7 +10451,7 @@ module.exports = Lookup.extends(KIND, function OffsetLookup(what, offset, docs, 
 });
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10401,7 +10485,7 @@ module.exports = Declaration.extends(KIND, function Parameter(name, type, value,
 });
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10427,7 +10511,7 @@ var ParentReference = Reference.extends(KIND, function ParentReference(raw, docs
 module.exports = ParentReference;
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10455,7 +10539,7 @@ module.exports = Operation.extends(KIND, function Post(type, what, docs, locatio
 });
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10483,7 +10567,7 @@ module.exports = Operation.extends(KIND, function Pre(type, what, docs, location
 });
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10508,7 +10592,7 @@ module.exports = Expression.extends(KIND, function Print(expression, docs, locat
 });
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10542,7 +10626,7 @@ module.exports = Block.extends(KIND, function Program(children, errors, comments
 });
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10572,7 +10656,7 @@ module.exports = Declaration.extends(KIND, function Property(name, value, flags,
 });
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10596,7 +10680,7 @@ module.exports = Lookup.extends(KIND, function PropertyLookup(what, offset, docs
 });
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10626,7 +10710,7 @@ module.exports = Expression.extends(KIND, function RetIf(test, trueExpr, falseEx
 });
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10652,7 +10736,7 @@ module.exports = Statement.extends(KIND, function Return(expr, docs, location) {
 });
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10678,7 +10762,7 @@ var SelfReference = Reference.extends(KIND, function SelfReference(raw, docs, lo
 module.exports = SelfReference;
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10704,7 +10788,7 @@ module.exports = Expression.extends(KIND, function Silent(expr, docs, location) 
 });
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10730,7 +10814,7 @@ module.exports = Statement.extends(KIND, function Static(items, docs, location) 
 });
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10754,7 +10838,7 @@ module.exports = Lookup.extends(KIND, function StaticLookup(what, offset, docs, 
 });
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10780,7 +10864,7 @@ var StaticReference = Reference.extends(KIND, function StaticReference(raw, docs
 module.exports = StaticReference;
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10809,7 +10893,7 @@ module.exports = Literal.extends(KIND, function String(isDoubleQuote, value, uni
 });
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10839,7 +10923,7 @@ module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, 
 });
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10865,7 +10949,7 @@ module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
 });
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10883,19 +10967,15 @@ var KIND = "trait";
  * A trait definition
  * @constructor Trait
  * @extends {Declaration}
- * @property {Identifier|null} extends
- * @property {Identifier[]} implements
  * @property {Declaration[]} body
  */
-module.exports = Declaration.extends(KIND, function Trait(name, ext, impl, body, docs, location) {
+module.exports = Declaration.extends(KIND, function Trait(name, body, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
-  this.extends = ext;
-  this.implements = impl;
   this.body = body;
 });
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10941,7 +11021,7 @@ module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags
 });
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10971,7 +11051,7 @@ module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, inst
 });
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10999,7 +11079,7 @@ module.exports = Node.extends(KIND, function TraitUse(traits, adaptations, docs,
 });
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11029,7 +11109,7 @@ module.exports = Statement.extends(KIND, function Try(body, catches, always, doc
 });
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11060,7 +11140,7 @@ TypeReference.types = ["int", "float", "string", "bool", "object", "array", "cal
 module.exports = TypeReference;
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11088,7 +11168,7 @@ module.exports = Operation.extends(KIND, function Unary(type, what, docs, locati
 });
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11113,7 +11193,7 @@ module.exports = Statement.extends(KIND, function Unset(variables, docs, locatio
 });
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11145,7 +11225,7 @@ module.exports = Statement.extends(KIND, function UseGroup(name, type, items, do
 });
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11190,7 +11270,7 @@ UseItem.TYPE_FUNCTION = "function";
 module.exports = UseItem;
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11231,7 +11311,7 @@ module.exports = Expression.extends(KIND, function Variable(name, byref, curly, 
 });
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11258,7 +11338,7 @@ module.exports = Expression.extends(KIND, function variadic(what, docs, location
 });
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11288,7 +11368,7 @@ module.exports = Statement.extends(KIND, function While(test, body, shortForm, d
 });
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11317,7 +11397,7 @@ module.exports = Expression.extends(KIND, function Yield(value, key, docs, locat
 });
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
