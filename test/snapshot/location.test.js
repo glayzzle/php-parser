@@ -296,6 +296,19 @@ describe('Test locations', function() {
       )
     ).toMatchSnapshot();
   });
+  it('static multiple', function() {
+    expect(
+      parser.parseEval(
+        'static $a = 1, $b = 2, $c = 3;',
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it('echo', function() {
     expect(
       parser.parseEval(

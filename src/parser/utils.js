@@ -89,14 +89,14 @@ module.exports = {
    *
    * Sample code :
    * ```php
-   * <?php class foo extends bar, baz { }
+   * <?php static $a = 'hello', $b = 'world';
    * ```
-   * @return {Variable[]|Assign[]} Returns an array composed by a list of variables, or
+   * @return {StaticVariable[]} Returns an array composed by a list of variables, or
    * assign values
    */
   read_variable_declarations: function() {
     return this.read_list(function() {
-      const node = this.node("assign");
+      const node = this.node("staticvariable");
       let variable = this.node("variable");
       // plain variable name
       if (this.expect(this.tok.T_VARIABLE)) {
