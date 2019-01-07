@@ -117,7 +117,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
     },
     Interface {
       "body": Array [
@@ -173,7 +176,10 @@ Program {
         },
       ],
       "kind": "interface",
-      "name": "boo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "boo",
+      },
     },
     Trait {
       "body": Array [
@@ -215,20 +221,11 @@ Program {
           "visibility": "protected",
         },
       ],
-      "extends": ClassReference {
-        "kind": "classreference",
-        "name": "foo",
-        "resolution": "uqn",
-      },
-      "implements": Array [
-        ClassReference {
-          "kind": "classreference",
-          "name": "boo",
-          "resolution": "uqn",
-        },
-      ],
       "kind": "trait",
-      "name": "line",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "line",
+      },
     },
   ],
   "comments": Array [
@@ -277,35 +274,41 @@ Program {
           "arguments": Array [],
           "body": Block {
             "children": Array [
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "foo",
-                  },
-                  "what": ParentReference {
-                    "kind": "parentreference",
-                    "raw": "parent",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "foo",
+                    },
+                    "what": ParentReference {
+                      "kind": "parentreference",
+                      "raw": "parent",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "bar",
-                  },
-                  "what": SelfReference {
-                    "kind": "selfreference",
-                    "raw": "self",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "bar",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
               ExpressionStatement {
                 "expression": Call {
@@ -325,21 +328,24 @@ Program {
                 },
                 "kind": "expressionstatement",
               },
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "fooBar",
-                  },
-                  "what": ClassReference {
-                    "kind": "classreference",
-                    "name": "A",
-                    "resolution": "uqn",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "fooBar",
+                    },
+                    "what": ClassReference {
+                      "kind": "classreference",
+                      "name": "A",
+                      "resolution": "uqn",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
               ExpressionStatement {
                 "expression": Call {
@@ -384,7 +390,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "A",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
     },
   ],
   "errors": Array [],
@@ -457,30 +466,33 @@ Program {
                 },
                 "kind": "expressionstatement",
               },
-              Assign {
-                "kind": "assign",
-                "left": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Variable {
-                    "byref": false,
-                    "curly": false,
-                    "kind": "variable",
-                    "name": "constructor",
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Variable {
+                      "byref": false,
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "constructor",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
                   },
-                  "what": SelfReference {
-                    "kind": "selfreference",
-                    "raw": "self",
+                  "operator": "=",
+                  "right": Identifier {
+                    "kind": "identifier",
+                    "name": ClassReference {
+                      "kind": "classreference",
+                      "name": "null",
+                      "resolution": "uqn",
+                    },
                   },
                 },
-                "operator": "=",
-                "right": Identifier {
-                  "kind": "identifier",
-                  "name": ClassReference {
-                    "kind": "classreference",
-                    "name": "null",
-                    "resolution": "uqn",
-                  },
-                },
+                "kind": "expressionstatement",
               },
             ],
             "kind": "block",
@@ -505,7 +517,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "__proto__",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "__proto__",
+      },
     },
   ],
   "errors": Array [],
@@ -562,7 +577,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
     },
   ],
   "errors": Array [
@@ -854,7 +872,10 @@ Program {
       "isAnonymous": false,
       "isFinal": true,
       "kind": "class",
-      "name": "foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
     },
     Class {
       "body": Array [
@@ -990,7 +1011,54 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "bar",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bar",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test classes class name as identifier 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test classes empty 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
     },
   ],
   "errors": Array [],

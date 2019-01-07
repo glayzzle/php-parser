@@ -119,8 +119,12 @@ describe("Test precedence", function() {
   it("test assign with &&", function() {
     shouldBeSame("$a && $b = $c && $d", "$a && ($b = ($c && $d))");
   });
-  /*it("test cast", function() {
+  it("test static lookup offsets", function() {
+    shouldBeSame("(Foo::$bar)['baz']();", "Foo::$bar['baz']();");
+  });
+  it("test cast", function() {
     shouldBeSame("$a = (string)$b . $c", "$a = ((string)$b) . $c");
     shouldBeSame("$a = (string)$b->foo . $c", "$a = ((string)$b->foo) . $c");
-  });*/
+    shouldBeSame("(bool) $var ? 1 : 2;", "((bool)$var) ? 1 : 2;");
+  });
 });

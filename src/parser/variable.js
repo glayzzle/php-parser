@@ -151,7 +151,7 @@ module.exports = {
         what = what(name, false, false);
         break;
       case "$":
-        this.next().expect(["{", this.tok.T_VARIABLE]);
+        this.next().expect(["$", "{", this.tok.T_VARIABLE]);
         if (this.token === "{") {
           // $obj->${$varname}
           what = this.next().read_expr();
@@ -178,12 +178,7 @@ module.exports = {
     return what;
   },
 
-  recursive_variable_chain_scan: function(
-    result,
-    read_only,
-    encapsed,
-    dereferencable
-  ) {
+  recursive_variable_chain_scan: function(result, read_only, encapsed) {
     let node, offset;
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
@@ -228,10 +223,11 @@ module.exports = {
           node = this.node("staticlookup");
           result = node(result, this.read_what(true));
 
+          // fix 185
           // static lookup dereferencables are limited to staticlookup over functions
-          if (dereferencable && this.token !== "(") {
+          /*if (dereferencable && this.token !== "(") {
             this.error("(");
-          }
+          }*/
           break;
         case this.tok.T_OBJECT_OPERATOR: {
           node = this.node("propertylookup");
@@ -290,6 +286,7 @@ module.exports = {
     let offset;
     while (this.token != this.EOF) {
       const node = this.node();
+      /*
       if (this.token == "[") {
         offset = null;
         if (encapsed) {
@@ -299,7 +296,8 @@ module.exports = {
         }
         this.expect("]") && this.next();
         result = node("offsetlookup", result, offset);
-      } else if (this.token == "{" && !encapsed) {
+      } else */
+      if (this.token == "{" && !encapsed) {
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);

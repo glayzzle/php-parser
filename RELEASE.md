@@ -1,5 +1,20 @@
 # Releases
 
+## 3.0.0-prerelease.8 : (2019-01-07)
+ - #235 : invalid ast for `self` and `parent`
+ - #234 : regression with parens in `3.0.0-prerelease.7`
+ - #230 : `resolvePrecedence` break location for `bin` nodes
+ - #202 : [bug] comment position in lookup
+ - #194 : [feature] implement trailingComments on nodes 
+ - #185 : [bug] parens and staticlookup
+ - #172 : cast precedence
+ - #182 : strange with parens, staticlookup and offsetlookup
+ - #167 : staticlookup is broken with curly
+ - #239 : [bug] call should be in ExpressionStatement
+ - #207 : [feature] use `identifier` for `class/interface/trait` name 
+ - #243 : Regression in prerelease 7 with echo
+ - #181 : strange with parens and unary
+
 ## 3.0.0-prerelease.7 : (2018-11-10)
  - #201 : [bug] curly in staticlookup bug
  - #175 : impossible detect curly in `encapsed` AST enhancement

@@ -92,7 +92,7 @@ describe("Test comments", function() {
         {
           parser: {
             extractDoc: true,
-            debug: true
+            // debug: true
           }
         }
       );

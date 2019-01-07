@@ -61,7 +61,7 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.rules.php
    * @return {Reference}
    */
-  read_namespace_name: function() {
+  read_namespace_name: function(resolveReference) {
     const result = this.node();
     let relative = false;
     if (this.token === this.tok.T_NAMESPACE) {
@@ -73,7 +73,11 @@ module.exports = {
       this.tok.T_NS_SEPARATOR,
       true
     );
-    if (!relative && names.length === 1) {
+    if (
+      !relative &&
+      names.length === 1 &&
+      (resolveReference || this.token !== "(")
+    ) {
       if (names[0].toLowerCase() === "parent") {
         return result("parentreference", names[0]);
       } else if (names[0].toLowerCase() === "self") {

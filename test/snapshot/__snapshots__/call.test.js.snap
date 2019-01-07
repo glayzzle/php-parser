@@ -76,31 +76,34 @@ Program {
 exports[`Test call inside offsetlookup 1`] = `
 Program {
   "children": Array [
-    OffsetLookup {
-      "kind": "offsetlookup",
-      "offset": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"offset\\"",
-        "unicode": false,
-        "value": "offset",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "obj",
+    ExpressionStatement {
+      "expression": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"offset\\"",
+          "unicode": false,
+          "value": "offset",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "obj",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
           },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -111,28 +114,31 @@ Program {
 exports[`Test call inside propertylookup 1`] = `
 Program {
   "children": Array [
-    PropertyLookup {
-      "kind": "propertylookup",
-      "offset": Identifier {
-        "kind": "identifier",
-        "name": "property",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "obj",
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "property",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "obj",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
           },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -143,47 +149,49 @@ Program {
 exports[`Test call inside staticlookup (2) 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Identifier {
-          "kind": "identifier",
-          "name": "call",
-        },
-        "what": Call {
-          "arguments": Array [],
-          "kind": "call",
-          "what": StaticLookup {
-            "kind": "staticlookup",
-            "offset": Identifier {
-              "kind": "identifier",
-              "name": "call",
-            },
-            "what": Call {
-              "arguments": Array [],
-              "kind": "call",
-              "what": StaticLookup {
-                "kind": "staticlookup",
-                "offset": Identifier {
-                  "kind": "identifier",
-                  "name": "call",
-                },
-                "what": Call {
-                  "arguments": Array [
-                    Variable {
-                      "byref": false,
-                      "curly": false,
-                      "kind": "variable",
-                      "name": "obj",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "call",
+          },
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "call",
+              },
+              "what": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "call",
+                  },
+                  "what": Call {
+                    "arguments": Array [
+                      Variable {
+                        "byref": false,
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "obj",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": ClassReference {
+                      "kind": "classreference",
+                      "name": "get_class",
+                      "resolution": "uqn",
                     },
-                  ],
-                  "kind": "call",
-                  "what": ClassReference {
-                    "kind": "classreference",
-                    "name": "get_class",
-                    "resolution": "uqn",
                   },
                 },
               },
@@ -191,6 +199,7 @@ Program {
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -201,30 +210,33 @@ Program {
 exports[`Test call inside staticlookup (3) 1`] = `
 Program {
   "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "property",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "obj",
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "property",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "obj",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
           },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -235,15 +247,8 @@ Program {
 exports[`Test call inside staticlookup (4) 1`] = `
 Program {
   "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "property",
-      },
-      "what": StaticLookup {
+    ExpressionStatement {
+      "expression": StaticLookup {
         "kind": "staticlookup",
         "offset": Variable {
           "byref": false,
@@ -258,6 +263,321 @@ Program {
             "curly": false,
             "kind": "variable",
             "name": "property",
+          },
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "property",
+            },
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "obj",
+                },
+              ],
+              "kind": "call",
+              "what": ClassReference {
+                "kind": "classreference",
+                "name": "get_class",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (5) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "CONSTANT",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "obj",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (6) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "property",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (7) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "property",
+        },
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "property",
+          },
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "property",
+            },
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "var",
+                },
+              ],
+              "kind": "call",
+              "what": ClassReference {
+                "kind": "classreference",
+                "name": "get_class",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (8) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"property\\"",
+          "unicode": false,
+          "value": "property",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (9) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "property",
+        },
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "byref": false,
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "get_class",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (10) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "call",
+            },
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "Order",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup (11) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "call",
+              "resolution": "uqn",
+            },
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "Order",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call inside staticlookup 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "call",
           },
           "what": Call {
             "arguments": Array [
@@ -277,288 +597,7 @@ Program {
           },
         },
       },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (5) 1`] = `
-Program {
-  "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Identifier {
-        "kind": "identifier",
-        "name": "CONSTANT",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "obj",
-          },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (6) 1`] = `
-Program {
-  "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "property",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "var",
-          },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (7) 1`] = `
-Program {
-  "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "property",
-      },
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "property",
-        },
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "property",
-          },
-          "what": Call {
-            "arguments": Array [
-              Variable {
-                "byref": false,
-                "curly": false,
-                "kind": "variable",
-                "name": "var",
-              },
-            ],
-            "kind": "call",
-            "what": ClassReference {
-              "kind": "classreference",
-              "name": "get_class",
-              "resolution": "uqn",
-            },
-          },
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (8) 1`] = `
-Program {
-  "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": String {
-        "isDoubleQuote": true,
-        "kind": "string",
-        "raw": "\\"property\\"",
-        "unicode": false,
-        "value": "property",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "var",
-          },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (9) 1`] = `
-Program {
-  "children": Array [
-    StaticLookup {
-      "kind": "staticlookup",
-      "offset": Variable {
-        "byref": false,
-        "curly": false,
-        "kind": "variable",
-        "name": "property",
-      },
-      "what": Call {
-        "arguments": Array [
-          Variable {
-            "byref": false,
-            "curly": false,
-            "kind": "variable",
-            "name": "var",
-          },
-        ],
-        "kind": "call",
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "get_class",
-          "resolution": "uqn",
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (10) 1`] = `
-Program {
-  "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": Call {
-        "arguments": Array [],
-        "kind": "call",
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": Identifier {
-            "kind": "identifier",
-            "name": "call",
-          },
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "Order",
-            "resolution": "uqn",
-          },
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup (11) 1`] = `
-Program {
-  "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Call {
-          "arguments": Array [],
-          "kind": "call",
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "call",
-            "resolution": "uqn",
-          },
-        },
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "Order",
-          "resolution": "uqn",
-        },
-      },
-    },
-  ],
-  "errors": Array [],
-  "kind": "program",
-}
-`;
-
-exports[`Test call inside staticlookup 1`] = `
-Program {
-  "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Identifier {
-          "kind": "identifier",
-          "name": "call",
-        },
-        "what": Call {
-          "arguments": Array [
-            Variable {
-              "byref": false,
-              "curly": false,
-              "kind": "variable",
-              "name": "obj",
-            },
-          ],
-          "kind": "call",
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "get_class",
-            "resolution": "uqn",
-          },
-        },
-      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -620,22 +659,25 @@ Program {
 exports[`Test call multiple 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": Call {
+    ExpressionStatement {
+      "expression": Call {
         "arguments": Array [],
         "kind": "call",
         "what": Call {
           "arguments": Array [],
           "kind": "call",
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "call",
-            "resolution": "uqn",
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "call",
+              "resolution": "uqn",
+            },
           },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -646,33 +688,36 @@ Program {
 exports[`Test call multiple arguments 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "a",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "call",
+          "resolution": "uqn",
         },
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "b",
-        },
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "c",
-        },
-      ],
-      "kind": "call",
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "call",
-        "resolution": "uqn",
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -683,34 +728,37 @@ Program {
 exports[`Test call nested 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [
-        Call {
-          "arguments": Array [
-            Call {
-              "arguments": Array [],
-              "kind": "call",
-              "what": ClassReference {
-                "kind": "classreference",
-                "name": "call",
-                "resolution": "uqn",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": ClassReference {
+                  "kind": "classreference",
+                  "name": "call",
+                  "resolution": "uqn",
+                },
               },
+            ],
+            "kind": "call",
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "call",
+              "resolution": "uqn",
             },
-          ],
-          "kind": "call",
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "call",
-            "resolution": "uqn",
           },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "call",
+          "resolution": "uqn",
         },
-      ],
-      "kind": "call",
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "call",
-        "resolution": "uqn",
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -759,20 +807,23 @@ Program {
           "arguments": Array [],
           "body": Block {
             "children": Array [
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "call",
-                  },
-                  "what": ParentReference {
-                    "kind": "parentreference",
-                    "raw": "parent",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "call",
+                    },
+                    "what": ParentReference {
+                      "kind": "parentreference",
+                      "raw": "parent",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
             ],
             "kind": "block",
@@ -797,7 +848,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "Foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
     },
   ],
   "errors": Array [],
@@ -879,20 +933,23 @@ Program {
           "arguments": Array [],
           "body": Block {
             "children": Array [
-              Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": StaticLookup {
-                  "kind": "staticlookup",
-                  "offset": Identifier {
-                    "kind": "identifier",
-                    "name": "call",
-                  },
-                  "what": SelfReference {
-                    "kind": "selfreference",
-                    "raw": "self",
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "call",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
                   },
                 },
+                "kind": "expressionstatement",
               },
             ],
             "kind": "block",
@@ -917,7 +974,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "Foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
     },
   ],
   "errors": Array [],
@@ -928,14 +988,17 @@ Program {
 exports[`Test call simple 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "call",
-        "resolution": "uqn",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "call",
+          "resolution": "uqn",
+        },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -946,21 +1009,24 @@ Program {
 exports[`Test call single argument 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [
-        Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "a",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "call",
+          "resolution": "uqn",
         },
-      ],
-      "kind": "call",
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "call",
-        "resolution": "uqn",
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1018,7 +1084,10 @@ Program {
       "isAnonymous": false,
       "isFinal": false,
       "kind": "class",
-      "name": "Foo",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
     },
   ],
   "errors": Array [],
@@ -1029,21 +1098,24 @@ Program {
 exports[`Test call staticlookup (2) 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Identifier {
-          "kind": "identifier",
-          "name": "call",
-        },
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "Foo",
-          "resolution": "uqn",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "call",
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "Foo",
+            "resolution": "uqn",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],
@@ -1138,23 +1210,26 @@ Program {
 exports[`Test call variable function (3) 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Variable {
-          "byref": false,
-          "curly": false,
-          "kind": "variable",
-          "name": "func",
-        },
-        "what": ClassReference {
-          "kind": "classreference",
-          "name": "Foo",
-          "resolution": "uqn",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "func",
+          },
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "Foo",
+            "resolution": "uqn",
+          },
         },
       },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

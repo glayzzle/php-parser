@@ -400,40 +400,49 @@ Program {
         },
       ],
     },
-    Call {
-      "arguments": Array [
-        String {
-          "isDoubleQuote": true,
-          "kind": "string",
-          "leadingComments": Array [
-            CommentBlock {
-              "kind": "commentblock",
-              "value": "/* lead arg */",
-            },
-          ],
-          "raw": "\\"arg\\"",
-          "trailingComments": Array [
-            CommentBlock {
-              "kind": "commentblock",
-              "value": "/* trail arg */",
-            },
-          ],
-          "unicode": false,
-          "value": "arg",
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* lead arg */",
+              },
+            ],
+            "raw": "\\"arg\\"",
+            "trailingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "value": "/* trail arg */",
+              },
+            ],
+            "unicode": false,
+            "value": "arg",
+          },
+        ],
+        "kind": "call",
+        "trailingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* trail call */",
+          },
+        ],
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "callback",
+          "resolution": "uqn",
         },
-      ],
-      "kind": "call",
+      },
+      "kind": "expressionstatement",
       "trailingComments": Array [
         CommentBlock {
           "kind": "commentblock",
-          "value": "/* trail call */",
+          "value": "/* trail program */",
         },
       ],
-      "what": ClassReference {
-        "kind": "classreference",
-        "name": "callback",
-        "resolution": "uqn",
-      },
     },
   ],
   "comments": Array [
@@ -478,12 +487,6 @@ Program {
   ],
   "errors": Array [],
   "kind": "program",
-  "trailingComments": Array [
-    CommentBlock {
-      "kind": "commentblock",
-      "value": "/* trail program */",
-    },
-  ],
 }
 `;
 
@@ -1063,14 +1066,6 @@ Program {
           "isStatic": false,
           "kind": "property",
           "leadingComments": Array [
-            CommentBlock {
-              "kind": "commentblock",
-              "value": "/* ignore */",
-            },
-            CommentBlock {
-              "kind": "commentblock",
-              "value": "/* hehe */",
-            },
             CommentLine {
               "kind": "commentline",
               "value": "// @var test
@@ -1159,7 +1154,22 @@ Program {
        */",
         },
       ],
-      "name": "name",
+      "name": Identifier {
+        "kind": "identifier",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* ignore */",
+          },
+        ],
+        "name": "name",
+        "trailingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "value": "/* hehe */",
+          },
+        ],
+      },
     },
   ],
   "comments": Array [

@@ -118,20 +118,24 @@ module.exports = {
   /**
    * Reads a list of constants declaration
    * ```ebnf
-   *   declare_list ::= T_STRING '=' expr (',' T_STRING '=' expr)*
+   *   declare_list ::= IDENTIFIER '=' expr (',' IDENTIFIER '=' expr)*
    * ```
-   * @retrurn {Object}
+   * @retrurn {Array}
    */
   read_declare_list: function() {
-    const result = {};
+    const result = [];
     while (this.token != this.EOF && this.token !== ")") {
       this.expect(this.tok.T_STRING);
-      const name = this.text().toLowerCase();
-      if (this.next().expect("=")) {
-        result[name] = this.next().read_expr();
-      } else {
-        result[name] = null;
+      const directive = this.node("declaredirective");
+      let key = this.node("identifier");
+      const name = this.text();
+      this.next();
+      key = key(name);
+      let value = null;
+      if (this.expect("=")) {
+        value = this.next().read_expr();
       }
+      result.push(directive(key, value));
       if (this.token !== ",") break;
       this.next();
     }
@@ -299,7 +303,7 @@ module.exports = {
         const body = [];
         let mode;
         this.next().expect("(") && this.next();
-        const what = this.read_declare_list();
+        const directives = this.read_declare_list();
         this.expect(")") && this.next();
         if (this.token === ":") {
           this.next();
@@ -325,7 +329,7 @@ module.exports = {
           this.expect(";") && this.next();
           mode = this.ast.declare.MODE_NONE;
         }
-        return result(what, body, mode);
+        return result(directives, body, mode);
       }
 
       case this.tok.T_TRY:
@@ -356,9 +360,10 @@ module.exports = {
 
         // default fallback expr / T_STRING '::' (etc...)
         this.lexer.tokens.push(current);
+        const statement = this.node("expressionstatement");
         const expr = this.next().read_expr();
-        this.expectEndOfStatement();
-        return expr;
+        this.expectEndOfStatement(expr);
+        return statement(expr);
       }
 
       case this.tok.T_GOTO: {
