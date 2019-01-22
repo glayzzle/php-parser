@@ -51,11 +51,9 @@ module.exports = {
         // @see parser.js line 130 : resolves a conflict with scalar
         const literal = name.name.toLowerCase();
         if (literal === "true") {
-          name.destroy();
-          result = result("boolean", true, name.name);
+          result = name.destroy(result("boolean", true, name.name));
         } else if (literal === "false") {
-          name.destroy();
-          result = result("boolean", false, name.name);
+          result = name.destroy(result("boolean", false, name.name));
         } else {
           // @todo null keyword ?
           result = result("identifier", name);
