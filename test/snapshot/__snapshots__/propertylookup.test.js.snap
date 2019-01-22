@@ -29,6 +29,54 @@ Program {
 }
 `;
 
+exports[`propertylookup fix 128 - Don't have curly for propertylookup 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": Literal {
+          "kind": "literal",
+          "value": Identifier {
+            "kind": "identifier",
+            "name": ClassReference {
+              "kind": "classreference",
+              "name": "foo",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "this",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "bar",
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "this",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`propertylookup multiple 1`] = `
 Program {
   "children": Array [

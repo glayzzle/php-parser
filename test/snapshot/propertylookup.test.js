@@ -1,6 +1,9 @@
 const parser = require('../main');
 
 describe("propertylookup", function() {
+  it("fix 128 - Don't have curly for propertylookup", function() {
+    expect(parser.parseEval('$this->{foo};$this->bar;')).toMatchSnapshot();
+  });
   it("simple", function() {
     expect(parser.parseEval('$obj->property;')).toMatchSnapshot();
   });

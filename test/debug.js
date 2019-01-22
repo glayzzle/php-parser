@@ -17,7 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-get_class($var)::$$property;
+$this->{foo};
 `, { 
     parser: {
       debug: true,

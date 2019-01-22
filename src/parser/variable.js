@@ -96,8 +96,10 @@ module.exports = {
       this.next();
       offset = offset(name);
     } else if (this.token === "{") {
-      offset = this.next().read_expr();
+      offset = this.node("literal");
+      name = this.next().read_expr();
       this.expect("}") && this.next();
+      offset = offset("literal", name, null);
       this.expect("(");
     } else {
       this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
@@ -152,22 +154,24 @@ module.exports = {
         what = what(name, false, false);
         break;
       case "$":
-        what = this.node("variable");
+        what = this.node();
         this.next().expect(["$", "{", this.tok.T_VARIABLE]);
         if (this.token === "{") {
           // $obj->${$varname}
           name = this.next().read_expr();
           this.expect("}") && this.next();
-          what = what(name, false, true);
+          what = what("literal", "literal", name, null);
         } else {
           // $obj->$$varname
           name = this.read_expr();
-          what = what(name, false, false);
+          what = what("variable", name, false, false);
         }
         break;
       case "{":
-        what = this.next().read_expr();
+        what = this.node("literal");
+        name = this.next().read_expr();
         this.expect("}") && this.next();
+        what = what("literal", name, null);
         break;
       default:
         this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]);
@@ -302,6 +306,7 @@ module.exports = {
         result = node("offsetlookup", result, offset);
       } else */
       if (this.token == "{" && !encapsed) {
+        // @fixme check coverage, not sure thats working
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);
@@ -339,7 +344,8 @@ module.exports = {
           break;
         }
         case "$": // $$$var
-          result = result(this.read_simple_variable(false), byref);
+          // @fixme check coverage here
+          result = result(this.read_simple_variable(false), byref, false);
           break;
         case this.tok.T_VARIABLE: {
           // $$var
