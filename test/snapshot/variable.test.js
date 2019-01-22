@@ -1,6 +1,13 @@
 const parser = require('../main');
 
 describe("Test variables", function() {
+  it("fix 253 - can't be parsed `global` with multiple `$`", function() {
+    expect(parser.parseEval(`
+      global $$foo;
+    `
+    )).toMatchSnapshot();
+  });
+
   it("array destructuring", function() {
     expect(parser.parseEval("[$id1, $name1] = $data[0];")).toMatchSnapshot();
   });
