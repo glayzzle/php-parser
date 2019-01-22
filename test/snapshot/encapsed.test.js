@@ -97,4 +97,7 @@ describe("encapsed", function() {
   it("staticlookup (3) (complex syntax)", function() {
     expect(parser.parseEval('"string {$obj::$var::$var} string";')).toMatchSnapshot();
   });
+  it("staticlookup (4) (complex syntax)", function() {
+    expect(parser.parseEval('"string {$var::$target::$resource::$binary::$foo::$bar::$foobar::$bar::$foo::$foobar::$bar::$foo} string";')).toMatchSnapshot();
+  });
 });
