@@ -18,6 +18,15 @@ describe("Test variables", function() {
     )).toMatchSnapshot();
   });
   
+  it("fix 248 - test curly", function() {
+    expect(parser.parseEval(`
+      $bar->{$property->foo};
+      $bar->\${$property};
+      $bar->foo_{$property};
+    `
+    )).toMatchSnapshot();
+  });
+
 
   it("array destructuring", function() {
     expect(parser.parseEval("[$id1, $name1] = $data[0];")).toMatchSnapshot();
