@@ -1,6 +1,11 @@
 const parser = require('../main');
 
 describe("Test namespace statements", function() {
+  it("fix #246 - doesn't work properly for `FULL_QUALIFIED_NAME`", function() {
+    expect(parser.parseEval(`
+      $obj = new \\Foo();
+    `)).toMatchSnapshot();
+  });
   it("allow trailing comma for grouped namespaces #177", function() {
     expect(parser.parseEval(`
     use Foo\\Bar\\ {

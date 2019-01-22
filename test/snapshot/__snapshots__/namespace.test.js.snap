@@ -62,7 +62,7 @@ Program {
       "name": ClassReference {
         "kind": "classreference",
         "name": "",
-        "resolution": "qn",
+        "resolution": "fqn",
       },
       "withBrackets": false,
     },
@@ -86,6 +86,37 @@ Program {
       "token": "'$var' (T_VARIABLE)",
     },
   ],
+  "kind": "program",
+}
+`;
+
+exports[`Test namespace statements fix #246 - doesn't work properly for \`FULL_QUALIFIED_NAME\` 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "obj",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "\\\\Foo",
+            "resolution": "fqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;
@@ -1119,7 +1150,7 @@ Program {
       "name": ClassReference {
         "kind": "classreference",
         "name": "",
-        "resolution": "qn",
+        "resolution": "fqn",
       },
       "withBrackets": false,
     },
@@ -1316,7 +1347,7 @@ Program {
               "name": ClassReference {
                 "kind": "classreference",
                 "name": "\\\\barBaz",
-                "resolution": "qn",
+                "resolution": "fqn",
               },
             },
           },

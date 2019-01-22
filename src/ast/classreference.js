@@ -26,7 +26,7 @@ const ClassReference = Reference.extends(KIND, function ClassReference(
     this.resolution = ClassReference.RELATIVE_NAME;
   } else if (name.length === 1) {
     this.resolution = ClassReference.UNQUALIFIED_NAME;
-  } else if (name[0] === "") {
+  } else if (!name[0]) {
     this.resolution = ClassReference.FULL_QUALIFIED_NAME;
   } else {
     this.resolution = ClassReference.QUALIFIED_NAME;

@@ -17,7 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-$this->{foo};
+$obj = new \\Foo();
 `, { 
     parser: {
       debug: true,
