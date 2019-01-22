@@ -16,9 +16,16 @@
  */
 const util = require('util');
 const parser = require("../src/index");
-const ast = parser.parseEval(`$var1 + $var2 + $var3;`, { 
+const ast = parser.parseEval(`
+// leading
+foo();
+// bar
+bar() /* inner */ ;
+// trailing
+`, { 
     parser: {
-      debug: true
+      debug: true,
+      extractDoc: true
     },
     ast: {
       withPositions: true,

@@ -2,6 +2,28 @@ const parser = require('../main');
 
 describe("Test comments", function() {
   describe("issues", function() {
+    it("fix #250 : Leading comments are treated as trailing comments", function() {
+      expect(parser.parseEval(
+        `
+// leading
+foo();
+// bar
+bar() /* inner */ ;
+// trailing
+        `,
+        {
+          parser: {
+            extractDoc: true
+            // debug: true
+          },
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )).toMatchSnapshot();
+    });
+
     it("fix #126 : new option", function() {
       const ast = parser.parseEval(
         `
