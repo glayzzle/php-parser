@@ -206,7 +206,7 @@ module.exports = {
         // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
         if (this.token === "[") {
-          name = name(varName, false);
+          name = name(varName, false, false);
           node = this.node("offsetlookup");
           offset = this.next().read_expr();
           this.expect("]") && this.next();
