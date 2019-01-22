@@ -51,8 +51,10 @@ module.exports = {
         // @see parser.js line 130 : resolves a conflict with scalar
         const literal = name.name.toLowerCase();
         if (literal === "true") {
+          name.destroy();
           result = result("boolean", true, name.name);
         } else if (literal === "false") {
+          name.destroy();
           result = result("boolean", false, name.name);
         } else {
           // @todo null keyword ?
@@ -60,6 +62,7 @@ module.exports = {
         }
       } else {
         // @fixme possible #193 bug
+        result.destroy(name);
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {

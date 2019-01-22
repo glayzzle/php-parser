@@ -42,6 +42,7 @@ module.exports = {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.reference.RELATIVE_NAME;
         name.name = name.name.substring(1);
+        result.destroy();
         return this.node("call")(name, this.read_function_argument_list());
       } else {
         this.error(["{", ";"]);

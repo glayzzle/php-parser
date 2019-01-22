@@ -359,6 +359,7 @@ module.exports = {
         }
 
         // default fallback expr / T_STRING '::' (etc...)
+        result.destroy();
         this.lexer.tokens.push(current);
         const statement = this.node("expressionstatement");
         const expr = this.next().read_expr();
