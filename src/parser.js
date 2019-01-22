@@ -300,7 +300,7 @@ parser.prototype.parse = function(code, filename) {
       throw new Error('Some nodes are not closed');
     }
   }
-  return
+  return result;
 };
 
 /**
