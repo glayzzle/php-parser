@@ -289,15 +289,22 @@ parser.prototype.parse = function(code, filename) {
     this.lexer.yylloc.last_column,
     this.lexer.offset
   ];
-  let result = program(childs, this._errors, this._docs, this._tokens);
+  const result = program(childs, this._errors, this._docs, this._tokens);
   if (this.debug) {
-    let errors = this.ast.checkNodes();
+    const errors = this.ast.checkNodes();
     if (errors.length > 0) {
       errors.forEach(function(error) {
-        console.log('Node at line ' + error.position.line + ', column ' + error.position.column);
+        // eslint-disable-next-line no-console
+        console.log(
+          "Node at line " +
+            error.position.line +
+            ", column " +
+            error.position.column
+        );
+        // eslint-disable-next-line no-console
         console.log(error.stack.join("\n"));
       });
-      throw new Error('Some nodes are not closed');
+      throw new Error("Some nodes are not closed");
     }
   }
   return result;
@@ -406,16 +413,18 @@ parser.prototype.node = function(name) {
     node.postBuild = function(self) {
       if (this._docIndex < this._docs.length) {
         if (this._lastNode) {
-          let offset = this.prev[2];
-          let max = this._docIndex; 
-          for(;max < this._docs.length; max++) {
+          const offset = this.prev[2];
+          let max = this._docIndex;
+          for (; max < this._docs.length; max++) {
             if (this._docs[max].loc.start.offset > offset) {
               break;
             }
           }
           if (max > this._docIndex) {
             // inject trailing comment on child node
-            this._lastNode.setTrailingComments(this._docs.slice(this._docIndex, max - 1));
+            this._lastNode.setTrailingComments(
+              this._docs.slice(this._docIndex, max)
+            );
             this._docIndex = max;
           }
         } else if (this.token === this.EOF) {

@@ -369,7 +369,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
     }
     AST.stack[++AST.stackUid] = {
       position: start,
-      stack: (new Error()).stack.split("\n").slice(3, 5)
+      stack: new Error().stack.split("\n").slice(3, 5)
     };
     result.stackUid = AST.stackUid;
   }
@@ -410,7 +410,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
         parser._docIndex = parser._docs.length - docs.length;
       }
     }
-    if(parser.debug) {
+    if (parser.debug) {
       delete AST.stack[result.stackUid];
     }
   };
@@ -418,8 +418,8 @@ AST.prototype.prepare = function(kind, docs, parser) {
 };
 
 AST.prototype.checkNodes = function() {
-  let errors = [];
-  for(let k in AST.stack) {
+  const errors = [];
+  for (const k in AST.stack) {
     if (AST.stack.hasOwnProperty(k)) {
       errors.push(AST.stack[k]);
     }
