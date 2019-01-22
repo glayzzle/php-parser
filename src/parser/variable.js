@@ -152,14 +152,17 @@ module.exports = {
         what = what(name, false, false);
         break;
       case "$":
+        what = this.node("variable");
         this.next().expect(["$", "{", this.tok.T_VARIABLE]);
         if (this.token === "{") {
           // $obj->${$varname}
-          what = this.next().read_expr();
+          name = this.next().read_expr();
           this.expect("}") && this.next();
+          what = what(name, false, true);
         } else {
           // $obj->$$varname
-          what = this.read_expr();
+          name = this.read_expr();
+          what = what(name, false, false);
         }
         break;
       case "{":

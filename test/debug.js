@@ -17,11 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-// leading
-foo();
-// bar
-bar() /* inner */ ;
-// trailing
+get_class($var)::$$property;
 `, { 
     parser: {
       debug: true,

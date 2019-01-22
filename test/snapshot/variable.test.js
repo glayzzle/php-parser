@@ -8,6 +8,17 @@ describe("Test variables", function() {
     )).toMatchSnapshot();
   });
 
+  it("fix 248 - broken ast for `$$$$$`", function() {
+    expect(parser.parseEval(`
+      $foo::$$property;
+      $foo::\${$property};
+      $bar->$$property;
+      $bar->\${$property};
+    `
+    )).toMatchSnapshot();
+  });
+  
+
   it("array destructuring", function() {
     expect(parser.parseEval("[$id1, $name1] = $data[0];")).toMatchSnapshot();
   });

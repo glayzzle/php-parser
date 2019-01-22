@@ -1184,6 +1184,107 @@ Program {
 }
 `;
 
+exports[`Test variables fix 248 - broken ast for \`$$$$$\` 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "property",
+          },
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": true,
+          "kind": "variable",
+          "name": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "property",
+          },
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "property",
+          },
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": Variable {
+          "byref": false,
+          "curly": true,
+          "kind": "variable",
+          "name": Variable {
+            "byref": false,
+            "curly": false,
+            "kind": "variable",
+            "name": "property",
+          },
+        },
+        "what": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test variables fix 253 - can't be parsed \`global\` with multiple \`$\` 1`] = `
 Program {
   "children": Array [
@@ -1231,7 +1332,12 @@ Program {
                 "byref": false,
                 "curly": false,
                 "kind": "variable",
-                "name": "property",
+                "name": Variable {
+                  "byref": false,
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "property",
+                },
               },
             },
           },
