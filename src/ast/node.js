@@ -32,6 +32,38 @@ Node.prototype.setTrailingComments = function(docs) {
 };
 
 /**
+ * Destroying an unused node
+ */
+Node.prototype.destroy = function(node) {
+  if (!node) {
+    throw new Error(
+      "Node already initialized, you must swap with another node"
+    );
+  }
+  if (this.leadingComments) {
+    if (node.leadingComments) {
+      node.leadingComments = Array.concat(
+        this.leadingComments,
+        node.leadingComments
+      );
+    } else {
+      node.leadingComments = this.leadingComments;
+    }
+  }
+  if (this.trailingComments) {
+    if (node.trailingComments) {
+      node.trailingComments = Array.concat(
+        this.trailingComments,
+        node.trailingComments
+      );
+    } else {
+      node.trailingComments = this.trailingComments;
+    }
+  }
+  return node;
+};
+
+/**
  * Includes current token position of the parser
  * @param {*} parser
  */
