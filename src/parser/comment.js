@@ -16,6 +16,7 @@ module.exports = {
       null,
       this
     );
+    const offset = this.lexer.yylloc.first_offset;
     // handle location on comment
     const prev = this.prev;
     this.prev = [
@@ -25,6 +26,7 @@ module.exports = {
     ];
     this.lex();
     result = result(text);
+    result.offset = offset;
     this.prev = prev;
     return result;
   },
@@ -33,6 +35,7 @@ module.exports = {
    */
   read_doc_comment: function() {
     let result = this.ast.prepare("commentblock", null, this);
+    const offset = this.lexer.yylloc.first_offset;
     const text = this.text();
     const prev = this.prev;
     this.prev = [
@@ -42,6 +45,7 @@ module.exports = {
     ];
     this.lex();
     result = result(text);
+    result.offset = offset;
     this.prev = prev;
     return result;
   }

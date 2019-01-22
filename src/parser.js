@@ -416,7 +416,7 @@ parser.prototype.node = function(name) {
           const offset = this.prev[2];
           let max = this._docIndex;
           for (; max < this._docs.length; max++) {
-            if (this._docs[max].loc.start.offset > offset) {
+            if (this._docs[max].offset > offset) {
               break;
             }
           }
