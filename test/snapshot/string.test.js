@@ -1,6 +1,11 @@
 const parser = require("../main");
 
 describe("Test strings", function() {
+
+  it("fix #251", function() {
+    expect(parser.parseEval('$var = "string ${juices[\'FOO\']} string";')).toMatchSnapshot();
+  });
+
   it("fix #144", function() {
     expect(parser.parseEval('"encapsed \\" {$var}";')).toMatchSnapshot();
   });

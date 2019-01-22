@@ -1114,6 +1114,82 @@ bar",
 }
 `;
 
+exports[`Test strings fix #251 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "byref": false,
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"string \${juices['FOO']} string\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "string ",
+                "unicode": false,
+                "value": "string ",
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "byref": false,
+                "curly": true,
+                "kind": "variable",
+                "name": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'FOO'",
+                    "unicode": false,
+                    "value": "FOO",
+                  },
+                  "what": Variable {
+                    "byref": false,
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "juices",
+                  },
+                },
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " string",
+                "unicode": false,
+                "value": " string",
+              },
+              "kind": "encapsedpart",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test strings implement #116 1`] = `
 Program {
   "children": Array [
