@@ -354,8 +354,26 @@ AST.prototype.prepare = function(kind, docs, parser) {
       // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
     }
+    if (typeof result.postBuild === "function") {
+      result.postBuild(astNode);
+    }
+    if (parser.debug) {
+      delete AST.stack[result.stackUid];
+    }
     return self.resolvePrecedence(astNode, parser);
   };
+  if (parser.debug) {
+    if (!AST.stack) {
+      AST.stack = {};
+      AST.stackUid = 1;
+    }
+    AST.stack[++AST.stackUid] = {
+      position: start,
+      stack: (new Error()).stack.split("\n").slice(3, 5)
+    };
+    result.stackUid = AST.stackUid;
+  }
+
   /**
    * Helper to change a node kind
    * @param {String} newKind
@@ -375,6 +393,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
       result.trailingComments = docs;
     }
   };
+
   /**
    * Release a node without using it on the AST
    */
@@ -391,8 +410,22 @@ AST.prototype.prepare = function(kind, docs, parser) {
         parser._docIndex = parser._docs.length - docs.length;
       }
     }
+    if(parser.debug) {
+      delete AST.stack[result.stackUid];
+    }
   };
   return result;
+};
+
+AST.prototype.checkNodes = function() {
+  let errors = [];
+  for(let k in AST.stack) {
+    if (AST.stack.hasOwnProperty(k)) {
+      errors.push(AST.stack[k]);
+    }
+  }
+  AST.stack = {};
+  return errors;
 };
 
 // Define all AST nodes
