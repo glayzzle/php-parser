@@ -132,7 +132,9 @@ module.exports = {
    * ```
    */
   read_variable_list: function(flags) {
-    return this.read_list(
+    const result = this.node("propertystatement");
+
+    const properties = this.read_list(
       /**
        * Reads a variable declaration
        *
@@ -143,20 +145,24 @@ module.exports = {
       function read_variable_declaration() {
         const result = this.node("property");
         this.expect(this.tok.T_VARIABLE);
+        let propName = this.node("identifier");
         const name = this.text().substring(1); // ignore $
         this.next();
+        propName = propName(name);
         if (this.token === ";" || this.token === ",") {
-          return result(name, null, flags);
+          return result(propName, null);
         } else if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-          return result(name, this.next().read_expr(), flags);
+          return result(propName, this.next().read_expr());
         } else {
           this.expect([",", ";", "="]);
-          return result(name, null, flags);
+          return result(propName, null);
         }
       },
       ","
     );
+
+    return result(null, properties, flags);
   },
   /**
    * Reads constant list

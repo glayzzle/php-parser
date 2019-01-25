@@ -99,6 +99,8 @@ const Position = require("./ast/position");
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
+ *     - [PropertyStatement](#propertystatement)
+ *     - [Property](#property)
  *     - [Declaration](#declaration)
  *       - [Class](#class)
  *       - [Interface](#interface)
@@ -106,7 +108,6 @@ const Position = require("./ast/position");
  *       - [Function](#function)
  *         - [Method](#method)
  *       - [Parameter](#parameter)
- *       - [Property](#property)
  * ---
  */
 
@@ -296,8 +297,12 @@ AST.prototype.resolvePrecedence = function(result, parser) {
         result = buffer;
       }
     }
-  } else if (result.kind === "silent" && result.expr.right && !result.expr.parenthesizedExpression) {
-    // overall least precedence 
+  } else if (
+    result.kind === "silent" &&
+    result.expr.right &&
+    !result.expr.parenthesizedExpression
+  ) {
+    // overall least precedence
     buffer = result.expr;
     result.expr = buffer.left;
     buffer.left = result;
@@ -505,6 +510,7 @@ AST.prototype.checkNodes = function() {
   require("./ast/program"),
   require("./ast/property"),
   require("./ast/propertylookup"),
+  require("./ast/propertystatement"),
   require("./ast/reference"),
   require("./ast/retif"),
   require("./ast/return"),
