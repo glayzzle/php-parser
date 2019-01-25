@@ -409,8 +409,10 @@ module.exports = {
     let method;
 
     if (this.is("IDENTIFIER")) {
-      method = this.text();
+      method = this.node("identifier");
+      const methodName = this.text();
       this.next();
+      method = method(methodName);
     } else {
       method = this.read_namespace_name();
 
@@ -421,8 +423,10 @@ module.exports = {
           (this.php7 && this.is("IDENTIFIER"))
         ) {
           trait = method;
-          method = this.text();
+          method = this.node("identifier");
+          const methodName = this.text();
           this.next();
+          method = method(methodName);
         } else {
           this.expect(this.tok.T_STRING);
         }
@@ -452,8 +456,10 @@ module.exports = {
         this.token === this.tok.T_STRING ||
         (this.php7 && this.is("IDENTIFIER"))
       ) {
-        alias = this.text();
+        alias = this.node("identifier");
+        const name = this.text();
         this.next();
+        alias = alias(name);
       } else if (flags === false) {
         // no visibility flags and no name => too bad
         this.expect(this.tok.T_STRING);
