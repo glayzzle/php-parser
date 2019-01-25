@@ -12,14 +12,14 @@ const KIND = "constantstatement";
  * Declares a constants into the current scope
  * @constructor ConstantStatement
  * @extends {Statement}
- * @property {Constant[]} items
+ * @property {Constant[]} constants
  */
 module.exports = Statement.extends(KIND, function ConstantStatement(
   kind,
-  items,
+  constants,
   docs,
   location
 ) {
   Statement.apply(this, [kind || KIND, docs, location]);
-  this.items = items;
+  this.constants = constants;
 });
