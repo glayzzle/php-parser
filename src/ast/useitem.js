@@ -14,7 +14,7 @@ const KIND = "useitem";
  * @extends {Statement}
  * @property {String} name
  * @property {String|null} type - Possible value : function, const
- * @property {String|null} alias
+ * @property {Identifier|null} alias
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
