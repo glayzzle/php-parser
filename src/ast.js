@@ -296,8 +296,12 @@ AST.prototype.resolvePrecedence = function(result, parser) {
         result = buffer;
       }
     }
-  } else if (result.kind === "silent" && result.expr.right && !result.expr.parenthesizedExpression) {
-    // overall least precedence 
+  } else if (
+    result.kind === "silent" &&
+    result.expr.right &&
+    !result.expr.parenthesizedExpression
+  ) {
+    // overall least precedence
     buffer = result.expr;
     result.expr = buffer.left;
     buffer.left = result;
