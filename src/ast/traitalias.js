@@ -18,8 +18,8 @@ const IS_PRIVATE = "private";
  * @constructor TraitAlias
  * @extends {Node}
  * @property {Identifier|null} trait
- * @property {string} method
- * @property {string|null} as
+ * @property {Identifier} method
+ * @property {Identifier|null} as
  * @property {string|null} visibility
  */
 module.exports = Node.extends(KIND, function TraitAlias(

@@ -13,7 +13,7 @@ const KIND = "traitprecedence";
  * @constructor TraitPrecedence
  * @extends {Node}
  * @property {Identifier|null} trait
- * @property {string} method
+ * @property {Identifier} method
  * @property {Identifier[]} instead
  */
 module.exports = Node.extends(KIND, function TraitPrecedence(
