@@ -168,7 +168,7 @@ module.exports = {
    */
   read_parameter: function() {
     const node = this.node("parameter");
-    let name = null;
+    let parameterName = null;
     let value = null;
     let type = null;
     let nullable = false;
@@ -185,13 +185,15 @@ module.exports = {
     const isRef = this.is_reference();
     const isVariadic = this.is_variadic();
     if (this.expect(this.tok.T_VARIABLE)) {
-      name = this.text().substring(1);
+      parameterName = this.node("identifier");
+      const name = this.text().substring(1);
       this.next();
+      parameterName = parameterName(name);
     }
     if (this.token == "=") {
       value = this.next().read_expr();
     }
-    return node(name, type, value, isRef, isVariadic, nullable);
+    return node(parameterName, type, value, isRef, isVariadic, nullable);
   },
   /**
    * Reads a list of arguments
