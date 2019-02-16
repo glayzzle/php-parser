@@ -5,26 +5,23 @@
  */
 "use strict";
 
-const Declaration = require("./declaration");
+const Statement = require("./statement");
 const KIND = "property";
 
 /**
  * Defines a class property
  * @constructor Property
- * @extends {Declaration}
- * @property {boolean} isFinal
- * @property {boolean} isStatic
- * @property {string} visibility
+ * @extends {Statement}
+ * @property {string} name
  * @property {Node|null} value
  */
-module.exports = Declaration.extends(KIND, function Property(
+module.exports = Statement.extends(KIND, function Property(
   name,
   value,
-  flags,
   docs,
   location
 ) {
-  Declaration.apply(this, [KIND, name, docs, location]);
+  Statement.apply(this, [KIND, docs, location]);
+  this.name = name;
   this.value = value;
-  this.parseFlags(flags);
 });
