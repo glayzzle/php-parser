@@ -21,12 +21,12 @@ const IS_PRIVATE = "private";
  */
 const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
   kind,
-  items,
+  constants,
   flags,
   docs,
   location
 ) {
-  ConstantStatement.apply(this, [kind || KIND, items, docs, location]);
+  ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
   this.parseFlags(flags);
 });
 

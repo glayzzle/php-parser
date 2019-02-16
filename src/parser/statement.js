@@ -98,22 +98,24 @@ module.exports = {
    * ```
    */
   read_const_list: function() {
-    const result = this.read_list(
+    return this.read_list(
       function() {
         this.expect(this.tok.T_STRING);
         const result = this.node("constant");
+        let constName = this.node("identifier");
         const name = this.text();
-        if (this.next().expect("=")) {
-          return result(name, this.next().read_expr());
+        this.next();
+        constName = constName(name);
+        if (this.expect("=")) {
+          return result(constName, this.next().read_expr());
         } else {
           // fallback
-          return result(name, null);
+          return result(constName, null);
         }
       },
       ",",
       false
     );
-    return result;
   },
   /**
    * Reads a list of constants declaration

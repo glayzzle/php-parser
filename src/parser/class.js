@@ -186,21 +186,23 @@ module.exports = {
        */
       function read_constant_declaration() {
         const result = this.node("constant");
-        let name = null;
+        let constName = null;
         let value = null;
         if (
           this.token === this.tok.T_STRING ||
           (this.php7 && this.is("IDENTIFIER"))
         ) {
-          name = this.text();
+          constName = this.node("identifier");
+          const name = this.text();
           this.next();
+          constName = constName(name);
         } else {
           this.expect("IDENTIFIER");
         }
         if (this.expect("=")) {
           value = this.next().read_expr();
         }
-        return result(name, value);
+        return result(constName, value);
       },
       ","
     );
