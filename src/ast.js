@@ -176,10 +176,14 @@ AST.prototype.swapLocations = function(target, first, last, parser) {
     target.loc.start = first.loc.start;
     target.loc.end = last.loc.end;
     if (this.withSource) {
-      target.loc.source = parser.lexer._input.substring(
-        target.loc.start.offset,
-        target.loc.end.offset
-      );
+      const startOffset = target.loc.start.offset;
+      let endOffset = target.loc.end.offset;
+
+      if (target.kind === "offsetlookup") {
+        endOffset = endOffset + 1;
+      }
+
+      target.loc.source = parser.lexer._input.substring(startOffset, endOffset);
     }
   }
 };
@@ -193,7 +197,11 @@ AST.prototype.resolvePrecedence = function(result, parser) {
   if (result.kind === "call") {
     // including what argument into location
     this.swapLocations(result, result.what, result, parser);
-  } else if (result.kind === "propertylookup") {
+  } else if (
+    result.kind === "propertylookup" ||
+    result.kind === "staticlookup" ||
+    result.kind === "offsetlookup"
+  ) {
     // including what argument into location
     this.swapLocations(result, result.what, result.offset, parser);
   } else if (result.kind === "bin") {
