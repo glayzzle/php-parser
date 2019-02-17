@@ -176,14 +176,30 @@ AST.prototype.swapLocations = function(target, first, last, parser) {
     target.loc.start = first.loc.start;
     target.loc.end = last.loc.end;
     if (this.withSource) {
-      const startOffset = target.loc.start.offset;
-      let endOffset = target.loc.end.offset;
+      target.loc.source = parser.lexer._input.substring(
+        target.loc.start.offset,
+        target.loc.end.offset
+      );
+    }
+  }
+};
 
-      if (target.kind === "offsetlookup") {
-        endOffset = endOffset + 1;
-      }
-
-      target.loc.source = parser.lexer._input.substring(startOffset, endOffset);
+/**
+ * Includes locations from first & last into the target
+ */
+AST.prototype.resolveLocations = function(target, first, last, parser) {
+  if (this.withPositions) {
+    if (target.loc.start.offset > first.loc.start.offset) {
+      target.loc.start = first.loc.start;
+    }
+    if (target.loc.end.offset < last.loc.end.offset) {
+      target.loc.end = last.loc.end;
+    }
+    if (this.withSource) {
+      target.loc.source = parser.lexer._input.substring(
+        target.loc.start.offset,
+        target.loc.end.offset
+      );
     }
   }
 };
@@ -196,14 +212,14 @@ AST.prototype.resolvePrecedence = function(result, parser) {
   // handling precendence
   if (result.kind === "call") {
     // including what argument into location
-    this.swapLocations(result, result.what, result, parser);
+    this.resolveLocations(result, result.what, result, parser);
   } else if (
     result.kind === "propertylookup" ||
     result.kind === "staticlookup" ||
     result.kind === "offsetlookup"
   ) {
     // including what argument into location
-    this.swapLocations(result, result.what, result.offset, parser);
+    this.resolveLocations(result, result.what, result.offset, parser);
   } else if (result.kind === "bin") {
     if (result.right && !result.right.parenthesizedExpression) {
       if (result.right.kind === "bin") {

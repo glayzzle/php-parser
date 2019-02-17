@@ -1111,7 +1111,7 @@ string";`,
         `
         $var = $var
           // Comment
-          ['foo'] // Comment
+          [ 'foo' ] // Comment
           // Comment
           ['bar'] // Comment
           // Comment
