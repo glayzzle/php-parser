@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: 677b389626c2ff14bcde - 1/7/2019
+ *         Build: e3cf4a77371cc55d1718 - 02/03/2019
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -116,13 +116,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 var Node = __webpack_require__(2);
-var KIND = "statement";
 
+var KIND = "statement";
 /**
  * Any statement.
  * @constructor Statement
  * @extends {Node}
  */
+
 module.exports = Node.extends(KIND, function Statement(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
@@ -140,14 +141,15 @@ module.exports = Node.extends(KIND, function Statement(kind, docs, location) {
 
 
 var Node = __webpack_require__(2);
-var KIND = "expression";
 
+var KIND = "expression";
 /**
  * Any expression node. Since the left-hand side of an assignment may
  * be any expression in general, an expression can also be a pattern.
  * @constructor Expression
  * @extends {Node}
  */
+
 module.exports = Node.extends(KIND, function Expression(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
@@ -163,7 +165,6 @@ module.exports = Node.extends(KIND, function Expression(kind, docs, location) {
  * @url http://glayzzle.com
  */
 
-
 /**
  * A generic AST node
  * @constructor Node
@@ -175,26 +176,58 @@ module.exports = Node.extends(KIND, function Expression(kind, docs, location) {
 
 var Node = function Node(kind, docs, location) {
   this.kind = kind;
+
   if (docs) {
     this.leadingComments = docs;
   }
+
   if (location) {
     this.loc = location;
   }
 };
-
 /**
  * Attach comments to current node
  * @param {*} docs
  */
+
+
 Node.prototype.setTrailingComments = function (docs) {
   this.trailingComments = docs;
 };
+/**
+ * Destroying an unused node
+ */
 
+
+Node.prototype.destroy = function (node) {
+  if (!node) {
+    throw new Error("Node already initialized, you must swap with another node");
+  }
+
+  if (this.leadingComments) {
+    if (node.leadingComments) {
+      node.leadingComments = Array.concat(this.leadingComments, node.leadingComments);
+    } else {
+      node.leadingComments = this.leadingComments;
+    }
+  }
+
+  if (this.trailingComments) {
+    if (node.trailingComments) {
+      node.trailingComments = Array.concat(this.trailingComments, node.trailingComments);
+    } else {
+      node.trailingComments = this.trailingComments;
+    }
+  }
+
+  return node;
+};
 /**
  * Includes current token position of the parser
  * @param {*} parser
  */
+
+
 Node.prototype.includeToken = function (parser) {
   if (this.loc) {
     if (this.loc.end) {
@@ -202,19 +235,22 @@ Node.prototype.includeToken = function (parser) {
       this.loc.end.column = parser.lexer.yylloc.last_column;
       this.loc.end.offset = parser.lexer.offset;
     }
+
     if (parser.ast.withSource) {
       this.loc.source = parser.lexer._input.substring(this.loc.start.offset, parser.lexer.offset);
     }
   }
+
   return this;
 };
-
 /**
  * Helper for extending the Node class
  * @param {String} type
  * @param {Function} constructor
  * @return {Function}
  */
+
+
 Node.extends = function (type, constructor) {
   constructor.prototype = Object.create(this.prototype);
   constructor.extends = this.extends;
@@ -238,8 +274,8 @@ module.exports = Node;
 
 
 var Expression = __webpack_require__(1);
-var KIND = "literal";
 
+var KIND = "literal";
 /**
  * Defines an array structure
  * @constructor Literal
@@ -247,9 +283,11 @@ var KIND = "literal";
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value
  */
+
 module.exports = Expression.extends(KIND, function Literal(kind, value, raw, docs, location) {
   Expression.apply(this, [kind || KIND, docs, location]);
   this.value = value;
+
   if (raw) {
     this.raw = raw;
   }
@@ -267,50 +305,18 @@ module.exports = Expression.extends(KIND, function Literal(kind, value, raw, doc
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "declaration";
+var Expr = __webpack_require__(1);
 
-var IS_UNDEFINED = "";
-var IS_PUBLIC = "public";
-var IS_PROTECTED = "protected";
-var IS_PRIVATE = "private";
-
+var KIND = "operation";
 /**
- * A declaration statement (function, class, interface...)
- * @constructor Declaration
- * @extends {Statement}
- * @property {Identifier|string} name
+ * Defines binary operations
+ * @constructor Operation
+ * @extends {Expression}
  */
-var Declaration = Statement.extends(KIND, function Declaration(kind, name, docs, location) {
-  Statement.apply(this, [kind || KIND, docs, location]);
-  this.name = name;
+
+module.exports = Expr.extends(KIND, function Operation(kind, docs, location) {
+  Expr.apply(this, [kind || KIND, docs, location]);
 });
-
-/**
- * Generic flags parser
- * @param {Integer[]} flags
- * @return {void}
- */
-Declaration.prototype.parseFlags = function (flags) {
-  this.isAbstract = flags[2] === 1;
-  this.isFinal = flags[2] === 2;
-  if (this.kind !== "class") {
-    if (flags[0] === -1) {
-      this.visibility = IS_UNDEFINED;
-    } else if (flags[0] === null) {
-      this.visibility = null;
-    } else if (flags[0] === 0) {
-      this.visibility = IS_PUBLIC;
-    } else if (flags[0] === 1) {
-      this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
-      this.visibility = IS_PRIVATE;
-    }
-    this.isStatic = flags[1] === 1;
-  }
-};
-
-module.exports = Declaration;
 
 /***/ }),
 /* 5 */
@@ -324,17 +330,52 @@ module.exports = Declaration;
  */
 
 
-var Expr = __webpack_require__(1);
-var KIND = "operation";
+var Statement = __webpack_require__(0);
 
+var KIND = "declaration";
+var IS_UNDEFINED = "";
+var IS_PUBLIC = "public";
+var IS_PROTECTED = "protected";
+var IS_PRIVATE = "private";
 /**
- * Defines binary operations
- * @constructor Operation
- * @extends {Expression}
+ * A declaration statement (function, class, interface...)
+ * @constructor Declaration
+ * @extends {Statement}
+ * @property {Identifier|string} name
  */
-module.exports = Expr.extends(KIND, function Operation(kind, docs, location) {
-  Expr.apply(this, [kind || KIND, docs, location]);
+
+var Declaration = Statement.extends(KIND, function Declaration(kind, name, docs, location) {
+  Statement.apply(this, [kind || KIND, docs, location]);
+  this.name = name;
 });
+/**
+ * Generic flags parser
+ * @param {Integer[]} flags
+ * @return {void}
+ */
+
+Declaration.prototype.parseFlags = function (flags) {
+  this.isAbstract = flags[2] === 1;
+  this.isFinal = flags[2] === 2;
+
+  if (this.kind !== "class") {
+    if (flags[0] === -1) {
+      this.visibility = IS_UNDEFINED;
+    } else if (flags[0] === null) {
+      this.visibility = null;
+    } else if (flags[0] === 0) {
+      this.visibility = IS_PUBLIC;
+    } else if (flags[0] === 1) {
+      this.visibility = IS_PROTECTED;
+    } else if (flags[0] === 2) {
+      this.visibility = IS_PRIVATE;
+    }
+
+    this.isStatic = flags[1] === 1;
+  }
+};
+
+module.exports = Declaration;
 
 /***/ }),
 /* 6 */
@@ -349,17 +390,17 @@ module.exports = Expr.extends(KIND, function Operation(kind, docs, location) {
 
 
 var Node = __webpack_require__(2);
-var KIND = "reference";
 
+var KIND = "reference";
 /**
  * Defines a reference node
  * @constructor Reference
  * @extends {Node}
  */
+
 var Reference = Node.extends(KIND, function Reference(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
-
 module.exports = Reference;
 
 /***/ }),
@@ -375,14 +416,15 @@ module.exports = Reference;
 
 
 var Statement = __webpack_require__(0);
-var KIND = "block";
 
+var KIND = "block";
 /**
  * A block statement, i.e., a sequence of statements surrounded by braces.
  * @constructor Block
  * @extends {Statement}
  * @property {Node[]} children
  */
+
 module.exports = Statement.extends(KIND, function Block(kind, children, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.children = children.filter(Boolean);
@@ -401,8 +443,8 @@ module.exports = Statement.extends(KIND, function Block(kind, children, docs, lo
 
 
 var Expr = __webpack_require__(1);
-var KIND = "lookup";
 
+var KIND = "lookup";
 /**
  * Lookup on an offset in the specified object
  * @constructor Lookup
@@ -410,6 +452,7 @@ var KIND = "lookup";
  * @property {Expression} what
  * @property {Expression} offset
  */
+
 module.exports = Expr.extends(KIND, function Lookup(kind, what, offset, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
   this.what = what;
@@ -429,13 +472,14 @@ module.exports = Expr.extends(KIND, function Lookup(kind, what, offset, docs, lo
 
 
 var Node = __webpack_require__(2);
-
 /**
  * Abstract documentation node (ComentLine or CommentBlock)
  * @constructor Comment
  * @extends {Node}
  * @property {String} value
  */
+
+
 module.exports = Node.extends("comment", function Comment(kind, value, docs, location) {
   Node.apply(this, [kind, docs, location]);
   this.value = value;
@@ -454,17 +498,18 @@ module.exports = Node.extends("comment", function Comment(kind, value, docs, loc
 
 
 var Statement = __webpack_require__(0);
-var KIND = "constantstatement";
 
+var KIND = "constantstatement";
 /**
  * Declares a constants into the current scope
  * @constructor ConstantStatement
  * @extends {Statement}
- * @property {Constant[]} items
+ * @property {Constant[]} constants
  */
-module.exports = Statement.extends(KIND, function ConstantStatement(kind, items, docs, location) {
+
+module.exports = Statement.extends(KIND, function ConstantStatement(kind, constants, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
-  this.items = items;
+  this.constants = constants;
 });
 
 /***/ }),
@@ -479,9 +524,9 @@ module.exports = Statement.extends(KIND, function ConstantStatement(kind, items,
  */
 
 
-var Declaration = __webpack_require__(4);
-var KIND = "function";
+var Declaration = __webpack_require__(5);
 
+var KIND = "function";
 /**
  * Defines a classic function
  * @constructor Function
@@ -492,6 +537,7 @@ var KIND = "function";
  * @property {boolean} nullable
  * @property {Block|null} body
  */
+
 module.exports = Declaration.extends(KIND, function _Function(name, args, byref, type, nullable, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.arguments = args;
@@ -513,37 +559,43 @@ module.exports = Declaration.extends(KIND, function _Function(name, args, byref,
  */
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var lexer = __webpack_require__(18);
-var parser = __webpack_require__(28);
-var tokens = __webpack_require__(44);
-var AST = __webpack_require__(45);
 
+var parser = __webpack_require__(28);
+
+var tokens = __webpack_require__(44);
+
+var AST = __webpack_require__(45);
 /**
  * @private
  */
+
+
 function combine(src, to) {
   var keys = Object.keys(src);
   var i = keys.length;
+
   while (i--) {
     var k = keys[i];
     var val = src[k];
+
     if (val === null) {
       delete to[k];
     } else if (typeof val === "function") {
       to[k] = val.bind(to);
     } else if (Array.isArray(val)) {
       to[k] = Array.isArray(to[k]) ? to[k].concat(val) : val;
-    } else if ((typeof val === "undefined" ? "undefined" : _typeof(val)) === "object") {
+    } else if (_typeof(val) === "object") {
       to[k] = _typeof(to[k]) === "object" ? combine(val, to[k]) : val;
     } else {
       to[k] = val;
     }
   }
+
   return to;
 }
-
 /**
  * Initialise a new parser instance with the specified options
  *
@@ -576,80 +628,91 @@ function combine(src, to) {
  * @property {AST} ast
  * @property {Object} tokens
  */
+
+
 var engine = function engine(options) {
   if (typeof this === "function") {
     return new this(options);
   }
+
   this.tokens = tokens;
   this.lexer = new lexer(this);
   this.ast = new AST();
   this.parser = new parser(this.lexer, this.ast);
-  if (options && (typeof options === "undefined" ? "undefined" : _typeof(options)) === "object") {
+
+  if (options && _typeof(options) === "object") {
     // disable php7 from lexer if already disabled from parser
     if (options.parser && options.parser.php7 === false) {
       if (!options.lexer) {
         options.lexer = {};
       }
+
       options.lexer.php7 = false;
     }
+
     combine(options, this);
   }
 };
-
 /**
  * Check if the inpyt is a buffer or a string
  * @param  {Buffer|String} buffer Input value that can be either a buffer or a string
  * @return {String}   Returns the string from input
  */
+
+
 var getStringBuffer = function getStringBuffer(buffer) {
   return Buffer.isBuffer(buffer) ? buffer.toString() : buffer;
 };
-
 /**
  * Creates a new instance (Helper)
  * @param {Object} options
  * @return {Engine}
  * @private
  */
+
+
 engine.create = function (options) {
   return new engine(options);
 };
-
 /**
  * Evaluate the buffer
  * @private
  */
+
+
 engine.parseEval = function (buffer, options) {
   var self = new engine(options);
   return self.parseEval(buffer);
 };
-
 /**
  * Parse an evaluating mode string (no need to open php tags)
  * @param {String} buffer
  * @return {Program}
  */
+
+
 engine.prototype.parseEval = function (buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
   return this.parser.parse(buffer, "eval");
 };
-
 /**
  * Static function that parse a php code with open/close tags
  * @private
  */
+
+
 engine.parseCode = function (buffer, filename, options) {
-  if ((typeof filename === "undefined" ? "undefined" : _typeof(filename)) === "object" && !options) {
+  if (_typeof(filename) === "object" && !options) {
     // retro-compatibility
     options = filename;
     filename = "unknown";
   }
+
   var self = new engine(options);
   return self.parseCode(buffer, filename);
 };
-
 /**
  * Function that parse a php code with open/close tags
  *
@@ -670,28 +733,32 @@ engine.parseCode = function (buffer, filename, options) {
  * @param {String} filename - Filename
  * @return {Program}
  */
+
+
 engine.prototype.parseCode = function (buffer, filename) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
   return this.parser.parse(buffer, filename);
 };
-
 /**
  * Split the buffer into tokens
  * @private
  */
+
+
 engine.tokenGetAll = function (buffer, options) {
   var self = new engine(options);
   return self.tokenGetAll(buffer);
 };
-
 /**
  * Extract tokens from the specified buffer.
  * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
  * @param {String} buffer
  * @return {String[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
  */
+
+
 engine.prototype.tokenGetAll = function (buffer) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = true;
@@ -701,28 +768,30 @@ engine.prototype.tokenGetAll = function (buffer) {
   this.lexer.setInput(buffer);
   var token = this.lexer.lex() || EOF;
   var result = [];
+
   while (token != EOF) {
     var entry = this.lexer.yytext;
+
     if (names.hasOwnProperty(token)) {
       entry = [names[token], entry, this.lexer.yylloc.first_line];
     }
+
     result.push(entry);
     token = this.lexer.lex() || EOF;
   }
+
   return result;
-};
+}; // exports the function
 
-// exports the function
-module.exports = engine;
 
-// makes libraries public
+module.exports = engine; // makes libraries public
+
 module.exports.tokens = tokens;
 module.exports.lexer = lexer;
 module.exports.AST = AST;
 module.exports.parser = parser;
-module.exports.combine = combine;
+module.exports.combine = combine; // allow the default export in index.d.ts
 
-// allow the default export in index.d.ts
 module.exports.default = engine;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(13).Buffer))
 
@@ -2536,7 +2605,7 @@ g = (function() {
 
 try {
 	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
+	g = g || new Function("return this")();
 } catch (e) {
 	// This works if the window reference is available
 	if (typeof window === "object") g = window;
@@ -2819,7 +2888,6 @@ module.exports = Array.isArray || function (arr) {
  * @url http://glayzzle.com
  */
 
-
 /**
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
@@ -2835,7 +2903,7 @@ module.exports = Array.isArray || function (arr) {
  * @property {Object} castKeywords List of php keywords for type casting
  */
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var lexer = function lexer(engine) {
   this.engine = engine;
@@ -2940,10 +3008,11 @@ var lexer = function lexer(engine) {
     unset: this.tok.T_UNSET_CAST
   };
 };
-
 /**
  * Initialize the lexer with the specified input
  */
+
+
 lexer.prototype.setInput = function (input) {
   this._input = input;
   this.size = input.length;
@@ -2963,6 +3032,7 @@ lexer.prototype.setInput = function (input) {
   };
   this.tokens = [];
   this.done = this.offset >= this.size;
+
   if (!this.all_tokens && this.mode_eval) {
     this.conditionStack = ["INITIAL"];
     this.begin("ST_IN_SCRIPTING");
@@ -2970,21 +3040,25 @@ lexer.prototype.setInput = function (input) {
     this.conditionStack = [];
     this.begin("INITIAL");
   }
+
   return this;
 };
-
 /**
  * consumes and returns one char from the input
  */
+
+
 lexer.prototype.input = function () {
   var ch = this._input[this.offset];
   if (!ch) return "";
   this.yytext += ch;
   this.offset++;
+
   if (ch === "\r" && this._input[this.offset] === "\n") {
     this.yytext += "\n";
     this.offset++;
   }
+
   if (ch === "\n" || ch === "\r") {
     this.yylloc.last_line = ++this.yylineno;
     this.yyprevcol = this.yylloc.last_column;
@@ -2992,20 +3066,24 @@ lexer.prototype.input = function () {
   } else {
     this.yylloc.last_column++;
   }
+
   return ch;
 };
-
 /**
  * revert eating specified size
  */
+
+
 lexer.prototype.unput = function (size) {
   if (size === 1) {
     // 1 char unput (most cases)
     this.offset--;
+
     if (this._input[this.offset] === "\n" && this._input[this.offset - 1] === "\r") {
       this.offset--;
       size++;
     }
+
     if (this._input[this.offset] === "\r" || this._input[this.offset] === "\n") {
       this.yylloc.last_line--;
       this.yylineno--;
@@ -3013,21 +3091,26 @@ lexer.prototype.unput = function (size) {
     } else {
       this.yylloc.last_column--;
     }
+
     this.yytext = this.yytext.substring(0, this.yytext.length - size);
   } else if (size > 0) {
     this.offset -= size;
+
     if (size < this.yytext.length) {
-      this.yytext = this.yytext.substring(0, this.yytext.length - size);
-      // re-calculate position
+      this.yytext = this.yytext.substring(0, this.yytext.length - size); // re-calculate position
+
       this.yylloc.last_line = this.yylloc.first_line;
       this.yylloc.last_column = this.yyprevcol = this.yylloc.first_column;
+
       for (var i = 0; i < this.yytext.length; i++) {
         var c = this.yytext[i];
+
         if (c === "\r") {
           c = this.yytext[++i];
           this.yyprevcol = this.yylloc.last_column;
           this.yylloc.last_line++;
           this.yylloc.last_column = 0;
+
           if (c !== "\n") {
             if (c === "\r") {
               this.yylloc.last_line++;
@@ -3043,6 +3126,7 @@ lexer.prototype.unput = function (size) {
           this.yylloc.last_column++;
         }
       }
+
       this.yylineno = this.yylloc.last_line;
     } else {
       // reset full text
@@ -3053,39 +3137,43 @@ lexer.prototype.unput = function (size) {
   }
 
   return this;
-};
+}; // check if the text matches
 
-// check if the text matches
+
 lexer.prototype.tryMatch = function (text) {
   return text === this.ahead(text.length);
-};
+}; // check if the text matches
 
-// check if the text matches
+
 lexer.prototype.tryMatchCaseless = function (text) {
   return text === this.ahead(text.length).toLowerCase();
-};
+}; // look ahead
 
-// look ahead
+
 lexer.prototype.ahead = function (size) {
   var text = this._input.substring(this.offset, this.offset + size);
+
   if (text[text.length - 1] === "\r" && this._input[this.offset + size + 1] === "\n") {
     text += "\n";
   }
-  return text;
-};
 
-// consume the specified size
+  return text;
+}; // consume the specified size
+
+
 lexer.prototype.consume = function (size) {
   for (var i = 0; i < size; i++) {
     var ch = this._input[this.offset];
     if (!ch) break;
     this.yytext += ch;
     this.offset++;
+
     if (ch === "\r" && this._input[this.offset] === "\n") {
       this.yytext += "\n";
       this.offset++;
       i++;
     }
+
     if (ch === "\n" || ch === "\r") {
       this.yylloc.last_line = ++this.yylineno;
       this.yyprevcol = this.yylloc.last_column;
@@ -3094,12 +3182,14 @@ lexer.prototype.consume = function (size) {
       this.yylloc.last_column++;
     }
   }
+
   return this;
 };
-
 /**
  * Gets the current state
  */
+
+
 lexer.prototype.getState = function () {
   return {
     yytext: this.yytext,
@@ -3115,10 +3205,11 @@ lexer.prototype.getState = function () {
     }
   };
 };
-
 /**
  * Sets the current lexer state
  */
+
+
 lexer.prototype.setState = function (state) {
   this.yytext = state.yytext;
   this.offset = state.offset;
@@ -3126,20 +3217,21 @@ lexer.prototype.setState = function (state) {
   this.yyprevcol = state.yyprevcol;
   this.yylloc = state.yylloc;
   return this;
-};
+}; // prepend next token
 
-// prepend next token
+
 lexer.prototype.appendToken = function (value, ahead) {
   this.tokens.push([value, ahead]);
   return this;
-};
+}; // return next match that has a token
 
-// return next match that has a token
+
 lexer.prototype.lex = function () {
   this.yylloc.prev_offset = this.offset;
   this.yylloc.prev_line = this.yylloc.last_line;
   this.yylloc.prev_column = this.yylloc.last_column;
   var token = this.next() || this.lex();
+
   if (!this.all_tokens) {
     while (token === this.tok.T_WHITESPACE || // ignore white space
     !this.comment_tokens && (token === this.tok.T_COMMENT || // ignore single lines comments
@@ -3148,15 +3240,18 @@ lexer.prototype.lex = function () {
     token === this.tok.T_OPEN_TAG) {
       token = this.next() || this.lex();
     }
+
     if (token == this.tok.T_OPEN_TAG_WITH_ECHO) {
       // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1683
       // open tag with echo statement
       return this.tok.T_ECHO;
     } else if (token === this.tok.T_CLOSE_TAG) {
       // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
-      return ";"; /* implicit ; */
+      return ";";
+      /* implicit ; */
     }
   }
+
   if (!this.yylloc.prev_offset) {
     this.yylloc.prev_offset = this.yylloc.first_offset;
     this.yylloc.prev_line = this.yylloc.first_line;
@@ -3165,83 +3260,99 @@ lexer.prototype.lex = function () {
   /*else if (this.yylloc.prev_offset === this.offset && this.offset !== this.size) {
     throw new Error('Infinite loop @ ' + this.offset + ' / ' + this.size);
   }*/
-  return token;
-};
 
-// activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
+
+  return token;
+}; // activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
+
+
 lexer.prototype.begin = function (condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
   this.stateCb = this["match" + condition];
+
   if (typeof this.stateCb !== "function") {
     throw new Error('Undefined condition state "' + condition + '"');
   }
-  return this;
-};
 
-// pop the previously active lexer condition state off the condition stack
+  return this;
+}; // pop the previously active lexer condition state off the condition stack
+
+
 lexer.prototype.popState = function () {
   var n = this.conditionStack.length - 1;
   var condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
   this.stateCb = this["match" + this.curCondition];
+
   if (typeof this.stateCb !== "function") {
     throw new Error('Undefined condition state "' + this.curCondition + '"');
   }
-  return condition;
-};
 
-// return next match in input
+  return condition;
+}; // return next match in input
+
+
 lexer.prototype.next = function () {
-  var token = void 0;
+  var token;
+
   if (!this._input) {
     this.done = true;
   }
+
   this.yylloc.first_offset = this.offset;
   this.yylloc.first_line = this.yylloc.last_line;
   this.yylloc.first_column = this.yylloc.last_column;
   this.yytext = "";
+
   if (this.done) {
     this.yylloc.prev_offset = this.yylloc.first_offset;
     this.yylloc.prev_line = this.yylloc.first_line;
     this.yylloc.prev_column = this.yylloc.first_column;
     return this.EOF;
   }
+
   if (this.tokens.length > 0) {
     token = this.tokens.shift();
+
     if (_typeof(token[1]) === "object") {
       this.setState(token[1]);
     } else {
       this.consume(token[1]);
     }
+
     token = token[0];
   } else {
     token = this.stateCb.apply(this, []);
   }
+
   if (this.offset >= this.size && this.tokens.length === 0) {
     this.done = true;
   }
+
   if (this.debug) {
     var tName = token;
+
     if (typeof tName === "number") {
       tName = this.engine.tokens.values[tName];
     } else {
       tName = '"' + tName + '"';
     }
-    var e = new Error(tName + "\tfrom " + this.yylloc.first_line + "," + this.yylloc.first_column + "\t - to " + this.yylloc.last_line + "," + this.yylloc.last_column + '\t"' + this.yytext + '"');
-    // eslint-disable-next-line no-console
+
+    var e = new Error(tName + "\tfrom " + this.yylloc.first_line + "," + this.yylloc.first_column + "\t - to " + this.yylloc.last_line + "," + this.yylloc.last_column + '\t"' + this.yytext + '"'); // eslint-disable-next-line no-console
+
     console.error(e.stack);
   }
-  return token;
-};
 
-// extends the lexer with states
+  return token;
+}; // extends the lexer with states
+
+
 [__webpack_require__(19), __webpack_require__(20), __webpack_require__(21), __webpack_require__(23), __webpack_require__(24), __webpack_require__(25), __webpack_require__(26), __webpack_require__(27)].forEach(function (ext) {
   for (var k in ext) {
     lexer.prototype[k] = ext[k];
   }
 });
-
 module.exports = lexer;
 
 /***/ }),
@@ -3263,6 +3374,7 @@ module.exports = {
   T_COMMENT: function T_COMMENT() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (ch === "\n" || ch === "\r") {
         return this.tok.T_COMMENT;
       } else if (ch === "?" && !this.aspTagMode && this._input[this.offset] === ">") {
@@ -3273,34 +3385,42 @@ module.exports = {
         return this.tok.T_COMMENT;
       }
     }
+
     return this.tok.T_COMMENT;
   },
+
   /**
    * Behaviour : https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927
    */
   T_DOC_COMMENT: function T_DOC_COMMENT() {
     var ch = this.input();
     var token = this.tok.T_COMMENT;
+
     if (ch === "*") {
       // started with '/*' , check is next is '*'
       ch = this.input();
+
       if (this.is_WHITESPACE()) {
         // check if next is WHITESPACE
         token = this.tok.T_DOC_COMMENT;
       }
+
       if (ch === "/") {
         return token;
       } else {
         this.unput(1); // reset
       }
     }
+
     while (this.offset < this.size) {
       ch = this.input();
+
       if (ch === "*" && this._input[this.offset] === "/") {
         this.input();
         break;
       }
     }
+
     return token;
   }
 };
@@ -3325,24 +3445,29 @@ module.exports = {
     } else {
       this.begin("ST_IN_SCRIPTING");
     }
+
     return this;
   },
   matchINITIAL: function matchINITIAL() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (ch == "<") {
         ch = this.ahead(1);
+
         if (ch == "?") {
           if (this.tryMatch("?=")) {
             this.unput(1).appendToken(this.tok.T_OPEN_TAG_WITH_ECHO, 3).nextINITIAL();
             break;
           } else if (this.tryMatchCaseless("?php")) {
             ch = this._input[this.offset + 4];
+
             if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {
               this.unput(1).appendToken(this.tok.T_OPEN_TAG, 6).nextINITIAL();
               break;
             }
           }
+
           if (this.short_tags) {
             this.unput(1).appendToken(this.tok.T_OPEN_TAG, 2).nextINITIAL();
             break;
@@ -3360,6 +3485,7 @@ module.exports = {
         }
       }
     }
+
     if (this.yytext.length > 0) {
       return this.tok.T_INLINE_HTML;
     } else {
@@ -3379,11 +3505,11 @@ module.exports = {
  * @url http://glayzzle.com
  */
 
-
 /* istanbul ignore else  */
 
 var MAX_LENGTH_OF_LONG = 10;
 var long_min_digits = "2147483648";
+
 if (process.arch == "x64") {
   MAX_LENGTH_OF_LONG = 19;
   long_min_digits = "9223372036854775808";
@@ -3393,11 +3519,13 @@ module.exports = {
   consume_NUM: function consume_NUM() {
     var ch = this.yytext[0];
     var hasPoint = this.yytext[0] === ".";
+
     if (ch === "0") {
-      ch = this.input();
-      // check if hexa
+      ch = this.input(); // check if hexa
+
       if (ch === "x" || ch === "X") {
         ch = this.input();
+
         if (this.is_HEX()) {
           return this.consume_HNUM();
         } else {
@@ -3405,6 +3533,7 @@ module.exports = {
         }
       } else if (ch === "b" || ch === "B") {
         ch = this.input();
+
         if (ch === "0" || ch === "1") {
           return this.consume_BNUM();
         } else {
@@ -3417,13 +3546,16 @@ module.exports = {
 
     while (this.offset < this.size) {
       ch = this.input();
+
       if (!this.is_NUM()) {
         if (ch === "." && !hasPoint) {
           hasPoint = true;
         } else if (ch === "e" || ch === "E") {
           ch = this.input();
+
           if (ch === "+" || ch === "-") {
             ch = this.input();
+
             if (this.is_NUM()) {
               this.consume_LNUM();
               return this.tok.T_DNUMBER;
@@ -3444,6 +3576,7 @@ module.exports = {
         }
       }
     }
+
     if (hasPoint) {
       return this.tok.T_DNUMBER;
     } else if (this.yytext.length < MAX_LENGTH_OF_LONG - 1) {
@@ -3452,6 +3585,7 @@ module.exports = {
       if (this.yytext.length < MAX_LENGTH_OF_LONG || this.yytext.length == MAX_LENGTH_OF_LONG && this.yytext < long_min_digits) {
         return this.tok.T_LNUMBER;
       }
+
       return this.tok.T_DNUMBER;
     }
   },
@@ -3459,34 +3593,41 @@ module.exports = {
   consume_HNUM: function consume_HNUM() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (!this.is_HEX()) {
         if (ch) this.unput(1);
         break;
       }
     }
+
     return this.tok.T_LNUMBER;
   },
   // read a generic number
   consume_LNUM: function consume_LNUM() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (!this.is_NUM()) {
         if (ch) this.unput(1);
         break;
       }
     }
+
     return this.tok.T_LNUMBER;
   },
   // read binary
   consume_BNUM: function consume_BNUM() {
-    var ch = void 0;
+    var ch;
+
     while (this.offset < this.size) {
       ch = this.input();
+
       if (ch !== "0" && ch !== "1") {
         if (ch) this.unput(1);
         break;
       }
     }
+
     return this.tok.T_LNUMBER;
   }
 };
@@ -3697,12 +3838,15 @@ process.umask = function() { return 0; };
 module.exports = {
   matchST_LOOKING_FOR_PROPERTY: function matchST_LOOKING_FOR_PROPERTY() {
     var ch = this.input();
+
     if (ch === "-") {
       ch = this.input();
+
       if (ch === ">") {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1296
         return this.tok.T_OBJECT_OPERATOR;
       }
+
       if (ch) this.unput(1);
     } else if (this.is_WHITESPACE()) {
       return this.tok.T_WHITESPACE;
@@ -3711,22 +3855,23 @@ module.exports = {
       this.consume_LABEL();
       this.popState();
       return this.tok.T_STRING;
-    }
-    // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1306
+    } // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1306
+
+
     this.popState();
     if (ch) this.unput(1);
     return false;
   },
   matchST_LOOKING_FOR_VARNAME: function matchST_LOOKING_FOR_VARNAME() {
-    var ch = this.input();
+    var ch = this.input(); // SHIFT STATE
 
-    // SHIFT STATE
     this.popState();
     this.begin("ST_IN_SCRIPTING");
 
     if (this.is_LABEL_START()) {
       this.consume_LABEL();
       ch = this.input();
+
       if (ch === "[" || ch === "}") {
         this.unput(1);
         return this.tok.T_STRING_VARNAME;
@@ -3737,12 +3882,14 @@ module.exports = {
     } else {
       // any char (thats not a label start sequence)
       if (ch) this.unput(1);
-    }
-    // stops looking for a varname and starts the scripting mode
+    } // stops looking for a varname and starts the scripting mode
+
+
     return false;
   },
   matchST_VAR_OFFSET: function matchST_VAR_OFFSET() {
     var ch = this.input();
+
     if (this.is_NUM()) {
       this.consume_NUM();
       return this.tok.T_NUM_STRING;
@@ -3751,6 +3898,7 @@ module.exports = {
       return "]";
     } else if (ch === "$") {
       this.input();
+
       if (this.is_LABEL_START()) {
         this.consume_LABEL();
         return this.tok.T_VARIABLE;
@@ -3785,6 +3933,7 @@ module.exports = {
 module.exports = {
   matchST_IN_SCRIPTING: function matchST_IN_SCRIPTING() {
     var ch = this.input();
+
     switch (ch) {
       case " ":
       case "\t":
@@ -3792,8 +3941,10 @@ module.exports = {
       case "\r":
       case "\r\n":
         return this.T_WHITESPACE();
+
       case "#":
         return this.T_COMMENT();
+
       case "/":
         if (this._input[this.offset] === "/") {
           return this.T_COMMENT();
@@ -3801,57 +3952,78 @@ module.exports = {
           this.input();
           return this.T_DOC_COMMENT();
         }
+
         return this.consume_TOKEN();
+
       case "'":
         return this.T_CONSTANT_ENCAPSED_STRING();
+
       case '"':
         return this.ST_DOUBLE_QUOTES();
+
       case "`":
         this.begin("ST_BACKQUOTE");
         return "`";
+
       case "?":
         if (!this.aspTagMode && this.tryMatch(">")) {
           this.input();
           var nextCH = this._input[this.offset];
           if (nextCH === "\n" || nextCH === "\r") this.input();
+
           if (this.conditionStack.length > 1) {
             this.begin("INITIAL");
           }
+
           return this.tok.T_CLOSE_TAG;
         }
+
         return this.consume_TOKEN();
+
       case "%":
         if (this.aspTagMode && this._input[this.offset] === ">") {
           this.input(); // consume the '>'
+
           ch = this._input[this.offset]; // read next
+
           if (ch === "\n" || ch === "\r") {
             this.input(); // consume the newline
           }
+
           this.aspTagMode = false;
+
           if (this.conditionStack.length > 1) {
             this.begin("INITIAL");
           }
+
           return this.tok.T_CLOSE_TAG;
         }
+
         return this.consume_TOKEN();
+
       case "{":
         this.begin("ST_IN_SCRIPTING");
         return "{";
+
       case "}":
         if (this.conditionStack.length > 2) {
           // Return to HEREDOC/ST_DOUBLE_QUOTES mode
           this.popState();
         }
+
         return "}";
+
       default:
         if (ch === ".") {
           ch = this.input();
+
           if (this.is_NUM()) {
             return this.consume_NUM();
           } else {
             if (ch) this.unput(1);
           }
         }
+
         if (this.is_NUM()) {
           return this.consume_NUM();
         } else if (this.is_LABEL_START()) {
@@ -3859,19 +4031,23 @@ module.exports = {
         } else if (this.is_TOKEN()) {
           return this.consume_TOKEN();
         }
+
     }
+
     throw new Error('Bad terminal sequence "' + ch + '" at line ' + this.yylineno + " (offset " + this.offset + ")");
   },
-
   T_WHITESPACE: function T_WHITESPACE() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {
         continue;
       }
+
       if (ch) this.unput(1);
       break;
     }
+
     return this.tok.T_WHITESPACE;
   }
 };
@@ -3890,126 +4066,148 @@ module.exports = {
 
 module.exports = {
   T_CONSTANT_ENCAPSED_STRING: function T_CONSTANT_ENCAPSED_STRING() {
-    var ch = void 0;
+    var ch;
+
     while (this.offset < this.size) {
       ch = this.input();
+
       if (ch == "\\") {
         this.input();
       } else if (ch == "'") {
         break;
       }
     }
+
     return this.tok.T_CONSTANT_ENCAPSED_STRING;
   },
   // check if matching a HEREDOC state
   is_HEREDOC: function is_HEREDOC() {
     var revert = this.offset;
-    if (this._input[this.offset - 1] === "<" && this._input[this.offset] === "<" && this._input[this.offset + 1] === "<") {
-      this.offset += 3;
 
-      // optional tabs / spaces
+    if (this._input[this.offset - 1] === "<" && this._input[this.offset] === "<" && this._input[this.offset + 1] === "<") {
+      this.offset += 3; // optional tabs / spaces
+
       if (this.is_TABSPACE()) {
         while (this.offset < this.size) {
           this.offset++;
+
           if (!this.is_TABSPACE()) {
             break;
           }
         }
-      }
+      } // optional quotes
 
-      // optional quotes
+
       var tChar = this._input[this.offset - 1];
+
       if (tChar === "'" || tChar === '"') {
         this.offset++;
       } else {
         tChar = null;
-      }
+      } // required label
 
-      // required label
+
       if (this.is_LABEL_START()) {
         var yyoffset = this.offset - 1;
+
         while (this.offset < this.size) {
           this.offset++;
+
           if (!this.is_LABEL()) {
             break;
           }
         }
+
         var yylabel = this._input.substring(yyoffset, this.offset - 1);
+
         if (!tChar || tChar === this._input[this.offset - 1]) {
           // required ending quote
-          if (tChar) this.offset++;
-          // require newline
+          if (tChar) this.offset++; // require newline
+
           if (this._input[this.offset - 1] === "\r" || this._input[this.offset - 1] === "\n") {
             // go go go
             this.heredoc_label = yylabel;
             yyoffset = this.offset - revert;
             this.offset = revert;
             this.consume(yyoffset);
+
             if (tChar === "'") {
               this.begin("ST_NOWDOC");
             } else {
               this.begin("ST_HEREDOC");
             }
+
             return this.tok.T_START_HEREDOC;
           }
         }
       }
     }
+
     this.offset = revert;
     return false;
   },
   ST_DOUBLE_QUOTES: function ST_DOUBLE_QUOTES() {
-    var ch = void 0;
+    var ch;
+
     while (this.offset < this.size) {
       ch = this.input();
+
       if (ch == "\\") {
         this.input();
       } else if (ch == '"') {
         break;
       } else if (ch == "$") {
         ch = this.input();
+
         if (ch == "{" || this.is_LABEL_START()) {
           this.unput(2);
           break;
         }
+
         if (ch) this.unput(1);
       } else if (ch == "{") {
         ch = this.input();
+
         if (ch == "$") {
           this.unput(2);
           break;
         }
+
         if (ch) this.unput(1);
       }
     }
+
     if (ch == '"') {
       return this.tok.T_CONSTANT_ENCAPSED_STRING;
     } else {
       var prefix = 1;
+
       if (this.yytext[0] === "b" || this.yytext[0] === "B") {
         prefix = 2;
       }
+
       if (this.yytext.length > 2) {
         this.appendToken(this.tok.T_ENCAPSED_AND_WHITESPACE, this.yytext.length - prefix);
       }
+
       this.unput(this.yytext.length - prefix);
       this.begin("ST_DOUBLE_QUOTES");
       return this.yytext;
     }
   },
-
   // check if its a DOC end sequence
   isDOC_MATCH: function isDOC_MATCH() {
     // @fixme : check if out of text limits
     if (this._input.substring(this.offset - 1, this.offset - 1 + this.heredoc_label.length) === this.heredoc_label) {
       var ch = this._input[this.offset - 1 + this.heredoc_label.length];
+
       if (ch === "\n" || ch === "\r" || ch === ";") {
         return true;
       }
     }
+
     return false;
   },
-
   matchST_NOWDOC: function matchST_NOWDOC() {
     /** edge case : empty now doc **/
     if (this.isDOC_MATCH()) {
@@ -4019,10 +4217,14 @@ module.exports = {
       return this.tok.T_END_HEREDOC;
     }
     /** SCANNING CONTENTS **/
+
+
     var ch = this._input[this.offset - 1];
+
     while (this.offset < this.size) {
       if (ch === "\n" || ch === "\r") {
         ch = this.input();
+
         if (this.isDOC_MATCH()) {
           this.unput(1).popState();
           this.appendToken(this.tok.T_END_HEREDOC, this.heredoc_label.length);
@@ -4031,23 +4233,27 @@ module.exports = {
       } else {
         ch = this.input();
       }
-    }
-    // too bad ! reached end of document (will get a parse error)
+    } // too bad ! reached end of document (will get a parse error)
+
+
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
-
   matchST_HEREDOC: function matchST_HEREDOC() {
     /** edge case : empty here doc **/
     var ch = this.input();
+
     if (this.isDOC_MATCH()) {
       this.consume(this.heredoc_label.length - 1);
       this.popState();
       return this.tok.T_END_HEREDOC;
     }
     /** SCANNING CONTENTS **/
+
+
     while (this.offset < this.size) {
       if (ch === "\\") {
         ch = this.input(); // ignore next
+
         if (ch !== "\n" && ch !== "\r") {
           ch = this.input();
         }
@@ -4055,6 +4261,7 @@ module.exports = {
 
       if (ch === "\n" || ch === "\r") {
         ch = this.input();
+
         if (this.isDOC_MATCH()) {
           this.unput(1).popState();
           this.appendToken(this.tok.T_END_HEREDOC, this.heredoc_label.length);
@@ -4062,9 +4269,11 @@ module.exports = {
         }
       } else if (ch === "$") {
         ch = this.input();
+
         if (ch === "{") {
           // start of ${
           this.begin("ST_LOOKING_FOR_VARNAME");
+
           if (this.yytext.length > 2) {
             this.appendToken(this.tok.T_DOLLAR_OPEN_CURLY_BRACES, 2);
             this.unput(2);
@@ -4076,20 +4285,23 @@ module.exports = {
           // start of $var...
           var yyoffset = this.offset;
           var next = this.consume_VARIABLE();
+
           if (this.yytext.length > this.offset - yyoffset + 2) {
             this.appendToken(next, this.offset - yyoffset + 2);
             this.unput(this.offset - yyoffset + 2);
             return this.tok.T_ENCAPSED_AND_WHITESPACE;
           } else {
             return next;
-          }
-          //console.log(this.yytext);
+          } //console.log(this.yytext);
+
         }
       } else if (ch === "{") {
         ch = this.input();
+
         if (ch === "$") {
           // start of {$...
           this.begin("ST_IN_SCRIPTING");
+
           if (this.yytext.length > 2) {
             this.appendToken(this.tok.T_CURLY_OPEN, 1);
             this.unput(2);
@@ -4102,15 +4314,15 @@ module.exports = {
       } else {
         ch = this.input();
       }
-    }
+    } // too bad ! reached end of document (will get a parse error)
 
-    // too bad ! reached end of document (will get a parse error)
+
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
-
   consume_VARIABLE: function consume_VARIABLE() {
     this.consume_LABEL();
     var ch = this.input();
+
     if (ch == "[") {
       this.unput(1);
       this.begin("ST_VAR_OFFSET");
@@ -4118,9 +4330,11 @@ module.exports = {
     } else if (ch === "-") {
       if (this.input() === ">") {
         this.input();
+
         if (this.is_LABEL_START()) {
           this.begin("ST_LOOKING_FOR_PROPERTY");
         }
+
         this.unput(3);
         return this.tok.T_VARIABLE;
       } else {
@@ -4129,13 +4343,16 @@ module.exports = {
     } else {
       if (ch) this.unput(1);
     }
+
     return this.tok.T_VARIABLE;
   },
   // HANDLES BACKQUOTES
   matchST_BACKQUOTE: function matchST_BACKQUOTE() {
     var ch = this.input();
+
     if (ch === "$") {
       ch = this.input();
+
       if (ch === "{") {
         this.begin("ST_LOOKING_FOR_VARNAME");
         return this.tok.T_DOLLAR_OPEN_CURLY_BRACES;
@@ -4151,9 +4368,9 @@ module.exports = {
     } else if (ch === "`") {
       this.popState();
       return "`";
-    }
+    } // any char
 
-    // any char
+
     while (this.offset < this.size) {
       if (ch === "\\") {
         this.input();
@@ -4164,8 +4381,10 @@ module.exports = {
         break;
       } else if (ch === "$") {
         ch = this.input();
+
         if (ch === "{") {
           this.begin("ST_LOOKING_FOR_VARNAME");
+
           if (this.yytext.length > 2) {
             this.appendToken(this.tok.T_DOLLAR_OPEN_CURLY_BRACES, 2);
             this.unput(2);
@@ -4177,6 +4396,7 @@ module.exports = {
           // start of $var...
           var yyoffset = this.offset;
           var next = this.consume_VARIABLE();
+
           if (this.yytext.length > this.offset - yyoffset + 2) {
             this.appendToken(next, this.offset - yyoffset + 2);
             this.unput(this.offset - yyoffset + 2);
@@ -4185,12 +4405,15 @@ module.exports = {
             return next;
           }
         }
+
         continue;
       } else if (ch === "{") {
         ch = this.input();
+
         if (ch === "$") {
           // start of {$...
           this.begin("ST_IN_SCRIPTING");
+
           if (this.yytext.length > 2) {
             this.appendToken(this.tok.T_CURLY_OPEN, 1);
             this.unput(2);
@@ -4200,17 +4423,21 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
+
         continue;
       }
+
       ch = this.input();
     }
+
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
-
   matchST_DOUBLE_QUOTES: function matchST_DOUBLE_QUOTES() {
     var ch = this.input();
+
     if (ch === "$") {
       ch = this.input();
+
       if (ch === "{") {
         this.begin("ST_LOOKING_FOR_VARNAME");
         return this.tok.T_DOLLAR_OPEN_CURLY_BRACES;
@@ -4226,9 +4453,9 @@ module.exports = {
     } else if (ch === '"') {
       this.popState();
       return '"';
-    }
+    } // any char
 
-    // any char
+
     while (this.offset < this.size) {
       if (ch === "\\") {
         this.input();
@@ -4239,8 +4466,10 @@ module.exports = {
         break;
       } else if (ch === "$") {
         ch = this.input();
+
         if (ch === "{") {
           this.begin("ST_LOOKING_FOR_VARNAME");
+
           if (this.yytext.length > 2) {
             this.appendToken(this.tok.T_DOLLAR_OPEN_CURLY_BRACES, 2);
             this.unput(2);
@@ -4252,6 +4481,7 @@ module.exports = {
           // start of $var...
           var yyoffset = this.offset;
           var next = this.consume_VARIABLE();
+
           if (this.yytext.length > this.offset - yyoffset + 2) {
             this.appendToken(next, this.offset - yyoffset + 2);
             this.unput(this.offset - yyoffset + 2);
@@ -4260,12 +4490,15 @@ module.exports = {
             return next;
           }
         }
+
         if (ch) this.unput(1);
       } else if (ch === "{") {
         ch = this.input();
+
         if (ch === "$") {
           // start of {$...
           this.begin("ST_IN_SCRIPTING");
+
           if (this.yytext.length > 2) {
             this.appendToken(this.tok.T_CURLY_OPEN, 1);
             this.unput(2);
@@ -4276,10 +4509,13 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
+
         if (ch) this.unput(1);
       }
+
       ch = this.input();
     }
+
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   }
 };
@@ -4300,6 +4536,7 @@ module.exports = {
   T_STRING: function T_STRING() {
     var token = this.yytext.toLowerCase();
     var id = this.keywords[token];
+
     if (typeof id !== "number") {
       if (token === "yield") {
         if (this.php7 && this.tryMatch(" from")) {
@@ -4310,8 +4547,10 @@ module.exports = {
         }
       } else {
         id = this.tok.T_STRING;
+
         if (token === "b" || token === "B") {
           var ch = this.input(1);
+
           if (ch === '"') {
             return this.ST_DOUBLE_QUOTES();
           } else if (ch === "'") {
@@ -4322,12 +4561,14 @@ module.exports = {
         }
       }
     }
+
     return id;
   },
   // reads a custom token
   consume_TOKEN: function consume_TOKEN() {
     var ch = this._input[this.offset - 1];
     var fn = this.tokenTerminals[ch];
+
     if (fn) {
       return fn.apply(this, []);
     } else {
@@ -4338,6 +4579,7 @@ module.exports = {
   tokenTerminals: {
     $: function $() {
       this.offset++;
+
       if (this.is_LABEL_START()) {
         this.offset--;
         this.consume_LABEL();
@@ -4349,6 +4591,7 @@ module.exports = {
     },
     "-": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === ">") {
         this.begin("ST_LOOKING_FOR_PROPERTY").input();
         return this.tok.T_OBJECT_OPERATOR;
@@ -4359,6 +4602,7 @@ module.exports = {
         this.input();
         return this.tok.T_MINUS_EQUAL;
       }
+
       return "-";
     },
     "\\": function _() {
@@ -4369,6 +4613,7 @@ module.exports = {
         this.input();
         return this.tok.T_DIV_EQUAL;
       }
+
       return "/";
     },
     ":": function _() {
@@ -4382,30 +4627,37 @@ module.exports = {
     "(": function _() {
       var initial = this.offset;
       this.input();
+
       if (this.is_TABSPACE()) {
         this.consume_TABSPACE().input();
       }
+
       if (this.is_LABEL_START()) {
         var yylen = this.yytext.length;
         this.consume_LABEL();
         var castToken = this.yytext.substring(yylen - 1).toLowerCase();
         var castId = this.castKeywords[castToken];
+
         if (typeof castId === "number") {
           this.input();
+
           if (this.is_TABSPACE()) {
             this.consume_TABSPACE().input();
           }
+
           if (this._input[this.offset - 1] === ")") {
             return castId;
           }
         }
-      }
-      // revert the check
+      } // revert the check
+
+
       this.unput(this.offset - initial);
       return "(";
     },
     "=": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === ">") {
         this.input();
         return this.tok.T_DOUBLE_ARROW;
@@ -4418,10 +4670,12 @@ module.exports = {
           return this.tok.T_IS_EQUAL;
         }
       }
+
       return "=";
     },
     "+": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "+") {
         this.input();
         return this.tok.T_INC;
@@ -4429,6 +4683,7 @@ module.exports = {
         this.input();
         return this.tok.T_PLUS_EQUAL;
       }
+
       return "+";
     },
     "!": function _() {
@@ -4441,6 +4696,7 @@ module.exports = {
           return this.tok.T_IS_NOT_EQUAL;
         }
       }
+
       return "!";
     },
     "?": function _() {
@@ -4448,12 +4704,15 @@ module.exports = {
         this.input();
         return this.tok.T_COALESCE;
       }
+
       return "?";
     },
     "<": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "<") {
         nchar = this._input[this.offset + 1];
+
         if (nchar === "=") {
           this.consume(2);
           return this.tok.T_SL_EQUAL;
@@ -4462,10 +4721,12 @@ module.exports = {
             return this.tok.T_START_HEREDOC;
           }
         }
+
         this.input();
         return this.tok.T_SL;
       } else if (nchar === "=") {
         this.input();
+
         if (this.php7 && this._input[this.offset] === ">") {
           this.input();
           return this.tok.T_SPACESHIP;
@@ -4476,15 +4737,18 @@ module.exports = {
         this.input();
         return this.tok.T_IS_NOT_EQUAL;
       }
+
       return "<";
     },
     ">": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "=") {
         this.input();
         return this.tok.T_IS_GREATER_OR_EQUAL;
       } else if (nchar === ">") {
         nchar = this._input[this.offset + 1];
+
         if (nchar === "=") {
           this.consume(2);
           return this.tok.T_SR_EQUAL;
@@ -4493,15 +4757,18 @@ module.exports = {
           return this.tok.T_SR;
         }
       }
+
       return ">";
     },
     "*": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "=") {
         this.input();
         return this.tok.T_MUL_EQUAL;
       } else if (nchar === "*") {
         this.input();
+
         if (this._input[this.offset] === "=") {
           this.input();
           return this.tok.T_POW_EQUAL;
@@ -4509,10 +4776,12 @@ module.exports = {
           return this.tok.T_POW;
         }
       }
+
       return "*";
     },
     ".": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "=") {
         this.input();
         return this.tok.T_CONCAT_EQUAL;
@@ -4520,6 +4789,7 @@ module.exports = {
         this.consume(2);
         return this.tok.T_ELLIPSIS;
       }
+
       return ".";
     },
     "%": function _() {
@@ -4527,10 +4797,12 @@ module.exports = {
         this.input();
         return this.tok.T_MOD_EQUAL;
       }
+
       return "%";
     },
     "&": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "=") {
         this.input();
         return this.tok.T_AND_EQUAL;
@@ -4538,10 +4810,12 @@ module.exports = {
         this.input();
         return this.tok.T_BOOLEAN_AND;
       }
+
       return "&";
     },
     "|": function _() {
       var nchar = this._input[this.offset];
+
       if (nchar === "=") {
         this.input();
         return this.tok.T_OR_EQUAL;
@@ -4549,6 +4823,7 @@ module.exports = {
         this.input();
         return this.tok.T_BOOLEAN_OR;
       }
+
       return "|";
     },
     "^": function _() {
@@ -4556,6 +4831,7 @@ module.exports = {
         this.input();
         return this.tok.T_XOR_EQUAL;
       }
+
       return "^";
     }
   }
@@ -4574,38 +4850,38 @@ module.exports = {
 
 
 var tokens = ";:,.\\[]()|^&+-/*=%!~$<>?@";
-
 module.exports = {
   // check if the char can be a numeric
   is_NUM: function is_NUM() {
     var ch = this._input.charCodeAt(this.offset - 1);
+
     return ch > 47 && ch < 58;
   },
-
   // check if current char can be a label
   is_LABEL: function is_LABEL() {
     var ch = this._input.charCodeAt(this.offset - 1);
+
     return ch > 96 && ch < 123 || ch > 64 && ch < 91 || ch === 95 || ch > 47 && ch < 58 || ch > 126;
   },
-
   // check if current char can be a label
   is_LABEL_START: function is_LABEL_START() {
     var ch = this._input.charCodeAt(this.offset - 1);
+
     return ch > 96 && ch < 123 || ch > 64 && ch < 91 || ch === 95 || ch > 126;
   },
-
   // reads each char of the label
   consume_LABEL: function consume_LABEL() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (!this.is_LABEL()) {
         if (ch) this.unput(1);
         break;
       }
     }
+
     return this;
   },
-
   // check if current char is a token char
   is_TOKEN: function is_TOKEN() {
     var ch = this._input[this.offset - 1];
@@ -4625,16 +4901,19 @@ module.exports = {
   consume_TABSPACE: function consume_TABSPACE() {
     while (this.offset < this.size) {
       var ch = this.input();
+
       if (!this.is_TABSPACE()) {
         if (ch) this.unput(1);
         break;
       }
     }
+
     return this;
   },
   // check if current char can be a hexadecimal number
   is_HEX: function is_HEX() {
     var ch = this._input.charCodeAt(this.offset - 1);
+
     return ch > 47 && ch < 58 || ch > 64 && ch < 71 || ch > 96 && ch < 103;
   }
 };
@@ -4650,7 +4929,6 @@ module.exports = {
  * @url http://glayzzle.com
  */
 
-
 /**
  * @private
  */
@@ -4658,7 +4936,6 @@ module.exports = {
 function isNumber(n) {
   return n != "." && n != "," && !isNaN(parseFloat(n)) && isFinite(n);
 }
-
 /**
  * The PHP Parser class that build the AST tree from the lexer
  *
@@ -4672,6 +4949,8 @@ function isNumber(n) {
  * @property {Boolean} suppressErrors - should ignore parsing errors and continue
  * @property {Boolean} debug - should output debug informations
  */
+
+
 var parser = function parser(lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
@@ -4684,9 +4963,11 @@ var parser = function parser(lexer, ast) {
   this.extractDoc = false;
   this.extractTokens = false;
   this.suppressErrors = false;
+
   var mapIt = function mapIt(item) {
     return [item, null];
   };
+
   this.entries = {
     IDENTIFIER: new Map([this.tok.T_ABSTRACT, this.tok.T_ARRAY, this.tok.T_AS, this.tok.T_BREAK, this.tok.T_CALLABLE, this.tok.T_CASE, this.tok.T_CATCH, this.tok.T_CLASS, this.tok.T_CLASS_C, this.tok.T_CLONE, this.tok.T_CONST, this.tok.T_CONTINUE, this.tok.T_DECLARE, this.tok.T_DEFAULT, this.tok.T_DIR, this.tok.T_DO, this.tok.T_ECHO, this.tok.T_ELSE, this.tok.T_ELSEIF, this.tok.T_EMPTY, this.tok.T_ENDDECLARE, this.tok.T_ENDFOR, this.tok.T_ENDFOREACH, this.tok.T_ENDIF, this.tok.T_ENDSWITCH, this.tok.T_ENDWHILE, this.tok.T_EVAL, this.tok.T_EXIT, this.tok.T_EXTENDS, this.tok.T_FILE, this.tok.T_FINAL, this.tok.T_FINALLY, this.tok.T_FUNC_C, this.tok.T_FOR, this.tok.T_FOREACH, this.tok.T_FUNCTION, this.tok.T_GLOBAL, this.tok.T_GOTO, this.tok.T_IF, this.tok.T_IMPLEMENTS, this.tok.T_INCLUDE, this.tok.T_INCLUDE_ONCE, this.tok.T_INSTANCEOF, this.tok.T_INSTEADOF, this.tok.T_INTERFACE, this.tok.T_ISSET, this.tok.T_LINE, this.tok.T_LIST, this.tok.T_LOGICAL_AND, this.tok.T_LOGICAL_OR, this.tok.T_LOGICAL_XOR, this.tok.T_METHOD_C, this.tok.T_NAMESPACE, this.tok.T_NEW, this.tok.T_NS_C, this.tok.T_PRINT, this.tok.T_PRIVATE, this.tok.T_PROTECTED, this.tok.T_PUBLIC, this.tok.T_REQUIRE, this.tok.T_REQUIRE_ONCE, this.tok.T_RETURN, this.tok.T_STATIC, this.tok.T_SWITCH, this.tok.T_THROW, this.tok.T_TRAIT, this.tok.T_TRY, this.tok.T_UNSET, this.tok.T_USE, this.tok.T_VAR, this.tok.T_WHILE, this.tok.T_YIELD].map(mapIt)),
     VARIABLE: new Map([this.tok.T_VARIABLE, "$", "&", this.tok.T_NS_SEPARATOR, this.tok.T_STRING, this.tok.T_NAMESPACE, this.tok.T_STATIC].map(mapIt)),
@@ -4694,18 +4975,17 @@ var parser = function parser(lexer, ast) {
     T_MAGIC_CONST: new Map([this.tok.T_CLASS_C, this.tok.T_TRAIT_C, this.tok.T_FUNC_C, this.tok.T_METHOD_C, this.tok.T_LINE, this.tok.T_FILE, this.tok.T_DIR, this.tok.T_NS_C].map(mapIt)),
     T_MEMBER_FLAGS: new Map([this.tok.T_PUBLIC, this.tok.T_PRIVATE, this.tok.T_PROTECTED, this.tok.T_STATIC, this.tok.T_ABSTRACT, this.tok.T_FINAL].map(mapIt)),
     EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
-    EXPR: new Map(["@", "-", "+", "!", "~", "(", "`", this.tok.T_LIST, this.tok.T_CLONE, this.tok.T_INC, this.tok.T_DEC, this.tok.T_NEW, this.tok.T_ISSET, this.tok.T_EMPTY, this.tok.T_INCLUDE, this.tok.T_INCLUDE_ONCE, this.tok.T_REQUIRE, this.tok.T_REQUIRE_ONCE, this.tok.T_EVAL, this.tok.T_INT_CAST, this.tok.T_DOUBLE_CAST, this.tok.T_STRING_CAST, this.tok.T_ARRAY_CAST, this.tok.T_OBJECT_CAST, this.tok.T_BOOL_CAST, this.tok.T_UNSET_CAST, this.tok.T_EXIT, this.tok.T_PRINT, this.tok.T_YIELD, this.tok.T_STATIC, this.tok.T_FUNCTION,
-    // using VARIABLES :
-    this.tok.T_VARIABLE, "$", this.tok.T_NS_SEPARATOR, this.tok.T_STRING,
-    // using SCALAR :
+    EXPR: new Map(["@", "-", "+", "!", "~", "(", "`", this.tok.T_LIST, this.tok.T_CLONE, this.tok.T_INC, this.tok.T_DEC, this.tok.T_NEW, this.tok.T_ISSET, this.tok.T_EMPTY, this.tok.T_INCLUDE, this.tok.T_INCLUDE_ONCE, this.tok.T_REQUIRE, this.tok.T_REQUIRE_ONCE, this.tok.T_EVAL, this.tok.T_INT_CAST, this.tok.T_DOUBLE_CAST, this.tok.T_STRING_CAST, this.tok.T_ARRAY_CAST, this.tok.T_OBJECT_CAST, this.tok.T_BOOL_CAST, this.tok.T_UNSET_CAST, this.tok.T_EXIT, this.tok.T_PRINT, this.tok.T_YIELD, this.tok.T_STATIC, this.tok.T_FUNCTION, // using VARIABLES :
+    this.tok.T_VARIABLE, "$", this.tok.T_NS_SEPARATOR, this.tok.T_STRING, // using SCALAR :
     this.tok.T_STRING, // @see variable.js line 45 > conflict with variable = shift/reduce :)
     this.tok.T_CONSTANT_ENCAPSED_STRING, this.tok.T_START_HEREDOC, this.tok.T_LNUMBER, this.tok.T_DNUMBER, this.tok.T_ARRAY, "[", this.tok.T_CLASS_C, this.tok.T_TRAIT_C, this.tok.T_FUNC_C, this.tok.T_METHOD_C, this.tok.T_LINE, this.tok.T_FILE, this.tok.T_DIR, this.tok.T_NS_C].map(mapIt))
   };
 };
-
 /**
  * helper : gets a token name
  */
+
+
 parser.prototype.getTokenName = function (token) {
   if (!isNumber(token)) {
     return "'" + token + "'";
@@ -4714,25 +4994,30 @@ parser.prototype.getTokenName = function (token) {
     return this.lexer.engine.tokens.values[token];
   }
 };
-
 /**
  * main entry point : converts a source code to AST
  */
+
+
 parser.prototype.parse = function (code, filename) {
   this._errors = [];
   this.filename = filename || "eval";
   this.currentNamespace = [""];
+
   if (this.extractDoc) {
     this._docs = [];
   } else {
     this._docs = null;
   }
+
   if (this.extractTokens) {
     this._tokens = [];
   } else {
     this._tokens = null;
   }
+
   this._docIndex = 0;
+  this._lastNode = null;
   this.lexer.setInput(code);
   this.lexer.all_tokens = this.extractTokens;
   this.lexer.comment_tokens = this.extractDoc;
@@ -4742,8 +5027,10 @@ parser.prototype.parse = function (code, filename) {
   var program = this.node("program");
   var childs = [];
   this.next();
+
   while (this.token != this.EOF) {
     var node = this.read_start();
+
     if (node !== null && node !== undefined) {
       if (Array.isArray(node)) {
         childs = childs.concat(node);
@@ -4751,33 +5038,56 @@ parser.prototype.parse = function (code, filename) {
         childs.push(node);
       }
     }
-  }
-  // #176 : register latest position
-  this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
-  return program(childs, this._errors, this._docs, this._tokens);
-};
+  } // #176 : register latest position
 
+
+  this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
+  var result = program(childs, this._errors, this._docs, this._tokens);
+
+  if (this.debug) {
+    var errors = this.ast.checkNodes();
+
+    if (errors.length > 0) {
+      errors.forEach(function (error) {
+        // eslint-disable-next-line no-console
+        console.log("Node at line " + error.position.line + ", column " + error.position.column); // eslint-disable-next-line no-console
+
+        console.log(error.stack.join("\n"));
+      });
+      throw new Error("Some nodes are not closed");
+    }
+  }
+
+  return result;
+};
 /**
  * Raise an error
  */
+
+
 parser.prototype.raiseError = function (message, msgExpect, expect, token) {
   message += " on line " + this.lexer.yylloc.first_line;
+
   if (!this.suppressErrors) {
     var err = new SyntaxError(message, this.filename, this.lexer.yylloc.first_line);
     err.lineNumber = this.lexer.yylloc.first_line;
     err.fileName = this.filename;
     err.columnNumber = this.lexer.yylloc.first_column;
     throw err;
-  }
-  // Error node :
+  } // Error node :
+
+
   var node = this.ast.prepare("error", null, this)(message, token, this.lexer.yylloc.first_line, expect);
+
   this._errors.push(node);
+
   return node;
 };
-
 /**
  * handling errors
  */
+
+
 parser.prototype.error = function (expect) {
   var msg = "Parse Error : syntax error";
   var token = this.getTokenName(this.token);
@@ -4786,38 +5096,48 @@ parser.prototype.error = function (expect) {
   if (this.token !== this.EOF) {
     if (isNumber(this.token)) {
       var symbol = this.text();
+
       if (symbol.length > 10) {
         symbol = symbol.substring(0, 7) + "...";
       }
+
       token = "'" + symbol + "' (" + token + ")";
     }
+
     msg += ", unexpected " + token;
   }
+
   if (expect && !Array.isArray(expect)) {
     if (isNumber(expect) || expect.length === 1) {
       msgExpect = ", expecting " + this.getTokenName(expect);
     }
+
     msg += msgExpect;
   }
+
   return this.raiseError(msg, msgExpect, expect, token);
 };
-
 /**
  * Creates a new AST node
  */
+
+
 parser.prototype.node = function (name) {
   if (this.extractDoc) {
     var docs = null;
+
     if (this._docIndex < this._docs.length) {
       docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
+
       if (this.debug) {
         // eslint-disable-next-line no-console
-        console.log(new Error("Append docs on " + name));
-        // eslint-disable-next-line no-console
+        console.log(new Error("Append docs on " + name)); // eslint-disable-next-line no-console
+
         console.log(docs);
       }
     }
+
     var node = this.ast.prepare(name, docs, this);
     /**
      * TOKENS :
@@ -4848,22 +5168,46 @@ parser.prototype.node = function (name) {
      * NOTE : As the trailingComment Behavior depends on AST, it will be build on
      * the AST layer - last child node will keep it's trailingComment nodes
      */
-    node.preBuild = function () {
-      // inject leading comment on current node
+
+    node.postBuild = function (self) {
       if (this._docIndex < this._docs.length) {
-        node.setTrailingComments(this._docs.slice(this._docIndex));
-        this._docIndex = this._docs.length;
+        if (this._lastNode) {
+          var offset = this.prev[2];
+          var max = this._docIndex;
+
+          for (; max < this._docs.length; max++) {
+            if (this._docs[max].offset > offset) {
+              break;
+            }
+          }
+
+          if (max > this._docIndex) {
+            // inject trailing comment on child node
+            this._lastNode.setTrailingComments(this._docs.slice(this._docIndex, max));
+
+            this._docIndex = max;
+          }
+        } else if (this.token === this.EOF) {
+          // end of content
+          self.setTrailingComments(this._docs.slice(this._docIndex));
+          this._docIndex = this._docs.length;
+        }
       }
+
+      this._lastNode = self;
     }.bind(this);
+
     return node;
   }
+
   return this.ast.prepare(name, null, this);
 };
-
 /**
  * expects an end of statement or end of file
  * @return {boolean}
  */
+
+
 parser.prototype.expectEndOfStatement = function (node) {
   if (this.token === ";") {
     // include only real ';' statements
@@ -4875,33 +5219,39 @@ parser.prototype.expectEndOfStatement = function (node) {
     this.error(";");
     return false;
   }
+
   this.next();
   return true;
 };
-
 /** outputs some debug information on current token **/
+
+
 var ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
+
 parser.prototype.showlog = function () {
   var stack = new Error().stack.split("\n");
-  var line = void 0;
+  var line;
+
   for (var offset = 2; offset < stack.length; offset++) {
     line = stack[offset].trim();
     var found = false;
+
     for (var i = 0; i < ignoreStack.length; i++) {
       if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
         found = true;
         break;
       }
     }
+
     if (!found) {
       break;
     }
-  }
-  // eslint-disable-next-line no-console
+  } // eslint-disable-next-line no-console
+
+
   console.log("Line " + this.lexer.yylloc.first_line + " : " + this.getTokenName(this.token) + ">" + this.lexer.yytext + "<" + " @-->" + line);
   return this;
 };
-
 /**
  * Force the parser to check the current token.
  *
@@ -4915,6 +5265,8 @@ parser.prototype.showlog = function () {
  * @return {boolean}
  * @throws Error
  */
+
+
 parser.prototype.expect = function (token) {
   if (Array.isArray(token)) {
     if (token.indexOf(this.token) === -1) {
@@ -4925,35 +5277,37 @@ parser.prototype.expect = function (token) {
     this.error(token);
     return false;
   }
+
   return true;
 };
-
 /**
  * Returns the current token contents
  * @return {String}
  */
+
+
 parser.prototype.text = function () {
   return this.lexer.yytext;
 };
-
 /** consume the next token **/
+
+
 parser.prototype.next = function () {
   // prepare the back command
   if (this.token !== ";" || this.lexer.yytext === ";") {
     // ignore '?>' from automated resolution
     // https://github.com/glayzzle/php-parser/issues/168
     this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
-  }
+  } // eating the token
 
-  // eating the token
-  this.lex();
 
-  // showing the debug
+  this.lex(); // showing the debug
+
   if (this.debug) {
     this.showlog();
-  }
+  } // handling comments
 
-  // handling comments
+
   if (this.extractDoc) {
     while (this.token === this.tok.T_COMMENT || this.token === this.tok.T_DOC_COMMENT) {
       // APPEND COMMENTS
@@ -4967,10 +5321,11 @@ parser.prototype.next = function () {
 
   return this;
 };
-
 /**
  * Eating a token
  */
+
+
 parser.prototype.lex = function () {
   // append on token stack
   if (this.extractTokens) {
@@ -4979,12 +5334,15 @@ parser.prototype.lex = function () {
       this.token = this.lexer.lex() || this.EOF;
       if (this.token === this.EOF) return this;
       var entry = this.lexer.yytext;
+
       if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
         entry = [this.lexer.engine.tokens.values[this.token], entry, this.lexer.yylloc.first_line, this.lexer.yylloc.first_offset, this.lexer.offset];
       } else {
         entry = [null, entry, this.lexer.yylloc.first_line, this.lexer.yylloc.first_offset, this.lexer.offset];
       }
+
       this._tokens.push(entry);
+
       if (this.token === this.tok.T_CLOSE_TAG) {
         // https://github.com/php/php-src/blob/7ff186434e82ee7be7c59d0db9a976641cf7b09c/Zend/zend_compile.c#L1680
         this.token = ";";
@@ -5001,30 +5359,33 @@ parser.prototype.lex = function () {
   } else {
     this.token = this.lexer.lex() || this.EOF;
   }
+
   return this;
 };
-
 /**
  * Check if token is of specified type
  */
+
+
 parser.prototype.is = function (type) {
   if (Array.isArray(type)) {
     return type.indexOf(this.token) !== -1;
   }
-  return this.entries[type].has(this.token);
-};
 
-// extends the parser with syntax files
+  return this.entries[type].has(this.token);
+}; // extends the parser with syntax files
+
+
 [__webpack_require__(29), __webpack_require__(30), __webpack_require__(31), __webpack_require__(32), __webpack_require__(33), __webpack_require__(34), __webpack_require__(35), __webpack_require__(36), __webpack_require__(37), __webpack_require__(38), __webpack_require__(39), __webpack_require__(40), __webpack_require__(41), __webpack_require__(42), __webpack_require__(43)].forEach(function (ext) {
   for (var k in ext) {
     if (parser.prototype.hasOwnProperty(k)) {
       // @see https://github.com/glayzzle/php-parser/issues/234
       throw new Error("Function " + k + " is already defined - collision");
     }
+
     parser.prototype[k] = ext[k];
   }
 });
-
 module.exports = parser;
 
 /***/ }),
@@ -5041,7 +5402,6 @@ module.exports = parser;
 
 var ArrayExpr = "array";
 var ArrayEntry = "entry";
-
 module.exports = {
   /**
    * Parse an array
@@ -5062,11 +5422,13 @@ module.exports = {
       shortForm = true;
       expect = "]";
     }
+
     var items = [];
+
     if (this.next().token !== expect) {
       items = this.read_array_pair_list(shortForm);
-    }
-    // check non empty entries
+    } // check non empty entries
+
     /*for(let i = 0, size = items.length - 1; i < size; i++) {
       if (items[i] === null) {
         this.raiseError(
@@ -5074,10 +5436,13 @@ module.exports = {
         );
       }
     }*/
+
+
     this.expect(expect);
     this.next();
     return result(shortForm, items);
   },
+
   /**
    * Reads an array of items
    * ```ebnf
@@ -5090,6 +5455,7 @@ module.exports = {
       return self.read_array_pair(shortForm);
     }, ",", true);
   },
+
   /**
    * Reads an entry
    * array_pair:
@@ -5104,11 +5470,13 @@ module.exports = {
     if (this.token === "," || !shortForm && this.token === ")" || shortForm && this.token === "]") {
       return null;
     }
+
     if (this.token === "&") {
       return this.next().read_variable(true, false, true);
     } else {
       var entry = this.node(ArrayEntry);
       var expr = this.read_expr();
+
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         if (this.next().token === "&") {
           return entry(expr, this.next().read_variable(true, false, true));
@@ -5116,9 +5484,11 @@ module.exports = {
           return entry(expr, this.read_expr());
         }
       }
+
       return expr;
     }
   },
+
   /**
    * ```ebnf
    *  dim_offset ::= expr?
@@ -5151,30 +5521,36 @@ module.exports = {
    */
   read_class: function read_class() {
     var result = this.node("class");
-    var flag = this.read_class_scope();
-    // graceful mode : ignore token & go next
+    var flag = this.read_class_scope(); // graceful mode : ignore token & go next
+
     if (this.token !== this.tok.T_CLASS) {
       this.error(this.tok.T_CLASS);
       this.next();
       return null;
     }
+
     this.next().expect(this.tok.T_STRING);
     var propName = this.node("identifier");
     var name = this.text();
     this.next();
     propName = propName(name);
     var propExtends = null;
+
     if (this.token == this.tok.T_EXTENDS) {
       propExtends = this.next().read_namespace_name();
     }
+
     var propImplements = null;
+
     if (this.token == this.tok.T_IMPLEMENTS) {
       propImplements = this.next().read_name_list();
     }
+
     this.expect("{");
     var body = this.next().read_class_body();
     return result(propName, propExtends, propImplements, body, flag);
   },
+
   /**
    * Read the class visibility
    * ```ebnf
@@ -5183,6 +5559,7 @@ module.exports = {
    */
   read_class_scope: function read_class_scope() {
     var result = this.token;
+
     if (result == this.tok.T_FINAL) {
       this.next();
       return [0, 0, 2];
@@ -5190,8 +5567,10 @@ module.exports = {
       this.next();
       return [0, 0, 1];
     }
+
     return [0, 0, 0];
   },
+
   /**
    * Reads a class body
    * ```ebnf
@@ -5210,31 +5589,33 @@ module.exports = {
       if (this.token === this.tok.T_DOC_COMMENT) {
         result.push(this.read_doc_comment());
         continue;
-      }
+      } // check T_USE trait
 
-      // check T_USE trait
+
       if (this.token === this.tok.T_USE) {
         result = result.concat(this.read_trait_use_statement());
         continue;
-      }
+      } // read member flags
 
-      // read member flags
-      var flags = this.read_member_flags(false);
 
-      // check constant
+      var flags = this.read_member_flags(false); // check constant
+
       if (this.token === this.tok.T_CONST) {
         var constants = this.read_constant_list(flags);
+
         if (this.expect(";")) {
           this.next();
         }
+
         result = result.concat(constants);
         continue;
-      }
+      } // jump over T_VAR then land on T_VARIABLE
 
-      // jump over T_VAR then land on T_VARIABLE
+
       if (this.token === this.tok.T_VAR) {
         this.next().expect(this.tok.T_VARIABLE);
         flags[0] = null; // public (as null)
+
         flags[1] = 0; // non static var
       }
 
@@ -5249,15 +5630,17 @@ module.exports = {
         result.push(this.read_function(false, flags));
       } else {
         // raise an error
-        this.error([this.tok.T_CONST, this.tok.T_VARIABLE, this.tok.T_FUNCTION]);
-        // ignore token
+        this.error([this.tok.T_CONST, this.tok.T_VARIABLE, this.tok.T_FUNCTION]); // ignore token
+
         this.next();
       }
     }
+
     this.expect("}");
     this.next();
     return result;
   },
+
   /**
    * Reads variable list
    * ```ebnf
@@ -5265,7 +5648,8 @@ module.exports = {
    * ```
    */
   read_variable_list: function read_variable_list(flags) {
-    return this.read_list(
+    var result = this.node("propertystatement");
+    var properties = this.read_list(
     /**
      * Reads a variable declaration
      *
@@ -5276,19 +5660,25 @@ module.exports = {
     function read_variable_declaration() {
       var result = this.node("property");
       this.expect(this.tok.T_VARIABLE);
+      var propName = this.node("identifier");
       var name = this.text().substring(1); // ignore $
+
       this.next();
+      propName = propName(name);
+
       if (this.token === ";" || this.token === ",") {
-        return result(name, null, flags);
+        return result(propName, null);
       } else if (this.token === "=") {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-        return result(name, this.next().read_expr(), flags);
+        return result(propName, this.next().read_expr());
       } else {
         this.expect([",", ";", "="]);
-        return result(name, null, flags);
+        return result(propName, null);
       }
     }, ",");
+    return result(null, properties, flags);
   },
+
   /**
    * Reads constant list
    * ```ebnf
@@ -5299,6 +5689,7 @@ module.exports = {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
+
     var result = this.node("classconstant");
     var items = this.read_list(
     /**
@@ -5311,22 +5702,27 @@ module.exports = {
      */
     function read_constant_declaration() {
       var result = this.node("constant");
-      var name = null;
+      var constName = null;
       var value = null;
+
       if (this.token === this.tok.T_STRING || this.php7 && this.is("IDENTIFIER")) {
-        name = this.text();
+        constName = this.node("identifier");
+        var name = this.text();
         this.next();
+        constName = constName(name);
       } else {
         this.expect("IDENTIFIER");
       }
+
       if (this.expect("=")) {
         value = this.next().read_expr();
       }
-      return result(name, value);
-    }, ",");
 
+      return result(constName, value);
+    }, ",");
     return result(null, items, flags);
   },
+
   /**
    * Read member flags
    * @return array
@@ -5336,36 +5732,44 @@ module.exports = {
    */
   read_member_flags: function read_member_flags(asInterface) {
     var result = [-1, -1, -1];
+
     if (this.is("T_MEMBER_FLAGS")) {
       var idx = 0,
           val = 0;
+
       do {
         switch (this.token) {
           case this.tok.T_PUBLIC:
             idx = 0;
             val = 0;
             break;
+
           case this.tok.T_PROTECTED:
             idx = 0;
             val = 1;
             break;
+
           case this.tok.T_PRIVATE:
             idx = 0;
             val = 2;
             break;
+
           case this.tok.T_STATIC:
             idx = 1;
             val = 1;
             break;
+
           case this.tok.T_ABSTRACT:
             idx = 2;
             val = 1;
             break;
+
           case this.tok.T_FINAL:
             idx = 2;
             val = 2;
             break;
         }
+
         if (asInterface) {
           if (idx == 0 && val == 2) {
             // an interface can't be private
@@ -5377,6 +5781,7 @@ module.exports = {
             val = -1;
           }
         }
+
         if (result[idx] !== -1) {
           // already defined flag
           this.error();
@@ -5390,6 +5795,7 @@ module.exports = {
     if (result[2] == -1) result[2] = 0;
     return result;
   },
+
   /**
    * reading an interface
    * ```ebnf
@@ -5398,24 +5804,29 @@ module.exports = {
    */
   read_interface: function read_interface() {
     var result = this.node("interface");
+
     if (this.token !== this.tok.T_INTERFACE) {
       this.error(this.tok.T_INTERFACE);
       this.next();
       return null;
     }
+
     this.next().expect(this.tok.T_STRING);
     var propName = this.node("identifier");
     var name = this.text();
     this.next();
     propName = propName(name);
     var propExtends = null;
+
     if (this.token === this.tok.T_EXTENDS) {
       propExtends = this.next().read_name_list();
     }
+
     this.expect("{");
     var body = this.next().read_interface_body();
     return result(propName, propExtends, body);
   },
+
   /**
    * Reads an interface body
    * ```ebnf
@@ -5434,23 +5845,25 @@ module.exports = {
       if (this.token === this.tok.T_DOC_COMMENT) {
         result.push(this.read_doc_comment());
         continue;
-      }
+      } // read member flags
 
-      // read member flags
-      var flags = this.read_member_flags(true);
 
-      // check constant
+      var flags = this.read_member_flags(true); // check constant
+
       if (this.token == this.tok.T_CONST) {
         var constants = this.read_constant_list(flags);
+
         if (this.expect(";")) {
           this.next();
         }
+
         result = result.concat(constants);
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         var method = this.read_function_declaration(2, flags);
         method.parseFlags(flags);
         result.push(method);
+
         if (this.expect(";")) {
           this.next();
         }
@@ -5460,11 +5873,14 @@ module.exports = {
         this.next();
       }
     }
+
     if (this.expect("}")) {
       this.next();
     }
+
     return result;
   },
+
   /**
    * reading a trait
    * ```ebnf
@@ -5472,13 +5888,14 @@ module.exports = {
    * ```
    */
   read_trait: function read_trait() {
-    var result = this.node("trait");
-    // graceful mode : ignore token & go next
+    var result = this.node("trait"); // graceful mode : ignore token & go next
+
     if (this.token !== this.tok.T_TRAIT) {
       this.error(this.tok.T_TRAIT);
       this.next();
       return null;
     }
+
     this.next().expect(this.tok.T_STRING);
     var propName = this.node("identifier");
     var name = this.text();
@@ -5488,6 +5905,7 @@ module.exports = {
     var body = this.next().read_class_body();
     return result(propName, body);
   },
+
   /**
    * reading a use statement
    * ```ebnf
@@ -5500,17 +5918,20 @@ module.exports = {
     this.expect(this.tok.T_USE) && this.next();
     var traits = [this.read_namespace_name()];
     var adaptations = null;
+
     while (this.token === ",") {
       traits.push(this.next().read_namespace_name());
     }
+
     if (this.token === "{") {
-      adaptations = [];
-      // defines alias statements
+      adaptations = []; // defines alias statements
+
       while (this.next().token !== this.EOF) {
         if (this.token === "}") break;
         adaptations.push(this.read_trait_use_alias());
         this.expect(";");
       }
+
       if (this.expect("}")) {
         this.next();
       }
@@ -5519,8 +5940,10 @@ module.exports = {
         this.next();
       }
     }
+
     return node(traits, adaptations);
   },
+
   /**
    * Reading trait alias
    * ```ebnf
@@ -5532,20 +5955,27 @@ module.exports = {
   read_trait_use_alias: function read_trait_use_alias() {
     var node = this.node();
     var trait = null;
-    var method = void 0;
+    var method;
 
     if (this.is("IDENTIFIER")) {
-      method = this.text();
+      method = this.node("identifier");
+      var methodName = this.text();
       this.next();
+      method = method(methodName);
     } else {
       method = this.read_namespace_name();
 
       if (this.token === this.tok.T_DOUBLE_COLON) {
         this.next();
+
         if (this.token === this.tok.T_STRING || this.php7 && this.is("IDENTIFIER")) {
           trait = method;
-          method = this.text();
+          method = this.node("identifier");
+
+          var _methodName = this.text();
+
           this.next();
+          method = method(_methodName);
         } else {
           this.expect(this.tok.T_STRING);
         }
@@ -5553,31 +5983,34 @@ module.exports = {
         // convert identifier as string
         method = method.name;
       }
-    }
+    } // handle trait precedence
 
-    // handle trait precedence
+
     if (this.token === this.tok.T_INSTEADOF) {
       return node("traitprecedence", trait, method, this.next().read_name_list());
     } else if (this.token === this.tok.T_AS) {
       // handle trait alias
       var flags = null;
       var alias = null;
+
       if (this.next().is("T_MEMBER_FLAGS")) {
         flags = this.read_member_flags();
       }
 
       if (this.token === this.tok.T_STRING || this.php7 && this.is("IDENTIFIER")) {
-        alias = this.text();
+        alias = this.node("identifier");
+        var name = this.text();
         this.next();
+        alias = alias(name);
       } else if (flags === false) {
         // no visibility flags and no name => too bad
         this.expect(this.tok.T_STRING);
       }
 
       return node("traitalias", trait, method, alias, flags);
-    }
+    } // handle errors
 
-    // handle errors
+
     this.expect([this.tok.T_AS, this.tok.T_INSTEADOF]);
     return node("traitalias", trait, method, null, null);
   }
@@ -5602,24 +6035,29 @@ module.exports = {
   read_comment: function read_comment() {
     var text = this.text();
     var result = this.ast.prepare(text.substring(0, 2) === "/*" ? "commentblock" : "commentline", null, this);
-    // handle location on comment
+    var offset = this.lexer.yylloc.first_offset; // handle location on comment
+
     var prev = this.prev;
     this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
     this.lex();
     result = result(text);
+    result.offset = offset;
     this.prev = prev;
     return result;
   },
+
   /**
    * Comments with / ** ... * /
    */
   read_doc_comment: function read_doc_comment() {
     var result = this.ast.prepare("commentblock", null, this);
+    var offset = this.lexer.yylloc.first_offset;
     var text = this.text();
     var prev = this.prev;
     this.prev = [this.lexer.yylloc.last_line, this.lexer.yylloc.last_column, this.lexer.offset];
     this.lex();
     result = result(text);
+    result.offset = offset;
     this.prev = prev;
     return result;
   }
@@ -5640,10 +6078,12 @@ module.exports = {
 module.exports = {
   read_expr: function read_expr(expr) {
     var result = this.node();
+
     if (!expr) {
       expr = this.read_expr_item();
-    }
-    // binary operations
+    } // binary operations
+
+
     if (this.token === "|") return result("bin", "|", expr, this.next().read_expr());
     if (this.token === "&") return result("bin", "&", expr, this.next().read_expr());
     if (this.token === "^") return result("bin", "^", expr, this.next().read_expr());
@@ -5655,8 +6095,8 @@ module.exports = {
     if (this.token === "%") return result("bin", "%", expr, this.next().read_expr());
     if (this.token === this.tok.T_POW) return result("bin", "**", expr, this.next().read_expr());
     if (this.token === this.tok.T_SL) return result("bin", "<<", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SR) return result("bin", ">>", expr, this.next().read_expr());
-    // more binary operations (formerly bool)
+    if (this.token === this.tok.T_SR) return result("bin", ">>", expr, this.next().read_expr()); // more binary operations (formerly bool)
+
     if (this.token === this.tok.T_BOOLEAN_OR) return result("bin", "||", expr, this.next().read_expr());
     if (this.token === this.tok.T_LOGICAL_OR) return result("bin", "or", expr, this.next().read_expr());
     if (this.token === this.tok.T_BOOLEAN_AND) return result("bin", "&&", expr, this.next().read_expr());
@@ -5671,24 +6111,27 @@ module.exports = {
     if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL) return result("bin", "<=", expr, this.next().read_expr());
     if (this.token === this.tok.T_IS_GREATER_OR_EQUAL) return result("bin", ">=", expr, this.next().read_expr());
     if (this.token === this.tok.T_SPACESHIP) return result("bin", "<=>", expr, this.next().read_expr());
+
     if (this.token === this.tok.T_INSTANCEOF) {
       expr = result("bin", "instanceof", expr, this.next().read_class_name_reference());
+
       if (this.token !== ";" && this.token !== this.tok.T_INLINE_HTML && this.token !== this.EOF) {
         expr = this.read_expr(expr);
       }
-    }
-
-    // extra operations :
+    } // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
-    if (this.token === this.tok.T_COALESCE) return result("bin", "??", expr, this.next().read_expr());
 
-    // extra operations :
+
+    if (this.token === this.tok.T_COALESCE) return result("bin", "??", expr, this.next().read_expr()); // extra operations :
     // $username = $_GET['user'] ? true : false;
+
     if (this.token === "?") {
       var trueArg = null;
+
       if (this.next().token !== ":") {
         trueArg = this.read_expr();
       }
+
       this.expect(":") && this.next();
       return result("retif", expr, trueArg, this.read_expr());
     } else {
@@ -5713,8 +6156,7 @@ module.exports = {
    * ```
    */
   read_expr_item: function read_expr_item() {
-    var result = void 0,
-        expr = void 0;
+    var result, expr;
     if (this.token === "@") return this.node("silent")(this.next().read_expr());
     if (this.token === "+") return this.node("unary")("+", this.next().read_expr());
     if (this.token === "-") return this.node("unary")("-", this.next().read_expr());
@@ -5737,36 +6179,41 @@ module.exports = {
       var assign = null;
       var isInner = this.innerList;
       result = this.node("list");
+
       if (!isInner) {
         assign = this.node("assign");
       }
+
       if (this.next().expect("(")) {
         this.next();
       }
 
-      if (!this.innerList) this.innerList = true;
+      if (!this.innerList) this.innerList = true; // reads inner items
 
-      // reads inner items
       var assignList = this.read_array_pair_list(false);
+
       if (this.expect(")")) {
         this.next();
-      }
+      } // check if contains at least one assignment statement
 
-      // check if contains at least one assignment statement
+
       var hasItem = false;
+
       for (var i = 0; i < assignList.length; i++) {
         if (assignList[i] !== null) {
           hasItem = true;
           break;
         }
       }
+
       if (!hasItem) {
         this.raiseError("Fatal Error :  Cannot use empty list on line " + this.lexer.yylloc.first_line);
-      }
+      } // handles the node resolution
 
-      // handles the node resolution
+
       if (!isInner) {
         this.innerList = false;
+
         if (this.expect("=")) {
           return assign(result(assignList, false), this.next().read_expr(), "=");
         } else {
@@ -5793,27 +6240,37 @@ module.exports = {
       case this.tok.T_ISSET:
         {
           result = this.node("isset");
+
           if (this.next().expect("(")) {
             this.next();
           }
+
           var variables = this.read_list(this.read_expr, ",");
+
           if (this.expect(")")) {
             this.next();
           }
+
           return result(variables);
         }
+
       case this.tok.T_EMPTY:
         {
           result = this.node("empty");
+
           if (this.next().expect("(")) {
             this.next();
           }
+
           var expression = this.read_expr();
+
           if (this.expect(")")) {
             this.next();
           }
+
           return result(expression);
         }
+
       case this.tok.T_INCLUDE:
         return this.node("include")(false, false, this.next().read_expr());
 
@@ -5828,13 +6285,17 @@ module.exports = {
 
       case this.tok.T_EVAL:
         result = this.node("eval");
+
         if (this.next().expect("(")) {
           this.next();
         }
+
         expr = this.read_expr();
+
         if (this.expect(")")) {
           this.next();
         }
+
         return result(expr);
 
       case this.tok.T_INT_CAST:
@@ -5863,9 +6324,11 @@ module.exports = {
           var useDie = this.lexer.yytext.toLowerCase() === "die";
           result = this.node("exit");
           var status = null;
+
           if (this.next().token === "(") {
             if (this.next().token !== ")") {
               status = this.read_expr();
+
               if (this.expect(")")) {
                 this.next();
               }
@@ -5873,31 +6336,35 @@ module.exports = {
               this.next();
             }
           }
+
           return result(status, useDie);
         }
 
       case this.tok.T_PRINT:
         return this.node("print")(this.next().read_expr());
-
       // T_YIELD (expr (T_DOUBLE_ARROW expr)?)?
+
       case this.tok.T_YIELD:
         {
           var value = null;
           var key = null;
           result = this.node("yield");
+
           if (this.next().is("EXPR")) {
             // reads the yield return value
             value = this.read_expr();
+
             if (this.token === this.tok.T_DOUBLE_ARROW) {
               // reads the yield returned key
               key = value;
               value = this.next().read_expr();
             }
           }
+
           return result(value, key);
         }
-
       // T_YIELD_FROM expr
+
       case this.tok.T_YIELD_FROM:
         result = this.node("yieldfrom");
         expr = this.next().read_expr();
@@ -5909,6 +6376,7 @@ module.exports = {
       case this.tok.T_STATIC:
         {
           var backup = [this.token, this.lexer.getState()];
+
           if (this.next().token === this.tok.T_FUNCTION) {
             // handles static function
             return this.read_function(true, [0, 1, 0]);
@@ -5918,23 +6386,22 @@ module.exports = {
             this.next();
           }
         }
-    }
+    } // SCALAR | VARIABLE
 
-    // SCALAR | VARIABLE
+
     if (this.is("VARIABLE")) {
       result = this.node();
-      expr = this.read_variable(false, false, false);
-
-      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
+      expr = this.read_variable(false, false, false); // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
       // should accept only a variable
-      var isConst = expr.kind === "identifier" || expr.kind === "staticlookup" && expr.offset.kind === "identifier";
 
-      // VARIABLES SPECIFIC OPERATIONS
+      var isConst = expr.kind === "identifier" || expr.kind === "staticlookup" && expr.offset.kind === "identifier"; // VARIABLES SPECIFIC OPERATIONS
+
       switch (this.token) {
         case "=":
           {
             if (isConst) this.error("VARIABLE");
-            var right = void 0;
+            var right;
+
             if (this.next().token == "&") {
               if (this.next().token === this.tok.T_NEW) {
                 right = this.read_new_expr();
@@ -5944,10 +6411,11 @@ module.exports = {
             } else {
               right = this.read_expr();
             }
+
             return result("assign", expr, right, "=");
           }
-
         // operations :
+
         case this.tok.T_PLUS_EQUAL:
           if (isConst) this.error("VARIABLE");
           return result("assign", expr, this.next().read_expr(), "+=");
@@ -6000,10 +6468,12 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           this.next();
           return result("post", "+", expr);
+
         case this.tok.T_DEC:
           if (isConst) this.error("VARIABLE");
           this.next();
           return result("post", "-", expr);
+
         default:
           // see #193
           result.destroy(expr);
@@ -6011,26 +6481,31 @@ module.exports = {
     } else if (this.is("SCALAR")) {
       result = this.node();
       expr = this.read_scalar();
+
       if (expr.kind === "array" && expr.shortForm && this.token === "=") {
         // list assign
         var list = this.node("list")(expr.items, true);
         if (expr.loc) list.loc = expr.loc;
+
         var _right = this.next().read_expr();
+
         return result("assign", list, _right, "=");
       } else {
         // see #189 - swap docs on nodes
         result.destroy(expr);
-      }
-      // classic array
+      } // classic array
+
+
       return this.handleDereferencable(expr);
     } else {
       this.error("EXPR");
       this.next();
-    }
+    } // returns variable | scalar
 
-    // returns variable | scalar
+
     return expr;
   },
+
   /**
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
@@ -6041,33 +6516,43 @@ module.exports = {
     var result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     var args = [];
+
     if (this.token === this.tok.T_CLASS) {
-      var what = this.node("class");
-      // Annonymous class declaration
+      var what = this.node("class"); // Annonymous class declaration
+
       var propExtends = null,
           propImplements = null,
           body = null;
+
       if (this.next().token === "(") {
         args = this.read_function_argument_list();
       }
+
       if (this.token == this.tok.T_EXTENDS) {
         propExtends = this.next().read_namespace_name();
       }
+
       if (this.token == this.tok.T_IMPLEMENTS) {
         propImplements = this.next().read_name_list();
       }
+
       if (this.expect("{")) {
         body = this.next().read_class_body();
       }
+
       return result(what(null, propExtends, propImplements, body, [0, 0, 0]), args);
-    }
-    // Already existing class
+    } // Already existing class
+
+
     var name = this.read_new_class_name();
+
     if (this.token === "(") {
       args = this.read_function_argument_list();
     }
+
     return result(name, args);
   },
+
   /**
    * Reads a class name
    * ```ebnf
@@ -6077,9 +6562,11 @@ module.exports = {
   read_new_class_name: function read_new_class_name() {
     if (this.token === this.tok.T_NS_SEPARATOR || this.token === this.tok.T_STRING || this.token === this.tok.T_NAMESPACE) {
       var result = this.read_namespace_name(true);
+
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
       }
+
       return result;
     } else if (this.is("VARIABLE")) {
       return this.read_variable(true, false, false);
@@ -6100,6 +6587,7 @@ module.exports = {
         return expr;
       }
     }
+
     return expr;
   }
 };
@@ -6125,8 +6613,10 @@ module.exports = {
       this.next();
       return true;
     }
+
     return false;
   },
+
   /**
    * checks if current token is a variadic keyword
    */
@@ -6135,8 +6625,10 @@ module.exports = {
       this.next();
       return true;
     }
+
     return false;
   },
+
   /**
    * reading a function
    * ```ebnf
@@ -6145,25 +6637,31 @@ module.exports = {
    */
   read_function: function read_function(closure, flag) {
     var result = this.read_function_declaration(closure ? 1 : flag ? 2 : 0, flag && flag[1] === 1);
+
     if (flag && flag[2] == 1) {
       // abstract function :
       result.parseFlags(flag);
+
       if (this.expect(";")) {
         this.next();
       }
     } else {
       if (this.expect("{")) {
         result.body = this.read_code_block(false);
+
         if (result.loc && result.body.loc) {
           result.loc.end = result.body.loc.end;
         }
       }
+
       if (!closure && flag) {
         result.parseFlags(flag);
       }
     }
+
     return result;
   },
+
   /**
    * reads a function declaration (without his body)
    * ```ebnf
@@ -6172,23 +6670,28 @@ module.exports = {
    */
   read_function_declaration: function read_function_declaration(type, isStatic) {
     var nodeName = "function";
+
     if (type === 1) {
       nodeName = "closure";
     } else if (type === 2) {
       nodeName = "method";
     }
+
     var result = this.node(nodeName);
 
     if (this.expect(this.tok.T_FUNCTION)) {
       this.next();
     }
+
     var isRef = this.is_reference();
     var name = false,
         use = [],
         returnType = null,
         nullable = false;
+
     if (type !== 1) {
       var nameNode = this.node("identifier");
+
       if (type === 2) {
         if (this.token === this.tok.T_STRING || this.php7 && this.is("IDENTIFIER")) {
           name = this.text();
@@ -6200,31 +6703,40 @@ module.exports = {
         if (this.expect(this.tok.T_STRING)) {
           name = this.text();
         }
+
         this.next();
       }
+
       name = nameNode(name);
     }
+
     if (this.expect("(")) this.next();
     var params = this.read_parameter_list();
     if (this.expect(")")) this.next();
+
     if (type === 1 && this.token === this.tok.T_USE) {
       if (this.next().expect("(")) this.next();
       use = this.read_list(this.read_lexical_var, ",");
       if (this.expect(")")) this.next();
     }
+
     if (this.token === ":") {
       if (this.next().token === "?") {
         nullable = true;
         this.next();
       }
+
       returnType = this.read_type();
     }
+
     if (type === 1) {
       // closure
       return result(params, isRef, use, returnType, nullable, isStatic);
     }
+
     return result(name, params, isRef, returnType, nullable);
   },
+
   /**
    * ```ebnf
    * lexical_var ::= '&'? T_VARIABLE
@@ -6233,15 +6745,18 @@ module.exports = {
   read_lexical_var: function read_lexical_var() {
     var result = this.node("variable");
     var isRef = false;
+
     if (this.token === "&") {
       isRef = true;
       this.next();
     }
+
     this.expect(this.tok.T_VARIABLE);
     var name = this.text().substring(1);
     this.next();
     return result(name, isRef, false);
   },
+
   /**
    * reads a list of parameters
    * ```ebnf
@@ -6250,9 +6765,11 @@ module.exports = {
    */
   read_parameter_list: function read_parameter_list() {
     var result = [];
+
     if (this.token != ")") {
       while (this.token != this.EOF) {
         result.push(this.read_parameter());
+
         if (this.token == ",") {
           this.next();
         } else if (this.token == ")") {
@@ -6263,8 +6780,10 @@ module.exports = {
         }
       }
     }
+
     return result;
   },
+
   /**
    * ```ebnf
    *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
@@ -6273,29 +6792,39 @@ module.exports = {
    */
   read_parameter: function read_parameter() {
     var node = this.node("parameter");
-    var name = null;
+    var parameterName = null;
     var value = null;
     var type = null;
     var nullable = false;
+
     if (this.token === "?") {
       this.next();
       nullable = true;
     }
+
     type = this.read_type();
+
     if (nullable && !type) {
       this.raiseError("Expecting a type definition combined with nullable operator");
     }
+
     var isRef = this.is_reference();
     var isVariadic = this.is_variadic();
+
     if (this.expect(this.tok.T_VARIABLE)) {
-      name = this.text().substring(1);
+      parameterName = this.node("identifier");
+      var name = this.text().substring(1);
       this.next();
+      parameterName = parameterName(name);
     }
+
     if (this.token == "=") {
       value = this.next().read_expr();
     }
-    return node(name, type, value, isRef, isVariadic, nullable);
+
+    return node(parameterName, type, value, isRef, isVariadic, nullable);
   },
+
   /**
    * Reads a list of arguments
    * ```ebnf
@@ -6306,25 +6835,31 @@ module.exports = {
     var result = [];
     var wasVariadic = false;
     this.expect("(") && this.next();
+
     if (this.token !== ")") {
       while (this.token != this.EOF) {
         var argument = this.read_argument_list();
+
         if (argument) {
           result.push(argument);
+
           if (argument.kind === "variadic") {
             wasVariadic = true;
           } else if (wasVariadic) {
             this.raiseError("Unexpected argument after a variadic argument");
           }
         }
+
         if (this.token === ",") {
           this.next();
         } else break;
       }
     }
+
     this.expect(")") && this.next();
     return result;
   },
+
   /**
    * ```ebnf
    *    argument_list ::= T_ELLIPSIS? expr
@@ -6334,8 +6869,10 @@ module.exports = {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
     }
+
     return this.read_expr();
   },
+
   /**
    * read type hinting
    * ```ebnf
@@ -6344,14 +6881,17 @@ module.exports = {
    */
   read_type: function read_type() {
     var result = this.node();
+
     if (this.token === this.tok.T_ARRAY || this.token === this.tok.T_CALLABLE) {
       var type = this.text();
       this.next();
       return result("typereference", type.toLowerCase(), type);
     } else if (this.token === this.tok.T_STRING) {
       var _type = this.text();
+
       var backup = [this.token, this.lexer.getState()];
       this.next();
+
       if (this.token !== this.tok.T_NS_SEPARATOR && this.ast.typereference.types.indexOf(_type.toLowerCase()) > -1) {
         return result("typereference", _type.toLowerCase(), _type);
       } else {
@@ -6363,6 +6903,7 @@ module.exports = {
     } else if (this.token === this.tok.T_NAMESPACE || this.token === this.tok.T_NS_SEPARATOR) {
       return this.read_namespace_name();
     }
+
     return null;
   }
 };
@@ -6400,6 +6941,7 @@ module.exports = {
       this.next();
       body = this.node("block");
       var items = [];
+
       while (this.token !== this.EOF && this.token !== this.tok.T_ENDIF) {
         if (this.token === this.tok.T_ELSEIF) {
           alternate = this.read_elseif_short();
@@ -6408,21 +6950,26 @@ module.exports = {
           alternate = this.read_else_short();
           break;
         }
+
         items.push(this.read_inner_statement());
       }
+
       body = body(null, items);
       this.expect(this.tok.T_ENDIF) && this.next();
       this.expectEndOfStatement();
     } else {
       body = this.read_statement();
+
       if (this.token === this.tok.T_ELSEIF) {
         alternate = this.read_if();
       } else if (this.token === this.tok.T_ELSE) {
         alternate = this.next().read_statement();
       }
     }
+
     return result(test, body, alternate, shortForm);
   },
+
   /**
    * reads an if expression : '(' expr ')'
    */
@@ -6432,6 +6979,7 @@ module.exports = {
     this.expect(")") && this.next();
     return result;
   },
+
   /**
    * reads an elseif (expr): statements
    */
@@ -6444,6 +6992,7 @@ module.exports = {
     test = this.next().read_if_expr();
     if (this.expect(":")) this.next();
     body = this.node("block");
+
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       if (this.token === this.tok.T_ELSEIF) {
         alternate = this.read_elseif_short();
@@ -6452,11 +7001,14 @@ module.exports = {
         alternate = this.read_else_short();
         break;
       }
+
       items.push(this.read_inner_statement());
     }
+
     body = body(null, items);
     return result(test, body, alternate, true);
   },
+
   /**
    *
    */
@@ -6464,9 +7016,11 @@ module.exports = {
     var body = this.node("block");
     if (this.next().expect(":")) this.next();
     var items = [];
+
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       items.push(this.read_inner_statement());
     }
+
     return body(null, items);
   }
 };
@@ -6501,14 +7055,17 @@ module.exports = {
     if (this.expect("(")) this.next();
     test = this.read_expr();
     if (this.expect(")")) this.next();
+
     if (this.token === ":") {
       shortForm = true;
       body = this.read_short_form(this.tok.T_ENDWHILE);
     } else {
       body = this.read_statement();
     }
+
     return result(test, body, shortForm);
   },
+
   /**
    * Reads a do / while loop
    * ```ebnf
@@ -6523,14 +7080,17 @@ module.exports = {
     var test = null;
     var body = null;
     body = this.read_statement();
+
     if (this.expect(this.tok.T_WHILE)) {
       if (this.next().expect("(")) this.next();
       test = this.read_expr();
       if (this.expect(")")) this.next();
       if (this.expect(";")) this.next();
     }
+
     return result(test, body);
   },
+
   /**
    * Read a for incremental loop
    * ```ebnf
@@ -6550,32 +7110,38 @@ module.exports = {
     var body = null;
     var shortForm = false;
     if (this.expect("(")) this.next();
+
     if (this.token !== ";") {
       init = this.read_list(this.read_expr, ",");
       if (this.expect(";")) this.next();
     } else {
       this.next();
     }
+
     if (this.token !== ";") {
       test = this.read_list(this.read_expr, ",");
       if (this.expect(";")) this.next();
     } else {
       this.next();
     }
+
     if (this.token !== ")") {
       increment = this.read_list(this.read_expr, ",");
       if (this.expect(")")) this.next();
     } else {
       this.next();
     }
+
     if (this.token === ":") {
       shortForm = true;
       body = this.read_short_form(this.tok.T_ENDFOR);
     } else {
       body = this.read_statement();
     }
+
     return result(init, test, increment, body, shortForm);
   },
+
   /**
    * Reads a foreach loop
    * ```ebnf
@@ -6594,16 +7160,18 @@ module.exports = {
     var shortForm = false;
     if (this.expect("(")) this.next();
     source = this.read_expr();
+
     if (this.expect(this.tok.T_AS)) {
       this.next();
       value = this.read_foreach_variable();
+
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         key = value;
         value = this.next().read_foreach_variable();
       }
-    }
+    } // grammatically correct but not supported by PHP
 
-    // grammatically correct but not supported by PHP
+
     if (key && key.kind === "list") {
       this.raiseError("Fatal Error : Cannot use list as key element");
     }
@@ -6616,8 +7184,10 @@ module.exports = {
     } else {
       body = this.read_statement();
     }
+
     return result(source, key, value, body, shortForm);
   },
+
   /**
    * Reads a foreach variable statement
    * ```ebnf
@@ -6698,8 +7268,9 @@ module.exports = {
    */
   read_namespace: function read_namespace() {
     var result = this.node("namespace");
-    var body = void 0;
+    var body;
     this.expect(this.tok.T_NAMESPACE) && this.next();
+
     if (this.token == "{") {
       this.currentNamespace = [""];
       body = this.next().read_top_statements();
@@ -6707,6 +7278,7 @@ module.exports = {
       return result([""], body, true);
     } else {
       var name = this.read_namespace_name();
+
       if (this.token == ";") {
         this.currentNamespace = name;
         body = this.next().read_top_statements();
@@ -6721,10 +7293,11 @@ module.exports = {
         // resolve ambuiguity between namespace & function call
         name.resolution = this.ast.reference.RELATIVE_NAME;
         name.name = name.name.substring(1);
+        result.destroy();
         return this.node("call")(name, this.read_function_argument_list());
       } else {
-        this.error(["{", ";"]);
-        // graceful mode :
+        this.error(["{", ";"]); // graceful mode :
+
         this.currentNamespace = name;
         body = this.read_top_statements();
         this.expect(this.EOF);
@@ -6732,6 +7305,7 @@ module.exports = {
       }
     }
   },
+
   /**
    * Reads a namespace name
    * ```ebnf
@@ -6743,11 +7317,14 @@ module.exports = {
   read_namespace_name: function read_namespace_name(resolveReference) {
     var result = this.node();
     var relative = false;
+
     if (this.token === this.tok.T_NAMESPACE) {
       this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();
       relative = true;
     }
+
     var names = this.read_list(this.tok.T_STRING, this.tok.T_NS_SEPARATOR, true);
+
     if (!relative && names.length === 1 && (resolveReference || this.token !== "(")) {
       if (names[0].toLowerCase() === "parent") {
         return result("parentreference", names[0]);
@@ -6755,8 +7332,10 @@ module.exports = {
         return result("selfreference", names[0]);
       }
     }
+
     return result("classreference", names, relative);
   },
+
   /**
    * Reads a use statement
    * ```ebnf
@@ -6776,6 +7355,7 @@ module.exports = {
     this.expect(this.tok.T_USE) && this.next();
     var type = this.read_use_type();
     items.push(this.read_use_declaration(false));
+
     if (this.token === ",") {
       items = items.concat(this.next().read_use_declarations(false));
     } else if (this.token === "{") {
@@ -6783,10 +7363,12 @@ module.exports = {
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();
     }
+
     result = result(name, type, items);
     this.expect(";") && this.next();
     return result;
   },
+
   /**
    *
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
@@ -6795,6 +7377,7 @@ module.exports = {
     // resolved as the same
     return this.read_variable(true, false, false);
   },
+
   /**
    * Reads a use declaration
    * ```ebnf
@@ -6811,6 +7394,7 @@ module.exports = {
     var alias = this.read_use_alias();
     return result(name.name, alias, type);
   },
+
   /**
    * Reads a list of use declarations
    * ```ebnf
@@ -6821,8 +7405,10 @@ module.exports = {
    */
   read_use_declarations: function read_use_declarations(typed) {
     var result = [this.read_use_declaration(typed)];
+
     while (this.token === ",") {
       this.next();
+
       if (typed) {
         if (this.token !== this.tok.T_FUNCTION && this.token !== this.tok.T_CONST && this.token !== this.tok.T_STRING) {
           break;
@@ -6830,10 +7416,13 @@ module.exports = {
       } else if (this.token !== this.tok.T_STRING) {
         break;
       }
+
       result.push(this.read_use_declaration(typed));
     }
+
     return result;
   },
+
   /**
    * Reads a use statement
    * ```ebnf
@@ -6843,14 +7432,19 @@ module.exports = {
    */
   read_use_alias: function read_use_alias() {
     var result = null;
+
     if (this.token === this.tok.T_AS) {
       if (this.next().expect(this.tok.T_STRING)) {
-        result = this.text();
+        var aliasName = this.node("identifier");
+        var name = this.text();
         this.next();
+        result = aliasName(name);
       }
     }
+
     return result;
   },
+
   /**
    * Reads the namespace type declaration
    * ```ebnf
@@ -6867,6 +7461,7 @@ module.exports = {
       this.next();
       return this.ast.useitem.TYPE_CONST;
     }
+
     return null;
   }
 };
@@ -6895,7 +7490,6 @@ var specialChar = {
   '\\"': '"',
   "\\'": "'"
 };
-
 module.exports = {
   /**
    * Unescape special chars
@@ -6907,10 +7501,12 @@ module.exports = {
         return specialChar[seq];
       });
     }
+
     return text.replace(/\\[rntvef"'\\$]/g, function (seq) {
       return specialChar[seq];
     });
   },
+
   /**
    * ```ebnf
    *  scalar ::= T_MAGIC_CONST
@@ -6925,8 +7521,8 @@ module.exports = {
     if (this.is("T_MAGIC_CONST")) {
       return this.get_magic_constant();
     } else {
-      var value = void 0,
-          node = void 0;
+      var value, node;
+
       switch (this.token) {
         // TEXTS
         case this.tok.T_CONSTANT_ENCAPSED_STRING:
@@ -6934,13 +7530,16 @@ module.exports = {
             value = this.node("string");
             var text = this.text();
             var offset = 0;
+
             if (text[0] === "b" || text[0] === "B") {
               offset = 1;
             }
+
             var isDoubleQuote = text[offset] === '"';
             this.next();
             value = value(isDoubleQuote, this.resolve_special_chars(text.substring(offset + 1, text.length - 1), isDoubleQuote), offset === 1, // unicode flag
             text);
+
             if (this.token === this.tok.T_DOUBLE_COLON) {
               // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
               return this.read_static_getter(value);
@@ -6949,13 +7548,15 @@ module.exports = {
               return value;
             }
           }
+
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
             var start = this.lexer.yylloc.first_offset;
             node = this.node("nowdoc");
-            value = this.next().text();
-            // strip the last line return char
+            value = this.next().text(); // strip the last line return char
+
             var lastCh = value[value.length - 1];
+
             if (lastCh === "\n") {
               if (value[value.length - 2] === "\r") {
                 // windows style
@@ -6968,8 +7569,11 @@ module.exports = {
               // mac style
               value = value.substring(0, value.length - 1);
             }
+
             this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
+
             var raw = this.lexer._input.substring(start, this.lexer.yylloc.last_offset);
+
             this.expect(this.tok.T_END_HEREDOC) && this.next();
             node = node(value, raw, this.lexer.heredoc_label, raw[3] === '"' || raw[3] === "'");
             return node;
@@ -6985,9 +7589,10 @@ module.exports = {
           {
             return this.read_encapsed_string('"', true);
           }
-
         // NUMERIC
+
         case this.tok.T_LNUMBER: // long
+
         case this.tok.T_DNUMBER:
           {
             // double
@@ -6996,31 +7601,34 @@ module.exports = {
             this.next();
             return result(value, null);
           }
-
         // ARRAYS
+
         case this.tok.T_ARRAY:
           // array parser
           return this.read_array();
+
         case "[":
           // short array format
           return this.read_array();
+
         default:
           {
-            var err = this.error("SCALAR");
-            // graceful mode : ignore token & return error node
+            var err = this.error("SCALAR"); // graceful mode : ignore token & return error node
+
             this.next();
             return err;
           }
       }
     }
   },
+
   /**
    * Handles the dereferencing
    */
   read_dereferencable: function read_dereferencable(expr) {
-    var result = void 0,
-        offset = void 0;
+    var result, offset;
     var node = this.node("offsetlookup");
+
     if (this.token === "[") {
       offset = this.next().read_expr();
       if (this.expect("]")) this.next();
@@ -7029,8 +7637,10 @@ module.exports = {
       offset = this.read_encapsed_string_item(false);
       result = node(expr, offset);
     }
+
     return result;
   },
+
   /**
    * Reads and extracts an encapsed item
    * ```ebnf
@@ -7050,12 +7660,11 @@ module.exports = {
     var encapsedPart = this.node("encapsedpart");
     var curly = false;
     var result = this.node(),
-        offset = void 0,
-        node = void 0,
-        name = void 0;
-
-    // plain text
+        offset,
+        node,
+        name; // plain text
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1222
+
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
       var text = this.text();
       this.next();
@@ -7064,14 +7673,15 @@ module.exports = {
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
       name = null;
+
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         name = this.node("variable");
         var varName = this.text();
-        this.next();
-        // check if lookup an offset
+        this.next(); // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
+
         if (this.token === "[") {
-          name = name(varName, false);
+          name = name(varName, false, false);
           node = this.node("offsetlookup");
           offset = this.next().read_expr();
           this.expect("]") && this.next();
@@ -7082,6 +7692,7 @@ module.exports = {
       } else {
         name = this.read_expr();
       }
+
       this.expect("}") && this.next();
       result = result("variable", name, false, true);
     } else if (this.token === this.tok.T_CURLY_OPEN) {
@@ -7095,17 +7706,16 @@ module.exports = {
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
       result.destroy();
-      result = this.read_simple_variable(false);
+      result = this.read_simple_variable(false); // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
 
-      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
       if (this.token === "[") {
         node = this.node("offsetlookup");
         offset = this.next().read_encaps_var_offset();
         this.expect("]") && this.next();
         result = node(result, offset);
-      }
+      } // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
 
-      // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1236
+
       if (this.token === this.tok.T_OBJECT_OPERATOR) {
         node = this.node("propertylookup");
         this.next().expect(this.tok.T_STRING);
@@ -7113,26 +7723,25 @@ module.exports = {
         name = this.text();
         this.next();
         result = node(result, what(name));
-      }
+      } // error / fallback
 
-      // error / fallback
     } else {
       this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE);
       var value = this.text();
-      this.next();
-      // consider it as string
+      this.next(); // consider it as string
+
       result.destroy();
       result = result("string", false, value, false, value);
     }
 
     return encapsedPart(result, curly);
   },
+
   /**
    * Reads an encapsed string
    */
   read_encapsed_string: function read_encapsed_string(expect) {
     var isBinary = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
     var node = this.node("encapsed");
     this.next();
     var start = this.lexer.yylloc.prev_offset - (isBinary ? 1 : 0);
@@ -7145,9 +7754,9 @@ module.exports = {
       type = this.ast.encapsed.TYPE_STRING;
     } else {
       type = this.ast.encapsed.TYPE_HEREDOC;
-    }
+    } // reading encapsed parts
 
-    // reading encapsed parts
+
     while (this.token !== expect && this.token !== this.EOF) {
       value.push(this.read_encapsed_string_item(true));
     }
@@ -7158,8 +7767,10 @@ module.exports = {
     if (expect === this.tok.T_END_HEREDOC) {
       node.label = this.lexer.heredoc_label;
     }
+
     return node;
   },
+
   /**
    * Constant token
    */
@@ -7192,8 +7803,10 @@ module.exports = {
    */
   read_top_statements: function read_top_statements() {
     var result = [];
+
     while (this.token !== this.EOF && this.token !== "}") {
       var statement = this.read_top_statement();
+
       if (statement) {
         if (Array.isArray(statement)) {
           result = result.concat(statement);
@@ -7202,8 +7815,10 @@ module.exports = {
         }
       }
     }
+
     return result;
   },
+
   /**
    * reading a top statement
    * ```ebnf
@@ -7219,16 +7834,21 @@ module.exports = {
       case this.tok.T_FUNCTION:
         return this.read_function(false, false);
       // optional flags
+
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
       case this.tok.T_CLASS:
         return this.read_class();
+
       case this.tok.T_INTERFACE:
         return this.read_interface();
+
       case this.tok.T_TRAIT:
         return this.read_trait();
+
       case this.tok.T_USE:
         return this.read_use_statement();
+
       case this.tok.T_CONST:
         {
           var result = this.node("constantstatement");
@@ -7236,21 +7856,26 @@ module.exports = {
           this.expectEndOfStatement();
           return result(null, items);
         }
+
       case this.tok.T_NAMESPACE:
         return this.read_namespace();
+
       case this.tok.T_HALT_COMPILER:
         {
           var _result = this.node("halt");
+
           if (this.next().expect("(")) this.next();
           if (this.expect(")")) this.next();
           this.expect(";");
           this.lexer.done = true;
           return _result(this.lexer._input.substring(this.lexer.offset));
         }
+
       default:
         return this.read_statement();
     }
   },
+
   /**
    * reads a list of simple inner statements (helper for inner_statement*)
    * ```ebnf
@@ -7259,8 +7884,10 @@ module.exports = {
    */
   read_inner_statements: function read_inner_statements() {
     var result = [];
+
     while (this.token != this.EOF && this.token !== "}") {
       var statement = this.read_inner_statement();
+
       if (statement) {
         if (Array.isArray(statement)) {
           result = result.concat(statement);
@@ -7269,8 +7896,10 @@ module.exports = {
         }
       }
     }
+
     return result;
   },
+
   /**
    * Reads a list of constants declaration
    * ```ebnf
@@ -7278,19 +7907,23 @@ module.exports = {
    * ```
    */
   read_const_list: function read_const_list() {
-    var result = this.read_list(function () {
+    return this.read_list(function () {
       this.expect(this.tok.T_STRING);
       var result = this.node("constant");
+      var constName = this.node("identifier");
       var name = this.text();
-      if (this.next().expect("=")) {
-        return result(name, this.next().read_expr());
+      this.next();
+      constName = constName(name);
+
+      if (this.expect("=")) {
+        return result(constName, this.next().read_expr());
       } else {
         // fallback
-        return result(name, null);
+        return result(constName, null);
       }
     }, ",", false);
-    return result;
   },
+
   /**
    * Reads a list of constants declaration
    * ```ebnf
@@ -7300,6 +7933,7 @@ module.exports = {
    */
   read_declare_list: function read_declare_list() {
     var result = [];
+
     while (this.token != this.EOF && this.token !== ")") {
       this.expect(this.tok.T_STRING);
       var directive = this.node("declaredirective");
@@ -7308,15 +7942,19 @@ module.exports = {
       this.next();
       key = key(name);
       var value = null;
+
       if (this.expect("=")) {
         value = this.next().read_expr();
       }
+
       result.push(directive(key, value));
       if (this.token !== ",") break;
       this.next();
     }
+
     return result;
   },
+
   /**
    * reads a simple inner statement
    * ```ebnf
@@ -7328,18 +7966,22 @@ module.exports = {
       case this.tok.T_FUNCTION:
         return this.read_function(false, false);
       // optional flags
+
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
       case this.tok.T_CLASS:
         return this.read_class();
+
       case this.tok.T_INTERFACE:
         return this.read_interface();
+
       case this.tok.T_TRAIT:
         return this.read_trait();
+
       case this.tok.T_HALT_COMPILER:
         {
-          this.raiseError("__HALT_COMPILER() can only be used from the outermost scope");
-          // fallback : returns a node but does not stop the parsing
+          this.raiseError("__HALT_COMPILER() can only be used from the outermost scope"); // fallback : returns a node but does not stop the parsing
+
           var node = this.node("halt");
           this.next().expect("(") && this.next();
           this.expect(")") && this.next();
@@ -7347,10 +7989,12 @@ module.exports = {
           this.expect(";") && this.next();
           return node;
         }
+
       default:
         return this.read_statement();
     }
   },
+
   /**
    * Reads statements
    */
@@ -7387,23 +8031,28 @@ module.exports = {
         {
           var result = this.node("return");
           var expr = null;
+
           if (!this.next().is("EOS")) {
             expr = this.read_expr();
           }
+
           this.expectEndOfStatement();
           return result(expr);
         }
-
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L429
+
       case this.tok.T_BREAK:
       case this.tok.T_CONTINUE:
         {
           var _result2 = this.node(this.token === this.tok.T_CONTINUE ? "continue" : "break");
+
           var level = null;
           this.next(); // look ahead
+
           if (this.token !== ";") {
             level = this.read_expr();
           }
+
           this.expectEndOfStatement();
           return _result2(level);
         }
@@ -7411,6 +8060,7 @@ module.exports = {
       case this.tok.T_GLOBAL:
         {
           var _result3 = this.node("global");
+
           var items = this.next().read_list(this.read_simple_variable, ",");
           this.expectEndOfStatement();
           return _result3(items);
@@ -7419,18 +8069,25 @@ module.exports = {
       case this.tok.T_STATIC:
         {
           var current = [this.token, this.lexer.getState()];
+
           var _result4 = this.node();
+
           if (this.next().token === this.tok.T_DOUBLE_COLON) {
             // static keyword for a class
             this.lexer.tokens.push(current);
+
             var _expr = this.next().read_expr();
+
             this.expectEndOfStatement(_expr);
             return _result4("expressionstatement", _expr);
           }
+
           if (this.token === this.tok.T_FUNCTION) {
             return this.read_function(true, [0, 1, 0]);
           }
+
           var _items = this.read_variable_declarations();
+
           this.expectEndOfStatement();
           return _result4("static", _items);
         }
@@ -7438,6 +8095,7 @@ module.exports = {
       case this.tok.T_ECHO:
         {
           var _result5 = this.node("echo");
+
           var text = this.text();
           var shortForm = text === "<?=" || text === "<%=";
           var expressions = this.next().read_list(this.read_expr, ",");
@@ -7449,14 +8107,16 @@ module.exports = {
         {
           var value = this.text();
           var prevChar = this.lexer.yylloc.first_offset > 0 ? this.lexer._input[this.lexer.yylloc.first_offset - 1] : null;
-          var fixFirstLine = prevChar === "\r" || prevChar === "\n";
-          // revert back the first stripped line
+          var fixFirstLine = prevChar === "\r" || prevChar === "\n"; // revert back the first stripped line
+
           if (fixFirstLine) {
             if (prevChar === "\n" && this.lexer.yylloc.first_offset > 1 && this.lexer._input[this.lexer.yylloc.first_offset - 2] === "\r") {
               prevChar = "\r\n";
             }
           }
+
           var _result6 = this.node("inline");
+
           this.next();
           return _result6(value, fixFirstLine ? prevChar + value : value);
         }
@@ -7464,6 +8124,7 @@ module.exports = {
       case this.tok.T_UNSET:
         {
           var _result7 = this.node("unset");
+
           this.next().expect("(") && this.next();
           var variables = this.read_list(this.read_variable, ",");
           this.expect(")") && this.next();
@@ -7474,32 +8135,39 @@ module.exports = {
       case this.tok.T_DECLARE:
         {
           var _result8 = this.node("declare");
+
           var body = [];
-          var mode = void 0;
+          var mode;
           this.next().expect("(") && this.next();
           var directives = this.read_declare_list();
           this.expect(")") && this.next();
+
           if (this.token === ":") {
             this.next();
+
             while (this.token != this.EOF && this.token !== this.tok.T_ENDDECLARE) {
               // @todo : check declare_statement from php / not valid
               body.push(this.read_top_statement());
             }
+
             this.expect(this.tok.T_ENDDECLARE) && this.next();
             this.expectEndOfStatement();
             mode = this.ast.declare.MODE_SHORT;
           } else if (this.token === "{") {
             this.next();
+
             while (this.token != this.EOF && this.token !== "}") {
               // @todo : check declare_statement from php / not valid
               body.push(this.read_top_statement());
             }
+
             this.expect("}") && this.next();
             mode = this.ast.declare.MODE_BLOCK;
           } else {
             this.expect(";") && this.next();
             mode = this.ast.declare.MODE_NONE;
           }
+
           return _result8(directives, body, mode);
         }
 
@@ -7509,12 +8177,14 @@ module.exports = {
       case this.tok.T_THROW:
         {
           var _result9 = this.node("throw");
+
           var _expr2 = this.next().read_expr();
+
           this.expectEndOfStatement();
           return _result9(_expr2);
         }
-
       // ignore this (extra ponctuation)
+
       case ";":
         {
           this.next();
@@ -7524,18 +8194,23 @@ module.exports = {
       case this.tok.T_STRING:
         {
           var _result10 = this.node();
+
           var _current = [this.token, this.lexer.getState()];
-          var label = this.text();
-          // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
+          var label = this.text(); // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
+
           if (this.next().token === ":") {
             this.next();
             return _result10("label", label);
-          }
+          } // default fallback expr / T_STRING '::' (etc...)
 
-          // default fallback expr / T_STRING '::' (etc...)
+
+          _result10.destroy();
+
           this.lexer.tokens.push(_current);
           var statement = this.node("expressionstatement");
+
           var _expr3 = this.next().read_expr();
+
           this.expectEndOfStatement(_expr3);
           return statement(_expr3);
         }
@@ -7543,11 +8218,14 @@ module.exports = {
       case this.tok.T_GOTO:
         {
           var _result11 = this.node("goto");
+
           var _label = null;
+
           if (this.next().expect(this.tok.T_STRING)) {
             _label = this.text();
             this.next().expectEndOfStatement();
           }
+
           return _result11(_label);
         }
 
@@ -7555,12 +8233,15 @@ module.exports = {
         {
           // default fallback expr
           var _statement = this.node("expressionstatement");
+
           var _expr4 = this.read_expr();
+
           this.expectEndOfStatement(_expr4);
           return _statement(_expr4);
         }
     }
   },
+
   /**
    * ```ebnf
    *  code_block ::= '{' (inner_statements | top_statements) '}'
@@ -7606,6 +8287,7 @@ module.exports = {
     var body = this.read_switch_case_list();
     return result(test, body, shortForm);
   },
+
   /**
    * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
@@ -7617,29 +8299,36 @@ module.exports = {
     var expect = null;
     var result = this.node("block");
     var items = [];
+
     if (this.token === "{") {
       expect = "}";
     } else if (this.token === ":") {
       expect = this.tok.T_ENDSWITCH;
     } else {
       this.expect(["{", ":"]);
-    }
-    // OPTIONNAL ';'
+    } // OPTIONNAL ';'
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L570
+
+
     if (this.next().token === ";") {
       this.next();
-    }
-    // EXTRACTING CASES
+    } // EXTRACTING CASES
+
+
     while (this.token !== this.EOF && this.token !== expect) {
       items.push(this.read_case_list(expect));
-    }
-    // CHECK END TOKEN
+    } // CHECK END TOKEN
+
+
     this.expect(expect) && this.next();
+
     if (expect === this.tok.T_ENDSWITCH) {
       this.expectEndOfStatement();
     }
+
     return result(null, items);
   },
+
   /**
    * ```ebnf
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
@@ -7650,6 +8339,7 @@ module.exports = {
     var test = null;
     var body = null;
     var items = [];
+
     if (this.token === this.tok.T_CASE) {
       test = this.next().read_expr();
     } else if (this.token === this.tok.T_DEFAULT) {
@@ -7658,11 +8348,14 @@ module.exports = {
     } else {
       this.expect([this.tok.T_CASE, this.tok.T_DEFAULT]);
     }
+
     this.expect([":", ";"]) && this.next();
     body = this.node("block");
+
     while (this.token != this.EOF && this.token !== stopToken && this.token !== this.tok.T_CASE && this.token !== this.tok.T_DEFAULT) {
       items.push(this.read_inner_statement());
     }
+
     return result(test, items.length > 0 ? body(null, items) : null);
   }
 };
@@ -7696,8 +8389,8 @@ module.exports = {
     var result = this.node("try");
     var always = null;
     var catches = [];
-    var body = this.next().read_statement();
-    // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
+    var body = this.next().read_statement(); // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L455
+
     while (this.token === this.tok.T_CATCH) {
       var item = this.node("catch");
       this.next().expect("(") && this.next();
@@ -7706,9 +8399,11 @@ module.exports = {
       this.expect(")");
       catches.push(item(this.next().read_statement(), what, variable));
     }
+
     if (this.token === this.tok.T_FINALLY) {
       always = this.next().read_statement();
     }
+
     return result(body, catches, always);
   }
 };
@@ -7735,9 +8430,11 @@ module.exports = {
     var body = this.node("block");
     var items = [];
     if (this.expect(":")) this.next();
+
     while (this.token != this.EOF && this.token !== token) {
       items.push(this.read_inner_statement());
     }
+
     if (this.expect(token)) this.next();
     this.expectEndOfStatement();
     return body(null, items);
@@ -7760,6 +8457,7 @@ module.exports = {
     if (typeof item === "function") {
       do {
         result.push(item.apply(this, []));
+
         if (this.token != separator) {
           break;
         }
@@ -7770,13 +8468,15 @@ module.exports = {
       } else {
         return [];
       }
+
       while (this.next().token != this.EOF) {
-        if (this.token != separator) break;
-        // trim current separator & check item
+        if (this.token != separator) break; // trim current separator & check item
+
         if (this.next().token != item) break;
         result.push(this.text());
       }
     }
+
     return result;
   },
 
@@ -7809,16 +8509,16 @@ module.exports = {
    *
    * Sample code :
    * ```php
-   * <?php class foo extends bar, baz { }
+   * <?php static $a = 'hello', $b = 'world';
    * ```
-   * @return {Variable[]|Assign[]} Returns an array composed by a list of variables, or
+   * @return {StaticVariable[]} Returns an array composed by a list of variables, or
    * assign values
    */
   read_variable_declarations: function read_variable_declarations() {
     return this.read_list(function () {
-      var node = this.node("assign");
-      var variable = this.node("variable");
-      // plain variable name
+      var node = this.node("staticvariable");
+      var variable = this.node("variable"); // plain variable name
+
       if (this.expect(this.tok.T_VARIABLE)) {
         var name = this.text().substring(1);
         this.next();
@@ -7826,6 +8526,7 @@ module.exports = {
       } else {
         variable = variable("#ERR", false, false);
       }
+
       if (this.token === "=") {
         return node(variable, this.next().read_expr());
       } else {
@@ -7865,33 +8566,35 @@ module.exports = {
    * ```
    */
   read_variable: function read_variable(read_only, encapsed, byref) {
-    var result = void 0;
+    var result; // check the byref flag
 
-    // check the byref flag
     if (!byref && this.token === "&") {
       byref = true;
       this.next();
-    }
+    } // reads the entry point
 
-    // reads the entry point
+
     if (this.is([this.tok.T_VARIABLE, "$"])) {
       result = this.read_reference_variable(encapsed, byref);
     } else if (this.is([this.tok.T_NS_SEPARATOR, this.tok.T_STRING, this.tok.T_NAMESPACE])) {
       result = this.node();
       var name = this.read_namespace_name();
+
       if (this.token != this.tok.T_DOUBLE_COLON && this.token != "(" && ["parentreference", "selfreference"].indexOf(name.kind) === -1) {
         // @see parser.js line 130 : resolves a conflict with scalar
         var literal = name.name.toLowerCase();
+
         if (literal === "true") {
-          result = result("boolean", true, name.name);
+          result = name.destroy(result("boolean", true, name.name));
         } else if (literal === "false") {
-          result = result("boolean", false, name.name);
+          result = name.destroy(result("boolean", false, name.name));
         } else {
           // @todo null keyword ?
           result = result("identifier", name);
         }
       } else {
         // @fixme possible #193 bug
+        result.destroy(name);
         result = name;
       }
     } else if (this.token === this.tok.T_STATIC) {
@@ -7901,21 +8604,20 @@ module.exports = {
       result = result(raw);
     } else {
       this.expect("VARIABLE");
-    }
+    } // static mode
 
-    // static mode
+
     if (this.token === this.tok.T_DOUBLE_COLON) {
       result = this.read_static_getter(result, encapsed);
     }
 
     return this.recursive_variable_chain_scan(result, read_only, encapsed);
   },
-
   // resolves a static call
   read_static_getter: function read_static_getter(what, encapsed) {
     var result = this.node("staticlookup");
-    var offset = void 0,
-        name = void 0;
+    var offset, name;
+
     if (this.next().is([this.tok.T_VARIABLE, "$"])) {
       offset = this.read_reference_variable(encapsed, false);
     } else if (this.token === this.tok.T_STRING || this.token === this.tok.T_CLASS || this.php7 && this.is("IDENTIFIER")) {
@@ -7924,25 +8626,27 @@ module.exports = {
       this.next();
       offset = offset(name);
     } else if (this.token === "{") {
-      offset = this.next().read_expr();
+      offset = this.node("literal");
+      name = this.next().read_expr();
       this.expect("}") && this.next();
+      offset = offset("literal", name, null);
       this.expect("(");
     } else {
-      this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
-      // graceful mode : set getter as error node and continue
+      this.error([this.tok.T_VARIABLE, this.tok.T_STRING]); // graceful mode : set getter as error node and continue
+
       offset = this.node("identifier");
       name = this.text();
       this.next();
       offset = offset(name);
     }
+
     return result(what, offset);
   },
-
   read_what: function read_what() {
     var is_static_lookup = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-
     var what = null;
     var name = null;
+
     switch (this.next().token) {
       case this.tok.T_STRING:
         what = this.node("identifier");
@@ -7959,6 +8663,7 @@ module.exports = {
           name = this.text().substring(1);
           this.next();
           what = this.node("encapsed")([what, inner(name, false, false)], null, "offset");
+
           if (what.loc && what.value[0].loc) {
             what.loc.start = what.value[0].loc.start;
           }
@@ -7966,35 +8671,48 @@ module.exports = {
           var expr = this.next().read_expr();
           this.expect("}") && this.next();
           what = this.node("encapsed")([what, expr], null, "offset");
+
           if (what.loc && what.value[0].loc) {
             what.loc.start = what.value[0].loc.start;
           }
         }
+
         break;
+
       case this.tok.T_VARIABLE:
         what = this.node("variable");
         name = this.text().substring(1);
         this.next();
         what = what(name, false, false);
         break;
+
       case "$":
+        what = this.node();
         this.next().expect(["$", "{", this.tok.T_VARIABLE]);
+
         if (this.token === "{") {
           // $obj->${$varname}
-          what = this.next().read_expr();
+          name = this.next().read_expr();
           this.expect("}") && this.next();
+          what = what("literal", "literal", name, null);
         } else {
           // $obj->$$varname
-          what = this.read_expr();
+          name = this.read_expr();
+          what = what("variable", name, false, false);
         }
+
         break;
+
       case "{":
-        what = this.next().read_expr();
+        what = this.node("literal");
+        name = this.next().read_expr();
         this.expect("}") && this.next();
+        what = what("literal", name, null);
         break;
+
       default:
-        this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]);
-        // graceful mode : set what as error mode & continue
+        this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]); // graceful mode : set what as error mode & continue
+
         what = this.node("identifier");
         name = this.text();
         this.next();
@@ -8004,10 +8722,9 @@ module.exports = {
 
     return what;
   },
-
   recursive_variable_chain_scan: function recursive_variable_chain_scan(result, read_only, encapsed) {
-    var node = void 0,
-        offset = void 0;
+    var node, offset;
+
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
         case "(":
@@ -8017,11 +8734,14 @@ module.exports = {
           } else {
             result = this.node("call")(result, this.read_function_argument_list());
           }
+
           break;
+
         case "[":
           node = this.node("offsetlookup");
           this.next();
           offset = false;
+
           if (encapsed) {
             offset = this.read_encaps_var_offset();
             this.expect("]") && this.next();
@@ -8034,8 +8754,10 @@ module.exports = {
               this.next();
             }
           }
+
           result = node(result, offset);
           break;
+
         case this.tok.T_DOUBLE_COLON:
           // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
           if (result.kind === "staticlookup" && result.offset.kind === "identifier") {
@@ -8043,31 +8765,36 @@ module.exports = {
           }
 
           node = this.node("staticlookup");
-          result = node(result, this.read_what(true));
-
-          // fix 185
+          result = node(result, this.read_what(true)); // fix 185
           // static lookup dereferencables are limited to staticlookup over functions
+
           /*if (dereferencable && this.token !== "(") {
             this.error("(");
           }*/
+
           break;
+
         case this.tok.T_OBJECT_OPERATOR:
           {
             node = this.node("propertylookup");
             result = node(result, this.read_what());
             break;
           }
+
         default:
           break recursive_scan_loop;
       }
     }
+
     return result;
   },
+
   /**
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   read_encaps_var_offset: function read_encaps_var_offset() {
     var offset = this.node();
+
     if (this.token === this.tok.T_STRING) {
       var text = this.text();
       this.next();
@@ -8081,14 +8808,17 @@ module.exports = {
       this.next();
       offset = offset("variable", name, false, false);
     } else {
-      this.expect([this.tok.T_STRING, this.tok.T_NUM_STRING, this.tok.T_VARIABLE]);
-      // fallback : consider as identifier
+      this.expect([this.tok.T_STRING, this.tok.T_NUM_STRING, this.tok.T_VARIABLE]); // fallback : consider as identifier
+
       var _text = this.text();
+
       this.next();
       offset = offset("identifier", _text);
     }
+
     return offset;
   },
+
   /**
    * ```ebnf
    *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
@@ -8102,7 +8832,8 @@ module.exports = {
    */
   read_reference_variable: function read_reference_variable(encapsed, byref) {
     var result = this.read_simple_variable(byref);
-    var offset = void 0;
+    var offset;
+
     while (this.token != this.EOF) {
       var node = this.node();
       /*
@@ -8116,7 +8847,9 @@ module.exports = {
         this.expect("]") && this.next();
         result = node("offsetlookup", result, offset);
       } else */
+
       if (this.token == "{" && !encapsed) {
+        // @fixme check coverage, not sure thats working
         offset = this.next().read_expr();
         this.expect("}") && this.next();
         result = node("offsetlookup", result, offset);
@@ -8125,8 +8858,10 @@ module.exports = {
         break;
       }
     }
+
     return result;
   },
+
   /**
    * ```ebnf
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
@@ -8134,15 +8869,16 @@ module.exports = {
    */
   read_simple_variable: function read_simple_variable(byref) {
     var result = this.node("variable");
-    var name = void 0;
+    var name;
+
     if (this.expect([this.tok.T_VARIABLE, "$"]) && this.token === this.tok.T_VARIABLE) {
       // plain variable name
       name = this.text().substring(1);
       this.next();
       result = result(name, byref, false);
     } else {
-      if (this.token === "$") this.next();
-      // dynamic variable name
+      if (this.token === "$") this.next(); // dynamic variable name
+
       switch (this.token) {
         case "{":
           {
@@ -8151,10 +8887,13 @@ module.exports = {
             result = result(expr, byref, true);
             break;
           }
+
         case "$":
           // $$$var
-          result = result(this.read_simple_variable(false), byref);
+          // @fixme check coverage here
+          result = result(this.read_simple_variable(false), byref, false);
           break;
+
         case this.tok.T_VARIABLE:
           {
             // $$var
@@ -8164,14 +8903,16 @@ module.exports = {
             result = result(node(name, false, false), byref, false);
             break;
           }
+
         default:
-          this.error(["{", "$", this.tok.T_VARIABLE]);
-          // graceful mode
+          this.error(["{", "$", this.tok.T_VARIABLE]); // graceful mode
+
           name = this.text();
           this.next();
           result = result(name, byref, false);
       }
     }
+
     return result;
   }
 };
@@ -8186,7 +8927,6 @@ module.exports = {
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
 
 /**
  * PHP AST Tokens
@@ -8479,15 +9219,15 @@ module.exports = {
 
 
 var Location = __webpack_require__(46);
-var Position = __webpack_require__(47);
 
+var Position = __webpack_require__(47);
 /**
  * ## Class hierarchy
  *
  * - [Location](#location)
  * - [Position](#position)
  * - [Node](#node)
- *   - [DeclareDirective](#declaredirective)
+ *   - [StaticVariable](#staticvariable)
  *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
  *   - [Identifier](#identifier)
@@ -8572,6 +9312,8 @@ var Position = __webpack_require__(47);
  *     - [Block](#block)
  *       - [Program](#program)
  *       - [Namespace](#namespace)
+ *     - [PropertyStatement](#propertystatement)
+ *     - [Property](#property)
  *     - [Declaration](#declaration)
  *       - [Class](#class)
  *       - [Interface](#interface)
@@ -8579,7 +9321,6 @@ var Position = __webpack_require__(47);
  *       - [Function](#function)
  *         - [Method](#method)
  *       - [Parameter](#parameter)
- *       - [Property](#property)
  * ---
  */
 
@@ -8590,11 +9331,12 @@ var Position = __webpack_require__(47);
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)
  */
+
+
 var AST = function AST(withPositions, withSource) {
   this.withPositions = withPositions;
   this.withSource = withSource;
 };
-
 /**
  * Create a position node from specified parser
  * including it's lexer current state
@@ -8602,14 +9344,17 @@ var AST = function AST(withPositions, withSource) {
  * @return {Position}
  * @private
  */
+
+
 AST.prototype.position = function (parser) {
   return new Position(parser.lexer.yylloc.first_line, parser.lexer.yylloc.first_column, parser.lexer.yylloc.first_offset);
-};
+}; // operators in ascending order of precedence
 
-// operators in ascending order of precedence
+
 AST.precedence = {};
-[["or"], ["xor"], ["and"], ["="], ["?"], ["??"], ["||"], ["&&"], ["|"], ["^"], ["&"], ["==", "!=", "===", "!==", /* '<>', */"<=>"], ["<", "<=", ">", ">="], ["<<", ">>"], ["+", "-", "."], ["*", "/", "%"], ["!"], ["instanceof"], ["cast"]
-// TODO: typecasts
+[["or"], ["xor"], ["and"], ["="], ["?"], ["??"], ["||"], ["&&"], ["|"], ["^"], ["&"], ["==", "!=", "===", "!==",
+/* '<>', */
+"<=>"], ["<", "<=", ">", ">="], ["<<", ">>"], ["+", "-", "."], ["*", "/", "%"], ["!"], ["instanceof"], ["cast"] // TODO: typecasts
 // TODO: [ (array)
 // TODO: clone, new
 ].forEach(function (list, index) {
@@ -8617,39 +9362,60 @@ AST.precedence = {};
     AST.precedence[operator] = index + 1;
   });
 });
-
 /**
  * Change parent node informations after swapping childs
  */
+
 AST.prototype.swapLocations = function (target, first, last, parser) {
   if (this.withPositions) {
     target.loc.start = first.loc.start;
     target.loc.end = last.loc.end;
+
     if (this.withSource) {
       target.loc.source = parser.lexer._input.substring(target.loc.start.offset, target.loc.end.offset);
     }
   }
 };
+/**
+ * Includes locations from first & last into the target
+ */
 
+
+AST.prototype.resolveLocations = function (target, first, last, parser) {
+  if (this.withPositions) {
+    if (target.loc.start.offset > first.loc.start.offset) {
+      target.loc.start = first.loc.start;
+    }
+
+    if (target.loc.end.offset < last.loc.end.offset) {
+      target.loc.end = last.loc.end;
+    }
+
+    if (this.withSource) {
+      target.loc.source = parser.lexer._input.substring(target.loc.start.offset, target.loc.end.offset);
+    }
+  }
+};
 /**
  * Check and fix precence, by default using right
  */
+
+
 AST.prototype.resolvePrecedence = function (result, parser) {
-  var buffer = void 0,
-      lLevel = void 0,
-      rLevel = void 0;
-  // handling precendence
+  var buffer, lLevel, rLevel; // handling precendence
+
   if (result.kind === "call") {
     // including what argument into location
-    this.swapLocations(result, result.what, result, parser);
-  } else if (result.kind === "propertylookup") {
+    this.resolveLocations(result, result.what, result, parser);
+  } else if (result.kind === "propertylookup" || result.kind === "staticlookup" || result.kind === "offsetlookup" && result.offset) {
     // including what argument into location
-    this.swapLocations(result, result.what, result.offset, parser);
+    this.resolveLocations(result, result.what, result.offset, parser);
   } else if (result.kind === "bin") {
     if (result.right && !result.right.parenthesizedExpression) {
       if (result.right.kind === "bin") {
         lLevel = AST.precedence[result.type];
         rLevel = AST.precedence[result.right.type];
+
         if (lLevel && rLevel && rLevel <= lLevel) {
           // https://github.com/glayzzle/php-parser/issues/79
           // shift precedence
@@ -8662,6 +9428,7 @@ AST.prototype.resolvePrecedence = function (result, parser) {
       } else if (result.right.kind === "retif") {
         lLevel = AST.precedence[result.type];
         rLevel = AST.precedence["?"];
+
         if (lLevel && rLevel && rLevel <= lLevel) {
           buffer = result.right;
           result.right = result.right.test;
@@ -8723,8 +9490,8 @@ AST.prototype.resolvePrecedence = function (result, parser) {
     // https://github.com/glayzzle/php-parser/issues/81
     if (result.right && result.right.kind === "bin" && !result.right.parenthesizedExpression) {
       lLevel = AST.precedence["="];
-      rLevel = AST.precedence[result.right.type];
-      // only shifts with and, xor, or
+      rLevel = AST.precedence[result.right.type]; // only shifts with and, xor, or
+
       if (lLevel && rLevel && rLevel < lLevel) {
         buffer = result.right;
         result.right = result.right.left;
@@ -8733,10 +9500,17 @@ AST.prototype.resolvePrecedence = function (result, parser) {
         result = buffer;
       }
     }
+  } else if (result.kind === "silent" && result.expr.right && !result.expr.parenthesizedExpression) {
+    // overall least precedence
+    buffer = result.expr;
+    result.expr = buffer.left;
+    buffer.left = result;
+    this.swapLocations(buffer, buffer.left, buffer.right, parser);
+    result = buffer;
   }
+
   return result;
 };
-
 /**
  * Prepares an AST node
  * @param {String|null} kind - Defines the node type
@@ -8744,55 +9518,93 @@ AST.prototype.resolvePrecedence = function (result, parser) {
  * @param {Parser} parser - The parser instance (use for extracting locations)
  * @return {Function}
  */
+
+
 AST.prototype.prepare = function (kind, docs, parser) {
   var start = null;
+
   if (this.withPositions || this.withSource) {
     start = this.position(parser);
   }
-  var self = this;
-  // returns the node
+
+  var self = this; // returns the node
+
   var result = function result() {
     var location = null;
     var args = Array.prototype.slice.call(arguments);
     args.push(docs);
+
     if (typeof result.preBuild === "function") {
       result.preBuild(arguments);
     }
+
     if (self.withPositions || self.withSource) {
       var src = null;
+
       if (self.withSource) {
         src = parser.lexer._input.substring(start.offset, parser.prev[2]);
       }
+
       if (self.withPositions) {
         location = new Location(src, start, new Position(parser.prev[0], parser.prev[1], parser.prev[2]));
       } else {
         location = new Location(src, null, null);
-      }
-      // last argument is allways the location
+      } // last argument is allways the location
+
+
       args.push(location);
-    }
-    // handle lazy kind definitions
+    } // handle lazy kind definitions
+
+
     if (!kind) {
       kind = args.shift();
-    }
-    // build the object
+    } // build the object
+
+
     var node = self[kind];
+
     if (typeof node !== "function") {
       throw new Error('Undefined node "' + kind + '"');
     }
+
     var astNode = Object.create(node.prototype);
     node.apply(astNode, args);
     result.instance = astNode;
+
     if (result.trailingComments) {
       // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
     }
+
+    if (typeof result.postBuild === "function") {
+      result.postBuild(astNode);
+    }
+
+    if (parser.debug) {
+      delete AST.stack[result.stackUid];
+    }
+
     return self.resolvePrecedence(astNode, parser);
   };
+
+  if (parser.debug) {
+    if (!AST.stack) {
+      AST.stack = {};
+      AST.stackUid = 1;
+    }
+
+    AST.stack[++AST.stackUid] = {
+      position: start,
+      stack: new Error().stack.split("\n").slice(3, 5)
+    };
+    result.stackUid = AST.stackUid;
+  }
   /**
    * Helper to change a node kind
    * @param {String} newKind
    */
+
+
   result.setKind = function (newKind) {
     kind = newKind;
   };
@@ -8800,6 +9612,8 @@ AST.prototype.prepare = function (kind, docs, parser) {
    * Sets a list of trailing comments
    * @param {*} docs
    */
+
+
   result.setTrailingComments = function (docs) {
     if (result.instance) {
       // already created
@@ -8811,6 +9625,8 @@ AST.prototype.prepare = function (kind, docs, parser) {
   /**
    * Release a node without using it on the AST
    */
+
+
   result.destroy = function (target) {
     if (docs) {
       // release current docs stack
@@ -8824,15 +9640,32 @@ AST.prototype.prepare = function (kind, docs, parser) {
         parser._docIndex = parser._docs.length - docs.length;
       }
     }
+
+    if (parser.debug) {
+      delete AST.stack[result.stackUid];
+    }
   };
+
   return result;
 };
 
-// Define all AST nodes
-[__webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(7), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(9), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(10), __webpack_require__(65), __webpack_require__(4), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74), __webpack_require__(75), __webpack_require__(76), __webpack_require__(1), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(11), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(3), __webpack_require__(8), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94), __webpack_require__(2), __webpack_require__(95), __webpack_require__(96), __webpack_require__(97), __webpack_require__(5), __webpack_require__(98), __webpack_require__(99), __webpack_require__(100), __webpack_require__(101), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(105), __webpack_require__(6), __webpack_require__(106), __webpack_require__(107), __webpack_require__(108), __webpack_require__(109), __webpack_require__(0), __webpack_require__(110), __webpack_require__(111), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121), __webpack_require__(122), __webpack_require__(123), __webpack_require__(124), __webpack_require__(125), __webpack_require__(126), __webpack_require__(127), __webpack_require__(128), __webpack_require__(129), __webpack_require__(130)].forEach(function (ctor) {
+AST.prototype.checkNodes = function () {
+  var errors = [];
+
+  for (var k in AST.stack) {
+    if (AST.stack.hasOwnProperty(k)) {
+      errors.push(AST.stack[k]);
+    }
+  }
+
+  AST.stack = {};
+  return errors;
+}; // Define all AST nodes
+
+
+[__webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(7), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(9), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(10), __webpack_require__(65), __webpack_require__(5), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74), __webpack_require__(75), __webpack_require__(76), __webpack_require__(1), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(11), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(3), __webpack_require__(8), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94), __webpack_require__(2), __webpack_require__(95), __webpack_require__(96), __webpack_require__(97), __webpack_require__(4), __webpack_require__(98), __webpack_require__(99), __webpack_require__(100), __webpack_require__(101), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(105), __webpack_require__(106), __webpack_require__(6), __webpack_require__(107), __webpack_require__(108), __webpack_require__(109), __webpack_require__(110), __webpack_require__(0), __webpack_require__(111), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121), __webpack_require__(122), __webpack_require__(123), __webpack_require__(124), __webpack_require__(125), __webpack_require__(126), __webpack_require__(127), __webpack_require__(128), __webpack_require__(129), __webpack_require__(130), __webpack_require__(131), __webpack_require__(132)].forEach(function (ctor) {
   AST.prototype[ctor.kind] = ctor;
 });
-
 module.exports = AST;
 
 /***/ }),
@@ -8845,7 +9678,6 @@ module.exports = AST;
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
 
 /**
  * Defines the location of the node (with it's source contents as string)
@@ -8873,7 +9705,6 @@ module.exports = Location;
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
-
 
 /**
  * Each Position object consists of a line number (1-indexed) and a column number (0-indexed):
@@ -8904,8 +9735,8 @@ module.exports = Position;
 
 
 var Expr = __webpack_require__(1);
-var KIND = "array";
 
+var KIND = "array";
 /**
  * Defines an array structure
  * @constructor Array
@@ -8931,6 +9762,7 @@ var KIND = "array";
  * @property {Entry|Expr|Variable} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
+
 module.exports = Expr.extends(KIND, function Array(shortForm, items, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.items = items;
@@ -8950,8 +9782,8 @@ module.exports = Expr.extends(KIND, function Array(shortForm, items, docs, locat
 
 
 var Expression = __webpack_require__(1);
-var KIND = "assign";
 
+var KIND = "assign";
 /**
  * Assigns a value to the specified target
  * @constructor Assign
@@ -8960,6 +9792,7 @@ var KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
+
 module.exports = Expression.extends(KIND, function Assign(left, right, operator, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.operator = operator;
@@ -8979,7 +9812,8 @@ module.exports = Expression.extends(KIND, function Assign(left, right, operator,
  */
 
 
-var Operation = __webpack_require__(5);
+var Operation = __webpack_require__(4);
+
 var KIND = "bin";
 /**
  * Binary operations
@@ -8989,6 +9823,7 @@ var KIND = "bin";
  * @property {Expression} left
  * @property {Expression} right
  */
+
 module.exports = Operation.extends(KIND, function Bin(type, left, right, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
@@ -9009,13 +9844,14 @@ module.exports = Operation.extends(KIND, function Bin(type, left, right, docs, l
 
 
 var Literal = __webpack_require__(3);
-var KIND = "boolean";
 
+var KIND = "boolean";
 /**
  * Defines a boolean value (true/false)
  * @constructor Boolean
  * @extends {Literal}
  */
+
 module.exports = Literal.extends(KIND, function Boolean(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
@@ -9033,14 +9869,15 @@ module.exports = Literal.extends(KIND, function Boolean(value, raw, docs, locati
 
 
 var Statement = __webpack_require__(0);
-var KIND = "break";
 
+var KIND = "break";
 /**
  * A break statement
  * @constructor Break
  * @extends {Statement}
  * @property {Number|Null} level
  */
+
 module.exports = Statement.extends(KIND, function Break(level, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.level = level;
@@ -9059,8 +9896,8 @@ module.exports = Statement.extends(KIND, function Break(level, docs, location) {
 
 
 var Expression = __webpack_require__(1);
-var KIND = "call";
 
+var KIND = "call";
 /**
  * Executes a call statement
  * @constructor Call
@@ -9068,6 +9905,7 @@ var KIND = "call";
  * @property {Identifier|Variable|??} what
  * @property {Arguments[]} arguments
  */
+
 module.exports = Expression.extends(KIND, function Call(what, args, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
@@ -9087,8 +9925,8 @@ module.exports = Expression.extends(KIND, function Call(what, args, docs, locati
 
 
 var Statement = __webpack_require__(0);
-var KIND = "case";
 
+var KIND = "case";
 /**
  * A switch case statement
  * @constructor Case
@@ -9096,6 +9934,7 @@ var KIND = "case";
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body
  */
+
 module.exports = Statement.extends(KIND, function Case(test, body, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
@@ -9114,9 +9953,9 @@ module.exports = Statement.extends(KIND, function Case(test, body, docs, locatio
  */
 
 
-var Operation = __webpack_require__(5);
-var KIND = "cast";
+var Operation = __webpack_require__(4);
 
+var KIND = "cast";
 /**
  * Binary operations
  * @constructor Cast
@@ -9125,6 +9964,7 @@ var KIND = "cast";
  * @property {String} raw
  * @property {Expression} what
  */
+
 module.exports = Operation.extends(KIND, function Cast(type, raw, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
@@ -9145,8 +9985,8 @@ module.exports = Operation.extends(KIND, function Cast(type, raw, what, docs, lo
 
 
 var Statement = __webpack_require__(0);
-var KIND = "catch";
 
+var KIND = "catch";
 /**
  * Defines a catch statement
  * @constructor Catch
@@ -9156,6 +9996,7 @@ var KIND = "catch";
  * @property {Statement} body
  * @see http://php.net/manual/en/language.exceptions.php
  */
+
 module.exports = Statement.extends(KIND, function Catch(body, what, variable, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.body = body;
@@ -9175,9 +10016,9 @@ module.exports = Statement.extends(KIND, function Catch(body, what, variable, do
  */
 
 
-var Declaration = __webpack_require__(4);
-var KIND = "class";
+var Declaration = __webpack_require__(5);
 
+var KIND = "class";
 /**
  * A class definition
  * @constructor Class
@@ -9189,6 +10030,7 @@ var KIND = "class";
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
+
 module.exports = Declaration.extends(KIND, function Class(name, ext, impl, body, flags, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.isAnonymous = name ? false : true;
@@ -9211,29 +10053,29 @@ module.exports = Declaration.extends(KIND, function Class(name, ext, impl, body,
 
 
 var ConstantStatement = __webpack_require__(10);
-var KIND = "classconstant";
 
+var KIND = "classconstant";
 var IS_UNDEFINED = "";
 var IS_PUBLIC = "public";
 var IS_PROTECTED = "protected";
 var IS_PRIVATE = "private";
-
 /**
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
  * @extends {ConstantStatement}
  * @property {string} visibility
  */
-var ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(kind, items, flags, docs, location) {
-  ConstantStatement.apply(this, [kind || KIND, items, docs, location]);
+
+var ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(kind, constants, flags, docs, location) {
+  ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
   this.parseFlags(flags);
 });
-
 /**
  * Generic flags parser
  * @param {Integer[]} flags
  * @return {void}
  */
+
 ClassConstant.prototype.parseFlags = function (flags) {
   if (flags[0] === -1) {
     this.visibility = IS_UNDEFINED;
@@ -9263,8 +10105,8 @@ module.exports = ClassConstant;
 
 
 var Reference = __webpack_require__(6);
-var KIND = "classreference";
 
+var KIND = "classreference";
 /**
  * Defines a class reference node
  * @constructor ClassReference
@@ -9272,29 +10114,33 @@ var KIND = "classreference";
  * @property {string} name
  * @property {string} resolution
  */
+
 var ClassReference = Reference.extends(KIND, function ClassReference(name, isRelative, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
+
   if (isRelative) {
     this.resolution = ClassReference.RELATIVE_NAME;
   } else if (name.length === 1) {
     this.resolution = ClassReference.UNQUALIFIED_NAME;
-  } else if (name[0] === "") {
+  } else if (!name[0]) {
     this.resolution = ClassReference.FULL_QUALIFIED_NAME;
   } else {
     this.resolution = ClassReference.QUALIFIED_NAME;
   }
+
   this.name = name.join("\\");
 });
-
 /**
  * This is an identifier without a namespace separator, such as Foo
  * @constant {String} UNQUALIFIED_NAME
  */
+
 ClassReference.UNQUALIFIED_NAME = "uqn";
 /**
  * This is an identifier with a namespace separator, such as Foo\Bar
  * @constant {String} QUALIFIED_NAME
  */
+
 ClassReference.QUALIFIED_NAME = "qn";
 /**
  * This is an identifier with a namespace separator that begins with
@@ -9302,13 +10148,14 @@ ClassReference.QUALIFIED_NAME = "qn";
  * a fully qualified name.
  * @constant {String} FULL_QUALIFIED_NAME
  */
+
 ClassReference.FULL_QUALIFIED_NAME = "fqn";
 /**
  * This is an identifier starting with namespace, such as namespace\Foo\Bar.
  * @constant {String} RELATIVE_NAME
  */
-ClassReference.RELATIVE_NAME = "rn";
 
+ClassReference.RELATIVE_NAME = "rn";
 module.exports = ClassReference;
 
 /***/ }),
@@ -9324,14 +10171,15 @@ module.exports = ClassReference;
 
 
 var Expression = __webpack_require__(1);
-var KIND = "clone";
 
+var KIND = "clone";
 /**
  * Defines a clone call
  * @constructor Clone
  * @extends {Expression}
  * @property {Expression} what
  */
+
 module.exports = Expression.extends(KIND, function Clone(what, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
@@ -9350,8 +10198,8 @@ module.exports = Expression.extends(KIND, function Clone(what, docs, location) {
 
 
 var Expression = __webpack_require__(1);
-var KIND = "closure";
 
+var KIND = "closure";
 /**
  * Defines a closure
  * @constructor Closure
@@ -9364,6 +10212,7 @@ var KIND = "closure";
  * @property {Block|null} body
  * @property {boolean} isStatic
  */
+
 module.exports = Expression.extends(KIND, function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.uses = uses;
@@ -9388,13 +10237,14 @@ module.exports = Expression.extends(KIND, function Closure(args, byref, uses, ty
 
 
 var Comment = __webpack_require__(9);
-var KIND = "commentblock";
 
+var KIND = "commentblock";
 /**
  * A comment block (multiline)
  * @constructor CommentBlock
  * @extends {Comment}
  */
+
 module.exports = Comment.extends(KIND, function CommentBlock(value, docs, location) {
   Comment.apply(this, [KIND, value, docs, location]);
 });
@@ -9412,13 +10262,14 @@ module.exports = Comment.extends(KIND, function CommentBlock(value, docs, locati
 
 
 var Comment = __webpack_require__(9);
-var KIND = "commentline";
 
+var KIND = "commentline";
 /**
  * A single line comment
  * @constructor CommentLine
  * @extends {Comment}
  */
+
 module.exports = Comment.extends(KIND, function CommentLine(value, docs, location) {
   Comment.apply(this, [KIND, value, docs, location]);
 });
@@ -9436,8 +10287,8 @@ module.exports = Comment.extends(KIND, function CommentLine(value, docs, locatio
 
 
 var Node = __webpack_require__(2);
-var KIND = "constant";
 
+var KIND = "constant";
 /**
  * Defines a constant
  * @constructor Constant
@@ -9445,6 +10296,7 @@ var KIND = "constant";
  * @property {string} name
  * @property {Node|string|number|boolean|null} value
  */
+
 module.exports = Node.extends(KIND, function Constant(name, value, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.name = name;
@@ -9464,14 +10316,15 @@ module.exports = Node.extends(KIND, function Constant(name, value, docs, locatio
 
 
 var Statement = __webpack_require__(0);
-var KIND = "continue";
 
+var KIND = "continue";
 /**
  * A continue statement
  * @constructor Continue
  * @extends {Statement}
  * @property {Number|Null} level
  */
+
 module.exports = Statement.extends(KIND, function Continue(level, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.level = level;
@@ -9490,8 +10343,8 @@ module.exports = Statement.extends(KIND, function Continue(level, docs, location
 
 
 var Block = __webpack_require__(7);
-var KIND = "declare";
 
+var KIND = "declare";
 /**
  * The declare construct is used to set execution directives for a block of code
  * @constructor Declare
@@ -9500,12 +10353,12 @@ var KIND = "declare";
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
+
 var Declare = Block.extends(KIND, function Declare(directives, body, mode, docs, location) {
   Block.apply(this, [KIND, body, docs, location]);
   this.directives = directives;
   this.mode = mode;
 });
-
 /**
  * The node is declared as a short tag syntax :
  * ```php
@@ -9516,8 +10369,8 @@ var Declare = Block.extends(KIND, function Declare(directives, body, mode, docs,
  * ```
  * @constant {String} MODE_SHORT
  */
-Declare.MODE_SHORT = "short";
 
+Declare.MODE_SHORT = "short";
 /**
  * The node is declared bracket enclosed code :
  * ```php
@@ -9528,8 +10381,8 @@ Declare.MODE_SHORT = "short";
  * ```
  * @constant {String} MODE_BLOCK
  */
-Declare.MODE_BLOCK = "block";
 
+Declare.MODE_BLOCK = "block";
 /**
  * The node is declared as a simple statement. In order to make things simpler
  * children of the node are automatically collected until the next
@@ -9543,8 +10396,8 @@ Declare.MODE_BLOCK = "block";
  * ```
  * @constant {String} MODE_NONE
  */
-Declare.MODE_NONE = "none";
 
+Declare.MODE_NONE = "none";
 module.exports = Declare;
 
 /***/ }),
@@ -9560,8 +10413,8 @@ module.exports = Declare;
 
 
 var Node = __webpack_require__(2);
-var KIND = "declaredirective";
 
+var KIND = "declaredirective";
 /**
  * Defines a constant
  * @constructor DeclareDirective
@@ -9569,6 +10422,7 @@ var KIND = "declaredirective";
  * @property {Identifier} name
  * @property {Node|string|number|boolean|null} value
  */
+
 module.exports = Node.extends(KIND, function DeclareDirective(key, value, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.key = key;
@@ -9588,8 +10442,8 @@ module.exports = Node.extends(KIND, function DeclareDirective(key, value, docs, 
 
 
 var Statement = __webpack_require__(0);
-var KIND = "do";
 
+var KIND = "do";
 /**
  * Defines a do/while statement
  * @constructor Do
@@ -9597,6 +10451,7 @@ var KIND = "do";
  * @property {Expression} test
  * @property {Statement} body
  */
+
 module.exports = Statement.extends(KIND, function Do(test, body, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
@@ -9616,14 +10471,15 @@ module.exports = Statement.extends(KIND, function Do(test, body, docs, location)
 
 
 var Statement = __webpack_require__(0);
-var KIND = "echo";
 
+var KIND = "echo";
 /**
  * Defines system based call
  * @constructor Echo
  * @property {boolean} shortForm
  * @extends {Statement}
  */
+
 module.exports = Statement.extends(KIND, function Echo(expressions, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.shortForm = shortForm;
@@ -9643,13 +10499,14 @@ module.exports = Statement.extends(KIND, function Echo(expressions, shortForm, d
 
 
 var Expression = __webpack_require__(1);
-var KIND = "empty";
 
+var KIND = "empty";
 /**
  * Defines an empty check call
  * @constructor Empty
  * @extends {Expression}
  */
+
 module.exports = Expression.extends(KIND, function Empty(expression, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expression = expression;
@@ -9668,8 +10525,8 @@ module.exports = Expression.extends(KIND, function Empty(expression, docs, locat
 
 
 var Literal = __webpack_require__(3);
-var KIND = "encapsed";
 
+var KIND = "encapsed";
 /**
  * Defines an encapsed string (contains expressions)
  * @constructor Encapsed
@@ -9677,11 +10534,11 @@ var KIND = "encapsed";
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
+
 var Encapsed = Literal.extends(KIND, function Encapsed(value, raw, type, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.type = type;
 });
-
 /**
  * The node is a double quote string :
  * ```php
@@ -9690,8 +10547,8 @@ var Encapsed = Literal.extends(KIND, function Encapsed(value, raw, type, docs, l
  * ```
  * @constant {String} TYPE_STRING - `string`
  */
-Encapsed.TYPE_STRING = "string";
 
+Encapsed.TYPE_STRING = "string";
 /**
  * The node is a shell execute string :
  * ```php
@@ -9700,8 +10557,8 @@ Encapsed.TYPE_STRING = "string";
  * ```
  * @constant {String} TYPE_SHELL - `shell`
  */
-Encapsed.TYPE_SHELL = "shell";
 
+Encapsed.TYPE_SHELL = "shell";
 /**
  * The node is a shell execute string :
  * ```php
@@ -9713,8 +10570,8 @@ Encapsed.TYPE_SHELL = "shell";
  * ```
  * @constant {String} TYPE_HEREDOC - `heredoc`
  */
-Encapsed.TYPE_HEREDOC = "heredoc";
 
+Encapsed.TYPE_HEREDOC = "heredoc";
 /**
  * The node contains a list of constref / variables / expr :
  * ```php
@@ -9723,8 +10580,8 @@ Encapsed.TYPE_HEREDOC = "heredoc";
  * ```
  * @constant {String} TYPE_OFFSET - `offset`
  */
-Encapsed.TYPE_OFFSET = "offset";
 
+Encapsed.TYPE_OFFSET = "offset";
 module.exports = Encapsed;
 
 /***/ }),
@@ -9740,14 +10597,15 @@ module.exports = Encapsed;
 
 
 var Expression = __webpack_require__(1);
-var KIND = "encapsedpart";
 
+var KIND = "encapsedpart";
 /**
  * Part of `Encapsed` node
  * @constructor EncapsedPart
  * @extends {Expression}
  * @property {Expression} what
  */
+
 module.exports = Expression.extends(KIND, function EncapsedPart(expression, curly, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expression = expression;
@@ -9767,8 +10625,8 @@ module.exports = Expression.extends(KIND, function EncapsedPart(expression, curl
 
 
 var Expression = __webpack_require__(1);
-var KIND = "entry";
 
+var KIND = "entry";
 /**
  * An array entry - see [Array](#array)
  * @constructor Entry
@@ -9776,6 +10634,7 @@ var KIND = "entry";
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
  */
+
 module.exports = Expression.extends(KIND, function Entry(key, value, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.key = key;
@@ -9795,8 +10654,8 @@ module.exports = Expression.extends(KIND, function Entry(key, value, docs, locat
 
 
 var Node = __webpack_require__(2);
-var KIND = "error";
 
+var KIND = "error";
 /**
  * Defines an error node (used only on silentMode)
  * @constructor Error
@@ -9806,6 +10665,7 @@ var KIND = "error";
  * @property {number|string} token
  * @property {string|array} expected
  */
+
 module.exports = Node.extends(KIND, function Error(message, token, line, expected, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.message = message;
@@ -9827,14 +10687,15 @@ module.exports = Node.extends(KIND, function Error(message, token, line, expecte
 
 
 var Expression = __webpack_require__(1);
-var KIND = "eval";
 
+var KIND = "eval";
 /**
  * Defines an eval statement
  * @constructor Eval
  * @extends {Expression}
  * @property {Node} source
  */
+
 module.exports = Expression.extends(KIND, function Eval(source, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.source = source;
@@ -9853,8 +10714,8 @@ module.exports = Expression.extends(KIND, function Eval(source, docs, location) 
 
 
 var Expression = __webpack_require__(1);
-var KIND = "exit";
 
+var KIND = "exit";
 /**
  * Defines an exit / die call
  * @constructor Exit
@@ -9862,6 +10723,7 @@ var KIND = "exit";
  * @property {Node|null} status
  * @property {Boolean} useDie
  */
+
 module.exports = Expression.extends(KIND, function Exit(status, useDie, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.status = status;
@@ -9881,14 +10743,15 @@ module.exports = Expression.extends(KIND, function Exit(status, useDie, docs, lo
 
 
 var Statement = __webpack_require__(0);
-var KIND = "expressionstatement";
 
+var KIND = "expressionstatement";
 /**
  * Defines an expression based statement
  * @constructor ExpressionStatement
  * @extends {Statement}
  * @property {Expression} expression
  */
+
 module.exports = Statement.extends(KIND, function ExpressionStatement(expr, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.expression = expr;
@@ -9907,8 +10770,8 @@ module.exports = Statement.extends(KIND, function ExpressionStatement(expr, docs
 
 
 var Statement = __webpack_require__(0);
-var KIND = "for";
 
+var KIND = "for";
 /**
  * Defines a for iterator
  * @constructor For
@@ -9920,6 +10783,7 @@ var KIND = "for";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.for.php
  */
+
 module.exports = Statement.extends(KIND, function For(init, test, increment, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.init = init;
@@ -9942,8 +10806,8 @@ module.exports = Statement.extends(KIND, function For(init, test, increment, bod
 
 
 var Statement = __webpack_require__(0);
-var KIND = "foreach";
 
+var KIND = "foreach";
 /**
  * Defines a foreach iterator
  * @constructor Foreach
@@ -9955,6 +10819,7 @@ var KIND = "foreach";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.foreach.php
  */
+
 module.exports = Statement.extends(KIND, function Foreach(source, key, value, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.source = source;
@@ -9977,14 +10842,15 @@ module.exports = Statement.extends(KIND, function Foreach(source, key, value, bo
 
 
 var Statement = __webpack_require__(0);
-var KIND = "global";
 
+var KIND = "global";
 /**
  * Imports a variable from the global scope
  * @constructor Global
  * @extends {Statement}
  * @property {Variable[]} items
  */
+
 module.exports = Statement.extends(KIND, function Global(items, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.items = items;
@@ -10003,8 +10869,8 @@ module.exports = Statement.extends(KIND, function Global(items, docs, location) 
 
 
 var Statement = __webpack_require__(0);
-var KIND = "goto";
 
+var KIND = "goto";
 /**
  * Defines goto statement
  * @constructor Goto
@@ -10012,6 +10878,7 @@ var KIND = "goto";
  * @property {String} label
  * @see {Label}
  */
+
 module.exports = Statement.extends(KIND, function Goto(label, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.label = label;
@@ -10030,8 +10897,8 @@ module.exports = Statement.extends(KIND, function Goto(label, docs, location) {
 
 
 var Statement = __webpack_require__(0);
-var KIND = "halt";
 
+var KIND = "halt";
 /**
  * Halts the compiler execution
  * @constructor Halt
@@ -10039,6 +10906,7 @@ var KIND = "halt";
  * @property {String} after - String after the halt statement
  * @see http://php.net/manual/en/function.halt-compiler.php
  */
+
 module.exports = Statement.extends(KIND, function Halt(after, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.after = after;
@@ -10057,19 +10925,19 @@ module.exports = Statement.extends(KIND, function Halt(after, docs, location) {
 
 
 var Node = __webpack_require__(2);
-var KIND = "identifier";
 
+var KIND = "identifier";
 /**
  * Defines an identifier node
  * @constructor Identifier
  * @extends {Node}
  * @property {string} name
  */
+
 var Identifier = Node.extends(KIND, function Identifier(name, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.name = name;
 });
-
 module.exports = Identifier;
 
 /***/ }),
@@ -10085,8 +10953,8 @@ module.exports = Identifier;
 
 
 var Statement = __webpack_require__(0);
-var KIND = "if";
 
+var KIND = "if";
 /**
  * Defines a if statement
  * @constructor If
@@ -10096,6 +10964,7 @@ var KIND = "if";
  * @property {Block|If|null} alternate
  * @property {boolean} shortForm
  */
+
 module.exports = Statement.extends(KIND, function If(test, body, alternate, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
@@ -10117,8 +10986,8 @@ module.exports = Statement.extends(KIND, function If(test, body, alternate, shor
 
 
 var Expression = __webpack_require__(1);
-var KIND = "include";
 
+var KIND = "include";
 /**
  * Defines system include call
  * @constructor Include
@@ -10127,6 +10996,7 @@ var KIND = "include";
  * @property {boolean} once
  * @property {boolean} require
  */
+
 module.exports = Expression.extends(KIND, function Include(once, require, target, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.once = once;
@@ -10147,13 +11017,14 @@ module.exports = Expression.extends(KIND, function Include(once, require, target
 
 
 var Literal = __webpack_require__(3);
-var KIND = "inline";
 
+var KIND = "inline";
 /**
  * Defines inline html output (treated as echo output)
  * @constructor Inline
  * @extends {Literal}
  */
+
 module.exports = Literal.extends(KIND, function Inline(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
@@ -10170,9 +11041,9 @@ module.exports = Literal.extends(KIND, function Inline(value, raw, docs, locatio
  */
 
 
-var Declaration = __webpack_require__(4);
-var KIND = "interface";
+var Declaration = __webpack_require__(5);
 
+var KIND = "interface";
 /**
  * An interface definition
  * @constructor Interface
@@ -10180,6 +11051,7 @@ var KIND = "interface";
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
  */
+
 module.exports = Declaration.extends(KIND, function Interface(name, ext, body, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
@@ -10199,13 +11071,14 @@ module.exports = Declaration.extends(KIND, function Interface(name, ext, body, d
 
 
 var Expression = __webpack_require__(1);
-var KIND = "isset";
 
+var KIND = "isset";
 /**
  * Defines an isset call
  * @constructor Isset
  * @extends {Expression}
  */
+
 module.exports = Expression.extends(KIND, function Isset(variables, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.variables = variables;
@@ -10224,14 +11097,15 @@ module.exports = Expression.extends(KIND, function Isset(variables, docs, locati
 
 
 var Statement = __webpack_require__(0);
-var KIND = "label";
 
+var KIND = "label";
 /**
  * A label statement (referenced by goto)
  * @constructor Label
  * @extends {Statement}
  * @property {String} name
  */
+
 module.exports = Statement.extends(KIND, function Label(name, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
@@ -10250,14 +11124,15 @@ module.exports = Statement.extends(KIND, function Label(name, docs, location) {
 
 
 var Expression = __webpack_require__(1);
-var KIND = "list";
 
+var KIND = "list";
 /**
  * Defines list assignment
  * @constructor List
  * @extends {Expression}
  * @property {boolean} shortForm
  */
+
 module.exports = Expression.extends(KIND, function List(items, shortForm, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.items = items;
@@ -10277,13 +11152,14 @@ module.exports = Expression.extends(KIND, function List(items, shortForm, docs, 
 
 
 var Literal = __webpack_require__(3);
-var KIND = "magic";
 
+var KIND = "magic";
 /**
  * Defines magic constant
  * @constructor Magic
  * @extends {Literal}
  */
+
 module.exports = Literal.extends(KIND, function Magic(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
@@ -10301,8 +11177,8 @@ module.exports = Literal.extends(KIND, function Magic(value, raw, docs, location
 
 
 var _Function = __webpack_require__(11);
-var KIND = "method";
 
+var KIND = "method";
 /**
  * Defines a class/interface/trait method
  * @constructor Method
@@ -10312,8 +11188,10 @@ var KIND = "method";
  * @property {boolean} isStatic
  * @property {string} visibility
  */
+
 module.exports = _Function.extends(KIND, function Method() {
   _Function.apply(this, arguments);
+
   this.kind = KIND;
 });
 
@@ -10330,8 +11208,8 @@ module.exports = _Function.extends(KIND, function Method() {
 
 
 var Block = __webpack_require__(7);
-var KIND = "namespace";
 
+var KIND = "namespace";
 /**
  * The main program node
  * @constructor Namespace
@@ -10339,6 +11217,7 @@ var KIND = "namespace";
  * @property {String} name
  * @property {Boolean} withBrackets
  */
+
 module.exports = Block.extends(KIND, function Namespace(name, children, withBrackets, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.name = name;
@@ -10358,8 +11237,8 @@ module.exports = Block.extends(KIND, function Namespace(name, children, withBrac
 
 
 var Expression = __webpack_require__(1);
-var KIND = "new";
 
+var KIND = "new";
 /**
  * Creates a new instance of the specified class
  * @constructor New
@@ -10367,6 +11246,7 @@ var KIND = "new";
  * @property {Identifier|Variable|Class} what
  * @property {Arguments[]} arguments
  */
+
 module.exports = Expression.extends(KIND, function New(what, args, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
@@ -10386,8 +11266,8 @@ module.exports = Expression.extends(KIND, function New(what, args, docs, locatio
 
 
 var Literal = __webpack_require__(3);
-var KIND = "nowdoc";
 
+var KIND = "nowdoc";
 /**
  * Defines a nowdoc string
  * @constructor NowDoc
@@ -10396,6 +11276,7 @@ var KIND = "nowdoc";
  * @property {String} raw
  * @property {Boolean} quote
  */
+
 module.exports = Literal.extends(KIND, function Nowdoc(value, raw, label, quote, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.label = label;
@@ -10415,13 +11296,14 @@ module.exports = Literal.extends(KIND, function Nowdoc(value, raw, label, quote,
 
 
 var Literal = __webpack_require__(3);
-var KIND = "number";
 
+var KIND = "number";
 /**
  * Defines a numeric value
  * @constructor Number
  * @extends {Literal}
  */
+
 module.exports = Literal.extends(KIND, function Number(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
@@ -10439,13 +11321,14 @@ module.exports = Literal.extends(KIND, function Number(value, raw, docs, locatio
 
 
 var Lookup = __webpack_require__(8);
-var KIND = "offsetlookup";
 
+var KIND = "offsetlookup";
 /**
  * Lookup on an offset in an array
  * @constructor OffsetLookup
  * @extends {Lookup}
  */
+
 module.exports = Lookup.extends(KIND, function OffsetLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
@@ -10462,9 +11345,9 @@ module.exports = Lookup.extends(KIND, function OffsetLookup(what, offset, docs, 
  */
 
 
-var Declaration = __webpack_require__(4);
-var KIND = "parameter";
+var Declaration = __webpack_require__(5);
 
+var KIND = "parameter";
 /**
  * Defines a function parameter
  * @constructor Parameter
@@ -10475,6 +11358,7 @@ var KIND = "parameter";
  * @property {boolean} variadic
  * @property {boolean} nullable
  */
+
 module.exports = Declaration.extends(KIND, function Parameter(name, type, value, isRef, isVariadic, nullable, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
@@ -10497,13 +11381,14 @@ module.exports = Declaration.extends(KIND, function Parameter(name, type, value,
 
 
 var Reference = __webpack_require__(6);
-var KIND = "parentreference";
 
+var KIND = "parentreference";
 /**
  * Defines a class reference node
  * @constructor ParentReference
  * @extends {Reference}
  */
+
 var ParentReference = Reference.extends(KIND, function ParentReference(raw, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
   this.raw = raw;
@@ -10522,9 +11407,9 @@ module.exports = ParentReference;
  */
 
 
-var Operation = __webpack_require__(5);
-var KIND = "post";
+var Operation = __webpack_require__(4);
 
+var KIND = "post";
 /**
  * Defines a post operation `$i++` or `$i--`
  * @constructor Post
@@ -10532,6 +11417,7 @@ var KIND = "post";
  * @property {String} type
  * @property {Variable} what
  */
+
 module.exports = Operation.extends(KIND, function Post(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
@@ -10550,9 +11436,9 @@ module.exports = Operation.extends(KIND, function Post(type, what, docs, locatio
  */
 
 
-var Operation = __webpack_require__(5);
-var KIND = "pre";
+var Operation = __webpack_require__(4);
 
+var KIND = "pre";
 /**
  * Defines a pre operation `++$i` or `--$i`
  * @constructor Pre
@@ -10560,6 +11446,7 @@ var KIND = "pre";
  * @property {String} type
  * @property {Variable} what
  */
+
 module.exports = Operation.extends(KIND, function Pre(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
@@ -10579,13 +11466,14 @@ module.exports = Operation.extends(KIND, function Pre(type, what, docs, location
 
 
 var Expression = __webpack_require__(1);
-var KIND = "print";
 
+var KIND = "print";
 /**
  * Outputs
  * @constructor Print
  * @extends {Expression}
  */
+
 module.exports = Expression.extends(KIND, function Print(expression, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expression = expression;
@@ -10604,8 +11492,8 @@ module.exports = Expression.extends(KIND, function Print(expression, docs, locat
 
 
 var Block = __webpack_require__(7);
-var KIND = "program";
 
+var KIND = "program";
 /**
  * The main program node
  * @constructor Program
@@ -10614,12 +11502,15 @@ var KIND = "program";
  * @property {Doc[]?} comments
  * @property {String[]?} tokens
  */
+
 module.exports = Block.extends(KIND, function Program(children, errors, comments, tokens, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
+
   if (comments) {
     this.comments = comments;
   }
+
   if (tokens) {
     this.tokens = tokens;
   }
@@ -10637,22 +11528,21 @@ module.exports = Block.extends(KIND, function Program(children, errors, comments
  */
 
 
-var Declaration = __webpack_require__(4);
-var KIND = "property";
+var Statement = __webpack_require__(0);
 
+var KIND = "property";
 /**
  * Defines a class property
  * @constructor Property
- * @extends {Declaration}
- * @property {boolean} isFinal
- * @property {boolean} isStatic
- * @property {string} visibility
+ * @extends {Statement}
+ * @property {string} name
  * @property {Node|null} value
  */
-module.exports = Declaration.extends(KIND, function Property(name, value, flags, docs, location) {
-  Declaration.apply(this, [KIND, name, docs, location]);
+
+module.exports = Statement.extends(KIND, function Property(name, value, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.name = name;
   this.value = value;
-  this.parseFlags(flags);
 });
 
 /***/ }),
@@ -10668,13 +11558,14 @@ module.exports = Declaration.extends(KIND, function Property(name, value, flags,
 
 
 var Lookup = __webpack_require__(8);
-var KIND = "propertylookup";
 
+var KIND = "propertylookup";
 /**
  * Lookup to an object property
  * @constructor PropertyLookup
  * @extends {Lookup}
  */
+
 module.exports = Lookup.extends(KIND, function PropertyLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
@@ -10691,23 +11582,48 @@ module.exports = Lookup.extends(KIND, function PropertyLookup(what, offset, docs
  */
 
 
-var Expression = __webpack_require__(1);
-var KIND = "retif";
+var Statement = __webpack_require__(0);
 
+var KIND = "propertystatement";
+var IS_UNDEFINED = "";
+var IS_PUBLIC = "public";
+var IS_PROTECTED = "protected";
+var IS_PRIVATE = "private";
 /**
- * Defines a short if statement that returns a value
- * @constructor RetIf
- * @extends {Expression}
- * @property {Expression} test
- * @property {Expression} trueExpr
- * @property {Expression} falseExpr
+ * Declares a properties into the current scope
+ * @constructor PropertyStatement
+ * @extends {Statement}
+ * @property {Property[]} properties
  */
-module.exports = Expression.extends(KIND, function RetIf(test, trueExpr, falseExpr, docs, location) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.trueExpr = trueExpr;
-  this.falseExpr = falseExpr;
+
+var PropertyStatement = Statement.extends(KIND, function PropertyStatement(kind, properties, flags, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.properties = properties;
+  this.parseFlags(flags);
 });
+/**
+ * Generic flags parser
+ * @param {Integer[]} flags
+ * @return {void}
+ */
+
+PropertyStatement.prototype.parseFlags = function (flags) {
+  if (flags[0] === -1) {
+    this.visibility = IS_UNDEFINED;
+  } else if (flags[0] === null) {
+    this.visibility = null;
+  } else if (flags[0] === 0) {
+    this.visibility = IS_PUBLIC;
+  } else if (flags[0] === 1) {
+    this.visibility = IS_PROTECTED;
+  } else if (flags[0] === 2) {
+    this.visibility = IS_PRIVATE;
+  }
+
+  this.isStatic = flags[1] === 1;
+};
+
+module.exports = PropertyStatement;
 
 /***/ }),
 /* 107 */
@@ -10721,18 +11637,23 @@ module.exports = Expression.extends(KIND, function RetIf(test, trueExpr, falseEx
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "return";
+var Expression = __webpack_require__(1);
 
+var KIND = "retif";
 /**
- * A continue statement
- * @constructor Return
- * @extends {Statement}
- * @property {Expression|null} expr
+ * Defines a short if statement that returns a value
+ * @constructor RetIf
+ * @extends {Expression}
+ * @property {Expression} test
+ * @property {Expression} trueExpr
+ * @property {Expression} falseExpr
  */
-module.exports = Statement.extends(KIND, function Return(expr, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.expr = expr;
+
+module.exports = Expression.extends(KIND, function RetIf(test, trueExpr, falseExpr, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.test = test;
+  this.trueExpr = trueExpr;
+  this.falseExpr = falseExpr;
 });
 
 /***/ }),
@@ -10747,19 +11668,20 @@ module.exports = Statement.extends(KIND, function Return(expr, docs, location) {
  */
 
 
-var Reference = __webpack_require__(6);
-var KIND = "selfreference";
+var Statement = __webpack_require__(0);
 
+var KIND = "return";
 /**
- * Defines a class reference node
- * @constructor SelfReference
- * @extends {Reference}
+ * A continue statement
+ * @constructor Return
+ * @extends {Statement}
+ * @property {Expression|null} expr
  */
-var SelfReference = Reference.extends(KIND, function SelfReference(raw, docs, location) {
-  Reference.apply(this, [KIND, docs, location]);
-  this.raw = raw;
+
+module.exports = Statement.extends(KIND, function Return(expr, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.expr = expr;
 });
-module.exports = SelfReference;
 
 /***/ }),
 /* 109 */
@@ -10773,19 +11695,20 @@ module.exports = SelfReference;
  */
 
 
-var Expression = __webpack_require__(1);
-var KIND = "silent";
+var Reference = __webpack_require__(6);
 
+var KIND = "selfreference";
 /**
- * Avoids to show/log warnings & notices from the inner expression
- * @constructor Silent
- * @extends {Expression}
- * @property {Expression} expr
+ * Defines a class reference node
+ * @constructor SelfReference
+ * @extends {Reference}
  */
-module.exports = Expression.extends(KIND, function Silent(expr, docs, location) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.expr = expr;
+
+var SelfReference = Reference.extends(KIND, function SelfReference(raw, docs, location) {
+  Reference.apply(this, [KIND, docs, location]);
+  this.raw = raw;
 });
+module.exports = SelfReference;
 
 /***/ }),
 /* 110 */
@@ -10799,18 +11722,19 @@ module.exports = Expression.extends(KIND, function Silent(expr, docs, location) 
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "static";
+var Expression = __webpack_require__(1);
 
+var KIND = "silent";
 /**
- * Declares a static variable into the current scope
- * @constructor Static
- * @extends {Statement}
- * @property {Variable[]|Assign[]} items
+ * Avoids to show/log warnings & notices from the inner expression
+ * @constructor Silent
+ * @extends {Expression}
+ * @property {Expression} expr
  */
-module.exports = Statement.extends(KIND, function Static(items, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.items = items;
+
+module.exports = Expression.extends(KIND, function Silent(expr, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.expr = expr;
 });
 
 /***/ }),
@@ -10825,16 +11749,19 @@ module.exports = Statement.extends(KIND, function Static(items, docs, location) 
  */
 
 
-var Lookup = __webpack_require__(8);
-var KIND = "staticlookup";
+var Statement = __webpack_require__(0);
 
+var KIND = "static";
 /**
- * Lookup to a static property
- * @constructor StaticLookup
- * @extends {Lookup}
+ * Declares a static variable into the current scope
+ * @constructor Static
+ * @extends {Statement}
+ * @property {StaticVariable[]} variables
  */
-module.exports = Lookup.extends(KIND, function StaticLookup(what, offset, docs, location) {
-  Lookup.apply(this, [KIND, what, offset, docs, location]);
+
+module.exports = Statement.extends(KIND, function Static(variables, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.variables = variables;
 });
 
 /***/ }),
@@ -10849,19 +11776,22 @@ module.exports = Lookup.extends(KIND, function StaticLookup(what, offset, docs, 
  */
 
 
-var Reference = __webpack_require__(6);
-var KIND = "staticreference";
+var Node = __webpack_require__(2);
 
+var KIND = "staticvariable";
 /**
- * Defines a class reference node
- * @constructor StaticReference
- * @extends {Reference}
+ * Defines a constant
+ * @constructor StaticVariable
+ * @extends {Node}
+ * @property {Variable} variable
+ * @property {Node|string|number|boolean|null} defaultValue
  */
-var StaticReference = Reference.extends(KIND, function StaticReference(raw, docs, location) {
-  Reference.apply(this, [KIND, docs, location]);
-  this.raw = raw;
+
+module.exports = Node.extends(KIND, function StaticVariable(variable, defaultValue, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
+  this.variable = variable;
+  this.defaultValue = defaultValue;
 });
-module.exports = StaticReference;
 
 /***/ }),
 /* 113 */
@@ -10875,21 +11805,17 @@ module.exports = StaticReference;
  */
 
 
-var Literal = __webpack_require__(3);
-var KIND = "string";
+var Lookup = __webpack_require__(8);
 
+var KIND = "staticlookup";
 /**
- * Defines a string (simple ou double quoted) - chars are already escaped
- * @constructor String
- * @extends {Literal}
- * @property {boolean} unicode
- * @property {boolean} isDoubleQuote
- * @see {Encapsed}
+ * Lookup to a static property
+ * @constructor StaticLookup
+ * @extends {Lookup}
  */
-module.exports = Literal.extends(KIND, function String(isDoubleQuote, value, unicode, raw, docs, location) {
-  Literal.apply(this, [KIND, value, raw, docs, location]);
-  this.unicode = unicode;
-  this.isDoubleQuote = isDoubleQuote;
+
+module.exports = Lookup.extends(KIND, function StaticLookup(what, offset, docs, location) {
+  Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 /***/ }),
@@ -10904,23 +11830,20 @@ module.exports = Literal.extends(KIND, function String(isDoubleQuote, value, uni
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "switch";
+var Reference = __webpack_require__(6);
 
+var KIND = "staticreference";
 /**
- * Defines a switch statement
- * @constructor Switch
- * @extends {Statement}
- * @property {Expression} test
- * @property {Block} body
- * @property {boolean} shortForm
+ * Defines a class reference node
+ * @constructor StaticReference
+ * @extends {Reference}
  */
-module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.body = body;
-  this.shortForm = shortForm;
+
+var StaticReference = Reference.extends(KIND, function StaticReference(raw, docs, location) {
+  Reference.apply(this, [KIND, docs, location]);
+  this.raw = raw;
 });
+module.exports = StaticReference;
 
 /***/ }),
 /* 115 */
@@ -10934,18 +11857,22 @@ module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, 
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "throw";
+var Literal = __webpack_require__(3);
 
+var KIND = "string";
 /**
- * Defines a throw statement
- * @constructor Throw
- * @extends {Statement}
- * @property {Expression} what
+ * Defines a string (simple ou double quoted) - chars are already escaped
+ * @constructor String
+ * @extends {Literal}
+ * @property {boolean} unicode
+ * @property {boolean} isDoubleQuote
+ * @see {Encapsed}
  */
-module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.what = what;
+
+module.exports = Literal.extends(KIND, function String(isDoubleQuote, value, unicode, raw, docs, location) {
+  Literal.apply(this, [KIND, value, raw, docs, location]);
+  this.unicode = unicode;
+  this.isDoubleQuote = isDoubleQuote;
 });
 
 /***/ }),
@@ -10960,18 +11887,23 @@ module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
  */
 
 
-var Declaration = __webpack_require__(4);
-var KIND = "trait";
+var Statement = __webpack_require__(0);
 
+var KIND = "switch";
 /**
- * A trait definition
- * @constructor Trait
- * @extends {Declaration}
- * @property {Declaration[]} body
+ * Defines a switch statement
+ * @constructor Switch
+ * @extends {Statement}
+ * @property {Expression} test
+ * @property {Block} body
+ * @property {boolean} shortForm
  */
-module.exports = Declaration.extends(KIND, function Trait(name, body, docs, location) {
-  Declaration.apply(this, [KIND, name, docs, location]);
+
+module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.test = test;
   this.body = body;
+  this.shortForm = shortForm;
 });
 
 /***/ }),
@@ -10986,38 +11918,19 @@ module.exports = Declaration.extends(KIND, function Trait(name, body, docs, loca
  */
 
 
-var Node = __webpack_require__(2);
-var KIND = "traitalias";
+var Statement = __webpack_require__(0);
 
-var IS_UNDEFINED = "";
-var IS_PUBLIC = "public";
-var IS_PROTECTED = "protected";
-var IS_PRIVATE = "private";
-
+var KIND = "throw";
 /**
- * Defines a trait alias
- * @constructor TraitAlias
- * @extends {Node}
- * @property {Identifier|null} trait
- * @property {string} method
- * @property {string|null} as
- * @property {string|null} visibility
+ * Defines a throw statement
+ * @constructor Throw
+ * @extends {Statement}
+ * @property {Expression} what
  */
-module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
-  this.trait = trait;
-  this.method = method;
-  this.as = as;
-  this.visibility = IS_UNDEFINED;
-  if (flags) {
-    if (flags[0] === 0) {
-      this.visibility = IS_PUBLIC;
-    } else if (flags[0] === 1) {
-      this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
-      this.visibility = IS_PRIVATE;
-    }
-  }
+
+module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.what = what;
 });
 
 /***/ }),
@@ -11032,22 +11945,19 @@ module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags
  */
 
 
-var Node = __webpack_require__(2);
-var KIND = "traitprecedence";
+var Declaration = __webpack_require__(5);
 
+var KIND = "trait";
 /**
- * Defines a trait alias
- * @constructor TraitPrecedence
- * @extends {Node}
- * @property {Identifier|null} trait
- * @property {string} method
- * @property {Identifier[]} instead
+ * A trait definition
+ * @constructor Trait
+ * @extends {Declaration}
+ * @property {Declaration[]} body
  */
-module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, instead, docs, location) {
-  Node.apply(this, [KIND, docs, location]);
-  this.trait = trait;
-  this.method = method;
-  this.instead = instead;
+
+module.exports = Declaration.extends(KIND, function Trait(name, body, docs, location) {
+  Declaration.apply(this, [KIND, name, docs, location]);
+  this.body = body;
 });
 
 /***/ }),
@@ -11063,19 +11973,38 @@ module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, inst
 
 
 var Node = __webpack_require__(2);
-var KIND = "traituse";
 
+var KIND = "traitalias";
+var IS_UNDEFINED = "";
+var IS_PUBLIC = "public";
+var IS_PROTECTED = "protected";
+var IS_PRIVATE = "private";
 /**
- * Defines a trait usage
- * @constructor TraitUse
+ * Defines a trait alias
+ * @constructor TraitAlias
  * @extends {Node}
- * @property {Identifier[]} traits
- * @property {Node[]|null} adaptations
+ * @property {Identifier|null} trait
+ * @property {Identifier} method
+ * @property {Identifier|null} as
+ * @property {string|null} visibility
  */
-module.exports = Node.extends(KIND, function TraitUse(traits, adaptations, docs, location) {
+
+module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags, docs, location) {
   Node.apply(this, [KIND, docs, location]);
-  this.traits = traits;
-  this.adaptations = adaptations;
+  this.trait = trait;
+  this.method = method;
+  this.as = as;
+  this.visibility = IS_UNDEFINED;
+
+  if (flags) {
+    if (flags[0] === 0) {
+      this.visibility = IS_PUBLIC;
+    } else if (flags[0] === 1) {
+      this.visibility = IS_PROTECTED;
+    } else if (flags[0] === 2) {
+      this.visibility = IS_PRIVATE;
+    }
+  }
 });
 
 /***/ }),
@@ -11090,22 +12019,23 @@ module.exports = Node.extends(KIND, function TraitUse(traits, adaptations, docs,
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "try";
+var Node = __webpack_require__(2);
 
+var KIND = "traitprecedence";
 /**
- * Defines a try statement
- * @constructor Try
- * @extends {Statement}
- * @property {Block} body
- * @property {Catch[]} catches
- * @property {Block} allways
+ * Defines a trait alias
+ * @constructor TraitPrecedence
+ * @extends {Node}
+ * @property {Identifier|null} trait
+ * @property {Identifier} method
+ * @property {Identifier[]} instead
  */
-module.exports = Statement.extends(KIND, function Try(body, catches, always, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.body = body;
-  this.catches = catches;
-  this.always = always;
+
+module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, instead, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
+  this.trait = trait;
+  this.method = method;
+  this.instead = instead;
 });
 
 /***/ }),
@@ -11120,24 +12050,22 @@ module.exports = Statement.extends(KIND, function Try(body, catches, always, doc
  */
 
 
-var Reference = __webpack_require__(6);
-var KIND = "typereference";
+var Node = __webpack_require__(2);
 
+var KIND = "traituse";
 /**
- * Defines a class reference node
- * @constructor TypeReference
- * @extends {Reference}
- * @property {string} name
+ * Defines a trait usage
+ * @constructor TraitUse
+ * @extends {Node}
+ * @property {Identifier[]} traits
+ * @property {Node[]|null} adaptations
  */
-var TypeReference = Reference.extends(KIND, function TypeReference(name, raw, docs, location) {
-  Reference.apply(this, [KIND, docs, location]);
-  this.name = name;
-  this.raw = raw;
+
+module.exports = Node.extends(KIND, function TraitUse(traits, adaptations, docs, location) {
+  Node.apply(this, [KIND, docs, location]);
+  this.traits = traits;
+  this.adaptations = adaptations;
 });
-
-TypeReference.types = ["int", "float", "string", "bool", "object", "array", "callable", "iterable", "void"];
-
-module.exports = TypeReference;
 
 /***/ }),
 /* 122 */
@@ -11151,20 +12079,23 @@ module.exports = TypeReference;
  */
 
 
-var Operation = __webpack_require__(5);
-var KIND = "unary";
+var Statement = __webpack_require__(0);
 
+var KIND = "try";
 /**
- * Unary operations
- * @constructor Unary
- * @extends {Operation}
- * @property {String} type
- * @property {Expression} what
+ * Defines a try statement
+ * @constructor Try
+ * @extends {Statement}
+ * @property {Block} body
+ * @property {Catch[]} catches
+ * @property {Block} allways
  */
-module.exports = Operation.extends(KIND, function Unary(type, what, docs, location) {
-  Operation.apply(this, [KIND, docs, location]);
-  this.type = type;
-  this.what = what;
+
+module.exports = Statement.extends(KIND, function Try(body, catches, always, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.body = body;
+  this.catches = catches;
+  this.always = always;
 });
 
 /***/ }),
@@ -11179,18 +12110,23 @@ module.exports = Operation.extends(KIND, function Unary(type, what, docs, locati
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "unset";
+var Reference = __webpack_require__(6);
 
+var KIND = "typereference";
 /**
- * Deletes references to a list of variables
- * @constructor Unset
- * @extends {Statement}
+ * Defines a class reference node
+ * @constructor TypeReference
+ * @extends {Reference}
+ * @property {string} name
  */
-module.exports = Statement.extends(KIND, function Unset(variables, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.variables = variables;
+
+var TypeReference = Reference.extends(KIND, function TypeReference(name, raw, docs, location) {
+  Reference.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.raw = raw;
 });
+TypeReference.types = ["int", "float", "string", "bool", "object", "array", "callable", "iterable", "void"];
+module.exports = TypeReference;
 
 /***/ }),
 /* 124 */
@@ -11204,24 +12140,21 @@ module.exports = Statement.extends(KIND, function Unset(variables, docs, locatio
  */
 
 
-var Statement = __webpack_require__(0);
-var KIND = "usegroup";
+var Operation = __webpack_require__(4);
 
+var KIND = "unary";
 /**
- * Defines a use statement (with a list of use items)
- * @constructor UseGroup
- * @extends {Statement}
- * @property {String|null} name
- * @property {String|null} type - Possible value : function, const
- * @property {UseItem[]} item
- * @see {Namespace}
- * @see http://php.net/manual/en/language.namespaces.importing.php
+ * Unary operations
+ * @constructor Unary
+ * @extends {Operation}
+ * @property {String} type
+ * @property {Expression} what
  */
-module.exports = Statement.extends(KIND, function UseGroup(name, type, items, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.name = name;
+
+module.exports = Operation.extends(KIND, function Unary(type, what, docs, location) {
+  Operation.apply(this, [KIND, docs, location]);
   this.type = type;
-  this.items = items;
+  this.what = what;
 });
 
 /***/ }),
@@ -11237,37 +12170,18 @@ module.exports = Statement.extends(KIND, function UseGroup(name, type, items, do
 
 
 var Statement = __webpack_require__(0);
-var KIND = "useitem";
 
+var KIND = "unset";
 /**
- * Defines a use statement (from namespace)
- * @constructor UseItem
+ * Deletes references to a list of variables
+ * @constructor Unset
  * @extends {Statement}
- * @property {String} name
- * @property {String|null} type - Possible value : function, const
- * @property {String|null} alias
- * @see {Namespace}
- * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-var UseItem = Statement.extends(KIND, function UseItem(name, alias, type, docs, location) {
+
+module.exports = Statement.extends(KIND, function Unset(variables, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
-  this.name = name;
-  this.alias = alias;
-  this.type = type;
+  this.variables = variables;
 });
-
-/**
- * Importing a constant
- * @constant {String} TYPE_CONST
- */
-UseItem.TYPE_CONST = "const";
-/**
- * Importing a function
- * @constant {String} TYPE_FUNC
- */
-UseItem.TYPE_FUNCTION = "function";
-
-module.exports = UseItem;
 
 /***/ }),
 /* 126 */
@@ -11281,9 +12195,88 @@ module.exports = UseItem;
  */
 
 
-var Expression = __webpack_require__(1);
-var KIND = "variable";
+var Statement = __webpack_require__(0);
 
+var KIND = "usegroup";
+/**
+ * Defines a use statement (with a list of use items)
+ * @constructor UseGroup
+ * @extends {Statement}
+ * @property {String|null} name
+ * @property {String|null} type - Possible value : function, const
+ * @property {UseItem[]} item
+ * @see {Namespace}
+ * @see http://php.net/manual/en/language.namespaces.importing.php
+ */
+
+module.exports = Statement.extends(KIND, function UseGroup(name, type, items, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.type = type;
+  this.items = items;
+});
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+
+var Statement = __webpack_require__(0);
+
+var KIND = "useitem";
+/**
+ * Defines a use statement (from namespace)
+ * @constructor UseItem
+ * @extends {Statement}
+ * @property {String} name
+ * @property {String|null} type - Possible value : function, const
+ * @property {Identifier|null} alias
+ * @see {Namespace}
+ * @see http://php.net/manual/en/language.namespaces.importing.php
+ */
+
+var UseItem = Statement.extends(KIND, function UseItem(name, alias, type, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.alias = alias;
+  this.type = type;
+});
+/**
+ * Importing a constant
+ * @constant {String} TYPE_CONST
+ */
+
+UseItem.TYPE_CONST = "const";
+/**
+ * Importing a function
+ * @constant {String} TYPE_FUNC
+ */
+
+UseItem.TYPE_FUNCTION = "function";
+module.exports = UseItem;
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+
+var Expression = __webpack_require__(1);
+
+var KIND = "variable";
 /**
  * Any expression node. Since the left-hand side of an assignment may
  * be any expression in general, an expression can also be a pattern.
@@ -11303,68 +12296,12 @@ var KIND = "variable";
  * @property {boolean} byref Indicate if the variable reference is used, ex `&$foo`
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
+
 module.exports = Expression.extends(KIND, function Variable(name, byref, curly, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.name = name;
   this.byref = byref || false;
   this.curly = curly || false;
-});
-
-/***/ }),
-/* 127 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (C) 2018 Glayzzle (BSD3 License)
- * @authors https://github.com/glayzzle/php-parser/graphs/contributors
- * @url http://glayzzle.com
- */
-
-
-var Expression = __webpack_require__(1);
-var KIND = "variadic";
-
-/**
- * Introduce a list of items into the arguments of the call
- * @constructor variadic
- * @extends {Expression}
- * @property {Array|Expression} what
- * @see https://wiki.php.net/rfc/argument_unpacking
- */
-module.exports = Expression.extends(KIND, function variadic(what, docs, location) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.what = what;
-});
-
-/***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (C) 2018 Glayzzle (BSD3 License)
- * @authors https://github.com/glayzzle/php-parser/graphs/contributors
- * @url http://glayzzle.com
- */
-
-
-var Statement = __webpack_require__(0);
-var KIND = "while";
-
-/**
- * Defines a while statement
- * @constructor While
- * @extends {Statement}
- * @property {Expression} test
- * @property {Statement} body
- * @property {boolean} shortForm
- */
-module.exports = Statement.extends(KIND, function While(test, body, shortForm, docs, location) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.body = body;
-  this.shortForm = shortForm;
 });
 
 /***/ }),
@@ -11380,20 +12317,19 @@ module.exports = Statement.extends(KIND, function While(test, body, shortForm, d
 
 
 var Expression = __webpack_require__(1);
-var KIND = "yield";
 
+var KIND = "variadic";
 /**
- * Defines a yield generator statement
- * @constructor Yield
+ * Introduce a list of items into the arguments of the call
+ * @constructor variadic
  * @extends {Expression}
- * @property {Expression|Null} value
- * @property {Expression|Null} key
- * @see http://php.net/manual/en/language.generators.syntax.php
+ * @property {Array|Expression} what
+ * @see https://wiki.php.net/rfc/argument_unpacking
  */
-module.exports = Expression.extends(KIND, function Yield(value, key, docs, location) {
+
+module.exports = Expression.extends(KIND, function variadic(what, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
-  this.value = value;
-  this.key = key;
+  this.what = what;
 });
 
 /***/ }),
@@ -11408,9 +12344,70 @@ module.exports = Expression.extends(KIND, function Yield(value, key, docs, locat
  */
 
 
-var Expression = __webpack_require__(1);
-var KIND = "yieldfrom";
+var Statement = __webpack_require__(0);
 
+var KIND = "while";
+/**
+ * Defines a while statement
+ * @constructor While
+ * @extends {Statement}
+ * @property {Expression} test
+ * @property {Statement} body
+ * @property {boolean} shortForm
+ */
+
+module.exports = Statement.extends(KIND, function While(test, body, shortForm, docs, location) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.test = test;
+  this.body = body;
+  this.shortForm = shortForm;
+});
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+
+var Expression = __webpack_require__(1);
+
+var KIND = "yield";
+/**
+ * Defines a yield generator statement
+ * @constructor Yield
+ * @extends {Expression}
+ * @property {Expression|Null} value
+ * @property {Expression|Null} key
+ * @see http://php.net/manual/en/language.generators.syntax.php
+ */
+
+module.exports = Expression.extends(KIND, function Yield(value, key, docs, location) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.value = value;
+  this.key = key;
+});
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+
+var Expression = __webpack_require__(1);
+
+var KIND = "yieldfrom";
 /**
  * Defines a yield from generator statement
  * @constructor YieldFrom
@@ -11418,6 +12415,7 @@ var KIND = "yieldfrom";
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
+
 module.exports = Expression.extends(KIND, function YieldFrom(value, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.value = value;
