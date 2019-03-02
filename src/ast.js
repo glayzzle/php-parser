@@ -217,7 +217,7 @@ AST.prototype.resolvePrecedence = function(result, parser) {
   } else if (
     result.kind === "propertylookup" ||
     result.kind === "staticlookup" ||
-    result.kind === "offsetlookup"
+    (result.kind === "offsetlookup" && result.offset)
   ) {
     // including what argument into location
     this.resolveLocations(result, result.what, result.offset, parser);
