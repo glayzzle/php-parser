@@ -1128,4 +1128,14 @@ string";`,
       )
     ).toMatchSnapshot();
   });
+  it("assign []", function() {
+    expect(
+      parser.parseEval(`$var[] = $var`, {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      })
+    ).toMatchSnapshot();
+  });
 });
