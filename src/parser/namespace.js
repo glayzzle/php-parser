@@ -179,7 +179,7 @@ module.exports = {
     let result = null;
     if (this.token === this.tok.T_AS) {
       if (this.next().expect(this.tok.T_STRING)) {
-        let aliasName = this.node("identifier");
+        const aliasName = this.node("identifier");
         const name = this.text();
         this.next();
         result = aliasName(name);
