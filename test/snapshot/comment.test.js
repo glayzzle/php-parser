@@ -102,6 +102,49 @@ bar() /* inner */ ;
       expect(ast).toMatchSnapshot();
     });
 
+    it("fix #278", function() {
+      const ast = parser.parseEval(`
+/**
+ * Class description
+ */
+class FooClass
+{
+    /**
+     * Description
+     */
+    public static function bar()
+    {
+        return $array;
+    }
+
+    /**
+     * Description
+     */
+    public static function baz()
+    {
+        return $array;
+    }
+  
+    /**
+     * Description
+     */
+    public static function woo()
+    {
+        return $array;
+    }
+    // true trailing comment
+}
+        `,
+        {
+          parser: {
+            extractDoc: true,
+            // debug: true
+          }
+        }
+      );
+      expect(ast).toMatchSnapshot();
+    });
+
     it("impl #194", function() {
       const ast = parser.parseEval(
         `
