@@ -161,7 +161,10 @@ module.exports = {
         ) {
           break;
         }
-      } else if (this.token !== this.tok.T_STRING) {
+      } else if (
+        this.token !== this.tok.T_STRING &&
+        this.token !== this.tok.T_NS_SEPARATOR
+      ) {
         break;
       }
       result.push(this.read_use_declaration(typed));
