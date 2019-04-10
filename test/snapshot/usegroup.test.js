@@ -7,6 +7,9 @@ describe('usegroup', () => {
   it('multiple', () => {
     expect(parser.parseEval('use My\\Full\\Classname as Another, My\\Full\\NSname;')).toMatchSnapshot();
   });
+  it('multiple 2', () => {
+    expect(parser.parseEval('use My\\Full\\Classname as Another, My\\Full\\NSname, \\Full\\NSname\\With\\Leading\\Backslash;')).toMatchSnapshot();
+  });
   it('nested', () => {
     expect(parser.parseEval('use some\\my_namespace\\{ClassA, ClassB, ClassC as C};')).toMatchSnapshot();
   });
