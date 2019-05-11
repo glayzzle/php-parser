@@ -110,6 +110,7 @@ Related projects
 - [ts-php-inspections](https://github.com/DaGhostman/ts-php-inspections) : Provide PHP code inspections written in typescript
 - [php-reflection](https://github.com/glayzzle/php-reflection) : Reflection API for PHP files
 - [vscode-phpunit](https://github.com/recca0120/vscode-phpunit) : vscode phpunit extension
+- [lua2php](https://www.npmjs.com/package/lua2php) : a Lua to PHP transpiler
 
 > You can add here your own project by opening an issue request.
 
