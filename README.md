@@ -94,9 +94,9 @@ You can also [pass options](https://github.com/glayzzle/php-parser/wiki/Options)
 Documentation
 -------------
 
-- [AST nodes definition](https://glayzzle.com/docs/)
-- [Sandbox](https://glayzzle.com/)
-- [List of options](https://github.com/glayzzle/php-parser/wiki/Options)
+- [AST nodes definition](https://php-parser.glayzzle.com/api/ast.js)
+- [Sandbox](https://php-parser.glayzzle.com/demo)
+- [List of options](https://php-parser.glayzzle.com/guides/options)
 
 Related projects
 ----------------
