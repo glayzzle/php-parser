@@ -128,6 +128,15 @@ describe("Test precedence", function() {
   it("test silent node / div", function() {
     shouldBeSame("@$i / 0;", "@($i) / 0;");
   });
+  it("test silent node / ret if", function() {
+    shouldBeSame("@$i == true ? @$foo : @$bar;", "@($i) == true ? @($foo) : @($bar);");
+  });
+  it("test silent node / cast", function() {
+    shouldBeSame("@(int)$i + 1;", "@((int)$i) + 1;");
+  });
+  it("test silent node / property lookup", function() {
+    shouldBeSame("@$foo->bar;", "@($foo)->bar;");
+  });
   it("test cast", function() {
     shouldBeSame("$a = (string)$b . $c", "$a = ((string)$b) . $c");
     shouldBeSame("$a = (string)$b->foo . $c", "$a = ((string)$b->foo) . $c");
