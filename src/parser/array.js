@@ -68,7 +68,7 @@ module.exports = {
       (!shortForm && this.token === ")") ||
       (shortForm && this.token === "]")
     ) {
-      return this.node('noop')();
+      return this.node("noop")();
     }
     if (this.token === "&") {
       return this.next().read_variable(true, false, true);

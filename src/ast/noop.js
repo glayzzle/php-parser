@@ -10,7 +10,7 @@ const KIND = "noop";
 
 /**
  * Ignore this node, it implies a no operation block, for example :
-* [$foo, $bar, /* here a noop node * /]
+ * [$foo, $bar, /* here a noop node * /]
  * @constructor Noop
  * @extends {Node}
  */

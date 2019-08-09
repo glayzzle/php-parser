@@ -162,7 +162,7 @@ module.exports = {
       // check if contains at least one assignment statement
       let hasItem = false;
       for (let i = 0; i < assignList.length; i++) {
-        if (assignList[i] !== null && assignList[i].kind !== 'noop') {
+        if (assignList[i] !== null && assignList[i].kind !== "noop") {
           hasItem = true;
           break;
         }

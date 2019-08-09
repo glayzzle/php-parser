@@ -33,9 +33,7 @@ module.exports = {
     const result = [];
 
     if (this.token == separator) {
-      if (preserveFirstSeparator) result.push(
-        this.node('noop')()
-      );
+      if (preserveFirstSeparator) result.push(this.node("noop")());
       this.next();
     }
 
