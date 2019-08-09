@@ -294,17 +294,6 @@ module.exports = {
     let offset;
     while (this.token != this.EOF) {
       const node = this.node();
-      /*
-      if (this.token == "[") {
-        offset = null;
-        if (encapsed) {
-          offset = this.next().read_encaps_var_offset();
-        } else {
-          offset = this.next().token === "]" ? null : this.read_dim_offset();
-        }
-        this.expect("]") && this.next();
-        result = node("offsetlookup", result, offset);
-      } else */
       if (this.token == "{" && !encapsed) {
         // @fixme check coverage, not sure thats working
         offset = this.next().read_expr();
