@@ -32,14 +32,6 @@ module.exports = {
     if (this.next().token !== expect) {
       items = this.read_array_pair_list(shortForm);
     }
-    // check non empty entries
-    /*for(let i = 0, size = items.length - 1; i < size; i++) {
-      if (items[i] === null) {
-        this.raiseError(
-          "Cannot use empty array elements in arrays"
-        );
-      }
-    }*/
     this.expect(expect);
     this.next();
     return result(shortForm, items);
@@ -76,7 +68,7 @@ module.exports = {
       (!shortForm && this.token === ")") ||
       (shortForm && this.token === "]")
     ) {
-      return null;
+      return this.node('noop')();
     }
     if (this.token === "&") {
       return this.next().read_variable(true, false, true);
@@ -89,17 +81,10 @@ module.exports = {
         } else {
           return entry(expr, this.read_expr());
         }
+      } else {
+        entry.destroy();
       }
       return expr;
     }
-  },
-  /**
-   * ```ebnf
-   *  dim_offset ::= expr?
-   * ```
-   */
-  read_dim_offset: function() {
-    if (this.token == "]") return false;
-    return this.read_expr();
   }
 };
