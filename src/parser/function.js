@@ -75,7 +75,7 @@ module.exports = {
       this.next();
     }
     const isRef = this.is_reference();
-    let name = null,
+    let name = false,
       use = [],
       returnType = null,
       nullable = false;
@@ -85,11 +85,9 @@ module.exports = {
         if (this.php7) {
           if (this.token === this.tok.T_STRING || this.is("IDENTIFIER")) {
             name = this.text();
-            this.next();  
+            this.next();
           } else if (!this.php74) {
             this.error("IDENTIFIER");
-          } else {
-            nameNode.destroy();
           }
         } else if (this.token === this.tok.T_STRING) {
           name = this.text();
@@ -99,14 +97,16 @@ module.exports = {
         }
       } else {
         if (this.php7) {
-          if (this.token === this.tok.T_STRING || this.is("IDENTIFIER")) {
+          if (this.token === this.tok.T_STRING) {
             name = this.text();
             this.next();
-          } else if (!this.php74) {
-            this.error("IDENTIFIER");
-            this.next();
+          } else if (this.php74) {
+            if (!this.expect("(")) {
+              this.next();
+            }
           } else {
-            nameNode.destroy();
+            this.error(this.tok.T_STRING);
+            this.next();
           }
         } else {
           if (this.expect(this.tok.T_STRING)) {
@@ -115,9 +115,7 @@ module.exports = {
           this.next();
         }
       }
-      if (name) {
-        name = nameNode(name);
-      }
+      name = nameNode(name);
     }
     if (this.expect("(")) this.next();
     const params = this.read_parameter_list();

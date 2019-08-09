@@ -306,8 +306,8 @@ parser.prototype.parse = function(code, filename) {
               ", column " +
               error.position.column
           );
-          // eslint-disable-next-line no-console
         }
+        // eslint-disable-next-line no-console
         console.log(error.stack.join("\n"));
       });
       throw new Error("Some nodes are not closed");

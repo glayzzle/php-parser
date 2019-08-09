@@ -50,6 +50,7 @@ describe("Function tests", function() {
   it("test reserved word for function name error", function() {
     const astErr = parser.parseEval(`function list() {}`, {
       parser: {
+        php74: false,
         suppressErrors: true
       }
     });
@@ -60,4 +61,15 @@ describe("Function tests", function() {
     const ast = parser.parseEval("$a = static function() {};");
     expect(ast).toMatchSnapshot();
   });
+
+  it("test arrow function php 7.4", function() {
+    const astErr = parser.parseEval(`function () {}`, {
+      parser: {
+        php74: true,
+        suppressErrors: true
+      }
+    });
+    expect(astErr).toMatchSnapshot();
+  });
+
 });
