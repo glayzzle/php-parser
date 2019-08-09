@@ -17,37 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-namespace Foospace\\Foo;
-
-/**
- * Class description
- */
-class FooClass
-{
-    /**
-     * Description
-     */
-    public static function bar()
-    {
-        return $array;
-    }
-
-    /**
-     * Description
-     */
-    public static function baz()
-    {
-        return $array;
-    }
-  
-    /**
-     * Description
-     */
-    public static function woo()
-    {
-        return $array;
-    }
-}
+function () {};
 `, { 
     parser: {
       debug: true,

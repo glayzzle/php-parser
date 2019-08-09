@@ -34,6 +34,7 @@ const parser = function(lexer, ast) {
   this.prev = null;
   this.debug = false;
   this.php7 = true;
+  this.php74 = true;
   this.extractDoc = false;
   this.extractTokens = false;
   this.suppressErrors = false;
@@ -262,6 +263,9 @@ parser.prototype.parse = function(code, filename) {
   } else {
     this._tokens = null;
   }
+  if (!this.php7) {
+    this.php74 = false;
+  }
   this._docIndex = 0;
   this._lastNode = null;
   this.lexer.setInput(code);
@@ -294,14 +298,16 @@ parser.prototype.parse = function(code, filename) {
     const errors = this.ast.checkNodes();
     if (errors.length > 0) {
       errors.forEach(function(error) {
-        // eslint-disable-next-line no-console
-        console.log(
-          "Node at line " +
-            error.position.line +
-            ", column " +
-            error.position.column
-        );
-        // eslint-disable-next-line no-console
+        if (error.position) {
+          // eslint-disable-next-line no-console
+          console.log(
+            "Node at line " +
+              error.position.line +
+              ", column " +
+              error.position.column
+          );
+          // eslint-disable-next-line no-console
+        }
         console.log(error.stack.join("\n"));
       });
       throw new Error("Some nodes are not closed");
