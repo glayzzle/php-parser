@@ -33,7 +33,9 @@ module.exports = {
     const result = [];
 
     if (this.token == separator) {
-      if (preserveFirstSeparator) result.push(this.node("noop")());
+      if (preserveFirstSeparator) {
+        result.push(typeof item === "function" ? this.node("noop")() : null);
+      }
       this.next();
     }
 
