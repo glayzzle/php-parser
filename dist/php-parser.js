@@ -2,7 +2,7 @@
  * 
  *         Package: php-parser
  *         Parse PHP code and returns its AST
- *         Build: e3cf4a77371cc55d1718 - 02/03/2019
+ *         Build: 75b9f3f26b197ee535b2 - 8/15/2019
  *         License: BSD-3-Clause
  *         Author: Ioan CHIRIAC
  *       
@@ -124,7 +124,7 @@ var KIND = "statement";
  * @extends {Node}
  */
 
-module.exports = Node.extends(KIND, function Statement(kind, docs, location) {
+module.exports = Node["extends"](KIND, function Statement(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
 
@@ -150,7 +150,7 @@ var KIND = "expression";
  * @extends {Node}
  */
 
-module.exports = Node.extends(KIND, function Expression(kind, docs, location) {
+module.exports = Node["extends"](KIND, function Expression(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
 
@@ -251,9 +251,9 @@ Node.prototype.includeToken = function (parser) {
  */
 
 
-Node.extends = function (type, constructor) {
+Node["extends"] = function (type, constructor) {
   constructor.prototype = Object.create(this.prototype);
-  constructor.extends = this.extends;
+  constructor["extends"] = this["extends"];
   constructor.prototype.constructor = constructor;
   constructor.kind = type;
   return constructor;
@@ -284,7 +284,7 @@ var KIND = "literal";
  * @property {Node|string|number|boolean|null} value
  */
 
-module.exports = Expression.extends(KIND, function Literal(kind, value, raw, docs, location) {
+module.exports = Expression["extends"](KIND, function Literal(kind, value, raw, docs, location) {
   Expression.apply(this, [kind || KIND, docs, location]);
   this.value = value;
 
@@ -314,7 +314,7 @@ var KIND = "operation";
  * @extends {Expression}
  */
 
-module.exports = Expr.extends(KIND, function Operation(kind, docs, location) {
+module.exports = Expr["extends"](KIND, function Operation(kind, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
 });
 
@@ -344,7 +344,7 @@ var IS_PRIVATE = "private";
  * @property {Identifier|string} name
  */
 
-var Declaration = Statement.extends(KIND, function Declaration(kind, name, docs, location) {
+var Declaration = Statement["extends"](KIND, function Declaration(kind, name, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.name = name;
 });
@@ -398,7 +398,7 @@ var KIND = "reference";
  * @extends {Node}
  */
 
-var Reference = Node.extends(KIND, function Reference(kind, docs, location) {
+var Reference = Node["extends"](KIND, function Reference(kind, docs, location) {
   Node.apply(this, [kind || KIND, docs, location]);
 });
 module.exports = Reference;
@@ -425,7 +425,7 @@ var KIND = "block";
  * @property {Node[]} children
  */
 
-module.exports = Statement.extends(KIND, function Block(kind, children, docs, location) {
+module.exports = Statement["extends"](KIND, function Block(kind, children, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.children = children.filter(Boolean);
 });
@@ -453,7 +453,7 @@ var KIND = "lookup";
  * @property {Expression} offset
  */
 
-module.exports = Expr.extends(KIND, function Lookup(kind, what, offset, docs, location) {
+module.exports = Expr["extends"](KIND, function Lookup(kind, what, offset, docs, location) {
   Expr.apply(this, [kind || KIND, docs, location]);
   this.what = what;
   this.offset = offset;
@@ -480,7 +480,7 @@ var Node = __webpack_require__(2);
  */
 
 
-module.exports = Node.extends("comment", function Comment(kind, value, docs, location) {
+module.exports = Node["extends"]("comment", function Comment(kind, value, docs, location) {
   Node.apply(this, [kind, docs, location]);
   this.value = value;
 });
@@ -507,7 +507,7 @@ var KIND = "constantstatement";
  * @property {Constant[]} constants
  */
 
-module.exports = Statement.extends(KIND, function ConstantStatement(kind, constants, docs, location) {
+module.exports = Statement["extends"](KIND, function ConstantStatement(kind, constants, docs, location) {
   Statement.apply(this, [kind || KIND, docs, location]);
   this.constants = constants;
 });
@@ -538,7 +538,7 @@ var KIND = "function";
  * @property {Block|null} body
  */
 
-module.exports = Declaration.extends(KIND, function _Function(name, args, byref, type, nullable, docs, location) {
+module.exports = Declaration["extends"](KIND, function _Function(name, args, byref, type, nullable, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.arguments = args;
   this.byref = byref;
@@ -792,7 +792,7 @@ module.exports.AST = AST;
 module.exports.parser = parser;
 module.exports.combine = combine; // allow the default export in index.d.ts
 
-module.exports.default = engine;
+module.exports["default"] = engine;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(13).Buffer))
 
 /***/ }),
@@ -2928,45 +2928,45 @@ var lexer = function lexer(engine) {
     __namespace__: this.tok.T_NS_C,
     exit: this.tok.T_EXIT,
     die: this.tok.T_EXIT,
-    function: this.tok.T_FUNCTION,
-    const: this.tok.T_CONST,
-    return: this.tok.T_RETURN,
-    try: this.tok.T_TRY,
-    catch: this.tok.T_CATCH,
-    finally: this.tok.T_FINALLY,
-    throw: this.tok.T_THROW,
-    if: this.tok.T_IF,
+    "function": this.tok.T_FUNCTION,
+    "const": this.tok.T_CONST,
+    "return": this.tok.T_RETURN,
+    "try": this.tok.T_TRY,
+    "catch": this.tok.T_CATCH,
+    "finally": this.tok.T_FINALLY,
+    "throw": this.tok.T_THROW,
+    "if": this.tok.T_IF,
     elseif: this.tok.T_ELSEIF,
     endif: this.tok.T_ENDIF,
-    else: this.tok.T_ELSE,
-    while: this.tok.T_WHILE,
+    "else": this.tok.T_ELSE,
+    "while": this.tok.T_WHILE,
     endwhile: this.tok.T_ENDWHILE,
-    do: this.tok.T_DO,
-    for: this.tok.T_FOR,
+    "do": this.tok.T_DO,
+    "for": this.tok.T_FOR,
     endfor: this.tok.T_ENDFOR,
     foreach: this.tok.T_FOREACH,
     endforeach: this.tok.T_ENDFOREACH,
     declare: this.tok.T_DECLARE,
     enddeclare: this.tok.T_ENDDECLARE,
-    instanceof: this.tok.T_INSTANCEOF,
+    "instanceof": this.tok.T_INSTANCEOF,
     as: this.tok.T_AS,
-    switch: this.tok.T_SWITCH,
+    "switch": this.tok.T_SWITCH,
     endswitch: this.tok.T_ENDSWITCH,
-    case: this.tok.T_CASE,
-    default: this.tok.T_DEFAULT,
-    break: this.tok.T_BREAK,
-    continue: this.tok.T_CONTINUE,
-    goto: this.tok.T_GOTO,
+    "case": this.tok.T_CASE,
+    "default": this.tok.T_DEFAULT,
+    "break": this.tok.T_BREAK,
+    "continue": this.tok.T_CONTINUE,
+    "goto": this.tok.T_GOTO,
     echo: this.tok.T_ECHO,
     print: this.tok.T_PRINT,
-    class: this.tok.T_CLASS,
-    interface: this.tok.T_INTERFACE,
+    "class": this.tok.T_CLASS,
+    "interface": this.tok.T_INTERFACE,
     trait: this.tok.T_TRAIT,
-    extends: this.tok.T_EXTENDS,
-    implements: this.tok.T_IMPLEMENTS,
-    new: this.tok.T_NEW,
+    "extends": this.tok.T_EXTENDS,
+    "implements": this.tok.T_IMPLEMENTS,
+    "new": this.tok.T_NEW,
     clone: this.tok.T_CLONE,
-    var: this.tok.T_VAR,
+    "var": this.tok.T_VAR,
     eval: this.tok.T_EVAL,
     include: this.tok.T_INCLUDE,
     include_once: this.tok.T_INCLUDE_ONCE,
@@ -2979,12 +2979,12 @@ var lexer = function lexer(engine) {
     isset: this.tok.T_ISSET,
     empty: this.tok.T_EMPTY,
     __halt_compiler: this.tok.T_HALT_COMPILER,
-    static: this.tok.T_STATIC,
-    abstract: this.tok.T_ABSTRACT,
-    final: this.tok.T_FINAL,
-    private: this.tok.T_PRIVATE,
-    protected: this.tok.T_PROTECTED,
-    public: this.tok.T_PUBLIC,
+    "static": this.tok.T_STATIC,
+    "abstract": this.tok.T_ABSTRACT,
+    "final": this.tok.T_FINAL,
+    "private": this.tok.T_PRIVATE,
+    "protected": this.tok.T_PROTECTED,
+    "public": this.tok.T_PUBLIC,
     unset: this.tok.T_UNSET,
     list: this.tok.T_LIST,
     array: this.tok.T_ARRAY,
@@ -2994,17 +2994,17 @@ var lexer = function lexer(engine) {
     xor: this.tok.T_LOGICAL_XOR
   };
   this.castKeywords = {
-    int: this.tok.T_INT_CAST,
+    "int": this.tok.T_INT_CAST,
     integer: this.tok.T_INT_CAST,
     real: this.tok.T_DOUBLE_CAST,
-    double: this.tok.T_DOUBLE_CAST,
-    float: this.tok.T_DOUBLE_CAST,
+    "double": this.tok.T_DOUBLE_CAST,
+    "float": this.tok.T_DOUBLE_CAST,
     string: this.tok.T_STRING_CAST,
     binary: this.tok.T_STRING_CAST,
     array: this.tok.T_ARRAY_CAST,
     object: this.tok.T_OBJECT_CAST,
     bool: this.tok.T_BOOL_CAST,
-    boolean: this.tok.T_BOOL_CAST,
+    "boolean": this.tok.T_BOOL_CAST,
     unset: this.tok.T_UNSET_CAST
   };
 };
@@ -4960,6 +4960,7 @@ var parser = function parser(lexer, ast) {
   this.prev = null;
   this.debug = false;
   this.php7 = true;
+  this.php74 = true;
   this.extractDoc = false;
   this.extractTokens = false;
   this.suppressErrors = false;
@@ -5016,6 +5017,10 @@ parser.prototype.parse = function (code, filename) {
     this._tokens = null;
   }
 
+  if (!this.php7) {
+    this.php74 = false;
+  }
+
   this._docIndex = 0;
   this._lastNode = null;
   this.lexer.setInput(code);
@@ -5049,8 +5054,11 @@ parser.prototype.parse = function (code, filename) {
 
     if (errors.length > 0) {
       errors.forEach(function (error) {
-        // eslint-disable-next-line no-console
-        console.log("Node at line " + error.position.line + ", column " + error.position.column); // eslint-disable-next-line no-console
+        if (error.position) {
+          // eslint-disable-next-line no-console
+          console.log("Node at line " + error.position.line + ", column " + error.position.column);
+        } // eslint-disable-next-line no-console
+
 
         console.log(error.stack.join("\n"));
       });
@@ -5427,16 +5435,7 @@ module.exports = {
 
     if (this.next().token !== expect) {
       items = this.read_array_pair_list(shortForm);
-    } // check non empty entries
-
-    /*for(let i = 0, size = items.length - 1; i < size; i++) {
-      if (items[i] === null) {
-        this.raiseError(
-          "Cannot use empty array elements in arrays"
-        );
-      }
-    }*/
-
+    }
 
     this.expect(expect);
     this.next();
@@ -5468,7 +5467,7 @@ module.exports = {
    */
   read_array_pair: function read_array_pair(shortForm) {
     if (this.token === "," || !shortForm && this.token === ")" || shortForm && this.token === "]") {
-      return null;
+      return this.node("noop")();
     }
 
     if (this.token === "&") {
@@ -5483,20 +5482,12 @@ module.exports = {
         } else {
           return entry(expr, this.read_expr());
         }
+      } else {
+        entry.destroy();
       }
 
       return expr;
     }
-  },
-
-  /**
-   * ```ebnf
-   *  dim_offset ::= expr?
-   * ```
-   */
-  read_dim_offset: function read_dim_offset() {
-    if (this.token == "]") return false;
-    return this.read_expr();
   }
 };
 
@@ -6200,7 +6191,7 @@ module.exports = {
       var hasItem = false;
 
       for (var i = 0; i < assignList.length; i++) {
-        if (assignList[i] !== null) {
+        if (assignList[i] !== null && assignList[i].kind !== "noop") {
           hasItem = true;
           break;
         }
@@ -6404,6 +6395,10 @@ module.exports = {
 
             if (this.next().token == "&") {
               if (this.next().token === this.tok.T_NEW) {
+                if (this.php7) {
+                  this.error();
+                }
+
                 right = this.read_new_expr();
               } else {
                 right = this.read_variable(false, false, true);
@@ -6693,18 +6688,39 @@ module.exports = {
       var nameNode = this.node("identifier");
 
       if (type === 2) {
-        if (this.token === this.tok.T_STRING || this.php7 && this.is("IDENTIFIER")) {
+        if (this.php7) {
+          if (this.token === this.tok.T_STRING || this.is("IDENTIFIER")) {
+            name = this.text();
+            this.next();
+          } else if (!this.php74) {
+            this.error("IDENTIFIER");
+          }
+        } else if (this.token === this.tok.T_STRING) {
           name = this.text();
           this.next();
         } else {
           this.error("IDENTIFIER");
         }
       } else {
-        if (this.expect(this.tok.T_STRING)) {
-          name = this.text();
-        }
+        if (this.php7) {
+          if (this.token === this.tok.T_STRING) {
+            name = this.text();
+            this.next();
+          } else if (this.php74) {
+            if (!this.expect("(")) {
+              this.next();
+            }
+          } else {
+            this.error(this.tok.T_STRING);
+            this.next();
+          }
+        } else {
+          if (this.expect(this.tok.T_STRING)) {
+            name = this.text();
+          }
 
-        this.next();
+          this.next();
+        }
       }
 
       name = nameNode(name);
@@ -7413,7 +7429,7 @@ module.exports = {
         if (this.token !== this.tok.T_FUNCTION && this.token !== this.tok.T_CONST && this.token !== this.tok.T_STRING) {
           break;
         }
-      } else if (this.token !== this.tok.T_STRING) {
+      } else if (this.token !== this.tok.T_STRING && this.token !== this.tok.T_NS_SEPARATOR) {
         break;
       }
 
@@ -8450,7 +8466,10 @@ module.exports = {
     var result = [];
 
     if (this.token == separator) {
-      if (preserveFirstSeparator) result.push(null);
+      if (preserveFirstSeparator) {
+        result.push(typeof item === "function" ? this.node("noop")() : null);
+      }
+
       this.next();
     }
 
@@ -8836,17 +8855,6 @@ module.exports = {
 
     while (this.token != this.EOF) {
       var node = this.node();
-      /*
-      if (this.token == "[") {
-        offset = null;
-        if (encapsed) {
-          offset = this.next().read_encaps_var_offset();
-        } else {
-          offset = this.next().token === "]" ? null : this.read_dim_offset();
-        }
-        this.expect("]") && this.next();
-        result = node("offsetlookup", result, offset);
-      } else */
 
       if (this.token == "{" && !encapsed) {
         // @fixme check coverage, not sure thats working
@@ -9227,6 +9235,7 @@ var Position = __webpack_require__(47);
  * - [Location](#location)
  * - [Position](#position)
  * - [Node](#node)
+ *   - [Noop](#noop)
  *   - [StaticVariable](#staticvariable)
  *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
@@ -9663,7 +9672,7 @@ AST.prototype.checkNodes = function () {
 }; // Define all AST nodes
 
 
-[__webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(7), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(9), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(10), __webpack_require__(65), __webpack_require__(5), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74), __webpack_require__(75), __webpack_require__(76), __webpack_require__(1), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(11), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(3), __webpack_require__(8), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94), __webpack_require__(2), __webpack_require__(95), __webpack_require__(96), __webpack_require__(97), __webpack_require__(4), __webpack_require__(98), __webpack_require__(99), __webpack_require__(100), __webpack_require__(101), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(105), __webpack_require__(106), __webpack_require__(6), __webpack_require__(107), __webpack_require__(108), __webpack_require__(109), __webpack_require__(110), __webpack_require__(0), __webpack_require__(111), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121), __webpack_require__(122), __webpack_require__(123), __webpack_require__(124), __webpack_require__(125), __webpack_require__(126), __webpack_require__(127), __webpack_require__(128), __webpack_require__(129), __webpack_require__(130), __webpack_require__(131), __webpack_require__(132)].forEach(function (ctor) {
+[__webpack_require__(48), __webpack_require__(49), __webpack_require__(50), __webpack_require__(7), __webpack_require__(51), __webpack_require__(52), __webpack_require__(53), __webpack_require__(54), __webpack_require__(55), __webpack_require__(56), __webpack_require__(57), __webpack_require__(58), __webpack_require__(59), __webpack_require__(60), __webpack_require__(61), __webpack_require__(9), __webpack_require__(62), __webpack_require__(63), __webpack_require__(64), __webpack_require__(10), __webpack_require__(65), __webpack_require__(5), __webpack_require__(66), __webpack_require__(67), __webpack_require__(68), __webpack_require__(69), __webpack_require__(70), __webpack_require__(71), __webpack_require__(72), __webpack_require__(73), __webpack_require__(74), __webpack_require__(75), __webpack_require__(76), __webpack_require__(1), __webpack_require__(77), __webpack_require__(78), __webpack_require__(79), __webpack_require__(11), __webpack_require__(80), __webpack_require__(81), __webpack_require__(82), __webpack_require__(83), __webpack_require__(84), __webpack_require__(85), __webpack_require__(86), __webpack_require__(87), __webpack_require__(88), __webpack_require__(89), __webpack_require__(90), __webpack_require__(3), __webpack_require__(8), __webpack_require__(91), __webpack_require__(92), __webpack_require__(93), __webpack_require__(94), __webpack_require__(2), __webpack_require__(95), __webpack_require__(96), __webpack_require__(97), __webpack_require__(98), __webpack_require__(4), __webpack_require__(99), __webpack_require__(100), __webpack_require__(101), __webpack_require__(102), __webpack_require__(103), __webpack_require__(104), __webpack_require__(105), __webpack_require__(106), __webpack_require__(107), __webpack_require__(6), __webpack_require__(108), __webpack_require__(109), __webpack_require__(110), __webpack_require__(111), __webpack_require__(0), __webpack_require__(112), __webpack_require__(113), __webpack_require__(114), __webpack_require__(115), __webpack_require__(116), __webpack_require__(117), __webpack_require__(118), __webpack_require__(119), __webpack_require__(120), __webpack_require__(121), __webpack_require__(122), __webpack_require__(123), __webpack_require__(124), __webpack_require__(125), __webpack_require__(126), __webpack_require__(127), __webpack_require__(128), __webpack_require__(129), __webpack_require__(130), __webpack_require__(131), __webpack_require__(132), __webpack_require__(133)].forEach(function (ctor) {
   AST.prototype[ctor.kind] = ctor;
 });
 module.exports = AST;
@@ -9763,7 +9772,7 @@ var KIND = "array";
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
 
-module.exports = Expr.extends(KIND, function Array(shortForm, items, docs, location) {
+module.exports = Expr["extends"](KIND, function Array(shortForm, items, docs, location) {
   Expr.apply(this, [KIND, docs, location]);
   this.items = items;
   this.shortForm = shortForm;
@@ -9793,7 +9802,7 @@ var KIND = "assign";
  * @property {String} operator
  */
 
-module.exports = Expression.extends(KIND, function Assign(left, right, operator, docs, location) {
+module.exports = Expression["extends"](KIND, function Assign(left, right, operator, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.operator = operator;
   this.left = left;
@@ -9824,7 +9833,7 @@ var KIND = "bin";
  * @property {Expression} right
  */
 
-module.exports = Operation.extends(KIND, function Bin(type, left, right, docs, location) {
+module.exports = Operation["extends"](KIND, function Bin(type, left, right, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.left = left;
@@ -9852,7 +9861,7 @@ var KIND = "boolean";
  * @extends {Literal}
  */
 
-module.exports = Literal.extends(KIND, function Boolean(value, raw, docs, location) {
+module.exports = Literal["extends"](KIND, function Boolean(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
@@ -9878,7 +9887,7 @@ var KIND = "break";
  * @property {Number|Null} level
  */
 
-module.exports = Statement.extends(KIND, function Break(level, docs, location) {
+module.exports = Statement["extends"](KIND, function Break(level, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.level = level;
 });
@@ -9906,7 +9915,7 @@ var KIND = "call";
  * @property {Arguments[]} arguments
  */
 
-module.exports = Expression.extends(KIND, function Call(what, args, docs, location) {
+module.exports = Expression["extends"](KIND, function Call(what, args, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
@@ -9935,7 +9944,7 @@ var KIND = "case";
  * @property {Block|null} body
  */
 
-module.exports = Statement.extends(KIND, function Case(test, body, docs, location) {
+module.exports = Statement["extends"](KIND, function Case(test, body, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
@@ -9965,7 +9974,7 @@ var KIND = "cast";
  * @property {Expression} what
  */
 
-module.exports = Operation.extends(KIND, function Cast(type, raw, what, docs, location) {
+module.exports = Operation["extends"](KIND, function Cast(type, raw, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.raw = raw;
@@ -9997,7 +10006,7 @@ var KIND = "catch";
  * @see http://php.net/manual/en/language.exceptions.php
  */
 
-module.exports = Statement.extends(KIND, function Catch(body, what, variable, docs, location) {
+module.exports = Statement["extends"](KIND, function Catch(body, what, variable, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.what = what;
@@ -10031,11 +10040,11 @@ var KIND = "class";
  * @property {boolean} isFinal
  */
 
-module.exports = Declaration.extends(KIND, function Class(name, ext, impl, body, flags, docs, location) {
+module.exports = Declaration["extends"](KIND, function Class(name, ext, impl, body, flags, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.isAnonymous = name ? false : true;
-  this.extends = ext;
-  this.implements = impl;
+  this["extends"] = ext;
+  this["implements"] = impl;
   this.body = body;
   this.parseFlags(flags);
 });
@@ -10066,7 +10075,7 @@ var IS_PRIVATE = "private";
  * @property {string} visibility
  */
 
-var ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(kind, constants, flags, docs, location) {
+var ClassConstant = ConstantStatement["extends"](KIND, function ClassConstant(kind, constants, flags, docs, location) {
   ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
   this.parseFlags(flags);
 });
@@ -10115,7 +10124,7 @@ var KIND = "classreference";
  * @property {string} resolution
  */
 
-var ClassReference = Reference.extends(KIND, function ClassReference(name, isRelative, docs, location) {
+var ClassReference = Reference["extends"](KIND, function ClassReference(name, isRelative, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
 
   if (isRelative) {
@@ -10180,7 +10189,7 @@ var KIND = "clone";
  * @property {Expression} what
  */
 
-module.exports = Expression.extends(KIND, function Clone(what, docs, location) {
+module.exports = Expression["extends"](KIND, function Clone(what, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
 });
@@ -10213,7 +10222,7 @@ var KIND = "closure";
  * @property {boolean} isStatic
  */
 
-module.exports = Expression.extends(KIND, function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
+module.exports = Expression["extends"](KIND, function Closure(args, byref, uses, type, nullable, isStatic, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.uses = uses;
   this.arguments = args;
@@ -10245,7 +10254,7 @@ var KIND = "commentblock";
  * @extends {Comment}
  */
 
-module.exports = Comment.extends(KIND, function CommentBlock(value, docs, location) {
+module.exports = Comment["extends"](KIND, function CommentBlock(value, docs, location) {
   Comment.apply(this, [KIND, value, docs, location]);
 });
 
@@ -10270,7 +10279,7 @@ var KIND = "commentline";
  * @extends {Comment}
  */
 
-module.exports = Comment.extends(KIND, function CommentLine(value, docs, location) {
+module.exports = Comment["extends"](KIND, function CommentLine(value, docs, location) {
   Comment.apply(this, [KIND, value, docs, location]);
 });
 
@@ -10297,7 +10306,7 @@ var KIND = "constant";
  * @property {Node|string|number|boolean|null} value
  */
 
-module.exports = Node.extends(KIND, function Constant(name, value, docs, location) {
+module.exports = Node["extends"](KIND, function Constant(name, value, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.name = name;
   this.value = value;
@@ -10325,7 +10334,7 @@ var KIND = "continue";
  * @property {Number|Null} level
  */
 
-module.exports = Statement.extends(KIND, function Continue(level, docs, location) {
+module.exports = Statement["extends"](KIND, function Continue(level, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.level = level;
 });
@@ -10354,7 +10363,7 @@ var KIND = "declare";
  * @see http://php.net/manual/en/control-structures.declare.php
  */
 
-var Declare = Block.extends(KIND, function Declare(directives, body, mode, docs, location) {
+var Declare = Block["extends"](KIND, function Declare(directives, body, mode, docs, location) {
   Block.apply(this, [KIND, body, docs, location]);
   this.directives = directives;
   this.mode = mode;
@@ -10423,7 +10432,7 @@ var KIND = "declaredirective";
  * @property {Node|string|number|boolean|null} value
  */
 
-module.exports = Node.extends(KIND, function DeclareDirective(key, value, docs, location) {
+module.exports = Node["extends"](KIND, function DeclareDirective(key, value, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
@@ -10452,7 +10461,7 @@ var KIND = "do";
  * @property {Statement} body
  */
 
-module.exports = Statement.extends(KIND, function Do(test, body, docs, location) {
+module.exports = Statement["extends"](KIND, function Do(test, body, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
@@ -10480,7 +10489,7 @@ var KIND = "echo";
  * @extends {Statement}
  */
 
-module.exports = Statement.extends(KIND, function Echo(expressions, shortForm, docs, location) {
+module.exports = Statement["extends"](KIND, function Echo(expressions, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.shortForm = shortForm;
   this.expressions = expressions;
@@ -10507,7 +10516,7 @@ var KIND = "empty";
  * @extends {Expression}
  */
 
-module.exports = Expression.extends(KIND, function Empty(expression, docs, location) {
+module.exports = Expression["extends"](KIND, function Empty(expression, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expression = expression;
 });
@@ -10535,7 +10544,7 @@ var KIND = "encapsed";
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
 
-var Encapsed = Literal.extends(KIND, function Encapsed(value, raw, type, docs, location) {
+var Encapsed = Literal["extends"](KIND, function Encapsed(value, raw, type, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.type = type;
 });
@@ -10606,7 +10615,7 @@ var KIND = "encapsedpart";
  * @property {Expression} what
  */
 
-module.exports = Expression.extends(KIND, function EncapsedPart(expression, curly, docs, location) {
+module.exports = Expression["extends"](KIND, function EncapsedPart(expression, curly, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expression = expression;
   this.curly = curly;
@@ -10635,7 +10644,7 @@ var KIND = "entry";
  * @property {Node} value The entry value
  */
 
-module.exports = Expression.extends(KIND, function Entry(key, value, docs, location) {
+module.exports = Expression["extends"](KIND, function Entry(key, value, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
@@ -10666,7 +10675,7 @@ var KIND = "error";
  * @property {string|array} expected
  */
 
-module.exports = Node.extends(KIND, function Error(message, token, line, expected, docs, location) {
+module.exports = Node["extends"](KIND, function Error(message, token, line, expected, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.message = message;
   this.token = token;
@@ -10696,7 +10705,7 @@ var KIND = "eval";
  * @property {Node} source
  */
 
-module.exports = Expression.extends(KIND, function Eval(source, docs, location) {
+module.exports = Expression["extends"](KIND, function Eval(source, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.source = source;
 });
@@ -10724,7 +10733,7 @@ var KIND = "exit";
  * @property {Boolean} useDie
  */
 
-module.exports = Expression.extends(KIND, function Exit(status, useDie, docs, location) {
+module.exports = Expression["extends"](KIND, function Exit(status, useDie, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.status = status;
   this.useDie = useDie;
@@ -10752,7 +10761,7 @@ var KIND = "expressionstatement";
  * @property {Expression} expression
  */
 
-module.exports = Statement.extends(KIND, function ExpressionStatement(expr, docs, location) {
+module.exports = Statement["extends"](KIND, function ExpressionStatement(expr, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.expression = expr;
 });
@@ -10784,7 +10793,7 @@ var KIND = "for";
  * @see http://php.net/manual/en/control-structures.for.php
  */
 
-module.exports = Statement.extends(KIND, function For(init, test, increment, body, shortForm, docs, location) {
+module.exports = Statement["extends"](KIND, function For(init, test, increment, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.init = init;
   this.test = test;
@@ -10820,7 +10829,7 @@ var KIND = "foreach";
  * @see http://php.net/manual/en/control-structures.foreach.php
  */
 
-module.exports = Statement.extends(KIND, function Foreach(source, key, value, body, shortForm, docs, location) {
+module.exports = Statement["extends"](KIND, function Foreach(source, key, value, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.source = source;
   this.key = key;
@@ -10851,7 +10860,7 @@ var KIND = "global";
  * @property {Variable[]} items
  */
 
-module.exports = Statement.extends(KIND, function Global(items, docs, location) {
+module.exports = Statement["extends"](KIND, function Global(items, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.items = items;
 });
@@ -10879,7 +10888,7 @@ var KIND = "goto";
  * @see {Label}
  */
 
-module.exports = Statement.extends(KIND, function Goto(label, docs, location) {
+module.exports = Statement["extends"](KIND, function Goto(label, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.label = label;
 });
@@ -10907,7 +10916,7 @@ var KIND = "halt";
  * @see http://php.net/manual/en/function.halt-compiler.php
  */
 
-module.exports = Statement.extends(KIND, function Halt(after, docs, location) {
+module.exports = Statement["extends"](KIND, function Halt(after, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.after = after;
 });
@@ -10934,7 +10943,7 @@ var KIND = "identifier";
  * @property {string} name
  */
 
-var Identifier = Node.extends(KIND, function Identifier(name, docs, location) {
+var Identifier = Node["extends"](KIND, function Identifier(name, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.name = name;
 });
@@ -10965,7 +10974,7 @@ var KIND = "if";
  * @property {boolean} shortForm
  */
 
-module.exports = Statement.extends(KIND, function If(test, body, alternate, shortForm, docs, location) {
+module.exports = Statement["extends"](KIND, function If(test, body, alternate, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
@@ -10997,7 +11006,7 @@ var KIND = "include";
  * @property {boolean} require
  */
 
-module.exports = Expression.extends(KIND, function Include(once, require, target, docs, location) {
+module.exports = Expression["extends"](KIND, function Include(once, require, target, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.once = once;
   this.require = require;
@@ -11025,7 +11034,7 @@ var KIND = "inline";
  * @extends {Literal}
  */
 
-module.exports = Literal.extends(KIND, function Inline(value, raw, docs, location) {
+module.exports = Literal["extends"](KIND, function Inline(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
@@ -11052,9 +11061,9 @@ var KIND = "interface";
  * @property {Declaration[]} body
  */
 
-module.exports = Declaration.extends(KIND, function Interface(name, ext, body, docs, location) {
+module.exports = Declaration["extends"](KIND, function Interface(name, ext, body, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
-  this.extends = ext;
+  this["extends"] = ext;
   this.body = body;
 });
 
@@ -11079,7 +11088,7 @@ var KIND = "isset";
  * @extends {Expression}
  */
 
-module.exports = Expression.extends(KIND, function Isset(variables, docs, location) {
+module.exports = Expression["extends"](KIND, function Isset(variables, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.variables = variables;
 });
@@ -11106,7 +11115,7 @@ var KIND = "label";
  * @property {String} name
  */
 
-module.exports = Statement.extends(KIND, function Label(name, docs, location) {
+module.exports = Statement["extends"](KIND, function Label(name, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
 });
@@ -11133,7 +11142,7 @@ var KIND = "list";
  * @property {boolean} shortForm
  */
 
-module.exports = Expression.extends(KIND, function List(items, shortForm, docs, location) {
+module.exports = Expression["extends"](KIND, function List(items, shortForm, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.items = items;
   this.shortForm = shortForm;
@@ -11160,7 +11169,7 @@ var KIND = "magic";
  * @extends {Literal}
  */
 
-module.exports = Literal.extends(KIND, function Magic(value, raw, docs, location) {
+module.exports = Literal["extends"](KIND, function Magic(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
@@ -11189,7 +11198,7 @@ var KIND = "method";
  * @property {string} visibility
  */
 
-module.exports = _Function.extends(KIND, function Method() {
+module.exports = _Function["extends"](KIND, function Method() {
   _Function.apply(this, arguments);
 
   this.kind = KIND;
@@ -11218,7 +11227,7 @@ var KIND = "namespace";
  * @property {Boolean} withBrackets
  */
 
-module.exports = Block.extends(KIND, function Namespace(name, children, withBrackets, docs, location) {
+module.exports = Block["extends"](KIND, function Namespace(name, children, withBrackets, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.name = name;
   this.withBrackets = withBrackets || false;
@@ -11247,7 +11256,7 @@ var KIND = "new";
  * @property {Arguments[]} arguments
  */
 
-module.exports = Expression.extends(KIND, function New(what, args, docs, location) {
+module.exports = Expression["extends"](KIND, function New(what, args, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
   this.arguments = args;
@@ -11255,6 +11264,32 @@ module.exports = Expression.extends(KIND, function New(what, args, docs, locatio
 
 /***/ }),
 /* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (C) 2018 Glayzzle (BSD3 License)
+ * @authors https://github.com/glayzzle/php-parser/graphs/contributors
+ * @url http://glayzzle.com
+ */
+
+
+var Node = __webpack_require__(2);
+
+var KIND = "noop";
+/**
+ * Ignore this node, it implies a no operation block, for example :
+ * [$foo, $bar, /* here a noop node * /]
+ * @constructor Noop
+ * @extends {Node}
+ */
+
+module.exports = Node["extends"](KIND, function Noop(docs, location) {
+  Node.apply(this, [KIND, docs, location]);
+});
+
+/***/ }),
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11277,14 +11312,14 @@ var KIND = "nowdoc";
  * @property {Boolean} quote
  */
 
-module.exports = Literal.extends(KIND, function Nowdoc(value, raw, label, quote, docs, location) {
+module.exports = Literal["extends"](KIND, function Nowdoc(value, raw, label, quote, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.label = label;
   this.quote = quote;
 });
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11304,12 +11339,12 @@ var KIND = "number";
  * @extends {Literal}
  */
 
-module.exports = Literal.extends(KIND, function Number(value, raw, docs, location) {
+module.exports = Literal["extends"](KIND, function Number(value, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
 });
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11329,12 +11364,12 @@ var KIND = "offsetlookup";
  * @extends {Lookup}
  */
 
-module.exports = Lookup.extends(KIND, function OffsetLookup(what, offset, docs, location) {
+module.exports = Lookup["extends"](KIND, function OffsetLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11359,7 +11394,7 @@ var KIND = "parameter";
  * @property {boolean} nullable
  */
 
-module.exports = Declaration.extends(KIND, function Parameter(name, type, value, isRef, isVariadic, nullable, docs, location) {
+module.exports = Declaration["extends"](KIND, function Parameter(name, type, value, isRef, isVariadic, nullable, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.value = value;
   this.type = type;
@@ -11369,7 +11404,7 @@ module.exports = Declaration.extends(KIND, function Parameter(name, type, value,
 });
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11389,14 +11424,14 @@ var KIND = "parentreference";
  * @extends {Reference}
  */
 
-var ParentReference = Reference.extends(KIND, function ParentReference(raw, docs, location) {
+var ParentReference = Reference["extends"](KIND, function ParentReference(raw, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
   this.raw = raw;
 });
 module.exports = ParentReference;
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11418,14 +11453,14 @@ var KIND = "post";
  * @property {Variable} what
  */
 
-module.exports = Operation.extends(KIND, function Post(type, what, docs, location) {
+module.exports = Operation["extends"](KIND, function Post(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11447,14 +11482,14 @@ var KIND = "pre";
  * @property {Variable} what
  */
 
-module.exports = Operation.extends(KIND, function Pre(type, what, docs, location) {
+module.exports = Operation["extends"](KIND, function Pre(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11474,13 +11509,13 @@ var KIND = "print";
  * @extends {Expression}
  */
 
-module.exports = Expression.extends(KIND, function Print(expression, docs, location) {
+module.exports = Expression["extends"](KIND, function Print(expression, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expression = expression;
 });
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11503,7 +11538,7 @@ var KIND = "program";
  * @property {String[]?} tokens
  */
 
-module.exports = Block.extends(KIND, function Program(children, errors, comments, tokens, docs, location) {
+module.exports = Block["extends"](KIND, function Program(children, errors, comments, tokens, docs, location) {
   Block.apply(this, [KIND, children, docs, location]);
   this.errors = errors;
 
@@ -11517,7 +11552,7 @@ module.exports = Block.extends(KIND, function Program(children, errors, comments
 });
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11539,14 +11574,14 @@ var KIND = "property";
  * @property {Node|null} value
  */
 
-module.exports = Statement.extends(KIND, function Property(name, value, docs, location) {
+module.exports = Statement["extends"](KIND, function Property(name, value, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.value = value;
 });
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11566,12 +11601,12 @@ var KIND = "propertylookup";
  * @extends {Lookup}
  */
 
-module.exports = Lookup.extends(KIND, function PropertyLookup(what, offset, docs, location) {
+module.exports = Lookup["extends"](KIND, function PropertyLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11596,7 +11631,7 @@ var IS_PRIVATE = "private";
  * @property {Property[]} properties
  */
 
-var PropertyStatement = Statement.extends(KIND, function PropertyStatement(kind, properties, flags, docs, location) {
+var PropertyStatement = Statement["extends"](KIND, function PropertyStatement(kind, properties, flags, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.properties = properties;
   this.parseFlags(flags);
@@ -11626,7 +11661,7 @@ PropertyStatement.prototype.parseFlags = function (flags) {
 module.exports = PropertyStatement;
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11649,7 +11684,7 @@ var KIND = "retif";
  * @property {Expression} falseExpr
  */
 
-module.exports = Expression.extends(KIND, function RetIf(test, trueExpr, falseExpr, docs, location) {
+module.exports = Expression["extends"](KIND, function RetIf(test, trueExpr, falseExpr, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.test = test;
   this.trueExpr = trueExpr;
@@ -11657,7 +11692,7 @@ module.exports = Expression.extends(KIND, function RetIf(test, trueExpr, falseEx
 });
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11678,13 +11713,13 @@ var KIND = "return";
  * @property {Expression|null} expr
  */
 
-module.exports = Statement.extends(KIND, function Return(expr, docs, location) {
+module.exports = Statement["extends"](KIND, function Return(expr, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11704,14 +11739,14 @@ var KIND = "selfreference";
  * @extends {Reference}
  */
 
-var SelfReference = Reference.extends(KIND, function SelfReference(raw, docs, location) {
+var SelfReference = Reference["extends"](KIND, function SelfReference(raw, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
   this.raw = raw;
 });
 module.exports = SelfReference;
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11732,13 +11767,13 @@ var KIND = "silent";
  * @property {Expression} expr
  */
 
-module.exports = Expression.extends(KIND, function Silent(expr, docs, location) {
+module.exports = Expression["extends"](KIND, function Silent(expr, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.expr = expr;
 });
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11759,13 +11794,13 @@ var KIND = "static";
  * @property {StaticVariable[]} variables
  */
 
-module.exports = Statement.extends(KIND, function Static(variables, docs, location) {
+module.exports = Statement["extends"](KIND, function Static(variables, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.variables = variables;
 });
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11787,14 +11822,14 @@ var KIND = "staticvariable";
  * @property {Node|string|number|boolean|null} defaultValue
  */
 
-module.exports = Node.extends(KIND, function StaticVariable(variable, defaultValue, docs, location) {
+module.exports = Node["extends"](KIND, function StaticVariable(variable, defaultValue, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.variable = variable;
   this.defaultValue = defaultValue;
 });
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11814,12 +11849,12 @@ var KIND = "staticlookup";
  * @extends {Lookup}
  */
 
-module.exports = Lookup.extends(KIND, function StaticLookup(what, offset, docs, location) {
+module.exports = Lookup["extends"](KIND, function StaticLookup(what, offset, docs, location) {
   Lookup.apply(this, [KIND, what, offset, docs, location]);
 });
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11839,14 +11874,14 @@ var KIND = "staticreference";
  * @extends {Reference}
  */
 
-var StaticReference = Reference.extends(KIND, function StaticReference(raw, docs, location) {
+var StaticReference = Reference["extends"](KIND, function StaticReference(raw, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
   this.raw = raw;
 });
 module.exports = StaticReference;
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11869,14 +11904,14 @@ var KIND = "string";
  * @see {Encapsed}
  */
 
-module.exports = Literal.extends(KIND, function String(isDoubleQuote, value, unicode, raw, docs, location) {
+module.exports = Literal["extends"](KIND, function String(isDoubleQuote, value, unicode, raw, docs, location) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.unicode = unicode;
   this.isDoubleQuote = isDoubleQuote;
 });
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11899,7 +11934,7 @@ var KIND = "switch";
  * @property {boolean} shortForm
  */
 
-module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, docs, location) {
+module.exports = Statement["extends"](KIND, function Switch(test, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
@@ -11907,7 +11942,7 @@ module.exports = Statement.extends(KIND, function Switch(test, body, shortForm, 
 });
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11928,13 +11963,13 @@ var KIND = "throw";
  * @property {Expression} what
  */
 
-module.exports = Statement.extends(KIND, function Throw(what, docs, location) {
+module.exports = Statement["extends"](KIND, function Throw(what, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.what = what;
 });
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11955,13 +11990,13 @@ var KIND = "trait";
  * @property {Declaration[]} body
  */
 
-module.exports = Declaration.extends(KIND, function Trait(name, body, docs, location) {
+module.exports = Declaration["extends"](KIND, function Trait(name, body, docs, location) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.body = body;
 });
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11989,7 +12024,7 @@ var IS_PRIVATE = "private";
  * @property {string|null} visibility
  */
 
-module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags, docs, location) {
+module.exports = Node["extends"](KIND, function TraitAlias(trait, method, as, flags, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
@@ -12008,7 +12043,7 @@ module.exports = Node.extends(KIND, function TraitAlias(trait, method, as, flags
 });
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12031,7 +12066,7 @@ var KIND = "traitprecedence";
  * @property {Identifier[]} instead
  */
 
-module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, instead, docs, location) {
+module.exports = Node["extends"](KIND, function TraitPrecedence(trait, method, instead, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.trait = trait;
   this.method = method;
@@ -12039,7 +12074,7 @@ module.exports = Node.extends(KIND, function TraitPrecedence(trait, method, inst
 });
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12061,14 +12096,14 @@ var KIND = "traituse";
  * @property {Node[]|null} adaptations
  */
 
-module.exports = Node.extends(KIND, function TraitUse(traits, adaptations, docs, location) {
+module.exports = Node["extends"](KIND, function TraitUse(traits, adaptations, docs, location) {
   Node.apply(this, [KIND, docs, location]);
   this.traits = traits;
   this.adaptations = adaptations;
 });
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12091,7 +12126,7 @@ var KIND = "try";
  * @property {Block} allways
  */
 
-module.exports = Statement.extends(KIND, function Try(body, catches, always, docs, location) {
+module.exports = Statement["extends"](KIND, function Try(body, catches, always, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.body = body;
   this.catches = catches;
@@ -12099,7 +12134,7 @@ module.exports = Statement.extends(KIND, function Try(body, catches, always, doc
 });
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12120,7 +12155,7 @@ var KIND = "typereference";
  * @property {string} name
  */
 
-var TypeReference = Reference.extends(KIND, function TypeReference(name, raw, docs, location) {
+var TypeReference = Reference["extends"](KIND, function TypeReference(name, raw, docs, location) {
   Reference.apply(this, [KIND, docs, location]);
   this.name = name;
   this.raw = raw;
@@ -12129,7 +12164,7 @@ TypeReference.types = ["int", "float", "string", "bool", "object", "array", "cal
 module.exports = TypeReference;
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12151,14 +12186,14 @@ var KIND = "unary";
  * @property {Expression} what
  */
 
-module.exports = Operation.extends(KIND, function Unary(type, what, docs, location) {
+module.exports = Operation["extends"](KIND, function Unary(type, what, docs, location) {
   Operation.apply(this, [KIND, docs, location]);
   this.type = type;
   this.what = what;
 });
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12178,13 +12213,13 @@ var KIND = "unset";
  * @extends {Statement}
  */
 
-module.exports = Statement.extends(KIND, function Unset(variables, docs, location) {
+module.exports = Statement["extends"](KIND, function Unset(variables, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.variables = variables;
 });
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12209,7 +12244,7 @@ var KIND = "usegroup";
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
 
-module.exports = Statement.extends(KIND, function UseGroup(name, type, items, docs, location) {
+module.exports = Statement["extends"](KIND, function UseGroup(name, type, items, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.type = type;
@@ -12217,7 +12252,7 @@ module.exports = Statement.extends(KIND, function UseGroup(name, type, items, do
 });
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12242,7 +12277,7 @@ var KIND = "useitem";
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
 
-var UseItem = Statement.extends(KIND, function UseItem(name, alias, type, docs, location) {
+var UseItem = Statement["extends"](KIND, function UseItem(name, alias, type, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.alias = alias;
@@ -12263,7 +12298,7 @@ UseItem.TYPE_FUNCTION = "function";
 module.exports = UseItem;
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12297,7 +12332,7 @@ var KIND = "variable";
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
 
-module.exports = Expression.extends(KIND, function Variable(name, byref, curly, docs, location) {
+module.exports = Expression["extends"](KIND, function Variable(name, byref, curly, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.name = name;
   this.byref = byref || false;
@@ -12305,7 +12340,7 @@ module.exports = Expression.extends(KIND, function Variable(name, byref, curly, 
 });
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12327,13 +12362,13 @@ var KIND = "variadic";
  * @see https://wiki.php.net/rfc/argument_unpacking
  */
 
-module.exports = Expression.extends(KIND, function variadic(what, docs, location) {
+module.exports = Expression["extends"](KIND, function variadic(what, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.what = what;
 });
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12356,7 +12391,7 @@ var KIND = "while";
  * @property {boolean} shortForm
  */
 
-module.exports = Statement.extends(KIND, function While(test, body, shortForm, docs, location) {
+module.exports = Statement["extends"](KIND, function While(test, body, shortForm, docs, location) {
   Statement.apply(this, [KIND, docs, location]);
   this.test = test;
   this.body = body;
@@ -12364,7 +12399,7 @@ module.exports = Statement.extends(KIND, function While(test, body, shortForm, d
 });
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12387,14 +12422,14 @@ var KIND = "yield";
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
 
-module.exports = Expression.extends(KIND, function Yield(value, key, docs, location) {
+module.exports = Expression["extends"](KIND, function Yield(value, key, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.value = value;
   this.key = key;
 });
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12416,7 +12451,7 @@ var KIND = "yieldfrom";
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
 
-module.exports = Expression.extends(KIND, function YieldFrom(value, docs, location) {
+module.exports = Expression["extends"](KIND, function YieldFrom(value, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
   this.value = value;
 });

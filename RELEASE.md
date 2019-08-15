@@ -1,35 +1,51 @@
 # Releases
 
+## 3.0.0-prerelease.9 : (2019-08-15)
+- #291 : Incorrect parsing of backslash-prefixed use declarations
+- #278 : 3.0 - Confusing commentsBlocks references
+- #256 : invalid ast for multiple properties 
+- #255 : better ast for `constant` node 
+- #250 : Leading comments are treated as trailing comments to the previous function body
+- #248 : broken ast for `$$$$$`
+- #247 : invalid ast for `silent`
+- #246 : `resolution` for `classreference` doesn't work properly for `FULL_QUALIFIED_NAME` 
+- #242 : feat: improve `Declare` node and introduce `DeclareDirective` node 
+- #199 : [bug] comment location overlaps with node location for `static` node
+- #192 : [bug] encapsed and staticlookup
+- #180 : bug in parser with single function
+- #174 : Don't output `null` for last element in `list/array` 
+- #128 : Don't have curly for propertylookup in offset 
+
 ## 3.0.0-prerelease.8 : (2019-01-07)
+ - #243 : Regression in prerelease 7 with echo
+ - #239 : [bug] call should be in ExpressionStatement
  - #235 : invalid ast for `self` and `parent`
  - #234 : regression with parens in `3.0.0-prerelease.7`
  - #230 : `resolvePrecedence` break location for `bin` nodes
+ - #207 : [feature] use `identifier` for `class/interface/trait` name 
  - #202 : [bug] comment position in lookup
  - #194 : [feature] implement trailingComments on nodes 
  - #185 : [bug] parens and staticlookup
- - #172 : cast precedence
  - #182 : strange with parens, staticlookup and offsetlookup
- - #167 : staticlookup is broken with curly
- - #239 : [bug] call should be in ExpressionStatement
- - #207 : [feature] use `identifier` for `class/interface/trait` name 
- - #243 : Regression in prerelease 7 with echo
  - #181 : strange with parens and unary
+ - #172 : cast precedence
+ - #167 : staticlookup is broken with curly
 
 ## 3.0.0-prerelease.7 : (2018-11-10)
+ - #220 : regression in `rc-6`
+ - #210 : [bug] invalid ast for `const` enhancement
+ - #204 : [bug] invalid start offset encapsed AST bug
  - #201 : [bug] curly in staticlookup bug
  - #175 : impossible detect curly in `encapsed` AST enhancement
- - #210 : [bug] invalid ast for `const` enhancement
- - #220 : regression in `rc-6`
- - #204 : [bug] invalid start offset encapsed AST bug
  - #165 : declare doesn't support inline nodes investigating
 
 Many thanks to @evilebottnawi for his help
 
 ## 3.0.0-prerelease.6 : (2018-10-21)
- - fix #113 : Unhandled native identifiers
+ - impl #196 : identifier for function/method name
  - fix #183 : `static` parsed as constref
  - fix #188 : `constref` vs `identifier`
- - impl #196 : identifier for function/method name
+ - fix #113 : Unhandled native identifiers
 
 ## 3.0.0-alpha3 : (2018-08-15)
  - fix #168 : End location of `if` without semicolon
