@@ -1,9 +1,16 @@
 const parser = require('../main');
 
 describe("new", function() {
+  it("#348 - byref usage deprecated", function() {
+    expect(parser.parseEval('$a =& new Foo();', {
+      parser: {
+        suppressErrors: true
+      }
+    })).toMatchSnapshot();
+  });
   it("simple", function() {
     expect(parser.parseEval('new Foo();')).toMatchSnapshot();
-  });
+  });  
   it("variable", function() {
     expect(parser.parseEval('new $var;')).toMatchSnapshot();
   });

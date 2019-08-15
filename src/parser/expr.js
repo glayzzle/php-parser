@@ -356,6 +356,9 @@ module.exports = {
           let right;
           if (this.next().token == "&") {
             if (this.next().token === this.tok.T_NEW) {
+              if (this.php7) {
+                this.error();
+              }
               right = this.read_new_expr();
             } else {
               right = this.read_variable(false, false, true);
