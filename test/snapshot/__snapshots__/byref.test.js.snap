@@ -12,22 +12,25 @@ Program {
           "name": "a",
         },
         "operator": "=",
-        "right": Call {
-          "arguments": Array [
-            ByRef {
-              "kind": "byref",
-              "what": Variable {
-                "curly": false,
-                "kind": "variable",
-                "name": "b",
+        "right": ByRef {
+          "kind": "byref",
+          "what": Call {
+            "arguments": Array [
+              ByRef {
+                "kind": "byref",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "b",
+                },
               },
+            ],
+            "kind": "call",
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "foo",
+              "resolution": "uqn",
             },
-          ],
-          "kind": "call",
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "foo",
-            "resolution": "uqn",
           },
         },
       },
@@ -88,13 +91,16 @@ Program {
           "name": "a",
         },
         "operator": "=",
-        "right": New {
-          "arguments": Array [],
-          "kind": "new",
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "foo",
-            "resolution": "uqn",
+        "right": ByRef {
+          "kind": "byref",
+          "what": New {
+            "arguments": Array [],
+            "kind": "new",
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "foo",
+              "resolution": "uqn",
+            },
           },
         },
       },

@@ -162,7 +162,7 @@ module.exports = {
       if (this.expect(isShort ? "]" : ")")) this.next();
       return result(assignList, isShort);
     } else {
-      return this.read_variable(false, false, false);
+      return this.read_variable(false, false);
     }
   }
 };

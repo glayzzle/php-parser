@@ -224,7 +224,7 @@ module.exports = {
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
       curly = true;
       result.destroy();
-      result = this.next().read_variable(false, false, false);
+      result = this.next().read_variable(false, false);
       this.expect("}") && this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
       // plain variable

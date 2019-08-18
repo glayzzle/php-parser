@@ -123,7 +123,7 @@ module.exports = {
    */
   read_class_name_reference: function() {
     // resolved as the same
-    return this.read_variable(true, false, false);
+    return this.read_variable(true, false);
   },
   /**
    * Reads a use declaration

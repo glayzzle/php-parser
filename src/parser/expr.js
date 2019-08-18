@@ -199,13 +199,13 @@ module.exports = {
       case this.tok.T_INC:
         return this.node("pre")(
           "+",
-          this.next().read_variable(false, false, false)
+          this.next().read_variable(false, false)
         );
 
       case this.tok.T_DEC:
         return this.node("pre")(
           "-",
-          this.next().read_variable(false, false, false)
+          this.next().read_variable(false, false)
         );
 
       case this.tok.T_NEW:
@@ -341,7 +341,7 @@ module.exports = {
     // SCALAR | VARIABLE
     if (this.is("VARIABLE")) {
       result = this.node();
-      expr = this.read_variable(false, false, false);
+      expr = this.read_variable(false, false);
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L877
       // should accept only a variable
@@ -355,13 +355,14 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           let right;
           if (this.next().token == "&") {
+            right = this.node('byref');
             if (this.next().token === this.tok.T_NEW) {
               if (this.php7) {
                 this.error();
               }
-              right = this.read_new_expr();
+              right = right(this.read_new_expr());
             } else {
-              right = this.read_variable(false, false, true);
+              right = right(this.read_variable(false, false));
             }
           } else {
             right = this.read_expr();
@@ -511,7 +512,7 @@ module.exports = {
       }
       return result;
     } else if (this.is("VARIABLE")) {
-      return this.read_variable(true, false, false);
+      return this.read_variable(true, false);
     } else {
       this.expect([this.tok.T_STRING, "VARIABLE"]);
     }
