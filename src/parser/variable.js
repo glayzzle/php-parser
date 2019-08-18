@@ -138,9 +138,12 @@ module.exports = {
             what.loc.start = what.value[0].loc.start;
           }
         } else if (this.token === "{") {
+
+          // EncapsedPart
+          const part = this.node('encapsedpart');
           const expr = this.next().read_expr();
           this.expect("}") && this.next();
-          what = this.node("encapsed")([what, expr], null, "offset");
+          what = this.node("encapsed")([what, part(expr, true)], null, "offset");
           if (what.loc && what.value[0].loc) {
             what.loc.start = what.value[0].loc.start;
           }
@@ -159,7 +162,7 @@ module.exports = {
           // $obj->${$varname}
           name = this.next().read_expr();
           this.expect("}") && this.next();
-          what = what("literal", "literal", name, null);
+          what = what("variable", name, true);
         } else {
           // $obj->$$varname
           name = this.read_expr();
@@ -167,10 +170,10 @@ module.exports = {
         }
         break;
       case "{":
-        what = this.node("literal");
+        what = this.node("encapsedpart");
         name = this.next().read_expr();
         this.expect("}") && this.next();
-        what = what("literal", name, null);
+        what = what(name, true);
         break;
       default:
         this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]);

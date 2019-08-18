@@ -17,7 +17,7 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-$a =& foo( &$b );
+$var->foo_{$bar};
 `, { 
     parser: {
       debug: true,
