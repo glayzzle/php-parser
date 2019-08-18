@@ -24,4 +24,23 @@ describe("Test AST class (edge cases)", function() {
             node();
         }).toThrow(/foo/);
     });    
+    it("test debug mode", function() {
+        const test = parser.create({
+            parser: {
+                debug: true
+            }
+        });
+        test.parseEval('1 + 1;');
+    });
+    it("test debug mode / errors", function() {
+        const test = parser.create({
+            parser: {
+                debug: true
+            }
+        });
+        expect(() => {
+            test.parseEval('1 + ;');
+        }).toThrow();        
+    });
+    
 });
