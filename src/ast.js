@@ -410,13 +410,6 @@ AST.prototype.prepare = function(kind, docs, parser) {
   }
 
   /**
-   * Helper to change a node kind
-   * @param {String} newKind
-   */
-  result.setKind = function(newKind) {
-    kind = newKind;
-  };
-  /**
    * Sets a list of trailing comments
    * @param {*} docs
    */
