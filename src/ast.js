@@ -35,6 +35,7 @@ const Position = require("./ast/position");
  *   - [Expression](#expression)
  *     - [Entry](#entry)
  *     - [Closure](#closure)
+ *     - [ByRef](#byref)
  *     - [Silent](#silent)
  *     - [RetIf](#retif)
  *     - [New](#new)
@@ -473,6 +474,7 @@ AST.prototype.checkNodes = function() {
   require("./ast/block"),
   require("./ast/boolean"),
   require("./ast/break"),
+  require("./ast/byref"),
   require("./ast/call"),
   require("./ast/case"),
   require("./ast/cast"),

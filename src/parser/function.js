@@ -144,16 +144,14 @@ module.exports = {
    * ```
    */
   read_lexical_var: function() {
-    const result = this.node("variable");
-    let isRef = false;
     if (this.token === "&") {
-      isRef = true;
-      this.next();
+      return this.node("byref")(this.next().read_lexical_var());
     }
+    const result = this.node("variable");
     this.expect(this.tok.T_VARIABLE);
     const name = this.text().substring(1);
     this.next();
-    return result(name, isRef, false);
+    return result(name, false);
   },
   /**
    * reads a list of parameters

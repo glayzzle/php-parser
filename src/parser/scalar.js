@@ -206,7 +206,7 @@ module.exports = {
         // check if lookup an offset
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1243
         if (this.token === "[") {
-          name = name(varName, false, false);
+          name = name(varName, false);
           node = this.node("offsetlookup");
           offset = this.next().read_expr();
           this.expect("]") && this.next();
@@ -218,7 +218,7 @@ module.exports = {
         name = this.read_expr();
       }
       this.expect("}") && this.next();
-      result = result("variable", name, false, true);
+      result = result("variable", name, true);
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
@@ -230,7 +230,7 @@ module.exports = {
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
       result.destroy();
-      result = this.read_simple_variable(false);
+      result = this.read_simple_variable();
 
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1233
       if (this.token === "[") {

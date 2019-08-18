@@ -71,13 +71,16 @@ module.exports = {
       return this.node("noop")();
     }
     if (this.token === "&") {
-      return this.next().read_variable(true, false, true);
+      return this.node("byref")(this.next().read_variable(true, false));
     } else {
       const entry = this.node(ArrayEntry);
       const expr = this.read_expr();
       if (this.token === this.tok.T_DOUBLE_ARROW) {
         if (this.next().token === "&") {
-          return entry(expr, this.next().read_variable(true, false, true));
+          return entry(
+            expr,
+            this.node("byref")(this.next().read_variable(true, false))
+          );
         } else {
           return entry(expr, this.read_expr());
         }
