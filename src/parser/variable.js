@@ -138,12 +138,15 @@ module.exports = {
             what.loc.start = what.value[0].loc.start;
           }
         } else if (this.token === "{") {
-
           // EncapsedPart
-          const part = this.node('encapsedpart');
+          const part = this.node("encapsedpart");
           const expr = this.next().read_expr();
           this.expect("}") && this.next();
-          what = this.node("encapsed")([what, part(expr, true)], null, "offset");
+          what = this.node("encapsed")(
+            [what, part(expr, true)],
+            null,
+            "offset"
+          );
           if (what.loc && what.value[0].loc) {
             what.loc.start = what.value[0].loc.start;
           }

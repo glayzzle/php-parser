@@ -197,16 +197,10 @@ module.exports = {
 
     switch (this.token) {
       case this.tok.T_INC:
-        return this.node("pre")(
-          "+",
-          this.next().read_variable(false, false)
-        );
+        return this.node("pre")("+", this.next().read_variable(false, false));
 
       case this.tok.T_DEC:
-        return this.node("pre")(
-          "-",
-          this.next().read_variable(false, false)
-        );
+        return this.node("pre")("-", this.next().read_variable(false, false));
 
       case this.tok.T_NEW:
         return this.read_new_expr();
@@ -355,7 +349,7 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           let right;
           if (this.next().token == "&") {
-            right = this.node('byref');
+            right = this.node("byref");
             if (this.next().token === this.tok.T_NEW) {
               if (this.php7) {
                 this.error();
