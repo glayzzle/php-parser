@@ -356,9 +356,6 @@ AST.prototype.prepare = function(kind, docs, parser) {
     let location = null;
     const args = Array.prototype.slice.call(arguments);
     args.push(docs);
-    if (typeof result.preBuild === "function") {
-      result.preBuild(arguments);
-    }
     if (self.withPositions || self.withSource) {
       let src = null;
       if (self.withSource) {
