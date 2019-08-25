@@ -8,6 +8,12 @@
 module.exports = {
   read_expr: function(expr) {
     const result = this.node();
+    if (this.token === "@") {
+      if (!expr) {
+        expr = this.next().read_expr();
+      }
+      return result("silent", expr);
+    }
     if (!expr) {
       expr = this.read_expr_item();
     }
@@ -118,7 +124,6 @@ module.exports = {
    */
   read_expr_item: function() {
     let result, expr;
-    if (this.token === "@") return this.node("silent")(this.next().read_expr());
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
     if (this.token === "-")

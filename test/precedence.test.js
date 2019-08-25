@@ -4,18 +4,25 @@ var parser = require("./main");
  * Check precedence by using parenthesis on node B
  */
 var checkPrecedence = function(a, b) {
-  if (!a || !b)
+  if (!a && !b)
     return false;
-  for (var k in b) {
+  for (let k in b) {
     if (k === 'parenthesizedExpression') continue;
     if (b.hasOwnProperty(k)) {
       if (!a.hasOwnProperty(k))
-        return false;
-      if (typeof b[k] === "object") {
+        return expect(a).toHaveProperty(k, b[k]);
+      if (typeof b[k] === "object" && b[k] !== null) {
         checkPrecedence(a[k], b[k]);
       } else {
         expect(a[k]).toEqual(b[k]);
       }
+    }
+  }
+  for (let k in a) {
+    if (k === 'parenthesizedExpression') continue;
+    if (a.hasOwnProperty(k)) {
+      if (!b.hasOwnProperty(k))
+        return expect(b).toHaveProperty(k, a[k]);
     }
   }
   return true;
@@ -130,6 +137,18 @@ describe("Test precedence", function() {
   });
   it("test silent node / ret if", function() {
     shouldBeSame("@$i == true ? @$foo : @$bar;", "@($i) == true ? @($foo) : @($bar);");
+  });
+  it("test silent node - bugfix #355", function() {
+    shouldBeSame(
+      "echo 'pre' . (@$_GET['foo'] === 'bar' ? 'ok' : 'ko') . 'post'", 
+      "echo 'pre' . (@($_GET['foo']) === 'bar' ? 'ok' : 'ko') . 'post'"
+    );
+  });
+  it("test silent node - bugfix #356", function() {
+    shouldBeSame(
+      "@$var += 10", 
+      "@($var += 10)"
+    );
   });
   it("test silent node / cast", function() {
     shouldBeSame("@(int)$i + 1;", "@((int)$i) + 1;");

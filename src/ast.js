@@ -325,15 +325,17 @@ AST.prototype.resolvePrecedence = function(result, parser) {
     }
   } else if (
     result.kind === "silent" &&
-    result.expr.right &&
     !result.expr.parenthesizedExpression
   ) {
+    if (result.expr.kind === 'assign') return result;
     // overall least precedence
-    buffer = result.expr;
-    result.expr = buffer.left;
-    buffer.left = result;
-    this.swapLocations(buffer, buffer.left, buffer.right, parser);
-    result = buffer;
+    if (result.expr.right) {
+      buffer = result.expr;
+      result.expr = buffer.left;
+      buffer.left = result;
+      this.swapLocations(buffer, buffer.left, buffer.right, parser);
+      result = buffer;  
+    }
   }
   return result;
 };
