@@ -222,18 +222,21 @@ module.exports = {
     let wasVariadic = false;
     this.expect("(") && this.next();
     if (this.token !== ")") {
-      result = this.read_function_list(function() {
-        const argument = this.read_argument_list();
-        if (argument) {
-          if (wasVariadic) {
-            this.raiseError("Unexpected argument after a variadic argument");
+      result = this.read_function_list(
+        function() {
+          const argument = this.read_argument_list();
+          if (argument) {
+            if (wasVariadic) {
+              this.raiseError("Unexpected argument after a variadic argument");
+            }
+            if (argument.kind === "variadic") {
+              wasVariadic = true;
+            }
           }
-          if (argument.kind === "variadic") {
-            wasVariadic = true;
-          }  
-        }
-        return argument;
-      }.bind(this), ',');
+          return argument;
+        }.bind(this),
+        ","
+      );
     }
     this.expect(")") && this.next();
     return result;
