@@ -17,10 +17,14 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-@$var += 10
+$foo = new Foo(
+  'constructor',
+  'bar',
+);
 `, { 
     parser: {
       debug: true,
+      php73: true,
       extractDoc: true
     },
     /*ast: {

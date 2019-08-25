@@ -218,24 +218,22 @@ module.exports = {
    * ```
    */
   read_function_argument_list: function() {
-    const result = [];
+    let result = [];
     let wasVariadic = false;
     this.expect("(") && this.next();
     if (this.token !== ")") {
-      while (this.token != this.EOF) {
+      result = this.read_function_list(function() {
         const argument = this.read_argument_list();
         if (argument) {
-          result.push(argument);
-          if (argument.kind === "variadic") {
-            wasVariadic = true;
-          } else if (wasVariadic) {
+          if (wasVariadic) {
             this.raiseError("Unexpected argument after a variadic argument");
           }
+          if (argument.kind === "variadic") {
+            wasVariadic = true;
+          }  
         }
-        if (this.token === ",") {
-          this.next();
-        } else break;
-      }
+        return argument;
+      }.bind(this), ',');
     }
     this.expect(")") && this.next();
     return result;

@@ -34,6 +34,7 @@ const parser = function(lexer, ast) {
   this.prev = null;
   this.debug = false;
   this.php7 = true;
+  this.php73 = true;
   this.php74 = true;
   this.extractDoc = false;
   this.extractTokens = false;
@@ -264,6 +265,7 @@ parser.prototype.parse = function(code, filename) {
     this._tokens = null;
   }
   if (!this.php7) {
+    this.php73 = false;
     this.php74 = false;
   }
   this._docIndex = 0;

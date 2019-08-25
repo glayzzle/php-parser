@@ -70,3 +70,480 @@ Program {
   "kind": "program",
 }
 `;
+
+exports[`Test syntax parsing with PHP 73 support https://wiki.php.net/rfc/trailing-comma-function-calls 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "newArray",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arrayOne",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arrayTwo",
+            },
+            Array {
+              "items": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'foo'",
+                  "unicode": false,
+                  "value": "foo",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'bar'",
+                  "unicode": false,
+                  "value": "bar",
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+            Noop {
+              "kind": "noop",
+            },
+          ],
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "array_merge",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'constructor'",
+              "unicode": false,
+              "value": "constructor",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'bar'",
+              "unicode": false,
+              "value": "bar",
+            },
+            Noop {
+              "kind": "noop",
+            },
+          ],
+          "kind": "new",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "Foo",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'method'",
+            "unicode": false,
+            "value": "method",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'bar'",
+            "unicode": false,
+            "value": "bar",
+          },
+          Noop {
+            "kind": "noop",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'invoke'",
+            "unicode": false,
+            "value": "invoke",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'bar'",
+            "unicode": false,
+            "value": "bar",
+          },
+          Noop {
+            "kind": "noop",
+          },
+        ],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+        Noop {
+          "kind": "noop",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Isset {
+            "kind": "isset",
+            "variables": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "foo",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bar",
+              },
+              Noop {
+                "kind": "noop",
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test syntax parsing with PHP 73 support https://wiki.php.net/rfc/trailing-comma-function-calls#errors 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "a",
+          },
+          "nullable": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "nullable": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "name": null,
+          "nullable": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bar",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          undefined,
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'function'",
+            "unicode": false,
+            "value": "function",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'bar'",
+            "unicode": false,
+            "value": "bar",
+          },
+          Noop {
+            "kind": "noop",
+          },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          undefined,
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": String {
+        "isDoubleQuote": false,
+        "kind": "string",
+        "raw": "'function'",
+        "unicode": false,
+        "value": "function",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": String {
+        "isDoubleQuote": false,
+        "kind": "string",
+        "raw": "'bar'",
+        "unicode": false,
+        "value": "bar",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 222,
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ')', expecting T_VARIABLE on line 3",
+      "token": "')'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, unexpected ',' on line 7",
+      "token": "','",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, unexpected ',', expecting ')' on line 10",
+      "token": "','",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, unexpected ',', expecting ';' on line 10",
+      "token": "','",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, unexpected ',' on line 10",
+      "token": "','",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, unexpected ')', expecting ';' on line 10",
+      "token": "')'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, unexpected ')' on line 10",
+      "token": "')'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ',' on line 12",
+      "token": "','",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ''function'' (T_CONSTANT_ENCAPSED_STRING), expecting ')' on line 12",
+      "token": "''function'' (T_CONSTANT_ENCAPSED_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ''function'' (T_CONSTANT_ENCAPSED_STRING), expecting ';' on line 12",
+      "token": "''function'' (T_CONSTANT_ENCAPSED_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ',', expecting ';' on line 12",
+      "token": "','",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ',' on line 12",
+      "token": "','",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ''bar'' (T_CONSTANT_ENCAPSED_STRING), expecting ';' on line 12",
+      "token": "''bar'' (T_CONSTANT_ENCAPSED_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ')', expecting ';' on line 12",
+      "token": "')'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 12,
+      "message": "Parse Error : syntax error, unexpected ')' on line 12",
+      "token": "')'",
+    },
+  ],
+  "kind": "program",
+}
+`;

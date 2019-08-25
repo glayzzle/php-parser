@@ -215,7 +215,7 @@ module.exports = {
         if (this.next().expect("(")) {
           this.next();
         }
-        const variables = this.read_list(this.read_expr, ",");
+        const variables = this.read_function_list(this.read_expr, ",");
         if (this.expect(")")) {
           this.next();
         }

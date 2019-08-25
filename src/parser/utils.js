@@ -24,6 +24,30 @@ module.exports = {
   },
 
   /**
+   * https://wiki.php.net/rfc/trailing-comma-function-calls
+   * @param {*} item 
+   * @param {*} separator 
+   */
+  read_function_list: function(item, separator) {
+    const result = [];
+    do {
+      if (this.token == separator && this.php73 && result.length > 0) {
+        result.push(this.node('noop')());
+        break;
+      }
+      result.push(item.apply(this, []));
+      if (this.token != separator) {
+        break;
+      }
+      if (this.next().token == ')'  && this.php73) {
+        result.push(this.node('noop')());
+        break;
+      } 
+    } while (this.token != this.EOF);
+    return result;
+  },
+
+  /**
    * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
    * ```ebnf
    * list ::= separator? ( item separator )* item
