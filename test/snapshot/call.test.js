@@ -298,4 +298,31 @@ describe("Test call", function() {
     );
     expect(ast).toMatchSnapshot();
   });
+  it("trailing comma", function() {
+    const ast = parser.parseEval(
+        'foo("method", "bar",);',
+        {
+          parser: { debug: false }
+        }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("trailing comma #2", function() {
+    const ast = parser.parseEval(
+        '$foo("method", "bar",);',
+        {
+          parser: { debug: false }
+        }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+  it("trailing comma #3", function() {
+    const ast = parser.parseEval(
+        '$foo->bar("method", "bar",);',
+        {
+          parser: { debug: false }
+        }
+    );
+    expect(ast).toMatchSnapshot();
+  });
 });

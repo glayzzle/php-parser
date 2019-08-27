@@ -47,4 +47,10 @@ describe("new", function() {
   it("static", function() {
     expect(parser.parseEval('new static();')).toMatchSnapshot();
   });
+  it("with arguments", function() {
+    expect(parser.parseEval('new Foo("constructor", "bar");')).toMatchSnapshot();
+  });
+  it("trailing comma", function() {
+    expect(parser.parseEval('new Foo("constructor", "bar",);')).toMatchSnapshot();
+  });
 });

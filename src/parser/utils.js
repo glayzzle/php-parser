@@ -40,7 +40,6 @@ module.exports = {
         break;
       }
       if (this.next().token == ")" && this.php73) {
-        result.push(this.node("noop")());
         break;
       }
     } while (this.token != this.EOF);
@@ -65,7 +64,10 @@ module.exports = {
 
     if (typeof item === "function") {
       do {
-        result.push(item.apply(this, []));
+        const itemResult = item.apply(this, []);
+        if (itemResult) {
+          result.push(itemResult);
+        }
         if (this.token != separator) {
           break;
         }
