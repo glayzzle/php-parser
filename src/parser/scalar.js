@@ -96,11 +96,11 @@ module.exports = {
               value = value.substring(0, value.length - 1);
             }
             this.expect(this.tok.T_ENCAPSED_AND_WHITESPACE) && this.next();
+            this.expect(this.tok.T_END_HEREDOC) && this.next();
             const raw = this.lexer._input.substring(
               start,
-              this.lexer.yylloc.last_offset
+              this.lexer.yylloc.first_offset
             );
-            this.expect(this.tok.T_END_HEREDOC) && this.next();
             node = node(
               value,
               raw,
@@ -266,6 +266,7 @@ module.exports = {
    * Reads an encapsed string
    */
   read_encapsed_string: function(expect, isBinary = false) {
+    const labelStart = this.lexer.yylloc.first_offset;
     let node = this.node("encapsed");
     this.next();
     const start = this.lexer.yylloc.prev_offset - (isBinary ? 1 : 0);
@@ -284,13 +285,12 @@ module.exports = {
     while (this.token !== expect && this.token !== this.EOF) {
       value.push(this.read_encapsed_string_item(true));
     }
-
     this.expect(expect) && this.next();
-    node = node(
-      value,
-      this.lexer._input.substring(start - 1, this.lexer.yylloc.first_offset),
-      type
+    const raw = this.lexer._input.substring(
+      type === "heredoc" ? labelStart : start - 1,
+      this.lexer.yylloc.first_offset
     );
+    node = node(value, raw, type);
 
     if (expect === this.tok.T_END_HEREDOC) {
       node.label = this.lexer.heredoc_label;
