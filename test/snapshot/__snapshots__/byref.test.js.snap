@@ -12,25 +12,21 @@ Program {
           "name": "a",
         },
         "operator": "=",
-        "right": ByRef {
-          "kind": "byref",
-          "what": Call {
-            "arguments": Array [
-              ByRef {
-                "kind": "byref",
-                "what": Variable {
-                  "curly": false,
-                  "kind": "variable",
-                  "name": "b",
-                },
-              },
-            ],
-            "kind": "call",
-            "what": ClassReference {
-              "kind": "classreference",
-              "name": "foo",
-              "resolution": "uqn",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "byref": true,
+              "curly": false,
+              "kind": "variable",
+              "name": "b",
             },
+          ],
+          "byref": true,
+          "kind": "call",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "foo",
+            "resolution": "uqn",
           },
         },
       },
@@ -91,16 +87,14 @@ Program {
           "name": "a",
         },
         "operator": "=",
-        "right": ByRef {
-          "kind": "byref",
-          "what": New {
-            "arguments": Array [],
-            "kind": "new",
-            "what": ClassReference {
-              "kind": "classreference",
-              "name": "foo",
-              "resolution": "uqn",
-            },
+        "right": New {
+          "arguments": Array [],
+          "byref": true,
+          "kind": "new",
+          "what": ClassReference {
+            "kind": "classreference",
+            "name": "foo",
+            "resolution": "uqn",
           },
         },
       },
@@ -118,13 +112,11 @@ Program {
     ExpressionStatement {
       "expression": OffsetLookup {
         "kind": "offsetlookup",
-        "offset": ByRef {
-          "kind": "byref",
-          "what": Variable {
-            "curly": false,
-            "kind": "variable",
-            "name": "bar",
-          },
+        "offset": Variable {
+          "byref": true,
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
         },
         "what": Variable {
           "curly": false,
@@ -144,13 +136,11 @@ exports[`byref return statement 1`] = `
 Program {
   "children": Array [
     Return {
-      "expr": ByRef {
-        "kind": "byref",
-        "what": Variable {
-          "curly": false,
-          "kind": "variable",
-          "name": "foo",
-        },
+      "expr": Variable {
+        "byref": true,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
       },
       "kind": "return",
     },
@@ -164,20 +154,18 @@ exports[`byref static lookup 1`] = `
 Program {
   "children": Array [
     ExpressionStatement {
-      "expression": ByRef {
-        "kind": "byref",
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": Variable {
-            "curly": false,
-            "kind": "variable",
-            "name": "bar",
-          },
-          "what": ClassReference {
-            "kind": "classreference",
-            "name": "foo",
-            "resolution": "uqn",
-          },
+      "expression": StaticLookup {
+        "byref": true,
+        "kind": "staticlookup",
+        "offset": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "foo",
+          "resolution": "uqn",
         },
       },
       "kind": "expressionstatement",
@@ -192,13 +180,11 @@ exports[`byref variable 1`] = `
 Program {
   "children": Array [
     ExpressionStatement {
-      "expression": ByRef {
-        "kind": "byref",
-        "what": Variable {
-          "curly": false,
-          "kind": "variable",
-          "name": "foo",
-        },
+      "expression": Variable {
+        "byref": true,
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
       },
       "kind": "expressionstatement",
     },

@@ -106,6 +106,20 @@ module.exports = {
   },
 
   /**
+   * Reads the byref token and assign it to the specified node
+   * @param {*} cb
+   */
+  read_byref: function(cb) {
+    let byref = this.node("byref");
+    this.next();
+    byref = byref();
+    const result = cb();
+    this.ast.swapLocations(result, byref, result, this);
+    result.byref = true;
+    return result;
+  },
+
+  /**
    * Reads a list of variables declarations
    *
    * ```ebnf

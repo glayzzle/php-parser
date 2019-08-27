@@ -71,7 +71,7 @@ module.exports = {
       return this.node("noop")();
     }
     if (this.token === "&") {
-      return this.node("byref")(this.next().read_variable(true, false));
+      return this.read_byref(this.read_variable.bind(this, true, false));
     } else {
       const entry = this.node(ArrayEntry);
       const expr = this.read_expr();
@@ -79,7 +79,7 @@ module.exports = {
         if (this.next().token === "&") {
           return entry(
             expr,
-            this.node("byref")(this.next().read_variable(true, false))
+            this.read_byref(this.read_variable.bind(this, true, false))
           );
         } else {
           return entry(expr, this.read_expr());

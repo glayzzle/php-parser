@@ -27,7 +27,9 @@ module.exports = {
 
     // check the byref flag
     if (this.token === "&") {
-      return this.node("byref")(this.next().read_variable(read_only, encapsed));
+      return this.read_byref(
+        this.read_variable.bind(this, read_only, encapsed)
+      );
     }
 
     // reads the entry point
