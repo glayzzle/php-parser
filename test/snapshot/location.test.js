@@ -312,9 +312,29 @@ describe("Test locations", function() {
       })
     ).toMatchSnapshot();
   });
+  it("goto #2", function() {
+    expect(
+      parser.parseEval("goto longName;", {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      })
+    ).toMatchSnapshot();
+  });
   it("label", function() {
     expect(
       parser.parseEval('a: echo "something";', {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      })
+    ).toMatchSnapshot();
+  });
+  it("label #2", function() {
+    expect(
+      parser.parseEval('longName: echo "something";', {
         ast: {
           withPositions: true,
           withSource: true

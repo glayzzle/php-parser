@@ -353,11 +353,15 @@ module.exports = {
       case this.tok.T_STRING: {
         const result = this.node();
         const current = [this.token, this.lexer.getState()];
-        const label = this.text();
+        const labelNameText = this.text();
+        let labelName = this.node("identifier");
         // AST : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L457
         if (this.next().token === ":") {
+          labelName = labelName(labelNameText);
           this.next();
-          return result("label", label);
+          return result("label", labelName);
+        } else {
+          labelName.destroy();
         }
 
         // default fallback expr / T_STRING '::' (etc...)
@@ -371,12 +375,15 @@ module.exports = {
 
       case this.tok.T_GOTO: {
         const result = this.node("goto");
-        let label = null;
+        let labelName = null;
         if (this.next().expect(this.tok.T_STRING)) {
-          label = this.text();
-          this.next().expectEndOfStatement();
+          labelName = this.node("identifier");
+          const name = this.text();
+          this.next();
+          labelName = labelName(name);
+          this.expectEndOfStatement();
         }
-        return result(label);
+        return result(labelName);
       }
 
       default: {
