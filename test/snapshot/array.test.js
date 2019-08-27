@@ -62,4 +62,6 @@ describe('Array without keys', () => {
   it("single and empty (short form)", () => {
     expect(parser.parseEval("[]")).toMatchSnapshot();
   });
+
+
 });
