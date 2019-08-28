@@ -126,33 +126,6 @@ module.exports = {
         if (is_static_lookup && this.token === this.tok.T_OBJECT_OPERATOR) {
           this.error();
         }
-
-        if (this.token === this.tok.T_VARIABLE) {
-          const inner = this.node("variable");
-          name = this.text().substring(1);
-          this.next();
-          what = this.node("encapsed")(
-            [what, inner(name, false)],
-            null,
-            "offset"
-          );
-          if (what.loc && what.value[0].loc) {
-            what.loc.start = what.value[0].loc.start;
-          }
-        } else if (this.token === "{") {
-          // EncapsedPart
-          const part = this.node("encapsedpart");
-          const expr = this.next().read_expr();
-          this.expect("}") && this.next();
-          what = this.node("encapsed")(
-            [what, part(expr, true)],
-            null,
-            "offset"
-          );
-          if (what.loc && what.value[0].loc) {
-            what.loc.start = what.value[0].loc.start;
-          }
-        }
         break;
       case this.tok.T_VARIABLE:
         what = this.node("variable");
@@ -209,23 +182,30 @@ module.exports = {
           }
           break;
         case "[":
+        case "{": {
+          const backet = this.token;
+          const isSquareBracket = backet === "[";
           node = this.node("offsetlookup");
           this.next();
           offset = false;
           if (encapsed) {
             offset = this.read_encaps_var_offset();
-            this.expect("]") && this.next();
+            this.expect(isSquareBracket ? "]" : "}") && this.next();
           } else {
+            const isCallableVariable = isSquareBracket
+              ? this.token !== "]"
+              : this.token !== "}";
             // callable_variable : https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1122
-            if (this.token !== "]") {
+            if (isCallableVariable) {
               offset = this.read_expr();
-              this.expect("]") && this.next();
+              this.expect(isSquareBracket ? "]" : "}") && this.next();
             } else {
               this.next();
             }
           }
           result = node(result, offset);
           break;
+        }
         case this.tok.T_DOUBLE_COLON:
           // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
           if (

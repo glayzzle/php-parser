@@ -116,7 +116,7 @@ module.exports = {
     const result = cb();
     if (result) {
       this.ast.swapLocations(result, byref, result, this);
-      result.byref = true;  
+      result.byref = true;
     }
     return result;
   },
