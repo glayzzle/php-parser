@@ -17,20 +17,17 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-$foo = new Foo(
-  'constructor',
-  'bar',
-);
+$bar = &$foo;
 `, { 
     parser: {
       debug: true,
       php73: true,
       extractDoc: true
     },
-    /*ast: {
+    ast: {
       withPositions: true,
       withSource: true
-    }*/
+    }
   }
 );
 console.log(

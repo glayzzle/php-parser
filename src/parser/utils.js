@@ -112,10 +112,12 @@ module.exports = {
   read_byref: function(cb) {
     let byref = this.node("byref");
     this.next();
-    byref = byref();
+    byref = byref(null);
     const result = cb();
-    this.ast.swapLocations(result, byref, result, this);
-    result.byref = true;
+    if (result) {
+      this.ast.swapLocations(result, byref, result, this);
+      result.byref = true;  
+    }
     return result;
   },
 
