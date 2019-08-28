@@ -94,5 +94,13 @@ describe("Test graceful mode", function() {
     it("should fail !", function() {
       expect(test.parseEval("new Foo::{call()}();")).toMatchSnapshot();
     });
+
+    it("should fail with '{' and ']'", function() {
+      expect(test.parseEval("$obj{$foo];")).toMatchSnapshot();
+    });
+
+    it("should fail with '[' and '}'", function() {
+      expect(test.parseEval("$obj[$bar};")).toMatchSnapshot();
+    });
   });
 });

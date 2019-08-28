@@ -114,44 +114,37 @@ Program {
             "kind": "identifier",
             "name": "foo",
           },
-          "what": PropertyLookup {
-            "kind": "propertylookup",
-            "offset": Encapsed {
-              "kind": "encapsed",
-              "type": "offset",
-              "value": Array [
-                Identifier {
-                  "kind": "identifier",
-                  "name": "bar",
-                },
-                EncapsedPart {
-                  "curly": true,
-                  "expression": Variable {
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "baz",
+            },
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "what": Call {
+                "arguments": Array [
+                  Variable {
                     "curly": false,
                     "kind": "variable",
-                    "name": "baz",
+                    "name": "foo",
                   },
-                  "kind": "encapsedpart",
-                },
-              ],
-            },
-            "what": Call {
-              "arguments": Array [
-                Variable {
-                  "curly": false,
-                  "kind": "variable",
-                  "name": "foo",
-                },
-              ],
-              "kind": "call",
-              "what": Post {
-                "kind": "post",
-                "parenthesizedExpression": true,
-                "type": "+",
-                "what": Variable {
-                  "curly": false,
-                  "kind": "variable",
-                  "name": "a",
+                ],
+                "kind": "call",
+                "what": Post {
+                  "kind": "post",
+                  "parenthesizedExpression": true,
+                  "type": "+",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
                 },
               },
             },
