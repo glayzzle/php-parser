@@ -46,4 +46,7 @@ describe('assign', () => {
   it('>>=', () => {
     expect(parser.parseEval("$var >>= $var;")).toMatchSnapshot();
   });
+  it('with ref', () => {
+    expect(parser.parseEval("$bar = &$foo;")).toMatchSnapshot();
+  });
 });
