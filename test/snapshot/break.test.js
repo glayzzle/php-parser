@@ -13,4 +13,11 @@ describe('break', () => {
   it('argument 2', () => {
     expect(parser.parseEval('break 2;')).toMatchSnapshot();
   });
+  it('with parens', () => {
+    expect(parser.parseEval('break (1);')).toMatchSnapshot();
+  });
+  // Deprecated since 5.4.0
+  it('with expression', () => {
+    expect(parser.parseEval('break $var;')).toMatchSnapshot();
+  });
 });
