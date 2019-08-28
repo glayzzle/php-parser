@@ -6,16 +6,14 @@
 "use strict";
 
 const specialChar = {
-  "\\r": "\r",
-  "\\n": "\n",
-  "\\t": "\t",
-  "\\v": String.fromCharCode(11),
-  "\\e": String.fromCharCode(27),
-  "\\f": String.fromCharCode(12),
-  "\\\\": "\\",
-  "\\$": "$",
-  '\\"': '"',
-  "\\'": "'"
+  "\\": "\\",
+  $: "$",
+  n: "\n",
+  r: "\r",
+  t: "\t",
+  f: String.fromCharCode(12),
+  v: String.fromCharCode(11),
+  e: String.fromCharCode(27)
 };
 
 module.exports = {
@@ -25,13 +23,24 @@ module.exports = {
   resolve_special_chars: function(text, doubleQuote) {
     if (!doubleQuote) {
       // single quote fix
-      return text.replace(/\\['\\]/g, function(seq) {
-        return specialChar[seq];
-      });
+      return text.replace(/\\\\/g, "\\").replace(/\\'/g, "'");
     }
-    return text.replace(/\\[rntvef"'\\$]/g, function(seq) {
-      return specialChar[seq];
-    });
+    return text
+      .replace(/\\"/, '"')
+      .replace(
+        /\\([\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3}|u{([0-9a-fA-F]+)})/g,
+        ($match, p1, p2) => {
+          if (specialChar[p1]) {
+            return specialChar[p1];
+          } else if ("x" === p1[0] || "X" === p1[0]) {
+            return String.fromCodePoint(parseInt(p1.substr(1), 16));
+          } else if ("u" === p1[0]) {
+            return String.fromCodePoint(parseInt(p2, 16));
+          } else {
+            return String.fromCodePoint(parseInt(p1, 8));
+          }
+        }
+      );
   },
   /**
    * ```ebnf
@@ -59,12 +68,13 @@ module.exports = {
           }
           const isDoubleQuote = text[offset] === '"';
           this.next();
+          const textValue = this.resolve_special_chars(
+            text.substring(offset + 1, text.length - 1),
+            isDoubleQuote
+          );
           value = value(
             isDoubleQuote,
-            this.resolve_special_chars(
-              text.substring(offset + 1, text.length - 1),
-              isDoubleQuote
-            ),
+            textValue,
             offset === 1, // unicode flag
             text
           );
