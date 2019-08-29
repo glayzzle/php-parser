@@ -2005,7 +2005,7 @@ string:
 	RETURN_TOKEN(T_NS_C);
 }
 
-<SHEBANG>"#!" .* {NEWLINE} {
+<SHEBANG>"#!".*{NEWLINE} {
 	CG(zend_lineno)++;
 	BEGIN(INITIAL);
 	goto restart;
