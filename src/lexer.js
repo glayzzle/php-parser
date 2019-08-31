@@ -30,6 +30,7 @@ const lexer = function(engine) {
   this.asp_tags = false;
   this.short_tags = false;
   this.php7 = true;
+  this.php73 = true;
   this.yyprevcol = 0;
   this.keywords = {
     __class__: this.tok.T_CLASS_C,

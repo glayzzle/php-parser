@@ -264,10 +264,6 @@ parser.prototype.parse = function(code, filename) {
   } else {
     this._tokens = null;
   }
-  if (!this.php7) {
-    this.php73 = false;
-    this.php74 = false;
-  }
   this._docIndex = 0;
   this._lastNode = null;
   this.lexer.setInput(code);
