@@ -126,8 +126,70 @@ module.exports = {
   /**
    * Reads isset variables
    */
-  read_isset_variables: function () {
+  read_isset_variables: function() {
     return this.read_function_list(this.read_isset_variable, ",");
+  },
+
+  /*
+   * Reads internal PHP functions
+   */
+  read_internal_functions_in_yacc: function() {
+    let result = null;
+    switch (this.token) {
+      case this.tok.T_ISSET:
+        {
+          result = this.node("isset");
+          if (this.next().expect("(")) {
+            this.next();
+          }
+          const variables = this.read_isset_variables();
+          if (this.expect(")")) {
+            this.next();
+          }
+          result = result(variables);
+        }
+        break;
+      case this.tok.T_EMPTY:
+        {
+          result = this.node("empty");
+          if (this.next().expect("(")) {
+            this.next();
+          }
+          const expression = this.read_expr();
+          if (this.expect(")")) {
+            this.next();
+          }
+          result = result(expression);
+        }
+        break;
+      case this.tok.T_INCLUDE:
+        result = this.node("include")(false, false, this.next().read_expr());
+        break;
+      case this.tok.T_INCLUDE_ONCE:
+        result = this.node("include")(true, false, this.next().read_expr());
+        break;
+      case this.tok.T_EVAL:
+        {
+          result = this.node("eval");
+          if (this.next().expect("(")) {
+            this.next();
+          }
+          const expr = this.read_expr();
+          if (this.expect(")")) {
+            this.next();
+          }
+          result = result(expr);
+        }
+        break;
+      case this.tok.T_REQUIRE:
+        result = this.node("include")(false, true, this.next().read_expr());
+        break;
+      case this.tok.T_REQUIRE_ONCE:
+        result = this.node("include")(true, true, this.next().read_expr());
+        break;
+    }
+
+    return result;
   },
 
   /**
@@ -224,51 +286,14 @@ module.exports = {
       case this.tok.T_NEW:
         return this.read_new_expr();
 
-      case this.tok.T_ISSET: {
-        result = this.node("isset");
-        if (this.next().expect("(")) {
-          this.next();
-        }
-        const variables = this.read_isset_variables();
-        if (this.expect(")")) {
-          this.next();
-        }
-        return result(variables);
-      }
-      case this.tok.T_EMPTY: {
-        result = this.node("empty");
-        if (this.next().expect("(")) {
-          this.next();
-        }
-        const expression = this.read_expr();
-        if (this.expect(")")) {
-          this.next();
-        }
-        return result(expression);
-      }
+      case this.tok.T_ISSET:
+      case this.tok.T_EMPTY:
       case this.tok.T_INCLUDE:
-        return this.node("include")(false, false, this.next().read_expr());
-
       case this.tok.T_INCLUDE_ONCE:
-        return this.node("include")(true, false, this.next().read_expr());
-
-      case this.tok.T_REQUIRE:
-        return this.node("include")(false, true, this.next().read_expr());
-
-      case this.tok.T_REQUIRE_ONCE:
-        return this.node("include")(true, true, this.next().read_expr());
-
       case this.tok.T_EVAL:
-        result = this.node("eval");
-        if (this.next().expect("(")) {
-          this.next();
-        }
-        expr = this.read_expr();
-        if (this.expect(")")) {
-          this.next();
-        }
-        return result(expr);
-
+      case this.tok.T_REQUIRE:
+      case this.tok.T_REQUIRE_ONCE:
+        return this.read_internal_functions_in_yacc();
       case this.tok.T_INT_CAST:
         return this.read_expr_cast("int");
 
