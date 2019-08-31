@@ -10,4 +10,10 @@ describe("isset", function() {
   it("assign", function() {
     expect(parser.parseEval('$var = isset($var);')).toMatchSnapshot();
   });
+  it("trailing comma", function() {
+    expect(parser.parseEval('isset($foo,);')).toMatchSnapshot();
+  });
+  it("trailing comma #2", function() {
+    expect(parser.parseEval('isset($foo, $bar,);')).toMatchSnapshot();
+  });
 });

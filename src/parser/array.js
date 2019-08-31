@@ -64,10 +64,12 @@ module.exports = {
    */
   read_array_pair: function(shortForm) {
     if (
-      this.token === "," ||
       (!shortForm && this.token === ")") ||
       (shortForm && this.token === "]")
     ) {
+      return;
+    }
+    if (this.token === ",") {
       return this.node("noop")();
     }
     if (this.token === "&") {

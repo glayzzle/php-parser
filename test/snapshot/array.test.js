@@ -63,5 +63,43 @@ describe('Array without keys', () => {
     expect(parser.parseEval("[]")).toMatchSnapshot();
   });
 
+  it("array without trailing commas", () => {
+    expect(parser.parseEval("['foo', 'bar']")).toMatchSnapshot();
+  });
 
+  it("array without trailing commas", () => {
+    expect(parser.parseEval("['foo', 'bar']")).toMatchSnapshot();
+  });
+
+  it("array with trailing commas", () => {
+    expect(parser.parseEval("['foo', 'bar',]")).toMatchSnapshot();
+  });
+
+  it("array with trailing commas #2", () => {
+    expect(parser.parseEval("['foo', 'bar'   ,]")).toMatchSnapshot();
+  });
+
+  it("array with trailing commas #3", () => {
+    expect(parser.parseEval("['foo', 'bar'   ,   ]")).toMatchSnapshot();
+  });
+
+  it("array with multiple trailing commas", () => {
+    expect(parser.parseEval("['foo', 'bar',,]")).toMatchSnapshot();
+  });
+
+  it("array with multiple trailing commas #2", () => {
+    expect(parser.parseEval("['foo', 'bar',,,,,]")).toMatchSnapshot();
+  });
+
+  it("array with empty values", () => {
+    expect(parser.parseEval("[,,,'foo',,, 'bar',,,'baz']")).toMatchSnapshot();
+  });
+
+  it("array with empty values #2", () => {
+    expect(parser.parseEval("[,,,'foo',,, 'bar',,,'baz',]")).toMatchSnapshot();
+  });
+
+  it("array with empty values #3", () => {
+    expect(parser.parseEval("[,,,'foo',,, 'bar',,,'baz',,]")).toMatchSnapshot();
+  });
 });
