@@ -1,9 +1,10 @@
 const parser = require("../main");
 
 describe("Test strings", function() {
-
   it("fix #251", function() {
-    expect(parser.parseEval('$var = "string ${juices[\'FOO\']} string";')).toMatchSnapshot();
+    expect(
+      parser.parseEval("$var = \"string ${juices['FOO']} string\";")
+    ).toMatchSnapshot();
   });
 
   it("fix #144", function() {
@@ -389,4 +390,49 @@ describe("Test strings", function() {
   it("single (2)", function() {
     expect(parser.parseEval('"string";')).toMatchSnapshot();
   });
+  it("single quotes", function() {
+    expect(
+      parser.parseEval(`
+$var = 'foo';
+$var = '\\'';
+$var = '\\'\\'\\'';
+$var = '\\'foo';
+$var = 'foo\\'';
+$var = 'foo\\'foo';
+$var = '\\\\\\'';
+`)
+    ).toMatchSnapshot();
+  });
+    it("double quotes", function() {
+        expect(
+            parser.parseEval(`
+$var = "\\n";
+$var = "\\r";
+$var = "\\t";
+$var = "\\v";
+$var = "\\e";
+$var = "\\f";
+$var = "\\\\";
+$var = "\\$";
+$var = "\\"";
+$var = "\\141";
+$var = "\\7FF";
+$var = "\\x61";
+$var = "\\x0Z";
+$var = "\\xZZ";
+$var = "\\u{0061}";
+$var = "\\u{}";
+$var = "\\u{0FFF}";
+$var = "\\u{0ZZZ}";
+$var = "cat\\u{1F639}";
+$var = "\\u{D83D}\\u{DCA9}";
+$var = "💩";
+$var = "\\u{ZZZZ}\\u{ZZZZ}";
+$var = "🌟";
+$var = "'";
+$var = "\\'";
+$var = "\\n | \\r | \\t | \\v | \\e | \\f | \\\\ | \\$ | \\" | \\141 | \\x61 | \\u{0061}";
+`)
+        ).toMatchSnapshot();
+    });
 });

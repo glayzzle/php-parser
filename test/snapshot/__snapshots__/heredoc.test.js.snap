@@ -1,0 +1,528 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`heredoc empty 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "TEST",
+          "raw": "<<<TEST
+TEST",
+          "type": "heredoc",
+          "value": Array [],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc inside call 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "label": "EOD",
+                "raw": "<<<EOD
+foobar!
+EOD
+",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "foobar!
+",
+                      "unicode": false,
+                      "value": "foobar!
+",
+                    },
+                    "kind": "encapsedpart",
+                  },
+                ],
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc inside class 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [
+        ClassConstant {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "BAR",
+              },
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "FOOBAR",
+                "raw": "<<<FOOBAR
+Constant example
+FOOBAR",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Constant example
+",
+                      "unicode": false,
+                      "value": "Constant example
+",
+                    },
+                    "kind": "encapsedpart",
+                  },
+                ],
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "baz",
+              },
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "FOOBAR",
+                "raw": "<<<FOOBAR
+Property example
+FOOBAR",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Property example
+",
+                      "unicode": false,
+                      "value": "Property example
+",
+                    },
+                    "kind": "encapsedpart",
+                  },
+                ],
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc inside function 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              StaticVariable {
+                "defaultValue": Encapsed {
+                  "kind": "encapsed",
+                  "label": "LABEL",
+                  "raw": "<<<LABEL
+Nothing in here...
+LABEL",
+                  "type": "heredoc",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "Nothing in here...
+",
+                        "unicode": false,
+                        "value": "Nothing in here...
+",
+                      },
+                      "kind": "encapsedpart",
+                    },
+                  ],
+                },
+                "kind": "staticvariable",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "bar",
+                },
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc only newline 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "TEST",
+          "raw": "<<<TEST
+
+TEST",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "
+",
+                "unicode": false,
+                "value": "
+",
+              },
+              "kind": "encapsedpart",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc simple 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "EOD",
+          "raw": "<<<EOD
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Example of string
+spanning multiple lines
+using heredoc syntax.
+",
+                "unicode": false,
+                "value": "Example of string
+spanning multiple lines
+using heredoc syntax.
+",
+              },
+              "kind": "encapsedpart",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc with double quotes 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "EOD",
+          "raw": "<<<\\"EOD\\"
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Example of string
+spanning multiple lines
+using heredoc syntax.
+",
+                "unicode": false,
+                "value": "Example of string
+spanning multiple lines
+using heredoc syntax.
+",
+              },
+              "kind": "encapsedpart",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc with space between <<< and label 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "EOD",
+          "raw": "<<<     EOD
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Example of string
+spanning multiple lines
+using heredoc syntax.
+",
+                "unicode": false,
+                "value": "Example of string
+spanning multiple lines
+using heredoc syntax.
+",
+              },
+              "kind": "encapsedpart",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc with variables 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+My name is \\"$name\\". I am printing some $foo->foo.
+Now, I am printing some {$foo->bar[1]}.
+This should print a capital 'A': A
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "My name is \\"",
+                "unicode": false,
+                "value": "My name is \\"",
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "name",
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\". I am printing some ",
+                "unicode": false,
+                "value": "\\". I am printing some ",
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "foo",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "foo",
+                },
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": ".
+Now, I am printing some ",
+                "unicode": false,
+                "value": ".
+Now, I am printing some ",
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": true,
+              "expression": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "bar",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "foo",
+                  },
+                },
+              },
+              "kind": "encapsedpart",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": ".
+This should print a capital 'A': A
+",
+                "unicode": false,
+                "value": ".
+This should print a capital 'A': A
+",
+              },
+              "kind": "encapsedpart",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

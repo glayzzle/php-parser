@@ -108,6 +108,22 @@ module.exports = {
   },
 
   /**
+   * Reads the byref token and assign it to the specified node
+   * @param {*} cb
+   */
+  read_byref: function(cb) {
+    let byref = this.node("byref");
+    this.next();
+    byref = byref(null);
+    const result = cb();
+    if (result) {
+      this.ast.swapLocations(result, byref, result, this);
+      result.byref = true;
+    }
+    return result;
+  },
+
+  /**
    * Reads a list of variables declarations
    *
    * ```ebnf
@@ -140,5 +156,38 @@ module.exports = {
         return variable;
       }
     }, ",");
+  },
+
+  /*
+   * Reads class extends
+   */
+  read_extends_from: function() {
+    if (this.token === this.tok.T_EXTENDS) {
+      return this.next().read_namespace_name();
+    }
+
+    return null;
+  },
+
+  /*
+   * Reads interface extends list
+   */
+  read_interface_extends_list: function() {
+    if (this.token === this.tok.T_EXTENDS) {
+      return this.next().read_name_list();
+    }
+
+    return null;
+  },
+
+  /*
+   * Reads implements list
+   */
+  read_implements_list: function() {
+    if (this.token === this.tok.T_IMPLEMENTS) {
+      return this.next().read_name_list();
+    }
+
+    return null;
   }
 };

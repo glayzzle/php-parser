@@ -145,7 +145,7 @@ module.exports = {
    */
   read_lexical_var: function() {
     if (this.token === "&") {
-      return this.node("byref")(this.next().read_lexical_var());
+      return this.read_byref(this.read_lexical_var.bind(this));
     }
     const result = this.node("variable");
     this.expect(this.tok.T_VARIABLE);

@@ -114,44 +114,37 @@ Program {
             "kind": "identifier",
             "name": "foo",
           },
-          "what": PropertyLookup {
-            "kind": "propertylookup",
-            "offset": Encapsed {
-              "kind": "encapsed",
-              "type": "offset",
-              "value": Array [
-                Identifier {
-                  "kind": "identifier",
-                  "name": "bar",
-                },
-                EncapsedPart {
-                  "curly": true,
-                  "expression": Variable {
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "baz",
+            },
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "what": Call {
+                "arguments": Array [
+                  Variable {
                     "curly": false,
                     "kind": "variable",
-                    "name": "baz",
+                    "name": "foo",
                   },
-                  "kind": "encapsedpart",
-                },
-              ],
-            },
-            "what": Call {
-              "arguments": Array [
-                Variable {
-                  "curly": false,
-                  "kind": "variable",
-                  "name": "foo",
-                },
-              ],
-              "kind": "call",
-              "what": Post {
-                "kind": "post",
-                "parenthesizedExpression": true,
-                "type": "+",
-                "what": Variable {
-                  "curly": false,
-                  "kind": "variable",
-                  "name": "a",
+                ],
+                "kind": "call",
+                "what": Post {
+                  "kind": "post",
+                  "parenthesizedExpression": true,
+                  "type": "+",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
                 },
               },
             },
@@ -505,13 +498,10 @@ Program {
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
-        "left": Identifier {
-          "kind": "identifier",
-          "name": ClassReference {
-            "kind": "classreference",
-            "name": "a",
-            "resolution": "uqn",
-          },
+        "left": ClassReference {
+          "kind": "classreference",
+          "name": "a",
+          "resolution": "uqn",
         },
         "operator": "=",
         "right": Number {
@@ -522,15 +512,7 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [
-    Error {
-      "expected": "VARIABLE",
-      "kind": "error",
-      "line": 1,
-      "message": "Parse Error : syntax error, unexpected '=' on line 1",
-      "token": "'='",
-    },
-  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;
@@ -1259,27 +1241,27 @@ Program {
   "children": Array [
     ExpressionStatement {
       "expression": Exit {
-        "kind": "exit",
-        "status": Number {
+        "expression": Number {
           "kind": "number",
           "value": "1",
         },
+        "kind": "exit",
         "useDie": false,
       },
       "kind": "expressionstatement",
     },
     ExpressionStatement {
       "expression": Exit {
+        "expression": null,
         "kind": "exit",
-        "status": null,
         "useDie": true,
       },
       "kind": "expressionstatement",
     },
     ExpressionStatement {
       "expression": Exit {
+        "expression": null,
         "kind": "exit",
-        "status": null,
         "useDie": false,
       },
       "kind": "expressionstatement",

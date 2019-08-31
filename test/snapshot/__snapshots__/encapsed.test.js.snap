@@ -64,6 +64,41 @@ Program {
 }
 `;
 
+exports[`encapsed negative offset in encapsed var offset 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"$var[-1]\\"",
+        "type": "string",
+        "value": Array [
+          EncapsedPart {
+            "curly": false,
+            "expression": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": -1,
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "var",
+              },
+            },
+            "kind": "encapsedpart",
+          },
+        ],
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`encapsed newline before closing curly (complex syntax) 1`] = `
 Program {
   "children": Array [
@@ -440,13 +475,10 @@ Program {
               },
               "what": OffsetLookup {
                 "kind": "offsetlookup",
-                "offset": Identifier {
-                  "kind": "identifier",
-                  "name": ClassReference {
-                    "kind": "classreference",
-                    "name": "foo",
-                    "resolution": "uqn",
-                  },
+                "offset": ClassReference {
+                  "kind": "classreference",
+                  "name": "foo",
+                  "resolution": "uqn",
                 },
                 "what": Variable {
                   "curly": false,
@@ -532,6 +564,41 @@ Program {
               "raw": " string",
               "unicode": false,
               "value": " string",
+            },
+            "kind": "encapsedpart",
+          },
+        ],
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`encapsed positive offset in encapsed var offset 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"$var[1]\\"",
+        "type": "string",
+        "value": Array [
+          EncapsedPart {
+            "curly": false,
+            "expression": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "var",
+              },
             },
             "kind": "encapsedpart",
           },
@@ -1303,6 +1370,77 @@ Program {
               "raw": " string",
               "unicode": false,
               "value": " string",
+            },
+            "kind": "encapsedpart",
+          },
+        ],
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`encapsed string offset in encapsed var offset 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"$var[var]\\"",
+        "type": "string",
+        "value": Array [
+          EncapsedPart {
+            "curly": false,
+            "expression": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "var",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "var",
+              },
+            },
+            "kind": "encapsedpart",
+          },
+        ],
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`encapsed string offset in encapsed var offset 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\\"$var[$var]\\"",
+        "type": "string",
+        "value": Array [
+          EncapsedPart {
+            "curly": false,
+            "expression": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "var",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "var",
+              },
             },
             "kind": "encapsedpart",
           },

@@ -207,13 +207,10 @@ Program {
               "kind": "identifier",
               "name": "foo",
             },
-            "what": Identifier {
-              "kind": "identifier",
-              "name": ClassReference {
-                "kind": "classreference",
-                "name": "this",
-                "resolution": "uqn",
-              },
+            "what": ClassReference {
+              "kind": "classreference",
+              "name": "this",
+              "resolution": "uqn",
             },
           },
         },
@@ -799,13 +796,11 @@ Program {
           "name": "b",
         },
         "operator": "=",
-        "right": ByRef {
-          "kind": "byref",
-          "what": Variable {
-            "curly": false,
-            "kind": "variable",
-            "name": "c",
-          },
+        "right": Variable {
+          "byref": true,
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
         },
       },
       "kind": "expressionstatement",
@@ -1282,31 +1277,24 @@ Program {
       "kind": "expressionstatement",
     },
     ExpressionStatement {
-      "expression": PropertyLookup {
-        "kind": "propertylookup",
-        "offset": Encapsed {
-          "kind": "encapsed",
-          "type": "offset",
-          "value": Array [
-            Identifier {
-              "kind": "identifier",
-              "name": "foo_",
-            },
-            EncapsedPart {
-              "curly": true,
-              "expression": Variable {
-                "curly": false,
-                "kind": "variable",
-                "name": "property",
-              },
-              "kind": "encapsedpart",
-            },
-          ],
-        },
-        "what": Variable {
+      "expression": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Variable {
           "curly": false,
           "kind": "variable",
-          "name": "bar",
+          "name": "property",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "foo_",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bar",
+          },
         },
       },
       "kind": "expressionstatement",

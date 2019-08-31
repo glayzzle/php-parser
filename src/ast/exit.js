@@ -12,16 +12,16 @@ const KIND = "exit";
  * Defines an exit / die call
  * @constructor Exit
  * @extends {Expression}
- * @property {Node|null} status
+ * @property {Node|null} expression
  * @property {Boolean} useDie
  */
 module.exports = Expression.extends(KIND, function Exit(
-  status,
+  expression,
   useDie,
   docs,
   location
 ) {
   Expression.apply(this, [KIND, docs, location]);
-  this.status = status;
+  this.expression = expression;
   this.useDie = useDie;
 });

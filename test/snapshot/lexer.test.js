@@ -11,12 +11,13 @@ describe("Test lexer", function() {
     });
 
     it("parse short echo", function() {
-      expect(parser.parseCode("<?= $a ?>", {
-        lexer: {
-          short_tags: true
-        }
-      })).toMatchSnapshot();
+      expect(parser.parseCode("<?= $a ?>")).toMatchSnapshot();
     });
+
+    it("#263 - expect inline", function() {
+      expect(parser.parseCode("<?php$a ?>")).toMatchSnapshot();
+    });
+
 
     it("parse asp tag", function() {
       expect(parser.parseCode("<% echo $b; %>", {

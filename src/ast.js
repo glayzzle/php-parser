@@ -15,6 +15,7 @@ const Position = require("./ast/position");
  * - [Position](#position)
  * - [Node](#node)
  *   - [Noop](#noop)
+ *   - [NullKeyword](#nullkeyword)
  *   - [StaticVariable](#staticvariable)
  *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
@@ -235,6 +236,7 @@ AST.prototype.resolvePrecedence = function(result, parser) {
           result.right = result.right.left;
           this.swapLocations(result, result.left, result.right, parser);
           buffer.left = this.resolvePrecedence(result, parser);
+          this.swapLocations(buffer, buffer.left, buffer.right, parser);
           result = buffer;
         }
       } else if (result.right.kind === "retif") {
@@ -360,15 +362,12 @@ AST.prototype.prepare = function(kind, docs, parser) {
       if (self.withSource) {
         src = parser.lexer._input.substring(start.offset, parser.prev[2]);
       }
-      if (self.withPositions) {
-        location = new Location(
-          src,
-          start,
-          new Position(parser.prev[0], parser.prev[1], parser.prev[2])
-        );
-      } else {
-        location = new Location(src, null, null);
-      }
+      // if with source, need location on swapLocations function
+      location = new Location(
+        src,
+        start,
+        new Position(parser.prev[0], parser.prev[1], parser.prev[2])
+      );
       // last argument is allways the location
       args.push(location);
     }
@@ -516,6 +515,7 @@ AST.prototype.checkNodes = function() {
   require("./ast/node"),
   require("./ast/noop"),
   require("./ast/nowdoc"),
+  require("./ast/nullkeyword"),
   require("./ast/number"),
   require("./ast/offsetlookup"),
   require("./ast/operation"),

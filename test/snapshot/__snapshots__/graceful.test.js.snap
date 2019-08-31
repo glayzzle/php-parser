@@ -145,6 +145,108 @@ Program {
 }
 `;
 
+exports[`Test graceful mode to suppress errors should fail with '[' and '}' 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "obj",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "]",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '}', expecting ']' on line 1",
+      "token": "'}'",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '}', expecting ';' on line 1",
+      "token": "'}'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '}' on line 1",
+      "token": "'}'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test graceful mode to suppress errors should fail with '{' and ']' 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "obj",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "}",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ']', expecting '}' on line 1",
+      "token": "']'",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ']', expecting ';' on line 1",
+      "token": "']'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ']' on line 1",
+      "token": "']'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test graceful mode to suppress errors staticlookup 1`] = `
 Program {
   "children": Array [

@@ -281,10 +281,10 @@ module.exports = {
       case this.tok.T_EXIT: {
         const useDie = this.lexer.yytext.toLowerCase() === "die";
         result = this.node("exit");
-        let status = null;
+        let expression = null;
         if (this.next().token === "(") {
           if (this.next().token !== ")") {
-            status = this.read_expr();
+            expression = this.read_expr();
             if (this.expect(")")) {
               this.next();
             }
@@ -292,7 +292,7 @@ module.exports = {
             this.next();
           }
         }
-        return result(status, useDie);
+        return result(expression, useDie);
       }
 
       case this.tok.T_PRINT:
@@ -354,15 +354,18 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           let right;
           if (this.next().token == "&") {
-            right = this.node("byref");
-            if (this.next().token === this.tok.T_NEW) {
-              if (this.php7) {
-                this.error();
-              }
-              right = right(this.read_new_expr());
-            } else {
-              right = right(this.read_variable(false, false));
-            }
+            right = this.read_byref(
+              function() {
+                if (this.token === this.tok.T_NEW) {
+                  if (this.php7) {
+                    this.error();
+                  }
+                  return this.read_new_expr();
+                } else {
+                  return this.read_variable(false, false);
+                }
+              }.bind(this)
+            );
           } else {
             right = this.read_expr();
           }
@@ -453,6 +456,7 @@ module.exports = {
     // returns variable | scalar
     return expr;
   },
+
   /**
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
@@ -466,18 +470,12 @@ module.exports = {
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
-      let propExtends = null,
-        propImplements = null,
-        body = null;
       if (this.next().token === "(") {
         args = this.read_function_argument_list();
       }
-      if (this.token == this.tok.T_EXTENDS) {
-        propExtends = this.next().read_namespace_name();
-      }
-      if (this.token == this.tok.T_IMPLEMENTS) {
-        propImplements = this.next().read_name_list();
-      }
+      const propExtends = this.read_extends_from();
+      const propImplements = this.read_implements_list();
+      let body = null;
       if (this.expect("{")) {
         body = this.next().read_class_body();
       }

@@ -11,8 +11,8 @@ describe("Test AST class (edge cases)", function() {
         const ast = test.parseEval('echo $foo;');
         const echo = ast.children[0];
         expect(echo.loc.source).toBe("echo $foo;");
-        expect(echo.loc.start).toBeNull();
-        expect(echo.loc.end).toBeNull();
+        expect(echo.loc.start).not.toBeNull();
+        expect(echo.loc.end).not.toBeNull();
 
         const variable = echo.expressions[0];
         expect(variable.loc.source).toBe("$foo");

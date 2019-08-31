@@ -13,4 +13,11 @@ describe('continue', () => {
   it('argument 2', () => {
     expect(parser.parseEval('continue 2;')).toMatchSnapshot();
   });
+  it('with parens', () => {
+    expect(parser.parseEval('continue (1);')).toMatchSnapshot();
+  });
+  // Deprecated since 5.4.0
+  it('with expression', () => {
+    expect(parser.parseEval('continue $var;')).toMatchSnapshot();
+  });
 });

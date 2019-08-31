@@ -1,0 +1,285 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`nowdoc empty 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "TEST",
+          "quote": true,
+          "raw": "<<<'TEST'
+TEST",
+          "value": "",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc inside call 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Nowdoc {
+                "kind": "nowdoc",
+                "label": "EOD",
+                "quote": true,
+                "raw": "<<<'EOD'
+foobar!
+EOD
+",
+                "value": "foobar!",
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": ClassReference {
+          "kind": "classreference",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc inside class 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "body": Array [
+        ClassConstant {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "BAR",
+              },
+              "value": Nowdoc {
+                "kind": "nowdoc",
+                "label": "FOOBAR",
+                "quote": true,
+                "raw": "<<<'FOOBAR'
+Constant example
+FOOBAR",
+                "value": "Constant example",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "baz",
+              },
+              "value": Nowdoc {
+                "kind": "nowdoc",
+                "label": "FOOBAR",
+                "quote": true,
+                "raw": "<<<'FOOBAR'
+Property example
+FOOBAR",
+                "value": "Property example",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc inside function 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              StaticVariable {
+                "defaultValue": Nowdoc {
+                  "kind": "nowdoc",
+                  "label": "LABEL",
+                  "quote": true,
+                  "raw": "<<<'LABEL'
+Nothing in here...
+LABEL",
+                  "value": "Nothing in here...",
+                },
+                "kind": "staticvariable",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "bar",
+                },
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc only newline 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "TEST",
+          "quote": true,
+          "raw": "<<<'TEST'
+
+TEST",
+          "value": "",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc simple 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "EOD",
+          "quote": true,
+          "raw": "<<<'EOD'
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD",
+          "value": "Example of string
+spanning multiple lines
+using heredoc syntax.",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc with space between <<< and label 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "EOD",
+          "quote": false,
+          "raw": "<<<     'EOD'
+Example of string
+spanning multiple lines
+using heredoc syntax.
+EOD",
+          "value": "Example of string
+spanning multiple lines
+using heredoc syntax.",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc with variables 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "EOT",
+          "quote": true,
+          "raw": "<<<'EOT'
+My name is \\"$name\\". I am printing some $foo->foo.
+Now, I am printing some {$foo->bar[1]}.
+This should print a capital 'A': A
+EOT",
+          "value": "My name is \\"$name\\". I am printing some $foo->foo.
+Now, I am printing some {$foo->bar[1]}.
+This should print a capital 'A': A",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

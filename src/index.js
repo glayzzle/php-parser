@@ -76,11 +76,26 @@ const engine = function(options) {
   this.parser = new parser(this.lexer, this.ast);
   if (options && typeof options === "object") {
     // disable php7 from lexer if already disabled from parser
-    if (options.parser && options.parser.php7 === false) {
+    if (options.parser) {
       if (!options.lexer) {
         options.lexer = {};
       }
-      options.lexer.php7 = false;
+      if (options.parser.php7 === false) {
+        options.parser.php73 = false;
+        options.parser.php74 = false;
+      } else {
+        options.parser.php7 = true;
+        options.parser.php73 = true;
+        options.parser.php74 = true;
+      }
+      if (options.parser.php73 === true) {
+        options.parser.php7 = true;
+      }
+      if (options.parser.php74 === true) {
+        options.parser.php7 = true;
+      }
+      options.lexer.php7 = options.parser.php7;
+      options.lexer.php73 = options.parser.php73;
     }
     combine(options, this);
   }
