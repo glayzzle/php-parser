@@ -11,15 +11,22 @@
     "LICENSE"
   ],
   "scripts": {
-    "lint": "eslint 'src/**/*.js'",
-    "pretest": "npm run lint -- --fix",
+    "lint": "eslint 'src/**/*.js' --fix",
     "test": "jest",
+    "prehusky": "npm run lint",
+    "husky": "npm run test",
     "prebuild": "npm run test",
     "build": "webpack --config webpack.config.js",
     "postbuild": "npm run build-docs",
     "build-docs": "jsdoc -c .jsdoc.json",
     "publish-docs": "git subtree push --prefix docs origin gh-pages",
     "cover": "jest --coverage --coverageDirectory=coverage/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run husky",
+      "pre-push": "npm run husky"
+    }
   },
   "repository": {
     "type": "git",
@@ -63,6 +70,7 @@
     "coveralls": "^3.0.3",
     "eslint": "^5.15.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^3.0.4",
     "jest": "^24.1.0",
     "jsdoc": "^3.5.5",
     "jsdoc-template": "^1.2.0",

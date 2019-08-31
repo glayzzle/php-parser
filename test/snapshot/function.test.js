@@ -50,7 +50,7 @@ describe("Function tests", function() {
   it("test reserved word for function name error", function() {
     const astErr = parser.parseEval(`function list() {}`, {
       parser: {
-        php74: false,
+        php7: false,
         suppressErrors: true
       }
     });
