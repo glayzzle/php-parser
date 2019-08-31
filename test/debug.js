@@ -16,12 +16,8 @@
  */
 const util = require('util');
 const parser = require("../src/index");
-const ast = parser.parseEval(`
-$a = 1
-  * // A
-  2
-  * // B
-  3;
+const ast = parser.parseCode(`
+<?php$var = 1; ?>
 `, { 
     parser: {
       debug: true,
