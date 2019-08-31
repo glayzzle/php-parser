@@ -17,12 +17,15 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseEval(`
-$bar = &$foo;
+$a = 1
+  * // A
+  2
+  * // B
+  3;
 `, { 
     parser: {
       debug: true,
-      php73: true,
-      extractDoc: true
+      php73: true
     },
     ast: {
       withPositions: true,

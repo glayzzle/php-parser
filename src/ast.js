@@ -235,6 +235,7 @@ AST.prototype.resolvePrecedence = function(result, parser) {
           result.right = result.right.left;
           this.swapLocations(result, result.left, result.right, parser);
           buffer.left = this.resolvePrecedence(result, parser);
+          this.swapLocations(buffer, buffer.left, buffer.right, parser);
           result = buffer;
         }
       } else if (result.right.kind === "retif") {
