@@ -250,6 +250,11 @@ module.exports = {
       const num = this.text();
       this.next();
       offset = offset("number", num, null);
+    } else if (this.token === "-") {
+      this.next();
+      const num = -1 * this.text();
+      this.expect(this.tok.T_NUM_STRING) && this.next();
+      offset = offset("number", num, null);
     } else if (this.token === this.tok.T_VARIABLE) {
       const name = this.text().substring(1);
       this.next();
@@ -258,6 +263,7 @@ module.exports = {
       this.expect([
         this.tok.T_STRING,
         this.tok.T_NUM_STRING,
+        "-",
         this.tok.T_VARIABLE
       ]);
       // fallback : consider as identifier
