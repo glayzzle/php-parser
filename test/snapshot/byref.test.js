@@ -101,4 +101,10 @@ describe('byref', () => {
   it('closure', () => {
     expect(parser.parseEval('$var = function () use (&$message) { };')).toMatchSnapshot();
   });
+  it('with bin', () => {
+    expect(parser.parseEval('$foo = &$bar || $bar;')).toMatchSnapshot();
+  });
+  it('with bin #2', () => {
+    expect(parser.parseEval('$foo = &$bar + 1;')).toMatchSnapshot();
+  });
 });

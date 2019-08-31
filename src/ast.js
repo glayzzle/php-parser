@@ -46,6 +46,7 @@ const Position = require("./ast/position");
  *     - [Exit](#exit)
  *     - [Clone](#clone)
  *     - [Assign](#assign)
+ *     - [AssignRef](#assignref)
  *     - [Array](#array)
  *     - [List](#list)
  *     - [Variable](#variable)
@@ -458,6 +459,7 @@ AST.prototype.checkNodes = function() {
 [
   require("./ast/array"),
   require("./ast/assign"),
+  require("./ast/assignref"),
   require("./ast/bin"),
   require("./ast/block"),
   require("./ast/boolean"),
