@@ -44,9 +44,9 @@ module.exports = {
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
       case this.tok.T_CLASS:
-        return this.read_class();
+        return this.read_class_declaration_statement();
       case this.tok.T_INTERFACE:
-        return this.read_interface();
+        return this.read_interface_declaration_statement();
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_USE:
@@ -157,9 +157,9 @@ module.exports = {
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
       case this.tok.T_CLASS:
-        return this.read_class();
+        return this.read_class_declaration_statement();
       case this.tok.T_INTERFACE:
-        return this.read_interface();
+        return this.read_interface_declaration_statement();
       case this.tok.T_TRAIT:
         return this.read_trait();
       case this.tok.T_HALT_COMPILER: {

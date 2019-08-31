@@ -456,6 +456,7 @@ module.exports = {
     // returns variable | scalar
     return expr;
   },
+
   /**
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
@@ -469,18 +470,12 @@ module.exports = {
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
-      let propExtends = null,
-        propImplements = null,
-        body = null;
       if (this.next().token === "(") {
         args = this.read_function_argument_list();
       }
-      if (this.token == this.tok.T_EXTENDS) {
-        propExtends = this.next().read_namespace_name();
-      }
-      if (this.token == this.tok.T_IMPLEMENTS) {
-        propImplements = this.next().read_name_list();
-      }
+      const propExtends = this.read_extends_from();
+      const propImplements = this.read_implements_list();
+      let body = null;
       if (this.expect("{")) {
         body = this.next().read_class_body();
       }
