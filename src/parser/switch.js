@@ -42,9 +42,10 @@ module.exports = {
     } else {
       this.expect(["{", ":"]);
     }
+    this.next();
     // OPTIONNAL ';'
     // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L570
-    if (this.next().token === ";") {
+    if (this.token === ";") {
       this.next();
     }
     // EXTRACTING CASES
@@ -66,20 +67,20 @@ module.exports = {
   read_case_list: function(stopToken) {
     const result = this.node("case");
     let test = null;
-    let body = null;
-    const items = [];
     if (this.token === this.tok.T_CASE) {
       test = this.next().read_expr();
     } else if (this.token === this.tok.T_DEFAULT) {
-      // the defaut entry - no condition
+      // the default entry - no condition
       this.next();
     } else {
       this.expect([this.tok.T_CASE, this.tok.T_DEFAULT]);
     }
+    // case_separator
     this.expect([":", ";"]) && this.next();
-    body = this.node("block");
+    const body = this.node("block");
+    const items = [];
     while (
-      this.token != this.EOF &&
+      this.token !== this.EOF &&
       this.token !== stopToken &&
       this.token !== this.tok.T_CASE &&
       this.token !== this.tok.T_DEFAULT
