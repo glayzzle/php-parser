@@ -117,6 +117,20 @@ module.exports = {
   },
 
   /**
+   * Read a isset variable
+   */
+  read_isset_variable: function() {
+    return this.read_expr();
+  },
+
+  /**
+   * Reads isset variables
+   */
+  read_isset_variables: function () {
+    return this.read_function_list(this.read_isset_variable, ",");
+  },
+
+  /**
    * ```ebnf
    * Reads an expression
    *  expr ::= @todo
@@ -215,7 +229,7 @@ module.exports = {
         if (this.next().expect("(")) {
           this.next();
         }
-        const variables = this.read_function_list(this.read_expr, ",");
+        const variables = this.read_isset_variables();
         if (this.expect(")")) {
           this.next();
         }
