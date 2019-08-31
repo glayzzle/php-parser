@@ -47,4 +47,13 @@ describe("new", function() {
   it("static", function() {
     expect(parser.parseEval('new static();')).toMatchSnapshot();
   });
+  it("anonymous class", function() {
+    expect(parser.parseEval('$var = new class {};')).toMatchSnapshot();
+  });
+  it("anonymous class #2", function() {
+    expect(parser.parseEval('$var = new class($var) {};')).toMatchSnapshot();
+  });
+  it("anonymous class #3", function() {
+    expect(parser.parseEval('$var = new class($var) extends SomeClass implements SomeInterface {};')).toMatchSnapshot();
+  });
 });

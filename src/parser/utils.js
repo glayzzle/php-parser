@@ -154,5 +154,38 @@ module.exports = {
         return variable;
       }
     }, ",");
+  },
+
+  /*
+   * Reads class extends
+   */
+  read_extends_from: function() {
+    if (this.token === this.tok.T_EXTENDS) {
+      return this.next().read_namespace_name();
+    }
+
+    return null;
+  },
+
+  /*
+   * Reads interface extends list
+   */
+  read_interface_extends_list: function() {
+    if (this.token === this.tok.T_EXTENDS) {
+      return this.next().read_name_list();
+    }
+
+    return null;
+  },
+
+  /*
+   * Reads implements list
+   */
+  read_implements_list: function() {
+    if (this.token === this.tok.T_IMPLEMENTS) {
+      return this.next().read_name_list();
+    }
+
+    return null;
   }
 };

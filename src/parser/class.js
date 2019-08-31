@@ -12,7 +12,7 @@ module.exports = {
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
    * ```
    */
-  read_class: function() {
+  read_class_declaration_statement: function() {
     const result = this.node("class");
     const flag = this.read_class_scope();
     // graceful mode : ignore token & go next
@@ -26,14 +26,8 @@ module.exports = {
     const name = this.text();
     this.next();
     propName = propName(name);
-    let propExtends = null;
-    if (this.token == this.tok.T_EXTENDS) {
-      propExtends = this.next().read_namespace_name();
-    }
-    let propImplements = null;
-    if (this.token == this.tok.T_IMPLEMENTS) {
-      propImplements = this.next().read_name_list();
-    }
+    const propExtends = this.read_extends_from();
+    const propImplements = this.read_implements_list();
     this.expect("{");
     const body = this.next().read_class_body();
     return result(propName, propExtends, propImplements, body, flag);
@@ -278,7 +272,7 @@ module.exports = {
    * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
    * ```
    */
-  read_interface: function() {
+  read_interface_declaration_statement: function() {
     const result = this.node("interface");
     if (this.token !== this.tok.T_INTERFACE) {
       this.error(this.tok.T_INTERFACE);
@@ -290,10 +284,7 @@ module.exports = {
     const name = this.text();
     this.next();
     propName = propName(name);
-    let propExtends = null;
-    if (this.token === this.tok.T_EXTENDS) {
-      propExtends = this.next().read_name_list();
-    }
+    const propExtends = this.read_interface_extends_list();
     this.expect("{");
     const body = this.next().read_interface_body();
     return result(propName, propExtends, body);
