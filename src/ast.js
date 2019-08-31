@@ -15,6 +15,7 @@ const Position = require("./ast/position");
  * - [Position](#position)
  * - [Node](#node)
  *   - [Noop](#noop)
+ *   - [NullKeyword](#nullkeyword)
  *   - [StaticVariable](#staticvariable)
  *   - [EncapsedPart](#encapsedpart)
  *   - [Constant](#constant)
@@ -514,6 +515,7 @@ AST.prototype.checkNodes = function() {
   require("./ast/node"),
   require("./ast/noop"),
   require("./ast/nowdoc"),
+  require("./ast/nullkeyword"),
   require("./ast/number"),
   require("./ast/offsetlookup"),
   require("./ast/operation"),

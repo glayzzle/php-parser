@@ -55,9 +55,11 @@ module.exports = {
           result = name.destroy(result("boolean", true, name.name));
         } else if (literal === "false") {
           result = name.destroy(result("boolean", false, name.name));
+        } else if (literal === "null") {
+          result = name.destroy(result("nullkeyword", name.name));
         } else {
-          // @todo null keyword ?
-          result = result("identifier", name);
+          result.destroy(name);
+          result = name;
         }
       } else {
         // @fixme possible #193 bug

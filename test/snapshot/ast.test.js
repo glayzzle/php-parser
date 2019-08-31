@@ -8,6 +8,15 @@ describe("Test AST structure", function() {
   it('fix #127 - inline', function() {
     expect(parser.parseEval('?>?>?>')).toMatchSnapshot();
   });
+  
+  it('fix #370 - nullkeyword', function() {
+    expect(parser.parseEval('$a = Null;')).toMatchSnapshot();
+  });
+
+  it('fix #370 - classreference instead identifier(classreferent)', function() {
+    expect(parser.parseEval('$a = test;')).toMatchSnapshot();
+  });
+
 
   it("#176 - lost `?>` in program node", function() {
     expect(parser.parseCode(`<?php
