@@ -354,21 +354,19 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           let right;
           if (this.next().token == "&") {
-            right = this.read_byref(
-              function() {
-                if (this.token === this.tok.T_NEW) {
-                  if (this.php7) {
-                    this.error();
-                  }
-                  return this.read_new_expr();
-                } else {
-                  return this.read_variable(false, false);
-                }
-              }.bind(this)
-            );
-          } else {
-            right = this.read_expr();
+            this.next();
+            if (this.token === this.tok.T_NEW) {
+              if (this.php7) {
+                this.error();
+              }
+              right = this.read_new_expr();
+            } else {
+              right = this.read_variable(false, false);
+            }
+
+            return result("assignref", expr, right);
           }
+          right = this.read_expr();
           return result("assign", expr, right, "=");
         }
 

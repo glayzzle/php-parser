@@ -542,6 +542,16 @@ describe("Test locations", function() {
       })
     ).toMatchSnapshot();
   });
+  it("assign by ref", function() {
+    expect(
+      parser.parseEval("$var = &$var;", {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      })
+    ).toMatchSnapshot();
+  });
   it("assign mutliple", function() {
     expect(
       parser.parseEval("$var = $other = true;", {

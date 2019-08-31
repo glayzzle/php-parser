@@ -6,7 +6,7 @@
 "use strict";
 
 const Expression = require("./expression");
-const KIND = "assign";
+const KIND = "assignref";
 
 /**
  * Assigns a value to the specified target
@@ -16,15 +16,13 @@ const KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
-module.exports = Expression.extends(KIND, function Assign(
-  left,
-  right,
-  operator,
-  docs,
-  location
+module.exports = Expression.extends(KIND, function AssignRef(
+    left,
+    right,
+    docs,
+    location
 ) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.left = left;
-  this.right = right;
-  this.operator = operator;
+    Expression.apply(this, [KIND, docs, location]);
+    this.left = left;
+    this.right = right;
 });
