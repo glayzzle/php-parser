@@ -141,7 +141,8 @@ declare module "php-parser" {
     T_COALESCE = 230,
     T_POW = 231,
     T_POW_EQUAL = 232,
-    T_SPACESHIP = 233
+    T_SPACESHIP = 233,
+    T_COALESCE_EQUAL = 234
   }
 
   /**
