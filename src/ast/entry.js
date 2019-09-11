@@ -14,14 +14,20 @@ const KIND = "entry";
  * @extends {Expression}
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
+ * @property {Boolean} byRef By reference
+ * @property {Boolean} unpack Argument unpacking
  */
 module.exports = Expression.extends(KIND, function Entry(
   key,
   value,
+  byRef,
+  unpack,
   docs,
   location
 ) {
   Expression.apply(this, [KIND, docs, location]);
   this.key = key;
   this.value = value;
+  this.byRef = byRef;
+  this.unpack = unpack;
 });

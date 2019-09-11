@@ -662,6 +662,19 @@ describe("Test locations", function() {
       })
     ).toMatchSnapshot();
   });
+  it("array with keys, byRef and unpack", function() {
+    expect(
+      parser.parseEval(
+        `$var = [1, 'foo', 'test' => $foo, 'test' => &$foo, ...$var];`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
   it("clone", function() {
     expect(
       parser.parseEval("clone $var;", {
