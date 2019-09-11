@@ -91,6 +91,12 @@ describe('byref', () => {
   it('staticlookup #6', () => {
     expect(parser.parseEval('$var = &$var::$$$test;')).toMatchSnapshot();
   });
+  it('staticlookup #7', () => {
+    expect(parser.parseEval('$var = &parent::getElementByPath();')).toMatchSnapshot();
+  });
+  it('staticlookup #8', () => {
+    expect(parser.parseEval(' $var = &self::getElementByPath();')).toMatchSnapshot();
+  });
   // https://github.com/php/php-src/blob/php-7.4.0beta4/Zend/zend_language_parser.y#L1169
   it('propertylookup', () => {
     expect(parser.parseEval('$var = &$var->test;')).toMatchSnapshot();
