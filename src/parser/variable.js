@@ -177,10 +177,7 @@ module.exports = {
             // @fixme : add more informations & test
             return result;
           } else {
-            result = this.node("call")(
-              result,
-              this.read_function_argument_list()
-            );
+            result = this.node("call")(result, this.read_argument_list());
           }
           break;
         case "[":
@@ -236,10 +233,6 @@ module.exports = {
       }
     }
     return result;
-  },
-
-  read_encaps_var: function() {
-
   },
 
   /**

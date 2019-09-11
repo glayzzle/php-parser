@@ -126,7 +126,7 @@ module.exports = {
   /**
    * Reads isset variables
    */
-  read_isset_variables: function () {
+  read_isset_variables: function() {
     return this.read_function_list(this.read_isset_variable, ",");
   },
 
@@ -483,7 +483,7 @@ module.exports = {
       const what = this.node("class");
       // Annonymous class declaration
       if (this.next().token === "(") {
-        args = this.read_function_argument_list();
+        args = this.read_argument_list();
       }
       const propExtends = this.read_extends_from();
       const propImplements = this.read_implements_list();
@@ -499,7 +499,7 @@ module.exports = {
     // Already existing class
     const name = this.read_new_class_name();
     if (this.token === "(") {
-      args = this.read_function_argument_list();
+      args = this.read_argument_list();
     }
     return result(name, args);
   },
@@ -537,7 +537,7 @@ module.exports = {
         expr = this.read_dereferencable(expr);
       } else if (this.token === "(") {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-        expr = this.node("call")(expr, this.read_function_argument_list());
+        expr = this.node("call")(expr, this.read_argument_list());
       } else {
         return expr;
       }
