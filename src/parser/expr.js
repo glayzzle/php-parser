@@ -193,6 +193,32 @@ module.exports = {
   },
 
   /**
+   * Reads optional expression
+   */
+  read_optional_expr: function(stopToken) {
+    if (this.token !== stopToken) {
+      return this.read_expr();
+    }
+
+    return null;
+  },
+
+  /**
+   * Reads exit expression
+   */
+  read_exit_expr: function() {
+    let expression = null;
+
+    if (this.token === "(") {
+      this.next();
+      expression = this.read_optional_expr(')');
+      this.expect(')') && this.next();
+    }
+
+    return expression;
+  },
+
+  /**
    * ```ebnf
    * Reads an expression
    *  expr ::= @todo
@@ -320,17 +346,8 @@ module.exports = {
       case this.tok.T_EXIT: {
         const useDie = this.lexer.yytext.toLowerCase() === "die";
         result = this.node("exit");
-        let expression = null;
-        if (this.next().token === "(") {
-          if (this.next().token !== ")") {
-            expression = this.read_expr();
-            if (this.expect(")")) {
-              this.next();
-            }
-          } else {
-            this.next();
-          }
-        }
+        this.next();
+        const expression = this.read_exit_expr();
         return result(expression, useDie);
       }
 

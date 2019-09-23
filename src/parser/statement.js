@@ -212,10 +212,8 @@ module.exports = {
 
       case this.tok.T_RETURN: {
         const result = this.node("return");
-        let expr = null;
-        if (!this.next().is("EOS")) {
-          expr = this.read_expr();
-        }
+        this.next();
+        const expr = this.read_optional_expr(';');
         this.expectEndOfStatement();
         return result(expr);
       }
@@ -226,11 +224,8 @@ module.exports = {
         const result = this.node(
           this.token === this.tok.T_CONTINUE ? "continue" : "break"
         );
-        let level = null;
-        this.next(); // look ahead
-        if (this.token !== ";") {
-          level = this.read_expr();
-        }
+        this.next();
+        const level = this.read_optional_expr(';');
         this.expectEndOfStatement();
         return result(level);
       }
