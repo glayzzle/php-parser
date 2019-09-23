@@ -42,25 +42,17 @@ module.exports = {
         }
       );
   },
+
   /**
-   * ```ebnf
-   *  scalar ::= T_MAGIC_CONST
-   *       | T_LNUMBER | T_DNUMBER
-   *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
-   *       | '"' encaps_list '"'
-   *       | T_START_HEREDOC encaps_list T_END_HEREDOC
-   *       | namespace_name (T_DOUBLE_COLON T_STRING)?
-   * ```
+   * Reads dereferencable scalar
    */
-  read_scalar: function() {
-    if (this.is("T_MAGIC_CONST")) {
-      return this.get_magic_constant();
-    } else {
-      let value, node;
-      switch (this.token) {
-        // TEXTS
-        case this.tok.T_CONSTANT_ENCAPSED_STRING: {
-          value = this.node("string");
+  read_dereferencable_scalar: function() {
+    let result = null;
+
+    switch (this.token) {
+      case this.tok.T_CONSTANT_ENCAPSED_STRING:
+        {
+          let value = this.node("string");
           const text = this.text();
           let offset = 0;
           if (text[0] === "b" || text[0] === "B") {
@@ -80,11 +72,47 @@ module.exports = {
           );
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
-            return this.read_static_getter(value);
+            result = this.read_static_getter(value);
           } else {
             // dirrect string
-            return value;
+            result = value;
           }
+        }
+        break;
+      case this.tok.T_ARRAY: // array parser
+        result = this.read_array();
+        break;
+      case "[": // short array format
+        result = this.read_array();
+        break;
+    }
+
+    return result;
+  },
+
+  /**
+   * ```ebnf
+   *  scalar ::= T_MAGIC_CONST
+   *       | T_LNUMBER | T_DNUMBER
+   *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
+   *       | '"' encaps_list '"'
+   *       | T_START_HEREDOC encaps_list T_END_HEREDOC
+   *       | namespace_name (T_DOUBLE_COLON T_STRING)?
+   * ```
+   */
+  read_scalar: function() {
+    if (this.is("T_MAGIC_CONST")) {
+      return this.get_magic_constant();
+    } else {
+      let value, node;
+      switch (this.token) {
+        // NUMERIC
+        case this.tok.T_LNUMBER: // long
+        case this.tok.T_DNUMBER: { // double
+          const result = this.node("number");
+          value = this.text();
+          this.next();
+          return result(value, null);
         }
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
@@ -130,21 +158,11 @@ module.exports = {
           return this.read_encapsed_string('"', true);
         }
 
-        // NUMERIC
-        case this.tok.T_LNUMBER: // long
-        case this.tok.T_DNUMBER: {
-          // double
-          const result = this.node("number");
-          value = this.text();
-          this.next();
-          return result(value, null);
-        }
-
-        // ARRAYS
+        // TEXTS
+        case this.tok.T_CONSTANT_ENCAPSED_STRING:
         case this.tok.T_ARRAY: // array parser
-          return this.read_array();
         case "[": // short array format
-          return this.read_array();
+          return this.read_dereferencable_scalar();
         default: {
           const err = this.error("SCALAR");
           // graceful mode : ignore token & return error node
