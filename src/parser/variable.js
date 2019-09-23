@@ -333,7 +333,6 @@ module.exports = {
           break;
         }
         case "$": // $$$var
-          // @fixme check coverage here
           result = result(this.read_simple_variable(), false);
           break;
         case this.tok.T_VARIABLE: {
