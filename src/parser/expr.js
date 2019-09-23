@@ -458,6 +458,10 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           return result("assign", expr, this.next().read_expr(), ">>=");
 
+        case this.tok.T_COALESCE_EQUAL:
+          if (isConst) this.error("VARIABLE");
+          return result("assign", expr, this.next().read_expr(), "??=");
+
         case this.tok.T_INC:
           if (isConst) this.error("VARIABLE");
           this.next();

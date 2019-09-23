@@ -46,6 +46,21 @@ describe('assign', () => {
   it('>>=', () => {
     expect(parser.parseEval("$var >>= $var;")).toMatchSnapshot();
   });
+  it('??=', () => {
+    expect(parser.parseEval("$var ??= $var;")).toMatchSnapshot();
+  });
+  it('??= with bin', () => {
+    expect(parser.parseEval("$var ??= $var + 10;")).toMatchSnapshot();
+  });
+  it('??= (php < 7)', function() {
+    const astErr = parser.parseEval(`$var ??= $var;`, {
+      parser: {
+        php7: false,
+        suppressErrors: true
+      }
+    });
+    expect(astErr).toMatchSnapshot();
+  });
   it('with ref', () => {
     expect(parser.parseEval("$bar = &$foo;")).toMatchSnapshot();
   });
