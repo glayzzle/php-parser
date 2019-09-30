@@ -108,7 +108,8 @@ module.exports = {
       switch (this.token) {
         // NUMERIC
         case this.tok.T_LNUMBER: // long
-        case this.tok.T_DNUMBER: { // double
+        case this.tok.T_DNUMBER: {
+          // double
           const result = this.node("number");
           value = this.text();
           this.next();
@@ -139,12 +140,7 @@ module.exports = {
               start,
               this.lexer.yylloc.first_offset
             );
-            node = node(
-              value,
-              raw,
-              this.lexer.heredoc_label,
-              raw[3] === '"' || raw[3] === "'"
-            );
+            node = node(value, raw, this.lexer.heredoc_label);
             return node;
           } else {
             return this.read_encapsed_string(this.tok.T_END_HEREDOC);

@@ -14,17 +14,14 @@ const KIND = "nowdoc";
  * @extends {Literal}
  * @property {String} label
  * @property {String} raw
- * @property {Boolean} quote
  */
 module.exports = Literal.extends(KIND, function Nowdoc(
   value,
   raw,
   label,
-  quote,
   docs,
   location
 ) {
   Literal.apply(this, [KIND, value, raw, docs, location]);
   this.label = label;
-  this.quote = quote;
 });
