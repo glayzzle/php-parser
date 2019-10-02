@@ -152,4 +152,28 @@ describe("encapsed", function() {
   it("string offset in encapsed var offset", () => {
     expect(parser.parseEval(`"$var[$var]";`)).toMatchSnapshot();
   });
+  it("dollar open curly braces", () => {
+    expect(parser.parseEval('"string ${juice} string";')).toMatchSnapshot();
+  });
+  it("dollar open curly braces #2", () => {
+    expect(parser.parseEval('"string ${$juice} string";')).toMatchSnapshot();
+  });
+  it("dollar open curly braces #3", () => {
+    expect(parser.parseEval('"string ${${$juice}} string";')).toMatchSnapshot();
+  });
+  it("dollar open curly braces #4", () => {
+    expect(parser.parseEval('"string ${call()} string";')).toMatchSnapshot();
+  });
+  it("curly", () => {
+    expect(parser.parseEval('"string {$juice} string";')).toMatchSnapshot();
+  });
+  it("curly #2", () => {
+    expect(parser.parseEval('"string {$$juice} string";')).toMatchSnapshot();
+  });
+  it("curly #3", () => {
+    expect(parser.parseEval('"string {$call()} string";')).toMatchSnapshot();
+  });
+  it("no curly", () => {
+    expect(parser.parseEval('"string $$juice string";')).toMatchSnapshot();
+  });
 });

@@ -201,6 +201,7 @@ module.exports = {
    */
   read_encapsed_string_item: function(isDoubleQuote) {
     const encapsedPart = this.node("encapsedpart");
+    let syntax = null;
     let curly = false;
     let result = this.node(),
       offset,
@@ -220,6 +221,8 @@ module.exports = {
         text
       );
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      syntax = 'simple';
+      curly = true;
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
       name = null;
@@ -242,15 +245,16 @@ module.exports = {
         name = this.read_expr();
       }
       this.expect("}") && this.next();
-      result = result("variable", name, true);
+      result = result("variable", name);
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
-      curly = true;
+      syntax = 'complex';
       result.destroy();
       result = this.next().read_variable(false, false);
       this.expect("}") && this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
+      syntax = 'simple';
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
       result.destroy();
@@ -284,7 +288,7 @@ module.exports = {
       result = result("string", false, value, false, value);
     }
 
-    return encapsedPart(result, curly);
+    return encapsedPart(result, syntax, curly);
   },
   /**
    * Reads an encapsed string
