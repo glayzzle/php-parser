@@ -164,6 +164,18 @@ describe("encapsed", function() {
   it("dollar open curly braces #4", () => {
     expect(parser.parseEval('"string ${call()} string";')).toMatchSnapshot();
   });
+  it("dollar open curly braces #5", () => {
+    expect(parser.parseEval('"string ${test[test]} string";')).toMatchSnapshot();
+  });
+  it("dollar open curly braces #6", () => {
+    expect(parser.parseEval('"string ${test[1]} string";')).toMatchSnapshot();
+  });
+  it("dollar open curly braces #7", () => {
+    expect(parser.parseEval('"string ${test[-1]} string";')).toMatchSnapshot();
+  });
+  it("dollar open curly braces #8", () => {
+    expect(parser.parseEval('"string ${test[$var]} string";')).toMatchSnapshot();
+  });
   it("curly", () => {
     expect(parser.parseEval('"string {$juice} string";')).toMatchSnapshot();
   });
