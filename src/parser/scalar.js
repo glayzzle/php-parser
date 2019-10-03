@@ -221,7 +221,7 @@ module.exports = {
         text
       );
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
-      syntax = 'simple';
+      syntax = "simple";
       curly = true;
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
@@ -237,24 +237,23 @@ module.exports = {
           node = this.node("offsetlookup");
           offset = this.next().read_expr();
           this.expect("]") && this.next();
-          name = node(name, offset);
+          result = node(name, offset);
         } else {
-          name = varName;
+          result = name(varName, false);
         }
       } else {
-        name = this.read_expr();
+        result = result("variable", this.read_expr(), false);
       }
       this.expect("}") && this.next();
-      result = result("variable", name);
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
-      syntax = 'complex';
+      syntax = "complex";
       result.destroy();
       result = this.next().read_variable(false, false);
       this.expect("}") && this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
-      syntax = 'simple';
+      syntax = "simple";
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
       result.destroy();

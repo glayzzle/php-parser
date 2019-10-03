@@ -193,7 +193,11 @@ Program {
             "expression": Variable {
               "curly": false,
               "kind": "variable",
-              "name": "juice",
+              "name": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "juice",
+              },
             },
             "kind": "encapsedpart",
             "syntax": "simple",
@@ -244,12 +248,16 @@ Program {
           EncapsedPart {
             "curly": true,
             "expression": Variable {
-              "curly": true,
+              "curly": false,
               "kind": "variable",
               "name": Variable {
-                "curly": false,
+                "curly": true,
                 "kind": "variable",
-                "name": "juice",
+                "name": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "juice",
+                },
               },
             },
             "kind": "encapsedpart",
@@ -300,13 +308,17 @@ Program {
           },
           EncapsedPart {
             "curly": true,
-            "expression": Call {
-              "arguments": Array [],
-              "kind": "call",
-              "what": ClassReference {
-                "kind": "classreference",
-                "name": "call",
-                "resolution": "uqn",
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": ClassReference {
+                  "kind": "classreference",
+                  "name": "call",
+                  "resolution": "uqn",
+                },
               },
             },
             "kind": "encapsedpart",
@@ -604,9 +616,9 @@ Program {
           EncapsedPart {
             "curly": true,
             "expression": Variable {
-              "curly": "juice",
+              "curly": false,
               "kind": "variable",
-              "name": "variable",
+              "name": "juice",
             },
             "kind": "encapsedpart",
             "syntax": "simple",
@@ -1447,6 +1459,60 @@ Program {
 }
 `;
 
+exports[`encapsed propertylookup 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": PropertyLookup {
+        "kind": "propertylookup",
+        "offset": EncapsedPart {
+          "curly": false,
+          "expression": Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"set{$type}\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "set",
+                  "unicode": false,
+                  "value": "set",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "type",
+                },
+                "kind": "encapsedpart",
+                "syntax": "complex",
+              },
+            ],
+          },
+          "kind": "encapsedpart",
+          "syntax": "complex",
+        },
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "this",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`encapsed propertylookup and offsetlookup (complex syntax) 1`] = `
 Program {
   "children": Array [
@@ -1547,7 +1613,7 @@ Program {
             "expression": PropertyLookup {
               "kind": "propertylookup",
               "offset": EncapsedPart {
-                "curly": null,
+                "curly": false,
                 "expression": OffsetLookup {
                   "kind": "offsetlookup",
                   "offset": Number {
@@ -1561,7 +1627,7 @@ Program {
                   },
                 },
                 "kind": "encapsedpart",
-                "syntax": true,
+                "syntax": "complex",
               },
               "what": Variable {
                 "curly": false,
@@ -2854,9 +2920,9 @@ Program {
           EncapsedPart {
             "curly": true,
             "expression": Variable {
-              "curly": "var",
+              "curly": false,
               "kind": "variable",
-              "name": "variable",
+              "name": "var",
             },
             "kind": "encapsedpart",
             "syntax": "simple",

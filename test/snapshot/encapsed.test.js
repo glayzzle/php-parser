@@ -188,4 +188,7 @@ describe("encapsed", function() {
   it("no curly", () => {
     expect(parser.parseEval('"string $$juice string";')).toMatchSnapshot();
   });
+  it("propertylookup", () => {
+    expect(parser.parseEval('$this->{"set{$type}"};')).toMatchSnapshot();
+  });
 });

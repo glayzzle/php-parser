@@ -153,7 +153,7 @@ module.exports = {
         what = this.node("encapsedpart");
         name = this.next().read_expr();
         this.expect("}") && this.next();
-        what = what(name, true);
+        what = what(name, "complex", false);
         break;
       default:
         this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]);
