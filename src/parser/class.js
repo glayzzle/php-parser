@@ -346,7 +346,7 @@ module.exports = {
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
    * ```
    */
-  read_trait: function() {
+  read_trait_declaration_statement: function() {
     const result = this.node("trait");
     // graceful mode : ignore token & go next
     if (this.token !== this.tok.T_TRAIT) {
