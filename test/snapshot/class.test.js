@@ -122,7 +122,23 @@ describe("Test classes", function() {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
 
-  it('class name as identifier', function() {
-    expect(parser.parseEval('class A {}')).toMatchSnapshot();
+  it("class name as identifier", function() {
+    expect(parser.parseEval("class A {}")).toMatchSnapshot();
+  });
+
+  it("final and abstract", function() {
+    expect(
+      parser.parseEval(`final abstract class foo {}`, {
+        parser: { suppressErrors: true }
+      })
+    ).toMatchSnapshot();
+  });
+
+  it("abstract and final", function() {
+    expect(
+      parser.parseEval(`abstract final class foo {}`, {
+        parser: { suppressErrors: true }
+      })
+    ).toMatchSnapshot();
   });
 });
