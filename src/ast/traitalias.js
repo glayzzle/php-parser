@@ -26,7 +26,7 @@ module.exports = Node.extends(KIND, function TraitAlias(
   trait,
   method,
   as,
-  flags,
+  visibility,
   docs,
   location
 ) {
@@ -34,14 +34,18 @@ module.exports = Node.extends(KIND, function TraitAlias(
   this.trait = trait;
   this.method = method;
   this.as = as;
-  this.visibility = IS_UNDEFINED;
-  if (flags) {
-    if (flags[0] === 0) {
+
+  switch (visibility) {
+    case 0:
       this.visibility = IS_PUBLIC;
-    } else if (flags[0] === 1) {
+      break;
+    case 1:
       this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
+      break;
+    case 2:
       this.visibility = IS_PRIVATE;
-    }
+      break;
+    default:
+      this.visibility = IS_UNDEFINED;
   }
 });

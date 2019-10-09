@@ -205,6 +205,40 @@ module.exports = {
 
     return result(null, items, flags);
   },
+
+  read_member_modifier: function() {
+    let modifier;
+
+    switch (this.token) {
+      case this.tok.T_PUBLIC:
+        modifier = 0;
+        break;
+      case this.tok.T_PROTECTED:
+        modifier = 1;
+        break;
+      case this.tok.T_PRIVATE:
+        modifier = 2;
+        break;
+      case this.tok.T_STATIC:
+        modifier = 3;
+        break;
+      case this.tok.T_ABSTRACT:
+        modifier = 4;
+        break;
+      case this.tok.T_FINAL:
+        modifier = 5;
+        break;
+      default: {
+        const err = this.error("T_MEMBER_FLAGS");
+        this.next();
+        return err;
+      }
+    }
+
+    this.next();
+    return modifier;
+  },
+
   /**
    * Read member flags
    * @return array
@@ -215,31 +249,34 @@ module.exports = {
   read_member_flags: function(asInterface) {
     const result = [-1, -1, -1];
     if (this.is("T_MEMBER_FLAGS")) {
-      let idx = 0,
-        val = 0;
       do {
-        switch (this.token) {
-          case this.tok.T_PUBLIC:
+        let idx = 0;
+        let val = 0;
+
+        const visibility = this.read_member_modifier();
+
+        switch (visibility) {
+          case 0:
             idx = 0;
             val = 0;
             break;
-          case this.tok.T_PROTECTED:
+          case 1:
             idx = 0;
             val = 1;
             break;
-          case this.tok.T_PRIVATE:
+          case 2:
             idx = 0;
             val = 2;
             break;
-          case this.tok.T_STATIC:
+          case 3:
             idx = 1;
             val = 1;
             break;
-          case this.tok.T_ABSTRACT:
+          case 4:
             idx = 2;
             val = 1;
             break;
-          case this.tok.T_FINAL:
+          case 5:
             idx = 2;
             val = 2;
             break;
@@ -261,7 +298,7 @@ module.exports = {
         } else if (val !== -1) {
           result[idx] = val;
         }
-      } while (this.next().is("T_MEMBER_FLAGS"));
+      } while (this.is("T_MEMBER_FLAGS"));
     }
 
     if (result[1] == -1) result[1] = 0;
@@ -374,18 +411,18 @@ module.exports = {
     const node = this.node("traituse");
     this.expect(this.tok.T_USE) && this.next();
     const traits = [this.read_namespace_name()];
-    let adaptations = null;
     while (this.token === ",") {
       traits.push(this.next().read_namespace_name());
     }
+    const adaptations = this.read_trait_adaptations();
+    return node(traits, adaptations);
+  },
+
+  read_trait_adaptations: function() {
+    let adaptations = null;
+
     if (this.token === "{") {
-      adaptations = [];
-      // defines alias statements
-      while (this.next().token !== this.EOF) {
-        if (this.token === "}") break;
-        adaptations.push(this.read_trait_use_alias());
-        this.expect(";");
-      }
+      adaptations = this.read_trait_adaptation_list();
       if (this.expect("}")) {
         this.next();
       }
@@ -394,17 +431,34 @@ module.exports = {
         this.next();
       }
     }
-    return node(traits, adaptations);
+
+    return adaptations;
   },
+
+  /*
+   * Reads trait adaptation list
+   */
+  read_trait_adaptation_list: function() {
+    let adaptations = [];
+    // defines alias statements
+    while (this.next().token !== this.EOF) {
+      if (this.token === "}") break;
+      adaptations.push(this.read_trait_adaptation());
+      this.expect(";");
+    }
+
+    return adaptations;
+  },
+
   /**
-   * Reading trait alias
+   * Reading trait adaptation
    * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
    * ```
    * name list : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303
    * trait adaptation : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742
    */
-  read_trait_use_alias: function() {
+  read_trait_adaptation: function() {
     const node = this.node();
     let trait = null;
     let method;
@@ -447,10 +501,11 @@ module.exports = {
       );
     } else if (this.token === this.tok.T_AS) {
       // handle trait alias
-      let flags = null;
+      let visibility = null;
       let alias = null;
-      if (this.next().is("T_MEMBER_FLAGS")) {
-        flags = this.read_member_flags();
+      this.next();
+      if (this.is("T_MEMBER_FLAGS")) {
+        visibility = this.read_member_modifier();
       }
 
       if (
@@ -461,12 +516,12 @@ module.exports = {
         const name = this.text();
         this.next();
         alias = alias(name);
-      } else if (flags === false) {
+      } else if (visibility === false) {
         // no visibility flags and no name => too bad
         this.expect(this.tok.T_STRING);
       }
 
-      return node("traitalias", trait, method, alias, flags);
+      return node("traitalias", trait, method, alias, visibility);
     }
 
     // handle errors
