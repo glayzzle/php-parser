@@ -153,7 +153,7 @@ module.exports = {
         what = this.node("encapsedpart");
         name = this.next().read_expr();
         this.expect("}") && this.next();
-        what = what(name, true);
+        what = what(name, "complex", false);
         break;
       default:
         this.error([this.tok.T_STRING, this.tok.T_VARIABLE, "$", "{"]);
@@ -177,10 +177,7 @@ module.exports = {
             // @fixme : add more informations & test
             return result;
           } else {
-            result = this.node("call")(
-              result,
-              this.read_function_argument_list()
-            );
+            result = this.node("call")(result, this.read_argument_list());
           }
           break;
         case "[":
@@ -237,6 +234,7 @@ module.exports = {
     }
     return result;
   },
+
   /**
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
@@ -328,7 +326,6 @@ module.exports = {
           break;
         }
         case "$": // $$$var
-          // @fixme check coverage here
           result = result(this.read_simple_variable(), false);
           break;
         case this.tok.T_VARIABLE: {

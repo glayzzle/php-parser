@@ -126,8 +126,96 @@ module.exports = {
   /**
    * Reads isset variables
    */
-  read_isset_variables: function () {
+  read_isset_variables: function() {
     return this.read_function_list(this.read_isset_variable, ",");
+  },
+
+  /*
+   * Reads internal PHP functions
+   */
+  read_internal_functions_in_yacc: function() {
+    let result = null;
+    switch (this.token) {
+      case this.tok.T_ISSET:
+        {
+          result = this.node("isset");
+          if (this.next().expect("(")) {
+            this.next();
+          }
+          const variables = this.read_isset_variables();
+          if (this.expect(")")) {
+            this.next();
+          }
+          result = result(variables);
+        }
+        break;
+      case this.tok.T_EMPTY:
+        {
+          result = this.node("empty");
+          if (this.next().expect("(")) {
+            this.next();
+          }
+          const expression = this.read_expr();
+          if (this.expect(")")) {
+            this.next();
+          }
+          result = result(expression);
+        }
+        break;
+      case this.tok.T_INCLUDE:
+        result = this.node("include")(false, false, this.next().read_expr());
+        break;
+      case this.tok.T_INCLUDE_ONCE:
+        result = this.node("include")(true, false, this.next().read_expr());
+        break;
+      case this.tok.T_EVAL:
+        {
+          result = this.node("eval");
+          if (this.next().expect("(")) {
+            this.next();
+          }
+          const expr = this.read_expr();
+          if (this.expect(")")) {
+            this.next();
+          }
+          result = result(expr);
+        }
+        break;
+      case this.tok.T_REQUIRE:
+        result = this.node("include")(false, true, this.next().read_expr());
+        break;
+      case this.tok.T_REQUIRE_ONCE:
+        result = this.node("include")(true, true, this.next().read_expr());
+        break;
+    }
+
+    return result;
+  },
+
+  /**
+   * Reads optional expression
+   */
+  read_optional_expr: function(stopToken) {
+    if (this.token !== stopToken) {
+      return this.read_expr();
+    }
+
+    return null;
+  },
+
+  /**
+   * Reads exit expression
+   */
+  read_exit_expr: function() {
+    let expression = null;
+
+    if (this.token === "(") {
+      this.next();
+      expression = this.read_optional_expr(')');
+      this.expect(')') && this.next();
+    }
+
+    return expression;
   },
 
   /**
@@ -224,51 +312,14 @@ module.exports = {
       case this.tok.T_NEW:
         return this.read_new_expr();
 
-      case this.tok.T_ISSET: {
-        result = this.node("isset");
-        if (this.next().expect("(")) {
-          this.next();
-        }
-        const variables = this.read_isset_variables();
-        if (this.expect(")")) {
-          this.next();
-        }
-        return result(variables);
-      }
-      case this.tok.T_EMPTY: {
-        result = this.node("empty");
-        if (this.next().expect("(")) {
-          this.next();
-        }
-        const expression = this.read_expr();
-        if (this.expect(")")) {
-          this.next();
-        }
-        return result(expression);
-      }
+      case this.tok.T_ISSET:
+      case this.tok.T_EMPTY:
       case this.tok.T_INCLUDE:
-        return this.node("include")(false, false, this.next().read_expr());
-
       case this.tok.T_INCLUDE_ONCE:
-        return this.node("include")(true, false, this.next().read_expr());
-
-      case this.tok.T_REQUIRE:
-        return this.node("include")(false, true, this.next().read_expr());
-
-      case this.tok.T_REQUIRE_ONCE:
-        return this.node("include")(true, true, this.next().read_expr());
-
       case this.tok.T_EVAL:
-        result = this.node("eval");
-        if (this.next().expect("(")) {
-          this.next();
-        }
-        expr = this.read_expr();
-        if (this.expect(")")) {
-          this.next();
-        }
-        return result(expr);
-
+      case this.tok.T_REQUIRE:
+      case this.tok.T_REQUIRE_ONCE:
+        return this.read_internal_functions_in_yacc();
       case this.tok.T_INT_CAST:
         return this.read_expr_cast("int");
 
@@ -295,17 +346,8 @@ module.exports = {
       case this.tok.T_EXIT: {
         const useDie = this.lexer.yytext.toLowerCase() === "die";
         result = this.node("exit");
-        let expression = null;
-        if (this.next().token === "(") {
-          if (this.next().token !== ")") {
-            expression = this.read_expr();
-            if (this.expect(")")) {
-              this.next();
-            }
-          } else {
-            this.next();
-          }
-        }
+        this.next();
+        const expression = this.read_exit_expr();
         return result(expression, useDie);
       }
 
@@ -433,6 +475,10 @@ module.exports = {
           if (isConst) this.error("VARIABLE");
           return result("assign", expr, this.next().read_expr(), ">>=");
 
+        case this.tok.T_COALESCE_EQUAL:
+          if (isConst) this.error("VARIABLE");
+          return result("assign", expr, this.next().read_expr(), "??=");
+
         case this.tok.T_INC:
           if (isConst) this.error("VARIABLE");
           this.next();
@@ -483,7 +529,7 @@ module.exports = {
       const what = this.node("class");
       // Annonymous class declaration
       if (this.next().token === "(") {
-        args = this.read_function_argument_list();
+        args = this.read_argument_list();
       }
       const propExtends = this.read_extends_from();
       const propImplements = this.read_implements_list();
@@ -499,7 +545,7 @@ module.exports = {
     // Already existing class
     const name = this.read_new_class_name();
     if (this.token === "(") {
-      args = this.read_function_argument_list();
+      args = this.read_argument_list();
     }
     return result(name, args);
   },
@@ -537,7 +583,7 @@ module.exports = {
         expr = this.read_dereferencable(expr);
       } else if (this.token === "(") {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1118
-        expr = this.node("call")(expr, this.read_function_argument_list());
+        expr = this.node("call")(expr, this.read_argument_list());
       } else {
         return expr;
       }

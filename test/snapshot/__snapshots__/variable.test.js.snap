@@ -18,7 +18,7 @@ Program {
           "type": "string",
           "value": Array [
             EncapsedPart {
-              "curly": true,
+              "curly": false,
               "expression": OffsetLookup {
                 "kind": "offsetlookup",
                 "offset": OffsetLookup {
@@ -52,6 +52,7 @@ Program {
                 },
               },
               "kind": "encapsedpart",
+              "syntax": "complex",
             },
           ],
         },
@@ -582,7 +583,7 @@ Program {
           "type": "string",
           "value": Array [
             EncapsedPart {
-              "curly": true,
+              "curly": false,
               "expression": OffsetLookup {
                 "kind": "offsetlookup",
                 "offset": Number {
@@ -596,6 +597,7 @@ Program {
                 },
               },
               "kind": "encapsedpart",
+              "syntax": "complex",
             },
           ],
         },
@@ -617,7 +619,7 @@ Program {
           "type": "string",
           "value": Array [
             EncapsedPart {
-              "curly": true,
+              "curly": false,
               "expression": OffsetLookup {
                 "kind": "offsetlookup",
                 "offset": String {
@@ -634,6 +636,7 @@ Program {
                 },
               },
               "kind": "encapsedpart",
+              "syntax": "complex",
             },
           ],
         },
@@ -655,7 +658,7 @@ Program {
           "type": "string",
           "value": Array [
             EncapsedPart {
-              "curly": true,
+              "curly": false,
               "expression": OffsetLookup {
                 "kind": "offsetlookup",
                 "offset": Variable {
@@ -670,6 +673,7 @@ Program {
                 },
               },
               "kind": "encapsedpart",
+              "syntax": "complex",
             },
           ],
         },
@@ -1231,7 +1235,7 @@ Program {
       "expression": PropertyLookup {
         "kind": "propertylookup",
         "offset": EncapsedPart {
-          "curly": true,
+          "curly": false,
           "expression": PropertyLookup {
             "kind": "propertylookup",
             "offset": Identifier {
@@ -1245,6 +1249,7 @@ Program {
             },
           },
           "kind": "encapsedpart",
+          "syntax": "complex",
         },
         "what": Variable {
           "curly": false,
@@ -1319,6 +1324,137 @@ Program {
         },
       ],
       "kind": "global",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables simple variable #2 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": true,
+          "kind": "variable",
+          "name": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "var",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables simple variable #3 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": true,
+          "kind": "variable",
+          "name": Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'foo'",
+              "unicode": false,
+              "value": "foo",
+            },
+            "type": "+",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables simple variable #4 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "var",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables simple variable 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

@@ -33,6 +33,13 @@ describe("closure", () => {
       )
     ).toMatchSnapshot();
   });
+  it("use multiple", () => {
+    expect(
+      parser.parseEval(
+        '$var = function() use ($message, $message1, $message2) { echo "something"; };'
+      )
+    ).toMatchSnapshot();
+  });
   it("use by ref", () => {
     expect(
       parser.parseEval(
@@ -52,6 +59,11 @@ describe("closure", () => {
       parser.parseEval(
         '$var = function($arg, $arg, $arg) use ($use, $use, $use) { echo "something"; };'
       )
+    ).toMatchSnapshot();
+  });
+  it("inside call", () => {
+    expect(
+      parser.parseEval(`call(function ($arg) { return $arg; });`)
     ).toMatchSnapshot();
   });
 });

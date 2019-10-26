@@ -234,6 +234,125 @@ Program {
 }
 `;
 
+exports[`assign ??= (php < 7) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": RetIf {
+        "falseExpr": undefined,
+        "kind": "retif",
+        "test": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "trueExpr": undefined,
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "var",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '?' on line 1",
+      "token": "'?'",
+    },
+    Error {
+      "expected": ":",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '=', expecting ':' on line 1",
+      "token": "'='",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '=' on line 1",
+      "token": "'='",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '$var' (T_VARIABLE), expecting ';' on line 1",
+      "token": "'$var' (T_VARIABLE)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`assign ??= 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "??=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`assign ??= with bin 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "??=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "var",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "10",
+          },
+          "type": "+",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`assign ^= 1`] = `
 Program {
   "children": Array [

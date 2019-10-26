@@ -48,7 +48,7 @@ module.exports = {
       case this.tok.T_INTERFACE:
         return this.read_interface_declaration_statement();
       case this.tok.T_TRAIT:
-        return this.read_trait();
+        return this.read_trait_declaration_statement();
       case this.tok.T_USE:
         return this.read_use_statement();
       case this.tok.T_CONST: {
@@ -161,7 +161,7 @@ module.exports = {
       case this.tok.T_INTERFACE:
         return this.read_interface_declaration_statement();
       case this.tok.T_TRAIT:
-        return this.read_trait();
+        return this.read_trait_declaration_statement();
       case this.tok.T_HALT_COMPILER: {
         this.raiseError(
           "__HALT_COMPILER() can only be used from the outermost scope"
@@ -212,10 +212,8 @@ module.exports = {
 
       case this.tok.T_RETURN: {
         const result = this.node("return");
-        let expr = null;
-        if (!this.next().is("EOS")) {
-          expr = this.read_expr();
-        }
+        this.next();
+        const expr = this.read_optional_expr(';');
         this.expectEndOfStatement();
         return result(expr);
       }
@@ -226,11 +224,8 @@ module.exports = {
         const result = this.node(
           this.token === this.tok.T_CONTINUE ? "continue" : "break"
         );
-        let level = null;
-        this.next(); // look ahead
-        if (this.token !== ";") {
-          level = this.read_expr();
-        }
+        this.next();
+        const level = this.read_optional_expr(';');
         this.expectEndOfStatement();
         return result(level);
       }

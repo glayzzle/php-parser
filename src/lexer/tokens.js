@@ -154,8 +154,13 @@ module.exports = {
     },
     "?": function() {
       if (this.php7 && this._input[this.offset] === "?") {
-        this.input();
-        return this.tok.T_COALESCE;
+        if (this.php74 && this._input[this.offset + 1] === "=") {
+          this.consume(2);
+          return this.tok.T_COALESCE_EQUAL;
+        } else {
+          this.input();
+          return this.tok.T_COALESCE;
+        }
       }
       return "?";
     },
