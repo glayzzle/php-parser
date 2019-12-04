@@ -38,7 +38,7 @@ module.exports = {
   },
 
   read_class_modifier: function() {
-    let result = 0;
+    const result = 0;
 
     if (this.token === this.tok.T_ABSTRACT) {
       this.next();

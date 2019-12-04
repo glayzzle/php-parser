@@ -211,8 +211,8 @@ module.exports = {
 
     if (this.token === "(") {
       this.next();
-      expression = this.read_optional_expr(')');
-      this.expect(')') && this.next();
+      expression = this.read_optional_expr(")");
+      this.expect(")") && this.next();
     }
 
     return expression;

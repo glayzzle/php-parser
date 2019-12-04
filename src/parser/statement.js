@@ -213,7 +213,7 @@ module.exports = {
       case this.tok.T_RETURN: {
         const result = this.node("return");
         this.next();
-        const expr = this.read_optional_expr(';');
+        const expr = this.read_optional_expr(";");
         this.expectEndOfStatement();
         return result(expr);
       }
@@ -225,7 +225,7 @@ module.exports = {
           this.token === this.tok.T_CONTINUE ? "continue" : "break"
         );
         this.next();
-        const level = this.read_optional_expr(';');
+        const level = this.read_optional_expr(";");
         this.expectEndOfStatement();
         return result(level);
       }

@@ -44,6 +44,42 @@ module.exports = {
   },
 
   /**
+   * Remove all leading spaces each line for heredoc text if there is a indentation
+   * @param {string} text
+   * @param {number} indentation
+   * @param {boolean} indentation_uses_spaces
+   * @param {boolean} first_encaps_node if it is behind a variable, the first N spaces should not be removed
+   */
+  remove_heredoc_leading_whitespace_chars: function(
+    text,
+    indentation,
+    indentation_uses_spaces,
+    first_encaps_node
+  ) {
+    if (indentation === 0) {
+      return text;
+    }
+
+    const matchedChar = indentation_uses_spaces ? " " : "\t";
+    const removementRegExp = new RegExp(
+      `\\n${matchedChar}{${indentation}}`,
+      "g"
+    );
+    const removementFirstEncapsNodeRegExp = new RegExp(
+      `^${matchedChar}{${indentation}}`
+    );
+
+    // Rough replace, need more check
+    if (first_encaps_node) {
+      // Remove text leading whitespace
+      text = text.replace(removementFirstEncapsNodeRegExp, "");
+    }
+
+    // Remove leading whitespace after \n
+    return text.replace(removementRegExp, "\n");
+  },
+
+  /**
    * Reads dereferencable scalar
    */
   read_dereferencable_scalar: function() {
@@ -140,7 +176,7 @@ module.exports = {
               start,
               this.lexer.yylloc.first_offset
             );
-            node = node(value, raw, this.lexer.heredoc_label);
+            node = node(value, raw, this.lexer.heredoc_label.label);
             return node;
           } else {
             return this.read_encapsed_string(this.tok.T_END_HEREDOC);
@@ -213,10 +249,17 @@ module.exports = {
     if (this.token === this.tok.T_ENCAPSED_AND_WHITESPACE) {
       const text = this.text();
       this.next();
+
+      // if this.lexer.heredoc_label.first_encaps_node -> remove first indents
       result = result(
         "string",
         false,
-        this.resolve_special_chars(text, isDoubleQuote),
+        this.remove_heredoc_leading_whitespace_chars(
+          this.resolve_special_chars(text, isDoubleQuote),
+          this.lexer.heredoc_label.indentation,
+          this.lexer.heredoc_label.indentation_uses_spaces,
+          this.lexer.heredoc_label.first_encaps_node
+        ),
         false,
         text
       );
@@ -287,6 +330,8 @@ module.exports = {
       result = result("string", false, value, false, value);
     }
 
+    // reset first_encaps_node to false after access any node
+    this.lexer.heredoc_label.first_encaps_node = false;
     return encapsedPart(result, syntax, curly);
   },
   /**
@@ -320,7 +365,7 @@ module.exports = {
     node = node(value, raw, type);
 
     if (expect === this.tok.T_END_HEREDOC) {
-      node.label = this.lexer.heredoc_label;
+      node.label = this.lexer.heredoc_label.label;
     }
     return node;
   },

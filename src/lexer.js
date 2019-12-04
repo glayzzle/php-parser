@@ -154,6 +154,25 @@ lexer.prototype.setInput = function(input) {
     this.conditionStack = [];
     this.begin("INITIAL");
   }
+  // https://github.com/php/php-src/blob/999e32b65a8a4bb59e27e538fa68ffae4b99d863/Zend/zend_language_scanner.h#L59
+  // Used for heredoc and nowdoc
+  this.heredoc_label = {
+    label: "",
+    length: 0,
+    indentation: 0,
+    indentation_uses_spaces: false,
+    /**
+     * this used for parser to detemine the if current node segment is first encaps node.
+     * if ture, the indentation will remove from the begining. and if false, the prev node
+     * might be a variable '}' ,and the leading spaces should not be removed util meet the
+     * first \n
+     */
+    first_encaps_node: false,
+    // for backward compatible
+    toString: function() {
+      this.label;
+    }
+  };
   return this;
 };
 
@@ -305,7 +324,8 @@ lexer.prototype.getState = function() {
       first_column: this.yylloc.first_column,
       last_line: this.yylloc.last_line,
       last_column: this.yylloc.last_column
-    }
+    },
+    heredoc_label: this.heredoc_label
   };
 };
 
@@ -318,6 +338,9 @@ lexer.prototype.setState = function(state) {
   this.yylineno = state.yylineno;
   this.yyprevcol = state.yyprevcol;
   this.yylloc = state.yylloc;
+  if (state.heredoc_label) {
+    this.heredoc_label = state.heredoc_label;
+  }
   return this;
 };
 
