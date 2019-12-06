@@ -3,7 +3,7 @@ const parser = require("../main");
 describe("nowdoc", function() {
   it("simple", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<'EOD'
 Example of string
 spanning multiple lines
@@ -15,7 +15,7 @@ EOD;
 
   it("with space between <<< and label", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<     'EOD'
 Example of string
 spanning multiple lines
@@ -27,7 +27,7 @@ EOD;
 
   it("with variables", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<'EOT'
 My name is "$name". I am printing some $foo->foo.
 Now, I am printing some {$foo->bar[1]}.
@@ -39,7 +39,7 @@ EOT;
 
   it("inside call", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 var_dump(array(<<<'EOD'
 foobar!
 EOD
@@ -50,7 +50,7 @@ EOD
 
   it("inside function", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 function foo()
 {
     static $bar = <<<'LABEL'
@@ -63,7 +63,7 @@ LABEL;
 
   it("inside class", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 class foo {
     const BAR = <<<'FOOBAR'
 Constant example
@@ -79,7 +79,7 @@ FOOBAR;
 
   it("empty", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<'TEST'
 TEST;
     `)
@@ -88,7 +88,7 @@ TEST;
 
   it("only newline", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<'TEST'
 
 TEST;
@@ -98,7 +98,7 @@ TEST;
 
   it("space between <<< and label", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<   'TEST'
   a
  b
@@ -110,12 +110,37 @@ TEST;
 
   it("tab between <<< and label", function() {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 echo <<<\t'TEST'
   a
  b
 c
 TEST;
+    `)
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible nowdoc syntax: 4 spaces of indentation", function() {
+    expect(
+      parser.parseEval(`
+      echo <<<'END'
+      a
+     b
+    c
+    END;
+    `)
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible nowdoc syntax: with variables", function() {
+    expect(
+      parser.parseEval(`
+      echo <<<'END'
+      a
+      {$foo->bar[1]}
+     b
+    c
+    END;
     `)
     ).toMatchSnapshot();
   });

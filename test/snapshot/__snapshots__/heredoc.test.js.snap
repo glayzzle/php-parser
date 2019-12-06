@@ -1,5 +1,134 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`heredoc Flexible heredoc syntax: 4 spaces of indentation 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "END",
+          "raw": "<<<END
+      a
+     b
+    c
+    END",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "      a
+     b
+    c
+    ",
+                "unicode": false,
+                "value": "  a
+ b
+c
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: with variables 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "END",
+          "raw": "<<<END
+      a
+      {$foo->bar[1]}
+     b
+    c
+    END",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "      a
+      ",
+                "unicode": false,
+                "value": "  a
+  ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "bar",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "foo",
+                  },
+                },
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "
+     b
+    c
+    ",
+                "unicode": false,
+                "value": "
+ b
+c
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc empty 1`] = `
 Program {
   "children": Array [

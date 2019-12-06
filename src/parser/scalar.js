@@ -176,7 +176,16 @@ module.exports = {
               start,
               this.lexer.yylloc.first_offset
             );
-            node = node(value, raw, this.lexer.heredoc_label.label);
+            node = node(
+              this.remove_heredoc_leading_whitespace_chars(
+                value,
+                this.lexer.heredoc_label.indentation,
+                this.lexer.heredoc_label.indentation_uses_spaces,
+                this.lexer.heredoc_label.first_encaps_node
+              ),
+              raw,
+              this.lexer.heredoc_label.label
+            );
             return node;
           } else {
             return this.read_encapsed_string(this.tok.T_END_HEREDOC);

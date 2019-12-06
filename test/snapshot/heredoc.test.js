@@ -1,68 +1,68 @@
 const parser = require("../main");
 
 describe("heredoc", function() {
-    it("simple", function() {
-        expect(
-            parser.parseEval(`
+  it("simple", function() {
+    expect(
+      parser.parseEval(`
 echo <<<EOD
 Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("with space between <<< and label", function() {
-        expect(
-            parser.parseEval(`
+  it("with space between <<< and label", function() {
+    expect(
+      parser.parseEval(`
 echo <<<     EOD
 Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("with double quotes", function() {
-        expect(
-            parser.parseEval(`
+  it("with double quotes", function() {
+    expect(
+      parser.parseEval(`
 echo <<<"EOD"
 Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("with variables", function() {
-        expect(
-            parser.parseEval(`
+  it("with variables", function() {
+    expect(
+      parser.parseEval(`
 echo <<<EOT
 My name is "$name". I am printing some $foo->foo.
 Now, I am printing some {$foo->bar[1]}.
 This should print a capital 'A': \x41
 EOT;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("inside call", function() {
-        expect(
-            parser.parseEval(`
+  it("inside call", function() {
+    expect(
+      parser.parseEval(`
 var_dump(array(<<<EOD
 foobar!
 EOD
 ));
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("inside function", function() {
-        expect(
-            parser.parseEval(`
+  it("inside function", function() {
+    expect(
+      parser.parseEval(`
 function foo()
 {
     static $bar = <<<LABEL
@@ -70,12 +70,12 @@ Nothing in here...
 LABEL;
 }
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("inside class", function() {
-        expect(
-            parser.parseEval(`
+  it("inside class", function() {
+    expect(
+      parser.parseEval(`
 class foo {
     const BAR = <<<FOOBAR
 Constant example
@@ -86,49 +86,74 @@ Property example
 FOOBAR;
 }
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("empty", function() {
-        expect(
-            parser.parseEval(`
+  it("empty", function() {
+    expect(
+      parser.parseEval(`
 echo <<<TEST
 TEST;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("only newline", function() {
-        expect(
-            parser.parseEval(`
+  it("only newline", function() {
+    expect(
+      parser.parseEval(`
 echo <<<TEST
 
 TEST;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("space between <<< and label", function() {
-        expect(
-            parser.parseEval(`
+  it("space between <<< and label", function() {
+    expect(
+      parser.parseEval(`
 echo <<<   TEST
   a
  b
 c
 TEST;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 
-    it("tab between <<< and label", function() {
-        expect(
-            parser.parseEval(`
+  it("tab between <<< and label", function() {
+    expect(
+      parser.parseEval(`
 echo <<<\tTEST
   a
  b
 c
 TEST;
     `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: 4 spaces of indentation", function() {
+    expect(
+      parser.parseEval(`
+      echo <<<END
+      a
+     b
+    c
+    END;
+    `)
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: with variables", function() {
+    expect(
+      parser.parseEval(`
+      echo <<<END
+      a
+      {$foo->bar[1]}
+     b
+    c
+    END;
+    `)
+    ).toMatchSnapshot();
+  });
 });
