@@ -60,6 +60,13 @@ module.exports = {
       return text;
     }
 
+    this.check_heredoc_indentation_level(
+      text,
+      indentation,
+      indentation_uses_spaces,
+      first_encaps_node
+    );
+
     const matchedChar = indentation_uses_spaces ? " " : "\t";
     const removementRegExp = new RegExp(
       `\\n${matchedChar}{${indentation}}`,
@@ -77,6 +84,65 @@ module.exports = {
 
     // Remove leading whitespace after \n
     return text.replace(removementRegExp, "\n");
+  },
+
+  /**
+   * Check indentation level of heredoc in text, if mismatch, raiseError
+   * @param {string} text
+   * @param {number} indentation
+   * @param {boolean} indentation_uses_spaces
+   * @param {boolean} first_encaps_node if it is behind a variable, the first N spaces should not be removed
+   */
+  check_heredoc_indentation_level: function(
+    text,
+    indentation,
+    indentation_uses_spaces,
+    first_encaps_node
+  ) {
+    const textSize = text.length;
+    let offset = 0;
+    let leadingWhitespaceCharCount = 0;
+    /**
+     * @var inCoutingState {boolean} reset to true after a new line
+     */
+    let inCoutingState = true;
+    const chToCheck = indentation_uses_spaces ? " " : "\t";
+    let inCheckState = false;
+    if (!first_encaps_node) {
+      // start from first \n
+      offset = text.indexOf("\n");
+      // if no \n, just return
+      if (offset === -1) {
+        return;
+      }
+      offset++;
+    }
+    while (offset < textSize) {
+      if (inCoutingState) {
+        if (text[offset] === chToCheck) {
+          leadingWhitespaceCharCount++;
+        } else {
+          inCheckState = true;
+        }
+      } else {
+        inCoutingState = false;
+      }
+
+      if (inCheckState && leadingWhitespaceCharCount < indentation) {
+        this.raiseError(
+          `Invalid body indentation level (expecting an indentation at least ${indentation})`
+        );
+      } else {
+        inCheckState = false;
+      }
+
+      if (text[offset] === "\n") {
+        // Reset counting state
+        inCoutingState = true;
+        leadingWhitespaceCharCount = 0;
+      }
+      offset++;
+    }
   },
 
   /**

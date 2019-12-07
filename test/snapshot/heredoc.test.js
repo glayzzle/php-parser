@@ -156,4 +156,54 @@ TEST;
     `)
     ).toMatchSnapshot();
   });
+
+  it("Flexible heredoc syntax: If the closing marker is indented further than any lines of the body", () => {
+    expect(
+      parser.parseEval(
+        `
+      echo <<<END
+  a
+ b
+c
+ END;
+`,
+        {
+          parser: { suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: different indentation for body (spaces) ending marker (tabs)", () => {
+    expect(
+      parser.parseEval(
+        `
+      echo <<<END
+  a
+\t\tEND;
+`,
+        {
+          parser: { suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: mixing spaces and tabs in body", () => {
+    expect(
+      parser.parseEval(
+        `
+  echo <<<END
+\t a
+  END;
+`,
+        {
+          parser: { suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });

@@ -45,6 +45,216 @@ c
 }
 `;
 
+exports[`heredoc Flexible heredoc syntax: If the closing marker is indented further than any lines of the body 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "END",
+          "raw": "<<<END
+  a
+ b
+c
+ END",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "  a
+ b
+c
+ ",
+                "unicode": false,
+                "value": " a
+b
+c
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 6,
+      "message": "Invalid body indentation level (expecting an indentation at least 1) on line 6",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 6,
+      "message": "Invalid body indentation level (expecting an indentation at least 1) on line 6",
+      "token": undefined,
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: different indentation for body (spaces) ending marker (tabs) 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "END",
+          "raw": "<<<END
+  a
+		END",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "  a
+		",
+                "unicode": false,
+                "value": "  a
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: mixing spaces and tabs in body 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "label": "END",
+          "raw": "<<<END
+	 a
+  END",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "	 a
+  ",
+                "unicode": false,
+                "value": "	 a
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 4,
+      "message": "Invalid body indentation level (expecting an indentation at least 2) on line 4",
+      "token": undefined,
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc Flexible heredoc syntax: with variables 1`] = `
 Program {
   "children": Array [
