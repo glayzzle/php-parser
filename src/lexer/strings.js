@@ -147,7 +147,7 @@ module.exports = {
     let indentation = 0;
     let leading_ch = this._input.substring(offset - 1, offset);
 
-    while (/[\t ]/.test(leading_ch)) {
+    while (leading_ch === "\t" || leading_ch === " ") {
       if (leading_ch === " ") {
         indentation_uses_spaces = true;
       } else if (leading_ch === "\t") {
