@@ -1,5 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`nowdoc Flexible nowdoc syntax: 4 spaces of indentation 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "END",
+          "raw": "<<<'END'
+      a
+     b
+    c
+    END",
+          "value": "  a
+ b
+c
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc Flexible nowdoc syntax: with variables 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "END",
+          "raw": "<<<'END'
+      a
+      {$foo->bar[1]}
+     b
+    c
+    END",
+          "value": "  a
+  {$foo->bar[1]}
+ b
+c
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`nowdoc empty 1`] = `
 Program {
   "children": Array [
