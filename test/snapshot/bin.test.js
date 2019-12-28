@@ -101,6 +101,15 @@ describe('bin', () => {
   it('??', () => {
     expect(parser.parseEval('$foo ?? $bar;')).toMatchSnapshot();
   });
+  it('?? (php < 7)', function() {
+    const astErr = parser.parseEval(`$var ?? $var;`, {
+      parser: {
+        php7: false,
+        suppressErrors: true
+      }
+    });
+    expect(astErr).toMatchSnapshot();
+  });
   it('assign', () => {
     expect(parser.parseEval('$var = $var + $var;')).toMatchSnapshot();
   });

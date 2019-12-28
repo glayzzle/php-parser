@@ -494,6 +494,47 @@ Program {
 }
 `;
 
+exports[`bin ?? (php < 7) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": RetIf {
+        "falseExpr": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "kind": "retif",
+        "test": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "trueExpr": undefined,
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '?' on line 1",
+      "token": "'?'",
+    },
+    Error {
+      "expected": ":",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '$var' (T_VARIABLE), expecting ':' on line 1",
+      "token": "'$var' (T_VARIABLE)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`bin ?? 1`] = `
 Program {
   "children": Array [

@@ -1181,4 +1181,14 @@ string";`,
       })
     ).toMatchSnapshot();
   });
+  it("single call", function() {
+    expect(
+      parser.parseEval(`call();`, {
+        ast: {
+          withPositions: true,
+          withSource: true
+        }
+      })
+    ).toMatchSnapshot();
+  });
 });

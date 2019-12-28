@@ -336,6 +336,8 @@ AST.prototype.resolvePrecedence = function(result, parser) {
       this.swapLocations(buffer, buffer.left, buffer.right, parser);
       result = buffer;
     }
+  } else if (result.kind === "expressionstatement") {
+    this.swapLocations(result, result.expression, result, parser);
   }
   return result;
 };

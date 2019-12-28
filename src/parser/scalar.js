@@ -42,25 +42,17 @@ module.exports = {
         }
       );
   },
+
   /**
-   * ```ebnf
-   *  scalar ::= T_MAGIC_CONST
-   *       | T_LNUMBER | T_DNUMBER
-   *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
-   *       | '"' encaps_list '"'
-   *       | T_START_HEREDOC encaps_list T_END_HEREDOC
-   *       | namespace_name (T_DOUBLE_COLON T_STRING)?
-   * ```
+   * Reads dereferencable scalar
    */
-  read_scalar: function() {
-    if (this.is("T_MAGIC_CONST")) {
-      return this.get_magic_constant();
-    } else {
-      let value, node;
-      switch (this.token) {
-        // TEXTS
-        case this.tok.T_CONSTANT_ENCAPSED_STRING: {
-          value = this.node("string");
+  read_dereferencable_scalar: function() {
+    let result = null;
+
+    switch (this.token) {
+      case this.tok.T_CONSTANT_ENCAPSED_STRING:
+        {
+          let value = this.node("string");
           const text = this.text();
           let offset = 0;
           if (text[0] === "b" || text[0] === "B") {
@@ -80,11 +72,48 @@ module.exports = {
           );
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
-            return this.read_static_getter(value);
+            result = this.read_static_getter(value);
           } else {
             // dirrect string
-            return value;
+            result = value;
           }
+        }
+        break;
+      case this.tok.T_ARRAY: // array parser
+        result = this.read_array();
+        break;
+      case "[": // short array format
+        result = this.read_array();
+        break;
+    }
+
+    return result;
+  },
+
+  /**
+   * ```ebnf
+   *  scalar ::= T_MAGIC_CONST
+   *       | T_LNUMBER | T_DNUMBER
+   *       | T_START_HEREDOC T_ENCAPSED_AND_WHITESPACE? T_END_HEREDOC
+   *       | '"' encaps_list '"'
+   *       | T_START_HEREDOC encaps_list T_END_HEREDOC
+   *       | namespace_name (T_DOUBLE_COLON T_STRING)?
+   * ```
+   */
+  read_scalar: function() {
+    if (this.is("T_MAGIC_CONST")) {
+      return this.get_magic_constant();
+    } else {
+      let value, node;
+      switch (this.token) {
+        // NUMERIC
+        case this.tok.T_LNUMBER: // long
+        case this.tok.T_DNUMBER: {
+          // double
+          const result = this.node("number");
+          value = this.text();
+          this.next();
+          return result(value, null);
         }
         case this.tok.T_START_HEREDOC:
           if (this.lexer.curCondition === "ST_NOWDOC") {
@@ -111,12 +140,7 @@ module.exports = {
               start,
               this.lexer.yylloc.first_offset
             );
-            node = node(
-              value,
-              raw,
-              this.lexer.heredoc_label,
-              raw[3] === '"' || raw[3] === "'"
-            );
+            node = node(value, raw, this.lexer.heredoc_label);
             return node;
           } else {
             return this.read_encapsed_string(this.tok.T_END_HEREDOC);
@@ -130,21 +154,11 @@ module.exports = {
           return this.read_encapsed_string('"', true);
         }
 
-        // NUMERIC
-        case this.tok.T_LNUMBER: // long
-        case this.tok.T_DNUMBER: {
-          // double
-          const result = this.node("number");
-          value = this.text();
-          this.next();
-          return result(value, null);
-        }
-
-        // ARRAYS
+        // TEXTS
+        case this.tok.T_CONSTANT_ENCAPSED_STRING:
         case this.tok.T_ARRAY: // array parser
-          return this.read_array();
         case "[": // short array format
-          return this.read_array();
+          return this.read_dereferencable_scalar();
         default: {
           const err = this.error("SCALAR");
           // graceful mode : ignore token & return error node
@@ -187,6 +201,7 @@ module.exports = {
    */
   read_encapsed_string_item: function(isDoubleQuote) {
     const encapsedPart = this.node("encapsedpart");
+    let syntax = null;
     let curly = false;
     let result = this.node(),
       offset,
@@ -206,6 +221,8 @@ module.exports = {
         text
       );
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
+      syntax = "simple";
+      curly = true;
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
       name = null;
@@ -220,23 +237,23 @@ module.exports = {
           node = this.node("offsetlookup");
           offset = this.next().read_expr();
           this.expect("]") && this.next();
-          name = node(name, offset);
+          result = node(name, offset);
         } else {
-          name = varName;
+          result = name(varName, false);
         }
       } else {
-        name = this.read_expr();
+        result = result("variable", this.read_expr(), false);
       }
       this.expect("}") && this.next();
-      result = result("variable", name, true);
     } else if (this.token === this.tok.T_CURLY_OPEN) {
       // expression
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1246
-      curly = true;
+      syntax = "complex";
       result.destroy();
       result = this.next().read_variable(false, false);
       this.expect("}") && this.next();
     } else if (this.token === this.tok.T_VARIABLE) {
+      syntax = "simple";
       // plain variable
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1231
       result.destroy();
@@ -270,7 +287,7 @@ module.exports = {
       result = result("string", false, value, false, value);
     }
 
-    return encapsedPart(result, curly);
+    return encapsedPart(result, syntax, curly);
   },
   /**
    * Reads an encapsed string

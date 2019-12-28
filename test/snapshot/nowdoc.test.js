@@ -95,4 +95,28 @@ TEST;
     `)
     ).toMatchSnapshot();
   });
+
+  it("space between <<< and label", function() {
+    expect(
+        parser.parseEval(`
+echo <<<   'TEST'
+  a
+ b
+c
+TEST;
+    `)
+    ).toMatchSnapshot();
+  });
+
+  it("tab between <<< and label", function() {
+    expect(
+        parser.parseEval(`
+echo <<<\t'TEST'
+  a
+ b
+c
+TEST;
+    `)
+    ).toMatchSnapshot();
+  });
 });

@@ -14,7 +14,7 @@ module.exports = {
    */
   read_class_declaration_statement: function() {
     const result = this.node("class");
-    const flag = this.read_class_scope();
+    const flag = this.read_class_modifiers();
     // graceful mode : ignore token & go next
     if (this.token !== this.tok.T_CLASS) {
       this.error(this.tok.T_CLASS);
@@ -32,23 +32,25 @@ module.exports = {
     const body = this.next().read_class_body();
     return result(propName, propExtends, propImplements, body, flag);
   },
-  /**
-   * Read the class visibility
-   * ```ebnf
-   *   class_scope ::= (T_FINAL | T_ABSTRACT)?
-   * ```
-   */
-  read_class_scope: function() {
-    const result = this.token;
-    if (result == this.tok.T_FINAL) {
-      this.next();
-      return [0, 0, 2];
-    } else if (result == this.tok.T_ABSTRACT) {
-      this.next();
-      return [0, 0, 1];
-    }
-    return [0, 0, 0];
+
+  read_class_modifiers: function() {
+    return [0, 0, this.read_class_modifier()];
   },
+
+  read_class_modifier: function() {
+    let result = 0;
+
+    if (this.token === this.tok.T_ABSTRACT) {
+      this.next();
+      return 1;
+    } else if (this.token === this.tok.T_FINAL) {
+      this.next();
+      return 2;
+    }
+
+    return result;
+  },
+
   /**
    * Reads a class body
    * ```ebnf
@@ -344,7 +346,7 @@ module.exports = {
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
    * ```
    */
-  read_trait: function() {
+  read_trait_declaration_statement: function() {
     const result = this.node("trait");
     // graceful mode : ignore token & go next
     if (this.token !== this.tok.T_TRAIT) {

@@ -143,7 +143,8 @@ module.exports = {
     230: "T_COALESCE",
     231: "T_POW",
     232: "T_POW_EQUAL",
-    233: "T_SPACESHIP"
+    233: "T_SPACESHIP",
+    234: "T_COALESCE_EQUAL"
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -278,6 +279,7 @@ module.exports = {
     T_COALESCE: 230,
     T_POW: 231,
     T_POW_EQUAL: 232,
-    T_SPACESHIP: 233
+    T_SPACESHIP: 233,
+    T_COALESCE_EQUAL: 234
   }
 };

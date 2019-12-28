@@ -8,7 +8,6 @@ Program {
         Nowdoc {
           "kind": "nowdoc",
           "label": "TEST",
-          "quote": true,
           "raw": "<<<'TEST'
 TEST",
           "value": "",
@@ -83,7 +82,6 @@ Program {
               "value": Nowdoc {
                 "kind": "nowdoc",
                 "label": "FOOBAR",
-                "quote": true,
                 "raw": "<<<'FOOBAR'
 Constant example
 FOOBAR",
@@ -107,7 +105,6 @@ FOOBAR",
               "value": Nowdoc {
                 "kind": "nowdoc",
                 "label": "FOOBAR",
-                "quote": true,
                 "raw": "<<<'FOOBAR'
 Property example
 FOOBAR",
@@ -149,7 +146,6 @@ Program {
                 "defaultValue": Nowdoc {
                   "kind": "nowdoc",
                   "label": "LABEL",
-                  "quote": true,
                   "raw": "<<<'LABEL'
 Nothing in here...
 LABEL",
@@ -190,7 +186,6 @@ Program {
         Nowdoc {
           "kind": "nowdoc",
           "label": "TEST",
-          "quote": true,
           "raw": "<<<'TEST'
 
 TEST",
@@ -214,7 +209,6 @@ Program {
         Nowdoc {
           "kind": "nowdoc",
           "label": "EOD",
-          "quote": true,
           "raw": "<<<'EOD'
 Example of string
 spanning multiple lines
@@ -234,6 +228,60 @@ using heredoc syntax.",
 }
 `;
 
+exports[`nowdoc space between <<< and label 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "TEST",
+          "raw": "<<<   'TEST'
+  a
+ b
+c
+TEST",
+          "value": "  a
+ b
+c",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`nowdoc tab between <<< and label 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Nowdoc {
+          "kind": "nowdoc",
+          "label": "TEST",
+          "raw": "<<<	'TEST'
+  a
+ b
+c
+TEST",
+          "value": "  a
+ b
+c",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`nowdoc with space between <<< and label 1`] = `
 Program {
   "children": Array [
@@ -242,7 +290,6 @@ Program {
         Nowdoc {
           "kind": "nowdoc",
           "label": "EOD",
-          "quote": false,
           "raw": "<<<     'EOD'
 Example of string
 spanning multiple lines
@@ -270,7 +317,6 @@ Program {
         Nowdoc {
           "kind": "nowdoc",
           "label": "EOT",
-          "quote": true,
           "raw": "<<<'EOT'
 My name is \\"$name\\". I am printing some $foo->foo.
 Now, I am printing some {$foo->bar[1]}.

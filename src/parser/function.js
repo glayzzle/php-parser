@@ -120,10 +120,8 @@ module.exports = {
     if (this.expect("(")) this.next();
     const params = this.read_parameter_list();
     if (this.expect(")")) this.next();
-    if (type === 1 && this.token === this.tok.T_USE) {
-      if (this.next().expect("(")) this.next();
-      use = this.read_list(this.read_lexical_var, ",");
-      if (this.expect(")")) this.next();
+    if (type === 1) {
+      use = this.read_lexical_vars();
     }
     if (this.token === ":") {
       if (this.next().token === "?") {
@@ -138,6 +136,24 @@ module.exports = {
     }
     return result(name, params, isRef, returnType, nullable);
   },
+
+  read_lexical_vars: function() {
+    let result = [];
+
+    if (this.token === this.tok.T_USE) {
+      this.next();
+      this.expect("(") && this.next();
+      result = this.read_lexical_var_list();
+      this.expect(")") && this.next();
+    }
+
+    return result;
+  },
+
+  read_lexical_var_list: function() {
+    return this.read_list(this.read_lexical_var, ",");
+  },
+
   /**
    * ```ebnf
    * lexical_var ::= '&'? T_VARIABLE
@@ -217,36 +233,43 @@ module.exports = {
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
    * ```
    */
-  read_function_argument_list: function() {
+  read_argument_list: function() {
     let result = [];
-    let wasVariadic = false;
     this.expect("(") && this.next();
     if (this.token !== ")") {
-      result = this.read_function_list(
-        function() {
-          const argument = this.read_argument_list();
-          if (argument) {
-            if (wasVariadic) {
-              this.raiseError("Unexpected argument after a variadic argument");
-            }
-            if (argument.kind === "variadic") {
-              wasVariadic = true;
-            }
-          }
-          return argument;
-        }.bind(this),
-        ","
-      );
+      result = this.read_non_empty_argument_list();
     }
     this.expect(")") && this.next();
     return result;
+  },
+  /**
+   * Reads non empty argument list
+   */
+  read_non_empty_argument_list: function() {
+    let wasVariadic = false;
+
+    return this.read_function_list(
+      function() {
+        const argument = this.read_argument();
+        if (argument) {
+          if (wasVariadic) {
+            this.raiseError("Unexpected argument after a variadic argument");
+          }
+          if (argument.kind === "variadic") {
+            wasVariadic = true;
+          }
+        }
+        return argument;
+      }.bind(this),
+      ","
+    );
   },
   /**
    * ```ebnf
    *    argument_list ::= T_ELLIPSIS? expr
    * ```
    */
-  read_argument_list: function() {
+  read_argument: function() {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
     }

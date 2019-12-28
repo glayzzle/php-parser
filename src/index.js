@@ -96,6 +96,7 @@ const engine = function(options) {
       }
       options.lexer.php7 = options.parser.php7;
       options.lexer.php73 = options.parser.php73;
+      options.lexer.php74 = options.parser.php74;
     }
     combine(options, this);
   }
