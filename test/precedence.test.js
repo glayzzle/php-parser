@@ -3,45 +3,39 @@ var parser = require("./main");
 /**
  * Check precedence by using parenthesis on node B
  */
-var checkPrecedence = function(a, b) {
-  if (!a && !b)
-    return false;
-  for (let k in b) {
-    if (k === 'parenthesizedExpression') continue;
-    if (b.hasOwnProperty(k)) {
-      if (!a.hasOwnProperty(k))
-        return expect(a).toHaveProperty(k, b[k]);
-      if (typeof b[k] === "object" && b[k] !== null) {
-        checkPrecedence(a[k], b[k]);
-      } else {
-        expect(a[k]).toEqual(b[k]);
-      }
-    }
+function filterKey(fn, obj) {
+  if (Array.isArray(obj)) {
+    return obj.map(e => filterKey(fn, e));
   }
-  for (let k in a) {
-    if (k === 'parenthesizedExpression') continue;
-    if (a.hasOwnProperty(k)) {
-      if (!b.hasOwnProperty(k))
-        return expect(b).toHaveProperty(k, a[k]);
-    }
-  }
-  return true;
-};
 
-var shouldBeSame = function(a, b) {
-  var ast = parser.parseEval([
-    a + ";",
-    b + ";"
-  ].join("\n"));
-  let result = checkPrecedence(ast.children[0], ast.children[1]);
-  if (!result) {
-    console.log("Parsed :", ast.children[0]);
-    console.log("Expected :", ast.children[1]);
+  if (typeof(obj) === "object" && obj !== null) {
+    return Object.keys(obj)
+      .filter(fn)
+      .reduce((result, key) => ({
+        ...result,
+        [key]: filterKey(fn, obj[key])
+      }), {});
   }
-  expect(result).toBeTruthy();
+
+  return obj
+}
+
+function shouldBeSame(a, b) {
+  const fn = key => key !== "parenthesizedExpression";
+  expect(filterKey(fn, parser.parseEval(a))).toEqual(filterKey(fn, parser.parseEval(b)))
 };
 
 // START TESTS HERE
+
+describe("Test infrastructure", function() {
+  it("should filter parenthesizedExpression prop", function() {
+    const fn = key => key !== "parenthesizedExpression";
+    expect(filterKey(fn, {foo: "bar", parenthesizedExpression: true})).toEqual({foo: "bar"});
+    expect(filterKey(fn, {x: {foo: "bar", parenthesizedExpression: true}})).toEqual({x: {foo: "bar"}});
+    expect(filterKey(fn, [{foo: "bar", parenthesizedExpression: true}])).toEqual([{foo: "bar"}]);
+  });
+});
+
 describe("Test precedence", function() {
   it("test *", function() {
     shouldBeSame("5 * 3 - 2", "(5 * 3) - 2");
@@ -134,6 +128,9 @@ describe("Test precedence", function() {
   });
   it("test silent node / div", function() {
     shouldBeSame("@$i / 0;", "@($i) / 0;");
+  });
+  it("test silent node / retif", function() {
+    shouldBeSame("@$var ? 1 : 2;", "(@$var) ? 1 : 2;");
   });
   it("test silent node / ret if", function() {
     shouldBeSame("@$i == true ? @$foo : @$bar;", "@($i) == true ? @($foo) : @($bar);");
