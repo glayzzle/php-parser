@@ -253,7 +253,7 @@ AST.prototype.resolvePrecedence = function(result, parser) {
       }
     }
   } else if (
-    ["silent", "cast"].includes(result.kind) &&
+    (result.kind === "silent" || result.kind === "cast") &&
     result.expr &&
     !result.expr.parenthesizedExpression
   ) {
@@ -283,13 +283,6 @@ AST.prototype.resolvePrecedence = function(result, parser) {
         this.swapLocations(result, result, result.what, parser);
         buffer.left = this.resolvePrecedence(result, parser);
         this.swapLocations(buffer, buffer.left, buffer.right, parser);
-        result = buffer;
-      } else if (result.what.kind === "retif") {
-        buffer = result.what;
-        result.what = result.what.test;
-        this.swapLocations(result, result, result.what, parser);
-        buffer.test = this.resolvePrecedence(result, parser);
-        this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
         result = buffer;
       }
     }
