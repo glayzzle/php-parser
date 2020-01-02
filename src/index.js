@@ -83,16 +83,13 @@ const engine = function(options) {
       if (options.parser.php7 === false) {
         options.parser.php73 = false;
         options.parser.php74 = false;
-      } else {
-        options.parser.php7 = true;
-        options.parser.php73 = true;
-        options.parser.php74 = true;
       }
       if (options.parser.php73 === true) {
         options.parser.php7 = true;
       }
       if (options.parser.php74 === true) {
         options.parser.php7 = true;
+        options.parser.php73 = true;
       }
       options.lexer.php7 = options.parser.php7;
       options.lexer.php73 = options.parser.php73;
