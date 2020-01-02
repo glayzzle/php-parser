@@ -163,8 +163,7 @@ AST.precedence = {};
   ["*", "/", "%"],
   ["!"],
   ["instanceof"],
-  ["cast"]
-  // TODO: typecasts
+  ["cast", "silent"]
   // TODO: [ (array)
   // TODO: clone, new
 ].forEach(function(list, index) {
@@ -254,22 +253,22 @@ AST.prototype.resolvePrecedence = function(result, parser) {
       }
     }
   } else if (
-    result.kind === "cast" &&
-    result.what &&
-    !result.what.parenthesizedExpression
+    (result.kind === "silent" || result.kind === "cast") &&
+    result.expr &&
+    !result.expr.parenthesizedExpression
   ) {
     // https://github.com/glayzzle/php-parser/issues/172
-    if (result.what.kind === "bin") {
-      buffer = result.what;
-      result.what = result.what.left;
-      this.swapLocations(result, result, result.what, parser);
+    if (result.expr.kind === "bin") {
+      buffer = result.expr;
+      result.expr = result.expr.left;
+      this.swapLocations(result, result, result.expr, parser);
       buffer.left = this.resolvePrecedence(result, parser);
       this.swapLocations(buffer, buffer.left, buffer.right, parser);
       result = buffer;
-    } else if (result.what.kind === "retif") {
-      buffer = result.what;
-      result.what = result.what.test;
-      this.swapLocations(result, result, result.what, parser);
+    } else if (result.expr.kind === "retif") {
+      buffer = result.expr;
+      result.expr = result.expr.test;
+      this.swapLocations(result, result, result.expr, parser);
       buffer.test = this.resolvePrecedence(result, parser);
       this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
       result = buffer;
@@ -284,13 +283,6 @@ AST.prototype.resolvePrecedence = function(result, parser) {
         this.swapLocations(result, result, result.what, parser);
         buffer.left = this.resolvePrecedence(result, parser);
         this.swapLocations(buffer, buffer.left, buffer.right, parser);
-        result = buffer;
-      } else if (result.what.kind === "retif") {
-        buffer = result.what;
-        result.what = result.what.test;
-        this.swapLocations(result, result, result.what, parser);
-        buffer.test = this.resolvePrecedence(result, parser);
-        this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
         result = buffer;
       }
     }
@@ -325,16 +317,6 @@ AST.prototype.resolvePrecedence = function(result, parser) {
         this.swapLocations(buffer, buffer.left, result.right, parser);
         result = buffer;
       }
-    }
-  } else if (result.kind === "silent" && !result.expr.parenthesizedExpression) {
-    if (result.expr.kind === "assign") return result;
-    // overall least precedence
-    if (result.expr.right) {
-      buffer = result.expr;
-      result.expr = buffer.left;
-      buffer.left = result;
-      this.swapLocations(buffer, buffer.left, buffer.right, parser);
-      result = buffer;
     }
   } else if (result.kind === "expressionstatement") {
     this.swapLocations(result, result.expression, result, parser);
