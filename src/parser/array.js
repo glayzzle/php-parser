@@ -5,9 +5,6 @@
  */
 "use strict";
 
-const ArrayExpr = "array";
-const ArrayEntry = "entry";
-
 module.exports = {
   /**
    * Parse an array
@@ -19,7 +16,7 @@ module.exports = {
   read_array: function() {
     let expect = null;
     let shortForm = false;
-    const result = this.node(ArrayExpr);
+    const result = this.node("array");
 
     if (this.token === this.tok.T_ARRAY) {
       this.next().expect("(");
@@ -69,27 +66,45 @@ module.exports = {
     ) {
       return;
     }
+
     if (this.token === ",") {
       return this.node("noop")();
     }
+
+    const entry = this.node("entry");
+
+    let key = null;
+    let value = null;
+    let byRef = false;
+    let unpack = false;
+
     if (this.token === "&") {
-      return this.read_byref(this.read_variable.bind(this, true, false));
+      this.next();
+      byRef = true;
+      value = this.read_variable(true, false);
+    } else if (this.token === this.tok.T_ELLIPSIS && this.php74) {
+      this.next();
+      unpack = true;
+      value = this.read_expr()
     } else {
-      const entry = this.node(ArrayEntry);
       const expr = this.read_expr();
+
       if (this.token === this.tok.T_DOUBLE_ARROW) {
-        if (this.next().token === "&") {
-          return entry(
-            expr,
-            this.read_byref(this.read_variable.bind(this, true, false))
-          );
+        this.next();
+        key = expr;
+
+        if (this.token === "&") {
+          this.next();
+          byRef = true;
+          value = this.read_variable(true, false);
         } else {
-          return entry(expr, this.read_expr());
+          value = this.read_expr();
         }
       } else {
-        entry.destroy();
+        value = expr;
       }
-      return expr;
     }
+
+    return entry(key, value, byRef, unpack);
   }
 };

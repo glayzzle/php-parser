@@ -234,7 +234,6 @@ module.exports = {
     }
     return result;
   },
-
   /**
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
