@@ -1,5 +1,7 @@
-var parser = require("./main");
-
+const parser = require("./main");
+const os = require("os");
+const cpus = os.cpus();
+const cpuId = cpus.length + "@" + cpus[0].speed + 'Mhz';
 describe("Performance tests", function() {
   var code = `
   <?php
@@ -15,6 +17,7 @@ describe("Performance tests", function() {
   }
   `;
 
+  console.log("Testing perfs on " + cpuId + " / " + cpus[0].model);
   it("tokenizer", function() {
     var reader = new parser();
     var tokSize = reader.tokenGetAll(code).length;
@@ -34,9 +37,9 @@ describe("Performance tests", function() {
       speed = speed / 1000;
       if (speed > 1000) {
         speed = speed / 1000;
-        speed = Math.round(speed * 100) / 100 + "M";
+        speed = Math.round(speed * 100) / 100 + "M Tokens";
       } else {
-        speed = Math.round(speed * 100) / 100 + "K";
+        speed = Math.round(speed * 100) / 100 + "K Tokens";
       }
     }
     console.log("    + Tokens speed  => " + speed + "/sec");
@@ -48,12 +51,12 @@ describe("Performance tests", function() {
       speed = speed / 1024;
       if (speed > 1024) {
         speed = speed / 1024;
-        speed = Math.round(speed * 100) / 100 + "M";
+        speed = Math.round(speed * 100) / 100 + " Mb";
       } else {
-        speed = Math.round(speed * 100) / 100 + "K";
+        speed = Math.round(speed * 100) / 100 + " Kb";
       }
     }
-    console.log("    + Reading speed => " + speed + "/sec");
+    console.log("    + Reading bandwidth => " + speed + "/sec");
   });
 
   it("parser", function() {
@@ -93,9 +96,9 @@ describe("Performance tests", function() {
       speed = speed / 1000;
       if (speed > 1000) {
         speed = speed / 1000;
-        speed = Math.round(speed * 100) / 100 + "M";
+        speed = Math.round(speed * 100) / 100 + "M Nodes";
       } else {
-        speed = Math.round(speed * 100) / 100 + "K";
+        speed = Math.round(speed * 100) / 100 + "K Nodes";
       }
     }
     console.log("    + Nodes speed  => " + speed + "/sec");
@@ -107,11 +110,11 @@ describe("Performance tests", function() {
       speed = speed / 1024;
       if (speed > 1024) {
         speed = speed / 1024;
-        speed = Math.round(speed * 100) / 100 + "M";
+        speed = Math.round(speed * 100) / 100 + " Mb";
       } else {
-        speed = Math.round(speed * 100) / 100 + "K";
+        speed = Math.round(speed * 100) / 100 + " Kb";
       }
     }
-    console.log("    + Overall speed => " + speed + "/sec");
+    console.log("    + Overall bandwidth => " + speed + "/sec");
   });
 });
