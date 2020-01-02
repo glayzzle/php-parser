@@ -253,26 +253,22 @@ AST.prototype.resolvePrecedence = function(result, parser) {
       }
     }
   } else if (
-    (result.kind === "cast" &&
-      result.what &&
-      !result.what.parenthesizedExpression) ||
-    (result.kind === "silent" &&
-      result.expr &&
-      !result.expr.parenthesizedExpression)
+    ["silent", "cast"].includes(result.kind) &&
+    result.expr &&
+    !result.expr.parenthesizedExpression
   ) {
     // https://github.com/glayzzle/php-parser/issues/172
-    const subject = result.kind === "cast" ? "what" : "expr";
-    if (result[subject].kind === "bin") {
-      buffer = result[subject];
-      result[subject] = result[subject].left;
-      this.swapLocations(result, result, result[subject], parser);
+    if (result.expr.kind === "bin") {
+      buffer = result.expr;
+      result.expr = result.expr.left;
+      this.swapLocations(result, result, result.expr, parser);
       buffer.left = this.resolvePrecedence(result, parser);
       this.swapLocations(buffer, buffer.left, buffer.right, parser);
       result = buffer;
-    } else if (result[subject].kind === "retif") {
-      buffer = result[subject];
-      result[subject] = result[subject].test;
-      this.swapLocations(result, result, result[subject], parser);
+    } else if (result.expr.kind === "retif") {
+      buffer = result.expr;
+      result.expr = result.expr.test;
+      this.swapLocations(result, result, result.expr, parser);
       buffer.test = this.resolvePrecedence(result, parser);
       this.swapLocations(buffer, buffer.test, buffer.falseExpr, parser);
       result = buffer;
