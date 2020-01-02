@@ -91,12 +91,14 @@ const engine = function(options) {
         options.parser.php7 = true;
         options.parser.php73 = true;
       }
-      options.lexer.php7 = options.parser.php7;
-      options.lexer.php73 = options.parser.php73;
-      options.lexer.php74 = options.parser.php74;
     }
     combine(options, this);
-  }
+
+    // same version flags based on parser options
+    this.lexer.php7 = this.parser.php7;
+    this.lexer.php73 = this.parser.php73;
+    this.lexer.php74 = this.parser.php74;
+}
 };
 
 /**
