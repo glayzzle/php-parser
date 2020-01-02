@@ -20,6 +20,7 @@ const ast = parser.parseCode(`
 <?php
 class Test {
   public ?int $prop = null;
+  public float|string $y;
 }
 `, { 
     parser: {
