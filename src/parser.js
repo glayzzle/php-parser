@@ -43,6 +43,7 @@ const parser = function(lexer, ast) {
     return [item, null];
   };
   this.entries = {
+    // reserved_non_modifiers
     IDENTIFIER: new Map(
       [
         this.tok.T_ABSTRACT,
@@ -77,9 +78,10 @@ const parser = function(lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_FINAL,
         this.tok.T_FINALLY,
-        this.tok.T_FUNC_C,
+        this.tok.T_FN,
         this.tok.T_FOR,
         this.tok.T_FOREACH,
+        this.tok.T_FUNC_C,
         this.tok.T_FUNCTION,
         this.tok.T_GLOBAL,
         this.tok.T_GOTO,
@@ -209,6 +211,7 @@ const parser = function(lexer, ast) {
         this.tok.T_YIELD,
         this.tok.T_STATIC,
         this.tok.T_FUNCTION,
+        this.tok.T_FN,
         // using VARIABLES :
         this.tok.T_VARIABLE,
         "$",
