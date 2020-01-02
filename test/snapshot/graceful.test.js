@@ -2,7 +2,7 @@ const parser = require("../main");
 
 describe("Test graceful mode", function() {
   describe("to suppress errors", function() {
-    var test = parser.create({
+    const test = parser.create({
       parser: {
         suppressErrors: true
       }

@@ -14,11 +14,13 @@
   ]
 }
  */
-const util = require('util');
+const util = require("util");
 const parser = require("../src/index");
-const ast = parser.parseCode(`
+const ast = parser.parseCode(
+  `
 <?php$var = 1; ?>
-`, { 
+`,
+  {
     parser: {
       debug: true,
       php73: true
@@ -29,6 +31,4 @@ const ast = parser.parseCode(`
     }
   }
 );
-console.log(
-  util.inspect(ast, false, 10, true)
-);
+console.log(util.inspect(ast, false, 10, true));

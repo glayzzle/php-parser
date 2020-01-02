@@ -1,18 +1,21 @@
-const parser = require('../main');
+const parser = require("../main");
 
-describe('Test syntax parsing with PHP 73 support', function() {
-
-  it('https://wiki.php.net/rfc/list_reference_assignment', function() {
-    var ast = parser.parseEval('[$a, &$b] = $array; list($a, &$b) = $array;', {
-      parser: {
-        php73: true
+describe("Test syntax parsing with PHP 73 support", function() {
+  it("https://wiki.php.net/rfc/list_reference_assignment", function() {
+    const ast = parser.parseEval(
+      "[$a, &$b] = $array; list($a, &$b) = $array;",
+      {
+        parser: {
+          php73: true
+        }
       }
-    });
+    );
     expect(ast).toMatchSnapshot();
   });
 
-  it('https://wiki.php.net/rfc/trailing-comma-function-calls', function() {
-    var ast = parser.parseEval(`
+  it("https://wiki.php.net/rfc/trailing-comma-function-calls", function() {
+    const ast = parser.parseEval(
+      `
     $newArray = array_merge(
         $arrayOne,
         $arrayTwo,
@@ -36,16 +39,19 @@ describe('Test syntax parsing with PHP 73 support', function() {
 
     unset($foo, $bar,);
     var_dump(isset($foo, $bar,));
-    `, {
+    `,
+      {
         parser: {
           php73: true
         }
-      });
-      expect(ast).toMatchSnapshot();
+      }
+    );
+    expect(ast).toMatchSnapshot();
   });
 
-  it('https://wiki.php.net/rfc/trailing-comma-function-calls#errors', function() {
-    var ast = parser.parseEval(`
+  it("https://wiki.php.net/rfc/trailing-comma-function-calls#errors", function() {
+    const ast = parser.parseEval(
+      `
     # Parse error
     function bar($a, $b,) {
         //
@@ -57,12 +63,14 @@ describe('Test syntax parsing with PHP 73 support', function() {
     foo('function', 'bar',,);
     # Also parse error
     foo(, 'function', 'bar');
-    `, {
+    `,
+      {
         parser: {
           php73: true,
           suppressErrors: true
         }
-      });
-      expect(ast).toMatchSnapshot();
+      }
+    );
+    expect(ast).toMatchSnapshot();
   });
 });

@@ -1,8 +1,10 @@
-const parser = require('../main');
+const parser = require("../main");
 
-describe('Acid', () => {
-  it('level 1', () => {
-    expect(parser.parseCode(`#!/usr/bin/php
+describe("Acid", () => {
+  it("level 1", () => {
+    expect(
+      parser.parseCode(
+        `#!/usr/bin/php
 <?= php_version(); ?>
 <?php
 declare(strict_types=1);
@@ -159,14 +161,17 @@ FOO
 }
 __halt_compiler();
 THE END ...
-`,  {
-      ast: {
-        withPositions: true,
-        withSource: true
-      },
-      parser: {
-        extractDoc: true
-      }
-    })).toMatchSnapshot();
+`,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          },
+          parser: {
+            extractDoc: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
   });
 });

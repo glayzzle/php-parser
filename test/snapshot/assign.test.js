@@ -1,58 +1,58 @@
-const parser = require('../main');
+const parser = require("../main");
 
-describe('assign', () => {
-  it('simple', () => {
+describe("assign", () => {
+  it("simple", () => {
     expect(parser.parseEval("$var = 1;")).toMatchSnapshot();
   });
-  it('variable', () => {
+  it("variable", () => {
     expect(parser.parseEval("$var = $var;")).toMatchSnapshot();
   });
-  it('multiple', () => {
+  it("multiple", () => {
     expect(parser.parseEval("$var = $var = $var;")).toMatchSnapshot();
   });
-  it('+=', () => {
+  it("+=", () => {
     expect(parser.parseEval("$var += $var;")).toMatchSnapshot();
   });
-  it('-=', () => {
+  it("-=", () => {
     expect(parser.parseEval("$var -= $var;")).toMatchSnapshot();
   });
-  it('*=', () => {
+  it("*=", () => {
     expect(parser.parseEval("$var *= $var;")).toMatchSnapshot();
   });
-  it('**=', () => {
+  it("**=", () => {
     expect(parser.parseEval("$var **= $var;")).toMatchSnapshot();
   });
-  it('/=', () => {
+  it("/=", () => {
     expect(parser.parseEval("$var /= $var;")).toMatchSnapshot();
   });
-  it('.=', () => {
+  it(".=", () => {
     expect(parser.parseEval("$var .= $var;")).toMatchSnapshot();
   });
-  it('%=', () => {
+  it("%=", () => {
     expect(parser.parseEval("$var %= $var;")).toMatchSnapshot();
   });
-  it('&=', () => {
+  it("&=", () => {
     expect(parser.parseEval("$var &= $var;")).toMatchSnapshot();
   });
-  it('|=', () => {
+  it("|=", () => {
     expect(parser.parseEval("$var |= $var;")).toMatchSnapshot();
   });
-  it('^=', () => {
+  it("^=", () => {
     expect(parser.parseEval("$var ^= $var;")).toMatchSnapshot();
   });
-  it('<<=', () => {
+  it("<<=", () => {
     expect(parser.parseEval("$var <<= $var;")).toMatchSnapshot();
   });
-  it('>>=', () => {
+  it(">>=", () => {
     expect(parser.parseEval("$var >>= $var;")).toMatchSnapshot();
   });
-  it('??=', () => {
+  it("??=", () => {
     expect(parser.parseEval("$var ??= $var;")).toMatchSnapshot();
   });
-  it('??= with bin', () => {
+  it("??= with bin", () => {
     expect(parser.parseEval("$var ??= $var + 10;")).toMatchSnapshot();
   });
-  it('??= (php < 7)', function() {
+  it("??= (php < 7)", function() {
     const astErr = parser.parseEval(`$var ??= $var;`, {
       parser: {
         php7: false,
@@ -61,7 +61,7 @@ describe('assign', () => {
     });
     expect(astErr).toMatchSnapshot();
   });
-  it('with ref', () => {
+  it("with ref", () => {
     expect(parser.parseEval("$bar = &$foo;")).toMatchSnapshot();
   });
 });

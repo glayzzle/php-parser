@@ -127,7 +127,7 @@ $var = [...new ArrayIterator(['a', 'b', 'c'])];
 
   it("byRef", () => {
     expect(
-        parser.parseEval(`
+      parser.parseEval(`
 $var = [1, 'test', &$var, 'test' => &$var];
 `)
     ).toMatchSnapshot();

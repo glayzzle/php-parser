@@ -1,4 +1,4 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("Test expressions", function() {
   it("test binary", function() {
@@ -126,7 +126,6 @@ describe("Test expressions", function() {
     expect(ast).toMatchSnapshot();
   });
 
-
   it("test cast extension - #171", function() {
     const ast = parser.parseEval(
       `
@@ -142,7 +141,8 @@ describe("Test expressions", function() {
         (array)$var;
         (object)$var;
         (unset)$var;
-      `, {
+      `,
+      {
         parser: {
           read_expr_cast: function(cast) {
             const rawCast = this.text();
@@ -222,14 +222,21 @@ describe("Test expressions", function() {
   });
 
   it("fix #234", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       new foo;
       $a = (new foo)[0];
-    `, { parser: { debug: false } })).toMatchSnapshot();
+    `,
+        { parser: { debug: false } }
+      )
+    ).toMatchSnapshot();
   });
 
   it("fix #235", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
     self();
     sElF();
     parent();
@@ -238,24 +245,36 @@ describe("Test expressions", function() {
     new self();
     new static();
     new parent();
-    `, { parser: { debug: false } })).toMatchSnapshot();
+    `,
+        { parser: { debug: false } }
+      )
+    ).toMatchSnapshot();
   });
 
   it("test node references", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
     parent::foo();
     new self();
     new static();
     new parent();
-    `, { parser: { debug: false } })).toMatchSnapshot();
+    `,
+        { parser: { debug: false } }
+      )
+    ).toMatchSnapshot();
   });
 
   it("test fail new", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       $a = new foo[0];
-    `, { parser: { suppressErrors: true } })).toMatchSnapshot();
+    `,
+        { parser: { suppressErrors: true } }
+      )
+    ).toMatchSnapshot();
   });
-
 
   it("test nested expressions precedence", function() {
     const ast = parser.parseEval(
@@ -272,17 +291,22 @@ describe("Test expressions", function() {
     expect(ast).toMatchSnapshot();
   });
 
-
   it("chaining calls (derefenceable)", function() {
-    expect(parser.parseEval(`($a->b)::call()->foo[10]->bar;`)).toMatchSnapshot();
+    expect(
+      parser.parseEval(`($a->b)::call()->foo[10]->bar;`)
+    ).toMatchSnapshot();
     expect(parser.parseEval(`array(1, 2, 3)[0]->foo;`)).toMatchSnapshot();
-    expect(parser.parseEval(`($a++)($foo)->bar{$baz}::foo();`)).toMatchSnapshot();
+    expect(
+      parser.parseEval(`($a++)($foo)->bar{$baz}::foo();`)
+    ).toMatchSnapshot();
     // expect error :
-    expect(parser.parseEval(`($a++)bar::foo::baz;`, {
-      parser: {
-        suppressErrors: true
-      }
-    })).toMatchSnapshot();
+    expect(
+      parser.parseEval(`($a++)bar::foo::baz;`, {
+        parser: {
+          suppressErrors: true
+        }
+      })
+    ).toMatchSnapshot();
     // should pass
     expect(parser.parseEval(`bar()::foo()::baz();`)).toMatchSnapshot();
   });
