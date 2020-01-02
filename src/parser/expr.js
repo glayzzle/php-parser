@@ -377,14 +377,19 @@ module.exports = {
         expr = this.next().read_expr();
         return result(expr);
 
+      case this.tok.T_FN:
       case this.tok.T_FUNCTION:
-        return this.read_function(true);
+        return this.read_inline_function();
 
       case this.tok.T_STATIC: {
         const backup = [this.token, this.lexer.getState()];
-        if (this.next().token === this.tok.T_FUNCTION) {
+        this.next();
+        if (
+          this.token === this.tok.T_FUNCTION ||
+          (this.php74 && this.token === this.tok.T_FN)
+        ) {
           // handles static function
-          return this.read_function(true, [0, 1, 0]);
+          return this.read_inline_function([0, 1, 0]);
         } else {
           // rollback
           this.lexer.tokens.push(backup);
@@ -513,6 +518,60 @@ module.exports = {
 
     // returns variable | scalar
     return expr;
+  },
+
+  /**
+   *
+   * inline_function:
+   * 		function returns_ref backup_doc_comment '(' parameter_list ')' lexical_vars return_type
+   * 		backup_fn_flags '{' inner_statement_list '}' backup_fn_flags
+   * 			{ $$ = zend_ast_create_decl(ZEND_AST_CLOSURE, $2 | $13, $1, $3,
+   * 				  zend_string_init("{closure}", sizeof("{closure}") - 1, 0),
+   * 				  $5, $7, $11, $8); CG(extra_fn_flags) = $9; }
+   * 	|	fn returns_ref '(' parameter_list ')' return_type backup_doc_comment T_DOUBLE_ARROW backup_fn_flags backup_lex_pos expr backup_fn_flags
+   * 			{ $$ = zend_ast_create_decl(ZEND_AST_ARROW_FUNC, $2 | $12, $1, $7,
+   * 				  zend_string_init("{closure}", sizeof("{closure}") - 1, 0), $4, NULL,
+   * 				  zend_ast_create(ZEND_AST_RETURN, $11), $6);
+   * 				  ((zend_ast_decl *) $$)->lex_pos = $10;
+   * 				  CG(extra_fn_flags) = $9; }   *
+   */
+  read_inline_function: function(flags) {
+    if (this.token === this.tok.T_FUNCTION) {
+      return this.read_function(true, flags);
+    }
+    // introduced in PHP 7.4
+    if (!this.php74) {
+      this.raiseError("Arrow Functions are not allowed");
+    }
+    // as an arrowfunc
+    const node = this.node("arrowfunc");
+    // eat T_FN
+    if (this.expect(this.tok.T_FN)) this.next();
+    // check the &
+    const isRef = this.is_reference();
+    // ...
+    if (this.expect("(")) this.next();
+    const params = this.read_parameter_list();
+    if (this.expect(")")) this.next();
+    let nullable = false;
+    let returnType = null;
+    if (this.token === ":") {
+      if (this.next().token === "?") {
+        nullable = true;
+        this.next();
+      }
+      returnType = this.read_type();
+    }
+    if (this.expect(this.tok.T_DOUBLE_ARROW)) this.next();
+    const body = this.read_expr();
+    return node(
+      params,
+      isRef,
+      body,
+      returnType,
+      nullable,
+      flags ? true : false
+    );
   },
 
   /**
