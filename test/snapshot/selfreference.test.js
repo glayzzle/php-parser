@@ -14,15 +14,15 @@ describe("selfreference", function() {
     expect(parser.parseEval('SELF::call();')).toMatchSnapshot();
   });
   it("argument", function() {
-    expect(parser.parseEval('function fn(self $arg) {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo(self $arg) {}')).toMatchSnapshot();
   });
   it("argument (uppercase)", function() {
-    expect(parser.parseEval('function fn(SELF $arg) {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo(SELF $arg) {}')).toMatchSnapshot();
   });
   it("return type declarations", function() {
-    expect(parser.parseEval('function fn($arg): self {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo($arg): self {}')).toMatchSnapshot();
   });
   it("return type declarations (uppercase)", function() {
-    expect(parser.parseEval('function fn($arg): SELF {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo($arg): SELF {}')).toMatchSnapshot();
   });
 });

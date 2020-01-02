@@ -102,7 +102,7 @@ describe("Test call", function() {
   });
   it("parent", function() {
     const ast = parser.parseEval(
-      'class Foo { function fn() { parent::call(); } }',
+      'class Foo { function foo() { parent::call(); } }',
       {
         parser: { debug: false }
       }
@@ -111,7 +111,7 @@ describe("Test call", function() {
   });
   it("self", function() {
     const ast = parser.parseEval(
-      'class Foo { function fn() { self::call(); } }',
+      'class Foo { function foo() { self::call(); } }',
       {
         parser: { debug: false }
       }
@@ -120,7 +120,7 @@ describe("Test call", function() {
   });
   it("static", function() {
     const ast = parser.parseEval(
-      'class Foo { function fn() { static::call(); } }',
+      'class Foo { function foo() { static::call(); } }',
       {
         parser: { debug: false }
       }

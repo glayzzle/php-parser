@@ -14,15 +14,15 @@ describe("parentreference", function() {
     expect(parser.parseEval('PARENT::call();')).toMatchSnapshot();
   });
   it("argument", function() {
-    expect(parser.parseEval('function fn(parent $arg) {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo(parent $arg) {}')).toMatchSnapshot();
   });
   it("argument (uppercase)", function() {
-    expect(parser.parseEval('function fn(PARENT $arg) {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo(PARENT $arg) {}')).toMatchSnapshot();
   });
   it("return type declarations", function() {
-    expect(parser.parseEval('function fn($arg): parent {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo($arg): parent {}')).toMatchSnapshot();
   });
   it("return type declarations (uppercase)", function() {
-    expect(parser.parseEval('function fn($arg): PARENT {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo($arg): PARENT {}')).toMatchSnapshot();
   });
 });
