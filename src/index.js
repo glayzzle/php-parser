@@ -98,7 +98,7 @@ const engine = function(options) {
     this.lexer.php7 = this.parser.php7;
     this.lexer.php73 = this.parser.php73;
     this.lexer.php74 = this.parser.php74;
-}
+  }
 };
 
 /**

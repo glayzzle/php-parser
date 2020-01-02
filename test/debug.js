@@ -18,14 +18,15 @@ const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseCode(`
 <?php
-class Test {
-  public ?int $prop = null;
-  public float|string $y;
+function iter() {
+  yield 'ator' => $foo;
+  yield from iter(50);
 }
+$a = fn($n) => $n * $factor;
 `, { 
     parser: {
       debug: true,
-      php74: true
+      //extractDoc: true
     },
     ast: {
       withPositions: true,
