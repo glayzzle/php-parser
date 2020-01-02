@@ -146,6 +146,11 @@ lexer.prototype.setInput = function(input) {
     last_column: 0
   };
   this.tokens = [];
+  if (this.php74) {
+    this.keywords.fn = this.tok.T_FN;
+  } else {
+    delete this.keywords.fn;
+  }
   this.done = this.offset >= this.size;
   if (!this.all_tokens && this.mode_eval) {
     this.conditionStack = ["INITIAL"];
