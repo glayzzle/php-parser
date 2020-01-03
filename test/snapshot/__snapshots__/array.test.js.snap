@@ -1804,3 +1804,50 @@ Program {
   "kind": "program",
 }
 `;
+
+exports[`Array without keys spread operator with reference 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": true,
+              "value": Variable {
+                "byref": true,
+                "curly": false,
+                "kind": "variable",
+                "name": "arr",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '&' on line 1",
+      "token": "'&'",
+    },
+  ],
+  "kind": "program",
+}
+`;
