@@ -1,27 +1,29 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("Test comments", function() {
   describe("issues", function() {
     it("fix #250 : Leading comments are treated as trailing comments", function() {
-      expect(parser.parseEval(
-        `
+      expect(
+        parser.parseEval(
+          `
 // leading
 foo();
 // bar
 bar() /* inner */ ;
 // trailing
         `,
-        {
-          parser: {
-            extractDoc: true
-            // debug: true
-          },
-          ast: {
-            withPositions: true,
-            withSource: true
+          {
+            parser: {
+              extractDoc: true
+              // debug: true
+            },
+            ast: {
+              withPositions: true,
+              withSource: true
+            }
           }
-        }
-      )).toMatchSnapshot();
+        )
+      ).toMatchSnapshot();
     });
 
     it("fix #126 : new option", function() {
@@ -75,14 +77,14 @@ bar() /* inner */ ;
       `,
         {
           parser: {
-            extractDoc: true,
+            extractDoc: true
             // debug: true
           }
         }
       );
       expect(ast).toMatchSnapshot();
     });
-    
+
     it("fix #193", function() {
       const ast = parser.parseEval(
         `
@@ -94,7 +96,7 @@ bar() /* inner */ ;
         `,
         {
           parser: {
-            extractDoc: true,
+            extractDoc: true
             // debug: true
           }
         }
@@ -103,7 +105,8 @@ bar() /* inner */ ;
     });
 
     it("fix #278", function() {
-      const ast = parser.parseEval(`
+      const ast = parser.parseEval(
+        `
 /**
  * Class description
  */
@@ -137,7 +140,7 @@ class FooClass
         `,
         {
           parser: {
-            extractDoc: true,
+            extractDoc: true
             // debug: true
           }
         }
@@ -156,7 +159,7 @@ class FooClass
         `,
         {
           parser: {
-            extractDoc: true,
+            extractDoc: true
             // debug: true
           }
         }

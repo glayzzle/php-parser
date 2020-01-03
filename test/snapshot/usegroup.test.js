@@ -1,22 +1,38 @@
-const parser = require('../main');
+const parser = require("../main");
 
-describe('usegroup', () => {
-  it('simple', () => {
-    expect(parser.parseEval('use My\\Full\\Classname as Another;')).toMatchSnapshot();
+describe("usegroup", () => {
+  it("simple", () => {
+    expect(
+      parser.parseEval("use My\\Full\\Classname as Another;")
+    ).toMatchSnapshot();
   });
-  it('multiple', () => {
-    expect(parser.parseEval('use My\\Full\\Classname as Another, My\\Full\\NSname;')).toMatchSnapshot();
+  it("multiple", () => {
+    expect(
+      parser.parseEval("use My\\Full\\Classname as Another, My\\Full\\NSname;")
+    ).toMatchSnapshot();
   });
-  it('multiple 2', () => {
-    expect(parser.parseEval('use My\\Full\\Classname as Another, My\\Full\\NSname, \\Full\\NSname\\With\\Leading\\Backslash;')).toMatchSnapshot();
+  it("multiple 2", () => {
+    expect(
+      parser.parseEval(
+        "use My\\Full\\Classname as Another, My\\Full\\NSname, \\Full\\NSname\\With\\Leading\\Backslash;"
+      )
+    ).toMatchSnapshot();
   });
-  it('nested', () => {
-    expect(parser.parseEval('use some\\my_namespace\\{ClassA, ClassB, ClassC as C};')).toMatchSnapshot();
+  it("nested", () => {
+    expect(
+      parser.parseEval("use some\\my_namespace\\{ClassA, ClassB, ClassC as C};")
+    ).toMatchSnapshot();
   });
-  it('nested 2', () => {
-    expect(parser.parseEval('use function some\\my_namespace\\{fn_a, fn_b, fn_c};')).toMatchSnapshot();
+  it("nested 2", () => {
+    expect(
+      parser.parseEval("use function some\\my_namespace\\{fn_a, fn_b, fn_c};")
+    ).toMatchSnapshot();
   });
-  it('nested 3', () => {
-    expect(parser.parseEval('use const some\\my_namespace\\{ConstA, ConstB, ConstC};')).toMatchSnapshot();
+  it("nested 3", () => {
+    expect(
+      parser.parseEval(
+        "use const some\\my_namespace\\{ConstA, ConstB, ConstC};"
+      )
+    ).toMatchSnapshot();
   });
 });

@@ -2,9 +2,7 @@ const parser = require("../main");
 
 describe("arrow function", () => {
   it("simple", () => {
-    expect(
-      parser.parseEval('$var = fn() => "something";')
-    ).toMatchSnapshot();
+    expect(parser.parseEval('$var = fn() => "something";')).toMatchSnapshot();
   });
   it("argument", () => {
     expect(
@@ -18,22 +16,16 @@ describe("arrow function", () => {
   });
   it("arguments", () => {
     expect(
-      parser.parseEval(
-        '$var = fn($arg, $arg, $arg) => "something";'
-      )
+      parser.parseEval('$var = fn($arg, $arg, $arg) => "something";')
     ).toMatchSnapshot();
   });
   it("return type", () => {
     expect(
-      parser.parseEval(
-        '$var = fn(): ?string => "something";'
-      )
+      parser.parseEval('$var = fn(): ?string => "something";')
     ).toMatchSnapshot();
   });
   it("inside call", () => {
-    expect(
-      parser.parseEval(`call(fn($arg) => $arg);`)
-    ).toMatchSnapshot();
+    expect(parser.parseEval(`call(fn($arg) => $arg);`)).toMatchSnapshot();
   });
   it("error / fn passes on php7.3", () => {
     expect(
@@ -44,7 +36,7 @@ describe("arrow function", () => {
         }
       })
     ).toMatchSnapshot();
-  });  
+  });
   it("error / fn fails on php7.4", () => {
     expect(
       parser.parseEval(`function fn($arg) { return $arg; }`, {
@@ -54,7 +46,7 @@ describe("arrow function", () => {
         }
       })
     ).toMatchSnapshot();
-  });  
+  });
   it("error / empty not allowed", () => {
     expect(
       parser.parseEval("$var = fn() => ;", {
@@ -64,5 +56,4 @@ describe("arrow function", () => {
       })
     ).toMatchSnapshot();
   });
-
 });

@@ -25,7 +25,7 @@ describe("Test classes", function() {
       protected static float|string $y;
     }
     `)
-    ).toMatchSnapshot();    
+    ).toMatchSnapshot();
   });
 
   it("Validate usual declarations", function() {

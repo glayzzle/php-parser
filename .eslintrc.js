@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     sourceType: "module"
   },
   plugins: ["prettier"],
@@ -17,5 +17,13 @@ module.exports = {
     "prefer-const": "error",
     "no-var": "error",
     "prettier/prettier": "error"
-  }
+  },
+  overrides: [
+    {
+      files: ["test/**/*.js"],
+      rules: {
+        "no-console": "off"
+      }
+    }
+  ]
 };

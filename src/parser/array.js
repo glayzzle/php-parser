@@ -84,8 +84,8 @@ module.exports = {
       value = this.read_variable(true, false);
     } else if (this.token === this.tok.T_ELLIPSIS && this.php74) {
       this.next();
-      if (this.token === '&') {
-        this.error()
+      if (this.token === "&") {
+        this.error();
       }
       unpack = true;
       value = this.read_expr();

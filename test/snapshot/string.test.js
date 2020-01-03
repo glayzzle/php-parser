@@ -227,57 +227,55 @@ describe("Test strings", function() {
   });
 
   it("...", function() {
-    var ast = parser.parseEval('echo B"\\colors[1] contains >$colors[1]<\\n";');
+    parser.parseEval('echo B"\\colors[1] contains >$colors[1]<\\n";');
   });
 
   it("...", function() {
-    var ast = parser.parseEval('echo "\\colors[1] contains >$colors [1]<\\n";');
+    parser.parseEval('echo "\\colors[1] contains >$colors [1]<\\n";');
   });
 
   it("...", function() {
-    var ast = parser.parseEval("echo \"~'.{{$expectedLength}}'\\$~s\";");
+    parser.parseEval("echo \"~'.{{$expectedLength}}'\\$~s\";");
   });
 
   it("...", function() {
-    var ast = parser.parseEval("$a = b'\\t\\ra';");
+    parser.parseEval("$a = b'\\t\\ra';");
   });
 
   it("...", function() {
-    var ast = parser.parseEval('$foo = array("v1.09azAZ-._~!$", true);');
+    parser.parseEval('$foo = array("v1.09azAZ-._~!$", true);');
   });
 
   it("...", function() {
-    var ast = parser.parseEval('$v = strtolower("$i.$j.$k-$rel");');
+    parser.parseEval('$v = strtolower("$i.$j.$k-$rel");');
   });
 
   it("...", function() {
-    var ast = parser.parseEval('$text = "$text at line $line";');
+    parser.parseEval('$text = "$text at line $line";');
   });
 
   it("...", function() {
-    var ast = parser.parseEval(
-      "return \"Class.create('$package$className',{\";"
-    );
+    parser.parseEval("return \"Class.create('$package$className',{\";");
   });
 
   it("...", function() {
-    var ast = parser.parseEval("echo \"yo : {$feeds[0]['title[0][value]']}\";");
+    parser.parseEval("echo \"yo : {$feeds[0]['title[0][value]']}\";");
   });
 
   it("...", function() {
-    var ast = parser.parseEval('return "\\x1B[{$color}m{$str}\\x1B[0m";');
+    parser.parseEval('return "\\x1B[{$color}m{$str}\\x1B[0m";');
   });
 
   it("...", function() {
-    var ast = parser.parseEval('echo "\\"$parts[0]\\"\\n";');
+    parser.parseEval('echo "\\"$parts[0]\\"\\n";');
   });
 
   it("...", function() {
-    var ast = parser.parseEval('echo "Hello {".$obj->name."} !";');
+    parser.parseEval('echo "Hello {".$obj->name."} !";');
   });
 
   it("...", function() {
-    var ast = parser.parseEval('echo "Hello {$obj->name} !";');
+    parser.parseEval('echo "Hello {$obj->name} !";');
   });
 
   it("test encapsed elements", function() {
@@ -403,9 +401,9 @@ $var = '\\\\\\'';
 `)
     ).toMatchSnapshot();
   });
-    it("double quotes", function() {
-        expect(
-            parser.parseEval(`
+  it("double quotes", function() {
+    expect(
+      parser.parseEval(`
 $var = "\\n";
 $var = "\\r";
 $var = "\\t";
@@ -433,6 +431,6 @@ $var = "'";
 $var = "\\'";
 $var = "\\n | \\r | \\t | \\v | \\e | \\f | \\\\ | \\$ | \\" | \\141 | \\x61 | \\u{0061}";
 `)
-        ).toMatchSnapshot();
-    });
+    ).toMatchSnapshot();
+  });
 });
