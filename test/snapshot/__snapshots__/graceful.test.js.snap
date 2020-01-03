@@ -292,21 +292,25 @@ Program {
   "children": Array [
     Class {
       "body": Array [
-        ClassConstant {
-          "constants": Array [
-            Constant {
-              "kind": "constant",
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "kind": "property",
               "name": Identifier {
                 "kind": "identifier",
-                "name": "A",
+                "name": "onst",
               },
-              "value": Number {
-                "kind": "number",
-                "value": "1",
+              "nullable": false,
+              "type": ClassReference {
+                "kind": "classreference",
+                "name": "foo",
+                "resolution": "uqn",
               },
+              "value": null,
             },
           ],
-          "kind": "classconstant",
           "visibility": "",
         },
       ],
@@ -324,6 +328,31 @@ Program {
   ],
   "errors": Array [
     Error {
+      "expected": 222,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'const' (T_CONST), expecting T_VARIABLE on line 1",
+      "token": "'const' (T_CONST)",
+    },
+    Error {
+      "expected": Array [
+        ",",
+        ";",
+        "=",
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'A' (T_STRING) on line 1",
+      "token": "'A' (T_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'A' (T_STRING), expecting ';' on line 1",
+      "token": "'A' (T_STRING)",
+    },
+    Error {
       "expected": Array [
         198,
         222,
@@ -331,15 +360,19 @@ Program {
       ],
       "kind": "error",
       "line": 1,
-      "message": "Parse Error : syntax error, unexpected 'foo' (T_STRING) on line 1",
-      "token": "'foo' (T_STRING)",
+      "message": "Parse Error : syntax error, unexpected '=' on line 1",
+      "token": "'='",
     },
     Error {
-      "expected": ";",
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
       "kind": "error",
       "line": 1,
-      "message": "Parse Error : syntax error, expecting ';' on line 1",
-      "token": "the end of file (EOF)",
+      "message": "Parse Error : syntax error, unexpected '1' (T_LNUMBER) on line 1",
+      "token": "'1' (T_LNUMBER)",
     },
     Error {
       "expected": "}",
@@ -789,7 +822,29 @@ exports[`Test graceful mode to suppress errors trait 1`] = `
 Program {
   "children": Array [
     Trait {
-      "body": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "mplement",
+              },
+              "nullable": false,
+              "type": ClassReference {
+                "kind": "classreference",
+                "name": "bar",
+                "resolution": "uqn",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+      ],
       "kind": "trait",
       "name": Identifier {
         "kind": "identifier",
@@ -806,36 +861,28 @@ Program {
       "token": "'extends' (T_EXTENDS)",
     },
     Error {
-      "expected": Array [
-        198,
-        222,
-        182,
-      ],
+      "expected": 222,
       "kind": "error",
       "line": 1,
-      "message": "Parse Error : syntax error, unexpected 'bar' (T_STRING) on line 1",
-      "token": "'bar' (T_STRING)",
-    },
-    Error {
-      "expected": Array [
-        198,
-        222,
-        182,
-      ],
-      "kind": "error",
-      "line": 1,
-      "message": "Parse Error : syntax error, unexpected 'implement' (T_STRING) on line 1",
+      "message": "Parse Error : syntax error, unexpected 'implement' (T_STRING), expecting T_VARIABLE on line 1",
       "token": "'implement' (T_STRING)",
     },
     Error {
       "expected": Array [
-        198,
-        222,
-        182,
+        ",",
+        ";",
+        "=",
       ],
       "kind": "error",
       "line": 1,
       "message": "Parse Error : syntax error, unexpected 'baz' (T_STRING) on line 1",
+      "token": "'baz' (T_STRING)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected 'baz' (T_STRING), expecting ';' on line 1",
       "token": "'baz' (T_STRING)",
     },
     Error {

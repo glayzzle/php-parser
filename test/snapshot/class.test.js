@@ -17,6 +17,17 @@ describe("Test classes", function() {
     ).toMatchSnapshot();
   });
 
+  it("Implement typed_properties_v2 / php74", function() {
+    expect(
+      parser.parseEval(`
+    class Test {
+      public ?int $prop = null;
+      protected static float|string $y;
+    }
+    `)
+    ).toMatchSnapshot();    
+  });
+
   it("Validate usual declarations", function() {
     expect(
       parser.parseEval(`

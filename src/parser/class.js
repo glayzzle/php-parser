@@ -97,15 +97,25 @@ module.exports = {
         flags[1] = 0; // non static var
       }
 
-      if (this.token === this.tok.T_VARIABLE) {
+      if (this.token === this.tok.T_FUNCTION) {
+        // reads a function
+        result.push(this.read_function(false, flags));
+      } else if (
+        this.token === this.tok.T_VARIABLE ||
+        // support https://wiki.php.net/rfc/typed_properties_v2
+        (this.php74 &&
+          (this.token === "?" ||
+            this.token === this.tok.T_CALLABLE ||
+            this.token === this.tok.T_ARRAY ||
+            this.token === this.tok.T_NS_SEPARATOR ||
+            this.token === this.tok.T_STRING ||
+            this.token === this.tok.T_NAMESPACE))
+      ) {
         // reads a variable
         const variables = this.read_variable_list(flags);
         this.expect(";");
         this.next();
         result = result.concat(variables);
-      } else if (this.token === this.tok.T_FUNCTION) {
-        // reads a function
-        result.push(this.read_function(false, flags));
       } else {
         // raise an error
         this.error([
@@ -140,19 +150,20 @@ module.exports = {
        */
       function read_variable_declaration() {
         const result = this.node("property");
+        const [nullable, type] = this.read_optional_type();
         this.expect(this.tok.T_VARIABLE);
         let propName = this.node("identifier");
         const name = this.text().substring(1); // ignore $
         this.next();
         propName = propName(name);
         if (this.token === ";" || this.token === ",") {
-          return result(propName, null);
+          return result(propName, null, nullable, type);
         } else if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-          return result(propName, this.next().read_expr());
+          return result(propName, this.next().read_expr(), nullable, type);
         } else {
           this.expect([",", ";", "="]);
-          return result(propName, null);
+          return result(propName, null, nullable, type);
         }
       },
       ","
@@ -268,6 +279,60 @@ module.exports = {
     if (result[2] == -1) result[2] = 0;
     return result;
   },
+
+  /**
+   * optional_type:
+   *	  /- empty -/	{ $$ = NULL; }
+   *   |	type_expr	{ $$ = $1; }
+   * ;
+   *
+   * type_expr:
+   *		type		{ $$ = $1; }
+   *	|	'?' type	{ $$ = $2; $$->attr |= ZEND_TYPE_NULLABLE; }
+   *	|	union_type	{ $$ = $1; }
+   * ;
+   *
+   * type:
+   * 		T_ARRAY		{ $$ = zend_ast_create_ex(ZEND_AST_TYPE, IS_ARRAY); }
+   * 	|	T_CALLABLE	{ $$ = zend_ast_create_ex(ZEND_AST_TYPE, IS_CALLABLE); }
+   * 	|	name		{ $$ = $1; }
+   * ;
+   *
+   * union_type:
+   * 		type '|' type       { $$ = zend_ast_create_list(2, ZEND_AST_TYPE_UNION, $1, $3); }
+   * 	|	union_type '|' type { $$ = zend_ast_list_add($1, $3); }
+   * ;
+   */
+  read_optional_type: function() {
+    let nullable = false;
+    if (this.token === "?") {
+      nullable = true;
+      this.next();
+    }
+    let type = this.read_type();
+    if (nullable && !type) {
+      this.raiseError(
+        "Expecting a type definition combined with nullable operator"
+      );
+    }
+    if (!nullable && !type) {
+      return [false, null];
+    }
+    if (this.token === "|") {
+      type = [type];
+      do {
+        this.next();
+        const variant = this.read_type();
+        if (!variant) {
+          this.raiseError("Expecting a type definition");
+          break;
+        }
+        type.push(variant);
+      } while (this.token === "|");
+    }
+    return [nullable, type];
+  },
+
   /**
    * reading an interface
    * ```ebnf

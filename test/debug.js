@@ -17,11 +17,15 @@
 const util = require('util');
 const parser = require("../src/index");
 const ast = parser.parseCode(`
-<?php$var = 1; ?>
+<?php
+class Test {
+  public ?int $prop = null;
+  public float|string $y;
+}
 `, { 
     parser: {
       debug: true,
-      php73: true
+      php74: true
     },
     ast: {
       withPositions: true,

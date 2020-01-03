@@ -14,14 +14,20 @@ const KIND = "property";
  * @extends {Statement}
  * @property {string} name
  * @property {Node|null} value
+ * @property {boolean} nullable
+ * @property {Identifier|Array<Identifier>|null} type
  */
 module.exports = Statement.extends(KIND, function Property(
   name,
   value,
+  nullable,
+  type,
   docs,
   location
 ) {
   Statement.apply(this, [KIND, docs, location]);
   this.name = name;
   this.value = value;
+  this.nullable = nullable;
+  this.type = type;
 });
