@@ -125,6 +125,15 @@ $var = [...new ArrayIterator(['a', 'b', 'c'])];
     ).toMatchSnapshot();
   });
 
+  it('spread operator with reference', function() {
+    const astErr = parser.parseEval(`$var = [...&$arr];`, {
+      parser: {
+        suppressErrors: true
+      }
+    });
+    expect(astErr).toMatchSnapshot();
+  });
+
   it("byRef", () => {
     expect(
         parser.parseEval(`
