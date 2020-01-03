@@ -17,7 +17,7 @@ notifications:
     on_success: change
     on_failure: always
     on_start: never
-script: npm run lint && npm run cover
+script: npm test
 after_success: cat /home/travis/build/glayzzle/php-parser/coverage/lcov.info | /home/travis/build/glayzzle/php-parser/node_modules/coveralls/bin/coveralls.js
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
