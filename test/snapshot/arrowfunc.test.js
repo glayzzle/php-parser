@@ -1,32 +1,17 @@
 const parser = require("../main");
 
 describe("arrow function", () => {
-  it("simple", () => {
-    expect(parser.parseEval('$var = fn() => "something";')).toMatchSnapshot();
+  it.each([
+    ["simple", '$var = fn() => "something";'],
+    ["argument", '$var = fn($arg) =>  "something";'],
+    ["argument by ref", '$var = fn(&$arg) => "something";'],
+    ["arguments", '$var = fn($arg, $arg, $arg) => "something";'],
+    ["return type", '$var = fn(): ?string => "something";'],
+    ["inside call", `call(fn($arg) => $arg);`]
+  ])("%s", function(_, code) {
+    expect(parser.parseEval(code)).toMatchSnapshot();
   });
-  it("argument", () => {
-    expect(
-      parser.parseEval('$var = fn($arg) =>  "something";')
-    ).toMatchSnapshot();
-  });
-  it("argument by ref", () => {
-    expect(
-      parser.parseEval('$var = fn(&$arg) => "something";')
-    ).toMatchSnapshot();
-  });
-  it("arguments", () => {
-    expect(
-      parser.parseEval('$var = fn($arg, $arg, $arg) => "something";')
-    ).toMatchSnapshot();
-  });
-  it("return type", () => {
-    expect(
-      parser.parseEval('$var = fn(): ?string => "something";')
-    ).toMatchSnapshot();
-  });
-  it("inside call", () => {
-    expect(parser.parseEval(`call(fn($arg) => $arg);`)).toMatchSnapshot();
-  });
+
   it("error / fn passes on php7.3", () => {
     expect(
       parser.parseEval(`function fn($arg) { return $arg; }`, {

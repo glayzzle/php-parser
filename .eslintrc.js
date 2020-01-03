@@ -5,7 +5,7 @@ module.exports = {
     sourceType: "module"
   },
   plugins: ["prettier"],
-  extends: ["eslint:recommended"],
+  extends: ["eslint:recommended", "plugin:jest/recommended"],
   env: {
     browser: true,
     node: true,

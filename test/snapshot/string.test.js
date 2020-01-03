@@ -226,56 +226,22 @@ describe("Test strings", function() {
     ).toMatchSnapshot();
   });
 
-  it("...", function() {
-    parser.parseEval('echo B"\\colors[1] contains >$colors[1]<\\n";');
-  });
-
-  it("...", function() {
-    parser.parseEval('echo "\\colors[1] contains >$colors [1]<\\n";');
-  });
-
-  it("...", function() {
-    parser.parseEval("echo \"~'.{{$expectedLength}}'\\$~s\";");
-  });
-
-  it("...", function() {
-    parser.parseEval("$a = b'\\t\\ra';");
-  });
-
-  it("...", function() {
-    parser.parseEval('$foo = array("v1.09azAZ-._~!$", true);');
-  });
-
-  it("...", function() {
-    parser.parseEval('$v = strtolower("$i.$j.$k-$rel");');
-  });
-
-  it("...", function() {
-    parser.parseEval('$text = "$text at line $line";');
-  });
-
-  it("...", function() {
-    parser.parseEval("return \"Class.create('$package$className',{\";");
-  });
-
-  it("...", function() {
-    parser.parseEval("echo \"yo : {$feeds[0]['title[0][value]']}\";");
-  });
-
-  it("...", function() {
-    parser.parseEval('return "\\x1B[{$color}m{$str}\\x1B[0m";');
-  });
-
-  it("...", function() {
-    parser.parseEval('echo "\\"$parts[0]\\"\\n";');
-  });
-
-  it("...", function() {
-    parser.parseEval('echo "Hello {".$obj->name."} !";');
-  });
-
-  it("...", function() {
-    parser.parseEval('echo "Hello {$obj->name} !";');
+  it.each([
+    'echo B"\\colors[1] contains >$colors[1]<\\n";',
+    'echo "\\colors[1] contains >$colors [1]<\\n";',
+    "echo \"~'.{{$expectedLength}}'\\$~s\";",
+    "$a = b'\\t\\ra';",
+    '$foo = array("v1.09azAZ-._~!$", true);',
+    '$v = strtolower("$i.$j.$k-$rel");',
+    '$text = "$text at line $line";',
+    "return \"Class.create('$package$className',{\";",
+    "echo \"yo : {$feeds[0]['title[0][value]']}\";",
+    'return "\\x1B[{$color}m{$str}\\x1B[0m";',
+    'echo "\\"$parts[0]\\"\\n";',
+    'echo "Hello {".$obj->name."} !";',
+    'echo "Hello {$obj->name} !";'
+  ])("string test: %s", function(code) {
+    parser.parseEval(code);
   });
 
   it("test encapsed elements", function() {
