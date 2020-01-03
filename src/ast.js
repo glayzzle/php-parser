@@ -35,6 +35,7 @@ const Position = require("./ast/position");
  *   - [Error](#error)
  *   - [Expression](#expression)
  *     - [Entry](#entry)
+ *     - [ArrowFunc](#arrowfunc)
  *     - [Closure](#closure)
  *     - [ByRef](#byref)
  *     - [Silent](#silent)
@@ -449,6 +450,7 @@ AST.prototype.checkNodes = function() {
 // Define all AST nodes
 [
   require("./ast/array"),
+  require("./ast/arrowfunc"),
   require("./ast/assign"),
   require("./ast/assignref"),
   require("./ast/bin"),

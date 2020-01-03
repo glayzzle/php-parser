@@ -17,7 +17,7 @@ describe("yield", function() {
     expect(parser.parseEval('$data = (yield $key => $value);')).toMatchSnapshot();
   });
   it("inside function", function() {
-    expect(parser.parseEval('function fn() { yield $i; }')).toMatchSnapshot();
+    expect(parser.parseEval('function foo() { yield $i; }')).toMatchSnapshot();
   });
   it("null", function() {
     expect(parser.parseEval('yield;')).toMatchSnapshot();

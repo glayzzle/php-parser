@@ -344,7 +344,7 @@ describe("Test locations", function() {
   });
   it("function", function() {
     expect(
-      parser.parseEval('function fn() { echo "something"; }', {
+      parser.parseEval('function foo() { echo "something"; }', {
         ast: {
           withPositions: true,
           withSource: true
@@ -384,7 +384,7 @@ describe("Test locations", function() {
   });
   it("class (inner statement)", function() {
     expect(
-      parser.parseEval("function fn() { class Foo {} }", {
+      parser.parseEval("function foo() { class Foo {} }", {
         ast: {
           withPositions: true,
           withSource: true
@@ -394,7 +394,7 @@ describe("Test locations", function() {
   });
   it("abstract class (inner statement)", function() {
     expect(
-      parser.parseEval("function fn() { abstract class Foo {} }", {
+      parser.parseEval("function foo() { abstract class Foo {} }", {
         ast: {
           withPositions: true,
           withSource: true
@@ -404,7 +404,7 @@ describe("Test locations", function() {
   });
   it("final class (inner statement)", function() {
     expect(
-      parser.parseEval("function fn() { final class Foo {} }", {
+      parser.parseEval("function foo() { final class Foo {} }", {
         ast: {
           withPositions: true,
           withSource: true
@@ -1025,7 +1025,7 @@ string";`,
   });
   it("parameter", function() {
     expect(
-      parser.parseEval("function fn(?int $foo = 2112) {}", {
+      parser.parseEval("function foo(?int $foo = 2112) {}", {
         ast: {
           withPositions: true,
           withSource: true

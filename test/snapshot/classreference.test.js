@@ -11,9 +11,9 @@ describe("classreference", function() {
     expect(parser.parseEval('Foo::call();')).toMatchSnapshot();
   });
   it("argument type", function() {
-    expect(parser.parseEval('function fn(Foo $arg) {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo(Foo $arg) {}')).toMatchSnapshot();
   });
   it("argument type (2)", function() {
-    expect(parser.parseEval('function fn(Foo\\Foo $arg) {}')).toMatchSnapshot();
+    expect(parser.parseEval('function foo(Foo\\Foo $arg) {}')).toMatchSnapshot();
   });
 });
