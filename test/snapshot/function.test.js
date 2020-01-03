@@ -2,41 +2,36 @@ const parser = require("../main");
 
 describe("Function tests", function() {
   it("test function parsing", function() {
-    const ast = parser.parseEval(
-      `
+    expect(
+      parser.parseEval(`
       function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}
       $a = function &($b) use(&$c, $d) : array {
         return true;
       };
       $b = foo(...[1, null, 1, 2, 3]);
-      `
-    );
-    expect(ast).toMatchSnapshot();
+      `)
+    ).toMatchSnapshot();
   });
 
   it("implement #113 : typehint nodes", function() {
     expect(
-      parser.parseEval(
-        `
+      parser.parseEval(`
       function &foo(int $a = 1, float $b = 1, bool $c = 1, string $d, callable $e, int\\bar $f, ?array &...$params) : ?object {
         // inner comment
-      }
-      `
-      )
+      }`)
     ).toMatchSnapshot();
   });
 
+  it("function called 'fn'", function() {
+    expect(parser.parseEval("$function fn() {};")).toMatchSnapshot();
+  });
+
   it("implement #196 : set function name as identifier", function() {
-    const ast = parser.parseEval(
-      `
-      function f /* f */($a) {}
-      `,
-      {
-        parser: {
-          extractDoc: true
-        }
+    const ast = parser.parseEval(`function f /* f */($a) {}`, {
+      parser: {
+        extractDoc: true
       }
-    );
+    });
     expect(ast).toMatchSnapshot();
   });
 
