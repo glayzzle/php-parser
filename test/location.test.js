@@ -1,8 +1,8 @@
-var parser = require("./main");
+const parser = require("./main");
 
 describe("Test offsets", function() {
   // init a new parser instance
-  var test = parser.create({
+  const test = parser.create({
     ast: {
       withPositions: true,
       withSource: true
@@ -16,9 +16,9 @@ describe("Test offsets", function() {
     }
   });
 
-  var lines = ["// a comment", 'echo "string";', "$a = true;"];
-  var text = lines.join("\r\n");
-  var ast = test.parseEval(text);
+  const lines = ["// a comment", 'echo "string";', "$a = true;"];
+  const text = lines.join("\r\n");
+  const ast = test.parseEval(text);
 
   describe("to program node", function() {
     it("test line", function() {
@@ -47,7 +47,7 @@ describe("Test offsets", function() {
     it("test offsets", function() {
       expect(ast.comments[0].loc.start.offset).toBe(0);
       expect(ast.comments[0].loc.end.offset).toBe(lines[0].length + 2);
-      expect(ast.comments[0].loc.source).toBe(lines[0] + '\r\n');
+      expect(ast.comments[0].loc.source).toBe(lines[0] + "\r\n");
     });
   });
 
@@ -130,11 +130,11 @@ describe("Test offsets", function() {
 
   describe("test block statements", function() {
     it("test if", function() {
-      const ast = test.parseEval('if(true) {}\n//foo\necho $bar;');
+      const ast = test.parseEval("if(true) {}\n//foo\necho $bar;");
       expect(ast.children[0].loc.start.line).toBe(1);
       expect(ast.children[0].loc.end.line).toBe(1);
       expect(ast.children[1].loc.start.line).toBe(3);
       expect(ast.children[1].loc.end.line).toBe(3);
     });
-  })
+  });
 });

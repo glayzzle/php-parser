@@ -1,10 +1,10 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("clone", function() {
   it("simple", function() {
-    expect(parser.parseEval('clone $obj;')).toMatchSnapshot();
+    expect(parser.parseEval("clone $obj;")).toMatchSnapshot();
   });
   it("assign", function() {
-    expect(parser.parseEval('$var = clone $obj;')).toMatchSnapshot();
+    expect(parser.parseEval("$var = clone $obj;")).toMatchSnapshot();
   });
 });

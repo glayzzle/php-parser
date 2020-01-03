@@ -1,4 +1,4 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("print", function() {
   it("simple", function() {

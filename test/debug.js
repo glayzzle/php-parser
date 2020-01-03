@@ -14,18 +14,20 @@
   ]
 }
  */
-const util = require('util');
+const util = require("util");
 const parser = require("../src/index");
-const ast = parser.parseCode(`
+const ast = parser.parseCode(
+  `
 <?php
 function iter() {
   yield 'ator' => $foo;
   yield from iter(50);
 }
 $a = fn($n) => $n * $factor;
-`, { 
+`,
+  {
     parser: {
-      debug: true,
+      debug: true
       //extractDoc: true
     },
     ast: {
@@ -34,6 +36,4 @@ $a = fn($n) => $n * $factor;
     }
   }
 );
-console.log(
-  util.inspect(ast, false, 10, true)
-);
+console.log(util.inspect(ast, false, 10, true));

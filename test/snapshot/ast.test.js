@@ -1,36 +1,41 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("Test AST structure", function() {
-  it('fix #127 - echo statements', () => {
+  it("fix #127 - echo statements", () => {
     expect(parser.parseEval('echo "hello"; ?> world')).toMatchSnapshot();
   });
 
-  it('fix #127 - inline', function() {
-    expect(parser.parseEval('?>?>?>')).toMatchSnapshot();
-  });
-  
-  it('fix #370 - nullkeyword', function() {
-    expect(parser.parseEval('$a = Null;')).toMatchSnapshot();
+  it("fix #127 - inline", function() {
+    expect(parser.parseEval("?>?>?>")).toMatchSnapshot();
   });
 
-  it('fix #370 - classreference instead identifier(classreferent)', function() {
-    expect(parser.parseEval('$a = test;')).toMatchSnapshot();
+  it("fix #370 - nullkeyword", function() {
+    expect(parser.parseEval("$a = Null;")).toMatchSnapshot();
   });
 
+  it("fix #370 - classreference instead identifier(classreferent)", function() {
+    expect(parser.parseEval("$a = test;")).toMatchSnapshot();
+  });
 
   it("#176 - lost `?>` in program node", function() {
-    expect(parser.parseCode(`<?php
+    expect(
+      parser.parseCode(
+        `<?php
     __LINE__
-    ?>`, null, {
-      ast: {
-        withPositions: true,
-        withSource: true
-      }
-    })).toMatchSnapshot();
-  })
+    ?>`,
+        null,
+        {
+          ast: {
+            withPositions: true,
+            withSource: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 
-  it('test program', function() {
-    expect(parser.parseEval('')).toMatchSnapshot();
+  it("test program", function() {
+    expect(parser.parseEval("")).toMatchSnapshot();
   });
   it("test syntax error", function() {
     const parse = function() {
@@ -48,25 +53,17 @@ describe("Test AST structure", function() {
   });
 
   it("fix #120", function() {
-    expect(
-      parser.parseCode("<?php echo 'World'; ?>\r\n !")
-    ).toMatchSnapshot();
+    expect(parser.parseCode("<?php echo 'World'; ?>\r\n !")).toMatchSnapshot();
   });
 
   it("test magics", function() {
-    expect(
-      parser.parseEval("echo __FILE__, __DIR__;")
-    ).toMatchSnapshot();
+    expect(parser.parseEval("echo __FILE__, __DIR__;")).toMatchSnapshot();
   });
   it("test shell", function() {
-    expect(
-      parser.parseEval("echo `ls -larth`;")
-    ).toMatchSnapshot();
+    expect(parser.parseEval("echo `ls -larth`;")).toMatchSnapshot();
   });
   it("test clone", function() {
-    expect(
-      parser.parseEval("$a = clone $var;")
-    ).toMatchSnapshot();
+    expect(parser.parseEval("$a = clone $var;")).toMatchSnapshot();
   });
   it("test echo, isset, unset, empty", function() {
     expect(
@@ -81,15 +78,11 @@ describe("Test AST structure", function() {
   });
 
   it("test constants", function() {
-    expect(
-      parser.parseEval("const FOO = 3.14;")
-    ).toMatchSnapshot();
+    expect(parser.parseEval("const FOO = 3.14;")).toMatchSnapshot();
   });
 
   it("test eval", function() {
-    expect(
-      parser.parseEval('eval("return true;");')
-    ).toMatchSnapshot();
+    expect(parser.parseEval('eval("return true;");')).toMatchSnapshot();
   });
   it("test die/exit", function() {
     expect(
@@ -101,9 +94,7 @@ describe("Test AST structure", function() {
   });
 
   it("test coalesce operator", function() {
-    expect(
-      parser.parseEval("$var = $a ?? true;")
-    ).toMatchSnapshot();
+    expect(parser.parseEval("$var = $a ?? true;")).toMatchSnapshot();
   });
 
   it("test include / require", function() {

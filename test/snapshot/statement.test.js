@@ -1,31 +1,40 @@
-const parser = require('../main');
+const parser = require("../main");
 
 describe("Test statements", function() {
   it("test goto label", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(`
       start:
         $i++;
       goto start;
-    `)).toMatchSnapshot();
+    `)
+    ).toMatchSnapshot();
   });
 
   it("test global", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(`
       function foo() {
         global $a, $b;
       }
-    `)).toMatchSnapshot();
+    `)
+    ).toMatchSnapshot();
   });
 
-  describe('halt statements', function() {
+  describe("halt statements", function() {
     it("test halt statement", function() {
-      expect(parser.parseEval(`
+      expect(
+        parser.parseEval(
+          `
         $a = 1;
         __halt_compiler();
         $b = 1;
-      `, {
-        parser: { debug: false }
-      })).toMatchSnapshot();
+      `,
+          {
+            parser: { debug: false }
+          }
+        )
+      ).toMatchSnapshot();
     });
 
     it("test inner error", function() {
@@ -34,35 +43,47 @@ describe("Test statements", function() {
           if (true) {
             __halt_compiler();
           }
-        `)
+        `);
       }).toThrow();
     });
 
     it("test fallback", function() {
-      expect(parser.parseEval(`
+      expect(
+        parser.parseEval(
+          `
         if (true) {
           __halt_compiler();
         }
         $b = 1;
-      `, {
-        parser: { suppressErrors: true }
-      })).toMatchSnapshot();
+      `,
+          {
+            parser: { suppressErrors: true }
+          }
+        )
+      ).toMatchSnapshot();
     });
   });
 
   it("test static", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       function foo() {
         static $a, $b = 5;
       }
       static $sVar1 = 11;
-    `, {
-      parser: { debug: false }
-    })).toMatchSnapshot();
+    `,
+        {
+          parser: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("test declare", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       if (true) { declare(ticks=1); }
       $a = 1;
       declare(ticks=2,encoding=ISO-8859-1);
@@ -74,13 +95,18 @@ describe("Test statements", function() {
         $d = 3;
       enddeclare;
       $e = 4;
-    `, {
-      parser: { debug: false }
-    })).toMatchSnapshot();
+    `,
+        {
+          parser: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("test try", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       try {
         foo();
       } catch(FooError|BarError $err) {
@@ -89,13 +115,18 @@ describe("Test statements", function() {
       } finally {
         clean();
       }
-    `, {
-      parser: { debug: false }
-    })).toMatchSnapshot();
+    `,
+        {
+          parser: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("test inner statements", function() {
-    expect(parser.parseEval(`
+    expect(
+      parser.parseEval(
+        `
       if (true) {
         function foo() {}
         abstract class foo {}
@@ -104,8 +135,11 @@ describe("Test statements", function() {
         trait foo {}
         interface foo {}
       }
-    `, {
-      parser: { debug: false }
-    })).toMatchSnapshot();
+    `,
+        {
+          parser: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
   });
 });
