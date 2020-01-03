@@ -158,4 +158,8 @@ describe("Test precedence", function() {
     shouldBeSame("$a = (string)$b->foo . $c", "$a = ((string)$b->foo) . $c");
     shouldBeSame("(bool) $var ? 1 : 2;", "((bool)$var) ? 1 : 2;");
   });
+
+  it("test unary / retif", function() {
+    shouldBeSame("$a = +(+$var ? 1 : 2)", "$a = +((+$var) ? 1 : 2)")
+  });
 });
