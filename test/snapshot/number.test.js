@@ -4,6 +4,7 @@ describe("Test numbers", function() {
   it("test common cases", function() {
     expect(
       parser.parseEval(`
+      1234;
       $a = -1.5;
       $b = 1234;
       $c = 9223372036854775807;
@@ -35,9 +36,5 @@ describe("Test numbers", function() {
         }
       )
     ).toMatchSnapshot();
-  });
-
-  it("test common cases", function() {
-    expect(parser.parseEval("1234;")).toMatchSnapshot();
   });
 });

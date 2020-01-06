@@ -33,9 +33,6 @@ describe("byref", () => {
   it("function definition", () => {
     expect(parser.parseEval("function &foo( &$bar ) { }")).toMatchSnapshot();
   });
-  it("variable", () => {
-    expect(parser.parseEval("$a = &$var;")).toMatchSnapshot();
-  });
   it("variadic", () => {
     expect(parser.parseEval("function test(&...$var) { }")).toMatchSnapshot();
   });
@@ -112,11 +109,6 @@ describe("byref", () => {
   });
   it.skip("propertylookup #2", () => {
     expect(parser.parseEval("$var = &($var)->test;")).toMatchSnapshot();
-  });
-  it("closure", () => {
-    expect(
-      parser.parseEval("$var = function () use (&$message) { };")
-    ).toMatchSnapshot();
   });
   it("with bin", () => {
     expect(parser.parseEval("$foo = &$bar || $bar;")).toMatchSnapshot();

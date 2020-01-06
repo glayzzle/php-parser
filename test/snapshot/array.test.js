@@ -67,19 +67,19 @@ describe("Array without keys", () => {
     expect(parser.parseEval("['foo', 'bar']")).toMatchSnapshot();
   });
 
-  it("array without trailing commas", () => {
+  it("array without trailing commas #2", () => {
     expect(parser.parseEval("['foo', 'bar']")).toMatchSnapshot();
   });
 
-  it("array with trailing commas", () => {
+  it("array with trailing commas #3", () => {
     expect(parser.parseEval("['foo', 'bar',]")).toMatchSnapshot();
   });
 
-  it("array with trailing commas #2", () => {
+  it("array with trailing commas #4", () => {
     expect(parser.parseEval("['foo', 'bar'   ,]")).toMatchSnapshot();
   });
 
-  it("array with trailing commas #3", () => {
+  it("array with trailing commas #5", () => {
     expect(parser.parseEval("['foo', 'bar'   ,   ]")).toMatchSnapshot();
   });
 
