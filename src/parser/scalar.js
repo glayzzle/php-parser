@@ -223,6 +223,12 @@ module.exports = {
             node = this.node("nowdoc");
             value = this.next().text();
             // strip the last line return char
+            if (this.lexer.heredoc_label.indentation > 0) {
+              value = value.substring(
+                0,
+                value.length - this.lexer.heredoc_label.indentation
+              );
+            }
             const lastCh = value[value.length - 1];
             if (lastCh === "\n") {
               if (value[value.length - 2] === "\r") {
@@ -431,6 +437,26 @@ module.exports = {
     // reading encapsed parts
     while (this.token !== expect && this.token !== this.EOF) {
       value.push(this.read_encapsed_string_item(true));
+    }
+    if (
+      value.length > 0 &&
+      value[value.length - 1].kind === "encapsedpart" &&
+      value[value.length - 1].expression.kind === "string"
+    ) {
+      const node = value[value.length - 1].expression;
+      const lastCh = node.value[node.value.length - 1];
+      if (lastCh === "\n") {
+        if (node.value[node.value.length - 2] === "\r") {
+          // windows style
+          node.value = node.value.substring(0, node.value.length - 2);
+        } else {
+          // linux style
+          node.value = node.value.substring(0, node.value.length - 1);
+        }
+      } else if (lastCh === "\r") {
+        // mac style
+        node.value = node.value.substring(0, node.value.length - 1);
+      }
     }
     this.expect(expect) && this.next();
     const raw = this.lexer._input.substring(
