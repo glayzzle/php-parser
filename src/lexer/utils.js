@@ -11,6 +11,12 @@ module.exports = {
   // check if the char can be a numeric
   is_NUM: function() {
     const ch = this._input.charCodeAt(this.offset - 1);
+    return (ch > 47 && ch < 58) || ch === 95;
+  },
+
+  // check if the char can be a numeric
+  is_NUM_START: function() {
+    const ch = this._input.charCodeAt(this.offset - 1);
     return ch > 47 && ch < 58;
   },
 
@@ -76,7 +82,10 @@ module.exports = {
   is_HEX: function() {
     const ch = this._input.charCodeAt(this.offset - 1);
     return (
-      (ch > 47 && ch < 58) || (ch > 64 && ch < 71) || (ch > 96 && ch < 103)
+      (ch > 47 && ch < 58) ||
+      (ch > 64 && ch < 71) ||
+      (ch > 96 && ch < 103) ||
+      ch === 95
     );
   }
 };
