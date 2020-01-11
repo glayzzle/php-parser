@@ -54,7 +54,7 @@ module.exports = {
   },
   matchST_VAR_OFFSET: function() {
     const ch = this.input();
-    if (this.is_NUM()) {
+    if (this.is_NUM_START()) {
       this.consume_NUM();
       return this.tok.T_NUM_STRING;
     } else if (ch === "]") {
