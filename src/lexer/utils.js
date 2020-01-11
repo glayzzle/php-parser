@@ -35,9 +35,16 @@ module.exports = {
   // check if current char can be a label
   is_LABEL_START: function() {
     const ch = this._input.charCodeAt(this.offset - 1);
-    return (
-      (ch > 96 && ch < 123) || (ch > 64 && ch < 91) || ch === 95 || ch > 126
-    );
+    // A - Z
+    if (ch > 64 && ch < 91) return true;
+    // a - z
+    if (ch > 96 && ch < 123) return true;
+    // _ (95)
+    if (ch === 95) return true;
+    // utf8 / extended
+    if (ch > 126) return true;
+    // else
+    return false;
   },
 
   // reads each char of the label
@@ -81,11 +88,15 @@ module.exports = {
   // check if current char can be a hexadecimal number
   is_HEX: function() {
     const ch = this._input.charCodeAt(this.offset - 1);
-    return (
-      (ch > 47 && ch < 58) ||
-      (ch > 64 && ch < 71) ||
-      (ch > 96 && ch < 103) ||
-      ch === 95
-    );
+    // 0 - 9
+    if (ch > 47 && ch < 58) return true;
+    // A - F
+    if (ch > 64 && ch < 71) return true;
+    // a - f
+    if (ch > 96 && ch < 103) return true;
+    // _ (code 95)
+    if (ch === 95) return true;
+    // else
+    return false;
   }
 };
