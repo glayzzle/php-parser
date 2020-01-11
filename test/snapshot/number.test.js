@@ -19,22 +19,28 @@ describe("Test numbers", function() {
     ).toMatchSnapshot();
   });
 
-  it("test edge cases", function() {
-    expect(
-      parser.parseEval(
-        `
-      $a = 0xx;
-      $b = 0b2;
-      $c = 01239;
-      $d = 7E-a;
-      $e = 7EX;
-    `,
-        {
-          parser: {
-            suppressErrors: true
-          }
-        }
-      )
-    ).toMatchSnapshot();
+  it.each([
+    ["hexa without hex", "$a = 0xx;"],
+    ["binary with 2", "$b = 0b2;"],
+    // @fixme : PHP Parse error:  Invalid numeric literal in %s
+    // ["octal with 9", "$c = 01239;"],
+    ["exponent with letter", "$d = 7E-a;"],
+    ["variant (for coverage)", "$d = 7e+a;"],
+    ["exponent empty", "$e = 7EX;"],
+    ["underscore #1", "$e = 7__0;"],
+    ["underscore #2", "$e = 7._0;"],
+    ["underscore #3", "$e = 7_.0;"],
+    ["underscore #4", "$e = 7e_0;"],
+    ["underscore #5", "$e = 7_e0;"]
+  ])("%s", function(_, code) {
+    const ast = parser.parseEval(code, {
+      parser: {
+        suppressErrors: true
+      }
+    });
+    // expect to fail
+    expect(ast.errors.length).toBeGreaterThan(0);
+    // check structure
+    expect(ast).toMatchSnapshot();
   });
 });
