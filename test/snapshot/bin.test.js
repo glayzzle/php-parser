@@ -103,6 +103,9 @@ describe("bin", () => {
   it("??", () => {
     expect(parser.parseEval("$foo ?? $bar;")).toMatchSnapshot();
   });
+  it("?? right-associative", () => {
+    expect(parser.parseEval("$foo ?? $bar ?? $bazz;")).toMatchSnapshot();
+  });
   it("?? (php < 7)", function() {
     const astErr = parser.parseEval(`$var ?? $var;`, {
       parser: {
