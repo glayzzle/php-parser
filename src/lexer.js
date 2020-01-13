@@ -29,9 +29,7 @@ const lexer = function(engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = false;
-  this.php7 = true;
-  this.php73 = true;
-  this.php74 = true;
+  this.version = 704;
   this.yyprevcol = 0;
   this.keywords = {
     __class__: this.tok.T_CLASS_C,
@@ -146,7 +144,7 @@ lexer.prototype.setInput = function(input) {
     last_column: 0
   };
   this.tokens = [];
-  if (this.php74) {
+  if (this.version > 703) {
     this.keywords.fn = this.tok.T_FN;
   } else {
     delete this.keywords.fn;

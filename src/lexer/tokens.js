@@ -11,7 +11,7 @@ module.exports = {
     let id = this.keywords[token];
     if (typeof id !== "number") {
       if (token === "yield") {
-        if (this.php7 && this.tryMatch(" from")) {
+        if (this.version >= 700 && this.tryMatch(" from")) {
           this.consume(5);
           id = this.tok.T_YIELD_FROM;
         } else {
@@ -153,8 +153,8 @@ module.exports = {
       return "!";
     },
     "?": function() {
-      if (this.php7 && this._input[this.offset] === "?") {
-        if (this.php74 && this._input[this.offset + 1] === "=") {
+      if (this.version >= 700 && this._input[this.offset] === "?") {
+        if (this.version >= 704 && this._input[this.offset + 1] === "=") {
           this.consume(2);
           return this.tok.T_COALESCE_EQUAL;
         } else {
@@ -180,7 +180,7 @@ module.exports = {
         return this.tok.T_SL;
       } else if (nchar === "=") {
         this.input();
-        if (this.php7 && this._input[this.offset] === ">") {
+        if (this.version >= 700 && this._input[this.offset] === ">") {
           this.input();
           return this.tok.T_SPACESHIP;
         } else {

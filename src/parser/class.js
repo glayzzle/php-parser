@@ -103,7 +103,7 @@ module.exports = {
       } else if (
         this.token === this.tok.T_VARIABLE ||
         // support https://wiki.php.net/rfc/typed_properties_v2
-        (this.php74 &&
+        (this.version >= 704 &&
           (this.token === "?" ||
             this.token === this.tok.T_CALLABLE ||
             this.token === this.tok.T_ARRAY ||
@@ -197,7 +197,7 @@ module.exports = {
         let value = null;
         if (
           this.token === this.tok.T_STRING ||
-          (this.php7 && this.is("IDENTIFIER"))
+          (this.version >= 700 && this.is("IDENTIFIER"))
         ) {
           constName = this.node("identifier");
           const name = this.text();
@@ -486,7 +486,7 @@ module.exports = {
         this.next();
         if (
           this.token === this.tok.T_STRING ||
-          (this.php7 && this.is("IDENTIFIER"))
+          (this.version >= 700 && this.is("IDENTIFIER"))
         ) {
           trait = method;
           method = this.node("identifier");
@@ -520,7 +520,7 @@ module.exports = {
 
       if (
         this.token === this.tok.T_STRING ||
-        (this.php7 && this.is("IDENTIFIER"))
+        (this.version >= 700 && this.is("IDENTIFIER"))
       ) {
         alias = this.node("identifier");
         const name = this.text();

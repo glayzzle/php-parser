@@ -31,7 +31,7 @@ module.exports = {
   read_function_list: function(item, separator) {
     const result = [];
     do {
-      if (this.token == separator && this.php73 && result.length > 0) {
+      if (this.token == separator && this.version >= 703 && result.length > 0) {
         result.push(this.node("noop")());
         break;
       }
@@ -39,7 +39,7 @@ module.exports = {
       if (this.token != separator) {
         break;
       }
-      if (this.next().token == ")" && this.php73) {
+      if (this.next().token == ")" && this.version >= 703) {
         break;
       }
     } while (this.token != this.EOF);

@@ -82,11 +82,11 @@ module.exports = {
     if (type !== 1) {
       const nameNode = this.node("identifier");
       if (type === 2) {
-        if (this.php7) {
+        if (this.version >= 700) {
           if (this.token === this.tok.T_STRING || this.is("IDENTIFIER")) {
             name = this.text();
             this.next();
-          } else if (!this.php74) {
+          } else if (this.version < 704) {
             this.error("IDENTIFIER");
           }
         } else if (this.token === this.tok.T_STRING) {
@@ -96,11 +96,11 @@ module.exports = {
           this.error("IDENTIFIER");
         }
       } else {
-        if (this.php7) {
+        if (this.version >= 700) {
           if (this.token === this.tok.T_STRING) {
             name = this.text();
             this.next();
-          } else if (this.php74) {
+          } else if (this.version >= 704) {
             if (!this.expect("(")) {
               this.next();
             }

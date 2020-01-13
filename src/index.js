@@ -45,7 +45,7 @@ function combine(src, to) {
  *   parser: {
  *     extractDoc: true,
  *     suppressErrors: true,
- *     php7: true
+ *     version: 704 // or '7.4'
  *   },
  *   ast: {
  *     withPositions: true
@@ -80,24 +80,27 @@ const engine = function(options) {
       if (!options.lexer) {
         options.lexer = {};
       }
-      if (options.parser.php7 === false) {
-        options.parser.php73 = false;
-        options.parser.php74 = false;
-      }
-      if (options.parser.php73 === true) {
-        options.parser.php7 = true;
-      }
-      if (options.parser.php74 === true) {
-        options.parser.php7 = true;
-        options.parser.php73 = true;
+      if (options.parser.version) {
+        if (typeof options.parser.version === "string") {
+          let version = options.parser.version.split(".");
+          version = parseInt(version[0]) * 100 + parseInt(version[1]);
+          if (isNaN(options.parser.version)) {
+            throw new Error("Bad version number : " + options.parser.version);
+          } else {
+            options.parser.version = version;
+          }
+        } else if (typeof options.parser.version !== "number") {
+          throw new Error("Expecting a number for version");
+        }
+        if (options.parser.version < 500 || options.parser.version > 704) {
+          throw new Error("Can only handle versions between 5.0 to 7.4");
+        }
       }
     }
     combine(options, this);
 
     // same version flags based on parser options
-    this.lexer.php7 = this.parser.php7;
-    this.lexer.php73 = this.parser.php73;
-    this.lexer.php74 = this.parser.php74;
+    this.lexer.version = this.parser.version;
   }
 };
 
