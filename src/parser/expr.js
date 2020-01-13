@@ -413,22 +413,10 @@ module.exports = {
       switch (this.token) {
         case "=": {
           if (isConst) this.error("VARIABLE");
-          let right;
           if (this.next().token == "&") {
-            this.next();
-            if (this.token === this.tok.T_NEW) {
-              if (this.version >= 700) {
-                this.error();
-              }
-              right = this.read_new_expr();
-            } else {
-              right = this.read_variable(false, false);
-            }
-
-            return result("assignref", expr, right);
+            return this.read_assignref(result, expr);
           }
-          right = this.read_expr();
-          return result("assign", expr, right, "=");
+          return result("assign", expr, this.read_expr(), "=");
         }
 
         // operations :
@@ -518,6 +506,25 @@ module.exports = {
 
     // returns variable | scalar
     return expr;
+  },
+
+  /**
+   * Reads assignment
+   * @param {*} left
+   */
+  read_assignref: function(result, left) {
+    this.next();
+    let right;
+    if (this.token === this.tok.T_NEW) {
+      if (this.version >= 700) {
+        this.error();
+      }
+      right = this.read_new_expr();
+    } else {
+      right = this.read_variable(false, false);
+    }
+
+    return result("assignref", left, right);
   },
 
   /**
