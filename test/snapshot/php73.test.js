@@ -6,7 +6,7 @@ describe("Test syntax parsing with PHP 73 support", function() {
       "[$a, &$b] = $array; list($a, &$b) = $array;",
       {
         parser: {
-          php73: true
+          version: "7.3"
         }
       }
     );
@@ -42,7 +42,7 @@ describe("Test syntax parsing with PHP 73 support", function() {
     `,
       {
         parser: {
-          php73: true
+          version: "7.3"
         }
       }
     );
@@ -66,7 +66,7 @@ describe("Test syntax parsing with PHP 73 support", function() {
     `,
       {
         parser: {
-          php73: true,
+          version: "7.3",
           suppressErrors: true
         }
       }

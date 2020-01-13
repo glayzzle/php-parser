@@ -14,7 +14,7 @@ describe("byref", () => {
     expect(
       parser.parseEval("$a =& new foo();", {
         parser: {
-          php7: false
+          version: "5.6"
         }
       })
     ).toMatchSnapshot();
