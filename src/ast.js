@@ -21,11 +21,11 @@ const Position = require("./ast/position");
  *   - [Constant](#constant)
  *   - [Identifier](#identifier)
  *   - [Reference](#reference)
- *     - [TypeReference](#classreference)
- *     - [ParentReference](#classreference)
- *     - [StaticReference](#classreference)
- *     - [SelfReference](#classreference)
- *     - [ClassReference](#classreference)
+ *     - [TypeReference](#typereference)
+ *     - [ParentReference](#parentreference)
+ *     - [StaticReference](#staticreference)
+ *     - [SelfReference](#selfreference)
+ *     - [Name](#name)
  *   - [TraitUse](#traituse)
  *   - [TraitAlias](#traitalias)
  *   - [TraitPrecedence](#traitprecedence)
@@ -464,7 +464,6 @@ AST.prototype.checkNodes = function() {
   require("./ast/catch"),
   require("./ast/class"),
   require("./ast/classconstant"),
-  require("./ast/classreference"),
   require("./ast/clone"),
   require("./ast/closure"),
   require("./ast/comment"),
@@ -505,6 +504,7 @@ AST.prototype.checkNodes = function() {
   require("./ast/lookup"),
   require("./ast/magic"),
   require("./ast/method"),
+  require("./ast/name"),
   require("./ast/namespace"),
   require("./ast/new"),
   require("./ast/node"),
