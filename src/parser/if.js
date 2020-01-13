@@ -36,6 +36,13 @@ module.exports = {
         }
         items.push(this.read_inner_statement());
       }
+      if (
+        items.length === 0 &&
+        this.extractDoc &&
+        this._docs.length > this._docIndex
+      ) {
+        items.push(this.node("noop")());
+      }
       body = body(null, items);
       this.expect(this.tok.T_ENDIF) && this.next();
       this.expectEndOfStatement();
@@ -80,6 +87,13 @@ module.exports = {
       }
       items.push(this.read_inner_statement());
     }
+    if (
+      items.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      items.push(this.node("noop")());
+    }
     body = body(null, items);
     return result(test, body, alternate, true);
   },
@@ -92,6 +106,13 @@ module.exports = {
     const items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       items.push(this.read_inner_statement());
+    }
+    if (
+      items.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      items.push(this.node("noop")());
     }
     return body(null, items);
   }

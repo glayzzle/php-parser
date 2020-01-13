@@ -401,6 +401,13 @@ module.exports = {
     const body = top
       ? this.read_top_statements()
       : this.read_inner_statements();
+    if (
+      body.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      body.push(this.node("noop")());
+    }
     this.expect("}") && this.next();
     return result(null, body);
   }
