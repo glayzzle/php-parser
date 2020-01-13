@@ -84,7 +84,7 @@ const engine = function(options) {
         if (typeof options.parser.version === "string") {
           let version = options.parser.version.split(".");
           version = parseInt(version[0]) * 100 + parseInt(version[1]);
-          if (isNaN(options.parser.version)) {
+          if (isNaN(version)) {
             throw new Error("Bad version number : " + options.parser.version);
           } else {
             options.parser.version = version;
@@ -93,7 +93,7 @@ const engine = function(options) {
           throw new Error("Expecting a number for version");
         }
         if (options.parser.version < 500 || options.parser.version > 704) {
-          throw new Error("Can only handle versions between 5.0 to 7.4");
+          throw new Error("Can only handle versions between 5.x to 7.x");
         }
       }
     }
