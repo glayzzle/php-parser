@@ -25,7 +25,7 @@ module.exports = {
 
     if (this.token == "{") {
       name = {
-        name: ""
+        name: [""]
       };
     } else {
       name = this.read_namespace_name();
