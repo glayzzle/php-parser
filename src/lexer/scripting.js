@@ -69,13 +69,13 @@ module.exports = {
       default:
         if (ch === ".") {
           ch = this.input();
-          if (this.is_NUM()) {
+          if (this.is_NUM_START()) {
             return this.consume_NUM();
           } else {
             if (ch) this.unput(1);
           }
         }
-        if (this.is_NUM()) {
+        if (this.is_NUM_START()) {
           return this.consume_NUM();
         } else if (this.is_LABEL_START()) {
           return this.consume_LABEL().T_STRING();

@@ -19,11 +19,8 @@ const parser = require("../src/index");
 const ast = parser.parseCode(
   `
 <?php
-function iter() {
-  yield 'ator' => $foo;
-  yield from iter(50);
-}
-$a = fn($n) => $n * $factor;
+$a = 100_00;
+$bad = 100__00;
 `,
   {
     parser: {
