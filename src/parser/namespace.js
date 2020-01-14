@@ -85,7 +85,7 @@ module.exports = {
         return result("selfreference", names[0]);
       }
     }
-    return result("classreference", names, relative);
+    return result("name", names, relative);
   },
   /**
    * Reads a use statement
