@@ -10,8 +10,16 @@ describe("block", () => {
     ["empty declare block", "declare(tick=1) { /* 1 */ }"],
     ["empty declare short form", "declare(tick=1): /* 1 */ ENDDECLARE;"],
     ["empty switch", "switch($foo) { /* foo */ }"],
+    ["empty for", "for(;;) { /* foo */ }"],
+    ["empty foreach", "foreach($foo as $bar) { /* foo */ }"],
     ["empty switch short form", "switch($foo): /* foo */ endswitch;"],
+    ["empty for short form", "for(;;):  /* foo */ endfor;"],
+    [
+      "empty foreach short form",
+      "foreach($foo as $bar): /* foo */ endforeach;"
+    ],
     ["empty if", "if($foo) { /* foo */ }"],
+    ["empty statement", "/* 1 */; /* 2 */; ; /* 3 */"],
     ["empty if short form", "if($foo): /* foo */ endif;"],
     [
       "empty if #2 short form",
