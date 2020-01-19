@@ -35,19 +35,14 @@ describe("Test versions", function() {
       })
     ).toThrow(new Error("Bad version number : x.y.z"));
   });
-  it("unhandled version", function() {
+  it.each([
+    ["unhandled version 4.9", "4.9"],
+    ["unhandled version 8.9", "8.9"],
+    ["unhandled version -0.9", "-0.9"]
+  ])("%s", function(_, version) {
     expect(
       parser.create.bind(null, {
-        parser: {
-          version: "4.9"
-        }
-      })
-    ).toThrow(new Error("Can only handle versions between 5.x to 7.x"));
-    expect(
-      parser.create.bind(null, {
-        parser: {
-          version: "8.9"
-        }
+        parser: { version }
       })
     ).toThrow(new Error("Can only handle versions between 5.x to 7.x"));
   });
