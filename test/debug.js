@@ -19,13 +19,12 @@ const parser = require("../src/index");
 const ast = parser.parseCode(
   `
 <?php
-$a = 100_00;
-$bad = 100__00;
+declare(tick=1): /* 1 */ ENDDECLARE;
 `,
   {
     parser: {
-      debug: true
-      //extractDoc: true
+      debug: true,
+      extractDoc: true
     },
     ast: {
       withPositions: true,

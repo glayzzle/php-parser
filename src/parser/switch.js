@@ -52,6 +52,13 @@ module.exports = {
     while (this.token !== this.EOF && this.token !== expect) {
       items.push(this.read_case_list(expect));
     }
+    if (
+      items.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      items.push(this.node("noop")());
+    }
     // CHECK END TOKEN
     this.expect(expect) && this.next();
     if (expect === this.tok.T_ENDSWITCH) {
@@ -87,6 +94,6 @@ module.exports = {
     ) {
       items.push(this.read_inner_statement());
     }
-    return result(test, items.length > 0 ? body(null, items) : null);
+    return result(test, body(null, items));
   }
 };

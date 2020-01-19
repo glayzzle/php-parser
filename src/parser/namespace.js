@@ -21,37 +21,47 @@ module.exports = {
     const result = this.node("namespace");
     let body;
     this.expect(this.tok.T_NAMESPACE) && this.next();
+    let name;
+
     if (this.token == "{") {
-      this.currentNamespace = [""];
+      name = {
+        name: [""]
+      };
+    } else {
+      name = this.read_namespace_name();
+    }
+    this.currentNamespace = name;
+
+    if (this.token == ";") {
+      this.currentNamespace = name;
+      body = this.next().read_top_statements();
+      this.expect(this.EOF);
+      return result(name.name, body, false);
+    } else if (this.token == "{") {
+      this.currentNamespace = name;
       body = this.next().read_top_statements();
       this.expect("}") && this.next();
-      return result([""], body, true);
-    } else {
-      const name = this.read_namespace_name();
-      if (this.token == ";") {
-        this.currentNamespace = name;
-        body = this.next().read_top_statements();
-        this.expect(this.EOF);
-        return result(name.name, body, false);
-      } else if (this.token == "{") {
-        this.currentNamespace = name;
-        body = this.next().read_top_statements();
-        this.expect("}") && this.next();
-        return result(name.name, body, true);
-      } else if (this.token === "(") {
-        // resolve ambuiguity between namespace & function call
-        name.resolution = this.ast.reference.RELATIVE_NAME;
-        name.name = name.name.substring(1);
-        result.destroy();
-        return this.node("call")(name, this.read_argument_list());
-      } else {
-        this.error(["{", ";"]);
-        // graceful mode :
-        this.currentNamespace = name;
-        body = this.read_top_statements();
-        this.expect(this.EOF);
-        return result(name, body, false);
+      if (
+        body.length === 0 &&
+        this.extractDoc &&
+        this._docs.length > this._docIndex
+      ) {
+        body.push(this.node("noop")());
       }
+      return result(name.name, body, true);
+    } else if (this.token === "(") {
+      // @fixme after merging #478
+      name.resolution = this.ast.reference.RELATIVE_NAME;
+      name.name = name.name.substring(1);
+      result.destroy();
+      return this.node("call")(name, this.read_argument_list());
+    } else {
+      this.error(["{", ";"]);
+      // graceful mode :
+      this.currentNamespace = name;
+      body = this.read_top_statements();
+      this.expect(this.EOF);
+      return result(name, body, false);
     }
   },
   /**

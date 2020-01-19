@@ -18,6 +18,13 @@ module.exports = {
     while (this.token != this.EOF && this.token !== token) {
       items.push(this.read_inner_statement());
     }
+    if (
+      items.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      items.push(this.node("noop")());
+    }
     if (this.expect(token)) this.next();
     this.expectEndOfStatement();
     return body(null, items);

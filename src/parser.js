@@ -276,17 +276,18 @@ parser.prototype.parse = function(code, filename) {
   this.innerList = false;
   this.innerListForm = false;
   const program = this.node("program");
-  let childs = [];
+  const childs = [];
   this.next();
   while (this.token != this.EOF) {
-    const node = this.read_start();
-    if (node !== null && node !== undefined) {
-      if (Array.isArray(node)) {
-        childs = childs.concat(node);
-      } else {
-        childs.push(node);
-      }
-    }
+    childs.push(this.read_start());
+  }
+  // append last comment
+  if (
+    childs.length === 0 &&
+    this.extractDoc &&
+    this._docs.length > this._docIndex
+  ) {
+    childs.push(this.node("noop")());
   }
   // #176 : register latest position
   this.prev = [
