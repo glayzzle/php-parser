@@ -13,6 +13,10 @@ describe("block", () => {
     ["empty for", "for(;;) { /* foo */ }"],
     ["empty foreach", "foreach($foo as $bar) { /* foo */ }"],
     ["empty switch short form", "switch($foo): /* foo */ endswitch;"],
+    [
+      "empty switch case short form",
+      "switch($foo): case 1: /* foo */ endswitch;"
+    ],
     ["empty for short form", "for(;;):  /* foo */ endfor;"],
     [
       "empty foreach short form",

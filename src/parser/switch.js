@@ -94,13 +94,6 @@ module.exports = {
     ) {
       items.push(this.read_inner_statement());
     }
-    if (
-      items.length === 0 &&
-      this.extractDoc &&
-      this._docs.length > this._docIndex
-    ) {
-      items.push(this.node("noop")());
-    }
-    return result(test, items.length > 0 ? body(null, items) : null);
+    return result(test, body(null, items));
   }
 };
