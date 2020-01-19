@@ -311,6 +311,13 @@ module.exports = {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());
           }
+          if (
+            body.length === 0 &&
+            this.extractDoc &&
+            this._docs.length > this._docIndex
+          ) {
+            body.push(this.node("noop")());
+          }
           this.expect(this.tok.T_ENDDECLARE) && this.next();
           this.expectEndOfStatement();
           mode = this.ast.declare.MODE_SHORT;
@@ -319,6 +326,13 @@ module.exports = {
           while (this.token != this.EOF && this.token !== "}") {
             // @todo : check declare_statement from php / not valid
             body.push(this.read_top_statement());
+          }
+          if (
+            body.length === 0 &&
+            this.extractDoc &&
+            this._docs.length > this._docIndex
+          ) {
+            body.push(this.node("noop")());
           }
           this.expect("}") && this.next();
           mode = this.ast.declare.MODE_BLOCK;
