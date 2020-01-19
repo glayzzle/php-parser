@@ -245,6 +245,231 @@ Program {
 }
 `;
 
+exports[`block empty if #2 short form 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "offset": 10,
+            "value": "/* pre */",
+          },
+        ],
+        "trailingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "offset": 24,
+            "value": "/* inner */",
+          },
+        ],
+      },
+      "kind": "if",
+      "shortForm": true,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+      "trailingComments": Array [
+        CommentBlock {
+          "kind": "commentblock",
+          "offset": 43,
+          "value": "/* out */",
+        },
+      ],
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 10,
+      "value": "/* pre */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 24,
+      "value": "/* inner */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 43,
+      "value": "/* out */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`block empty if #3 short form 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": If {
+        "alternate": Block {
+          "children": Array [],
+          "kind": "block",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "offset": 50,
+              "value": "/* bar */",
+            },
+          ],
+        },
+        "body": Block {
+          "children": Array [],
+          "kind": "block",
+          "leadingComments": Array [
+            CommentBlock {
+              "kind": "commentblock",
+              "offset": 34,
+              "value": "/* baz */",
+            },
+          ],
+        },
+        "kind": "if",
+        "shortForm": true,
+        "test": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+      },
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "offset": 10,
+            "value": "/* foo */",
+          },
+        ],
+      },
+      "kind": "if",
+      "shortForm": true,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 10,
+      "value": "/* foo */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 34,
+      "value": "/* baz */",
+    },
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 50,
+      "value": "/* bar */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`block empty if 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          Noop {
+            "kind": "noop",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 11,
+                "value": "/* foo */",
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 11,
+      "value": "/* foo */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`block empty if short form 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+        "leadingComments": Array [
+          CommentBlock {
+            "kind": "commentblock",
+            "offset": 10,
+            "value": "/* foo */",
+          },
+        ],
+      },
+      "kind": "if",
+      "shortForm": true,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 10,
+      "value": "/* foo */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`block empty method block 1`] = `
 Program {
   "children": Array [
@@ -331,6 +556,86 @@ Program {
       "kind": "commentblock",
       "offset": 16,
       "value": "/* 1 */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`block empty switch 1`] = `
+Program {
+  "children": Array [
+    Switch {
+      "body": Block {
+        "children": Array [
+          Noop {
+            "kind": "noop",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 15,
+                "value": "/* foo */",
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "switch",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 15,
+      "value": "/* foo */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`block empty switch short form 1`] = `
+Program {
+  "children": Array [
+    Switch {
+      "body": Block {
+        "children": Array [
+          Noop {
+            "kind": "noop",
+            "leadingComments": Array [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 14,
+                "value": "/* foo */",
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "switch",
+      "shortForm": true,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "foo",
+      },
+    },
+  ],
+  "comments": Array [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 14,
+      "value": "/* foo */",
     },
   ],
   "errors": Array [],

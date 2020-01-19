@@ -8,7 +8,19 @@ describe("block", () => {
     ["empty method block", "class foo { function bar()  { /* 1 */ } }"],
     ["empty namespace block", "namespace foo { /* 1 */ }"],
     ["empty declare block", "declare(tick=1) { /* 1 */ }"],
-    ["empty declare short form", "declare(tick=1): /* 1 */ ENDDECLARE;"]
+    ["empty declare short form", "declare(tick=1): /* 1 */ ENDDECLARE;"],
+    ["empty switch", "switch($foo) { /* foo */ }"],
+    ["empty switch short form", "switch($foo): /* foo */ endswitch;"],
+    ["empty if", "if($foo) { /* foo */ }"],
+    ["empty if short form", "if($foo): /* foo */ endif;"],
+    [
+      "empty if #2 short form",
+      "if($foo): /* pre */ $a; /* inner */ endif; /* out */"
+    ],
+    [
+      "empty if #3 short form",
+      "if($foo): /* foo */ elseif($bar): /* baz */ else: /* bar */ endif;"
+    ]
   ])("%s", function(_, code) {
     expect(
       parser.parseEval(code, {
