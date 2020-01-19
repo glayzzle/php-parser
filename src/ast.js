@@ -164,7 +164,8 @@ AST.precedence = {};
   ["*", "/", "%"],
   ["!"],
   ["instanceof"],
-  ["cast", "silent"]
+  ["cast", "silent"],
+  ["**"]
   // TODO: [ (array)
   // TODO: clone, new
 ].forEach(function(list, index) {
@@ -172,6 +173,10 @@ AST.precedence = {};
     AST.precedence[operator] = index + 1;
   });
 });
+
+AST.prototype.isRightAssociative = function(operator) {
+  return operator === "**" || operator === "??";
+};
 
 /**
  * Change parent node informations after swapping childs
@@ -230,7 +235,12 @@ AST.prototype.resolvePrecedence = function(result, parser) {
       if (result.right.kind === "bin") {
         lLevel = AST.precedence[result.type];
         rLevel = AST.precedence[result.right.type];
-        if (lLevel && rLevel && rLevel <= lLevel) {
+        if (
+          lLevel &&
+          rLevel &&
+          rLevel <= lLevel &&
+          !this.isRightAssociative(result.type)
+        ) {
           // https://github.com/glayzzle/php-parser/issues/79
           // shift precedence
           buffer = result.right;
