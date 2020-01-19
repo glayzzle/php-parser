@@ -18,4 +18,42 @@ describe("block", () => {
       })
     ).toMatchSnapshot();
   });
+  it("check empty php blocks", function() {
+    expect(
+      parser.parseCode(
+        `<?php
+  /**
+   * Comment header
+   */
+?>
+SOME HTML OUTPUT
+<?php /* Inner comment */
+      `,
+        "test",
+        {
+          parser: {
+            extractDoc: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("check empty php file", function() {
+    expect(
+      parser.parseCode(
+        `<?php
+  /**
+   * Comment header
+   */
+      `,
+        "test",
+        {
+          parser: {
+            extractDoc: true
+          }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
