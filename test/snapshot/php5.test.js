@@ -4,7 +4,7 @@ describe("Test syntax parsing without PHP7 support", function() {
   it("special keywords should fail", function() {
     const ast = parser.parseEval("class foo { function list() { } }", {
       parser: {
-        php7: false,
+        version: "5.6",
         suppressErrors: true
       }
     });

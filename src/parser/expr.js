@@ -386,7 +386,7 @@ module.exports = {
         this.next();
         if (
           this.token === this.tok.T_FUNCTION ||
-          (this.php74 && this.token === this.tok.T_FN)
+          (this.version >= 704 && this.token === this.tok.T_FN)
         ) {
           // handles static function
           return this.read_inline_function([0, 1, 0]);
@@ -413,22 +413,10 @@ module.exports = {
       switch (this.token) {
         case "=": {
           if (isConst) this.error("VARIABLE");
-          let right;
           if (this.next().token == "&") {
-            this.next();
-            if (this.token === this.tok.T_NEW) {
-              if (this.php7) {
-                this.error();
-              }
-              right = this.read_new_expr();
-            } else {
-              right = this.read_variable(false, false);
-            }
-
-            return result("assignref", expr, right);
+            return this.read_assignref(result, expr);
           }
-          right = this.read_expr();
-          return result("assign", expr, right, "=");
+          return result("assign", expr, this.read_expr(), "=");
         }
 
         // operations :
@@ -521,6 +509,25 @@ module.exports = {
   },
 
   /**
+   * Reads assignment
+   * @param {*} left
+   */
+  read_assignref: function(result, left) {
+    this.next();
+    let right;
+    if (this.token === this.tok.T_NEW) {
+      if (this.version >= 700) {
+        this.error();
+      }
+      right = this.read_new_expr();
+    } else {
+      right = this.read_variable(false, false);
+    }
+
+    return result("assignref", left, right);
+  },
+
+  /**
    *
    * inline_function:
    * 		function returns_ref backup_doc_comment '(' parameter_list ')' lexical_vars return_type
@@ -540,7 +547,7 @@ module.exports = {
       return this.read_function(true, flags);
     }
     // introduced in PHP 7.4
-    if (!this.php74) {
+    if (!this.version >= 704) {
       this.raiseError("Arrow Functions are not allowed");
     }
     // as an arrowfunc

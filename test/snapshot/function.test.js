@@ -52,7 +52,7 @@ describe("Function tests", function() {
   it("test reserved word for function name error", function() {
     const astErr = parser.parseEval(`function list() {}`, {
       parser: {
-        php7: false,
+        version: "5.6",
         suppressErrors: true
       }
     });
@@ -67,7 +67,7 @@ describe("Function tests", function() {
   it("test arrow function php 7.4", function() {
     const astErr = parser.parseEval(`function () {}`, {
       parser: {
-        php74: true,
+        version: "7.4",
         suppressErrors: true
       }
     });

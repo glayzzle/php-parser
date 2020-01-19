@@ -16,8 +16,7 @@ describe("arrow function", () => {
     expect(
       parser.parseEval(`function fn($arg) { return $arg; }`, {
         parser: {
-          php73: true,
-          php74: false // disable the php 7.4 support
+          version: "7.3" // disable the php 7.4 support
         }
       })
     ).toMatchSnapshot();
@@ -26,7 +25,7 @@ describe("arrow function", () => {
     expect(
       parser.parseEval(`function fn($arg) { return $arg; }`, {
         parser: {
-          php74: true,
+          version: "7.4", // enable the php 7.4 support
           suppressErrors: true
         }
       })

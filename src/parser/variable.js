@@ -92,7 +92,7 @@ module.exports = {
     } else if (
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_CLASS ||
-      (this.php7 && this.is("IDENTIFIER"))
+      (this.version >= 700 && this.is("IDENTIFIER"))
     ) {
       offset = this.node("identifier");
       name = this.text();

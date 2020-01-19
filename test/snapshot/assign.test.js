@@ -55,7 +55,7 @@ describe("assign", () => {
   it("??= (php < 7)", function() {
     const astErr = parser.parseEval(`$var ??= $var;`, {
       parser: {
-        php7: false,
+        version: "5.6",
         suppressErrors: true
       }
     });
