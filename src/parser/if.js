@@ -89,13 +89,6 @@ module.exports = {
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       items.push(this.read_inner_statement());
     }
-    if (
-      items.length === 0 &&
-      this.extractDoc &&
-      this._docs.length > this._docIndex
-    ) {
-      items.push(this.node("noop")());
-    }
     return body(null, items);
   }
 };
