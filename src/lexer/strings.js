@@ -146,7 +146,12 @@ module.exports = {
     // reset heredoc_label structure
     let indentation = 0;
     let leading_ch = this._input.substring(offset - 1, offset);
-    const valid_endings = ["\t", " ", ",", ")", "]", "\n", "\r", ";"];
+    let valid_endings = ["\n", "\r", ";"];
+
+    if (this.version >= 703) {
+      valid_endings = valid_endings.concat(["\t", " ", ",", ")", "]"]);
+    }
+
     while (leading_ch === "\t" || leading_ch === " ") {
       if (leading_ch === " ") {
         indentation_uses_spaces = true;

@@ -219,6 +219,23 @@ END);
 `
       )
     ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+stringManipulator(<<<END
+   a
+  b
+ c
+END);
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("Flexible heredoc syntax: symbols after ending", () => {
@@ -233,6 +250,23 @@ END, 'd e f'];
 `
       )
     ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END, 'd e f'];
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
   });
 
   it("Flexible heredoc syntax: symbols after ending with whitespace", () => {
@@ -245,6 +279,23 @@ b
 c
 END          , 'd e f'];
 `
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END          , 'd e f'];
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
       )
     ).toMatchSnapshot();
   });
@@ -262,6 +313,26 @@ $values = [<<<END
 
     END];
 `
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+        a
+
+      b
+
+    c
+
+    END];
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
       )
     ).toMatchSnapshot();
   });

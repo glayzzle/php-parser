@@ -249,6 +249,95 @@ Program {
 }
 `;
 
+exports[`heredoc Flexible heredoc syntax: empty lines 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "END",
+                "raw": "<<<END
+        a
+
+      b
+
+    c
+
+    END];
+",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "        a
+
+      b
+
+    c
+
+    END];
+",
+                      "unicode": false,
+                      "value": "        a
+
+      b
+
+    c
+
+    END];",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 220,
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 10",
+      "token": "the end of file (EOF)",
+    },
+    Error {
+      "expected": "]",
+      "kind": "error",
+      "line": 10,
+      "message": "Parse Error : syntax error, expecting ']' on line 10",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc Flexible heredoc syntax: mixing spaces and tabs in body 1`] = `
 Program {
   "children": Array [
@@ -374,6 +463,75 @@ END",
 }
 `;
 
+exports[`heredoc Flexible heredoc syntax: parentheses 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "label": "END",
+            "raw": "<<<END
+   a
+  b
+ c
+END);
+",
+            "type": "heredoc",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "   a
+  b
+ c
+END);
+",
+                  "unicode": false,
+                  "value": "   a
+  b
+ c
+END);",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stringManipulator",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 220,
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 7",
+      "token": "the end of file (EOF)",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, expecting ')' on line 7",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc Flexible heredoc syntax: symbols after ending 1`] = `
 Program {
   "children": Array [
@@ -449,6 +607,86 @@ c",
 }
 `;
 
+exports[`heredoc Flexible heredoc syntax: symbols after ending 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "END",
+                "raw": "<<<END
+a
+b
+c
+END, 'd e f'];
+",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "a
+b
+c
+END, 'd e f'];
+",
+                      "unicode": false,
+                      "value": "a
+b
+c
+END, 'd e f'];",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 220,
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 7",
+      "token": "the end of file (EOF)",
+    },
+    Error {
+      "expected": "]",
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, expecting ']' on line 7",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc Flexible heredoc syntax: symbols after ending with whitespace 1`] = `
 Program {
   "children": Array [
@@ -520,6 +758,86 @@ c",
     },
   ],
   "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: symbols after ending with whitespace 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "END",
+                "raw": "<<<END
+a
+b
+c
+END          , 'd e f'];
+",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "a
+b
+c
+END          , 'd e f'];
+",
+                      "unicode": false,
+                      "value": "a
+b
+c
+END          , 'd e f'];",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 220,
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 7",
+      "token": "the end of file (EOF)",
+    },
+    Error {
+      "expected": "]",
+      "kind": "error",
+      "line": 7,
+      "message": "Parse Error : syntax error, expecting ']' on line 7",
+      "token": "the end of file (EOF)",
+    },
+  ],
   "kind": "program",
 }
 `;
