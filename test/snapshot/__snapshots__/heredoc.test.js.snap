@@ -177,6 +177,78 @@ Program {
 }
 `;
 
+exports[`heredoc Flexible heredoc syntax: empty lines 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "END",
+                "raw": "<<<END
+        a
+
+      b
+
+    c
+
+    END",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "        a
+
+      b
+
+    c
+
+    ",
+                      "unicode": false,
+                      "value": "        a
+
+      b
+
+    c
+
+    ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc Flexible heredoc syntax: mixing spaces and tabs in body 1`] = `
 Program {
   "children": Array [
@@ -247,6 +319,207 @@ Program {
       "token": undefined,
     },
   ],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: parentheses 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "label": "END",
+            "raw": "<<<END
+   a
+  b
+ c
+END",
+            "type": "heredoc",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "   a
+  b
+ c
+",
+                  "unicode": false,
+                  "value": "   a
+  b
+ c",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stringManipulator",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: symbols after ending 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "END",
+                "raw": "<<<END
+a
+b
+c
+END",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "a
+b
+c
+",
+                      "unicode": false,
+                      "value": "a
+b
+c",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'d e f'",
+                "unicode": false,
+                "value": "d e f",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: symbols after ending with whitespace 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Encapsed {
+                "kind": "encapsed",
+                "label": "END",
+                "raw": "<<<END
+a
+b
+c
+END          ",
+                "type": "heredoc",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "a
+b
+c
+",
+                      "unicode": false,
+                      "value": "a
+b
+c",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'d e f'",
+                "unicode": false,
+                "value": "d e f",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;

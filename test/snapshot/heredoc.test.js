@@ -206,4 +206,63 @@ c
       )
     ).toMatchSnapshot();
   });
+
+  it("Flexible heredoc syntax: parentheses", () => {
+    expect(
+      parser.parseEval(
+        `
+stringManipulator(<<<END
+   a
+  b
+ c
+END);
+`
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: symbols after ending", () => {
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END, 'd e f'];
+`
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: symbols after ending with whitespace", () => {
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END          , 'd e f'];
+`
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: empty lines", () => {
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+        a
+
+      b
+
+    c
+
+    END];
+`
+      )
+    ).toMatchSnapshot();
+  });
 });

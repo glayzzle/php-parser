@@ -146,7 +146,7 @@ module.exports = {
     // reset heredoc_label structure
     let indentation = 0;
     let leading_ch = this._input.substring(offset - 1, offset);
-
+    const valid_endings = ["\t", " ", ",", ")", "]", "\n", "\r", ";"];
     while (leading_ch === "\t" || leading_ch === " ") {
       if (leading_ch === " ") {
         indentation_uses_spaces = true;
@@ -168,7 +168,7 @@ module.exports = {
       ) === this.heredoc_label.label
     ) {
       const ch = this._input[offset - 1 + this.heredoc_label.length];
-      if (ch === "\n" || ch === "\r" || ch === ";") {
+      if (valid_endings.includes(ch)) {
         if (consumeLeadingSpaces) {
           this.consume(indentation);
           // https://wiki.php.net/rfc/flexible_heredoc_nowdoc_syntaxes
