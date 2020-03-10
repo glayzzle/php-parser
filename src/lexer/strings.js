@@ -135,7 +135,7 @@ module.exports = {
     // consumeLeadingSpaces is false happen DOC prematch END HEREDOC stage.
 
     // Ensure current state is really after a new line break, not after a such as ${variables}
-    const prev_ch = this._input.substring(offset - 2, offset - 1);
+    const prev_ch = this._input[offset - 2];
     if (prev_ch !== "\n" && prev_ch !== "\r") {
       return false;
     }
@@ -145,26 +145,34 @@ module.exports = {
     let indentation_uses_tabs = false;
     // reset heredoc_label structure
     let indentation = 0;
-    let leading_ch = this._input.substring(offset - 1, offset);
+    let leading_ch = this._input[offset - 1];
     let valid_endings = ["\n", "\r", ";"];
 
     if (this.version >= 703) {
       valid_endings = valid_endings.concat(["\t", " ", ",", ")", "]"]);
-    }
 
-    while (leading_ch === "\t" || leading_ch === " ") {
-      if (leading_ch === " ") {
-        indentation_uses_spaces = true;
-      } else if (leading_ch === "\t") {
-        indentation_uses_tabs = true;
+      while (leading_ch === "\t" || leading_ch === " ") {
+        if (leading_ch === " ") {
+          indentation_uses_spaces = true;
+        } else if (leading_ch === "\t") {
+          indentation_uses_tabs = true;
+        }
+
+        leading_ch = this._input[offset + indentation];
+        indentation++;
       }
 
-      leading_ch = this._input[offset + indentation];
-      indentation++;
-    }
+      // Move offset to skip leading whitespace
+      offset = offset + indentation;
 
-    // Move offset to skip leading whitespace
-    offset = offset + indentation;
+      // return out if there was only whitespace on this line
+      if (
+        this._input[offset - 1] === "\n" ||
+        this._input[offset - 1] === "\r"
+      ) {
+        return false;
+      }
+    }
 
     if (
       this._input.substring(
@@ -216,9 +224,11 @@ module.exports = {
         return;
       }
 
-      // skip one line
-      while (this._input[offset++] !== "\n" && offset < this._input.length) {
-        // skip
+      if (this._input[offset - 1] !== "\n") {
+        // skip one line
+        while (this._input[offset++] !== "\n" && offset < this._input.length) {
+          // skip
+        }
       }
 
       offset++;

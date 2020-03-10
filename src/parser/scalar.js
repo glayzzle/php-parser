@@ -128,7 +128,11 @@ module.exports = {
         inCoutingState = false;
       }
 
-      if (inCheckState && leadingWhitespaceCharCount < indentation) {
+      if (
+        text[offset] !== "\n" &&
+        inCheckState &&
+        leadingWhitespaceCharCount < indentation
+      ) {
         this.raiseError(
           `Invalid body indentation level (expecting an indentation at least ${indentation})`
         );
@@ -335,12 +339,14 @@ module.exports = {
       result = result(
         "string",
         false,
-        this.remove_heredoc_leading_whitespace_chars(
-          this.resolve_special_chars(text, isDoubleQuote),
-          this.lexer.heredoc_label.indentation,
-          this.lexer.heredoc_label.indentation_uses_spaces,
-          this.lexer.heredoc_label.first_encaps_node
-        ),
+        this.version >= 703
+          ? this.remove_heredoc_leading_whitespace_chars(
+              this.resolve_special_chars(text, isDoubleQuote),
+              this.lexer.heredoc_label.indentation,
+              this.lexer.heredoc_label.indentation_uses_spaces,
+              this.lexer.heredoc_label.first_encaps_node
+            )
+          : text,
         false,
         text
       );
