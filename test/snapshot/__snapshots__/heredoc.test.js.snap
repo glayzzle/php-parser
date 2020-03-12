@@ -723,6 +723,181 @@ a
 }
 `;
 
+exports[`heredoc Flexible heredoc syntax: indentation bracket bug 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+  EOT",
+          "type": "heredoc",
+          "value": Array [],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$x}
+test\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "
+test",
+                "unicode": false,
+                "value": "
+test",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`heredoc Flexible heredoc syntax: indentation bracket bug 2`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+  EOT;
+$b = \\"{$x}
+test\\";
+",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "  EOT;
+",
+                "unicode": false,
+                "value": "  EOT;
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " = \\"",
+                "unicode": false,
+                "value": " = \\"",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "
+test\\";
+",
+                "unicode": false,
+                "value": "
+test\\";",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 220,
+      "kind": "error",
+      "line": 6,
+      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 6",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`heredoc Flexible heredoc syntax: mixing spaces and tabs in body 1`] = `
 Program {
   "children": Array [

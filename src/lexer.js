@@ -164,6 +164,7 @@ lexer.prototype.setInput = function(input) {
     length: 0,
     indentation: 0,
     indentation_uses_spaces: false,
+    finished: false,
     /**
      * this used for parser to detemine the if current node segment is first encaps node.
      * if ture, the indentation will remove from the begining. and if false, the prev node

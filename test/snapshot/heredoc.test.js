@@ -456,4 +456,30 @@ $values = <<<END
       )
     ).toMatchSnapshot();
   });
+
+  it("Flexible heredoc syntax: indentation bracket bug", () => {
+    expect(
+      parser.parseEval(
+        `
+$a = <<<EOT
+  EOT;
+$b = "{$x}\ntest";
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$a = <<<EOT
+  EOT;
+$b = "{$x}\ntest";
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
