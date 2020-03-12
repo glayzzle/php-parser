@@ -790,6 +790,41 @@ test",
       },
       "kind": "expressionstatement",
     },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "TOE",
+          "raw": "<<< TOE
+  a
+  TOE",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "  a
+  ",
+                "unicode": false,
+                "value": "a",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
   ],
   "errors": Array [],
   "kind": "program",
@@ -815,6 +850,9 @@ Program {
   EOT;
 $b = \\"{$x}
 test\\";
+$c = <<<TOE
+  a
+  TOE;
 ",
           "type": "heredoc",
           "value": Array [
@@ -874,7 +912,35 @@ test\\";
 ",
                 "unicode": false,
                 "value": "
-test\\";",
+test\\";
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " = <<<TOE
+  a
+  TOE;
+",
+                "unicode": false,
+                "value": " = <<<TOE
+  a
+  TOE;",
               },
               "kind": "encapsedpart",
               "syntax": null,
@@ -889,8 +955,8 @@ test\\";",
     Error {
       "expected": 220,
       "kind": "error",
-      "line": 6,
-      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 6",
+      "line": 9,
+      "message": "Parse Error : syntax error, expecting T_END_HEREDOC on line 9",
       "token": "the end of file (EOF)",
     },
   ],

@@ -464,6 +464,9 @@ $values = <<<END
 $a = <<<EOT
   EOT;
 $b = "{$x}\ntest";
+$c = <<< TOE
+  a
+  TOE;
 `
       )
     ).toMatchSnapshot();
@@ -474,6 +477,9 @@ $b = "{$x}\ntest";
 $a = <<<EOT
   EOT;
 $b = "{$x}\ntest";
+$c = <<<TOE
+  a
+  TOE;
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },

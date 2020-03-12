@@ -67,6 +67,7 @@ module.exports = {
             // go go go
             this.heredoc_label.label = yylabel;
             this.heredoc_label.length = yylabel.length;
+            this.heredoc_label.finished = false;
             yyoffset = this.offset - revert;
             this.offset = revert;
             this.consume(yyoffset);
