@@ -212,8 +212,8 @@ module.exports = {
       }
 
       // skip one line
-      while (this._input[offset++] !== "\n" && offset < this._input.length) {
-        // skip
+      while (this._input[offset - 1] !== "\n" && offset < this._input.length) {
+        offset++;
       }
 
       offset++;

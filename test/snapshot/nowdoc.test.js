@@ -144,4 +144,19 @@ TEST;
     `)
     ).toMatchSnapshot();
   });
+
+  it("Flexible nowdoc syntax: multiple blocks with different indentation", function() {
+    expect(
+      parser.parseEval(`
+$a = <<<'EOT'
+    a
+
+    EOT;
+
+$b = <<<'EOT'
+  b
+  EOT;
+    `)
+    ).toMatchSnapshot();
+  });
 });
