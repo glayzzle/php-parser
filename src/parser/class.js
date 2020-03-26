@@ -178,10 +178,10 @@ module.exports = {
    * ```
    */
   read_constant_list: function(flags) {
+    const result = this.node("classconstant");
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
-    const result = this.node("classconstant");
     const items = this.read_list(
       /**
        * Reads a constant declaration

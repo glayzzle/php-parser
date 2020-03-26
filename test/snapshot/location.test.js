@@ -207,7 +207,8 @@ string";`
         `
     ],
     ["assign []", `$var[] = $var`],
-    ["single call", `call();`]
+    ["single call", `call();`],
+    ["start location for class constants", "class foo { const bar = 1; }"]
   ])("test %s", (_, code) => {
     expect(
       parser.parseEval(code, {
