@@ -488,4 +488,21 @@ $c = <<<TOE
       )
     ).toMatchSnapshot();
   });
+
+  it("Can't parse multiple flexible nowdoc blocks with different indentation #508", () => {
+    expect(
+      parser.parseEval(
+        `
+$a = <<<'EOT'
+    a
+
+    EOT;
+
+$b = <<<'EOT'
+  b
+  EOT;
+`
+      )
+    ).toMatchSnapshot();
+  });
 });
