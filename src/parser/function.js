@@ -37,6 +37,10 @@ module.exports = {
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1
     );
+    if (flag && flag[3]) {
+      // include function modifiers tokens
+      this.ast.swapLocations(result, flag[3], result, this);
+    }
     if (flag && flag[2] == 1) {
       // abstract function :
       result.parseFlags(flag);

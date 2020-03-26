@@ -138,7 +138,7 @@ module.exports = {
    * ```
    */
   read_variable_list: function(flags) {
-    const result = this.node("propertystatement");
+    let result = this.node("propertystatement");
 
     const properties = this.read_list(
       /**
@@ -168,8 +168,12 @@ module.exports = {
       },
       ","
     );
-
-    return result(null, properties, flags);
+    result = result(null, properties, flags);
+    // including visibility modifiers tokens
+    if (flags[3]) {
+      this.ast.swapLocations(result, flags[3], result, this);
+    }
+    return result;
   },
   /**
    * Reads constant list
@@ -178,7 +182,7 @@ module.exports = {
    * ```
    */
   read_constant_list: function(flags) {
-    const result = this.node("classconstant");
+    let result = this.node("classconstant");
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
@@ -213,8 +217,12 @@ module.exports = {
       },
       ","
     );
-
-    return result(null, items, flags);
+    result = result(null, items, flags);
+    // including visibility modifiers tokens
+    if (flags[3]) {
+      this.ast.swapLocations(result, flags[3], result, this);
+    }
+    return result;
   },
   /**
    * Read member flags
@@ -222,9 +230,17 @@ module.exports = {
    *  1st index : 0 => public, 1 => protected, 2 => private
    *  2nd index : 0 => instance member, 1 => static member
    *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
+   *  4th index : location of tokens (to be included into resulting node)
    */
   read_member_flags: function(asInterface) {
-    const result = [-1, -1, -1];
+    const result = [
+      -1,
+      -1,
+      -1,
+      {
+        loc: { start: this.ast.position(this) }
+      }
+    ];
     if (this.is("T_MEMBER_FLAGS")) {
       let idx = 0,
         val = 0;

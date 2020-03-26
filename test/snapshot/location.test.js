@@ -208,7 +208,19 @@ string";`
     ],
     ["assign []", `$var[] = $var`],
     ["single call", `call();`],
-    ["start location for class constants", "class foo { const bar = 1; }"]
+    ["start location for class constants", "class foo { const bar = 1; }"],
+    [
+      "start location for class constants #1",
+      "class foo { private const bar = 1; }"
+    ],
+    [
+      "start location for class properties",
+      "class foo { final public $bar = 1; }"
+    ],
+    [
+      "start location for class methods",
+      "class foo { final public function bar() { } }"
+    ]
   ])("test %s", (_, code) => {
     expect(
       parser.parseEval(code, {
