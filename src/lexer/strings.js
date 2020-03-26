@@ -5,6 +5,19 @@
  */
 "use strict";
 
+const newline = ["\n", "\r"];
+const valid_after_heredoc = ["\n", "\r", ";"];
+const valid_after_heredoc_73 = valid_after_heredoc.concat([
+  "\t",
+  " ",
+  ",",
+  "]",
+  ")",
+  "/",
+  "=",
+  "!"
+]);
+
 module.exports = {
   T_CONSTANT_ENCAPSED_STRING: function() {
     let ch;
@@ -60,13 +73,11 @@ module.exports = {
           // required ending quote
           if (tChar) this.offset++;
           // require newline
-          if (
-            this._input[this.offset - 1] === "\r" ||
-            this._input[this.offset - 1] === "\n"
-          ) {
+          if (newline.includes(this._input[this.offset - 1])) {
             // go go go
             this.heredoc_label.label = yylabel;
             this.heredoc_label.length = yylabel.length;
+            this.heredoc_label.finished = false;
             yyoffset = this.offset - revert;
             this.offset = revert;
             this.consume(yyoffset);
@@ -135,8 +146,8 @@ module.exports = {
     // consumeLeadingSpaces is false happen DOC prematch END HEREDOC stage.
 
     // Ensure current state is really after a new line break, not after a such as ${variables}
-    const prev_ch = this._input.substring(offset - 2, offset - 1);
-    if (prev_ch !== "\n" && prev_ch !== "\r") {
+    const prev_ch = this._input[offset - 2];
+    if (!newline.includes(prev_ch)) {
       return false;
     }
 
@@ -145,21 +156,28 @@ module.exports = {
     let indentation_uses_tabs = false;
     // reset heredoc_label structure
     let indentation = 0;
-    let leading_ch = this._input.substring(offset - 1, offset);
+    let leading_ch = this._input[offset - 1];
 
-    while (leading_ch === "\t" || leading_ch === " ") {
-      if (leading_ch === " ") {
-        indentation_uses_spaces = true;
-      } else if (leading_ch === "\t") {
-        indentation_uses_tabs = true;
+    if (this.version >= 703) {
+      while (leading_ch === "\t" || leading_ch === " ") {
+        if (leading_ch === " ") {
+          indentation_uses_spaces = true;
+        } else if (leading_ch === "\t") {
+          indentation_uses_tabs = true;
+        }
+
+        leading_ch = this._input[offset + indentation];
+        indentation++;
       }
 
-      leading_ch = this._input[offset + indentation];
-      indentation++;
-    }
+      // Move offset to skip leading whitespace
+      offset = offset + indentation;
 
-    // Move offset to skip leading whitespace
-    offset = offset + indentation;
+      // return out if there was only whitespace on this line
+      if (newline.includes(this._input[offset - 1])) {
+        return false;
+      }
+    }
 
     if (
       this._input.substring(
@@ -168,7 +186,12 @@ module.exports = {
       ) === this.heredoc_label.label
     ) {
       const ch = this._input[offset - 1 + this.heredoc_label.length];
-      if (ch === "\n" || ch === "\r" || ch === ";") {
+      if (
+        (this.version >= 703
+          ? valid_after_heredoc_73
+          : valid_after_heredoc
+        ).includes(ch)
+      ) {
         if (consumeLeadingSpaces) {
           this.consume(indentation);
           // https://wiki.php.net/rfc/flexible_heredoc_nowdoc_syntaxes
@@ -211,9 +234,14 @@ module.exports = {
         return;
       }
 
-      // skip one line
-      while (this._input[offset++] !== "\n" && offset < this._input.length) {
-        // skip
+      if (!newline.includes(this._input[offset - 1])) {
+        // skip one line
+        while (
+          !newline.includes(this._input[offset++]) &&
+          offset < this._input.length
+        ) {
+          // skip
+        }
       }
 
       offset++;
@@ -231,7 +259,7 @@ module.exports = {
     /** SCANNING CONTENTS **/
     let ch = this._input[this.offset - 1];
     while (this.offset < this.size) {
-      if (ch === "\n" || ch === "\r") {
+      if (newline.includes(ch)) {
         ch = this.input();
         if (this.isDOC_MATCH(this.offset, true)) {
           this.unput(1).popState();
@@ -258,12 +286,12 @@ module.exports = {
     while (this.offset < this.size) {
       if (ch === "\\") {
         ch = this.input(); // ignore next
-        if (ch !== "\n" && ch !== "\r") {
+        if (!newline.includes(ch)) {
           ch = this.input();
         }
       }
 
-      if (ch === "\n" || ch === "\r") {
+      if (newline.includes(ch)) {
         ch = this.input();
         if (this.isDOC_MATCH(this.offset, true)) {
           this.unput(1).popState();

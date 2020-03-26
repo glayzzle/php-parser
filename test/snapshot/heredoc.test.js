@@ -206,4 +206,286 @@ c
       )
     ).toMatchSnapshot();
   });
+
+  it("Flexible heredoc syntax: ending label breaks old versions", () => {
+    expect(
+      parser.parseEval(
+        `
+echo <<<END
+a
+ END;
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: parentheses", () => {
+    expect(
+      parser.parseEval(
+        `
+stringManipulator(<<<END
+   a
+  b
+ c
+END);
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+stringManipulator(<<<END
+   a
+  b
+ c
+END);
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: symbols after ending", () => {
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END, 'd e f'];
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END, 'd e f'];
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: symbols after ending with whitespace", () => {
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END          , 'd e f'];
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = [<<<END
+a
+b
+c
+END          , 'd e f'];
+`,
+
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: empty lines", () => {
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+
+      b
+  
+    c
+
+    END;
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+  
+      b
+
+    c
+    END;
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+  
+      b
+
+    c
+  
+    END;
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+  
+      b
+
+   c
+  
+    END;
+`,
+        {
+          parser: { suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+
+    // check that it still breaks in old versions
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+
+      b
+  
+    c
+
+    END;
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+  
+      b
+
+    c
+    END;
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+  
+      b
+
+    c
+  
+    END;
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$values = <<<END
+        a
+  
+      b
+
+   c
+  
+    END;
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible heredoc syntax: indentation bracket bug", () => {
+    expect(
+      parser.parseEval(
+        `
+$a = <<<EOT
+  EOT;
+$b = "{$x}\ntest";
+$c = <<< TOE
+  a
+  TOE;
+`
+      )
+    ).toMatchSnapshot();
+
+    expect(
+      parser.parseEval(
+        `
+$a = <<<EOT
+  EOT;
+$b = "{$x}\ntest";
+$c = <<<TOE
+  a
+  TOE;
+`,
+        {
+          parser: { version: 702, suppressErrors: true, debug: false },
+          lexer: { debug: false }
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
