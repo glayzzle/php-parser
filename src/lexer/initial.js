@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  nextINITIAL: function() {
+  nextINITIAL: function () {
     if (
       this.conditionStack.length > 1 &&
       this.conditionStack[this.conditionStack.length - 1] === "INITIAL"
@@ -18,7 +18,7 @@ module.exports = {
     }
     return this;
   },
-  matchINITIAL: function() {
+  matchINITIAL: function () {
     while (this.offset < this.size) {
       let ch = this.input();
       if (ch == "<") {
@@ -32,16 +32,12 @@ module.exports = {
           } else if (this.tryMatchCaseless("?php")) {
             ch = this._input[this.offset + 4];
             if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {
-              this.unput(1)
-                .appendToken(this.tok.T_OPEN_TAG, 6)
-                .nextINITIAL();
+              this.unput(1).appendToken(this.tok.T_OPEN_TAG, 6).nextINITIAL();
               break;
             }
           }
           if (this.short_tags) {
-            this.unput(1)
-              .appendToken(this.tok.T_OPEN_TAG, 2)
-              .nextINITIAL();
+            this.unput(1).appendToken(this.tok.T_OPEN_TAG, 2).nextINITIAL();
             break;
           }
         } else if (this.asp_tags && ch == "%") {
@@ -53,9 +49,7 @@ module.exports = {
             break;
           } else {
             this.aspTagMode = true;
-            this.unput(1)
-              .appendToken(this.tok.T_OPEN_TAG, 2)
-              .nextINITIAL();
+            this.unput(1).appendToken(this.tok.T_OPEN_TAG, 2).nextINITIAL();
             break;
           }
         }
@@ -66,5 +60,5 @@ module.exports = {
     } else {
       return false;
     }
-  }
+  },
 };

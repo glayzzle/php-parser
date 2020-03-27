@@ -8,13 +8,16 @@ module.exports = {
   projects: [
     {
       displayName: "test",
-      testEnvironment: "node"
+      testEnvironment: "node",
     },
     {
       runner: "jest-runner-eslint",
       displayName: "lint",
       testMatch: ["<rootDir>/**/*.js"],
-      testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/coverage/"]
-    }
-  ]
+      testPathIgnorePatterns: [
+        "<rootDir>/node_modules/",
+        "<rootDir>/coverage/",
+      ],
+    },
+  ],
 };

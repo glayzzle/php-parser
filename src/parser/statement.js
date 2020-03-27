@@ -12,7 +12,7 @@ module.exports = {
    *  top_statements ::= top_statement*
    * ```
    */
-  read_top_statements: function() {
+  read_top_statements: function () {
     let result = [];
     while (this.token !== this.EOF && this.token !== "}") {
       const statement = this.read_top_statement();
@@ -36,7 +36,7 @@ module.exports = {
    *       | statement
    * ```
    */
-  read_top_statement: function() {
+  read_top_statement: function () {
     switch (this.token) {
       case this.tok.T_FUNCTION:
         return this.read_function(false, false);
@@ -77,7 +77,7 @@ module.exports = {
    *  inner_statements ::= inner_statement*
    * ```
    */
-  read_inner_statements: function() {
+  read_inner_statements: function () {
     let result = [];
     while (this.token != this.EOF && this.token !== "}") {
       const statement = this.read_inner_statement();
@@ -97,9 +97,9 @@ module.exports = {
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
    * ```
    */
-  read_const_list: function() {
+  read_const_list: function () {
     return this.read_list(
-      function() {
+      function () {
         this.expect(this.tok.T_STRING);
         const result = this.node("constant");
         let constName = this.node("identifier");
@@ -124,7 +124,7 @@ module.exports = {
    * ```
    * @retrurn {Array}
    */
-  read_declare_list: function() {
+  read_declare_list: function () {
     const result = [];
     while (this.token != this.EOF && this.token !== ")") {
       this.expect(this.tok.T_STRING);
@@ -149,7 +149,7 @@ module.exports = {
    *  inner_statement ::= '{' inner_statements '}' | token
    * ```
    */
-  read_inner_statement: function() {
+  read_inner_statement: function () {
     switch (this.token) {
       case this.tok.T_FUNCTION:
         return this.read_function(false, false);
@@ -181,7 +181,7 @@ module.exports = {
   /**
    * Reads statements
    */
-  read_statement: function() {
+  read_statement: function () {
     switch (this.token) {
       case "{":
         return this.read_code_block(false);
@@ -409,7 +409,7 @@ module.exports = {
    *  code_block ::= '{' (inner_statements | top_statements) '}'
    * ```
    */
-  read_code_block: function(top) {
+  read_code_block: function (top) {
     const result = this.node("block");
     this.expect("{") && this.next();
     const body = top
@@ -424,5 +424,5 @@ module.exports = {
     }
     this.expect("}") && this.next();
     return result(null, body);
-  }
+  },
 };

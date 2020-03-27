@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("Function tests", function() {
-  it("test function parsing", function() {
+describe("Function tests", function () {
+  it("test function parsing", function () {
     const ast = parser.parseEval(
       `
       function &foo($a = 1, callable $b, ?array &...$params) : ?boolean {}
@@ -14,7 +14,7 @@ describe("Function tests", function() {
     expect(ast).toMatchSnapshot();
   });
 
-  it("implement #113 : typehint nodes", function() {
+  it("implement #113 : typehint nodes", function () {
     expect(
       parser.parseEval(
         `
@@ -26,50 +26,50 @@ describe("Function tests", function() {
     ).toMatchSnapshot();
   });
 
-  it("implement #196 : set function name as identifier", function() {
+  it("implement #196 : set function name as identifier", function () {
     const ast = parser.parseEval(
       `
       function f /* f */($a) {}
       `,
       {
         parser: {
-          extractDoc: true
-        }
+          extractDoc: true,
+        },
       }
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("test variadic error", function() {
+  it("test variadic error", function () {
     const astErr = parser.parseEval(`$b = foo(...[1, 2, 3], $a);`, {
       parser: {
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     expect(astErr).toMatchSnapshot();
   });
 
-  it("test reserved word for function name error", function() {
+  it("test reserved word for function name error", function () {
     const astErr = parser.parseEval(`function list() {}`, {
       parser: {
         version: "5.6",
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     expect(astErr).toMatchSnapshot();
   });
 
-  it("test static closure", function() {
+  it("test static closure", function () {
     const ast = parser.parseEval("$a = static function() {};");
     expect(ast).toMatchSnapshot();
   });
 
-  it("test arrow function php 7.4", function() {
+  it("test arrow function php 7.4", function () {
     const astErr = parser.parseEval(`function () {}`, {
       parser: {
         version: "7.4",
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     expect(astErr).toMatchSnapshot();
   });

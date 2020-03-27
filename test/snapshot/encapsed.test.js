@@ -1,6 +1,6 @@
 const parser = require("../main");
 
-describe("encapsed", function() {
+describe("encapsed", function () {
   it.each([
     ["variable (simple syntax)", '"string $var string";'],
     ["two variable (simple syntax)", '"string $var->$var string";'],
@@ -19,66 +19,66 @@ describe("encapsed", function() {
     ["offsetlookup 4 (complex syntax)", '"string {$arr["foo"][3]} string";'],
     [
       "propertylookup and offsetlookup (complex syntax)",
-      '"string {$obj->values[3]->name} string";'
+      '"string {$obj->values[3]->name} string";',
     ],
     ["value of the var (complex syntax)", '"string {${$name}} string";'],
     [
       "value of the var named by the return value (complex syntax)",
-      '"string {${call()}} string";'
+      '"string {${call()}} string";',
     ],
     [
       "value of the var named by the return value (2) (complex syntax)",
-      '"string {${call()}} string";'
+      '"string {${call()}} string";',
     ],
     [
       "value of the var named by the return value (3) (complex syntax)",
-      '"string {${$obj->property}} string";'
+      '"string {${$obj->property}} string";',
     ],
     [
       "value of the var named by the return value (4) (complex syntax)",
-      '"string {${$obj->call()}} string";'
+      '"string {${$obj->call()}} string";',
     ],
     [
       "value of the var named by the return value (5) (complex syntax)",
-      '"string {${$obj::$var}} string";'
+      '"string {${$obj::$var}} string";',
     ],
     [
       "value of the var named by the return value (6) (complex syntax)",
-      '"string {${$obj::call()}} string";'
+      '"string {${$obj::call()}} string";',
     ],
     [
       "propertylookup by variable (complex syntax)",
-      '"string {$obj->$var} string";'
+      '"string {$obj->$var} string";',
     ],
     [
       "propertylookup by variable (2) (complex syntax)",
-      '"string {$obj->{$array[1]}} string";'
+      '"string {$obj->{$array[1]}} string";',
     ],
     [
       "propertylookup with multiple call (complex syntax)",
-      '"string {$obj->call()->call()} string";'
+      '"string {$obj->call()->call()} string";',
     ],
     [
       "multiple propertylookup (complex syntax)",
-      '"string {$obj->property->property} string";'
+      '"string {$obj->property->property} string";',
     ],
     [
       "propertylookup with comments (complex syntax)",
-      '"string {$var->foo->bar /* Comment */ } string";'
+      '"string {$var->foo->bar /* Comment */ } string";',
     ],
     [
       "newline before closing curly (complex syntax)",
-      '"string {$var\n} string";'
+      '"string {$var\n} string";',
     ],
     ["staticlookup (complex syntax)", '"string {$obj::$var} string";'],
     ["staticlookup (2) (complex syntax)", '"string {$obj::call()} string";'],
     [
       "staticlookup (3) (complex syntax)",
-      '"string {$obj::$var::$var} string";'
+      '"string {$obj::$var::$var} string";',
     ],
     [
       "staticlookup (4) (complex syntax)",
-      '"string {$var::$target::$resource::$binary::$foo::$bar::$foobar::$bar::$foo::$foobar::$bar::$foo} string";'
+      '"string {$var::$target::$resource::$binary::$foo::$bar::$foobar::$bar::$foo::$foobar::$bar::$foo} string";',
     ],
     ["string offset in encapsed var offset", `"$var[var]";`],
     ["positive offset in encapsed var offset", `"$var[1]";`],
@@ -96,8 +96,8 @@ describe("encapsed", function() {
     ["curly #2", '"string {$$juice} string";'],
     ["curly #3", '"string {$call()} string";'],
     ["no curly", '"string $$juice string";'],
-    ["propertylookup", '$this->{"set{$type}"};']
-  ])("%s", function(_, code) {
+    ["propertylookup", '$this->{"set{$type}"};'],
+  ])("%s", function (_, code) {
     expect(parser.parseEval(code)).toMatchSnapshot();
   });
 });

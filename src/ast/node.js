@@ -27,14 +27,14 @@ const Node = function Node(kind, docs, location) {
  * Attach comments to current node
  * @param {*} docs
  */
-Node.prototype.setTrailingComments = function(docs) {
+Node.prototype.setTrailingComments = function (docs) {
   this.trailingComments = docs;
 };
 
 /**
  * Destroying an unused node
  */
-Node.prototype.destroy = function(node) {
+Node.prototype.destroy = function (node) {
   if (!node) {
     throw new Error(
       "Node already initialized, you must swap with another node"
@@ -67,7 +67,7 @@ Node.prototype.destroy = function(node) {
  * Includes current token position of the parser
  * @param {*} parser
  */
-Node.prototype.includeToken = function(parser) {
+Node.prototype.includeToken = function (parser) {
   if (this.loc) {
     if (this.loc.end) {
       this.loc.end.line = parser.lexer.yylloc.last_line;
@@ -90,7 +90,7 @@ Node.prototype.includeToken = function(parser) {
  * @param {Function} constructor
  * @return {Function}
  */
-Node.extends = function(type, constructor) {
+Node.extends = function (type, constructor) {
   constructor.prototype = Object.create(this.prototype);
   constructor.extends = this.extends;
   constructor.prototype.constructor = constructor;

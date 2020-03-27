@@ -12,7 +12,7 @@
  * @property {Position} start
  * @property {Position} end
  */
-const Location = function(source, start, end) {
+const Location = function (source, start, end) {
   this.source = source;
   this.start = start;
   this.end = end;

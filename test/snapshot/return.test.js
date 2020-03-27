@@ -1,16 +1,16 @@
 const parser = require("../main");
 
-describe("return", function() {
-  it("simple", function() {
+describe("return", function () {
+  it("simple", function () {
     expect(parser.parseEval('return "string";')).toMatchSnapshot();
   });
-  it("no expression", function() {
+  it("no expression", function () {
     expect(parser.parseEval("return;")).toMatchSnapshot();
   });
-  it("should fail when no ';' at end", function() {
+  it("should fail when no ';' at end", function () {
     expect(
       parser.parseEval("return", {
-        parser: { suppressErrors: true }
+        parser: { suppressErrors: true },
       })
     ).toMatchSnapshot();
   });

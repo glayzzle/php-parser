@@ -1,31 +1,31 @@
 const parser = require("../main");
 
-describe("offsetlookup", function() {
-  it("simple", function() {
+describe("offsetlookup", function () {
+  it("simple", function () {
     expect(parser.parseEval('$obj["index"];')).toMatchSnapshot();
   });
-  it("variable", function() {
+  it("variable", function () {
     expect(parser.parseEval("$obj[$var];")).toMatchSnapshot();
   });
-  it("call", function() {
+  it("call", function () {
     expect(parser.parseEval("$obj[$var]();")).toMatchSnapshot();
   });
-  it("multiple", function() {
+  it("multiple", function () {
     expect(parser.parseEval('$obj["first"]["second"];')).toMatchSnapshot();
   });
-  it("simple (curly)", function() {
+  it("simple (curly)", function () {
     expect(parser.parseEval('$obj{"index"};')).toMatchSnapshot();
   });
-  it("variable (curly)", function() {
+  it("variable (curly)", function () {
     expect(parser.parseEval("$obj{$var};")).toMatchSnapshot();
   });
-  it("call (curly)", function() {
+  it("call (curly)", function () {
     expect(parser.parseEval("$obj{$var}();")).toMatchSnapshot();
   });
-  it("multiple (curly)", function() {
+  it("multiple (curly)", function () {
     expect(parser.parseEval('$obj{"first"}{"second"};')).toMatchSnapshot();
   });
-  it("inside propertylookup", function() {
+  it("inside propertylookup", function () {
     expect(
       parser.parseEval(`
 $foo->bzr_[1];
@@ -36,7 +36,7 @@ $foo->bzr_[$var ? 'one' : 'two'];
     `)
     ).toMatchSnapshot();
   });
-  it("inside propertylookup (curly)", function() {
+  it("inside propertylookup (curly)", function () {
     expect(
       parser.parseEval(`
 $foo->bzr_{1};

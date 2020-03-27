@@ -9,7 +9,7 @@ module.exports = {
   /**
    * checks if current token is a reference keyword
    */
-  is_reference: function() {
+  is_reference: function () {
     if (this.token == "&") {
       this.next();
       return true;
@@ -19,7 +19,7 @@ module.exports = {
   /**
    * checks if current token is a variadic keyword
    */
-  is_variadic: function() {
+  is_variadic: function () {
     if (this.token === this.tok.T_ELLIPSIS) {
       this.next();
       return true;
@@ -32,7 +32,7 @@ module.exports = {
    * function ::= function_declaration code_block
    * ```
    */
-  read_function: function(closure, flag) {
+  read_function: function (closure, flag) {
     const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1
@@ -62,7 +62,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  read_function_declaration: function(type, isStatic) {
+  read_function_declaration: function (type, isStatic) {
     let nodeName = "function";
     if (type === 1) {
       nodeName = "closure";
@@ -137,7 +137,7 @@ module.exports = {
     return result(name, params, isRef, returnType, nullable);
   },
 
-  read_lexical_vars: function() {
+  read_lexical_vars: function () {
     let result = [];
 
     if (this.token === this.tok.T_USE) {
@@ -150,7 +150,7 @@ module.exports = {
     return result;
   },
 
-  read_lexical_var_list: function() {
+  read_lexical_var_list: function () {
     return this.read_list(this.read_lexical_var, ",");
   },
 
@@ -159,7 +159,7 @@ module.exports = {
    * lexical_var ::= '&'? T_VARIABLE
    * ```
    */
-  read_lexical_var: function() {
+  read_lexical_var: function () {
     if (this.token === "&") {
       return this.read_byref(this.read_lexical_var.bind(this));
     }
@@ -175,7 +175,7 @@ module.exports = {
    *  parameter_list ::= (parameter ',')* parameter?
    * ```
    */
-  read_parameter_list: function() {
+  read_parameter_list: function () {
     const result = [];
     if (this.token != ")") {
       while (this.token != this.EOF) {
@@ -198,7 +198,7 @@ module.exports = {
    * ```
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
-  read_parameter: function() {
+  read_parameter: function () {
     const node = this.node("parameter");
     let parameterName = null;
     let value = null;
@@ -233,7 +233,7 @@ module.exports = {
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
    * ```
    */
-  read_argument_list: function() {
+  read_argument_list: function () {
     let result = [];
     this.expect("(") && this.next();
     if (this.token !== ")") {
@@ -245,11 +245,11 @@ module.exports = {
   /**
    * Reads non empty argument list
    */
-  read_non_empty_argument_list: function() {
+  read_non_empty_argument_list: function () {
     let wasVariadic = false;
 
     return this.read_function_list(
-      function() {
+      function () {
         const argument = this.read_argument();
         if (argument) {
           if (wasVariadic) {
@@ -269,7 +269,7 @@ module.exports = {
    *    argument_list ::= T_ELLIPSIS? expr
    * ```
    */
-  read_argument: function() {
+  read_argument: function () {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
     }
@@ -281,7 +281,7 @@ module.exports = {
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name
    * ```
    */
-  read_type: function() {
+  read_type: function () {
     const result = this.node();
     if (this.token === this.tok.T_ARRAY || this.token === this.tok.T_CALLABLE) {
       const type = this.text();
@@ -315,5 +315,5 @@ module.exports = {
     // fix : destroy not consumed node (release comments)
     result.destroy();
     return null;
-  }
+  },
 };

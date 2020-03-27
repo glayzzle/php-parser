@@ -52,12 +52,12 @@ describe("assign", () => {
   it("??= with bin", () => {
     expect(parser.parseEval("$var ??= $var + 10;")).toMatchSnapshot();
   });
-  it("??= (php < 7)", function() {
+  it("??= (php < 7)", function () {
     const astErr = parser.parseEval(`$var ??= $var;`, {
       parser: {
         version: "5.6",
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     expect(astErr).toMatchSnapshot();
   });

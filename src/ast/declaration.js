@@ -34,7 +34,7 @@ const Declaration = Statement.extends(KIND, function Declaration(
  * @param {Integer[]} flags
  * @return {void}
  */
-Declaration.prototype.parseFlags = function(flags) {
+Declaration.prototype.parseFlags = function (flags) {
   this.isAbstract = flags[2] === 1;
   this.isFinal = flags[2] === 2;
   if (this.kind !== "class") {

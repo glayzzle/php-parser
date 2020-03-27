@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("heredoc", function() {
-  it("simple", function() {
+describe("heredoc", function () {
+  it("simple", function () {
     expect(
       parser.parseEval(`
 echo <<<EOD
@@ -13,7 +13,7 @@ EOD;
     ).toMatchSnapshot();
   });
 
-  it("with space between <<< and label", function() {
+  it("with space between <<< and label", function () {
     expect(
       parser.parseEval(`
 echo <<<     EOD
@@ -25,7 +25,7 @@ EOD;
     ).toMatchSnapshot();
   });
 
-  it("with double quotes", function() {
+  it("with double quotes", function () {
     expect(
       parser.parseEval(`
 echo <<<"EOD"
@@ -37,7 +37,7 @@ EOD;
     ).toMatchSnapshot();
   });
 
-  it("with variables", function() {
+  it("with variables", function () {
     expect(
       parser.parseEval(`
 echo <<<EOT
@@ -49,7 +49,7 @@ EOT;
     ).toMatchSnapshot();
   });
 
-  it("inside call", function() {
+  it("inside call", function () {
     expect(
       parser.parseEval(`
 var_dump(array(<<<EOD
@@ -60,7 +60,7 @@ EOD
     ).toMatchSnapshot();
   });
 
-  it("inside function", function() {
+  it("inside function", function () {
     expect(
       parser.parseEval(`
 function foo()
@@ -73,7 +73,7 @@ LABEL;
     ).toMatchSnapshot();
   });
 
-  it("inside class", function() {
+  it("inside class", function () {
     expect(
       parser.parseEval(`
 class foo {
@@ -89,7 +89,7 @@ FOOBAR;
     ).toMatchSnapshot();
   });
 
-  it("empty", function() {
+  it("empty", function () {
     expect(
       parser.parseEval(`
 echo <<<TEST
@@ -98,7 +98,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("only newline", function() {
+  it("only newline", function () {
     expect(
       parser.parseEval(`
 echo <<<TEST
@@ -108,7 +108,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("space between <<< and label", function() {
+  it("space between <<< and label", function () {
     expect(
       parser.parseEval(`
 echo <<<   TEST
@@ -120,7 +120,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("tab between <<< and label", function() {
+  it("tab between <<< and label", function () {
     expect(
       parser.parseEval(`
 echo <<<\tTEST
@@ -132,7 +132,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("Flexible heredoc syntax: 4 spaces of indentation", function() {
+  it("Flexible heredoc syntax: 4 spaces of indentation", function () {
     expect(
       parser.parseEval(`
       echo <<<END
@@ -144,7 +144,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("Flexible heredoc syntax: with variables", function() {
+  it("Flexible heredoc syntax: with variables", function () {
     expect(
       parser.parseEval(`
       echo <<<END
@@ -169,7 +169,7 @@ c
 `,
         {
           parser: { suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -185,7 +185,7 @@ c
 `,
         {
           parser: { suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -201,7 +201,7 @@ c
 `,
         {
           parser: { suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -217,7 +217,7 @@ a
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -248,7 +248,7 @@ END);
 
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -279,7 +279,7 @@ END, 'd e f'];
 
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -310,7 +310,7 @@ END          , 'd e f'];
 
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -375,7 +375,7 @@ $values = <<<END
 `,
         {
           parser: { suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -395,7 +395,7 @@ $values = <<<END
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -413,7 +413,7 @@ $values = <<<END
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -432,7 +432,7 @@ $values = <<<END
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -451,7 +451,7 @@ $values = <<<END
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();
@@ -483,7 +483,7 @@ $c = <<<TOE
 `,
         {
           parser: { version: 702, suppressErrors: true, debug: false },
-          lexer: { debug: false }
+          lexer: { debug: false },
         }
       )
     ).toMatchSnapshot();

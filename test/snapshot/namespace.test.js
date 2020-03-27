@@ -1,14 +1,14 @@
 const parser = require("../main");
 
-describe("Test namespace statements", function() {
-  it("fix #246 - doesn't work properly for `FULL_QUALIFIED_NAME`", function() {
+describe("Test namespace statements", function () {
+  it("fix #246 - doesn't work properly for `FULL_QUALIFIED_NAME`", function () {
     expect(
       parser.parseEval(`
       $obj = new \\Foo();
     `)
     ).toMatchSnapshot();
   });
-  it("allow trailing comma for grouped namespaces #177", function() {
+  it("allow trailing comma for grouped namespaces #177", function () {
     expect(
       parser.parseEval(`
     use Foo\\Bar\\ {
@@ -18,7 +18,7 @@ describe("Test namespace statements", function() {
     };`)
     ).toMatchSnapshot();
   });
-  it("test single namespace", function() {
+  it("test single namespace", function () {
     expect(
       parser.parseEval(
         `
@@ -41,14 +41,14 @@ describe("Test namespace statements", function() {
     `,
         {
           parser: {
-            debug: false
-          }
+            debug: false,
+          },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test multiple namespace", function() {
+  it("test multiple namespace", function () {
     expect(
       parser.parseEval(
         `
@@ -61,14 +61,14 @@ describe("Test namespace statements", function() {
     `,
         {
           parser: {
-            debug: false
-          }
+            debug: false,
+          },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test namespace keyword", function() {
+  it("test namespace keyword", function () {
     expect(
       parser.parseEval(
         `
@@ -77,14 +77,14 @@ describe("Test namespace statements", function() {
     `,
         {
           parser: {
-            debug: false
-          }
+            debug: false,
+          },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test namespace error", function() {
+  it("test namespace error", function () {
     expect(
       parser.parseEval(
         `
@@ -93,26 +93,26 @@ describe("Test namespace statements", function() {
         {
           parser: {
             debug: false,
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("check namespace", function() {
+  it("check namespace", function () {
     // @todo
   });
 
-  it("check use", function() {
+  it("check use", function () {
     // @todo
   });
 
-  it("check resolution", function() {
+  it("check resolution", function () {
     // @todo
   });
 
-  it("check silent mode", function() {
+  it("check silent mode", function () {
     expect(
       parser.parseEval(
         `
@@ -121,14 +121,14 @@ describe("Test namespace statements", function() {
         {
           parser: {
             debug: false,
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("work with declare statement", function() {
+  it("work with declare statement", function () {
     expect(
       parser.parseEval(`
       declare(strict_types=1);
@@ -138,7 +138,7 @@ describe("Test namespace statements", function() {
     ).toMatchSnapshot();
   });
 
-  describe("read usegroup location correctly", function() {
+  describe("read usegroup location correctly", function () {
     const testString = `
       namespace Test\\test\\test;
 
@@ -161,25 +161,25 @@ describe("Test namespace statements", function() {
       }
     `;
 
-    it("without docs", function() {
+    it("without docs", function () {
       expect(
         parser.parseEval(testString, {
           ast: {
-            withPositions: true
-          }
+            withPositions: true,
+          },
         })
       ).toMatchSnapshot();
     });
 
-    it("with docs", function() {
+    it("with docs", function () {
       expect(
         parser.parseEval(testString, {
           ast: {
-            withPositions: true
+            withPositions: true,
           },
           parser: {
-            extractDoc: true
-          }
+            extractDoc: true,
+          },
         })
       ).toMatchSnapshot();
     });

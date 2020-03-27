@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  matchST_LOOKING_FOR_PROPERTY: function() {
+  matchST_LOOKING_FOR_PROPERTY: function () {
     let ch = this.input();
     if (ch === "-") {
       ch = this.input();
@@ -28,7 +28,7 @@ module.exports = {
     if (ch) this.unput(1);
     return false;
   },
-  matchST_LOOKING_FOR_VARNAME: function() {
+  matchST_LOOKING_FOR_VARNAME: function () {
     let ch = this.input();
 
     // SHIFT STATE
@@ -52,7 +52,7 @@ module.exports = {
     // stops looking for a varname and starts the scripting mode
     return false;
   },
-  matchST_VAR_OFFSET: function() {
+  matchST_VAR_OFFSET: function () {
     const ch = this.input();
     if (this.is_NUM_START()) {
       this.consume_NUM();
@@ -90,5 +90,5 @@ module.exports = {
     } else {
       throw new Error("Unexpected terminal");
     }
-  }
+  },
 };

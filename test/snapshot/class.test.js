@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("Test classes", function() {
-  it("Implement #183 : static keyword as identifier", function() {
+describe("Test classes", function () {
+  it("Implement #183 : static keyword as identifier", function () {
     expect(
       parser.parseEval(`
     class A {
@@ -17,7 +17,7 @@ describe("Test classes", function() {
     ).toMatchSnapshot();
   });
 
-  it("Implement typed_properties_v2 / php74", function() {
+  it("Implement typed_properties_v2 / php74", function () {
     expect(
       parser.parseEval(`
     class Test {
@@ -28,7 +28,7 @@ describe("Test classes", function() {
     ).toMatchSnapshot();
   });
 
-  it("Validate usual declarations", function() {
+  it("Validate usual declarations", function () {
     expect(
       parser.parseEval(`
       final class foo extends bar implements
@@ -64,7 +64,7 @@ describe("Test classes", function() {
     ).toMatchSnapshot();
   });
 
-  it("Advanced tests", function() {
+  it("Advanced tests", function () {
     expect(
       parser.parseEval(
         `
@@ -94,13 +94,13 @@ describe("Test classes", function() {
       }
     `,
         {
-          parser: { extractDoc: true }
+          parser: { extractDoc: true },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("Test of silent mode", function() {
+  it("Test of silent mode", function () {
     expect(
       parser.parseEval(
         `
@@ -109,13 +109,13 @@ describe("Test classes", function() {
         use B { foo };
       }`,
         {
-          parser: { suppressErrors: true }
+          parser: { suppressErrors: true },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("Test js properties", function() {
+  it("Test js properties", function () {
     expect(
       parser.parseEval(`
       class __proto__ {
@@ -129,26 +129,26 @@ describe("Test classes", function() {
     ).toMatchSnapshot();
   });
 
-  it("empty", function() {
+  it("empty", function () {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
 
-  it("class name as identifier", function() {
+  it("class name as identifier", function () {
     expect(parser.parseEval("class A {}")).toMatchSnapshot();
   });
 
-  it("final and abstract", function() {
+  it("final and abstract", function () {
     expect(
       parser.parseEval(`final abstract class foo {}`, {
-        parser: { suppressErrors: true }
+        parser: { suppressErrors: true },
       })
     ).toMatchSnapshot();
   });
 
-  it("abstract and final", function() {
+  it("abstract and final", function () {
     expect(
       parser.parseEval(`abstract final class foo {}`, {
-        parser: { suppressErrors: true }
+        parser: { suppressErrors: true },
       })
     ).toMatchSnapshot();
   });

@@ -109,12 +109,12 @@ describe("bin", () => {
   it("?? right-associative", () => {
     expect(parser.parseEval("$a ?? $b ?? $c;")).toMatchSnapshot();
   });
-  it("?? (php < 7)", function() {
+  it("?? (php < 7)", function () {
     const astErr = parser.parseEval(`$var ?? $var;`, {
       parser: {
         version: "5.6",
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     expect(astErr).toMatchSnapshot();
   });

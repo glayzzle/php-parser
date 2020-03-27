@@ -24,12 +24,12 @@ declare(tick=1): /* 1 */ ENDDECLARE;
   {
     parser: {
       debug: true,
-      extractDoc: true
+      extractDoc: true,
     },
     ast: {
       withPositions: true,
-      withSource: true
-    }
+      withSource: true,
+    },
   }
 );
 console.log(util.inspect(ast, false, 10, true));

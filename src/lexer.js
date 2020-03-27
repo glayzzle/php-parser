@@ -19,7 +19,7 @@
  * @property {Object} keywords List of php keyword
  * @property {Object} castKeywords List of php keywords for type casting
  */
-const lexer = function(engine) {
+const lexer = function (engine) {
   this.engine = engine;
   this.tok = this.engine.tokens.names;
   this.EOF = 1;
@@ -105,7 +105,7 @@ const lexer = function(engine) {
     callable: this.tok.T_CALLABLE,
     or: this.tok.T_LOGICAL_OR,
     and: this.tok.T_LOGICAL_AND,
-    xor: this.tok.T_LOGICAL_XOR
+    xor: this.tok.T_LOGICAL_XOR,
   };
   this.castKeywords = {
     int: this.tok.T_INT_CAST,
@@ -119,14 +119,14 @@ const lexer = function(engine) {
     object: this.tok.T_OBJECT_CAST,
     bool: this.tok.T_BOOL_CAST,
     boolean: this.tok.T_BOOL_CAST,
-    unset: this.tok.T_UNSET_CAST
+    unset: this.tok.T_UNSET_CAST,
   };
 };
 
 /**
  * Initialize the lexer with the specified input
  */
-lexer.prototype.setInput = function(input) {
+lexer.prototype.setInput = function (input) {
   this._input = input;
   this.size = input.length;
   this.yylineno = 1;
@@ -141,7 +141,7 @@ lexer.prototype.setInput = function(input) {
     prev_line: 1,
     prev_column: 0,
     last_line: 1,
-    last_column: 0
+    last_column: 0,
   };
   this.tokens = [];
   if (this.version > 703) {
@@ -173,9 +173,9 @@ lexer.prototype.setInput = function(input) {
      */
     first_encaps_node: false,
     // for backward compatible
-    toString: function() {
+    toString: function () {
       this.label;
-    }
+    },
   };
   return this;
 };
@@ -183,7 +183,7 @@ lexer.prototype.setInput = function(input) {
 /**
  * consumes and returns one char from the input
  */
-lexer.prototype.input = function() {
+lexer.prototype.input = function () {
   const ch = this._input[this.offset];
   if (!ch) return "";
   this.yytext += ch;
@@ -205,7 +205,7 @@ lexer.prototype.input = function() {
 /**
  * revert eating specified size
  */
-lexer.prototype.unput = function(size) {
+lexer.prototype.unput = function (size) {
   if (size === 1) {
     // 1 char unput (most cases)
     this.offset--;
@@ -269,17 +269,17 @@ lexer.prototype.unput = function(size) {
 };
 
 // check if the text matches
-lexer.prototype.tryMatch = function(text) {
+lexer.prototype.tryMatch = function (text) {
   return text === this.ahead(text.length);
 };
 
 // check if the text matches
-lexer.prototype.tryMatchCaseless = function(text) {
+lexer.prototype.tryMatchCaseless = function (text) {
   return text === this.ahead(text.length).toLowerCase();
 };
 
 // look ahead
-lexer.prototype.ahead = function(size) {
+lexer.prototype.ahead = function (size) {
   let text = this._input.substring(this.offset, this.offset + size);
   if (
     text[text.length - 1] === "\r" &&
@@ -291,7 +291,7 @@ lexer.prototype.ahead = function(size) {
 };
 
 // consume the specified size
-lexer.prototype.consume = function(size) {
+lexer.prototype.consume = function (size) {
   for (let i = 0; i < size; i++) {
     const ch = this._input[this.offset];
     if (!ch) break;
@@ -316,7 +316,7 @@ lexer.prototype.consume = function(size) {
 /**
  * Gets the current state
  */
-lexer.prototype.getState = function() {
+lexer.prototype.getState = function () {
   return {
     yytext: this.yytext,
     offset: this.offset,
@@ -327,16 +327,16 @@ lexer.prototype.getState = function() {
       first_line: this.yylloc.first_line,
       first_column: this.yylloc.first_column,
       last_line: this.yylloc.last_line,
-      last_column: this.yylloc.last_column
+      last_column: this.yylloc.last_column,
     },
-    heredoc_label: this.heredoc_label
+    heredoc_label: this.heredoc_label,
   };
 };
 
 /**
  * Sets the current lexer state
  */
-lexer.prototype.setState = function(state) {
+lexer.prototype.setState = function (state) {
   this.yytext = state.yytext;
   this.offset = state.offset;
   this.yylineno = state.yylineno;
@@ -349,13 +349,13 @@ lexer.prototype.setState = function(state) {
 };
 
 // prepend next token
-lexer.prototype.appendToken = function(value, ahead) {
+lexer.prototype.appendToken = function (value, ahead) {
   this.tokens.push([value, ahead]);
   return this;
 };
 
 // return next match that has a token
-lexer.prototype.lex = function() {
+lexer.prototype.lex = function () {
   this.yylloc.prev_offset = this.offset;
   this.yylloc.prev_line = this.yylloc.last_line;
   this.yylloc.prev_column = this.yylloc.last_column;
@@ -392,7 +392,7 @@ lexer.prototype.lex = function() {
 };
 
 // activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
-lexer.prototype.begin = function(condition) {
+lexer.prototype.begin = function (condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
   this.stateCb = this["match" + condition];
@@ -403,7 +403,7 @@ lexer.prototype.begin = function(condition) {
 };
 
 // pop the previously active lexer condition state off the condition stack
-lexer.prototype.popState = function() {
+lexer.prototype.popState = function () {
   const n = this.conditionStack.length - 1;
   const condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
@@ -415,7 +415,7 @@ lexer.prototype.popState = function() {
 };
 
 // return next match in input
-lexer.prototype.next = function() {
+lexer.prototype.next = function () {
   let token;
   if (!this._input) {
     this.done = true;
@@ -480,8 +480,8 @@ lexer.prototype.next = function() {
   require("./lexer/scripting.js"),
   require("./lexer/strings.js"),
   require("./lexer/tokens.js"),
-  require("./lexer/utils.js")
-].forEach(function(ext) {
+  require("./lexer/utils.js"),
+].forEach(function (ext) {
   for (const k in ext) {
     lexer.prototype[k] = ext[k];
   }

@@ -34,7 +34,7 @@ TypeReference.types = [
   "array",
   "callable",
   "iterable",
-  "void"
+  "void",
 ];
 
 module.exports = TypeReference;

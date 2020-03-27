@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  read_expr: function(expr) {
+  read_expr: function (expr) {
     const result = this.node();
     if (this.token === "@") {
       if (!expr) {
@@ -112,28 +112,28 @@ module.exports = {
   /**
    * Reads a cast expression
    */
-  read_expr_cast: function(type) {
+  read_expr_cast: function (type) {
     return this.node("cast")(type, this.text(), this.next().read_expr());
   },
 
   /**
    * Read a isset variable
    */
-  read_isset_variable: function() {
+  read_isset_variable: function () {
     return this.read_expr();
   },
 
   /**
    * Reads isset variables
    */
-  read_isset_variables: function() {
+  read_isset_variables: function () {
     return this.read_function_list(this.read_isset_variable, ",");
   },
 
   /*
    * Reads internal PHP functions
    */
-  read_internal_functions_in_yacc: function() {
+  read_internal_functions_in_yacc: function () {
     let result = null;
     switch (this.token) {
       case this.tok.T_ISSET:
@@ -195,7 +195,7 @@ module.exports = {
   /**
    * Reads optional expression
    */
-  read_optional_expr: function(stopToken) {
+  read_optional_expr: function (stopToken) {
     if (this.token !== stopToken) {
       return this.read_expr();
     }
@@ -206,7 +206,7 @@ module.exports = {
   /**
    * Reads exit expression
    */
-  read_exit_expr: function() {
+  read_exit_expr: function () {
     let expression = null;
 
     if (this.token === "(") {
@@ -224,7 +224,7 @@ module.exports = {
    *  expr ::= @todo
    * ```
    */
-  read_expr_item: function() {
+  read_expr_item: function () {
     let result, expr;
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
@@ -512,7 +512,7 @@ module.exports = {
    * Reads assignment
    * @param {*} left
    */
-  read_assignref: function(result, left) {
+  read_assignref: function (result, left) {
     this.next();
     let right;
     if (this.token === this.tok.T_NEW) {
@@ -542,7 +542,7 @@ module.exports = {
    * 				  ((zend_ast_decl *) $$)->lex_pos = $10;
    * 				  CG(extra_fn_flags) = $9; }   *
    */
-  read_inline_function: function(flags) {
+  read_inline_function: function (flags) {
     if (this.token === this.tok.T_FUNCTION) {
       return this.read_function(true, flags);
     }
@@ -587,7 +587,7 @@ module.exports = {
    * ```
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
-  read_new_expr: function() {
+  read_new_expr: function () {
     const result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     let args = [];
@@ -621,7 +621,7 @@ module.exports = {
    * read_new_class_name ::= namespace_name | variable
    * ```
    */
-  read_new_class_name: function() {
+  read_new_class_name: function () {
     if (
       this.token === this.tok.T_NS_SEPARATOR ||
       this.token === this.tok.T_STRING ||
@@ -638,7 +638,7 @@ module.exports = {
       this.expect([this.tok.T_STRING, "VARIABLE"]);
     }
   },
-  handleDereferencable: function(expr) {
+  handleDereferencable: function (expr) {
     while (this.token !== this.EOF) {
       if (
         this.token === this.tok.T_OBJECT_OPERATOR ||
@@ -655,5 +655,5 @@ module.exports = {
       }
     }
     return expr;
-  }
+  },
 };

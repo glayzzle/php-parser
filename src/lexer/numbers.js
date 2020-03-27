@@ -14,7 +14,7 @@ if (process.arch == "x64") {
 }
 
 module.exports = {
-  consume_NUM: function() {
+  consume_NUM: function () {
     let ch = this.yytext[0];
     let hasPoint = ch === ".";
     if (ch === "0") {
@@ -118,7 +118,7 @@ module.exports = {
     }
   },
   // read hexa
-  consume_HNUM: function() {
+  consume_HNUM: function () {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_HEX()) {
@@ -129,7 +129,7 @@ module.exports = {
     return this.tok.T_LNUMBER;
   },
   // read a generic number
-  consume_LNUM: function() {
+  consume_LNUM: function () {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_NUM()) {
@@ -140,7 +140,7 @@ module.exports = {
     return this.tok.T_LNUMBER;
   },
   // read binary
-  consume_BNUM: function() {
+  consume_BNUM: function () {
     let ch;
     while (this.offset < this.size) {
       ch = this.input();
@@ -150,5 +150,5 @@ module.exports = {
       }
     }
     return this.tok.T_LNUMBER;
-  }
+  },
 };

@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("nowdoc", function() {
-  it("simple", function() {
+describe("nowdoc", function () {
+  it("simple", function () {
     expect(
       parser.parseEval(`
 echo <<<'EOD'
@@ -13,7 +13,7 @@ EOD;
     ).toMatchSnapshot();
   });
 
-  it("with space between <<< and label", function() {
+  it("with space between <<< and label", function () {
     expect(
       parser.parseEval(`
 echo <<<     'EOD'
@@ -25,7 +25,7 @@ EOD;
     ).toMatchSnapshot();
   });
 
-  it("with variables", function() {
+  it("with variables", function () {
     expect(
       parser.parseEval(`
 echo <<<'EOT'
@@ -37,7 +37,7 @@ EOT;
     ).toMatchSnapshot();
   });
 
-  it("inside call", function() {
+  it("inside call", function () {
     expect(
       parser.parseEval(`
 var_dump(array(<<<'EOD'
@@ -48,7 +48,7 @@ EOD
     ).toMatchSnapshot();
   });
 
-  it("inside function", function() {
+  it("inside function", function () {
     expect(
       parser.parseEval(`
 function foo()
@@ -61,7 +61,7 @@ LABEL;
     ).toMatchSnapshot();
   });
 
-  it("inside class", function() {
+  it("inside class", function () {
     expect(
       parser.parseEval(`
 class foo {
@@ -77,7 +77,7 @@ FOOBAR;
     ).toMatchSnapshot();
   });
 
-  it("empty", function() {
+  it("empty", function () {
     expect(
       parser.parseEval(`
 echo <<<'TEST'
@@ -86,7 +86,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("only newline", function() {
+  it("only newline", function () {
     expect(
       parser.parseEval(`
 echo <<<'TEST'
@@ -96,7 +96,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("space between <<< and label", function() {
+  it("space between <<< and label", function () {
     expect(
       parser.parseEval(`
 echo <<<   'TEST'
@@ -108,7 +108,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("tab between <<< and label", function() {
+  it("tab between <<< and label", function () {
     expect(
       parser.parseEval(`
 echo <<<\t'TEST'
@@ -120,7 +120,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("Flexible nowdoc syntax: 4 spaces of indentation", function() {
+  it("Flexible nowdoc syntax: 4 spaces of indentation", function () {
     expect(
       parser.parseEval(`
       echo <<<'END'
@@ -132,7 +132,7 @@ TEST;
     ).toMatchSnapshot();
   });
 
-  it("Flexible nowdoc syntax: with variables", function() {
+  it("Flexible nowdoc syntax: with variables", function () {
     expect(
       parser.parseEval(`
       echo <<<'END'

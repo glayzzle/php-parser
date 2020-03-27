@@ -9,7 +9,7 @@ module.exports = {
   /**
    * Reads a single line comment
    */
-  T_COMMENT: function() {
+  T_COMMENT: function () {
     while (this.offset < this.size) {
       const ch = this.input();
       if (ch === "\n" || ch === "\r") {
@@ -35,7 +35,7 @@ module.exports = {
   /**
    * Behaviour : https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927
    */
-  T_DOC_COMMENT: function() {
+  T_DOC_COMMENT: function () {
     let ch = this.input();
     let token = this.tok.T_COMMENT;
     if (ch === "*") {
@@ -59,5 +59,5 @@ module.exports = {
       }
     }
     return token;
-  }
+  },
 };

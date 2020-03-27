@@ -1,19 +1,19 @@
 const parser = require("../main");
 
-describe("Test syntax parsing with PHP 73 support", function() {
-  it("https://wiki.php.net/rfc/list_reference_assignment", function() {
+describe("Test syntax parsing with PHP 73 support", function () {
+  it("https://wiki.php.net/rfc/list_reference_assignment", function () {
     const ast = parser.parseEval(
       "[$a, &$b] = $array; list($a, &$b) = $array;",
       {
         parser: {
-          version: "7.3"
-        }
+          version: "7.3",
+        },
       }
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("https://wiki.php.net/rfc/trailing-comma-function-calls", function() {
+  it("https://wiki.php.net/rfc/trailing-comma-function-calls", function () {
     const ast = parser.parseEval(
       `
     $newArray = array_merge(
@@ -42,14 +42,14 @@ describe("Test syntax parsing with PHP 73 support", function() {
     `,
       {
         parser: {
-          version: "7.3"
-        }
+          version: "7.3",
+        },
       }
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("https://wiki.php.net/rfc/trailing-comma-function-calls#errors", function() {
+  it("https://wiki.php.net/rfc/trailing-comma-function-calls#errors", function () {
     const ast = parser.parseEval(
       `
     # Parse error
@@ -67,8 +67,8 @@ describe("Test syntax parsing with PHP 73 support", function() {
       {
         parser: {
           version: "7.3",
-          suppressErrors: true
-        }
+          suppressErrors: true,
+        },
       }
     );
     expect(ast).toMatchSnapshot();

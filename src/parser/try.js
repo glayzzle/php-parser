@@ -17,7 +17,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L448
    * @return {Try}
    */
-  read_try: function() {
+  read_try: function () {
     this.expect(this.tok.T_TRY);
     const result = this.node("try");
     let always = null;
@@ -36,5 +36,5 @@ module.exports = {
       always = this.next().read_statement();
     }
     return result(body, catches, always);
-  }
+  },
 };

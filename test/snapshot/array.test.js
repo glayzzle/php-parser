@@ -44,11 +44,11 @@ describe("Array without keys", () => {
     ).toMatchSnapshot();
   });
 
-  describe("mixed tests / coverage", function() {
-    it("test empty array", function() {
+  describe("mixed tests / coverage", function () {
+    it("test empty array", function () {
       expect(parser.parseEval("$a = []; $b = array();")).toMatchSnapshot();
     });
-    it("test short form / keys", function() {
+    it("test short form / keys", function () {
       expect(
         parser.parseEval('[0 => &$foo, $bar => "foobar"];')
       ).toMatchSnapshot();
@@ -125,11 +125,11 @@ $var = [...new ArrayIterator(['a', 'b', 'c'])];
     ).toMatchSnapshot();
   });
 
-  it("spread operator with reference", function() {
+  it("spread operator with reference", function () {
     const astErr = parser.parseEval(`$var = [...&$arr];`, {
       parser: {
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     expect(astErr).toMatchSnapshot();
   });

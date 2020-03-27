@@ -35,7 +35,7 @@ const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
  * @param {Integer[]} flags
  * @return {void}
  */
-ClassConstant.prototype.parseFlags = function(flags) {
+ClassConstant.prototype.parseFlags = function (flags) {
   if (flags[0] === -1) {
     this.visibility = IS_UNDEFINED;
   } else if (flags[0] === null) {

@@ -7,8 +7,8 @@ describe("arrow function", () => {
     ["argument by ref", '$var = fn(&$arg) => "something";'],
     ["arguments", '$var = fn($arg, $arg, $arg) => "something";'],
     ["return type", '$var = fn(): ?string => "something";'],
-    ["inside call", `call(fn($arg) => $arg);`]
-  ])("%s", function(_, code) {
+    ["inside call", `call(fn($arg) => $arg);`],
+  ])("%s", function (_, code) {
     expect(parser.parseEval(code)).toMatchSnapshot();
   });
 
@@ -16,8 +16,8 @@ describe("arrow function", () => {
     expect(
       parser.parseEval(`function fn($arg) { return $arg; }`, {
         parser: {
-          version: "7.3" // disable the php 7.4 support
-        }
+          version: "7.3", // disable the php 7.4 support
+        },
       })
     ).toMatchSnapshot();
   });
@@ -26,8 +26,8 @@ describe("arrow function", () => {
       parser.parseEval(`function fn($arg) { return $arg; }`, {
         parser: {
           version: "7.4", // enable the php 7.4 support
-          suppressErrors: true
-        }
+          suppressErrors: true,
+        },
       })
     ).toMatchSnapshot();
   });
@@ -35,8 +35,8 @@ describe("arrow function", () => {
     expect(
       parser.parseEval("$var = fn() => ;", {
         parser: {
-          suppressErrors: true
-        }
+          suppressErrors: true,
+        },
       })
     ).toMatchSnapshot();
   });

@@ -1,6 +1,6 @@
 const parser = require("../main");
 
-describe("Test unary", function() {
+describe("Test unary", function () {
   it.each([
     ["simple", "!$var;"],
     ["number", "-100;"],
@@ -27,8 +27,8 @@ describe("Test unary", function() {
     ["parens (7)", "~($var);"],
     ["parens (8)", "(~$var);"],
     ["parens (9)", "(-100);"],
-    ["parens (10)", "-(100);"]
-  ])("%s", function(_, code) {
+    ["parens (10)", "-(100);"],
+  ])("%s", function (_, code) {
     expect(parser.parseEval(code)).toMatchSnapshot();
   });
 });

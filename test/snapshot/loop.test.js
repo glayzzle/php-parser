@@ -1,8 +1,8 @@
 const parser = require("../main");
 
-describe("Test loops statements (for, while)", function() {
-  describe("test while", function() {
-    it("test default form", function() {
+describe("Test loops statements (for, while)", function () {
+  describe("test while", function () {
+    it("test default form", function () {
       expect(
         parser.parseEval(`
         while(true) {
@@ -12,7 +12,7 @@ describe("Test loops statements (for, while)", function() {
       ).toMatchSnapshot();
     });
 
-    it("test short form", function() {
+    it("test short form", function () {
       expect(
         parser.parseEval(`
         while(true):
@@ -23,7 +23,7 @@ describe("Test loops statements (for, while)", function() {
     });
   });
 
-  it("test do", function() {
+  it("test do", function () {
     expect(
       parser.parseEval(
         `
@@ -32,13 +32,13 @@ describe("Test loops statements (for, while)", function() {
       } while(true);
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test for", function() {
+  it("test for", function () {
     expect(
       parser.parseEval(
         `
@@ -51,13 +51,13 @@ describe("Test loops statements (for, while)", function() {
       endfor;
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test foreach", function() {
+  it("test foreach", function () {
     expect(
       parser.parseEval(
         `
@@ -72,12 +72,12 @@ describe("Test loops statements (for, while)", function() {
       endforeach;
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();
   });
-  it("fix #122", function() {
+  it("fix #122", function () {
     // https://github.com/glayzzle/php-parser/issues/122
     expect(
       parser.parseEval(
@@ -86,7 +86,7 @@ describe("Test loops statements (for, while)", function() {
         echo "$k -> $v\n";
     `,
         {
-          parser: { suppressErrors: true }
+          parser: { suppressErrors: true },
         }
       )
     ).toMatchSnapshot();
@@ -97,7 +97,7 @@ describe("Test loops statements (for, while)", function() {
         echo "$k -> $v\n";
     `,
         {
-          parser: { suppressErrors: true }
+          parser: { suppressErrors: true },
         }
       )
     ).toMatchSnapshot();

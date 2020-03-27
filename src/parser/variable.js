@@ -22,7 +22,7 @@ module.exports = {
    *  $var->func()->property    // chained calls
    * ```
    */
-  read_variable: function(read_only, encapsed) {
+  read_variable: function (read_only, encapsed) {
     let result;
 
     // check the byref flag
@@ -39,7 +39,7 @@ module.exports = {
       this.is([
         this.tok.T_NS_SEPARATOR,
         this.tok.T_STRING,
-        this.tok.T_NAMESPACE
+        this.tok.T_NAMESPACE,
       ])
     ) {
       result = this.node();
@@ -84,7 +84,7 @@ module.exports = {
   },
 
   // resolves a static call
-  read_static_getter: function(what, encapsed) {
+  read_static_getter: function (what, encapsed) {
     const result = this.node("staticlookup");
     let offset, name;
     if (this.next().is([this.tok.T_VARIABLE, "$"])) {
@@ -115,7 +115,7 @@ module.exports = {
     return result(what, offset);
   },
 
-  read_what: function(is_static_lookup = false) {
+  read_what: function (is_static_lookup = false) {
     let what = null;
     let name = null;
     switch (this.next().token) {
@@ -168,7 +168,7 @@ module.exports = {
     return what;
   },
 
-  recursive_variable_chain_scan: function(result, read_only, encapsed) {
+  recursive_variable_chain_scan: function (result, read_only, encapsed) {
     let node, offset;
     recursive_scan_loop: while (this.token != this.EOF) {
       switch (this.token) {
@@ -237,7 +237,7 @@ module.exports = {
   /**
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
-  read_encaps_var_offset: function() {
+  read_encaps_var_offset: function () {
     let offset = this.node();
     if (this.token === this.tok.T_STRING) {
       const text = this.text();
@@ -261,7 +261,7 @@ module.exports = {
         this.tok.T_STRING,
         this.tok.T_NUM_STRING,
         "-",
-        this.tok.T_VARIABLE
+        this.tok.T_VARIABLE,
       ]);
       // fallback : consider as identifier
       const text = this.text();
@@ -281,7 +281,7 @@ module.exports = {
    *  $foo[123]{1};   // gets the 2nd char from the 123 array entry
    * </code>
    */
-  read_reference_variable: function(encapsed) {
+  read_reference_variable: function (encapsed) {
     let result = this.read_simple_variable();
     let offset;
     while (this.token != this.EOF) {
@@ -303,7 +303,7 @@ module.exports = {
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
    * ```
    */
-  read_simple_variable: function() {
+  read_simple_variable: function () {
     let result = this.node("variable");
     let name;
     if (
@@ -344,5 +344,5 @@ module.exports = {
       }
     }
     return result;
-  }
+  },
 };

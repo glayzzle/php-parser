@@ -36,7 +36,7 @@ const PropertyStatement = Statement.extends(KIND, function PropertyStatement(
  * @param {Integer[]} flags
  * @return {void}
  */
-PropertyStatement.prototype.parseFlags = function(flags) {
+PropertyStatement.prototype.parseFlags = function (flags) {
   if (flags[0] === -1) {
     this.visibility = IS_UNDEFINED;
   } else if (flags[0] === null) {

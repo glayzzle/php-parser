@@ -15,34 +15,34 @@ describe("block", () => {
     ["empty switch short form", "switch($foo): /* foo */ endswitch;"],
     [
       "empty switch case short form",
-      "switch($foo): case 1: /* foo */ endswitch;"
+      "switch($foo): case 1: /* foo */ endswitch;",
     ],
     ["empty for short form", "for(;;):  /* foo */ endfor;"],
     [
       "empty foreach short form",
-      "foreach($foo as $bar): /* foo */ endforeach;"
+      "foreach($foo as $bar): /* foo */ endforeach;",
     ],
     ["empty if", "if($foo) { /* foo */ }"],
     ["empty statement", "/* 1 */; /* 2 */; ; /* 3 */"],
     ["empty if short form", "if($foo): /* foo */ endif;"],
     [
       "empty if #2 short form",
-      "if($foo): /* pre */ $a; /* inner */ endif; /* out */"
+      "if($foo): /* pre */ $a; /* inner */ endif; /* out */",
     ],
     [
       "empty if #3 short form",
-      "if($foo): /* foo */ elseif($bar): /* baz */ else: /* bar */ endif;"
-    ]
-  ])("%s", function(_, code) {
+      "if($foo): /* foo */ elseif($bar): /* baz */ else: /* bar */ endif;",
+    ],
+  ])("%s", function (_, code) {
     expect(
       parser.parseEval(code, {
         parser: {
-          extractDoc: true
-        }
+          extractDoc: true,
+        },
       })
     ).toMatchSnapshot();
   });
-  it("check empty php blocks", function() {
+  it("check empty php blocks", function () {
     expect(
       parser.parseCode(
         `<?php
@@ -56,14 +56,14 @@ SOME HTML OUTPUT
         "test",
         {
           parser: {
-            extractDoc: true
-          }
+            extractDoc: true,
+          },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("check empty php file", function() {
+  it("check empty php file", function () {
     expect(
       parser.parseCode(
         `<?php
@@ -74,8 +74,8 @@ SOME HTML OUTPUT
         "test",
         {
           parser: {
-            extractDoc: true
-          }
+            extractDoc: true,
+          },
         }
       )
     ).toMatchSnapshot();

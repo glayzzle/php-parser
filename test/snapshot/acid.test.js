@@ -165,11 +165,11 @@ THE END ...
         {
           ast: {
             withPositions: true,
-            withSource: true
+            withSource: true,
           },
           parser: {
-            extractDoc: true
-          }
+            extractDoc: true,
+          },
         }
       )
     ).toMatchSnapshot();

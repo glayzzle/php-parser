@@ -9,7 +9,7 @@ module.exports = {
   /**
    *  Comments with // or # or / * ... * /
    */
-  read_comment: function() {
+  read_comment: function () {
     const text = this.text();
     let result = this.ast.prepare(
       text.substring(0, 2) === "/*" ? "commentblock" : "commentline",
@@ -22,7 +22,7 @@ module.exports = {
     this.prev = [
       this.lexer.yylloc.last_line,
       this.lexer.yylloc.last_column,
-      this.lexer.offset
+      this.lexer.offset,
     ];
     this.lex();
     result = result(text);
@@ -33,7 +33,7 @@ module.exports = {
   /**
    * Comments with / ** ... * /
    */
-  read_doc_comment: function() {
+  read_doc_comment: function () {
     let result = this.ast.prepare("commentblock", null, this);
     const offset = this.lexer.yylloc.first_offset;
     const text = this.text();
@@ -41,12 +41,12 @@ module.exports = {
     this.prev = [
       this.lexer.yylloc.last_line,
       this.lexer.yylloc.last_column,
-      this.lexer.offset
+      this.lexer.offset,
     ];
     this.lex();
     result = result(text);
     result.offset = offset;
     this.prev = prev;
     return result;
-  }
+  },
 };

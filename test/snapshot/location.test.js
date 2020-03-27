@@ -1,22 +1,22 @@
 const parser = require("../main");
 
-describe("Test locations", function() {
+describe("Test locations", function () {
   it.each([
     ["#230 : check location", "$var1 + $var2 + $var3;"],
     [
       "#230 : check location on retif",
-      "$var1 + $var2 ? true : $false ? $innerTrue : $innerFalse;"
+      "$var1 + $var2 ? true : $false ? $innerTrue : $innerFalse;",
     ],
     ["#230 : check location on cast", "(string)$var1 + $var2;"],
     ["#202 : include calling argument", "$foo->bar->baz($arg);"],
     ["#164 : expr must include ;", "$a = $b + 1;"],
     [
       "if/elseif/else",
-      'if ($a > $b) echo "something"; elseif ($a < $b) echo "something"; else echo "something";'
+      'if ($a > $b) echo "something"; elseif ($a < $b) echo "something"; else echo "something";',
     ],
     [
       "if/elseif/else block",
-      'if ($a > $b) { echo "something"; } elseif ($a < $b) { echo "something"; } else { echo "something"; }'
+      'if ($a > $b) { echo "something"; } elseif ($a < $b) { echo "something"; } else { echo "something"; }',
     ],
     ["switch", "switch ($i) {}"],
     ["switch case", 'switch ($i) { case 0: echo "something"; break; }'],
@@ -51,7 +51,7 @@ describe("Test locations", function() {
     ["class (inner statement)", "function foo() { class Foo {} }"],
     [
       "abstract class (inner statement)",
-      "function foo() { abstract class Foo {} }"
+      "function foo() { abstract class Foo {} }",
     ],
     ["final class (inner statement)", "function foo() { final class Foo {} }"],
     ["interface", "interface Foo {}"],
@@ -81,7 +81,7 @@ describe("Test locations", function() {
     ["array short form nested", "[[1, 2, 3]];"],
     [
       "array with keys, byRef and unpack",
-      `$var = [1, 'foo', 'test' => $foo, 'test' => &$foo, ...$var];`
+      `$var = [1, 'foo', 'test' => $foo, 'test' => &$foo, ...$var];`,
     ],
     ["clone", "clone $var;"],
     ["new", "new Foo();"],
@@ -99,25 +99,25 @@ describe("Test locations", function() {
       "nowdoc",
       `<<<'EOD'
 Text
-EOD;`
+EOD;`,
     ],
     [
       "nowdoc assign",
       `$var = <<<'EOD'
 Text
-EOD;`
+EOD;`,
     ],
     [
       "encapsed heredoc",
       `<<<EOD
 Text
-EOD;`
+EOD;`,
     ],
     [
       "encapsed heredoc assign",
       `$var = <<<EOD
 Text
-EOD;`
+EOD;`,
     ],
     ["encapsed shell", "$var = `command`;"],
     [
@@ -126,7 +126,7 @@ EOD;`
 command;
 command;
 command;
-\`;`
+\`;`,
     ],
     ["encapsed string", '"string $var string";'],
     ["encapsed string assign", '$var = "string $var string";'],
@@ -134,7 +134,7 @@ command;
       "encapsed string multiline",
       `$var = "string
 $var
-string";`
+string";`,
     ],
     ["list", "list($a, $b, $c) = $var;"],
     ["list short form", "[$a, $b, $c] = $var;"],
@@ -142,7 +142,7 @@ string";`
     ["traituse multiple", "class Foo { use Hello, World; }"],
     [
       "traituse adaptations",
-      "class Foo { use A, B { B::smallTalk insteadof A;  B::bigTalk as talk; sayHello as protected; sayHello as private myPrivateHello; } }"
+      "class Foo { use A, B { B::smallTalk insteadof A;  B::bigTalk as talk; sayHello as protected; sayHello as private myPrivateHello; } }",
     ],
     ["method", "class Foo { function method() {} }"],
     ["method (public)", "class Foo { public function method() {} }"],
@@ -150,7 +150,7 @@ string";`
     ["retif", "$var = $var ? true : false;"],
     [
       "retif nested",
-      "$var = ($one ? true : false) ? ($two ? true : false) : ($three ? true : false);"
+      "$var = ($one ? true : false) ? ($two ? true : false) : ($three ? true : false);",
     ],
     ["parameter", "function foo(?int $foo = 2112) {}"],
     ["bin", "$var + 2112;"],
@@ -160,7 +160,7 @@ string";`
     ["conststatement", 'const CONSTANT = "Hello world!";'],
     [
       "conststatement multiple",
-      'const CONSTANT = "Hello world!", OTHER_CONSTANT = "Other hello world!";'
+      'const CONSTANT = "Hello world!", OTHER_CONSTANT = "Other hello world!";',
     ],
     ["declare directive", "declare (strict_types=1);"],
     ["declare directive (multiple)", "declare (A='B', C='D') { }"],
@@ -176,7 +176,7 @@ string";`
           ->first() // Comment
           // Comment
           ->dump();
-        `
+        `,
     ],
     [
       "staticlookup",
@@ -190,7 +190,7 @@ string";`
           ::first() // Comment
           // Comment
           ::dump();
-        `
+        `,
     ],
     [
       "offsetlookup",
@@ -204,28 +204,28 @@ string";`
           ['baz'] // Comment
           // Comment
           ['qqq'];
-        `
+        `,
     ],
     ["assign []", `$var[] = $var`],
-    ["single call", `call();`]
+    ["single call", `call();`],
   ])("test %s", (_, code) => {
     expect(
       parser.parseEval(code, {
         ast: {
           withPositions: true,
-          withSource: true
-        }
+          withSource: true,
+        },
       })
     ).toMatchSnapshot();
   });
 
-  it("#164 : expr should avoid ?>", function() {
+  it("#164 : expr should avoid ?>", function () {
     expect(
       parser.parseCode("<?php $a = $b + 1 ?>", {
         ast: {
           withPositions: true,
-          withSource: true
-        }
+          withSource: true,
+        },
       })
     ).toMatchSnapshot();
   });

@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("Test variables", function() {
-  it("fix 253 - can't be parsed `global` with multiple `$`", function() {
+describe("Test variables", function () {
+  it("fix 253 - can't be parsed `global` with multiple `$`", function () {
     expect(
       parser.parseEval(`
       global $$foo;
@@ -9,7 +9,7 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("fix 248 - broken ast for `$$$$$`", function() {
+  it("fix 248 - broken ast for `$$$$$`", function () {
     expect(
       parser.parseEval(`
       $foo::$$property;
@@ -20,7 +20,7 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("fix 248 - test curly", function() {
+  it("fix 248 - test curly", function () {
     expect(
       parser.parseEval(`
       $bar->{$property->foo};
@@ -30,11 +30,11 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("array destructuring", function() {
+  it("array destructuring", function () {
     expect(parser.parseEval("[$id1, $name1] = $data[0];")).toMatchSnapshot();
   });
 
-  it("default variables", function() {
+  it("default variables", function () {
     expect(
       parser.parseEval(`
       $a = "foo";
@@ -43,23 +43,23 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("Variable chains", function() {
+  it("Variable chains", function () {
     expect(parser.parseEval("foo::$a[1][2];")).toMatchSnapshot();
   });
 
-  it("fix #167", function() {
+  it("fix #167", function () {
     expect(
       parser.parseEval("$var = Foo::{$bar['baz']}();Foo::$bar['baz']();")
     ).toMatchSnapshot();
   });
 
-  it("valid offset lookup", function() {
+  it("valid offset lookup", function () {
     expect(
       parser.parseEval("get_class($var)::$$$$$property;")
     ).toMatchSnapshot();
   });
 
-  it("fix #185", function() {
+  it("fix #185", function () {
     expect(
       parser.parseEval(`
     $var = ($var[0])::foo;
@@ -72,7 +72,7 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("Class constants", function() {
+  it("Class constants", function () {
     expect(
       parser.parseEval(`
       static::foo();
@@ -85,7 +85,7 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("Encaps var offset", function() {
+  it("Encaps var offset", function () {
     expect(
       parser.parseEval(`
       $a = "{$a[1]}";
@@ -94,7 +94,7 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("Chained encapsed vars", function() {
+  it("Chained encapsed vars", function () {
     expect(
       parser.parseEval(
         `
@@ -104,7 +104,7 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  it("Dynamic variables", function() {
+  it("Dynamic variables", function () {
     expect(
       parser.parseEval(`
       $$a = "bar";
@@ -115,68 +115,68 @@ describe("Test variables", function() {
     ).toMatchSnapshot();
   });
 
-  describe("Check errors", function() {
-    it("should be ?", function() {
+  describe("Check errors", function () {
+    it("should be ?", function () {
       expect(
         parser.parseEval("$? = true;", {
           parser: {
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         })
       ).toMatchSnapshot();
     });
 
-    it("should fail on double static lookup", function() {
+    it("should fail on double static lookup", function () {
       expect(
         parser.parseEval(["this->foo::bar::baz;"].join("\n"), {
           parser: {
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         })
       ).toMatchSnapshot();
     });
 
-    it("should fail on property lookup on static lookup", function() {
+    it("should fail on property lookup on static lookup", function () {
       expect(
         parser.parseEval(["$this->foo::bar->baz;"].join("\n"), {
           parser: {
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         })
       ).toMatchSnapshot();
     });
 
-    it("should fail $foo->bar::!", function() {
+    it("should fail $foo->bar::!", function () {
       expect(
         parser.parseEval("$foo->bar::!", {
           parser: {
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         })
       ).toMatchSnapshot();
     });
 
-    it("should fail foo::bar::baz", function() {
+    it("should fail foo::bar::baz", function () {
       expect(
         parser.parseEval("foo::bar::baz", {
           parser: {
-            suppressErrors: true
-          }
+            suppressErrors: true,
+          },
         })
       ).toMatchSnapshot();
     });
   });
 
-  it("simple variable", function() {
+  it("simple variable", function () {
     expect(parser.parseEval("$var = $var;")).toMatchSnapshot();
   });
-  it("simple variable #2", function() {
+  it("simple variable #2", function () {
     expect(parser.parseEval("$var = ${$var};")).toMatchSnapshot();
   });
-  it("simple variable #3", function() {
+  it("simple variable #3", function () {
     expect(parser.parseEval("$var = ${$var + 'foo'};")).toMatchSnapshot();
   });
-  it("simple variable #4", function() {
+  it("simple variable #4", function () {
     expect(parser.parseEval("$var = $$$var;")).toMatchSnapshot();
   });
 });

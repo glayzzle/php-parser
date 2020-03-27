@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("Test statements", function() {
-  it("test goto label", function() {
+describe("Test statements", function () {
+  it("test goto label", function () {
     expect(
       parser.parseEval(`
       start:
@@ -11,7 +11,7 @@ describe("Test statements", function() {
     ).toMatchSnapshot();
   });
 
-  it("test global", function() {
+  it("test global", function () {
     expect(
       parser.parseEval(`
       function foo() {
@@ -21,8 +21,8 @@ describe("Test statements", function() {
     ).toMatchSnapshot();
   });
 
-  describe("halt statements", function() {
-    it("test halt statement", function() {
+  describe("halt statements", function () {
+    it("test halt statement", function () {
       expect(
         parser.parseEval(
           `
@@ -31,13 +31,13 @@ describe("Test statements", function() {
         $b = 1;
       `,
           {
-            parser: { debug: false }
+            parser: { debug: false },
           }
         )
       ).toMatchSnapshot();
     });
 
-    it("test inner error", function() {
+    it("test inner error", function () {
       expect(() => {
         parser.parseEval(`
           if (true) {
@@ -47,7 +47,7 @@ describe("Test statements", function() {
       }).toThrow();
     });
 
-    it("test fallback", function() {
+    it("test fallback", function () {
       expect(
         parser.parseEval(
           `
@@ -57,14 +57,14 @@ describe("Test statements", function() {
         $b = 1;
       `,
           {
-            parser: { suppressErrors: true }
+            parser: { suppressErrors: true },
           }
         )
       ).toMatchSnapshot();
     });
   });
 
-  it("test static", function() {
+  it("test static", function () {
     expect(
       parser.parseEval(
         `
@@ -74,13 +74,13 @@ describe("Test statements", function() {
       static $sVar1 = 11;
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test declare", function() {
+  it("test declare", function () {
     expect(
       parser.parseEval(
         `
@@ -97,13 +97,13 @@ describe("Test statements", function() {
       $e = 4;
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test try", function() {
+  it("test try", function () {
     expect(
       parser.parseEval(
         `
@@ -117,13 +117,13 @@ describe("Test statements", function() {
       }
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();
   });
 
-  it("test inner statements", function() {
+  it("test inner statements", function () {
     expect(
       parser.parseEval(
         `
@@ -137,7 +137,7 @@ describe("Test statements", function() {
       }
     `,
         {
-          parser: { debug: false }
+          parser: { debug: false },
         }
       )
     ).toMatchSnapshot();

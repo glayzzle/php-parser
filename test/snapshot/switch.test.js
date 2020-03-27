@@ -1,191 +1,191 @@
 const parser = require("../main");
 
-describe("switch statements", function() {
-  it("empty case list", function() {
+describe("switch statements", function () {
+  it("empty case list", function () {
     const ast = parser.parseEval("switch (true) {}");
     expect(ast).toMatchSnapshot();
   });
 
-  it("empty case list #2", function() {
+  it("empty case list #2", function () {
     const ast = parser.parseEval("switch (true) {;}");
     expect(ast).toMatchSnapshot();
   });
 
-  it("empty case list #3", function() {
+  it("empty case list #3", function () {
     const ast = parser.parseEval("switch (true): endswitch;");
     expect(ast).toMatchSnapshot();
   });
 
-  it("empty case list #4", function() {
+  it("empty case list #4", function () {
     const ast = parser.parseEval("switch (true):; endswitch;");
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and one case", function() {
+  it("curly and one case", function () {
     const ast = parser.parseEval('switch (true) { case 1: return "1"; }');
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and one case #2", function() {
+  it("curly and one case #2", function () {
     const ast = parser.parseEval('switch (true) {; case 1: return "1"; }');
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and one case", function() {
+  it("colon and one case", function () {
     const ast = parser.parseEval(
       'switch (true): case 1: return "1"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and one case #2", function() {
+  it("colon and one case #2", function () {
     const ast = parser.parseEval(
       'switch (true):; case 1: return "1"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple difference cases", function() {
+  it("curly and multiple difference cases", function () {
     const ast = parser.parseEval(
       'switch (true) { case 1: return "1"; case 2: return "2"; case 3: return "3"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple difference cases #2", function() {
+  it("curly and multiple difference cases #2", function () {
     const ast = parser.parseEval(
       'switch (true) {; case 1: return "1"; case 2: return "2"; case 3: return "3"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple difference cases", function() {
+  it("colon and multiple difference cases", function () {
     const ast = parser.parseEval(
       'switch (true): case 1: return "1"; case 2: return "2"; case 3: return "3"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple difference cases #2", function() {
+  it("colon and multiple difference cases #2", function () {
     const ast = parser.parseEval(
       'switch (true):; case 1: return "1"; case 2: return "2"; case 3: return "3"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple same cases", function() {
+  it("curly and multiple same cases", function () {
     const ast = parser.parseEval(
       'switch (true) { case 1: case 2: case 3: return "3"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple same cases #2", function() {
+  it("curly and multiple same cases #2", function () {
     const ast = parser.parseEval(
       'switch (true) {; case 1: case 2: case 3: return "3"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple same cases", function() {
+  it("colon and multiple same cases", function () {
     const ast = parser.parseEval(
       'switch (true): case 1: case 2: case 3: return "3"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple same cases #2", function() {
+  it("colon and multiple same cases #2", function () {
     const ast = parser.parseEval(
       'switch (true):; case 1: case 2: case 3: return "3"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple difference cases with default", function() {
+  it("curly and multiple difference cases with default", function () {
     const ast = parser.parseEval(
       'switch (true) { case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple difference cases with default #2", function() {
+  it("curly and multiple difference cases with default #2", function () {
     const ast = parser.parseEval(
       'switch (true) {; case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple difference cases with default", function() {
+  it("colon and multiple difference cases with default", function () {
     const ast = parser.parseEval(
       'switch (true): case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple difference cases with default #2", function() {
+  it("colon and multiple difference cases with default #2", function () {
     const ast = parser.parseEval(
       'switch (true):; case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple same cases with default", function() {
+  it("curly and multiple same cases with default", function () {
     const ast = parser.parseEval(
       'switch (true) { case 1: case 2: case 3: return "3"; default: return "5"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and multiple same cases with default #2", function() {
+  it("curly and multiple same cases with default #2", function () {
     const ast = parser.parseEval(
       'switch (true) {; case 1: case 2: case 3: return "3"; default: return "5"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple same cases with default", function() {
+  it("colon and multiple same cases with default", function () {
     const ast = parser.parseEval(
       'switch (true): case 1: case 2: case 3: return "3"; default: return "5"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and multiple same cases with default #2", function() {
+  it("colon and multiple same cases with default #2", function () {
     const ast = parser.parseEval(
       'switch (true):; case 1: case 2: case 3: return "3"; default: return "5"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and ';' separator", function() {
+  it("curly and ';' separator", function () {
     const ast = parser.parseEval(
       'switch (true) { case 1; case 2; case 3; return "3"; default; return "5"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("curly and ';' separator #2", function() {
+  it("curly and ';' separator #2", function () {
     const ast = parser.parseEval(
       'switch (true) {; case 1; case 2; case 3; return "3"; default; return "5"; }'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and ';' separator", function() {
+  it("colon and ';' separator", function () {
     const ast = parser.parseEval(
       'switch (true): case 1; case 2; case 3; return "3"; default; return "5"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("colon and ';' separator #2", function() {
+  it("colon and ';' separator #2", function () {
     const ast = parser.parseEval(
       'switch (true):; case 1; case 2; case 3; return "3"; default; return "5"; endswitch;'
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("parse correctly", function() {
+  it("parse correctly", function () {
     const ast = parser.parseEval(
       `
       switch(true) {
@@ -205,13 +205,13 @@ describe("switch statements", function() {
       endswitch;
       `,
       {
-        parser: { debug: false }
+        parser: { debug: false },
       }
     );
     expect(ast).toMatchSnapshot();
   });
 
-  it("test errors", function() {
+  it("test errors", function () {
     const errAst = parser.parseEval(
       `
       switch(true);
@@ -221,7 +221,7 @@ describe("switch statements", function() {
       endswitch;
       `,
       {
-        parser: { suppressErrors: true }
+        parser: { suppressErrors: true },
       }
     );
     expect(errAst).toMatchSnapshot();

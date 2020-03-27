@@ -1,6 +1,6 @@
 const parser = require("./main");
 
-describe("Performance tests", function() {
+describe("Performance tests", function () {
   const code = `
   <?php
   class foo extends bar {
@@ -15,7 +15,7 @@ describe("Performance tests", function() {
   }
   `;
 
-  it("tokenizer", function() {
+  it("tokenizer", function () {
     const reader = new parser();
     const tokSize = reader.tokenGetAll(code).length;
     let hrTime = process.hrtime();
@@ -56,7 +56,7 @@ describe("Performance tests", function() {
     console.log("    + Reading speed => " + speed + "/sec");
   });
 
-  it("parser", function() {
+  it("parser", function () {
     const reader = new parser();
     let nodeSize = 0;
     function countNode(node) {

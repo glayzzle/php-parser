@@ -14,7 +14,7 @@ module.exports = {
    * @return {Switch}
    * @see http://php.net/manual/en/control-structures.switch.php
    */
-  read_switch: function() {
+  read_switch: function () {
     const result = this.node("switch");
     this.expect(this.tok.T_SWITCH) && this.next();
     this.expect("(") && this.next();
@@ -30,7 +30,7 @@ module.exports = {
    * ```
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L566
    */
-  read_switch_case_list: function() {
+  read_switch_case_list: function () {
     // DETECT SWITCH MODE
     let expect = null;
     const result = this.node("block");
@@ -71,7 +71,7 @@ module.exports = {
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
    * ```
    */
-  read_case_list: function(stopToken) {
+  read_case_list: function (stopToken) {
     const result = this.node("case");
     let test = null;
     if (this.token === this.tok.T_CASE) {
@@ -95,5 +95,5 @@ module.exports = {
       items.push(this.read_inner_statement());
     }
     return result(test, body(null, items));
-  }
+  },
 };

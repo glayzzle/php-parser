@@ -123,7 +123,7 @@ const Position = require("./ast/position");
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)
  */
-const AST = function(withPositions, withSource) {
+const AST = function (withPositions, withSource) {
   this.withPositions = withPositions;
   this.withSource = withSource;
 };
@@ -135,7 +135,7 @@ const AST = function(withPositions, withSource) {
  * @return {Position}
  * @private
  */
-AST.prototype.position = function(parser) {
+AST.prototype.position = function (parser) {
   return new Position(
     parser.lexer.yylloc.first_line,
     parser.lexer.yylloc.first_column,
@@ -165,23 +165,23 @@ AST.precedence = {};
   ["!"],
   ["instanceof"],
   ["cast", "silent"],
-  ["**"]
+  ["**"],
   // TODO: [ (array)
   // TODO: clone, new
-].forEach(function(list, index) {
-  list.forEach(function(operator) {
+].forEach(function (list, index) {
+  list.forEach(function (operator) {
     AST.precedence[operator] = index + 1;
   });
 });
 
-AST.prototype.isRightAssociative = function(operator) {
+AST.prototype.isRightAssociative = function (operator) {
   return operator === "**" || operator === "??";
 };
 
 /**
  * Change parent node informations after swapping childs
  */
-AST.prototype.swapLocations = function(target, first, last, parser) {
+AST.prototype.swapLocations = function (target, first, last, parser) {
   if (this.withPositions) {
     target.loc.start = first.loc.start;
     target.loc.end = last.loc.end;
@@ -197,7 +197,7 @@ AST.prototype.swapLocations = function(target, first, last, parser) {
 /**
  * Includes locations from first & last into the target
  */
-AST.prototype.resolveLocations = function(target, first, last, parser) {
+AST.prototype.resolveLocations = function (target, first, last, parser) {
   if (this.withPositions) {
     if (target.loc.start.offset > first.loc.start.offset) {
       target.loc.start = first.loc.start;
@@ -217,7 +217,7 @@ AST.prototype.resolveLocations = function(target, first, last, parser) {
 /**
  * Check and fix precence, by default using right
  */
-AST.prototype.resolvePrecedence = function(result, parser) {
+AST.prototype.resolvePrecedence = function (result, parser) {
   let buffer, lLevel, rLevel;
   // handling precendence
   if (result.kind === "call") {
@@ -349,14 +349,14 @@ AST.prototype.resolvePrecedence = function(result, parser) {
  * @param {Parser} parser - The parser instance (use for extracting locations)
  * @return {Function}
  */
-AST.prototype.prepare = function(kind, docs, parser) {
+AST.prototype.prepare = function (kind, docs, parser) {
   let start = null;
   if (this.withPositions || this.withSource) {
     start = this.position(parser);
   }
   const self = this;
   // returns the node
-  const result = function() {
+  const result = function () {
     let location = null;
     const args = Array.prototype.slice.call(arguments);
     args.push(docs);
@@ -405,7 +405,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
     }
     AST.stack[++AST.stackUid] = {
       position: start,
-      stack: new Error().stack.split("\n").slice(3, 5)
+      stack: new Error().stack.split("\n").slice(3, 5),
     };
     result.stackUid = AST.stackUid;
   }
@@ -414,7 +414,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
    * Sets a list of trailing comments
    * @param {*} docs
    */
-  result.setTrailingComments = function(docs) {
+  result.setTrailingComments = function (docs) {
     if (result.instance) {
       // already created
       result.instance.setTrailingComments(docs);
@@ -426,7 +426,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   /**
    * Release a node without using it on the AST
    */
-  result.destroy = function(target) {
+  result.destroy = function (target) {
     if (docs) {
       // release current docs stack
       if (target) {
@@ -446,7 +446,7 @@ AST.prototype.prepare = function(kind, docs, parser) {
   return result;
 };
 
-AST.prototype.checkNodes = function() {
+AST.prototype.checkNodes = function () {
   const errors = [];
   for (const k in AST.stack) {
     if (AST.stack.hasOwnProperty(k)) {
@@ -560,8 +560,8 @@ AST.prototype.checkNodes = function() {
   require("./ast/variadic"),
   require("./ast/while"),
   require("./ast/yield"),
-  require("./ast/yieldfrom")
-].forEach(function(ctor) {
+  require("./ast/yieldfrom"),
+].forEach(function (ctor) {
   AST.prototype[ctor.kind] = ctor;
 });
 

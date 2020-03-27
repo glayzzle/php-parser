@@ -1,7 +1,7 @@
 const parser = require("../main");
 
-describe("Test numbers", function() {
-  it("test common cases", function() {
+describe("Test numbers", function () {
+  it("test common cases", function () {
     expect(
       parser.parseEval(`
       1234;
@@ -31,12 +31,12 @@ describe("Test numbers", function() {
     ["underscore #2", "$e = 7._0;"],
     ["underscore #3", "$e = 7_.0;"],
     ["underscore #4", "$e = 7e_0;"],
-    ["underscore #5", "$e = 7_e0;"]
-  ])("%s", function(_, code) {
+    ["underscore #5", "$e = 7_e0;"],
+  ])("%s", function (_, code) {
     const ast = parser.parseEval(code, {
       parser: {
-        suppressErrors: true
-      }
+        suppressErrors: true,
+      },
     });
     // expect to fail
     expect(ast.errors.length).toBeGreaterThan(0);

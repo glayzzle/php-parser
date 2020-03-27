@@ -20,10 +20,10 @@ describe("break", () => {
   it("with expression", () => {
     expect(parser.parseEval("break $var;")).toMatchSnapshot();
   });
-  it("should fail when no ';' at end", function() {
+  it("should fail when no ';' at end", function () {
     expect(
       parser.parseEval("break", {
-        parser: { suppressErrors: true }
+        parser: { suppressErrors: true },
       })
     ).toMatchSnapshot();
   });

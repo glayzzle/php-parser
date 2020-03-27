@@ -13,7 +13,7 @@ module.exports = {
    *   '[' array_pair_list ']'
    * ```
    */
-  read_array: function() {
+  read_array: function () {
     let expect = null;
     let shortForm = false;
     const result = this.node("array");
@@ -39,10 +39,10 @@ module.exports = {
    * array_pair_list ::= array_pair (',' array_pair?)*
    * ```
    */
-  read_array_pair_list: function(shortForm) {
+  read_array_pair_list: function (shortForm) {
     const self = this;
     return this.read_list(
-      function() {
+      function () {
         return self.read_array_pair(shortForm);
       },
       ",",
@@ -59,7 +59,7 @@ module.exports = {
    *  | expr T_DOUBLE_ARROW T_LIST '(' array_pair_list ')'
    *  | T_LIST '(' array_pair_list ')'
    */
-  read_array_pair: function(shortForm) {
+  read_array_pair: function (shortForm) {
     if (
       (!shortForm && this.token === ")") ||
       (shortForm && this.token === "]")
@@ -109,5 +109,5 @@ module.exports = {
     }
 
     return entry(key, value, byRef, unpack);
-  }
+  },
 };
