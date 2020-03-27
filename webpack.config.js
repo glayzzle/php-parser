@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const { name, description, license, author } = require("./package.json");
+const { name, description, license } = require("./package.json");
 
 const entry = "./src/index.js";
 
@@ -45,7 +45,7 @@ module.exports = {
             keep_fnames: false,
           },
           sourceMap: true,
-          mangle: false,
+          mangle: true,
           maxLineLen: 1024,
         },
       }),
@@ -55,11 +55,12 @@ module.exports = {
     new webpack.BannerPlugin({
       entryOnly: true,
       banner: `
-        Package: ${name}
-        ${description}
-        Build: [hash] - ${today}
-        License: ${license}
-        Author: ${author}
+  Package: ${name}
+  ${description}
+  Build: [hash] - ${today}
+  Copyright (C) 2020 Glayzzle (${license})
+  @authors https://github.com/glayzzle/php-parser/graphs/contributors
+  @url http://glayzzle.com        
       `,
     }),
   ],
