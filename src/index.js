@@ -1,5 +1,5 @@
-/*!
- * Copyright (C) 2018 Glayzzle (BSD3 License)
+/**
+ * Copyright (C) 2020 Glayzzle (BSD3 License)
  * @authors https://github.com/glayzzle/php-parser/graphs/contributors
  * @url http://glayzzle.com
  */
@@ -110,7 +110,7 @@ const engine = function (options) {
  * @return {String}   Returns the string from input
  */
 const getStringBuffer = function (buffer) {
-  return Buffer.isBuffer(buffer) ? buffer.toString() : buffer;
+  return typeof buffer.write === "function" ? buffer.toString() : buffer;
 };
 
 /**
