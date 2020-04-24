@@ -359,7 +359,7 @@ module.exports = {
         let value = null;
         let key = null;
         result = this.node("yield");
-        if (this.next().is("EXPR") || this.is("SCALAR")) {
+        if (this.next().is("EXPR")) {
           // reads the yield return value
           value = this.read_expr();
           if (this.token === this.tok.T_DOUBLE_ARROW) {

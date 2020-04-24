@@ -231,6 +231,11 @@ const parser = function (lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_DIR,
         this.tok.T_NS_C,
+        '"',
+        'b"',
+        'B"',
+        "-",
+        this.tok.T_NS_SEPARATOR,
       ].map(mapIt)
     ),
   };
