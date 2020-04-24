@@ -19,7 +19,11 @@ const parser = require("../src/index");
 const ast = parser.parseCode(
   `
 <?php
-declare(tick=1): /* 1 */ ENDDECLARE;
+
+function foo() {
+  $test = 123;
+  yield "bar {$test}" => 123;
+}
 `,
   {
     parser: {

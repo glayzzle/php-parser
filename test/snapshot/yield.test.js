@@ -21,6 +21,11 @@ describe("yield", function () {
   it("inside function", function () {
     expect(parser.parseEval("function foo() { yield $i; }")).toMatchSnapshot();
   });
+  it("expression as generator key", function () {
+    expect(
+      parser.parseEval('function foo() { yield "bar {$test}" => 123; }')
+    ).toMatchSnapshot();
+  });
   it("null", function () {
     expect(parser.parseEval("yield;")).toMatchSnapshot();
   });
