@@ -89,6 +89,12 @@ describe("Test precedence", function () {
   it("test ?? right-associative", function () {
     shouldBeSame("1 ?? 2 ?? 3", "1 ?? (2 ?? 3)");
   });
+  it("test ?? precedence", function () {
+    shouldBeSame("1 ?? 2 and 3", "(1 ?? 2) and 3");
+  });
+  it("test ** precedence", function () {
+    shouldBeSame("1 ** 2 + 3", "(1 ** 2) + 3");
+  });
   it("test ** right-associative", function () {
     shouldBeSame("1 ** 2 ** 3", "1 ** (2 ** 3)");
   });

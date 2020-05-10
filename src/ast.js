@@ -239,7 +239,8 @@ AST.prototype.resolvePrecedence = function (result, parser) {
           lLevel &&
           rLevel &&
           rLevel <= lLevel &&
-          !this.isRightAssociative(result.type)
+          (result.type !== result.right.type ||
+            !this.isRightAssociative(result.type))
         ) {
           // https://github.com/glayzzle/php-parser/issues/79
           // shift precedence
