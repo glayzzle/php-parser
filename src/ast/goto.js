@@ -12,7 +12,7 @@ const KIND = "goto";
  * Defines goto statement
  * @constructor Goto
  * @extends {Statement}
- * @property {String} label
+ * @property {string} label
  * @see {Label}
  */
 module.exports = Statement.extends(KIND, function Goto(label, docs, location) {

@@ -131,7 +131,7 @@ const AST = function (withPositions, withSource) {
 /**
  * Create a position node from specified parser
  * including it's lexer current state
- * @param {Parser}
+ * @param {Parser} parser
  * @return {Position}
  * @private
  */
@@ -426,6 +426,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 
   /**
    * Release a node without using it on the AST
+   * @param {*} target
    */
   result.destroy = function (target) {
     if (docs) {

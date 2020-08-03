@@ -12,8 +12,8 @@ const KIND = "useitem";
  * Defines a use statement (from namespace)
  * @constructor UseItem
  * @extends {Statement}
- * @property {String} name
- * @property {String|null} type - Possible value : function, const
+ * @property {string} name
+ * @property {string|null} type - Possible value : function, const
  * @property {Identifier|null} alias
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php

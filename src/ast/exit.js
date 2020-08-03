@@ -13,7 +13,7 @@ const KIND = "exit";
  * @constructor Exit
  * @extends {Expression}
  * @property {Node|null} expression
- * @property {Boolean} useDie
+ * @property {boolean} useDie
  */
 module.exports = Expression.extends(KIND, function Exit(
   expression,

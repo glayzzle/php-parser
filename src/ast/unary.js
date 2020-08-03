@@ -12,7 +12,7 @@ const KIND = "unary";
  * Unary operations
  * @constructor Unary
  * @extends {Operation}
- * @property {String} type
+ * @property {string} type
  * @property {Expression} what
  */
 module.exports = Operation.extends(KIND, function Unary(

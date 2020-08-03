@@ -12,8 +12,8 @@ const KIND = "call";
  * Executes a call statement
  * @constructor Call
  * @extends {Expression}
- * @property {Identifier|Variable|??} what
- * @property {Arguments[]} arguments
+ * @property {Identifier|Variable} what
+ * @property {Variable[]} arguments
  */
 module.exports = Expression.extends(KIND, function Call(
   what,

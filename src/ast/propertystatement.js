@@ -33,7 +33,7 @@ const PropertyStatement = Statement.extends(KIND, function PropertyStatement(
 
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 PropertyStatement.prototype.parseFlags = function (flags) {

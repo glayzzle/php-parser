@@ -17,7 +17,7 @@ const IS_PRIVATE = "private";
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
  * @extends {Statement}
- * @property {Identifier|string} name
+ * @property {number|string} name
  */
 const Declaration = Statement.extends(KIND, function Declaration(
   kind,
@@ -31,7 +31,7 @@ const Declaration = Statement.extends(KIND, function Declaration(
 
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 Declaration.prototype.parseFlags = function (flags) {

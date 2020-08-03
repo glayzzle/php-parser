@@ -12,8 +12,8 @@ const KIND = "yield";
  * Defines a yield generator statement
  * @constructor Yield
  * @extends {Expression}
- * @property {Expression|Null} value
- * @property {Expression|Null} key
+ * @property {Expression|null} value
+ * @property {Expression|null} key
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
 module.exports = Expression.extends(KIND, function Yield(

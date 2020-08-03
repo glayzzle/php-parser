@@ -32,7 +32,7 @@ const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
 
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 ClassConstant.prototype.parseFlags = function (flags) {

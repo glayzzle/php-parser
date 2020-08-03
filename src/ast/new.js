@@ -13,7 +13,7 @@ const KIND = "new";
  * @constructor New
  * @extends {Expression}
  * @property {Identifier|Variable|Class} what
- * @property {Arguments[]} arguments
+ * @property {Variable[]} arguments
  */
 module.exports = Expression.extends(KIND, function New(
   what,

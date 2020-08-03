@@ -15,7 +15,7 @@ const KIND = "closure";
  * @property {Parameter[]} arguments
  * @property {Variable[]} uses
  * @property {Identifier} type
- * @property {boolean} byref
+ * @property {Boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
  * @property {boolean} isStatic

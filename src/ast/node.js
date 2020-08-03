@@ -9,9 +9,9 @@
  * A generic AST node
  * @constructor Node
  * @property {Location|null} loc
- * @property {Comment[]} leadingComments
- * @property {Comment[]?} trailingComments
- * @property {String} kind
+ * @property {Comment[]|null} leadingComments
+ * @property {Comment[]|null} trailingComments
+ * @property {string} kind
  */
 const Node = function Node(kind, docs, location) {
   this.kind = kind;
@@ -86,7 +86,7 @@ Node.prototype.includeToken = function (parser) {
 
 /**
  * Helper for extending the Node class
- * @param {String} type
+ * @param {string} type
  * @param {Function} constructor
  * @return {Function}
  */

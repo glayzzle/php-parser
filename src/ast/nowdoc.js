@@ -12,8 +12,8 @@ const KIND = "nowdoc";
  * Defines a nowdoc string
  * @constructor NowDoc
  * @extends {Literal}
- * @property {String} label
- * @property {String} raw
+ * @property {string} label
+ * @property {string} raw
  */
 module.exports = Literal.extends(KIND, function Nowdoc(
   value,

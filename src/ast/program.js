@@ -13,8 +13,8 @@ const KIND = "program";
  * @constructor Program
  * @extends {Block}
  * @property {Error[]} errors
- * @property {Doc[]?} comments
- * @property {String[]?} tokens
+ * @property {Comment[]|null} comments
+ * @property {String[]|null} tokens
  */
 module.exports = Block.extends(KIND, function Program(
   children,

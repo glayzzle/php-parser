@@ -10,7 +10,7 @@ const KIND = "assignref";
 
 /**
  * Assigns a value to the specified target
- * @constructor Assign
+ * @constructor AssignRef
  * @extends {Expression}
  * @property {Expression} left
  * @property {Expression} right

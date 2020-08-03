@@ -66,7 +66,7 @@ function combine(src, to) {
  * @property {AST} ast
  * @property {Object} tokens
  */
-const engine = function (options) {
+const Engine = function (options) {
   if (typeof this === "function") {
     return new this(options);
   }
@@ -119,16 +119,16 @@ const getStringBuffer = function (buffer) {
  * @return {Engine}
  * @private
  */
-engine.create = function (options) {
-  return new engine(options);
+Engine.create = function (options) {
+  return new Engine(options);
 };
 
 /**
  * Evaluate the buffer
  * @private
  */
-engine.parseEval = function (buffer, options) {
-  const self = new engine(options);
+Engine.parseEval = function (buffer, options) {
+  const self = new Engine(options);
   return self.parseEval(buffer);
 };
 
@@ -137,7 +137,7 @@ engine.parseEval = function (buffer, options) {
  * @param {String} buffer
  * @return {Program}
  */
-engine.prototype.parseEval = function (buffer) {
+Engine.prototype.parseEval = function (buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
@@ -148,13 +148,13 @@ engine.prototype.parseEval = function (buffer) {
  * Static function that parse a php code with open/close tags
  * @private
  */
-engine.parseCode = function (buffer, filename, options) {
+Engine.parseCode = function (buffer, filename, options) {
   if (typeof filename === "object" && !options) {
     // retro-compatibility
     options = filename;
     filename = "unknown";
   }
-  const self = new engine(options);
+  const self = new Engine(options);
   return self.parseCode(buffer, filename);
 };
 
@@ -178,7 +178,7 @@ engine.parseCode = function (buffer, filename, options) {
  * @param {String} filename - Filename
  * @return {Program}
  */
-engine.prototype.parseCode = function (buffer, filename) {
+Engine.prototype.parseCode = function (buffer, filename) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
@@ -189,8 +189,8 @@ engine.prototype.parseCode = function (buffer, filename) {
  * Split the buffer into tokens
  * @private
  */
-engine.tokenGetAll = function (buffer, options) {
-  const self = new engine(options);
+Engine.tokenGetAll = function (buffer, options) {
+  const self = new Engine(options);
   return self.tokenGetAll(buffer);
 };
 
@@ -200,7 +200,7 @@ engine.tokenGetAll = function (buffer, options) {
  * @param {String} buffer
  * @return {String[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
  */
-engine.prototype.tokenGetAll = function (buffer) {
+Engine.prototype.tokenGetAll = function (buffer) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = true;
   buffer = getStringBuffer(buffer);
@@ -221,7 +221,7 @@ engine.prototype.tokenGetAll = function (buffer) {
 };
 
 // exports the function
-module.exports = engine;
+module.exports = Engine;
 
 // makes libraries public
 module.exports.tokens = tokens;
@@ -231,4 +231,4 @@ module.exports.parser = parser;
 module.exports.combine = combine;
 
 // allow the default export in index.d.ts
-module.exports.default = engine;
+module.exports.default = Engine;

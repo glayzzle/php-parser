@@ -12,7 +12,7 @@ const KIND = "continue";
  * A continue statement
  * @constructor Continue
  * @extends {Statement}
- * @property {Number|Null} level
+ * @property {number|null} level
  */
 module.exports = Statement.extends(KIND, function Continue(
   level,

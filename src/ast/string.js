@@ -9,7 +9,7 @@ const Literal = require("./literal");
 const KIND = "string";
 
 /**
- * Defines a string (simple ou double quoted) - chars are already escaped
+ * Defines a string (simple or double quoted) - chars are already escaped
  * @constructor String
  * @extends {Literal}
  * @property {boolean} unicode

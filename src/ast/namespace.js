@@ -12,8 +12,8 @@ const KIND = "namespace";
  * The main program node
  * @constructor Namespace
  * @extends {Block}
- * @property {String} name
- * @property {Boolean} withBrackets
+ * @property {string} name
+ * @property {boolean} withBrackets
  */
 module.exports = Block.extends(KIND, function Namespace(
   name,

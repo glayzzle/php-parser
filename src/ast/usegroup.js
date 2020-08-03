@@ -12,8 +12,8 @@ const KIND = "usegroup";
  * Defines a use statement (with a list of use items)
  * @constructor UseGroup
  * @extends {Statement}
- * @property {String|null} name
- * @property {String|null} type - Possible value : function, const
+ * @property {string|null} name
+ * @property {string|null} type - Possible value : function, const
  * @property {UseItem[]} item
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
