@@ -25,7 +25,7 @@ declare class Array extends Expression {
     /**
      * List of array items
     */
-    items: Entry | Expr | Variable;
+    items: Entry | Expression | Variable;
     /**
      * Indicate if the short array syntax is used, ex `[]` instead `array()`
     */
@@ -659,8 +659,8 @@ declare class Node {
      */
     static extends(type: string, constructor: (...params: any[]) => any): (...params: any[]) => any;
     loc: Location | null;
-    leadingComments: Comment[] | null;
-    trailingComments: Comment[] | null;
+    leadingComments: CommentBlock[] | Comment[] | null;
+    trailingComments: CommentBlock[] | Comment[] | null;
     kind: string;
 }
 

@@ -9,8 +9,8 @@
  * A generic AST node
  * @constructor Node
  * @property {Location|null} loc
- * @property {Comment[]|null} leadingComments
- * @property {Comment[]|null} trailingComments
+ * @property {CommentBlock[]|Comment[]|null} leadingComments
+ * @property {CommentBlock[]|Comment[]|null} trailingComments
  * @property {string} kind
  */
 const Node = function Node(kind, docs, location) {
