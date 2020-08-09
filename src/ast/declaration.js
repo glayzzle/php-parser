@@ -17,7 +17,7 @@ const IS_PRIVATE = "private";
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
  * @extends {Statement}
- * @property {number|string} name
+ * @property {Identifier|string} name
  */
 const Declaration = Statement.extends(KIND, function Declaration(
   kind,
