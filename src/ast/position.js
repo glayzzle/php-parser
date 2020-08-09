@@ -8,6 +8,7 @@
 /**
  * Each Position object consists of a line number (1-indexed) and a column number (0-indexed):
  * @constructor Position
+ * @memberOf module:php-parser
  * @property {number} line
  * @property {number} column
  * @property {number} offset

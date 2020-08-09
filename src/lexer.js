@@ -10,6 +10,7 @@
  * parser to build the AST from its grammar.
  *
  * @constructor Lexer
+ * @memberOf module:php-parser
  * @property {number} EOF
  * @property {boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
  * @property {boolean} comment_tokens extracts comments tokens

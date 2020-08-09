@@ -11,6 +11,7 @@ const KIND = "return";
 /**
  * A continue statement
  * @constructor Return
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression|null} expr
  */

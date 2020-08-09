@@ -11,6 +11,7 @@ const KIND = "propertylookup";
 /**
  * Lookup to an object property
  * @constructor PropertyLookup
+ * @memberOf module:php-parser
  * @extends {Lookup}
  */
 module.exports = Lookup.extends(KIND, function PropertyLookup(

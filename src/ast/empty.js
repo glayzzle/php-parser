@@ -11,6 +11,7 @@ const KIND = "empty";
 /**
  * Defines an empty check call
  * @constructor Empty
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 module.exports = Expression.extends(KIND, function Empty(

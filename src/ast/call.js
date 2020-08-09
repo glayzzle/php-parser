@@ -11,6 +11,7 @@ const KIND = "call";
 /**
  * Executes a call statement
  * @constructor Call
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Identifier|Variable} what
  * @property {Variable[]} arguments

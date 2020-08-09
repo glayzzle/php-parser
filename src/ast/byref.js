@@ -11,6 +11,7 @@ const KIND = "byref";
 /**
  * Passing by Reference - so the function can modify the variable
  * @constructor ByRef
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {ExpressionStatement} what
  */

@@ -11,6 +11,7 @@ const KIND = "if";
 /**
  * Defines a if statement
  * @constructor If
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Block} body

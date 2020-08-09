@@ -11,6 +11,7 @@ const KIND = "catch";
 /**
  * Defines a catch statement
  * @constructor Catch
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier[]} what
  * @property {Variable} variable

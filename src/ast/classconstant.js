@@ -16,6 +16,7 @@ const IS_PRIVATE = "private";
 /**
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
+ * @memberOf module:php-parser
  * @extends {ConstantStatement}
  * @property {string} visibility
  */
@@ -32,6 +33,8 @@ const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
 
 /**
  * Generic flags parser
+ * @function
+ * @name ClassConstant#parseFlags
  * @param {Array<number|null>} flags
  * @return {void}
  */

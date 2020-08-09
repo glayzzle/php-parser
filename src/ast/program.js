@@ -11,6 +11,7 @@ const KIND = "program";
 /**
  * The main program node
  * @constructor Program
+ * @memberOf module:php-parser
  * @extends {Block}
  * @property {Error[]} errors
  * @property {Comment[]|null} comments

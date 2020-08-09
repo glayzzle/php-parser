@@ -104,6 +104,7 @@ module.exports = {
     let leadingWhitespaceCharCount = 0;
     /**
      * @var inCoutingState {boolean} reset to true after a new line
+     * @private
      */
     let inCoutingState = true;
     const chToCheck = indentation_uses_spaces ? " " : "\t";

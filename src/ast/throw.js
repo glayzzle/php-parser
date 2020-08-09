@@ -11,6 +11,7 @@ const KIND = "throw";
 /**
  * Defines a throw statement
  * @constructor Throw
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} what
  */

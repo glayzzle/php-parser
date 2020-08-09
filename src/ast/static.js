@@ -11,6 +11,7 @@ const KIND = "static";
 /**
  * Declares a static variable into the current scope
  * @constructor Static
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {StaticVariable[]} variables
  */

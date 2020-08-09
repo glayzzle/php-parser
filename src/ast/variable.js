@@ -12,6 +12,7 @@ const KIND = "variable";
  * Any expression node. Since the left-hand side of an assignment may
  * be any expression in general, an expression can also be a pattern.
  * @constructor Variable
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @example
  * // PHP code :

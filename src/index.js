@@ -38,6 +38,7 @@ function combine(src, to) {
  * Initialise a new parser instance with the specified options
  *
  * @class
+ * @memberOf module:php-parser
  * @tutorial Engine
  * @example
  * var parser = require('php-parser');
@@ -106,6 +107,7 @@ const Engine = function (options) {
 
 /**
  * Check if the inpyt is a buffer or a string
+ * @private
  * @param  {Buffer|String} buffer Input value that can be either a buffer or a string
  * @return {String}   Returns the string from input
  */
@@ -219,6 +221,8 @@ Engine.prototype.tokenGetAll = function (buffer) {
   }
   return result;
 };
+
+/** @module php-parser */
 
 // exports the function
 module.exports = Engine;

@@ -11,6 +11,7 @@ const KIND = "post";
 /**
  * Defines a post operation `$i++` or `$i--`
  * @constructor Post
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {Variable} what

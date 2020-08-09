@@ -11,6 +11,7 @@ const KIND = "traituse";
 /**
  * Defines a trait usage
  * @constructor TraitUse
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations

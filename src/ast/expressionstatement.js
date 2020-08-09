@@ -11,6 +11,7 @@ const KIND = "expressionstatement";
 /**
  * Defines an expression based statement
  * @constructor ExpressionStatement
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} expression
  */

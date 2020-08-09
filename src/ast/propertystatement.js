@@ -16,6 +16,7 @@ const IS_PRIVATE = "private";
 /**
  * Declares a properties into the current scope
  * @constructor PropertyStatement
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Property[]} properties
  */

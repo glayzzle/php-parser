@@ -11,6 +11,7 @@ const KIND = "switch";
 /**
  * Defines a switch statement
  * @constructor Switch
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Block} body

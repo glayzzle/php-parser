@@ -16,6 +16,7 @@ const IS_PRIVATE = "private";
 /**
  * Defines a trait alias
  * @constructor TraitAlias
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier|null} trait
  * @property {Identifier} method

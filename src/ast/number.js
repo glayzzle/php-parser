@@ -11,6 +11,7 @@ const KIND = "number";
 /**
  * Defines a numeric value
  * @constructor Number
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
 module.exports = Literal.extends(KIND, function Number(

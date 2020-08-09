@@ -11,6 +11,7 @@ const KIND = "array";
 /**
  * Defines an array structure
  * @constructor Array
+ * @memberOf module:php-parser
  * @example
  * // PHP code :
  * [1, 'foo' => 'bar', 3]

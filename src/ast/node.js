@@ -8,6 +8,7 @@
 /**
  * A generic AST node
  * @constructor Node
+ * @memberOf module:php-parser
  * @property {Location|null} loc
  * @property {CommentBlock[]|Comment[]|null} leadingComments
  * @property {CommentBlock[]|Comment[]|null} trailingComments

@@ -11,6 +11,7 @@ const KIND = "retif";
 /**
  * Defines a short if statement that returns a value
  * @constructor RetIf
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} test
  * @property {Expression} trueExpr

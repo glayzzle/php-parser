@@ -16,6 +16,7 @@ function isNumber(n) {
  * The PHP Parser class that build the AST tree from the lexer
  *
  * @constructor Parser
+ * @memberOf module:php-parser
  * @tutorial Parser
  * @property {Lexer} lexer - current lexer instance
  * @property {AST} ast - the AST factory instance
@@ -470,7 +471,10 @@ Parser.prototype.expectEndOfStatement = function (node) {
   return true;
 };
 
-/** outputs some debug information on current token **/
+/**
+ * outputs some debug information on current token
+ * @private
+ */
 const ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
 Parser.prototype.showlog = function () {
   const stack = new Error().stack.split("\n");

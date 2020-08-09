@@ -11,6 +11,7 @@ const KIND = "print";
 /**
  * Outputs
  * @constructor Print
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 module.exports = Expression.extends(KIND, function Print(

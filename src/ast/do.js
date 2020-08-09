@@ -11,6 +11,7 @@ const KIND = "do";
 /**
  * Defines a do/while statement
  * @constructor Do
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Statement} body

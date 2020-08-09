@@ -11,6 +11,7 @@ const KIND = "literal";
 /**
  * Defines an array structure
  * @constructor Literal
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value

@@ -11,6 +11,7 @@ const KIND = "goto";
 /**
  * Defines goto statement
  * @constructor Goto
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} label
  * @see {Label}

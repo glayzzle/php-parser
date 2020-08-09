@@ -11,6 +11,7 @@ const KIND = "useitem";
 /**
  * Defines a use statement (from namespace)
  * @constructor UseItem
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
  * @property {string|null} type - Possible value : function, const
@@ -33,12 +34,14 @@ const UseItem = Statement.extends(KIND, function UseItem(
 
 /**
  * Importing a constant
- * @constant {String} TYPE_CONST
+ * @constant {string} TYPE_CONST
+ * @memberOf UseItem
  */
 UseItem.TYPE_CONST = "const";
 /**
  * Importing a function
- * @constant {String} TYPE_FUNC
+ * @constant {string} TYPE_FUNC
+ * @memberOf UseItem
  */
 UseItem.TYPE_FUNCTION = "function";
 

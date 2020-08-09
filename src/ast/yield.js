@@ -11,6 +11,7 @@ const KIND = "yield";
 /**
  * Defines a yield generator statement
  * @constructor Yield
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression|null} value
  * @property {Expression|null} key

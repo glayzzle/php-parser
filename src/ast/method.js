@@ -11,6 +11,7 @@ const KIND = "method";
 /**
  * Defines a class/interface/trait method
  * @constructor Method
+ * @memberOf module:php-parser
  * @extends {Function}
  * @property {boolean} isAbstract
  * @property {boolean} isFinal

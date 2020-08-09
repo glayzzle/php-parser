@@ -11,6 +11,7 @@ const KIND = "block";
 /**
  * A block statement, i.e., a sequence of statements surrounded by braces.
  * @constructor Block
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Node[]} children
  */

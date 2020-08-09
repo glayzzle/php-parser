@@ -11,6 +11,7 @@ const KIND = "usegroup";
 /**
  * Defines a use statement (with a list of use items)
  * @constructor UseGroup
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string|null} name
  * @property {string|null} type - Possible value : function, const

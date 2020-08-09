@@ -11,6 +11,7 @@ const KIND = "namespace";
 /**
  * The main program node
  * @constructor Namespace
+ * @memberOf module:php-parser
  * @extends {Block}
  * @property {string} name
  * @property {boolean} withBrackets

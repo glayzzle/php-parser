@@ -11,6 +11,7 @@ const KIND = "constantstatement";
 /**
  * Declares a constants into the current scope
  * @constructor ConstantStatement
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Constant[]} constants
  */

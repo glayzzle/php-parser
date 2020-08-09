@@ -11,6 +11,7 @@ const KIND = "closure";
 /**
  * Defines a closure
  * @constructor Closure
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Variable[]} uses

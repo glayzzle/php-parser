@@ -11,6 +11,7 @@ const KIND = "exit";
 /**
  * Defines an exit / die call
  * @constructor Exit
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node|null} expression
  * @property {boolean} useDie

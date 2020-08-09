@@ -11,6 +11,7 @@ const KIND = "global";
 /**
  * Imports a variable from the global scope
  * @constructor Global
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Variable[]} items
  */

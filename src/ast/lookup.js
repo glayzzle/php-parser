@@ -11,6 +11,7 @@ const KIND = "lookup";
 /**
  * Lookup on an offset in the specified object
  * @constructor Lookup
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} what
  * @property {Expression} offset

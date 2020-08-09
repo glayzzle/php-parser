@@ -11,6 +11,7 @@ const KIND = "class";
 /**
  * A class definition
  * @constructor Class
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier|null} extends
  * @property {Identifier[]} implements

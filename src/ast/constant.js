@@ -11,6 +11,7 @@ const KIND = "constant";
 /**
  * Defines a constant
  * @constructor Constant
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {string} name
  * @property {Node|string|number|boolean|null} value

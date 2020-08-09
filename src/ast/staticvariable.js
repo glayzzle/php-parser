@@ -11,6 +11,7 @@ const KIND = "staticvariable";
 /**
  * Defines a constant
  * @constructor StaticVariable
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Variable} variable
  * @property {Node|string|number|boolean|null} defaultValue

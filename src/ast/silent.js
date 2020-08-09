@@ -11,6 +11,7 @@ const KIND = "silent";
 /**
  * Avoids to show/log warnings & notices from the inner expression
  * @constructor Silent
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} expr
  */

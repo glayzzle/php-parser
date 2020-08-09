@@ -11,6 +11,7 @@ const KIND = "isset";
 /**
  * Defines an isset call
  * @constructor Isset
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 module.exports = Expression.extends(KIND, function Isset(

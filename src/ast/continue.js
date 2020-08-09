@@ -11,6 +11,7 @@ const KIND = "continue";
 /**
  * A continue statement
  * @constructor Continue
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {number|null} level
  */

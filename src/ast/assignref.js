@@ -11,6 +11,7 @@ const KIND = "assignref";
 /**
  * Assigns a value to the specified target
  * @constructor AssignRef
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} left
  * @property {Expression} right

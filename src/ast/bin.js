@@ -10,6 +10,7 @@ const KIND = "bin";
 /**
  * Binary operations
  * @constructor Bin
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {Expression} left

@@ -119,6 +119,7 @@ const Position = require("./ast/position");
 /**
  * The AST builder class
  * @constructor AST
+ * @memberOf module:php-parser
  * @tutorial AST
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)

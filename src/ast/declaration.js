@@ -16,6 +16,7 @@ const IS_PRIVATE = "private";
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier|string} name
  */

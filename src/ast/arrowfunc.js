@@ -11,6 +11,7 @@ const KIND = "arrowfunc";
 /**
  * Defines an arrow function (it's like a closure)
  * @constructor ArrowFunc
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Identifier} type

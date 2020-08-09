@@ -11,6 +11,7 @@ const KIND = "encapsed";
 /**
  * Defines an encapsed string (contains expressions)
  * @constructor Encapsed
+ * @memberOf module:php-parser
  * @extends {Literal}
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
@@ -33,6 +34,7 @@ const Encapsed = Literal.extends(KIND, function Encapsed(
  * echo "hello $world";
  * ```
  * @constant {String} TYPE_STRING - `string`
+ * @memberOf Encapsed
  */
 Encapsed.TYPE_STRING = "string";
 
@@ -43,6 +45,7 @@ Encapsed.TYPE_STRING = "string";
  * echo `ls -larth $path`;
  * ```
  * @constant {String} TYPE_SHELL - `shell`
+ * @memberOf Encapsed
  */
 Encapsed.TYPE_SHELL = "shell";
 
@@ -56,6 +59,7 @@ Encapsed.TYPE_SHELL = "shell";
  * ;
  * ```
  * @constant {String} TYPE_HEREDOC - `heredoc`
+ * @memberOf Encapsed
  */
 Encapsed.TYPE_HEREDOC = "heredoc";
 
@@ -66,6 +70,7 @@ Encapsed.TYPE_HEREDOC = "heredoc";
  * echo $foo->bar_$baz;
  * ```
  * @constant {String} TYPE_OFFSET - `offset`
+ * @memberOf Encapsed
  */
 Encapsed.TYPE_OFFSET = "offset";
 

@@ -11,6 +11,7 @@ const KIND = "traitprecedence";
 /**
  * Defines a trait alias
  * @constructor TraitPrecedence
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier|null} trait
  * @property {Identifier} method

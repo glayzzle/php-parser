@@ -11,6 +11,7 @@ const KIND = "offsetlookup";
 /**
  * Lookup on an offset in an array
  * @constructor OffsetLookup
+ * @memberOf module:php-parser
  * @extends {Lookup}
  */
 module.exports = Lookup.extends(KIND, function OffsetLookup(

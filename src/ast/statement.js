@@ -11,6 +11,7 @@ const KIND = "statement";
 /**
  * Any statement.
  * @constructor Statement
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 module.exports = Node.extends(KIND, function Statement(kind, docs, location) {

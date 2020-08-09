@@ -11,6 +11,7 @@ const KIND = "nowdoc";
 /**
  * Defines a nowdoc string
  * @constructor NowDoc
+ * @memberOf module:php-parser
  * @extends {Literal}
  * @property {string} label
  * @property {string} raw

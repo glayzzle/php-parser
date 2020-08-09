@@ -11,6 +11,7 @@ const KIND = "commentblock";
 /**
  * A comment block (multiline)
  * @constructor CommentBlock
+ * @memberOf module:php-parser
  * @extends {Comment}
  */
 module.exports = Comment.extends(KIND, function CommentBlock(

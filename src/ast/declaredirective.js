@@ -11,6 +11,7 @@ const KIND = "declaredirective";
 /**
  * Defines a constant
  * @constructor DeclareDirective
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier} name
  * @property {Node|string|number|boolean|null} value
