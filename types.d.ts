@@ -228,7 +228,7 @@ declare class Declaration extends Statement {
      * Generic flags parser
      */
     parseFlags(flags: (number | null)[]): void;
-    name: number | string;
+    name: Identifier | string;
 }
 
 /**
