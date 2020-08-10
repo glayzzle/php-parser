@@ -774,7 +774,7 @@ declare module "php-parser" {
     /**
      * Introduce a list of items into the arguments of the call
      */
-    class variadic extends Expression {
+    class Variadic extends Expression {
         what: any[] | Expression;
     }
     /**

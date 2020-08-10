@@ -10,7 +10,7 @@ const KIND = "variadic";
 
 /**
  * Introduce a list of items into the arguments of the call
- * @constructor variadic
+ * @constructor Variadic
  * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Array|Expression} what
