@@ -2,7 +2,7 @@
  * 
  *   Package: php-parser
  *   Parse PHP code from JS and returns its AST
- *   Build: 6af20f43d0d6855ac0e0 - 2020-4-24
+ *   Build: 6828de23c173b08ca739 - 2020-10-4
  *   Copyright (C) 2020 Glayzzle (BSD-3-Clause)
  *   @authors https://github.com/glayzzle/php-parser/graphs/contributors
  *   @url http://glayzzle.com        
@@ -3650,7 +3650,7 @@ function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArra
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -4741,7 +4741,7 @@ module.exports = {
 
       if (expr.kind === "array" && expr.shortForm && this.token === "=") {
         // list assign
-        var list = this.node("list")(expr.items, true);
+        var list = this.convertToList(expr);
         if (expr.loc) list.loc = expr.loc;
         var right = this.next().read_expr();
         return result("assign", list, right, "=");
@@ -4759,6 +4759,26 @@ module.exports = {
 
 
     return expr;
+  },
+
+  /**
+   * Recursively convert nested array to nested list.
+   */
+  convertToList: function convertToList(array) {
+    var _this = this;
+
+    var convertedItems = array.items.map(function (entry) {
+      if (entry.value && entry.value.kind === "array" && entry.value.shortForm) {
+        entry.value = _this.convertToList(entry.value);
+      }
+
+      return entry;
+    });
+    var node = this.node("list")(convertedItems, true);
+    if (array.loc) node.loc = array.loc;
+    if (array.leadingComments) node.leadingComments = array.leadingComments;
+    if (array.trailingComments) node.trailingComments = array.trailingComments;
+    return node;
   },
 
   /**
@@ -8024,7 +8044,7 @@ AST.prototype.resolvePrecedence = function (result, parser) {
         lLevel = AST.precedence[result.type];
         rLevel = AST.precedence[result.right.type];
 
-        if (lLevel && rLevel && rLevel <= lLevel && !this.isRightAssociative(result.type)) {
+        if (lLevel && rLevel && rLevel <= lLevel && (result.type !== result.right.type || !this.isRightAssociative(result.type))) {
           // https://github.com/glayzzle/php-parser/issues/79
           // shift precedence
           buffer = result.right;
