@@ -37,8 +37,8 @@ const Declare = Block.extends(KIND, function Declare(
  * // some statements
  * enddeclare;
  * ```
- * @constant {String} MODE_SHORT
- * @memberOf Declare
+ * @constant {String} Declare#MODE_SHORT
+ * @memberOf module:php-parser
  */
 Declare.MODE_SHORT = "short";
 
@@ -50,8 +50,8 @@ Declare.MODE_SHORT = "short";
  * // some statements
  * }
  * ```
- * @constant {String} MODE_BLOCK
- * @memberOf Declare
+ * @constant {String} Declare#MODE_BLOCK
+ * @memberOf module:php-parser
  */
 Declare.MODE_BLOCK = "block";
 
@@ -66,8 +66,8 @@ Declare.MODE_BLOCK = "block";
  * declare(ticks=2);
  * // some statements
  * ```
- * @constant {String} MODE_NONE
- * @memberOf Declare
+ * @constant {String} Declare#MODE_NONE
+ * @memberOf module:php-parser
  */
 Declare.MODE_NONE = "none";
 

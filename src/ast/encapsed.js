@@ -33,8 +33,8 @@ const Encapsed = Literal.extends(KIND, function Encapsed(
  * <?php
  * echo "hello $world";
  * ```
- * @constant {String} TYPE_STRING - `string`
- * @memberOf Encapsed
+ * @constant {String} Encapsed#TYPE_STRING - `string`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_STRING = "string";
 
@@ -44,8 +44,8 @@ Encapsed.TYPE_STRING = "string";
  * <?php
  * echo `ls -larth $path`;
  * ```
- * @constant {String} TYPE_SHELL - `shell`
- * @memberOf Encapsed
+ * @constant {String} Encapsed#TYPE_SHELL - `shell`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_SHELL = "shell";
 
@@ -58,8 +58,8 @@ Encapsed.TYPE_SHELL = "shell";
  * STR
  * ;
  * ```
- * @constant {String} TYPE_HEREDOC - `heredoc`
- * @memberOf Encapsed
+ * @constant {String} Encapsed#TYPE_HEREDOC - `heredoc`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_HEREDOC = "heredoc";
 
@@ -69,8 +69,8 @@ Encapsed.TYPE_HEREDOC = "heredoc";
  * <?php
  * echo $foo->bar_$baz;
  * ```
- * @constant {String} TYPE_OFFSET - `offset`
- * @memberOf Encapsed
+ * @constant {String} Encapsed#TYPE_OFFSET - `offset`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_OFFSET = "offset";
 

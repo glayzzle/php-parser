@@ -26,6 +26,8 @@ const Node = function Node(kind, docs, location) {
 
 /**
  * Attach comments to current node
+ * @function Node#setTrailingComments
+ * @memberOf module:php-parser
  * @param {*} docs
  */
 Node.prototype.setTrailingComments = function (docs) {
@@ -34,6 +36,8 @@ Node.prototype.setTrailingComments = function (docs) {
 
 /**
  * Destroying an unused node
+ * @function Node#destroy
+ * @memberOf module:php-parser
  */
 Node.prototype.destroy = function (node) {
   if (!node) {
@@ -66,6 +70,8 @@ Node.prototype.destroy = function (node) {
 
 /**
  * Includes current token position of the parser
+ * @function Node#includeToken
+ * @memberOf module:php-parser
  * @param {*} parser
  */
 Node.prototype.includeToken = function (parser) {
@@ -87,6 +93,8 @@ Node.prototype.includeToken = function (parser) {
 
 /**
  * Helper for extending the Node class
+ * @function Node.extends
+ * @memberOf module:php-parser
  * @param {string} type
  * @param {Function} constructor
  * @return {Function}

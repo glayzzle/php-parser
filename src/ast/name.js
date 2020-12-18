@@ -37,28 +37,28 @@ const Name = Reference.extends(KIND, function Name(
 
 /**
  * This is an identifier without a namespace separator, such as Foo
- * @constant {String} UNQUALIFIED_NAME
- * @memberOf Name
+ * @constant {String} Name#UNQUALIFIED_NAME
+ * @memberOf module:php-parser
  */
 Name.UNQUALIFIED_NAME = "uqn";
 /**
  * This is an identifier with a namespace separator, such as Foo\Bar
- * @constant {String} QUALIFIED_NAME
- * @memberOf Name
+ * @constant {String} Name#QUALIFIED_NAME
+ * @memberOf module:php-parser
  */
 Name.QUALIFIED_NAME = "qn";
 /**
  * This is an identifier with a namespace separator that begins with
  * a namespace separator, such as \Foo\Bar. The namespace \Foo is also
  * a fully qualified name.
- * @constant {String} FULL_QUALIFIED_NAME
- * @memberOf Name
+ * @constant {String} Name#FULL_QUALIFIED_NAME
+ * @memberOf module:php-parser
  */
 Name.FULL_QUALIFIED_NAME = "fqn";
 /**
  * This is an identifier starting with namespace, such as namespace\Foo\Bar.
- * @constant {String} RELATIVE_NAME
- * @memberOf Name
+ * @constant {String} Name#RELATIVE_NAME
+ * @memberOf module:php-parser
  */
 Name.RELATIVE_NAME = "rn";
 

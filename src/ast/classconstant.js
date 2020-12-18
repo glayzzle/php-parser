@@ -35,6 +35,7 @@ const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
  * Generic flags parser
  * @function
  * @name ClassConstant#parseFlags
+ * @memberOf module:php-parser
  * @param {Array<number|null>} flags
  * @return {void}
  */

@@ -34,6 +34,8 @@ const PropertyStatement = Statement.extends(KIND, function PropertyStatement(
 
 /**
  * Generic flags parser
+ * @function PropertyStatement#parseFlags
+ * @memberOf module:php-parser
  * @param {Array<number|null>} flags
  * @return {void}
  */

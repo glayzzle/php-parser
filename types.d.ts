@@ -139,6 +139,10 @@ declare module "php-parser" {
      * Defines a class/interface/trait constant
      */
     class ClassConstant extends ConstantStatement {
+        /**
+         * Generic flags parser
+         */
+        parseFlags(flags: (number | null)[]): void;
         visibility: string;
     }
     /**
@@ -198,12 +202,49 @@ declare module "php-parser" {
      * A declaration statement (function, class, interface...)
      */
     class Declaration extends Statement {
+        /**
+         * Generic flags parser
+         */
+        parseFlags(flags: (number | null)[]): void;
         name: Identifier | string;
     }
     /**
      * The declare construct is used to set execution directives for a block of code
      */
     class Declare extends Block {
+        /**
+         * The node is declared as a short tag syntax :
+         * ```php
+         * <?php
+         * declare(ticks=1):
+         * // some statements
+         * enddeclare;
+         * ```
+         */
+        readonly MODE_SHORT: string;
+        /**
+         * The node is declared bracket enclosed code :
+         * ```php
+         * <?php
+         * declare(ticks=1) {
+         * // some statements
+         * }
+         * ```
+         */
+        readonly MODE_BLOCK: string;
+        /**
+         * The node is declared as a simple statement. In order to make things simpler
+         * children of the node are automatically collected until the next
+         * declare statement.
+         * ```php
+         * <?php
+         * declare(ticks=1);
+         * // some statements
+         * declare(ticks=2);
+         * // some statements
+         * ```
+         */
+        readonly MODE_NONE: string;
         directives: any[][];
         mode: string;
     }
@@ -238,6 +279,41 @@ declare module "php-parser" {
      * @property label - The heredoc label, defined only when the type is heredoc
      */
     class Encapsed extends Literal {
+        /**
+         * The node is a double quote string :
+         * ```php
+         * <?php
+         * echo "hello $world";
+         * ```
+         */
+        readonly TYPE_STRING: string;
+        /**
+         * The node is a shell execute string :
+         * ```php
+         * <?php
+         * echo `ls -larth $path`;
+         * ```
+         */
+        readonly TYPE_SHELL: string;
+        /**
+         * The node is a shell execute string :
+         * ```php
+         * <?php
+         * echo <<<STR
+         *  Hello $world
+         * STR
+         * ;
+         * ```
+         */
+        readonly TYPE_HEREDOC: string;
+        /**
+         * The node contains a list of constref / variables / expr :
+         * ```php
+         * <?php
+         * echo $foo->bar_$baz;
+         * ```
+         */
+        readonly TYPE_OFFSET: string;
         /**
          * Defines the type of encapsed string (shell, heredoc, string)
         */
@@ -458,6 +534,24 @@ declare module "php-parser" {
      * Defines a class reference node
      */
     class Name extends Reference {
+        /**
+         * This is an identifier without a namespace separator, such as Foo
+         */
+        readonly UNQUALIFIED_NAME: string;
+        /**
+         * This is an identifier with a namespace separator, such as Foo\Bar
+         */
+        readonly QUALIFIED_NAME: string;
+        /**
+         * This is an identifier with a namespace separator that begins with
+         * a namespace separator, such as \Foo\Bar. The namespace \Foo is also
+         * a fully qualified name.
+         */
+        readonly FULL_QUALIFIED_NAME: string;
+        /**
+         * This is an identifier starting with namespace, such as namespace\Foo\Bar.
+         */
+        readonly RELATIVE_NAME: string;
         name: string;
         resolution: string;
     }
@@ -479,6 +573,22 @@ declare module "php-parser" {
      * A generic AST node
      */
     class Node {
+        /**
+         * Attach comments to current node
+         */
+        setTrailingComments(docs: any): void;
+        /**
+         * Destroying an unused node
+         */
+        destroy(): void;
+        /**
+         * Includes current token position of the parser
+         */
+        includeToken(parser: any): void;
+        /**
+         * Helper for extending the Node class
+         */
+        static extends(type: string, constructor: (...params: any[]) => any): (...params: any[]) => any;
         loc: Location | null;
         leadingComments: CommentBlock[] | Comment[] | null;
         trailingComments: CommentBlock[] | Comment[] | null;
@@ -585,6 +695,10 @@ declare module "php-parser" {
      * Declares a properties into the current scope
      */
     class PropertyStatement extends Statement {
+        /**
+         * Generic flags parser
+         */
+        parseFlags(flags: (number | null)[]): void;
         properties: Property[];
     }
     /**
@@ -739,6 +853,14 @@ declare module "php-parser" {
      * @property type - Possible value : function, const
      */
     class UseItem extends Statement {
+        /**
+         * Importing a constant
+         */
+        readonly TYPE_CONST: string;
+        /**
+         * Importing a function
+         */
+        readonly TYPE_FUNC: string;
         name: string;
         /**
          * Possible value : function, const
@@ -886,6 +1008,62 @@ declare module "php-parser" {
      * @property castKeywords - List of php keywords for type casting
      */
     class Lexer {
+        /**
+         * Initialize the lexer with the specified input
+         */
+        setInput(): void;
+        /**
+         * consumes and returns one char from the input
+         */
+        input(): void;
+        /**
+         * revert eating specified size
+         */
+        unput(): void;
+        /**
+         * check if the text matches
+         */
+        tryMatch(text: string): boolean;
+        /**
+         * check if the text matches
+         */
+        tryMatchCaseless(text: string): boolean;
+        /**
+         * look ahead
+         */
+        ahead(size: number): string;
+        /**
+         * consume the specified size
+         */
+        consume(size: number): Lexer;
+        /**
+         * Gets the current state
+         */
+        getState(): void;
+        /**
+         * Sets the current lexer state
+         */
+        setState(): void;
+        /**
+         * prepend next token
+         */
+        appendToken(value: any, ahead: any): Lexer;
+        /**
+         * return next match that has a token
+         */
+        lex(): number | string;
+        /**
+         * activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
+         */
+        begin(condition: any): Lexer;
+        /**
+         * pop the previously active lexer condition state off the condition stack
+         */
+        popState(): string | any;
+        /**
+         * return next match in input
+         */
+        next(): number | any;
         EOF: number;
         /**
          * defines if all tokens must be retrieved (used by token_get_all only)
@@ -927,6 +1105,56 @@ declare module "php-parser" {
      * @property debug - should output debug informations
      */
     class Parser {
+        /**
+         * helper : gets a token name
+         */
+        getTokenName(): void;
+        /**
+         * main entry point : converts a source code to AST
+         */
+        parse(): void;
+        /**
+         * Raise an error
+         */
+        raiseError(): void;
+        /**
+         * handling errors
+         */
+        error(): void;
+        /**
+         * Creates a new AST node
+         */
+        node(): void;
+        /**
+         * expects an end of statement or end of file
+         */
+        expectEndOfStatement(): boolean;
+        /**
+         * Force the parser to check the current token.
+         *
+         * If the current token does not match to expected token,
+         * the an error will be raised.
+         *
+         * If the suppressError mode is activated, then the error will
+         * be added to the program error stack and this function will return `false`.
+         */
+        expect(token: string | number): boolean;
+        /**
+         * Returns the current token contents
+         */
+        text(): string;
+        /**
+         * consume the next token
+         */
+        next(): void;
+        /**
+         * Eating a token
+         */
+        lex(): void;
+        /**
+         * Check if token is of specified type
+         */
+        is(): void;
         /**
          * current lexer instance
         */

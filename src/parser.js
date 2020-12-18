@@ -244,6 +244,8 @@ const Parser = function (lexer, ast) {
 
 /**
  * helper : gets a token name
+ * @function Parser#getTokenName
+ * @memberOf module:php-parser
  */
 Parser.prototype.getTokenName = function (token) {
   if (!isNumber(token)) {
@@ -256,6 +258,8 @@ Parser.prototype.getTokenName = function (token) {
 
 /**
  * main entry point : converts a source code to AST
+ * @function Parser#parse
+ * @memberOf module:php-parser
  */
 Parser.prototype.parse = function (code, filename) {
   this._errors = [];
@@ -324,6 +328,8 @@ Parser.prototype.parse = function (code, filename) {
 
 /**
  * Raise an error
+ * @function Parser#raiseError
+ * @memberOf module:php-parser
  */
 Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
   message += " on line " + this.lexer.yylloc.first_line;
@@ -351,6 +357,8 @@ Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
 
 /**
  * handling errors
+ * @function Parser#error
+ * @memberOf module:php-parser
  */
 Parser.prototype.error = function (expect) {
   let msg = "Parse Error : syntax error";
@@ -378,6 +386,8 @@ Parser.prototype.error = function (expect) {
 
 /**
  * Creates a new AST node
+ * @function Parser#node
+ * @memberOf module:php-parser
  */
 Parser.prototype.node = function (name) {
   if (this.extractDoc) {
@@ -393,7 +403,7 @@ Parser.prototype.node = function (name) {
       }
     }
     const node = this.ast.prepare(name, docs, this);
-    /**
+    /*
      * TOKENS :
      * node1 commentA token commmentB node2 commentC token commentD node3 commentE token
      *
@@ -454,6 +464,8 @@ Parser.prototype.node = function (name) {
 
 /**
  * expects an end of statement or end of file
+ * @function Parser#expectEndOfStatement
+ * @memberOf module:php-parser
  * @return {boolean}
  */
 Parser.prototype.expectEndOfStatement = function (node) {
@@ -471,11 +483,13 @@ Parser.prototype.expectEndOfStatement = function (node) {
   return true;
 };
 
+const ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
 /**
  * outputs some debug information on current token
  * @private
+ * @function Parser#showlog
+ * @memberOf module:php-parser
  */
-const ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
 Parser.prototype.showlog = function () {
   const stack = new Error().stack.split("\n");
   let line;
@@ -516,6 +530,8 @@ Parser.prototype.showlog = function () {
  * If the suppressError mode is activated, then the error will
  * be added to the program error stack and this function will return `false`.
  *
+ * @function Parser#expect
+ * @memberOf module:php-parser
  * @param {String|Number} token
  * @return {boolean}
  * @throws Error
@@ -535,13 +551,19 @@ Parser.prototype.expect = function (token) {
 
 /**
  * Returns the current token contents
+ * @function Parser#text
+ * @memberOf module:php-parser
  * @return {String}
  */
 Parser.prototype.text = function () {
   return this.lexer.yytext;
 };
 
-/** consume the next token **/
+/**
+ * consume the next token
+ * @function Parser#next
+ * @memberOf module:php-parser
+ */
 Parser.prototype.next = function () {
   // prepare the back command
   if (this.token !== ";" || this.lexer.yytext === ";") {
@@ -582,6 +604,8 @@ Parser.prototype.next = function () {
 
 /**
  * Eating a token
+ * @function Parser#lex
+ * @memberOf module:php-parser
  */
 Parser.prototype.lex = function () {
   // append on token stack
@@ -633,6 +657,8 @@ Parser.prototype.lex = function () {
 
 /**
  * Check if token is of specified type
+ * @function Parser#is
+ * @memberOf module:php-parser
  */
 Parser.prototype.is = function (type) {
   if (Array.isArray(type)) {

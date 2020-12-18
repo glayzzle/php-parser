@@ -34,14 +34,14 @@ const UseItem = Statement.extends(KIND, function UseItem(
 
 /**
  * Importing a constant
- * @constant {string} TYPE_CONST
- * @memberOf UseItem
+ * @constant {string} UseItem#TYPE_CONST
+ * @memberOf module:php-parser
  */
 UseItem.TYPE_CONST = "const";
 /**
  * Importing a function
- * @constant {string} TYPE_FUNC
- * @memberOf UseItem
+ * @constant {string} UseItem#TYPE_FUNC
+ * @memberOf module:php-parser
  */
 UseItem.TYPE_FUNCTION = "function";
 

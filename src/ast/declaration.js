@@ -32,6 +32,9 @@ const Declaration = Statement.extends(KIND, function Declaration(
 
 /**
  * Generic flags parser
+ * @function
+ * @name Declaration#parseFlags
+ * @memberOf module:php-parser
  * @param {Array<number|null>} flags
  * @return {void}
  */
