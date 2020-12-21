@@ -217,7 +217,7 @@ module.exports = {
     return false;
   },
 
-  /**
+  /*
    * Prematch the end of HEREDOC/NOWDOC end tag to preset the
    * context of this.heredoc_label
    */

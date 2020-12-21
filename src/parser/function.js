@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * checks if current token is a reference keyword
    */
   is_reference: function () {
@@ -16,7 +16,7 @@ module.exports = {
     }
     return false;
   },
-  /**
+  /*
    * checks if current token is a variadic keyword
    */
   is_variadic: function () {
@@ -26,7 +26,7 @@ module.exports = {
     }
     return false;
   },
-  /**
+  /*
    * reading a function
    * ```ebnf
    * function ::= function_declaration code_block
@@ -56,7 +56,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * reads a function declaration (without his body)
    * ```ebnf
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
@@ -154,7 +154,7 @@ module.exports = {
     return this.read_list(this.read_lexical_var, ",");
   },
 
-  /**
+  /*
    * ```ebnf
    * lexical_var ::= '&'? T_VARIABLE
    * ```
@@ -169,7 +169,7 @@ module.exports = {
     this.next();
     return result(name, false);
   },
-  /**
+  /*
    * reads a list of parameters
    * ```ebnf
    *  parameter_list ::= (parameter ',')* parameter?
@@ -192,7 +192,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * ```ebnf
    *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
    * ```
@@ -227,7 +227,7 @@ module.exports = {
     }
     return node(parameterName, type, value, isRef, isVariadic, nullable);
   },
-  /**
+  /*
    * Reads a list of arguments
    * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
@@ -242,7 +242,7 @@ module.exports = {
     this.expect(")") && this.next();
     return result;
   },
-  /**
+  /*
    * Reads non empty argument list
    */
   read_non_empty_argument_list: function () {
@@ -264,7 +264,7 @@ module.exports = {
       ","
     );
   },
-  /**
+  /*
    * ```ebnf
    *    argument_list ::= T_ELLIPSIS? expr
    * ```
@@ -275,7 +275,7 @@ module.exports = {
     }
     return this.read_expr();
   },
-  /**
+  /*
    * read type hinting
    * ```ebnf
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name

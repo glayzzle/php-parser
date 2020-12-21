@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * ```ebnf
    * start ::= (namespace | top_statement)*
    * ```

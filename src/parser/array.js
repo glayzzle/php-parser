@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Parse an array
    * ```ebnf
    * array ::= T_ARRAY '(' array_pair_list ')' |
@@ -33,7 +33,7 @@ module.exports = {
     this.next();
     return result(shortForm, items);
   },
-  /**
+  /*
    * Reads an array of items
    * ```ebnf
    * array_pair_list ::= array_pair (',' array_pair?)*
@@ -49,7 +49,7 @@ module.exports = {
       true
     );
   },
-  /**
+  /*
    * Reads an entry
    * array_pair:
    *  expr T_DOUBLE_ARROW expr

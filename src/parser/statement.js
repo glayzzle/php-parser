@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * reading a list of top statements (helper for top_statement*)
    * ```ebnf
    *  top_statements ::= top_statement*
@@ -26,7 +26,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * reading a top statement
    * ```ebnf
    *  top_statement ::=
@@ -71,7 +71,7 @@ module.exports = {
         return this.read_statement();
     }
   },
-  /**
+  /*
    * reads a list of simple inner statements (helper for inner_statement*)
    * ```ebnf
    *  inner_statements ::= inner_statement*
@@ -91,7 +91,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * Reads a list of constants declaration
    * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
@@ -117,7 +117,7 @@ module.exports = {
       false
     );
   },
-  /**
+  /*
    * Reads a list of constants declaration
    * ```ebnf
    *   declare_list ::= IDENTIFIER '=' expr (',' IDENTIFIER '=' expr)*
@@ -143,7 +143,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * reads a simple inner statement
    * ```ebnf
    *  inner_statement ::= '{' inner_statements '}' | token
@@ -178,7 +178,7 @@ module.exports = {
         return this.read_statement();
     }
   },
-  /**
+  /*
    * Reads statements
    */
   read_statement: function () {
@@ -404,7 +404,7 @@ module.exports = {
       }
     }
   },
-  /**
+  /*
    * ```ebnf
    *  code_block ::= '{' (inner_statements | top_statements) '}'
    * ```
