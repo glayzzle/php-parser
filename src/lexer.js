@@ -387,8 +387,8 @@ Lexer.prototype.setState = function (state) {
  * prepend next token
  * @function Lexer#appendToken
  * @memberOf module:php-parser
- * @param value
- * @param ahead
+ * @param {*} value
+ * @param {*} ahead
  * @returns {Lexer}
  */
 Lexer.prototype.appendToken = function (value, ahead) {
@@ -442,7 +442,7 @@ Lexer.prototype.lex = function () {
  * activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
  * @function Lexer#begin
  * @memberOf module:php-parser
- * @param condition
+ * @param {*} condition
  * @returns {Lexer}
  */
 Lexer.prototype.begin = function (condition) {
