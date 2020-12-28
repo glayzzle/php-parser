@@ -233,6 +233,7 @@ module.exports.lexer = lexer;
 module.exports.AST = AST;
 module.exports.parser = parser;
 module.exports.combine = combine;
+module.exports.Engine = Engine;
 
 // allow the default export in index.d.ts
 module.exports.default = Engine;
