@@ -146,6 +146,7 @@ module.exports = {
     233: "T_SPACESHIP",
     234: "T_COALESCE_EQUAL",
     235: "T_FN",
+    236: "T_NULLSAFE_OBJECT_OPERATOR",
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -283,5 +284,6 @@ module.exports = {
     T_SPACESHIP: 233,
     T_COALESCE_EQUAL: 234,
     T_FN: 235,
+    T_NULLSAFE_OBJECT_OPERATOR: 236,
   },
 };

@@ -522,6 +522,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/noop"),
   require("./ast/nowdoc"),
   require("./ast/nullkeyword"),
+  require("./ast/nullsafepropertylookup"),
   require("./ast/number"),
   require("./ast/offsetlookup"),
   require("./ast/operation"),
