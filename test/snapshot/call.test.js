@@ -49,6 +49,18 @@ describe("Test call", function () {
     });
     expect(ast).toMatchSnapshot();
   });
+  it("nullsafepropertylookup", function () {
+    const ast = parser.parseEval("$obj?->call();", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (2)", function () {
+    const ast = parser.parseEval("$obj?->property?->call();", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
   it("staticlookup", function () {
     const ast = parser.parseEval("$obj::call();", {
       parser: { debug: false },
