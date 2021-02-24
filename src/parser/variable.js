@@ -228,6 +228,11 @@ module.exports = {
           result = node(result, this.read_what());
           break;
         }
+        case this.tok.T_NULLSAFE_OBJECT_OPERATOR: {
+          node = this.node("nullsafepropertylookup");
+          result = node(result, this.read_what());
+          break;
+        }
         default:
           break recursive_scan_loop;
       }

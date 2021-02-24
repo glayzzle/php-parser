@@ -42,13 +42,13 @@ describe("Test versions", function () {
           version: "4.9",
         },
       })
-    ).toThrow(new Error("Can only handle versions between 5.x to 7.x"));
+    ).toThrow(new Error("Can only handle versions between 5.x to 8.x"));
     expect(
       parser.create.bind(null, {
         parser: {
-          version: "8.9",
+          version: "9.9",
         },
       })
-    ).toThrow(new Error("Can only handle versions between 5.x to 7.x"));
+    ).toThrow(new Error("Can only handle versions between 5.x to 8.x"));
   });
 });

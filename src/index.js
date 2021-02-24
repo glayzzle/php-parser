@@ -92,8 +92,8 @@ const engine = function (options) {
         } else if (typeof options.parser.version !== "number") {
           throw new Error("Expecting a number for version");
         }
-        if (options.parser.version < 500 || options.parser.version > 704) {
-          throw new Error("Can only handle versions between 5.x to 7.x");
+        if (options.parser.version < 500 || options.parser.version > 900) {
+          throw new Error("Can only handle versions between 5.x to 8.x");
         }
       }
     }
