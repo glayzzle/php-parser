@@ -283,14 +283,27 @@ module.exports = {
   },
   /**
    * ```ebnf
-   *    argument_list ::= T_ELLIPSIS? expr
+   *    argument_list ::= T_STRING ':' expr | T_ELLIPSIS? expr
    * ```
    */
   read_argument: function () {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
     }
-    return this.read_expr();
+    const name = this.text();
+    let res;
+    try {
+      res = this.read_expr();
+    } catch (e) {
+      // happens if named argument name equals keyword name, e.g.
+      // foo(array: $a) - `array` is not a valid expr
+      this.expect(":") && this.next();
+      return this.node("namedargument")(name, this.read_expr());
+    }
+    if (this.token === ":") {
+      return this.node("namedargument")(name, this.next().read_expr());
+    }
+    return res;
   },
   /**
    * read type hinting
