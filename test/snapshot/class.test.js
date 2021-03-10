@@ -129,6 +129,22 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("Test promoted class properties php 8", function () {
+    const ast = parser.parseEval(
+      `
+      class __proto__ {
+        public function constructor(public int $id, private $name, protected ServerRequestInterface $req) {}
+      }`,
+      {
+        parser: {
+          version: "8.0",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("empty", function () {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });

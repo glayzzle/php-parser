@@ -527,6 +527,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/offsetlookup"),
   require("./ast/operation"),
   require("./ast/parameter"),
+  require("./ast/promotedparameter"),
   require("./ast/parentreference"),
   require("./ast/post"),
   require("./ast/pre"),

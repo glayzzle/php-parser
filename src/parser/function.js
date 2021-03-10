@@ -204,6 +204,17 @@ module.exports = {
     let value = null;
     let type = null;
     let nullable = false;
+    let promote = null;
+    if (this.token === this.tok.T_PUBLIC) {
+      promote = "public";
+    } else if (this.token === this.tok.T_PRIVATE) {
+      promote = "private";
+    } else if (this.token === this.tok.T_PROTECTED) {
+      promote = "protected";
+    }
+    if (promote !== null) {
+      this.next();
+    }
     if (this.token === "?") {
       this.next();
       nullable = true;
@@ -224,6 +235,17 @@ module.exports = {
     }
     if (this.token == "=") {
       value = this.next().read_expr();
+    }
+    if (promote !== null) {
+      return this.node("promotedparameter")(
+        parameterName,
+        type,
+        value,
+        isRef,
+        isVariadic,
+        nullable,
+        promote
+      );
     }
     return node(parameterName, type, value, isRef, isVariadic, nullable);
   },
