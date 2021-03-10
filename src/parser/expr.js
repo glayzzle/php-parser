@@ -320,6 +320,9 @@ module.exports = {
       case this.tok.T_REQUIRE:
       case this.tok.T_REQUIRE_ONCE:
         return this.read_internal_functions_in_yacc();
+
+      case this.tok.T_MATCH:
+        return this.read_match_statement();
       case this.tok.T_INT_CAST:
         return this.read_expr_cast("int");
 
@@ -600,6 +603,53 @@ module.exports = {
       nullable,
       flags ? true : false
     );
+  },
+
+  read_match_statement: function () {
+    const node = this.node("match");
+    this.expect(this.tok.T_MATCH) && this.next();
+    if (!this.version >= 800) {
+      this.reaseError("Match statements are not allowed");
+    }
+    let source = null;
+    let body = null;
+    if (this.expect("(")) this.next();
+    source = this.read_expr();
+    if (this.expect(")")) this.next();
+    if (this.expect("{")) this.next();
+    body = this.read_match_list();
+    if (this.expect("}")) this.next();
+    return node(source, body);
+  },
+
+  read_match_list: function () {
+    return this.read_list(() => this.read_match_pair(), ",", true);
+  },
+
+  read_match_pair: function () {
+    if (this.token === "}") {
+      return;
+    }
+
+    if (this.token === ",") {
+      return this.node("noop")();
+    }
+
+    const entry = this.node("entry");
+
+    let key = null;
+    if (this.token === this.tok.T_DEFAULT) {
+      key = this.node("defaultkeyword")("default");
+      this.next();
+    } else {
+      key = this.read_expr();
+    }
+    if (this.expect(this.tok.T_DOUBLE_ARROW)) {
+      this.next();
+    }
+    const value = this.read_expr();
+
+    return entry(key, value, false, false);
   },
 
   /**

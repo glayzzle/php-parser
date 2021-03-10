@@ -147,6 +147,7 @@ module.exports = {
     234: "T_COALESCE_EQUAL",
     235: "T_FN",
     236: "T_NULLSAFE_OBJECT_OPERATOR",
+    237: "T_MATCH",
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -285,5 +286,6 @@ module.exports = {
     T_COALESCE_EQUAL: 234,
     T_FN: 235,
     T_NULLSAFE_OBJECT_OPERATOR: 236,
+    T_MATCH: 237,
   },
 };
