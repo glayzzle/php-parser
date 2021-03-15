@@ -635,21 +635,25 @@ module.exports = {
       return this.node("noop")();
     }
 
-    const entry = this.node("entry");
+    const entry = this.node("matchentry");
 
-    let key = null;
+    const keys = [];
     if (this.token === this.tok.T_DEFAULT) {
-      key = this.node("defaultkeyword")("default");
+      keys.push(this.node("defaultkeyword")("default"));
       this.next();
     } else {
-      key = this.read_expr();
+      keys.push(this.read_expr());
+      while (this.token === ",") {
+        this.next();
+        keys.push(this.read_expr());
+      }
     }
     if (this.expect(this.tok.T_DOUBLE_ARROW)) {
       this.next();
     }
     const value = this.read_expr();
 
-    return entry(key, value, false, false);
+    return entry(keys, value, false, false);
   },
 
   /**
