@@ -9,8 +9,7 @@ describe("match", () => {
       default => null,
     };
     `);
-    console.log(ast.children[0].expression.right.body);
-    // expect (ast).toMatchSnapshot();
+    expect(ast).toMatchSnapshot();
   });
 
   it("can have lhs, functions", () => {
@@ -20,8 +19,7 @@ describe("match", () => {
       default => null,
     };
     `);
-    console.log(ast.children[0].expression.right.body);
-    // expect (ast).toMatchSnapshot();
+    expect(ast).toMatchSnapshot();
   });
 
   it("can have multiple values", () => {
@@ -31,7 +29,6 @@ describe("match", () => {
       default => null,
     };
     `);
-    console.log(ast.children[0].expression.right.body);
-    // expect (ast).toMatchSnapshot();
+    expect(ast).toMatchSnapshot();
   });
 });
