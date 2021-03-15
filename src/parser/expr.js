@@ -635,8 +635,15 @@ module.exports = {
       return this.node("noop")();
     }
 
-    const entry = this.node("matchentry");
+    return this.node("matchentry")(
+      this.read_match_pair_keys(),
+      this.read_expr(),
+      false,
+      false
+    );
+  },
 
+  read_match_pair_keys: function () {
     const keys = [];
     if (this.token === this.tok.T_DEFAULT) {
       keys.push(this.node("defaultkeyword")("default"));
@@ -651,9 +658,7 @@ module.exports = {
     if (this.expect(this.tok.T_DOUBLE_ARROW)) {
       this.next();
     }
-    const value = this.read_expr();
-
-    return entry(keys, value, false, false);
+    return keys;
   },
 
   /**
