@@ -14,6 +14,24 @@ describe("Function tests", function () {
     expect(ast).toMatchSnapshot();
   });
 
+  it("test function union types", function () {
+    const ast = parser.parseEval(
+      `
+      function foo(int|float $a = 1, Foo|Bar $b) : string|int {}
+      `
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test short function union types", function () {
+    const ast = parser.parseEval(
+      `
+      fn (int|float $a = 1, Foo|Bar $b) : string|int => "";
+      `
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("implement #113 : typehint nodes", function () {
     expect(
       parser.parseEval(
