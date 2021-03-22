@@ -309,7 +309,7 @@ module.exports = {
       nullable = true;
       this.next();
     }
-    let type = this.read_type();
+    let type = this.read_types();
     if (nullable && !type) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator"
