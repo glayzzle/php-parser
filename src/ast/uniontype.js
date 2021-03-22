@@ -20,6 +20,6 @@ module.exports = Declaration.extends(KIND, function UnionType(
   docs,
   location
 ) {
-  Declaration.apply(this, [KIND, types, docs, location]);
+  Declaration.apply(this, [KIND, null, docs, location]);
   this.types = types;
 });
