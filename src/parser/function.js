@@ -229,6 +229,7 @@ module.exports = {
   },
   read_types() {
     const types = [];
+    const unionType = this.node("uniontype");
     let type = this.read_type();
     if (!type) return null;
     types.push(type);
@@ -237,7 +238,11 @@ module.exports = {
       type = this.read_type();
       types.push(type);
     }
-    return types.length === 0 ? null : types;
+    if (types.length === 1) {
+      return types[0];
+    } else {
+      return unionType(types);
+    }
   },
   /**
    * Reads a list of arguments
