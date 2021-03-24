@@ -9,8 +9,8 @@ const Declaration = require("./declaration");
 const KIND = "promotedparameter";
 
 /**
- * Defines a function parameter
- * @constructor Parameter
+ * Defines a promoted function parameter (for class constructor)
+ * @constructor PromotedParameter
  * @extends {Declaration}
  * @property {Identifier|null} type
  * @property {Node|null} value
@@ -19,7 +19,7 @@ const KIND = "promotedparameter";
  * @property {boolean} nullable
  * @property {'public'|'private'|'protected'} promote
  */
-module.exports = Declaration.extends(KIND, function Parameter(
+module.exports = Declaration.extends(KIND, function PromotedParameter(
   name,
   type,
   value,
