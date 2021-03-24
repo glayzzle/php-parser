@@ -9,13 +9,11 @@ const Expression = require("./expression");
 const KIND = "matchentry";
 
 /**
- * An array entry - see [Array](#array)
- * @constructor Entry
+ * An match entry - multiple LHS values, single RHS value
+ * @constructor MatchEntry
  * @extends {Expression}
- * @property {Node|null} key The entry key/offset
+ * @property {Node[]} keys The entry key/offset
  * @property {Node} value The entry value
- * @property {Boolean} byRef By reference
- * @property {Boolean} unpack Argument unpacking
  */
 module.exports = Expression.extends(KIND, function MatchEntry(
   keys,
