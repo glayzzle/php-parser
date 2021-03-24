@@ -12,7 +12,7 @@ const KIND = "uniontype";
  * A union of types
  * @constructor UnionType
  * @extends {Declaration}
- * @property {Type[]} types
+ * @property {TypeReference[]} types
  */
 module.exports = Declaration.extends(KIND, function UnionType(
   types,
