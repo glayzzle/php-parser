@@ -9,11 +9,10 @@ const Declaration = require("./declaration");
 const KIND = "uniontype";
 
 /**
- * An interface definition
- * @constructor Interface
+ * A union of types
+ * @constructor UnionType
  * @extends {Declaration}
- * @property {Identifier[]} extends
- * @property {Declaration[]} body
+ * @property {Type[]} types
  */
 module.exports = Declaration.extends(KIND, function UnionType(
   types,
