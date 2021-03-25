@@ -588,7 +588,7 @@ module.exports = {
         nullable = true;
         this.next();
       }
-      returnType = this.read_type();
+      returnType = this.read_types();
     }
     if (this.expect(this.tok.T_DOUBLE_ARROW)) this.next();
     const body = this.read_expr();

@@ -128,7 +128,7 @@ module.exports = {
         nullable = true;
         this.next();
       }
-      returnType = this.read_type();
+      returnType = this.read_types();
     }
     if (type === 1) {
       // closure
@@ -202,14 +202,14 @@ module.exports = {
     const node = this.node("parameter");
     let parameterName = null;
     let value = null;
-    let type = null;
+    let types = null;
     let nullable = false;
     if (this.token === "?") {
       this.next();
       nullable = true;
     }
-    type = this.read_type();
-    if (nullable && !type) {
+    types = this.read_types();
+    if (nullable && !types) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator"
       );
@@ -225,7 +225,24 @@ module.exports = {
     if (this.token == "=") {
       value = this.next().read_expr();
     }
-    return node(parameterName, type, value, isRef, isVariadic, nullable);
+    return node(parameterName, types, value, isRef, isVariadic, nullable);
+  },
+  read_types() {
+    const types = [];
+    const unionType = this.node("uniontype");
+    let type = this.read_type();
+    if (!type) return null;
+    types.push(type);
+    while (this.token === "|") {
+      this.next();
+      type = this.read_type();
+      types.push(type);
+    }
+    if (types.length === 1) {
+      return types[0];
+    } else {
+      return unionType(types);
+    }
   },
   /**
    * Reads a list of arguments
