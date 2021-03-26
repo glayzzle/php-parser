@@ -6,24 +6,22 @@
 "use strict";
 
 const Expression = require("./expression");
-const KIND = "matchentry";
+const KIND = "matcharm";
 
 /**
  * An array entry - see [Array](#array)
  * @constructor Entry
  * @extends {Expression}
- * @property {Node|null} key The entry key/offset
- * @property {Node} value The entry value
- * @property {Boolean} byRef By reference
- * @property {Boolean} unpack Argument unpacking
+ * @property {Expression[]|null} conds The match condition expression list - null indicated default arm
+ * @property {Expression} body The match return value expression
  */
-module.exports = Expression.extends(KIND, function MatchEntry(
-  keys,
-  value,
+module.exports = Expression.extends(KIND, function MatchArm(
+  conds,
+  body,
   docs,
   location
 ) {
   Expression.apply(this, [KIND, docs, location]);
-  this.keys = keys;
-  this.value = value;
+  this.conds = conds;
+  this.body = body;
 });

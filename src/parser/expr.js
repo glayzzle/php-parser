@@ -322,7 +322,7 @@ module.exports = {
         return this.read_internal_functions_in_yacc();
 
       case this.tok.T_MATCH:
-        return this.read_match_statement();
+        return this.read_match_expression();
       case this.tok.T_INT_CAST:
         return this.read_expr_cast("int");
 
@@ -605,60 +605,53 @@ module.exports = {
     );
   },
 
-  read_match_statement: function () {
+  read_match_expression: function () {
     const node = this.node("match");
     this.expect(this.tok.T_MATCH) && this.next();
-    if (!this.version >= 800) {
-      this.reaseError("Match statements are not allowed");
+    if (this.version < 800) {
+      this.reaseError("Match statements are not allowed before PHP 8");
     }
-    let source = null;
-    let body = null;
+    let cond = null;
+    let arms = [];
     if (this.expect("(")) this.next();
-    source = this.read_expr();
+    cond = this.read_expr();
     if (this.expect(")")) this.next();
     if (this.expect("{")) this.next();
-    body = this.read_match_list();
+    arms = this.read_match_arms();
     if (this.expect("}")) this.next();
-    return node(source, body);
+    return node(cond, arms);
   },
 
-  read_match_list: function () {
-    return this.read_list(() => this.read_match_pair(), ",", true);
+  read_match_arms: function () {
+    return this.read_list(() => this.read_match_arm(), ",", true);
   },
 
-  read_match_pair: function () {
+  read_match_arm: function () {
     if (this.token === "}") {
       return;
     }
-
     if (this.token === ",") {
       return this.node("noop")();
     }
-
-    return this.node("matchentry")(
-      this.read_match_pair_keys(),
-      this.read_expr(),
-      false,
-      false
-    );
+    return this.node("matcharm")(this.read_match_arm_conds(), this.read_expr());
   },
 
-  read_match_pair_keys: function () {
-    const keys = [];
+  read_match_arm_conds: function () {
+    let conds = [];
     if (this.token === this.tok.T_DEFAULT) {
-      keys.push(this.node("defaultkeyword")("default"));
+      conds = null;
       this.next();
     } else {
-      keys.push(this.read_expr());
+      conds.push(this.read_expr());
       while (this.token === ",") {
         this.next();
-        keys.push(this.read_expr());
+        conds.push(this.read_expr());
       }
     }
     if (this.expect(this.tok.T_DOUBLE_ARROW)) {
       this.next();
     }
-    return keys;
+    return conds;
   },
 
   /**

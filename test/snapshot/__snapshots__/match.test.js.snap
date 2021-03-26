@@ -13,61 +13,56 @@ Program {
         },
         "operator": "=",
         "right": Match {
-          "body": Array [
-            MatchEntry {
-              "keys": Array [
-                Boolean {
-                  "kind": "boolean",
-                  "raw": "true",
-                  "value": true,
-                },
-              ],
-              "kind": "matchentry",
-              "value": String {
+          "arms": Array [
+            MatchArm {
+              "body": String {
                 "isDoubleQuote": false,
                 "kind": "string",
                 "raw": "'yes'",
                 "unicode": false,
                 "value": "yes",
               },
-            },
-            MatchEntry {
-              "keys": Array [
+              "conds": Array [
                 Boolean {
                   "kind": "boolean",
-                  "raw": "false",
-                  "value": false,
+                  "raw": "true",
+                  "value": true,
                 },
               ],
-              "kind": "matchentry",
-              "value": String {
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": String {
                 "isDoubleQuote": false,
                 "kind": "string",
                 "raw": "'no'",
                 "unicode": false,
                 "value": "no",
               },
-            },
-            MatchEntry {
-              "keys": Array [
-                DefaultKeyword {
-                  "kind": "defaultkeyword",
-                  "raw": "default",
+              "conds": Array [
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
                 },
               ],
-              "kind": "matchentry",
-              "value": NullKeyword {
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": NullKeyword {
                 "kind": "nullkeyword",
                 "raw": "null",
               },
+              "conds": null,
+              "kind": "matcharm",
             },
           ],
-          "kind": "match",
-          "test": Variable {
+          "cond": Variable {
             "curly": false,
             "kind": "variable",
             "name": "a",
           },
+          "kind": "match",
         },
       },
       "kind": "expressionstatement",
@@ -91,9 +86,16 @@ Program {
         },
         "operator": "=",
         "right": Match {
-          "body": Array [
-            MatchEntry {
-              "keys": Array [
+          "arms": Array [
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'yes'",
+                "unicode": false,
+                "value": "yes",
+              },
+              "conds": Array [
                 Call {
                   "arguments": Array [
                     Variable {
@@ -125,35 +127,23 @@ Program {
                   },
                 },
               ],
-              "kind": "matchentry",
-              "value": String {
-                "isDoubleQuote": false,
-                "kind": "string",
-                "raw": "'yes'",
-                "unicode": false,
-                "value": "yes",
-              },
+              "kind": "matcharm",
             },
-            MatchEntry {
-              "keys": Array [
-                DefaultKeyword {
-                  "kind": "defaultkeyword",
-                  "raw": "default",
-                },
-              ],
-              "kind": "matchentry",
-              "value": NullKeyword {
+            MatchArm {
+              "body": NullKeyword {
                 "kind": "nullkeyword",
                 "raw": "null",
               },
+              "conds": null,
+              "kind": "matcharm",
             },
           ],
-          "kind": "match",
-          "test": Boolean {
+          "cond": Boolean {
             "kind": "boolean",
             "raw": "true",
             "value": true,
           },
+          "kind": "match",
         },
       },
       "kind": "expressionstatement",
@@ -177,9 +167,18 @@ Program {
         },
         "operator": "=",
         "right": Match {
-          "body": Array [
-            MatchEntry {
-              "keys": Array [
+          "arms": Array [
+            MatchArm {
+              "body": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "run",
+                  "resolution": "uqn",
+                },
+              },
+              "conds": Array [
                 Number {
                   "kind": "number",
                   "value": "0",
@@ -197,37 +196,23 @@ Program {
                   "value": "3",
                 },
               ],
-              "kind": "matchentry",
-              "value": Call {
-                "arguments": Array [],
-                "kind": "call",
-                "what": Name {
-                  "kind": "name",
-                  "name": "run",
-                  "resolution": "uqn",
-                },
-              },
+              "kind": "matcharm",
             },
-            MatchEntry {
-              "keys": Array [
-                DefaultKeyword {
-                  "kind": "defaultkeyword",
-                  "raw": "default",
-                },
-              ],
-              "kind": "matchentry",
-              "value": NullKeyword {
+            MatchArm {
+              "body": NullKeyword {
                 "kind": "nullkeyword",
                 "raw": "null",
               },
+              "conds": null,
+              "kind": "matcharm",
             },
           ],
-          "kind": "match",
-          "test": Name {
+          "cond": Name {
             "kind": "name",
             "name": "trye",
             "resolution": "uqn",
           },
+          "kind": "match",
         },
       },
       "kind": "expressionstatement",

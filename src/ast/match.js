@@ -12,17 +12,17 @@ const KIND = "match";
  * Defines a match expression
  * @constructor Match
  * @extends {Expression}
- * @property {Expression} test
- * @property {Block} body
+ * @property {Expression} cond Condition expression to match against
+ * @property {MatchArm[]} arms
  * @property {boolean} shortForm
  */
 module.exports = Expression.extends(KIND, function Match(
-  test,
-  body,
+  cond,
+  arms,
   docs,
   location
 ) {
   Expression.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.body = body;
+  this.cond = cond;
+  this.arms = arms;
 });
