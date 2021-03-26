@@ -556,6 +556,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/try"),
   require("./ast/typereference"),
   require("./ast/unary"),
+  require("./ast/uniontype"),
   require("./ast/unset"),
   require("./ast/usegroup"),
   require("./ast/useitem"),

@@ -445,6 +445,103 @@ Program {
 }
 `;
 
+exports[`Function tests test function union types 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "a",
+          },
+          "nullable": false,
+          "type": UnionType {
+            "kind": "uniontype",
+            "name": null,
+            "types": Array [
+              TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              TypeReference {
+                "kind": "typereference",
+                "name": "float",
+                "raw": "float",
+              },
+            ],
+          },
+          "value": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "variadic": false,
+        },
+        Parameter {
+          "byref": false,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "nullable": false,
+          "type": UnionType {
+            "kind": "uniontype",
+            "name": null,
+            "types": Array [
+              Name {
+                "kind": "name",
+                "name": "Foo",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "Bar",
+                "resolution": "uqn",
+              },
+            ],
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": UnionType {
+        "kind": "uniontype",
+        "name": null,
+        "types": Array [
+          TypeReference {
+            "kind": "typereference",
+            "name": "string",
+            "raw": "string",
+          },
+          TypeReference {
+            "kind": "typereference",
+            "name": "int",
+            "raw": "int",
+          },
+        ],
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Function tests test reserved word for function name error 1`] = `
 Program {
   "children": Array [
@@ -473,6 +570,106 @@ Program {
       "token": "'list' (T_LIST)",
     },
   ],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test short function union types 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Closure {
+        "arguments": Array [
+          Parameter {
+            "byref": false,
+            "kind": "parameter",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "a",
+            },
+            "nullable": false,
+            "type": UnionType {
+              "kind": "uniontype",
+              "name": null,
+              "types": Array [
+                TypeReference {
+                  "kind": "typereference",
+                  "name": "int",
+                  "raw": "int",
+                },
+                TypeReference {
+                  "kind": "typereference",
+                  "name": "float",
+                  "raw": "float",
+                },
+              ],
+            },
+            "value": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "variadic": false,
+          },
+          Parameter {
+            "byref": false,
+            "kind": "parameter",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "b",
+            },
+            "nullable": false,
+            "type": UnionType {
+              "kind": "uniontype",
+              "name": null,
+              "types": Array [
+                Name {
+                  "kind": "name",
+                  "name": "Foo",
+                  "resolution": "uqn",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "Bar",
+                  "resolution": "uqn",
+                },
+              ],
+            },
+            "value": null,
+            "variadic": false,
+          },
+        ],
+        "body": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\"",
+          "unicode": false,
+          "value": "",
+        },
+        "byref": false,
+        "isStatic": false,
+        "kind": "arrowfunc",
+        "nullable": false,
+        "type": UnionType {
+          "kind": "uniontype",
+          "name": null,
+          "types": Array [
+            TypeReference {
+              "kind": "typereference",
+              "name": "string",
+              "raw": "string",
+            },
+            TypeReference {
+              "kind": "typereference",
+              "name": "int",
+              "raw": "int",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;

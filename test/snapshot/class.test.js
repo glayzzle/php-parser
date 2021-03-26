@@ -145,6 +145,17 @@ describe("Test classes", function () {
     expect(ast).toMatchSnapshot();
   });
 
+  it("Test class union properties", function () {
+    expect(
+      parser.parseEval(`
+      class Test {
+        static int|float $foo;
+        private ?Foo|Bar $bar;
+        public Repo|string|null $a;
+      }`)
+    ).toMatchSnapshot();
+  });
+
   it("empty", function () {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
