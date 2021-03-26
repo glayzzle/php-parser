@@ -9,8 +9,8 @@ const Node = require("./node");
 const KIND = "defaultkeyword";
 
 /**
- * Represents the null keyword
- * @constructor NullKeyword
+ * Represents the default keyword, specifically for match statement
+ * @constructor DefaultKeyword
  * @extends {Node}
  */
 module.exports = Node.extends(KIND, function DefaultKeyword(
