@@ -290,20 +290,20 @@ module.exports = {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
     }
-    const name = this.text();
-    let res;
-    try {
-      res = this.read_expr();
-    } catch (e) {
-      // happens if named argument name equals keyword name, e.g.
-      // foo(array: $a) - `array` is not a valid expr
-      this.expect(":") && this.next();
-      return this.node("namedargument")(name, this.read_expr());
+    if (
+      this.token === this.tok.T_STRING ||
+      Object.values(this.lexer.keywords).includes(this.token)
+    ) {
+      const backup = [this.token, this.lexer.getState()];
+      const name = this.text();
+      this.next();
+      if (this.token === ":") {
+        return this.node("namedargument")(name, this.next().read_expr());
+      }
+      this.lexer.tokens.push(backup);
+      this.next();
     }
-    if (this.token === ":") {
-      return this.node("namedargument")(name, this.next().read_expr());
-    }
-    return res;
+    return this.read_expr();
   },
   /**
    * read type hinting
