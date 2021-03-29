@@ -13,7 +13,7 @@ const KIND = "match";
  * @constructor Match
  * @extends {Expression}
  * @property {Expression} cond Condition expression to match against
- * @property {MatchArm[]} arms
+ * @property {MatchArm[]} arms Arms for comparison
  */
 module.exports = Expression.extends(KIND, function Match(
   cond,

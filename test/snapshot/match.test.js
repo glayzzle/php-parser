@@ -50,4 +50,13 @@ describe("match", () => {
     `);
     }).toThrow(SyntaxError);
   });
+  it("can be nested", () => {
+    const ast = parser.parseEval(`
+      $v = match(callMe(1,2,3)) {
+        null => match($err) { 1 => 'Connect', 2 => 'Auth'},
+        match($a) {true => 0, false => -1} => 'Ok'
+      };
+    `);
+    expect(ast).toMatchSnapshot();
+  });
 });

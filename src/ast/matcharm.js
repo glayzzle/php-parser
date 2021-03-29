@@ -12,8 +12,8 @@ const KIND = "matcharm";
  * An array entry - see [Array](#array)
  * @constructor Entry
  * @extends {Expression}
- * @property {Expression[]|null} conds The match condition expression list - null indicated default arm
- * @property {Expression} body The match return value expression
+ * @property {Expression[]|null} conds The match condition expression list - null indicates default arm
+ * @property {Expression} body The return value expression
  */
 module.exports = Expression.extends(KIND, function MatchArm(
   conds,
