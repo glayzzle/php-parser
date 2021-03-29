@@ -346,6 +346,14 @@ module.exports = {
       case this.tok.T_UNSET_CAST:
         return this.read_expr_cast("unset");
 
+      case this.tok.T_THROW: {
+        if (this.version < 800) {
+          this.raiseError("PHP 8+ is required to use throw as an expression");
+        }
+        const result = this.node("throw");
+        const expr = this.next().read_expr();
+        return result(expr);
+      }
       case this.tok.T_EXIT: {
         const useDie = this.lexer.yytext.toLowerCase() === "die";
         result = this.node("exit");

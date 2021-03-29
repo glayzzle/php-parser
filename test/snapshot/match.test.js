@@ -35,7 +35,7 @@ describe("match", () => {
     const ast = parser.parseEval(`
     $test = match($test) {
       true, => 'ok',
-      false => 'Nope!',
+      false => throw new Exception('Nope'),
     };
     `);
     expect(ast).toMatchSnapshot();
