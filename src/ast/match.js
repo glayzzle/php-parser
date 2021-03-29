@@ -14,7 +14,6 @@ const KIND = "match";
  * @extends {Expression}
  * @property {Expression} cond Condition expression to match against
  * @property {MatchArm[]} arms
- * @property {boolean} shortForm
  */
 module.exports = Expression.extends(KIND, function Match(
   cond,
