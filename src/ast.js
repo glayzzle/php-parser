@@ -486,7 +486,6 @@ AST.prototype.checkNodes = function () {
   require("./ast/declaration"),
   require("./ast/declare"),
   require("./ast/declaredirective"),
-  require("./ast/defaultkeyword"),
   require("./ast/do"),
   require("./ast/echo"),
   require("./ast/empty"),
