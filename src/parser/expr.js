@@ -630,9 +630,6 @@ module.exports = {
     if (this.token === "}") {
       return;
     }
-    if (this.token === ",") {
-      return this.node("noop")();
-    }
     return this.node("matcharm")(this.read_match_arm_conds(), this.read_expr());
   },
 
