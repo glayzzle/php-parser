@@ -34,7 +34,7 @@ describe("match", () => {
   it("can have hanging comma", () => {
     const ast = parser.parseEval(`
     $test = match($test) {
-      true => 'ok',
+      true, => 'ok',
       false => 'Nope!',
     };
     `);

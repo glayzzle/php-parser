@@ -645,6 +645,10 @@ module.exports = {
       conds.push(this.read_expr());
       while (this.token === ",") {
         this.next();
+        if (this.token === this.tok.T_DOUBLE_ARROW) {
+          this.next();
+          return conds;
+        }
         conds.push(this.read_expr());
       }
     }
