@@ -6,7 +6,7 @@ describe("match", () => {
     $test = match($a) {
       true => 'yes',
       false => 'no',
-      default => null,
+      default => null
     };
     `);
     expect(ast).toMatchSnapshot();
@@ -16,7 +16,7 @@ describe("match", () => {
     const ast = parser.parseEval(`
     $test = match(true) {
       test($a), abc($b) => 'yes',
-      default => null,
+      default => null
     };
     `);
     expect(ast).toMatchSnapshot();
@@ -26,9 +26,28 @@ describe("match", () => {
     const ast = parser.parseEval(`
     $test = match(trye) {
       0,1,2,3 => run(),
-      default => null,
+      default => null
     };
     `);
     expect(ast).toMatchSnapshot();
+  });
+  it("can have hanging comma", () => {
+    const ast = parser.parseEval(`
+    $test = match($test) {
+      true => 'ok',
+      false => 'Nope!',
+    };
+    `);
+    expect(ast).toMatchSnapshot();
+  });
+  it("does not support older php than 8", () => {
+    expect(() => {
+      new parser({ parser: { version: 704 } }).parseEval(`
+        $test = match($test) {
+          true => 'ok',
+          false => 'Nope!',
+        };
+    `);
+    }).toThrow(SyntaxError);
   });
 });

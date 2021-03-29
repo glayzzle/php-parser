@@ -609,7 +609,7 @@ module.exports = {
     const node = this.node("match");
     this.expect(this.tok.T_MATCH) && this.next();
     if (this.version < 800) {
-      this.reaseError("Match statements are not allowed before PHP 8");
+      this.raiseError("Match statements are not allowed before PHP 8");
     }
     let cond = null;
     let arms = [];
