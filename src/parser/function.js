@@ -208,6 +208,7 @@ module.exports = {
       this.next();
       nullable = true;
     }
+    const flags = this.read_promoted();
     types = this.read_types();
     if (nullable && !types) {
       this.raiseError(
@@ -225,7 +226,15 @@ module.exports = {
     if (this.token == "=") {
       value = this.next().read_expr();
     }
-    return node(parameterName, types, value, isRef, isVariadic, nullable);
+    return node(
+      parameterName,
+      types,
+      value,
+      isRef,
+      isVariadic,
+      nullable,
+      flags
+    );
   },
   read_types() {
     const types = [];
@@ -242,6 +251,23 @@ module.exports = {
       return types[0];
     } else {
       return unionType(types);
+    }
+  },
+  read_promoted() {
+    const MODIFIER_PUBLIC = 1;
+    const MODIFIER_PROTECTED = 2;
+    const MODIFIER_PRIVATE = 4;
+    if (this.token === this.tok.T_PUBLIC) {
+      this.next();
+      return MODIFIER_PUBLIC;
+    } else if (this.token === this.tok.T_PROTECTED) {
+      this.next();
+      return MODIFIER_PROTECTED;
+    } else if (this.token === this.tok.T_PRIVATE) {
+      this.next();
+      return MODIFIER_PRIVATE;
+    } else {
+      0;
     }
   },
   /**
