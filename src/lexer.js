@@ -106,6 +106,7 @@ const lexer = function (engine) {
     or: this.tok.T_LOGICAL_OR,
     and: this.tok.T_LOGICAL_AND,
     xor: this.tok.T_LOGICAL_XOR,
+    match: this.tok.T_MATCH,
   };
   this.castKeywords = {
     int: this.tok.T_INT_CAST,

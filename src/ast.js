@@ -514,6 +514,8 @@ AST.prototype.checkNodes = function () {
   require("./ast/literal"),
   require("./ast/lookup"),
   require("./ast/magic"),
+  require("./ast/match"),
+  require("./ast/matcharm"),
   require("./ast/method"),
   require("./ast/name"),
   require("./ast/namespace"),
