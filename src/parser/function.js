@@ -283,12 +283,25 @@ module.exports = {
   },
   /**
    * ```ebnf
-   *    argument_list ::= T_ELLIPSIS? expr
+   *    argument_list ::= T_STRING ':' expr | T_ELLIPSIS? expr
    * ```
    */
   read_argument: function () {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
+    }
+    if (
+      this.token === this.tok.T_STRING ||
+      Object.values(this.lexer.keywords).includes(this.token)
+    ) {
+      const backup = [this.token, this.lexer.getState()];
+      const name = this.text();
+      this.next();
+      if (this.token === ":") {
+        return this.node("namedargument")(name, this.next().read_expr());
+      }
+      this.lexer.tokens.push(backup);
+      this.next();
     }
     return this.read_expr();
   },

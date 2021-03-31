@@ -97,6 +97,84 @@ Program {
 }
 `;
 
+exports[`Test call comments 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "leadingComments": Array [
+                  CommentLine {
+                    "kind": "commentline",
+                    "offset": 10,
+                    "value": "// comment
+",
+                  },
+                ],
+                "unpack": false,
+                "value": Number {
+                  "kind": "number",
+                  "value": "100",
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+            ],
+            "kind": "array",
+            "leadingComments": Array [
+              CommentLine {
+                "kind": "commentline",
+                "offset": 10,
+                "value": "// comment
+",
+              },
+            ],
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "comments": Array [
+    CommentLine {
+      "kind": "commentline",
+      "offset": 10,
+      "value": "// comment
+",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "offset": 10,
+      "value": "// comment
+",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test call inside offsetlookup 1`] = `
 Program {
   "children": Array [
@@ -636,6 +714,79 @@ Program {
 }
 `;
 
+exports[`Test call keyword as named argument 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          namedargument {
+            "kind": "namedargument",
+            "name": "array",
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call mix of unnamed and named arguments 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Number {
+            "kind": "number",
+            "value": "50",
+          },
+          namedargument {
+            "kind": "namedargument",
+            "name": "num",
+            "value": Number {
+              "kind": "number",
+              "value": "100",
+            },
+          },
+          namedargument {
+            "kind": "namedargument",
+            "name": "start_index",
+            "value": Number {
+              "kind": "number",
+              "value": "0",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test call multiple (2) 1`] = `
 Program {
   "children": Array [
@@ -741,6 +892,37 @@ Program {
         "what": Name {
           "kind": "name",
           "name": "call",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call named arguments in php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          namedargument {
+            "kind": "namedargument",
+            "name": "a",
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
           "resolution": "uqn",
         },
       },

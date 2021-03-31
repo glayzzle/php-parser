@@ -519,6 +519,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/method"),
   require("./ast/name"),
   require("./ast/namespace"),
+  require("./ast/namedargument"),
   require("./ast/new"),
   require("./ast/node"),
   require("./ast/noop"),
