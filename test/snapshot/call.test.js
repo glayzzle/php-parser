@@ -253,6 +253,25 @@ describe("Test call", function () {
     });
     expect(astErr).toMatchSnapshot();
   });
+  it("named arguments are not supported in php 7.2", function () {
+    expect(() =>
+      parser.parseEval(`foo(a: $a);`, {
+        parser: {
+          version: "7.2",
+          debug: false,
+        },
+      })
+    ).toThrow("PHP 8+ is required to use named arguments");
+  });
+  it("doesnt confused static methods with named arguments", function () {
+    const astErr = parser.parseEval(`foo(a::bar());`, {
+      parser: {
+        version: "8.0",
+        debug: false,
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
   it("keyword as named argument", function () {
     const astErr = parser.parseEval(`foo(array: $a);`, {
       parser: {

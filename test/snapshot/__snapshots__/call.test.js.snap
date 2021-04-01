@@ -135,14 +135,6 @@ Program {
               },
             ],
             "kind": "array",
-            "leadingComments": Array [
-              CommentLine {
-                "kind": "commentline",
-                "offset": 10,
-                "value": "// comment
-",
-              },
-            ],
             "shortForm": false,
           },
         ],
@@ -163,11 +155,43 @@ Program {
       "value": "// comment
 ",
     },
-    CommentLine {
-      "kind": "commentline",
-      "offset": 10,
-      "value": "// comment
-",
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test call doesnt confused static methods with named arguments 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "a",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
     },
   ],
   "errors": Array [],

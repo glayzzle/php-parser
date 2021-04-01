@@ -26,6 +26,27 @@ bar() /* inner */ ;
       ).toMatchSnapshot();
     });
 
+    it("fix call comments", function () {
+      expect(
+        parser.parseEval(
+          `
+call(array // comment
+());
+        `,
+          {
+            parser: {
+              extractDoc: true,
+              // debug: true
+            },
+            ast: {
+              withPositions: true,
+              withSource: true,
+            },
+          }
+        )
+      ).toMatchSnapshot();
+    });
+
     it("fix #126 : new option", function () {
       const ast = parser.parseEval(
         `
