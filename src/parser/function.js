@@ -266,7 +266,7 @@ module.exports = {
     } else if (this.token === this.tok.T_PRIVATE) {
       this.next();
       return MODIFIER_PRIVATE;
-    } 
+    }
     return 0;
   },
   /**
