@@ -266,9 +266,8 @@ module.exports = {
     } else if (this.token === this.tok.T_PRIVATE) {
       this.next();
       return MODIFIER_PRIVATE;
-    } else {
-      0;
-    }
+    } 
+    return 0;
   },
   /**
    * Reads a list of arguments
