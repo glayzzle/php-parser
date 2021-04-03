@@ -8,6 +8,13 @@
 const Declaration = require("./declaration");
 const KIND = "parameter";
 
+// eslint-disable-next-line no-unused-vars
+const MODIFIER_PUBLIC = 1;
+// eslint-disable-next-line no-unused-vars
+const MODIFIER_PROTECTED = 2;
+// eslint-disable-next-line no-unused-vars
+const MODIFIER_PRIVATE = 4;
+
 /**
  * Defines a function parameter
  * @constructor Parameter
@@ -17,6 +24,7 @@ const KIND = "parameter";
  * @property {boolean} byref
  * @property {boolean} variadic
  * @property {boolean} nullable
+ * @property {MODIFIER_PUBLIC|MODIFIER_PROTECTED|MODIFIER_PRIVATE} flags
  */
 module.exports = Declaration.extends(KIND, function Parameter(
   name,
@@ -25,6 +33,7 @@ module.exports = Declaration.extends(KIND, function Parameter(
   isRef,
   isVariadic,
   nullable,
+  flags,
   docs,
   location
 ) {
@@ -34,4 +43,5 @@ module.exports = Declaration.extends(KIND, function Parameter(
   this.byref = isRef;
   this.variadic = isVariadic;
   this.nullable = nullable;
+  this.flags = flags || 0;
 });

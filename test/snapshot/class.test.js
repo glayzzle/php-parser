@@ -129,15 +129,20 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
-  it("Test class union properties", function () {
-    expect(
-      parser.parseEval(`
-      class Test {
-        static int|float $foo;
-        private ?Foo|Bar $bar;
-        public Repo|string|null $a;
-      }`)
-    ).toMatchSnapshot();
+  it("Test promoted class properties php 8", function () {
+    const ast = parser.parseEval(
+      `
+      class __proto__ {
+        public function constructor(public int $id, private $name, int $c, protected ServerRequestInterface $req) {}
+      }`,
+      {
+        parser: {
+          version: "8.0",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
   });
 
   it("empty", function () {
