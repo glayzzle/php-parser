@@ -19,15 +19,13 @@ const IS_PRIVATE = "private";
  * @extends {Statement}
  * @property {Identifier|string} name
  */
-const Declaration = Statement.extends(KIND, function Declaration(
-  kind,
-  name,
-  docs,
-  location
-) {
-  Statement.apply(this, [kind || KIND, docs, location]);
-  this.name = name;
-});
+const Declaration = Statement.extends(
+  KIND,
+  function Declaration(kind, name, docs, location) {
+    Statement.apply(this, [kind || KIND, docs, location]);
+    this.name = name;
+  }
+);
 
 /**
  * Generic flags parser

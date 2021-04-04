@@ -16,15 +16,12 @@ const KIND = "while";
  * @property {Statement} body
  * @property {boolean} shortForm
  */
-module.exports = Statement.extends(KIND, function While(
-  test,
-  body,
-  shortForm,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.body = body;
-  this.shortForm = shortForm;
-});
+module.exports = Statement.extends(
+  KIND,
+  function While(test, body, shortForm, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.test = test;
+    this.body = body;
+    this.shortForm = shortForm;
+  }
+);

@@ -16,15 +16,12 @@ const KIND = "encapsedpart";
  * @property {String} syntax
  * @property {Boolean} curly
  */
-module.exports = Expression.extends(KIND, function EncapsedPart(
-  expression,
-  syntax,
-  curly,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.expression = expression;
-  this.syntax = syntax;
-  this.curly = curly;
-});
+module.exports = Expression.extends(
+  KIND,
+  function EncapsedPart(expression, syntax, curly, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.expression = expression;
+    this.syntax = syntax;
+    this.curly = curly;
+  }
+);
