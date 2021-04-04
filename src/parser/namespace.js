@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads a namespace declaration block
    * ```ebnf
    * namespace ::= T_NAMESPACE namespace_name? '{'
@@ -64,7 +64,7 @@ module.exports = {
       return result(name, body, false);
     }
   },
-  /**
+  /*
    * Reads a namespace name
    * ```ebnf
    *  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
@@ -97,7 +97,7 @@ module.exports = {
     }
     return result("name", names, relative);
   },
-  /**
+  /*
    * Reads a use statement
    * ```ebnf
    * use_statement ::= T_USE
@@ -127,7 +127,7 @@ module.exports = {
     this.expect(";") && this.next();
     return result;
   },
-  /**
+  /*
    *
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
    */
@@ -135,7 +135,7 @@ module.exports = {
     // resolved as the same
     return this.read_variable(true, false);
   },
-  /**
+  /*
    * Reads a use declaration
    * ```ebnf
    * use_declaration ::= use_type? namespace_name use_alias
@@ -151,7 +151,7 @@ module.exports = {
     const alias = this.read_use_alias();
     return result(name.name, alias, type);
   },
-  /**
+  /*
    * Reads a list of use declarations
    * ```ebnf
    * use_declarations ::= use_declaration (',' use_declaration)*
@@ -181,7 +181,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * Reads a use statement
    * ```ebnf
    * use_alias ::= (T_AS T_STRING)?
@@ -200,7 +200,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * Reads the namespace type declaration
    * ```ebnf
    * use_type ::= (T_FUNCTION | T_CONST)?

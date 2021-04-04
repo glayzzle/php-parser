@@ -11,6 +11,7 @@ const KIND = "cast";
 /**
  * Binary operations
  * @constructor Cast
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {String} raw

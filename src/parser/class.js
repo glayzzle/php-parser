@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * reading a class
    * ```ebnf
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
@@ -51,7 +51,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a class body
    * ```ebnf
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
@@ -131,7 +131,7 @@ module.exports = {
     this.next();
     return result;
   },
-  /**
+  /*
    * Reads variable list
    * ```ebnf
    *  variable_list ::= (variable_declaration ',')* variable_declaration
@@ -141,7 +141,7 @@ module.exports = {
     const result = this.node("propertystatement");
 
     const properties = this.read_list(
-      /**
+      /*
        * Reads a variable declaration
        *
        * ```ebnf
@@ -171,7 +171,7 @@ module.exports = {
 
     return result(null, properties, flags);
   },
-  /**
+  /*
    * Reads constant list
    * ```ebnf
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
@@ -183,7 +183,7 @@ module.exports = {
     }
     const result = this.node("classconstant");
     const items = this.read_list(
-      /**
+      /*
        * Reads a constant declaration
        *
        * ```ebnf
@@ -216,7 +216,7 @@ module.exports = {
 
     return result(null, items, flags);
   },
-  /**
+  /*
    * Read member flags
    * @return array
    *  1st index : 0 => public, 1 => protected, 2 => private
@@ -280,7 +280,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * optional_type:
    *	  /- empty -/	{ $$ = NULL; }
    *   |	type_expr	{ $$ = $1; }
@@ -333,7 +333,7 @@ module.exports = {
     return [nullable, type];
   },
 
-  /**
+  /*
    * reading an interface
    * ```ebnf
    * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
@@ -356,7 +356,7 @@ module.exports = {
     const body = this.next().read_interface_body();
     return result(propName, propExtends, body);
   },
-  /**
+  /*
    * Reads an interface body
    * ```ebnf
    *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
@@ -405,7 +405,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * reading a trait
    * ```ebnf
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
@@ -428,7 +428,7 @@ module.exports = {
     const body = this.next().read_class_body();
     return result(propName, body);
   },
-  /**
+  /*
    * reading a use statement
    * ```ebnf
    * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
@@ -461,7 +461,7 @@ module.exports = {
     }
     return node(traits, adaptations);
   },
-  /**
+  /*
    * Reading trait alias
    * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)

@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads a short form of tokens
    * @param {Number} token - The ending token
    * @return {Block}
@@ -30,7 +30,7 @@ module.exports = {
     return body(null, items);
   },
 
-  /**
+  /*
    * https://wiki.php.net/rfc/trailing-comma-function-calls
    * @param {*} item
    * @param {*} separator
@@ -53,7 +53,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
    * ```ebnf
    * list ::= separator? ( item separator )* item
@@ -95,7 +95,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a list of names separated by a comma
    *
    * ```ebnf
@@ -114,7 +114,7 @@ module.exports = {
     return this.read_list(this.read_namespace_name, ",", false);
   },
 
-  /**
+  /*
    * Reads the byref token and assign it to the specified node
    * @param {*} cb
    */
@@ -130,7 +130,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a list of variables declarations
    *
    * ```ebnf

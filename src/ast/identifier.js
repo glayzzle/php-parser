@@ -11,6 +11,7 @@ const KIND = "identifier";
 /**
  * Defines an identifier node
  * @constructor Identifier
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {string} name
  */

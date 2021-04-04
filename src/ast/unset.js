@@ -11,6 +11,7 @@ const KIND = "unset";
 /**
  * Deletes references to a list of variables
  * @constructor Unset
+ * @memberOf module:php-parser
  * @extends {Statement}
  */
 module.exports = Statement.extends(

@@ -11,6 +11,7 @@ const KIND = "while";
 /**
  * Defines a while statement
  * @constructor While
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Statement} body

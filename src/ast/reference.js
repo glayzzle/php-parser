@@ -11,6 +11,7 @@ const KIND = "reference";
 /**
  * Defines a reference node
  * @constructor Reference
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 const Reference = Node.extends(KIND, function Reference(kind, docs, location) {

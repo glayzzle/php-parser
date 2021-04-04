@@ -11,6 +11,7 @@ const KIND = "label";
 /**
  * A label statement (referenced by goto)
  * @constructor Label
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {String} name
  */

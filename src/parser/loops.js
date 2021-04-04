@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads a while statement
    * ```ebnf
    * while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')
@@ -31,7 +31,7 @@ module.exports = {
     }
     return result(test, body, shortForm);
   },
-  /**
+  /*
    * Reads a do / while loop
    * ```ebnf
    * do ::= T_DO statement T_WHILE '(' expr ')' ';'
@@ -53,7 +53,7 @@ module.exports = {
     }
     return result(test, body);
   },
-  /**
+  /*
    * Read a for incremental loop
    * ```ebnf
    * for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
@@ -98,7 +98,7 @@ module.exports = {
     }
     return result(init, test, increment, body, shortForm);
   },
-  /**
+  /*
    * Reads a foreach loop
    * ```ebnf
    * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
@@ -140,7 +140,7 @@ module.exports = {
     }
     return result(source, key, value, body, shortForm);
   },
-  /**
+  /*
    * Reads a foreach variable statement
    * ```ebnf
    * foreach_variable =

@@ -11,6 +11,7 @@ const KIND = "include";
 /**
  * Defines system include call
  * @constructor Include
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node} target
  * @property {boolean} once

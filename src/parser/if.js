@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads an IF statement
    *
    * ```ebnf
@@ -48,7 +48,7 @@ module.exports = {
     }
     return result(test, body, alternate, shortForm);
   },
-  /**
+  /*
    * reads an if expression : '(' expr ')'
    */
   read_if_expr: function () {
@@ -57,7 +57,7 @@ module.exports = {
     this.expect(")") && this.next();
     return result;
   },
-  /**
+  /*
    * reads an elseif (expr): statements
    */
   read_elseif_short: function () {
@@ -79,7 +79,7 @@ module.exports = {
     }
     return result(test, body(null, items), alternate, true);
   },
-  /**
+  /*
    *
    */
   read_else_short: function () {

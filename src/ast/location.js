@@ -8,7 +8,8 @@
 /**
  * Defines the location of the node (with it's source contents as string)
  * @constructor Location
- * @property {String|null} source
+ * @memberOf module:php-parser
+ * @property {string|null} source
  * @property {Position} start
  * @property {Position} end
  */

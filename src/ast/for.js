@@ -11,6 +11,7 @@ const KIND = "for";
 /**
  * Defines a for iterator
  * @constructor For
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression[]} init
  * @property {Expression[]} test

@@ -10,6 +10,7 @@ const Node = require("./node");
 /**
  * Abstract documentation node (ComentLine or CommentBlock)
  * @constructor Comment
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {String} value
  */

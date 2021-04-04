@@ -11,6 +11,7 @@ const KIND = "magic";
 /**
  * Defines magic constant
  * @constructor Magic
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
 module.exports = Literal.extends(

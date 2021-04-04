@@ -11,6 +11,7 @@ const KIND = "list";
 /**
  * Defines list assignment
  * @constructor List
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {boolean} shortForm
  */

@@ -11,6 +11,7 @@ const KIND = "yieldfrom";
 /**
  * Defines a yield from generator statement
  * @constructor YieldFrom
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php

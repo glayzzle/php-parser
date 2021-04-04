@@ -11,6 +11,7 @@ const KIND = "function";
 /**
  * Defines a classic function
  * @constructor Function
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Parameter[]} arguments
  * @property {Identifier} type

@@ -11,6 +11,7 @@ const KIND = "try";
 /**
  * Defines a try statement
  * @constructor Try
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Block} body
  * @property {Catch[]} catches

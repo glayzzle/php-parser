@@ -8,9 +8,10 @@
 /**
  * Each Position object consists of a line number (1-indexed) and a column number (0-indexed):
  * @constructor Position
- * @property {Number} line
- * @property {Number} column
- * @property {Number} offset
+ * @memberOf module:php-parser
+ * @property {number} line
+ * @property {number} column
+ * @property {number} offset
  */
 const Position = function (line, column, offset) {
   this.line = line;

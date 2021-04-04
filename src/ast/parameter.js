@@ -11,6 +11,7 @@ const KIND = "parameter";
 /**
  * Defines a function parameter
  * @constructor Parameter
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier|null} type
  * @property {Node|null} value

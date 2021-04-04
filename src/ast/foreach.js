@@ -11,6 +11,7 @@ const KIND = "foreach";
 /**
  * Defines a foreach iterator
  * @constructor Foreach
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} source
  * @property {Expression|null} key

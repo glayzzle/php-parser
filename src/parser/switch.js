@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads a switch statement
    * ```ebnf
    *  switch ::= T_SWITCH '(' expr ')' switch_case_list
@@ -24,7 +24,7 @@ module.exports = {
     const body = this.read_switch_case_list();
     return result(test, body, shortForm);
   },
-  /**
+  /*
    * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
    * ```
@@ -66,7 +66,7 @@ module.exports = {
     }
     return result(null, items);
   },
-  /**
+  /*
    * ```ebnf
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
    * ```

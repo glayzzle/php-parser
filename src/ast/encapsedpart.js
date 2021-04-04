@@ -11,6 +11,7 @@ const KIND = "encapsedpart";
 /**
  * Part of `Encapsed` node
  * @constructor EncapsedPart
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} expression
  * @property {String} syntax

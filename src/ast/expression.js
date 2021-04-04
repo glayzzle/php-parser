@@ -12,6 +12,7 @@ const KIND = "expression";
  * Any expression node. Since the left-hand side of an assignment may
  * be any expression in general, an expression can also be a pattern.
  * @constructor Expression
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 module.exports = Node.extends(KIND, function Expression(kind, docs, location) {

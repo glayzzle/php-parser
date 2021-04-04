@@ -11,6 +11,7 @@ const KIND = "pre";
 /**
  * Defines a pre operation `++$i` or `--$i`
  * @constructor Pre
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {Variable} what

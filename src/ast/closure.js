@@ -11,11 +11,12 @@ const KIND = "closure";
 /**
  * Defines a closure
  * @constructor Closure
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Variable[]} uses
  * @property {Identifier} type
- * @property {boolean} byref
+ * @property {Boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
  * @property {boolean} isStatic

@@ -11,6 +11,7 @@ const KIND = "break";
 /**
  * A break statement
  * @constructor Break
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Number|Null} level
  */
