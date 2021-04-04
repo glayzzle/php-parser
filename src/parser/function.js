@@ -319,14 +319,18 @@ module.exports = {
       this.token === this.tok.T_STRING ||
       Object.values(this.lexer.keywords).includes(this.token)
     ) {
-      const backup = [this.token, this.lexer.getState()];
-      const name = this.text();
-      this.next();
-      if (this.token === ":") {
-        return this.node("namedargument")(name, this.next().read_expr());
+      const lexerState = this.lexer.getState();
+      const nextToken = this.lexer.lex();
+      this.lexer.setState(lexerState);
+      if (nextToken === ":") {
+        if (this.version < 800) {
+          this.raiseError("PHP 8+ is required to use named arguments");
+        }
+        return this.node("namedargument")(
+          this.text(),
+          this.next().next().read_expr()
+        );
       }
-      this.lexer.tokens.push(backup);
-      this.next();
     }
     return this.read_expr();
   },
