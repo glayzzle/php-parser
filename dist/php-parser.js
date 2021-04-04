@@ -2,7 +2,7 @@
  * 
  *   Package: php-parser
  *   Parse PHP code from JS and returns its AST
- *   Build: fb01e352a88aab8351d7 - 2021-4-4
+ *   Build: 8e6598903998e5d7291e - 2021-4-4
  *   Copyright (C) 2021 Glayzzle (BSD-3-Clause)
  *   @authors https://github.com/glayzzle/php-parser/graphs/contributors
  *   @url http://glayzzle.com
@@ -146,6 +146,7 @@ var Position = __webpack_require__(7724);
 /**
  * The AST builder class
  * @constructor AST
+ * @memberOf module:php-parser
  * @tutorial AST
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)
@@ -159,9 +160,11 @@ var AST = function AST(withPositions, withSource) {
 /**
  * Create a position node from specified parser
  * including it's lexer current state
- * @param {Parser}
- * @return {Position}
  * @private
+ * @function AST#position
+ * @memberOf module:php-parser
+ * @param {Parser} parser
+ * @return {Position}
  */
 
 
@@ -180,12 +183,22 @@ AST.precedence = {};
     AST.precedence[operator] = index + 1;
   });
 });
+/**
+ * @private
+ * @function AST#isRightAssociative
+ * @memberOf module:php-parser
+ * @param operator
+ * @return {boolean}
+ */
 
 AST.prototype.isRightAssociative = function (operator) {
   return operator === "**" || operator === "??";
 };
 /**
  * Change parent node informations after swapping childs
+ * @private
+ * @function AST#swapLocations
+ * @memberOf module:php-parser
  */
 
 
@@ -201,6 +214,9 @@ AST.prototype.swapLocations = function (target, first, last, parser) {
 };
 /**
  * Includes locations from first & last into the target
+ * @private
+ * @function AST#resolveLocations
+ * @memberOf module:php-parser
  */
 
 
@@ -221,6 +237,9 @@ AST.prototype.resolveLocations = function (target, first, last, parser) {
 };
 /**
  * Check and fix precence, by default using right
+ * @private
+ * @function AST#resolvePrecedence
+ * @memberOf module:php-parser
  */
 
 
@@ -332,8 +351,11 @@ AST.prototype.resolvePrecedence = function (result, parser) {
 };
 /**
  * Prepares an AST node
+ * @private
+ * @function AST#prepare
+ * @memberOf module:php-parser
  * @param {String|null} kind - Defines the node type
- * (if null, the kind must be passed at the function call)
+ * @param {*} docs - (if null, the kind must be passed at the function call)
  * @param {Parser} parser - The parser instance (use for extracting locations)
  * @return {Function}
  */
@@ -412,6 +434,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
   }
   /**
    * Sets a list of trailing comments
+   * @private
    * @param {*} docs
    */
 
@@ -426,6 +449,8 @@ AST.prototype.prepare = function (kind, docs, parser) {
   };
   /**
    * Release a node without using it on the AST
+   * @private
+   * @param {*} target
    */
 
 
@@ -488,6 +513,7 @@ var KIND = "array";
 /**
  * Defines an array structure
  * @constructor Array
+ * @memberOf module:php-parser
  * @example
  * // PHP code :
  * [1, 'foo' => 'bar', 3]
@@ -507,7 +533,7 @@ var KIND = "array";
  *  ]
  * }
  * @extends {Expression}
- * @property {Entry|Expr|Variable} items List of array items
+ * @property {Entry|Expression|Variable} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
 
@@ -535,6 +561,7 @@ var KIND = "arrowfunc";
 /**
  * Defines an arrow function (it's like a closure)
  * @constructor ArrowFunc
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Identifier} type
@@ -572,6 +599,7 @@ var KIND = "assign";
 /**
  * Assigns a value to the specified target
  * @constructor Assign
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} left
  * @property {Expression} right
@@ -602,7 +630,8 @@ var Expression = __webpack_require__(1530);
 var KIND = "assignref";
 /**
  * Assigns a value to the specified target
- * @constructor Assign
+ * @constructor AssignRef
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} left
  * @property {Expression} right
@@ -633,6 +662,7 @@ var KIND = "bin";
 /**
  * Binary operations
  * @constructor Bin
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {Expression} left
@@ -664,6 +694,7 @@ var KIND = "block";
 /**
  * A block statement, i.e., a sequence of statements surrounded by braces.
  * @constructor Block
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Node[]} children
  */
@@ -691,6 +722,7 @@ var KIND = "boolean";
 /**
  * Defines a boolean value (true/false)
  * @constructor Boolean
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
 
@@ -716,6 +748,7 @@ var KIND = "break";
 /**
  * A break statement
  * @constructor Break
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Number|Null} level
  */
@@ -743,8 +776,9 @@ var KIND = "byref";
 /**
  * Passing by Reference - so the function can modify the variable
  * @constructor ByRef
+ * @memberOf module:php-parser
  * @extends {Expression}
- * @property {expr} what
+ * @property {ExpressionStatement} what
  */
 
 module.exports = Expression["extends"](KIND, function ByRef(what, docs, location) {
@@ -770,9 +804,10 @@ var KIND = "call";
 /**
  * Executes a call statement
  * @constructor Call
+ * @memberOf module:php-parser
  * @extends {Expression}
- * @property {Identifier|Variable|??} what
- * @property {Arguments[]} arguments
+ * @property {Identifier|Variable} what
+ * @property {Variable[]} arguments
  */
 
 module.exports = Expression["extends"](KIND, function Call(what, args, docs, location) {
@@ -799,6 +834,7 @@ var KIND = "case";
 /**
  * A switch case statement
  * @constructor Case
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body
@@ -828,6 +864,7 @@ var KIND = "cast";
 /**
  * Binary operations
  * @constructor Cast
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {String} raw
@@ -859,6 +896,7 @@ var KIND = "catch";
 /**
  * Defines a catch statement
  * @constructor Catch
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier[]} what
  * @property {Variable} variable
@@ -891,6 +929,7 @@ var KIND = "class";
 /**
  * A class definition
  * @constructor Class
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier|null} extends
  * @property {Identifier[]} implements
@@ -931,6 +970,7 @@ var IS_PRIVATE = "private";
 /**
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
+ * @memberOf module:php-parser
  * @extends {ConstantStatement}
  * @property {string} visibility
  */
@@ -941,7 +981,10 @@ var ClassConstant = ConstantStatement["extends"](KIND, function ClassConstant(ki
 });
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @function
+ * @name ClassConstant#parseFlags
+ * @memberOf module:php-parser
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 
@@ -979,6 +1022,7 @@ var KIND = "clone";
 /**
  * Defines a clone call
  * @constructor Clone
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} what
  */
@@ -1006,11 +1050,12 @@ var KIND = "closure";
 /**
  * Defines a closure
  * @constructor Closure
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Parameter[]} arguments
  * @property {Variable[]} uses
  * @property {Identifier} type
- * @property {boolean} byref
+ * @property {Boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
  * @property {boolean} isStatic
@@ -1043,6 +1088,7 @@ var Node = __webpack_require__(2730);
 /**
  * Abstract documentation node (ComentLine or CommentBlock)
  * @constructor Comment
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {String} value
  */
@@ -1071,6 +1117,7 @@ var KIND = "commentblock";
 /**
  * A comment block (multiline)
  * @constructor CommentBlock
+ * @memberOf module:php-parser
  * @extends {Comment}
  */
 
@@ -1096,6 +1143,7 @@ var KIND = "commentline";
 /**
  * A single line comment
  * @constructor CommentLine
+ * @memberOf module:php-parser
  * @extends {Comment}
  */
 
@@ -1121,6 +1169,7 @@ var KIND = "constant";
 /**
  * Defines a constant
  * @constructor Constant
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {string} name
  * @property {Node|string|number|boolean|null} value
@@ -1150,6 +1199,7 @@ var KIND = "constantstatement";
 /**
  * Declares a constants into the current scope
  * @constructor ConstantStatement
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Constant[]} constants
  */
@@ -1177,8 +1227,9 @@ var KIND = "continue";
 /**
  * A continue statement
  * @constructor Continue
+ * @memberOf module:php-parser
  * @extends {Statement}
- * @property {Number|Null} level
+ * @property {number|null} level
  */
 
 module.exports = Statement["extends"](KIND, function Continue(level, docs, location) {
@@ -1208,6 +1259,7 @@ var IS_PRIVATE = "private";
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier|string} name
  */
@@ -1218,7 +1270,10 @@ var Declaration = Statement["extends"](KIND, function Declaration(kind, name, do
 });
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @function
+ * @name Declaration#parseFlags
+ * @memberOf module:php-parser
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 
@@ -1263,6 +1318,7 @@ var KIND = "declare";
 /**
  * The declare construct is used to set execution directives for a block of code
  * @constructor Declare
+ * @memberOf module:php-parser
  * @extends {Block}
  * @property {Array[]} directives
  * @property {String} mode
@@ -1282,7 +1338,8 @@ var Declare = Block["extends"](KIND, function Declare(directives, body, mode, do
  * // some statements
  * enddeclare;
  * ```
- * @constant {String} MODE_SHORT
+ * @constant {String} Declare#MODE_SHORT
+ * @memberOf module:php-parser
  */
 
 Declare.MODE_SHORT = "short";
@@ -1294,7 +1351,8 @@ Declare.MODE_SHORT = "short";
  * // some statements
  * }
  * ```
- * @constant {String} MODE_BLOCK
+ * @constant {String} Declare#MODE_BLOCK
+ * @memberOf module:php-parser
  */
 
 Declare.MODE_BLOCK = "block";
@@ -1309,7 +1367,8 @@ Declare.MODE_BLOCK = "block";
  * declare(ticks=2);
  * // some statements
  * ```
- * @constant {String} MODE_NONE
+ * @constant {String} Declare#MODE_NONE
+ * @memberOf module:php-parser
  */
 
 Declare.MODE_NONE = "none";
@@ -1333,6 +1392,7 @@ var KIND = "declaredirective";
 /**
  * Defines a constant
  * @constructor DeclareDirective
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier} name
  * @property {Node|string|number|boolean|null} value
@@ -1362,6 +1422,7 @@ var KIND = "do";
 /**
  * Defines a do/while statement
  * @constructor Do
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Statement} body
@@ -1391,6 +1452,7 @@ var KIND = "echo";
 /**
  * Defines system based call
  * @constructor Echo
+ * @memberOf module:php-parser
  * @property {boolean} shortForm
  * @extends {Statement}
  */
@@ -1419,6 +1481,7 @@ var KIND = "empty";
 /**
  * Defines an empty check call
  * @constructor Empty
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 
@@ -1445,6 +1508,7 @@ var KIND = "encapsed";
 /**
  * Defines an encapsed string (contains expressions)
  * @constructor Encapsed
+ * @memberOf module:php-parser
  * @extends {Literal}
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
@@ -1460,7 +1524,8 @@ var Encapsed = Literal["extends"](KIND, function Encapsed(value, raw, type, docs
  * <?php
  * echo "hello $world";
  * ```
- * @constant {String} TYPE_STRING - `string`
+ * @constant {String} Encapsed#TYPE_STRING - `string`
+ * @memberOf module:php-parser
  */
 
 Encapsed.TYPE_STRING = "string";
@@ -1470,7 +1535,8 @@ Encapsed.TYPE_STRING = "string";
  * <?php
  * echo `ls -larth $path`;
  * ```
- * @constant {String} TYPE_SHELL - `shell`
+ * @constant {String} Encapsed#TYPE_SHELL - `shell`
+ * @memberOf module:php-parser
  */
 
 Encapsed.TYPE_SHELL = "shell";
@@ -1483,7 +1549,8 @@ Encapsed.TYPE_SHELL = "shell";
  * STR
  * ;
  * ```
- * @constant {String} TYPE_HEREDOC - `heredoc`
+ * @constant {String} Encapsed#TYPE_HEREDOC - `heredoc`
+ * @memberOf module:php-parser
  */
 
 Encapsed.TYPE_HEREDOC = "heredoc";
@@ -1493,7 +1560,8 @@ Encapsed.TYPE_HEREDOC = "heredoc";
  * <?php
  * echo $foo->bar_$baz;
  * ```
- * @constant {String} TYPE_OFFSET - `offset`
+ * @constant {String} Encapsed#TYPE_OFFSET - `offset`
+ * @memberOf module:php-parser
  */
 
 Encapsed.TYPE_OFFSET = "offset";
@@ -1517,6 +1585,7 @@ var KIND = "encapsedpart";
 /**
  * Part of `Encapsed` node
  * @constructor EncapsedPart
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} expression
  * @property {String} syntax
@@ -1548,6 +1617,7 @@ var KIND = "entry";
 /**
  * An array entry - see [Array](#array)
  * @constructor Entry
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value
@@ -1581,6 +1651,7 @@ var KIND = "error";
 /**
  * Defines an error node (used only on silentMode)
  * @constructor Error
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {string} message
  * @property {number} line
@@ -1614,6 +1685,7 @@ var KIND = "eval";
 /**
  * Defines an eval statement
  * @constructor Eval
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node} source
  */
@@ -1641,9 +1713,10 @@ var KIND = "exit";
 /**
  * Defines an exit / die call
  * @constructor Exit
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node|null} expression
- * @property {Boolean} useDie
+ * @property {boolean} useDie
  */
 
 module.exports = Expression["extends"](KIND, function Exit(expression, useDie, docs, location) {
@@ -1671,6 +1744,7 @@ var KIND = "expression";
  * Any expression node. Since the left-hand side of an assignment may
  * be any expression in general, an expression can also be a pattern.
  * @constructor Expression
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 
@@ -1696,6 +1770,7 @@ var KIND = "expressionstatement";
 /**
  * Defines an expression based statement
  * @constructor ExpressionStatement
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} expression
  */
@@ -1723,6 +1798,7 @@ var KIND = "for";
 /**
  * Defines a for iterator
  * @constructor For
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression[]} init
  * @property {Expression[]} test
@@ -1759,6 +1835,7 @@ var KIND = "foreach";
 /**
  * Defines a foreach iterator
  * @constructor Foreach
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} source
  * @property {Expression|null} key
@@ -1795,6 +1872,7 @@ var KIND = "function";
 /**
  * Defines a classic function
  * @constructor Function
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Parameter[]} arguments
  * @property {Identifier} type
@@ -1830,6 +1908,7 @@ var KIND = "global";
 /**
  * Imports a variable from the global scope
  * @constructor Global
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Variable[]} items
  */
@@ -1857,8 +1936,9 @@ var KIND = "goto";
 /**
  * Defines goto statement
  * @constructor Goto
+ * @memberOf module:php-parser
  * @extends {Statement}
- * @property {String} label
+ * @property {string} label
  * @see {Label}
  */
 
@@ -1885,6 +1965,7 @@ var KIND = "halt";
 /**
  * Halts the compiler execution
  * @constructor Halt
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {String} after - String after the halt statement
  * @see http://php.net/manual/en/function.halt-compiler.php
@@ -1913,6 +1994,7 @@ var KIND = "identifier";
 /**
  * Defines an identifier node
  * @constructor Identifier
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {string} name
  */
@@ -1941,6 +2023,7 @@ var KIND = "if";
 /**
  * Defines a if statement
  * @constructor If
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Block} body
@@ -1974,6 +2057,7 @@ var KIND = "include";
 /**
  * Defines system include call
  * @constructor Include
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node} target
  * @property {boolean} once
@@ -2005,6 +2089,7 @@ var KIND = "inline";
 /**
  * Defines inline html output (treated as echo output)
  * @constructor Inline
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
 
@@ -2030,6 +2115,7 @@ var KIND = "interface";
 /**
  * An interface definition
  * @constructor Interface
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
@@ -2059,6 +2145,7 @@ var KIND = "isset";
 /**
  * Defines an isset call
  * @constructor Isset
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 
@@ -2085,6 +2172,7 @@ var KIND = "label";
 /**
  * A label statement (referenced by goto)
  * @constructor Label
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {String} name
  */
@@ -2112,6 +2200,7 @@ var KIND = "list";
 /**
  * Defines list assignment
  * @constructor List
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {boolean} shortForm
  */
@@ -2140,6 +2229,7 @@ var KIND = "literal";
 /**
  * Defines an array structure
  * @constructor Literal
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value
@@ -2168,7 +2258,8 @@ module.exports = Expression["extends"](KIND, function Literal(kind, value, raw, 
 /**
  * Defines the location of the node (with it's source contents as string)
  * @constructor Location
- * @property {String|null} source
+ * @memberOf module:php-parser
+ * @property {string|null} source
  * @property {Position} start
  * @property {Position} end
  */
@@ -2199,6 +2290,7 @@ var KIND = "lookup";
 /**
  * Lookup on an offset in the specified object
  * @constructor Lookup
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} what
  * @property {Expression} offset
@@ -2228,6 +2320,7 @@ var KIND = "magic";
 /**
  * Defines magic constant
  * @constructor Magic
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
 
@@ -2247,22 +2340,22 @@ module.exports = Literal["extends"](KIND, function Magic(value, raw, docs, locat
  */
 
 
-var _Function = __webpack_require__(1057);
+var Function_ = __webpack_require__(1057);
 
 var KIND = "method";
 /**
  * Defines a class/interface/trait method
  * @constructor Method
- * @extends {_Function}
+ * @memberOf module:php-parser
+ * @extends {Function}
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  * @property {boolean} isStatic
  * @property {string} visibility
  */
 
-module.exports = _Function["extends"](KIND, function Method() {
-  _Function.apply(this, arguments);
-
+module.exports = Function_["extends"](KIND, function Method() {
+  Function_.apply(this, arguments);
   this.kind = KIND;
 });
 
@@ -2284,6 +2377,7 @@ var KIND = "name";
 /**
  * Defines a class reference node
  * @constructor Name
+ * @memberOf module:php-parser
  * @extends {Reference}
  * @property {string} name
  * @property {string} resolution
@@ -2306,13 +2400,15 @@ var Name = Reference["extends"](KIND, function Name(name, isRelative, docs, loca
 });
 /**
  * This is an identifier without a namespace separator, such as Foo
- * @constant {String} UNQUALIFIED_NAME
+ * @constant {String} Name#UNQUALIFIED_NAME
+ * @memberOf module:php-parser
  */
 
 Name.UNQUALIFIED_NAME = "uqn";
 /**
  * This is an identifier with a namespace separator, such as Foo\Bar
- * @constant {String} QUALIFIED_NAME
+ * @constant {String} Name#QUALIFIED_NAME
+ * @memberOf module:php-parser
  */
 
 Name.QUALIFIED_NAME = "qn";
@@ -2320,13 +2416,15 @@ Name.QUALIFIED_NAME = "qn";
  * This is an identifier with a namespace separator that begins with
  * a namespace separator, such as \Foo\Bar. The namespace \Foo is also
  * a fully qualified name.
- * @constant {String} FULL_QUALIFIED_NAME
+ * @constant {String} Name#FULL_QUALIFIED_NAME
+ * @memberOf module:php-parser
  */
 
 Name.FULL_QUALIFIED_NAME = "fqn";
 /**
  * This is an identifier starting with namespace, such as namespace\Foo\Bar.
- * @constant {String} RELATIVE_NAME
+ * @constant {String} Name#RELATIVE_NAME
+ * @memberOf module:php-parser
  */
 
 Name.RELATIVE_NAME = "rn";
@@ -2350,9 +2448,10 @@ var KIND = "namespace";
 /**
  * The main program node
  * @constructor Namespace
+ * @memberOf module:php-parser
  * @extends {Block}
- * @property {String} name
- * @property {Boolean} withBrackets
+ * @property {string} name
+ * @property {boolean} withBrackets
  */
 
 module.exports = Block["extends"](KIND, function Namespace(name, children, withBrackets, docs, location) {
@@ -2379,9 +2478,10 @@ var KIND = "new";
 /**
  * Creates a new instance of the specified class
  * @constructor New
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Identifier|Variable|Class} what
- * @property {Arguments[]} arguments
+ * @property {Variable[]} arguments
  */
 
 module.exports = Expression["extends"](KIND, function New(what, args, docs, location) {
@@ -2404,10 +2504,11 @@ module.exports = Expression["extends"](KIND, function New(what, args, docs, loca
 /**
  * A generic AST node
  * @constructor Node
+ * @memberOf module:php-parser
  * @property {Location|null} loc
- * @property {Comment[]} leadingComments
- * @property {Comment[]?} trailingComments
- * @property {String} kind
+ * @property {CommentBlock[]|Comment[]|null} leadingComments
+ * @property {CommentBlock[]|Comment[]|null} trailingComments
+ * @property {string} kind
  */
 
 var Node = function Node(kind, docs, location) {
@@ -2423,6 +2524,8 @@ var Node = function Node(kind, docs, location) {
 };
 /**
  * Attach comments to current node
+ * @function Node#setTrailingComments
+ * @memberOf module:php-parser
  * @param {*} docs
  */
 
@@ -2432,6 +2535,8 @@ Node.prototype.setTrailingComments = function (docs) {
 };
 /**
  * Destroying an unused node
+ * @function Node#destroy
+ * @memberOf module:php-parser
  */
 
 
@@ -2460,6 +2565,8 @@ Node.prototype.destroy = function (node) {
 };
 /**
  * Includes current token position of the parser
+ * @function Node#includeToken
+ * @memberOf module:php-parser
  * @param {*} parser
  */
 
@@ -2481,7 +2588,9 @@ Node.prototype.includeToken = function (parser) {
 };
 /**
  * Helper for extending the Node class
- * @param {String} type
+ * @function Node.extends
+ * @memberOf module:php-parser
+ * @param {string} type
  * @param {Function} constructor
  * @return {Function}
  */
@@ -2516,6 +2625,7 @@ var KIND = "noop";
  * Ignore this node, it implies a no operation block, for example :
  * [$foo, $bar, /* here a noop node * /]
  * @constructor Noop
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 
@@ -2541,9 +2651,10 @@ var KIND = "nowdoc";
 /**
  * Defines a nowdoc string
  * @constructor NowDoc
+ * @memberOf module:php-parser
  * @extends {Literal}
- * @property {String} label
- * @property {String} raw
+ * @property {string} label
+ * @property {string} raw
  */
 
 module.exports = Literal["extends"](KIND, function Nowdoc(value, raw, label, docs, location) {
@@ -2569,6 +2680,7 @@ var KIND = "nullkeyword";
 /**
  * Represents the null keyword
  * @constructor NullKeyword
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 
@@ -2595,6 +2707,7 @@ var KIND = "number";
 /**
  * Defines a numeric value
  * @constructor Number
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
 
@@ -2620,6 +2733,7 @@ var KIND = "offsetlookup";
 /**
  * Lookup on an offset in an array
  * @constructor OffsetLookup
+ * @memberOf module:php-parser
  * @extends {Lookup}
  */
 
@@ -2645,6 +2759,7 @@ var KIND = "operation";
 /**
  * Defines binary operations
  * @constructor Operation
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 
@@ -2670,6 +2785,7 @@ var KIND = "parameter";
 /**
  * Defines a function parameter
  * @constructor Parameter
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier|null} type
  * @property {Node|null} value
@@ -2705,6 +2821,7 @@ var KIND = "parentreference";
 /**
  * Defines a class reference node
  * @constructor ParentReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  */
 
@@ -2728,9 +2845,10 @@ module.exports = ParentReference;
 /**
  * Each Position object consists of a line number (1-indexed) and a column number (0-indexed):
  * @constructor Position
- * @property {Number} line
- * @property {Number} column
- * @property {Number} offset
+ * @memberOf module:php-parser
+ * @property {number} line
+ * @property {number} column
+ * @property {number} offset
  */
 
 var Position = function Position(line, column, offset) {
@@ -2759,6 +2877,7 @@ var KIND = "post";
 /**
  * Defines a post operation `$i++` or `$i--`
  * @constructor Post
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {Variable} what
@@ -2788,6 +2907,7 @@ var KIND = "pre";
 /**
  * Defines a pre operation `++$i` or `--$i`
  * @constructor Pre
+ * @memberOf module:php-parser
  * @extends {Operation}
  * @property {String} type
  * @property {Variable} what
@@ -2817,6 +2937,7 @@ var KIND = "print";
 /**
  * Outputs
  * @constructor Print
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 
@@ -2843,10 +2964,11 @@ var KIND = "program";
 /**
  * The main program node
  * @constructor Program
+ * @memberOf module:php-parser
  * @extends {Block}
  * @property {Error[]} errors
- * @property {Doc[]?} comments
- * @property {String[]?} tokens
+ * @property {Comment[]|null} comments
+ * @property {String[]|null} tokens
  */
 
 module.exports = Block["extends"](KIND, function Program(children, errors, comments, tokens, docs, location) {
@@ -2880,6 +3002,7 @@ var KIND = "property";
 /**
  * Defines a class property
  * @constructor Property
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
  * @property {Node|null} value
@@ -2913,6 +3036,7 @@ var KIND = "propertylookup";
 /**
  * Lookup to an object property
  * @constructor PropertyLookup
+ * @memberOf module:php-parser
  * @extends {Lookup}
  */
 
@@ -2942,6 +3066,7 @@ var IS_PRIVATE = "private";
 /**
  * Declares a properties into the current scope
  * @constructor PropertyStatement
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Property[]} properties
  */
@@ -2953,7 +3078,9 @@ var PropertyStatement = Statement["extends"](KIND, function PropertyStatement(ki
 });
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @function PropertyStatement#parseFlags
+ * @memberOf module:php-parser
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 
@@ -2993,6 +3120,7 @@ var KIND = "reference";
 /**
  * Defines a reference node
  * @constructor Reference
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 
@@ -3019,6 +3147,7 @@ var KIND = "retif";
 /**
  * Defines a short if statement that returns a value
  * @constructor RetIf
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} test
  * @property {Expression} trueExpr
@@ -3050,6 +3179,7 @@ var KIND = "return";
 /**
  * A continue statement
  * @constructor Return
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression|null} expr
  */
@@ -3077,6 +3207,7 @@ var KIND = "selfreference";
 /**
  * Defines a class reference node
  * @constructor SelfReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  */
 
@@ -3104,6 +3235,7 @@ var KIND = "silent";
 /**
  * Avoids to show/log warnings & notices from the inner expression
  * @constructor Silent
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} expr
  */
@@ -3131,6 +3263,7 @@ var KIND = "statement";
 /**
  * Any statement.
  * @constructor Statement
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 
@@ -3156,6 +3289,7 @@ var KIND = "static";
 /**
  * Declares a static variable into the current scope
  * @constructor Static
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {StaticVariable[]} variables
  */
@@ -3183,6 +3317,7 @@ var KIND = "staticlookup";
 /**
  * Lookup to a static property
  * @constructor StaticLookup
+ * @memberOf module:php-parser
  * @extends {Lookup}
  */
 
@@ -3208,6 +3343,7 @@ var KIND = "staticreference";
 /**
  * Defines a class reference node
  * @constructor StaticReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  */
 
@@ -3235,6 +3371,7 @@ var KIND = "staticvariable";
 /**
  * Defines a constant
  * @constructor StaticVariable
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Variable} variable
  * @property {Node|string|number|boolean|null} defaultValue
@@ -3262,8 +3399,9 @@ var Literal = __webpack_require__(6602);
 
 var KIND = "string";
 /**
- * Defines a string (simple ou double quoted) - chars are already escaped
+ * Defines a string (simple or double quoted) - chars are already escaped
  * @constructor String
+ * @memberOf module:php-parser
  * @extends {Literal}
  * @property {boolean} unicode
  * @property {boolean} isDoubleQuote
@@ -3294,6 +3432,7 @@ var KIND = "switch";
 /**
  * Defines a switch statement
  * @constructor Switch
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Block} body
@@ -3325,6 +3464,7 @@ var KIND = "throw";
 /**
  * Defines a throw statement
  * @constructor Throw
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} what
  */
@@ -3352,6 +3492,7 @@ var KIND = "trait";
 /**
  * A trait definition
  * @constructor Trait
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Declaration[]} body
  */
@@ -3383,6 +3524,7 @@ var IS_PRIVATE = "private";
 /**
  * Defines a trait alias
  * @constructor TraitAlias
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier|null} trait
  * @property {Identifier} method
@@ -3426,6 +3568,7 @@ var KIND = "traitprecedence";
 /**
  * Defines a trait alias
  * @constructor TraitPrecedence
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier|null} trait
  * @property {Identifier} method
@@ -3457,6 +3600,7 @@ var KIND = "traituse";
 /**
  * Defines a trait usage
  * @constructor TraitUse
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {Identifier[]} traits
  * @property {Node[]|null} adaptations
@@ -3486,6 +3630,7 @@ var KIND = "try";
 /**
  * Defines a try statement
  * @constructor Try
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Block} body
  * @property {Catch[]} catches
@@ -3517,6 +3662,7 @@ var KIND = "typereference";
 /**
  * Defines a class reference node
  * @constructor TypeReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  * @property {string} name
  */
@@ -3547,8 +3693,9 @@ var KIND = "unary";
 /**
  * Unary operations
  * @constructor Unary
+ * @memberOf module:php-parser
  * @extends {Operation}
- * @property {String} type
+ * @property {string} type
  * @property {Expression} what
  */
 
@@ -3576,6 +3723,7 @@ var KIND = "unset";
 /**
  * Deletes references to a list of variables
  * @constructor Unset
+ * @memberOf module:php-parser
  * @extends {Statement}
  */
 
@@ -3602,9 +3750,10 @@ var KIND = "usegroup";
 /**
  * Defines a use statement (with a list of use items)
  * @constructor UseGroup
+ * @memberOf module:php-parser
  * @extends {Statement}
- * @property {String|null} name
- * @property {String|null} type - Possible value : function, const
+ * @property {string|null} name
+ * @property {string|null} type - Possible value : function, const
  * @property {UseItem[]} item
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
@@ -3635,9 +3784,10 @@ var KIND = "useitem";
 /**
  * Defines a use statement (from namespace)
  * @constructor UseItem
+ * @memberOf module:php-parser
  * @extends {Statement}
- * @property {String} name
- * @property {String|null} type - Possible value : function, const
+ * @property {string} name
+ * @property {string|null} type - Possible value : function, const
  * @property {Identifier|null} alias
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
@@ -3651,13 +3801,15 @@ var UseItem = Statement["extends"](KIND, function UseItem(name, alias, type, doc
 });
 /**
  * Importing a constant
- * @constant {String} TYPE_CONST
+ * @constant {string} UseItem#TYPE_CONST
+ * @memberOf module:php-parser
  */
 
 UseItem.TYPE_CONST = "const";
 /**
  * Importing a function
- * @constant {String} TYPE_FUNC
+ * @constant {string} UseItem#TYPE_FUNC
+ * @memberOf module:php-parser
  */
 
 UseItem.TYPE_FUNCTION = "function";
@@ -3682,6 +3834,7 @@ var KIND = "variable";
  * Any expression node. Since the left-hand side of an assignment may
  * be any expression in general, an expression can also be a pattern.
  * @constructor Variable
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @example
  * // PHP code :
@@ -3692,7 +3845,7 @@ var KIND = "variable";
  *  "name": "foo",
  *  "curly": false
  * }
- * @property {String|Node} name The variable name (can be a complex expression when the name is resolved dynamically)
+ * @property {string|Node} name The variable name (can be a complex expression when the name is resolved dynamically)
  * @property {boolean} curly Indicate if the name is defined between curlies, ex `${foo}`
  */
 
@@ -3719,7 +3872,8 @@ var Expression = __webpack_require__(1530);
 var KIND = "variadic";
 /**
  * Introduce a list of items into the arguments of the call
- * @constructor variadic
+ * @constructor Variadic
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Array|Expression} what
  * @see https://wiki.php.net/rfc/argument_unpacking
@@ -3748,6 +3902,7 @@ var KIND = "while";
 /**
  * Defines a while statement
  * @constructor While
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Statement} body
@@ -3779,9 +3934,10 @@ var KIND = "yield";
 /**
  * Defines a yield generator statement
  * @constructor Yield
+ * @memberOf module:php-parser
  * @extends {Expression}
- * @property {Expression|Null} value
- * @property {Expression|Null} key
+ * @property {Expression|null} value
+ * @property {Expression|null} key
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
 
@@ -3809,6 +3965,7 @@ var KIND = "yieldfrom";
 /**
  * Defines a yield from generator statement
  * @constructor YieldFrom
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php
@@ -3872,6 +4029,7 @@ function combine(src, to) {
  * Initialise a new parser instance with the specified options
  *
  * @class
+ * @memberOf module:php-parser
  * @tutorial Engine
  * @example
  * var parser = require('php-parser');
@@ -3902,7 +4060,7 @@ function combine(src, to) {
  */
 
 
-var engine = function engine(options) {
+var Engine = function Engine(options) {
   if (typeof this === "function") {
     return new this(options);
   }
@@ -3946,6 +4104,7 @@ var engine = function engine(options) {
 };
 /**
  * Check if the inpyt is a buffer or a string
+ * @private
  * @param  {Buffer|String} buffer Input value that can be either a buffer or a string
  * @return {String}   Returns the string from input
  */
@@ -3962,8 +4121,8 @@ var getStringBuffer = function getStringBuffer(buffer) {
  */
 
 
-engine.create = function (options) {
-  return new engine(options);
+Engine.create = function (options) {
+  return new Engine(options);
 };
 /**
  * Evaluate the buffer
@@ -3971,8 +4130,8 @@ engine.create = function (options) {
  */
 
 
-engine.parseEval = function (buffer, options) {
-  var self = new engine(options);
+Engine.parseEval = function (buffer, options) {
+  var self = new Engine(options);
   return self.parseEval(buffer);
 };
 /**
@@ -3982,7 +4141,7 @@ engine.parseEval = function (buffer, options) {
  */
 
 
-engine.prototype.parseEval = function (buffer) {
+Engine.prototype.parseEval = function (buffer) {
   this.lexer.mode_eval = true;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
@@ -3994,14 +4153,14 @@ engine.prototype.parseEval = function (buffer) {
  */
 
 
-engine.parseCode = function (buffer, filename, options) {
+Engine.parseCode = function (buffer, filename, options) {
   if (_typeof(filename) === "object" && !options) {
     // retro-compatibility
     options = filename;
     filename = "unknown";
   }
 
-  var self = new engine(options);
+  var self = new Engine(options);
   return self.parseCode(buffer, filename);
 };
 /**
@@ -4026,7 +4185,7 @@ engine.parseCode = function (buffer, filename, options) {
  */
 
 
-engine.prototype.parseCode = function (buffer, filename) {
+Engine.prototype.parseCode = function (buffer, filename) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = false;
   buffer = getStringBuffer(buffer);
@@ -4038,8 +4197,8 @@ engine.prototype.parseCode = function (buffer, filename) {
  */
 
 
-engine.tokenGetAll = function (buffer, options) {
-  var self = new engine(options);
+Engine.tokenGetAll = function (buffer, options) {
+  var self = new Engine(options);
   return self.tokenGetAll(buffer);
 };
 /**
@@ -4050,7 +4209,7 @@ engine.tokenGetAll = function (buffer, options) {
  */
 
 
-engine.prototype.tokenGetAll = function (buffer) {
+Engine.prototype.tokenGetAll = function (buffer) {
   this.lexer.mode_eval = false;
   this.lexer.all_tokens = true;
   buffer = getStringBuffer(buffer);
@@ -4072,18 +4231,21 @@ engine.prototype.tokenGetAll = function (buffer) {
   }
 
   return result;
-}; // exports the function
+};
+/** @module php-parser */
+// exports the function
 
 
-module.exports = engine; // makes libraries public
+module.exports = Engine; // makes libraries public
 
 module.exports.tokens = tokens;
 module.exports.lexer = lexer;
 module.exports.AST = AST;
 module.exports.parser = parser;
-module.exports.combine = combine; // allow the default export in index.d.ts
+module.exports.combine = combine;
+module.exports.Engine = Engine; // allow the default export in index.d.ts
 
-module.exports.default = engine;
+module.exports.default = Engine;
 
 /***/ }),
 
@@ -4100,20 +4262,21 @@ module.exports.default = engine;
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
  *
- * @class
- * @property {Integer} EOF
- * @property {Boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
- * @property {Boolean} comment_tokens extracts comments tokens
- * @property {Boolean} mode_eval enables the evald mode (ignore opening tags)
- * @property {Boolean} asp_tags disables by default asp tags mode
- * @property {Boolean} short_tags enables by default short tags mode
- * @property {Object} keywords List of php keyword
- * @property {Object} castKeywords List of php keywords for type casting
+ * @constructor Lexer
+ * @memberOf module:php-parser
+ * @property {number} EOF
+ * @property {boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
+ * @property {boolean} comment_tokens extracts comments tokens
+ * @property {boolean} mode_eval enables the evald mode (ignore opening tags)
+ * @property {boolean} asp_tags disables by default asp tags mode
+ * @property {boolean} short_tags enables by default short tags mode
+ * @property {object} keywords List of php keyword
+ * @property {object} castKeywords List of php keywords for type casting
  */
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var lexer = function lexer(engine) {
+var Lexer = function Lexer(engine) {
   this.engine = engine;
   this.tok = this.engine.tokens.names;
   this.EOF = 1;
@@ -4218,10 +4381,12 @@ var lexer = function lexer(engine) {
 };
 /**
  * Initialize the lexer with the specified input
+ * @function Lexer#setInput
+ * @memberOf module:php-parser
  */
 
 
-lexer.prototype.setInput = function (input) {
+Lexer.prototype.setInput = function (input) {
   this._input = input;
   this.size = input.length;
   this.yylineno = 1;
@@ -4265,7 +4430,7 @@ lexer.prototype.setInput = function (input) {
     indentation_uses_spaces: false,
     finished: false,
 
-    /**
+    /*
      * this used for parser to detemine the if current node segment is first encaps node.
      * if ture, the indentation will remove from the begining. and if false, the prev node
      * might be a variable '}' ,and the leading spaces should not be removed util meet the
@@ -4281,10 +4446,12 @@ lexer.prototype.setInput = function (input) {
 };
 /**
  * consumes and returns one char from the input
+ * @function Lexer#input
+ * @memberOf module:php-parser
  */
 
 
-lexer.prototype.input = function () {
+Lexer.prototype.input = function () {
   var ch = this._input[this.offset];
   if (!ch) return "";
   this.yytext += ch;
@@ -4307,10 +4474,12 @@ lexer.prototype.input = function () {
 };
 /**
  * revert eating specified size
+ * @function Lexer#unput
+ * @memberOf module:php-parser
  */
 
 
-lexer.prototype.unput = function (size) {
+Lexer.prototype.unput = function (size) {
   if (size === 1) {
     // 1 char unput (most cases)
     this.offset--;
@@ -4373,20 +4542,41 @@ lexer.prototype.unput = function (size) {
   }
 
   return this;
-}; // check if the text matches
+};
+/**
+ * check if the text matches
+ * @function Lexer#tryMatch
+ * @memberOf module:php-parser
+ * @param {string} text
+ * @returns {boolean}
+ */
 
 
-lexer.prototype.tryMatch = function (text) {
+Lexer.prototype.tryMatch = function (text) {
   return text === this.ahead(text.length);
-}; // check if the text matches
+};
+/**
+ * check if the text matches
+ * @function Lexer#tryMatchCaseless
+ * @memberOf module:php-parser
+ * @param {string} text
+ * @returns {boolean}
+ */
 
 
-lexer.prototype.tryMatchCaseless = function (text) {
+Lexer.prototype.tryMatchCaseless = function (text) {
   return text === this.ahead(text.length).toLowerCase();
-}; // look ahead
+};
+/**
+ * look ahead
+ * @function Lexer#ahead
+ * @memberOf module:php-parser
+ * @param {number} size
+ * @returns {string}
+ */
 
 
-lexer.prototype.ahead = function (size) {
+Lexer.prototype.ahead = function (size) {
   var text = this._input.substring(this.offset, this.offset + size);
 
   if (text[text.length - 1] === "\r" && this._input[this.offset + size + 1] === "\n") {
@@ -4394,10 +4584,17 @@ lexer.prototype.ahead = function (size) {
   }
 
   return text;
-}; // consume the specified size
+};
+/**
+ * consume the specified size
+ * @function Lexer#consume
+ * @memberOf module:php-parser
+ * @param {number} size
+ * @returns {Lexer}
+ */
 
 
-lexer.prototype.consume = function (size) {
+Lexer.prototype.consume = function (size) {
   for (var i = 0; i < size; i++) {
     var ch = this._input[this.offset];
     if (!ch) break;
@@ -4423,10 +4620,12 @@ lexer.prototype.consume = function (size) {
 };
 /**
  * Gets the current state
+ * @function Lexer#getState
+ * @memberOf module:php-parser
  */
 
 
-lexer.prototype.getState = function () {
+Lexer.prototype.getState = function () {
   return {
     yytext: this.yytext,
     offset: this.offset,
@@ -4444,10 +4643,12 @@ lexer.prototype.getState = function () {
 };
 /**
  * Sets the current lexer state
+ * @function Lexer#setState
+ * @memberOf module:php-parser
  */
 
 
-lexer.prototype.setState = function (state) {
+Lexer.prototype.setState = function (state) {
   this.yytext = state.yytext;
   this.offset = state.offset;
   this.yylineno = state.yylineno;
@@ -4459,16 +4660,30 @@ lexer.prototype.setState = function (state) {
   }
 
   return this;
-}; // prepend next token
+};
+/**
+ * prepend next token
+ * @function Lexer#appendToken
+ * @memberOf module:php-parser
+ * @param {*} value
+ * @param {*} ahead
+ * @returns {Lexer}
+ */
 
 
-lexer.prototype.appendToken = function (value, ahead) {
+Lexer.prototype.appendToken = function (value, ahead) {
   this.tokens.push([value, ahead]);
   return this;
-}; // return next match that has a token
+};
+/**
+ * return next match that has a token
+ * @function Lexer#lex
+ * @memberOf module:php-parser
+ * @returns {number|string}
+ */
 
 
-lexer.prototype.lex = function () {
+Lexer.prototype.lex = function () {
   this.yylloc.prev_offset = this.offset;
   this.yylloc.prev_line = this.yylloc.last_line;
   this.yylloc.prev_column = this.yylloc.last_column;
@@ -4505,10 +4720,17 @@ lexer.prototype.lex = function () {
 
 
   return token;
-}; // activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
+};
+/**
+ * activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
+ * @function Lexer#begin
+ * @memberOf module:php-parser
+ * @param {*} condition
+ * @returns {Lexer}
+ */
 
 
-lexer.prototype.begin = function (condition) {
+Lexer.prototype.begin = function (condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
   this.stateCb = this["match" + condition];
@@ -4518,10 +4740,16 @@ lexer.prototype.begin = function (condition) {
   }
 
   return this;
-}; // pop the previously active lexer condition state off the condition stack
+};
+/**
+ * pop the previously active lexer condition state off the condition stack
+ * @function Lexer#popState
+ * @memberOf module:php-parser
+ * @returns {string|*}
+ */
 
 
-lexer.prototype.popState = function () {
+Lexer.prototype.popState = function () {
   var n = this.conditionStack.length - 1;
   var condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
@@ -4532,10 +4760,16 @@ lexer.prototype.popState = function () {
   }
 
   return condition;
-}; // return next match in input
+};
+/**
+ * return next match in input
+ * @function Lexer#next
+ * @memberOf module:php-parser
+ * @returns {number|*}
+ */
 
 
-lexer.prototype.next = function () {
+Lexer.prototype.next = function () {
   var token;
 
   if (!this._input) {
@@ -4592,10 +4826,10 @@ lexer.prototype.next = function () {
 
 [__webpack_require__(438), __webpack_require__(3607), __webpack_require__(7405), __webpack_require__(465), __webpack_require__(5135), __webpack_require__(4437), __webpack_require__(1298), __webpack_require__(5609)].forEach(function (ext) {
   for (var k in ext) {
-    lexer.prototype[k] = ext[k];
+    Lexer.prototype[k] = ext[k];
   }
 });
-module.exports = lexer;
+module.exports = Lexer;
 
 /***/ }),
 
@@ -4610,7 +4844,7 @@ module.exports = lexer;
 
 
 module.exports = {
-  /**
+  /*
    * Reads a single line comment
    */
   T_COMMENT: function T_COMMENT() {
@@ -4631,7 +4865,7 @@ module.exports = {
     return this.tok.T_COMMENT;
   },
 
-  /**
+  /*
    * Behaviour : https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927
    */
   T_DOC_COMMENT: function T_DOC_COMMENT() {
@@ -5360,7 +5594,7 @@ module.exports = {
     return false;
   },
 
-  /**
+  /*
    * Prematch the end of HEREDOC/NOWDOC end tag to preset the
    * context of this.heredoc_label
    */
@@ -5387,14 +5621,13 @@ module.exports = {
     }
   },
   matchST_NOWDOC: function matchST_NOWDOC() {
-    /** edge case : empty now doc **/
+    // edge case : empty now doc
     if (this.isDOC_MATCH(this.offset, true)) {
       // @fixme : never reached (may be caused by quotes)
       this.consume(this.heredoc_label.length);
       this.popState();
       return this.tok.T_END_HEREDOC;
-    }
-    /** SCANNING CONTENTS **/
+    } // SCANNING CONTENTS
 
 
     var ch = this._input[this.offset - 1];
@@ -5417,15 +5650,14 @@ module.exports = {
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
   matchST_HEREDOC: function matchST_HEREDOC() {
-    /** edge case : empty here doc **/
+    // edge case : empty here doc
     var ch = this.input();
 
     if (this.isDOC_MATCH(this.offset, true)) {
       this.consume(this.heredoc_label.length - 1);
       this.popState();
       return this.tok.T_END_HEREDOC;
-    }
-    /** SCANNING CONTENTS **/
+    } // SCANNING CONTENTS
 
 
     while (this.offset < this.size) {
@@ -6146,19 +6378,20 @@ function isNumber(n) {
 /**
  * The PHP Parser class that build the AST tree from the lexer
  *
- * @class
+ * @constructor Parser
+ * @memberOf module:php-parser
  * @tutorial Parser
  * @property {Lexer} lexer - current lexer instance
  * @property {AST} ast - the AST factory instance
- * @property {Integer|String} token - current token
- * @property {Boolean} extractDoc - should extract documentation as AST node
- * @property {Boolean} extractTokens - should extract each token
- * @property {Boolean} suppressErrors - should ignore parsing errors and continue
- * @property {Boolean} debug - should output debug informations
+ * @property {number|string} token - current token
+ * @property {boolean} extractDoc - should extract documentation as AST node
+ * @property {boolean} extractTokens - should extract each token
+ * @property {boolean} suppressErrors - should ignore parsing errors and continue
+ * @property {boolean} debug - should output debug informations
  */
 
 
-var parser = function parser(lexer, ast) {
+var Parser = function Parser(lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
   this.tok = lexer.tok;
@@ -6191,10 +6424,12 @@ var parser = function parser(lexer, ast) {
 };
 /**
  * helper : gets a token name
+ * @function Parser#getTokenName
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.getTokenName = function (token) {
+Parser.prototype.getTokenName = function (token) {
   if (!isNumber(token)) {
     return "'" + token + "'";
   } else {
@@ -6204,10 +6439,12 @@ parser.prototype.getTokenName = function (token) {
 };
 /**
  * main entry point : converts a source code to AST
+ * @function Parser#parse
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.parse = function (code, filename) {
+Parser.prototype.parse = function (code, filename) {
   this._errors = [];
   this.filename = filename || "eval";
   this.currentNamespace = [""];
@@ -6270,10 +6507,12 @@ parser.prototype.parse = function (code, filename) {
 };
 /**
  * Raise an error
+ * @function Parser#raiseError
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.raiseError = function (message, msgExpect, expect, token) {
+Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
   message += " on line " + this.lexer.yylloc.first_line;
 
   if (!this.suppressErrors) {
@@ -6293,10 +6532,12 @@ parser.prototype.raiseError = function (message, msgExpect, expect, token) {
 };
 /**
  * handling errors
+ * @function Parser#error
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.error = function (expect) {
+Parser.prototype.error = function (expect) {
   var msg = "Parse Error : syntax error";
   var token = this.getTokenName(this.token);
   var msgExpect = "";
@@ -6327,10 +6568,12 @@ parser.prototype.error = function (expect) {
 };
 /**
  * Creates a new AST node
+ * @function Parser#node
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.node = function (name) {
+Parser.prototype.node = function (name) {
   if (this.extractDoc) {
     var docs = null;
 
@@ -6347,7 +6590,7 @@ parser.prototype.node = function (name) {
     }
 
     var node = this.ast.prepare(name, docs, this);
-    /**
+    /*
      * TOKENS :
      * node1 commentA token commmentB node2 commentC token commentD node3 commentE token
      *
@@ -6412,11 +6655,13 @@ parser.prototype.node = function (name) {
 };
 /**
  * expects an end of statement or end of file
+ * @function Parser#expectEndOfStatement
+ * @memberOf module:php-parser
  * @return {boolean}
  */
 
 
-parser.prototype.expectEndOfStatement = function (node) {
+Parser.prototype.expectEndOfStatement = function (node) {
   if (this.token === ";") {
     // include only real ';' statements
     // https://github.com/glayzzle/php-parser/issues/164
@@ -6431,12 +6676,16 @@ parser.prototype.expectEndOfStatement = function (node) {
   this.next();
   return true;
 };
-/** outputs some debug information on current token **/
-
 
 var ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
+/**
+ * outputs some debug information on current token
+ * @private
+ * @function Parser#showlog
+ * @memberOf module:php-parser
+ */
 
-parser.prototype.showlog = function () {
+Parser.prototype.showlog = function () {
   var stack = new Error().stack.split("\n");
   var line;
 
@@ -6469,13 +6718,15 @@ parser.prototype.showlog = function () {
  * If the suppressError mode is activated, then the error will
  * be added to the program error stack and this function will return `false`.
  *
+ * @function Parser#expect
+ * @memberOf module:php-parser
  * @param {String|Number} token
  * @return {boolean}
  * @throws Error
  */
 
 
-parser.prototype.expect = function (token) {
+Parser.prototype.expect = function (token) {
   if (Array.isArray(token)) {
     if (token.indexOf(this.token) === -1) {
       this.error(token);
@@ -6490,17 +6741,23 @@ parser.prototype.expect = function (token) {
 };
 /**
  * Returns the current token contents
+ * @function Parser#text
+ * @memberOf module:php-parser
  * @return {String}
  */
 
 
-parser.prototype.text = function () {
+Parser.prototype.text = function () {
   return this.lexer.yytext;
 };
-/** consume the next token **/
+/**
+ * consume the next token
+ * @function Parser#next
+ * @memberOf module:php-parser
+ */
 
 
-parser.prototype.next = function () {
+Parser.prototype.next = function () {
   // prepare the back command
   if (this.token !== ";" || this.lexer.yytext === ";") {
     // ignore '?>' from automated resolution
@@ -6531,10 +6788,12 @@ parser.prototype.next = function () {
 };
 /**
  * Eating a token
+ * @function Parser#lex
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.lex = function () {
+Parser.prototype.lex = function () {
   // append on token stack
   if (this.extractTokens) {
     do {
@@ -6572,10 +6831,12 @@ parser.prototype.lex = function () {
 };
 /**
  * Check if token is of specified type
+ * @function Parser#is
+ * @memberOf module:php-parser
  */
 
 
-parser.prototype.is = function (type) {
+Parser.prototype.is = function (type) {
   if (Array.isArray(type)) {
     return type.indexOf(this.token) !== -1;
   }
@@ -6586,15 +6847,15 @@ parser.prototype.is = function (type) {
 
 [__webpack_require__(3665), __webpack_require__(8342), __webpack_require__(9673), __webpack_require__(3166), __webpack_require__(2706), __webpack_require__(4002), __webpack_require__(3745), __webpack_require__(9905), __webpack_require__(1250), __webpack_require__(9889), __webpack_require__(4992), __webpack_require__(7991), __webpack_require__(4544), __webpack_require__(9957), __webpack_require__(1099)].forEach(function (ext) {
   for (var k in ext) {
-    if (parser.prototype.hasOwnProperty(k)) {
+    if (Parser.prototype.hasOwnProperty(k)) {
       // @see https://github.com/glayzzle/php-parser/issues/234
       throw new Error("Function " + k + " is already defined - collision");
     }
 
-    parser.prototype[k] = ext[k];
+    Parser.prototype[k] = ext[k];
   }
 });
-module.exports = parser;
+module.exports = Parser;
 
 /***/ }),
 
@@ -6609,7 +6870,7 @@ module.exports = parser;
 
 
 module.exports = {
-  /**
+  /*
    * Parse an array
    * ```ebnf
    * array ::= T_ARRAY '(' array_pair_list ')' |
@@ -6640,7 +6901,7 @@ module.exports = {
     return result(shortForm, items);
   },
 
-  /**
+  /*
    * Reads an array of items
    * ```ebnf
    * array_pair_list ::= array_pair (',' array_pair?)*
@@ -6653,7 +6914,7 @@ module.exports = {
     }, ",", true);
   },
 
-  /**
+  /*
    * Reads an entry
    * array_pair:
    *  expr T_DOUBLE_ARROW expr
@@ -6739,7 +7000,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 module.exports = {
-  /**
+  /*
    * reading a class
    * ```ebnf
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
@@ -6783,7 +7044,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a class body
    * ```ebnf
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
@@ -6854,7 +7115,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads variable list
    * ```ebnf
    *  variable_list ::= (variable_declaration ',')* variable_declaration
@@ -6863,7 +7124,7 @@ module.exports = {
   read_variable_list: function read_variable_list(flags) {
     var result = this.node("propertystatement");
     var properties = this.read_list(
-    /**
+    /*
      * Reads a variable declaration
      *
      * ```ebnf
@@ -6898,7 +7159,7 @@ module.exports = {
     return result(null, properties, flags);
   },
 
-  /**
+  /*
    * Reads constant list
    * ```ebnf
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
@@ -6911,7 +7172,7 @@ module.exports = {
 
     var result = this.node("classconstant");
     var items = this.read_list(
-    /**
+    /*
      * Reads a constant declaration
      *
      * ```ebnf
@@ -6942,7 +7203,7 @@ module.exports = {
     return result(null, items, flags);
   },
 
-  /**
+  /*
    * Read member flags
    * @return array
    *  1st index : 0 => public, 1 => protected, 2 => private
@@ -7015,7 +7276,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * optional_type:
    *	  /- empty -/	{ $$ = NULL; }
    *   |	type_expr	{ $$ = $1; }
@@ -7075,7 +7336,7 @@ module.exports = {
     return [nullable, type];
   },
 
-  /**
+  /*
    * reading an interface
    * ```ebnf
    * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
@@ -7101,7 +7362,7 @@ module.exports = {
     return result(propName, propExtends, body);
   },
 
-  /**
+  /*
    * Reads an interface body
    * ```ebnf
    *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
@@ -7155,7 +7416,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * reading a trait
    * ```ebnf
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
@@ -7180,7 +7441,7 @@ module.exports = {
     return result(propName, body);
   },
 
-  /**
+  /*
    * reading a use statement
    * ```ebnf
    * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
@@ -7218,7 +7479,7 @@ module.exports = {
     return node(traits, adaptations);
   },
 
-  /**
+  /*
    * Reading trait alias
    * ```ebnf
    * trait_use_alias ::= namespace_name ( T_DOUBLE_COLON T_STRING )? (T_INSTEADOF namespace_name) | (T_AS member_flags? T_STRING)
@@ -7303,7 +7564,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    *  Comments with // or # or / * ... * /
    */
   read_comment: function read_comment() {
@@ -7320,7 +7581,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Comments with / ** ... * /
    */
   read_doc_comment: function read_doc_comment() {
@@ -7424,21 +7685,21 @@ module.exports = {
     return expr;
   },
 
-  /**
+  /*
    * Reads a cast expression
    */
   read_expr_cast: function read_expr_cast(type) {
     return this.node("cast")(type, this.text(), this.next().read_expr());
   },
 
-  /**
+  /*
    * Read a isset variable
    */
   read_isset_variable: function read_isset_variable() {
     return this.read_expr();
   },
 
-  /**
+  /*
    * Reads isset variables
    */
   read_isset_variables: function read_isset_variables() {
@@ -7526,7 +7787,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads optional expression
    */
   read_optional_expr: function read_optional_expr(stopToken) {
@@ -7537,7 +7798,7 @@ module.exports = {
     return null;
   },
 
-  /**
+  /*
    * Reads exit expression
    */
   read_exit_expr: function read_exit_expr() {
@@ -7552,7 +7813,7 @@ module.exports = {
     return expression;
   },
 
-  /**
+  /*
    * ```ebnf
    * Reads an expression
    *  expr ::= @todo
@@ -7841,7 +8102,7 @@ module.exports = {
     return expr;
   },
 
-  /**
+  /*
    * Recursively convert nested array to nested list.
    */
   convertToList: function convertToList(array) {
@@ -7861,7 +8122,7 @@ module.exports = {
     return node;
   },
 
-  /**
+  /*
    * Reads assignment
    * @param {*} left
    */
@@ -7882,7 +8143,7 @@ module.exports = {
     return result("assignref", left, right);
   },
 
-  /**
+  /*
    *
    * inline_function:
    * 		function returns_ref backup_doc_comment '(' parameter_list ')' lexical_vars return_type
@@ -7934,7 +8195,7 @@ module.exports = {
     return node(params, isRef, body, returnType, nullable, flags ? true : false);
   },
 
-  /**
+  /*
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
    * ```
@@ -7973,7 +8234,7 @@ module.exports = {
     return result(name, args);
   },
 
-  /**
+  /*
    * Reads a class name
    * ```ebnf
    * read_new_class_name ::= namespace_name | variable
@@ -8025,7 +8286,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * checks if current token is a reference keyword
    */
   is_reference: function is_reference() {
@@ -8037,7 +8298,7 @@ module.exports = {
     return false;
   },
 
-  /**
+  /*
    * checks if current token is a variadic keyword
    */
   is_variadic: function is_variadic() {
@@ -8049,7 +8310,7 @@ module.exports = {
     return false;
   },
 
-  /**
+  /*
    * reading a function
    * ```ebnf
    * function ::= function_declaration code_block
@@ -8082,7 +8343,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * reads a function declaration (without his body)
    * ```ebnf
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
@@ -8191,7 +8452,7 @@ module.exports = {
     return this.read_list(this.read_lexical_var, ",");
   },
 
-  /**
+  /*
    * ```ebnf
    * lexical_var ::= '&'? T_VARIABLE
    * ```
@@ -8208,7 +8469,7 @@ module.exports = {
     return result(name, false);
   },
 
-  /**
+  /*
    * reads a list of parameters
    * ```ebnf
    *  parameter_list ::= (parameter ',')* parameter?
@@ -8235,7 +8496,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * ```ebnf
    *  parameter ::= type? '&'? T_ELLIPSIS? T_VARIABLE ('=' expr)?
    * ```
@@ -8276,7 +8537,7 @@ module.exports = {
     return node(parameterName, type, value, isRef, isVariadic, nullable);
   },
 
-  /**
+  /*
    * Reads a list of arguments
    * ```ebnf
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
@@ -8294,7 +8555,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads non empty argument list
    */
   read_non_empty_argument_list: function read_non_empty_argument_list() {
@@ -8316,7 +8577,7 @@ module.exports = {
     }.bind(this), ",");
   },
 
-  /**
+  /*
    * ```ebnf
    *    argument_list ::= T_ELLIPSIS? expr
    * ```
@@ -8329,7 +8590,7 @@ module.exports = {
     return this.read_expr();
   },
 
-  /**
+  /*
    * read type hinting
    * ```ebnf
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name
@@ -8383,7 +8644,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * Reads an IF statement
    *
    * ```ebnf
@@ -8431,7 +8692,7 @@ module.exports = {
     return result(test, body, alternate, shortForm);
   },
 
-  /**
+  /*
    * reads an if expression : '(' expr ')'
    */
   read_if_expr: function read_if_expr() {
@@ -8441,7 +8702,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * reads an elseif (expr): statements
    */
   read_elseif_short: function read_elseif_short() {
@@ -8467,7 +8728,7 @@ module.exports = {
     return result(test, body(null, items), alternate, true);
   },
 
-  /**
+  /*
    *
    */
   read_else_short: function read_else_short() {
@@ -8496,7 +8757,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * Reads a while statement
    * ```ebnf
    * while ::= T_WHILE (statement | ':' inner_statement_list T_ENDWHILE ';')
@@ -8524,7 +8785,7 @@ module.exports = {
     return result(test, body, shortForm);
   },
 
-  /**
+  /*
    * Reads a do / while loop
    * ```ebnf
    * do ::= T_DO statement T_WHILE '(' expr ')' ';'
@@ -8549,7 +8810,7 @@ module.exports = {
     return result(test, body);
   },
 
-  /**
+  /*
    * Read a for incremental loop
    * ```ebnf
    * for ::= T_FOR '(' for_exprs ';' for_exprs ';' for_exprs ')' for_statement
@@ -8600,7 +8861,7 @@ module.exports = {
     return result(init, test, increment, body, shortForm);
   },
 
-  /**
+  /*
    * Reads a foreach loop
    * ```ebnf
    * foreach ::= '(' expr T_AS foreach_variable (T_DOUBLE_ARROW foreach_variable)? ')' statement
@@ -8646,7 +8907,7 @@ module.exports = {
     return result(source, key, value, body, shortForm);
   },
 
-  /**
+  /*
    * Reads a foreach variable statement
    * ```ebnf
    * foreach_variable =
@@ -8686,7 +8947,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * ```ebnf
    * start ::= (namespace | top_statement)*
    * ```
@@ -8713,7 +8974,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * Reads a namespace declaration block
    * ```ebnf
    * namespace ::= T_NAMESPACE namespace_name? '{'
@@ -8771,7 +9032,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * Reads a namespace name
    * ```ebnf
    *  namespace_name ::= T_NS_SEPARATOR? (T_STRING T_NS_SEPARATOR)* T_STRING
@@ -8801,7 +9062,7 @@ module.exports = {
     return result("name", names, relative);
   },
 
-  /**
+  /*
    * Reads a use statement
    * ```ebnf
    * use_statement ::= T_USE
@@ -8834,7 +9095,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    *
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
    */
@@ -8843,7 +9104,7 @@ module.exports = {
     return this.read_variable(true, false);
   },
 
-  /**
+  /*
    * Reads a use declaration
    * ```ebnf
    * use_declaration ::= use_type? namespace_name use_alias
@@ -8860,7 +9121,7 @@ module.exports = {
     return result(name.name, alias, type);
   },
 
-  /**
+  /*
    * Reads a list of use declarations
    * ```ebnf
    * use_declarations ::= use_declaration (',' use_declaration)*
@@ -8888,7 +9149,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a use statement
    * ```ebnf
    * use_alias ::= (T_AS T_STRING)?
@@ -8910,7 +9171,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads the namespace type declaration
    * ```ebnf
    * use_type ::= (T_FUNCTION | T_CONST)?
@@ -8954,7 +9215,7 @@ var specialChar = {
   e: String.fromCharCode(27)
 };
 module.exports = {
-  /**
+  /*
    * Unescape special chars
    */
   resolve_special_chars: function resolve_special_chars(text, doubleQuote) {
@@ -8976,7 +9237,7 @@ module.exports = {
     });
   },
 
-  /**
+  /*
    * Remove all leading spaces each line for heredoc text if there is a indentation
    * @param {string} text
    * @param {number} indentation
@@ -9002,7 +9263,7 @@ module.exports = {
     return text.replace(removementRegExp, "\n");
   },
 
-  /**
+  /*
    * Check indentation level of heredoc in text, if mismatch, raiseError
    * @param {string} text
    * @param {number} indentation
@@ -9013,8 +9274,9 @@ module.exports = {
     var textSize = text.length;
     var offset = 0;
     var leadingWhitespaceCharCount = 0;
-    /**
+    /*
      * @var inCoutingState {boolean} reset to true after a new line
+     * @private
      */
 
     var inCoutingState = true;
@@ -9059,7 +9321,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * Reads dereferencable scalar
    */
   read_dereferencable_scalar: function read_dereferencable_scalar() {
@@ -9106,7 +9368,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * ```ebnf
    *  scalar ::= T_MAGIC_CONST
    *       | T_LNUMBER | T_DNUMBER
@@ -9199,7 +9461,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * Handles the dereferencing
    */
   read_dereferencable: function read_dereferencable(expr) {
@@ -9218,7 +9480,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads and extracts an encapsed item
    * ```ebnf
    * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
@@ -9320,7 +9582,7 @@ module.exports = {
     return encapsedPart(result, syntax, curly);
   },
 
-  /**
+  /*
    * Reads an encapsed string
    */
   read_encapsed_string: function read_encapsed_string(expect) {
@@ -9377,7 +9639,7 @@ module.exports = {
     return node;
   },
 
-  /**
+  /*
    * Constant token
    */
   get_magic_constant: function get_magic_constant() {
@@ -9401,7 +9663,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * reading a list of top statements (helper for top_statement*)
    * ```ebnf
    *  top_statements ::= top_statement*
@@ -9425,7 +9687,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * reading a top statement
    * ```ebnf
    *  top_statement ::=
@@ -9482,7 +9744,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * reads a list of simple inner statements (helper for inner_statement*)
    * ```ebnf
    *  inner_statements ::= inner_statement*
@@ -9506,7 +9768,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a list of constants declaration
    * ```ebnf
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
@@ -9530,7 +9792,7 @@ module.exports = {
     }, ",", false);
   },
 
-  /**
+  /*
    * Reads a list of constants declaration
    * ```ebnf
    *   declare_list ::= IDENTIFIER '=' expr (',' IDENTIFIER '=' expr)*
@@ -9561,7 +9823,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * reads a simple inner statement
    * ```ebnf
    *  inner_statement ::= '{' inner_statements '}' | token
@@ -9601,7 +9863,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * Reads statements
    */
   read_statement: function read_statement() {
@@ -9854,7 +10116,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * ```ebnf
    *  code_block ::= '{' (inner_statements | top_statements) '}'
    * ```
@@ -9886,7 +10148,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * Reads a switch statement
    * ```ebnf
    *  switch ::= T_SWITCH '(' expr ')' switch_case_list
@@ -9905,7 +10167,7 @@ module.exports = {
     return result(test, body, shortForm);
   },
 
-  /**
+  /*
    * ```ebnf
    *  switch_case_list ::= '{' ';'? case_list* '}' | ':' ';'? case_list* T_ENDSWITCH ';'
    * ```
@@ -9951,7 +10213,7 @@ module.exports = {
     return result(null, items);
   },
 
-  /**
+  /*
    * ```ebnf
    *   case_list ::= ((T_CASE expr) | T_DEFAULT) (':' | ';') inner_statement*
    * ```
@@ -9995,7 +10257,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * ```ebnf
    *  try ::= T_TRY '{' inner_statement* '}'
    *          (
@@ -10043,7 +10305,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * Reads a short form of tokens
    * @param {Number} token - The ending token
    * @return {Block}
@@ -10066,7 +10328,7 @@ module.exports = {
     return body(null, items);
   },
 
-  /**
+  /*
    * https://wiki.php.net/rfc/trailing-comma-function-calls
    * @param {*} item
    * @param {*} separator
@@ -10094,7 +10356,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Helper : reads a list of tokens / sample : T_STRING ',' T_STRING ...
    * ```ebnf
    * list ::= separator? ( item separator )* item
@@ -10141,7 +10403,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a list of names separated by a comma
    *
    * ```ebnf
@@ -10160,7 +10422,7 @@ module.exports = {
     return this.read_list(this.read_namespace_name, ",", false);
   },
 
-  /**
+  /*
    * Reads the byref token and assign it to the specified node
    * @param {*} cb
    */
@@ -10178,7 +10440,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads a list of variables declarations
    *
    * ```ebnf
@@ -10261,7 +10523,7 @@ module.exports = {
 
 
 module.exports = {
-  /**
+  /*
    * Reads a variable
    *
    * ```ebnf
@@ -10489,7 +10751,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   read_encaps_var_offset: function read_encaps_var_offset() {
@@ -10526,7 +10788,7 @@ module.exports = {
     return offset;
   },
 
-  /**
+  /*
    * ```ebnf
    *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
    * ```
@@ -10558,7 +10820,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * ```ebnf
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
    * ```
@@ -10624,11 +10886,159 @@ module.exports = {
  */
 
 /**
- * PHP AST Tokens
- * @type {Object}
+ * @memberOf module:php-parser
+ * @readonly
+ * @enum
  */
 
-module.exports = {
+var TokenNames = {
+  T_HALT_COMPILER: 101,
+  T_USE: 102,
+  T_ENCAPSED_AND_WHITESPACE: 103,
+  T_OBJECT_OPERATOR: 104,
+  T_STRING: 105,
+  T_DOLLAR_OPEN_CURLY_BRACES: 106,
+  T_STRING_VARNAME: 107,
+  T_CURLY_OPEN: 108,
+  T_NUM_STRING: 109,
+  T_ISSET: 110,
+  T_EMPTY: 111,
+  T_INCLUDE: 112,
+  T_INCLUDE_ONCE: 113,
+  T_EVAL: 114,
+  T_REQUIRE: 115,
+  T_REQUIRE_ONCE: 116,
+  T_NAMESPACE: 117,
+  T_NS_SEPARATOR: 118,
+  T_AS: 119,
+  T_IF: 120,
+  T_ENDIF: 121,
+  T_WHILE: 122,
+  T_DO: 123,
+  T_FOR: 124,
+  T_SWITCH: 125,
+  T_BREAK: 126,
+  T_CONTINUE: 127,
+  T_RETURN: 128,
+  T_GLOBAL: 129,
+  T_STATIC: 130,
+  T_ECHO: 131,
+  T_INLINE_HTML: 132,
+  T_UNSET: 133,
+  T_FOREACH: 134,
+  T_DECLARE: 135,
+  T_TRY: 136,
+  T_THROW: 137,
+  T_GOTO: 138,
+  T_FINALLY: 139,
+  T_CATCH: 140,
+  T_ENDDECLARE: 141,
+  T_LIST: 142,
+  T_CLONE: 143,
+  T_PLUS_EQUAL: 144,
+  T_MINUS_EQUAL: 145,
+  T_MUL_EQUAL: 146,
+  T_DIV_EQUAL: 147,
+  T_CONCAT_EQUAL: 148,
+  T_MOD_EQUAL: 149,
+  T_AND_EQUAL: 150,
+  T_OR_EQUAL: 151,
+  T_XOR_EQUAL: 152,
+  T_SL_EQUAL: 153,
+  T_SR_EQUAL: 154,
+  T_INC: 155,
+  T_DEC: 156,
+  T_BOOLEAN_OR: 157,
+  T_BOOLEAN_AND: 158,
+  T_LOGICAL_OR: 159,
+  T_LOGICAL_AND: 160,
+  T_LOGICAL_XOR: 161,
+  T_SL: 162,
+  T_SR: 163,
+  T_IS_IDENTICAL: 164,
+  T_IS_NOT_IDENTICAL: 165,
+  T_IS_EQUAL: 166,
+  T_IS_NOT_EQUAL: 167,
+  T_IS_SMALLER_OR_EQUAL: 168,
+  T_IS_GREATER_OR_EQUAL: 169,
+  T_INSTANCEOF: 170,
+  T_INT_CAST: 171,
+  T_DOUBLE_CAST: 172,
+  T_STRING_CAST: 173,
+  T_ARRAY_CAST: 174,
+  T_OBJECT_CAST: 175,
+  T_BOOL_CAST: 176,
+  T_UNSET_CAST: 177,
+  T_EXIT: 178,
+  T_PRINT: 179,
+  T_YIELD: 180,
+  T_YIELD_FROM: 181,
+  T_FUNCTION: 182,
+  T_DOUBLE_ARROW: 183,
+  T_DOUBLE_COLON: 184,
+  T_ARRAY: 185,
+  T_CALLABLE: 186,
+  T_CLASS: 187,
+  T_ABSTRACT: 188,
+  T_TRAIT: 189,
+  T_FINAL: 190,
+  T_EXTENDS: 191,
+  T_INTERFACE: 192,
+  T_IMPLEMENTS: 193,
+  T_VAR: 194,
+  T_PUBLIC: 195,
+  T_PROTECTED: 196,
+  T_PRIVATE: 197,
+  T_CONST: 198,
+  T_NEW: 199,
+  T_INSTEADOF: 200,
+  T_ELSEIF: 201,
+  T_ELSE: 202,
+  T_ENDSWITCH: 203,
+  T_CASE: 204,
+  T_DEFAULT: 205,
+  T_ENDFOR: 206,
+  T_ENDFOREACH: 207,
+  T_ENDWHILE: 208,
+  T_CONSTANT_ENCAPSED_STRING: 209,
+  T_LNUMBER: 210,
+  T_DNUMBER: 211,
+  T_LINE: 212,
+  T_FILE: 213,
+  T_DIR: 214,
+  T_TRAIT_C: 215,
+  T_METHOD_C: 216,
+  T_FUNC_C: 217,
+  T_NS_C: 218,
+  T_START_HEREDOC: 219,
+  T_END_HEREDOC: 220,
+  T_CLASS_C: 221,
+  T_VARIABLE: 222,
+  T_OPEN_TAG: 223,
+  T_OPEN_TAG_WITH_ECHO: 224,
+  T_CLOSE_TAG: 225,
+  T_WHITESPACE: 226,
+  T_COMMENT: 227,
+  T_DOC_COMMENT: 228,
+  T_ELLIPSIS: 229,
+  T_COALESCE: 230,
+  T_POW: 231,
+  T_POW_EQUAL: 232,
+  T_SPACESHIP: 233,
+  T_COALESCE_EQUAL: 234,
+  T_FN: 235
+};
+/**
+ * PHP AST Tokens
+ * @readonly
+ * @memberOf module:php-parser
+ *
+ * @type {object}
+ * @property {Object.<number, string>} values
+ * @property {TokenNames} names
+ */
+
+var tokens = {
   values: {
     101: "T_HALT_COMPILER",
     102: "T_USE",
@@ -10766,144 +11176,9 @@ module.exports = {
     234: "T_COALESCE_EQUAL",
     235: "T_FN"
   },
-  names: {
-    T_HALT_COMPILER: 101,
-    T_USE: 102,
-    T_ENCAPSED_AND_WHITESPACE: 103,
-    T_OBJECT_OPERATOR: 104,
-    T_STRING: 105,
-    T_DOLLAR_OPEN_CURLY_BRACES: 106,
-    T_STRING_VARNAME: 107,
-    T_CURLY_OPEN: 108,
-    T_NUM_STRING: 109,
-    T_ISSET: 110,
-    T_EMPTY: 111,
-    T_INCLUDE: 112,
-    T_INCLUDE_ONCE: 113,
-    T_EVAL: 114,
-    T_REQUIRE: 115,
-    T_REQUIRE_ONCE: 116,
-    T_NAMESPACE: 117,
-    T_NS_SEPARATOR: 118,
-    T_AS: 119,
-    T_IF: 120,
-    T_ENDIF: 121,
-    T_WHILE: 122,
-    T_DO: 123,
-    T_FOR: 124,
-    T_SWITCH: 125,
-    T_BREAK: 126,
-    T_CONTINUE: 127,
-    T_RETURN: 128,
-    T_GLOBAL: 129,
-    T_STATIC: 130,
-    T_ECHO: 131,
-    T_INLINE_HTML: 132,
-    T_UNSET: 133,
-    T_FOREACH: 134,
-    T_DECLARE: 135,
-    T_TRY: 136,
-    T_THROW: 137,
-    T_GOTO: 138,
-    T_FINALLY: 139,
-    T_CATCH: 140,
-    T_ENDDECLARE: 141,
-    T_LIST: 142,
-    T_CLONE: 143,
-    T_PLUS_EQUAL: 144,
-    T_MINUS_EQUAL: 145,
-    T_MUL_EQUAL: 146,
-    T_DIV_EQUAL: 147,
-    T_CONCAT_EQUAL: 148,
-    T_MOD_EQUAL: 149,
-    T_AND_EQUAL: 150,
-    T_OR_EQUAL: 151,
-    T_XOR_EQUAL: 152,
-    T_SL_EQUAL: 153,
-    T_SR_EQUAL: 154,
-    T_INC: 155,
-    T_DEC: 156,
-    T_BOOLEAN_OR: 157,
-    T_BOOLEAN_AND: 158,
-    T_LOGICAL_OR: 159,
-    T_LOGICAL_AND: 160,
-    T_LOGICAL_XOR: 161,
-    T_SL: 162,
-    T_SR: 163,
-    T_IS_IDENTICAL: 164,
-    T_IS_NOT_IDENTICAL: 165,
-    T_IS_EQUAL: 166,
-    T_IS_NOT_EQUAL: 167,
-    T_IS_SMALLER_OR_EQUAL: 168,
-    T_IS_GREATER_OR_EQUAL: 169,
-    T_INSTANCEOF: 170,
-    T_INT_CAST: 171,
-    T_DOUBLE_CAST: 172,
-    T_STRING_CAST: 173,
-    T_ARRAY_CAST: 174,
-    T_OBJECT_CAST: 175,
-    T_BOOL_CAST: 176,
-    T_UNSET_CAST: 177,
-    T_EXIT: 178,
-    T_PRINT: 179,
-    T_YIELD: 180,
-    T_YIELD_FROM: 181,
-    T_FUNCTION: 182,
-    T_DOUBLE_ARROW: 183,
-    T_DOUBLE_COLON: 184,
-    T_ARRAY: 185,
-    T_CALLABLE: 186,
-    T_CLASS: 187,
-    T_ABSTRACT: 188,
-    T_TRAIT: 189,
-    T_FINAL: 190,
-    T_EXTENDS: 191,
-    T_INTERFACE: 192,
-    T_IMPLEMENTS: 193,
-    T_VAR: 194,
-    T_PUBLIC: 195,
-    T_PROTECTED: 196,
-    T_PRIVATE: 197,
-    T_CONST: 198,
-    T_NEW: 199,
-    T_INSTEADOF: 200,
-    T_ELSEIF: 201,
-    T_ELSE: 202,
-    T_ENDSWITCH: 203,
-    T_CASE: 204,
-    T_DEFAULT: 205,
-    T_ENDFOR: 206,
-    T_ENDFOREACH: 207,
-    T_ENDWHILE: 208,
-    T_CONSTANT_ENCAPSED_STRING: 209,
-    T_LNUMBER: 210,
-    T_DNUMBER: 211,
-    T_LINE: 212,
-    T_FILE: 213,
-    T_DIR: 214,
-    T_TRAIT_C: 215,
-    T_METHOD_C: 216,
-    T_FUNC_C: 217,
-    T_NS_C: 218,
-    T_START_HEREDOC: 219,
-    T_END_HEREDOC: 220,
-    T_CLASS_C: 221,
-    T_VARIABLE: 222,
-    T_OPEN_TAG: 223,
-    T_OPEN_TAG_WITH_ECHO: 224,
-    T_CLOSE_TAG: 225,
-    T_WHITESPACE: 226,
-    T_COMMENT: 227,
-    T_DOC_COMMENT: 228,
-    T_ELLIPSIS: 229,
-    T_COALESCE: 230,
-    T_POW: 231,
-    T_POW_EQUAL: 232,
-    T_SPACESHIP: 233,
-    T_COALESCE_EQUAL: 234,
-    T_FN: 235
-  }
+  names: TokenNames
 };
+module.exports = Object.freeze(tokens);
 
 /***/ })
 
