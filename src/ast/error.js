@@ -18,17 +18,13 @@ const KIND = "error";
  * @property {number|string} token
  * @property {string|array} expected
  */
-module.exports = Node.extends(KIND, function Error(
-  message,
-  token,
-  line,
-  expected,
-  docs,
-  location
-) {
-  Node.apply(this, [KIND, docs, location]);
-  this.message = message;
-  this.token = token;
-  this.line = line;
-  this.expected = expected;
-});
+module.exports = Node.extends(
+  KIND,
+  function Error(message, token, line, expected, docs, location) {
+    Node.apply(this, [KIND, docs, location]);
+    this.message = message;
+    this.token = token;
+    this.line = line;
+    this.expected = expected;
+  }
+);

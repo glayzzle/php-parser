@@ -17,15 +17,12 @@ const KIND = "include";
  * @property {boolean} once
  * @property {boolean} require
  */
-module.exports = Expression.extends(KIND, function Include(
-  once,
-  require,
-  target,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.once = once;
-  this.require = require;
-  this.target = target;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Include(once, require, target, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.once = once;
+    this.require = require;
+    this.target = target;
+  }
+);

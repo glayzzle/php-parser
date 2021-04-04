@@ -17,15 +17,11 @@ const KIND = "string";
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
  */
-module.exports = Literal.extends(KIND, function String(
-  isDoubleQuote,
-  value,
-  unicode,
-  raw,
-  docs,
-  location
-) {
-  Literal.apply(this, [KIND, value, raw, docs, location]);
-  this.unicode = unicode;
-  this.isDoubleQuote = isDoubleQuote;
-});
+module.exports = Literal.extends(
+  KIND,
+  function String(isDoubleQuote, value, unicode, raw, docs, location) {
+    Literal.apply(this, [KIND, value, raw, docs, location]);
+    this.unicode = unicode;
+    this.isDoubleQuote = isDoubleQuote;
+  }
+);

@@ -20,16 +20,13 @@ const IS_PRIVATE = "private";
  * @extends {ConstantStatement}
  * @property {string} visibility
  */
-const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
-  kind,
-  constants,
-  flags,
-  docs,
-  location
-) {
-  ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
-  this.parseFlags(flags);
-});
+const ClassConstant = ConstantStatement.extends(
+  KIND,
+  function ClassConstant(kind, constants, flags, docs, location) {
+    ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
+    this.parseFlags(flags);
+  }
+);
 
 /**
  * Generic flags parser

@@ -15,11 +15,10 @@ const KIND = "expressionstatement";
  * @extends {Statement}
  * @property {Expression} expression
  */
-module.exports = Statement.extends(KIND, function ExpressionStatement(
-  expr,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.expression = expr;
-});
+module.exports = Statement.extends(
+  KIND,
+  function ExpressionStatement(expr, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.expression = expr;
+  }
+);

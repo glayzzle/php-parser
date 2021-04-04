@@ -16,13 +16,11 @@ const KIND = "call";
  * @property {Identifier|Variable} what
  * @property {Variable[]} arguments
  */
-module.exports = Expression.extends(KIND, function Call(
-  what,
-  args,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.what = what;
-  this.arguments = args;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Call(what, args, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.what = what;
+    this.arguments = args;
+  }
+);

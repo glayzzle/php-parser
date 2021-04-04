@@ -16,13 +16,11 @@ const KIND = "new";
  * @property {Identifier|Variable|Class} what
  * @property {Variable[]} arguments
  */
-module.exports = Expression.extends(KIND, function New(
-  what,
-  args,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.what = what;
-  this.arguments = args;
-});
+module.exports = Expression.extends(
+  KIND,
+  function New(what, args, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.what = what;
+    this.arguments = args;
+  }
+);

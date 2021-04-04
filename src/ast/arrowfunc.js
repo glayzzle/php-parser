@@ -20,21 +20,24 @@ const KIND = "arrowfunc";
  * @property {boolean} nullable
  * @property {boolean} isStatic
  */
-module.exports = Expression.extends(KIND, function Closure(
-  args,
-  byref,
-  body,
-  type,
-  nullable,
-  isStatic,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.arguments = args;
-  this.byref = byref;
-  this.body = body;
-  this.type = type;
-  this.nullable = nullable;
-  this.isStatic = isStatic || false;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Closure(
+    args,
+    byref,
+    body,
+    type,
+    nullable,
+    isStatic,
+    docs,
+    location
+  ) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.arguments = args;
+    this.byref = byref;
+    this.body = body;
+    this.type = type;
+    this.nullable = nullable;
+    this.isStatic = isStatic || false;
+  }
+);

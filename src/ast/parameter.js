@@ -19,20 +19,23 @@ const KIND = "parameter";
  * @property {boolean} variadic
  * @property {boolean} nullable
  */
-module.exports = Declaration.extends(KIND, function Parameter(
-  name,
-  type,
-  value,
-  isRef,
-  isVariadic,
-  nullable,
-  docs,
-  location
-) {
-  Declaration.apply(this, [KIND, name, docs, location]);
-  this.value = value;
-  this.type = type;
-  this.byref = isRef;
-  this.variadic = isVariadic;
-  this.nullable = nullable;
-});
+module.exports = Declaration.extends(
+  KIND,
+  function Parameter(
+    name,
+    type,
+    value,
+    isRef,
+    isVariadic,
+    nullable,
+    docs,
+    location
+  ) {
+    Declaration.apply(this, [KIND, name, docs, location]);
+    this.value = value;
+    this.type = type;
+    this.byref = isRef;
+    this.variadic = isVariadic;
+    this.nullable = nullable;
+  }
+);

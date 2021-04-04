@@ -16,13 +16,11 @@ const KIND = "constant";
  * @property {string} name
  * @property {Node|string|number|boolean|null} value
  */
-module.exports = Node.extends(KIND, function Constant(
-  name,
-  value,
-  docs,
-  location
-) {
-  Node.apply(this, [KIND, docs, location]);
-  this.name = name;
-  this.value = value;
-});
+module.exports = Node.extends(
+  KIND,
+  function Constant(name, value, docs, location) {
+    Node.apply(this, [KIND, docs, location]);
+    this.name = name;
+    this.value = value;
+  }
+);

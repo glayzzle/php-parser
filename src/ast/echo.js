@@ -15,13 +15,11 @@ const KIND = "echo";
  * @property {boolean} shortForm
  * @extends {Statement}
  */
-module.exports = Statement.extends(KIND, function Echo(
-  expressions,
-  shortForm,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.shortForm = shortForm;
-  this.expressions = expressions;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Echo(expressions, shortForm, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.shortForm = shortForm;
+    this.expressions = expressions;
+  }
+);

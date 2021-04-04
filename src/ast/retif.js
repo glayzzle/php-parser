@@ -17,15 +17,12 @@ const KIND = "retif";
  * @property {Expression} trueExpr
  * @property {Expression} falseExpr
  */
-module.exports = Expression.extends(KIND, function RetIf(
-  test,
-  trueExpr,
-  falseExpr,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.trueExpr = trueExpr;
-  this.falseExpr = falseExpr;
-});
+module.exports = Expression.extends(
+  KIND,
+  function RetIf(test, trueExpr, falseExpr, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.test = test;
+    this.trueExpr = trueExpr;
+    this.falseExpr = falseExpr;
+  }
+);

@@ -16,13 +16,11 @@ const KIND = "unary";
  * @property {string} type
  * @property {Expression} what
  */
-module.exports = Operation.extends(KIND, function Unary(
-  type,
-  what,
-  docs,
-  location
-) {
-  Operation.apply(this, [KIND, docs, location]);
-  this.type = type;
-  this.what = what;
-});
+module.exports = Operation.extends(
+  KIND,
+  function Unary(type, what, docs, location) {
+    Operation.apply(this, [KIND, docs, location]);
+    this.type = type;
+    this.what = what;
+  }
+);

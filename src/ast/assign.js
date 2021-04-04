@@ -17,15 +17,12 @@ const KIND = "assign";
  * @property {Expression} right
  * @property {String} operator
  */
-module.exports = Expression.extends(KIND, function Assign(
-  left,
-  right,
-  operator,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.left = left;
-  this.right = right;
-  this.operator = operator;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Assign(left, right, operator, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.left = left;
+    this.right = right;
+    this.operator = operator;
+  }
+);

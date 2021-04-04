@@ -23,26 +23,22 @@ const IS_PRIVATE = "private";
  * @property {Identifier|null} as
  * @property {string|null} visibility
  */
-module.exports = Node.extends(KIND, function TraitAlias(
-  trait,
-  method,
-  as,
-  flags,
-  docs,
-  location
-) {
-  Node.apply(this, [KIND, docs, location]);
-  this.trait = trait;
-  this.method = method;
-  this.as = as;
-  this.visibility = IS_UNDEFINED;
-  if (flags) {
-    if (flags[0] === 0) {
-      this.visibility = IS_PUBLIC;
-    } else if (flags[0] === 1) {
-      this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
-      this.visibility = IS_PRIVATE;
+module.exports = Node.extends(
+  KIND,
+  function TraitAlias(trait, method, as, flags, docs, location) {
+    Node.apply(this, [KIND, docs, location]);
+    this.trait = trait;
+    this.method = method;
+    this.as = as;
+    this.visibility = IS_UNDEFINED;
+    if (flags) {
+      if (flags[0] === 0) {
+        this.visibility = IS_PUBLIC;
+      } else if (flags[0] === 1) {
+        this.visibility = IS_PROTECTED;
+      } else if (flags[0] === 2) {
+        this.visibility = IS_PRIVATE;
+      }
     }
   }
-});
+);

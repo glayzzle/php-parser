@@ -14,11 +14,10 @@ const KIND = "isset";
  * @memberOf module:php-parser
  * @extends {Expression}
  */
-module.exports = Expression.extends(KIND, function Isset(
-  variables,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.variables = variables;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Isset(variables, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.variables = variables;
+  }
+);

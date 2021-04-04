@@ -14,11 +14,9 @@ const KIND = "offsetlookup";
  * @memberOf module:php-parser
  * @extends {Lookup}
  */
-module.exports = Lookup.extends(KIND, function OffsetLookup(
-  what,
-  offset,
-  docs,
-  location
-) {
-  Lookup.apply(this, [KIND, what, offset, docs, location]);
-});
+module.exports = Lookup.extends(
+  KIND,
+  function OffsetLookup(what, offset, docs, location) {
+    Lookup.apply(this, [KIND, what, offset, docs, location]);
+  }
+);
