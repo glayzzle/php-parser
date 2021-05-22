@@ -200,7 +200,7 @@ Engine.tokenGetAll = function (buffer, options) {
  * Extract tokens from the specified buffer.
  * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
  * @param {string} buffer
- * @return {string[]} - Each item can be a string or an array with following informations [token_name, text, line_number]
+ * @return {Array<string|string[]>} - Each item can be a string or an array with following informations [token_name, text, line_number]
  */
 Engine.prototype.tokenGetAll = function (buffer) {
   this.lexer.mode_eval = false;
