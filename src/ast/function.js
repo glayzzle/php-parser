@@ -33,4 +33,5 @@ module.exports = Declaration.extends(KIND, function _Function(
   this.type = type;
   this.nullable = nullable;
   this.body = null;
+  this.attrs = [];
 });

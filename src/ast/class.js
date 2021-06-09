@@ -15,6 +15,7 @@ const KIND = "class";
  * @property {Identifier|null} extends
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
+ * @property {Attribute[]} attrs
  * @property {boolean} isAnonymous
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
@@ -33,5 +34,6 @@ module.exports = Declaration.extends(KIND, function Class(
   this.extends = ext;
   this.implements = impl;
   this.body = body;
+  this.attrs = [];
   this.parseFlags(flags);
 });

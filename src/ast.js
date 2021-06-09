@@ -464,6 +464,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/arrowfunc"),
   require("./ast/assign"),
   require("./ast/assignref"),
+  require("./ast/attribute"),
   require("./ast/bin"),
   require("./ast/block"),
   require("./ast/boolean"),
