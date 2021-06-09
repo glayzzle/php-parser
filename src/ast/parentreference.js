@@ -13,12 +13,11 @@ const KIND = "parentreference";
  * @constructor ParentReference
  * @extends {Reference}
  */
-const ParentReference = Reference.extends(KIND, function ParentReference(
-  raw,
-  docs,
-  location
-) {
-  Reference.apply(this, [KIND, docs, location]);
-  this.raw = raw;
-});
+const ParentReference = Reference.extends(
+  KIND,
+  function ParentReference(raw, docs, location) {
+    Reference.apply(this, [KIND, docs, location]);
+    this.raw = raw;
+  }
+);
 module.exports = ParentReference;

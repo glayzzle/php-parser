@@ -14,11 +14,10 @@ const KIND = "uniontype";
  * @extends {Declaration}
  * @property {TypeReference[]} types
  */
-module.exports = Declaration.extends(KIND, function UnionType(
-  types,
-  docs,
-  location
-) {
-  Declaration.apply(this, [KIND, null, docs, location]);
-  this.types = types;
-});
+module.exports = Declaration.extends(
+  KIND,
+  function UnionType(types, docs, location) {
+    Declaration.apply(this, [KIND, null, docs, location]);
+    this.types = types;
+  }
+);

@@ -15,14 +15,11 @@ const KIND = "namespace";
  * @property {String} name
  * @property {Boolean} withBrackets
  */
-module.exports = Block.extends(KIND, function Namespace(
-  name,
-  children,
-  withBrackets,
-  docs,
-  location
-) {
-  Block.apply(this, [KIND, children, docs, location]);
-  this.name = name;
-  this.withBrackets = withBrackets || false;
-});
+module.exports = Block.extends(
+  KIND,
+  function Namespace(name, children, withBrackets, docs, location) {
+    Block.apply(this, [KIND, children, docs, location]);
+    this.name = name;
+    this.withBrackets = withBrackets || false;
+  }
+);

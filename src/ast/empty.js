@@ -13,11 +13,10 @@ const KIND = "empty";
  * @constructor Empty
  * @extends {Expression}
  */
-module.exports = Expression.extends(KIND, function Empty(
-  expression,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.expression = expression;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Empty(expression, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.expression = expression;
+  }
+);

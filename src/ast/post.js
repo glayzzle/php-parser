@@ -15,13 +15,11 @@ const KIND = "post";
  * @property {String} type
  * @property {Variable} what
  */
-module.exports = Operation.extends(KIND, function Post(
-  type,
-  what,
-  docs,
-  location
-) {
-  Operation.apply(this, [KIND, docs, location]);
-  this.type = type;
-  this.what = what;
-});
+module.exports = Operation.extends(
+  KIND,
+  function Post(type, what, docs, location) {
+    Operation.apply(this, [KIND, docs, location]);
+    this.type = type;
+    this.what = what;
+  }
+);

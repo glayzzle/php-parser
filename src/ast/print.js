@@ -13,11 +13,10 @@ const KIND = "print";
  * @constructor Print
  * @extends {Expression}
  */
-module.exports = Expression.extends(KIND, function Print(
-  expression,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.expression = expression;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Print(expression, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.expression = expression;
+  }
+);
