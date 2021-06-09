@@ -474,6 +474,7 @@ lexer.prototype.next = function () {
 
 // extends the lexer with states
 [
+  require("./lexer/attribute.js"),
   require("./lexer/comments.js"),
   require("./lexer/initial.js"),
   require("./lexer/numbers.js"),
