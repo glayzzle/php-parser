@@ -32,7 +32,7 @@ module.exports = {
    * function ::= function_declaration code_block
    * ```
    */
-  read_function: function (closure, flag) {
+  read_function: function (closure, flag, attrs) {
     const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1
@@ -54,6 +54,7 @@ module.exports = {
         result.parseFlags(flag);
       }
     }
+    if (attrs) result.attrs = attrs;
     return result;
   },
   /**
@@ -204,6 +205,8 @@ module.exports = {
     let value = null;
     let types = null;
     let nullable = false;
+    let attrs = [];
+    if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
     if (this.token === "?") {
       this.next();
       nullable = true;
@@ -226,7 +229,7 @@ module.exports = {
     if (this.token == "=") {
       value = this.next().read_expr();
     }
-    return node(
+    const result = node(
       parameterName,
       types,
       value,
@@ -235,6 +238,8 @@ module.exports = {
       nullable,
       flags
     );
+    if (attrs) result.attrs = attrs;
+    return result;
   },
   read_types() {
     const types = [];

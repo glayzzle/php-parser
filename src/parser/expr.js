@@ -663,6 +663,37 @@ module.exports = {
     return conds;
   },
 
+  read_attribute() {
+    if (this.expect(this.tok.T_ATTRIBUTE)) {
+      this.next();
+    }
+    const name = this.text();
+    let args = [];
+    this.next();
+    if (this.token === "(") {
+      args = this.read_argument_list();
+    }
+    return this.node("attribute")(name, args);
+  },
+  read_attr_list() {
+    const list = [];
+    let more = true;
+    while (more) {
+      list.push(this.read_attribute());
+      if (this.token === ",") this.next();
+      if (this.token === "]") {
+        this.next();
+      }
+      if (this.token === this.tok.T_ATTRIBUTE) {
+        // this.next();
+        more = true;
+      } else {
+        more = false;
+      }
+    }
+    return list;
+  },
+
   /**
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)

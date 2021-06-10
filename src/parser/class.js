@@ -12,7 +12,7 @@ module.exports = {
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
    * ```
    */
-  read_class_declaration_statement: function () {
+  read_class_declaration_statement: function (attrs) {
     const result = this.node("class");
     const flag = this.read_class_modifiers();
     // graceful mode : ignore token & go next
@@ -30,7 +30,9 @@ module.exports = {
     const propImplements = this.read_implements_list();
     this.expect("{");
     const body = this.next().read_class_body();
-    return result(propName, propExtends, propImplements, body, flag);
+    const node = result(propName, propExtends, propImplements, body, flag);
+    if (attrs) node.attrs = attrs;
+    return node;
   },
 
   read_class_modifiers: function () {
@@ -59,7 +61,7 @@ module.exports = {
    */
   read_class_body: function () {
     let result = [];
-
+    let attrs = [];
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
         result.push(this.read_comment());
@@ -77,6 +79,9 @@ module.exports = {
         continue;
       }
 
+      if (this.token === this.tok.T_ATTRIBUTE) {
+        attrs = this.read_attr_list();
+      }
       // read member flags
       const flags = this.read_member_flags(false);
 
@@ -99,7 +104,7 @@ module.exports = {
 
       if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        result.push(this.read_function(false, flags));
+        result.push(this.read_function(false, flags, attrs));
       } else if (
         this.token === this.tok.T_VARIABLE ||
         // support https://wiki.php.net/rfc/typed_properties_v2
