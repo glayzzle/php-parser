@@ -676,12 +676,14 @@ module.exports = {
     const list = [];
     do {
       this.expect(this.tok.T_ATTRIBUTE);
+      const attrGr = this.node("attrgroup")();
       this.next();
-      list.push(this.read_attribute());
+      attrGr.attrs.push(this.read_attribute());
       while (this.token === ",") {
         this.next();
-        if (this.token !== "]") list.push(this.read_attribute());
+        if (this.token !== "]") attrGr.attrs.push(this.read_attribute());
       }
+      list.push(attrGr);
       this.expect("]");
       this.next();
     } while (this.token === this.tok.T_ATTRIBUTE);

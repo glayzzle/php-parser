@@ -9,7 +9,7 @@ const Node = require("./node");
 const KIND = "attribute";
 
 /**
- * Binary operations
+ * Attribute Value
  * @constructor Attribute
  * @extends {Node}
  * @property {String} name

@@ -31,7 +31,7 @@ module.exports = {
     this.expect("{");
     const body = this.next().read_class_body();
     const node = result(propName, propExtends, propImplements, body, flag);
-    if (attrs) node.attrs = attrs;
+    if (attrs) node.attrGroups = attrs;
     return node;
   },
 

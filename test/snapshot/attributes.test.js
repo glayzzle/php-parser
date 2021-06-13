@@ -33,7 +33,7 @@ describe("Parse Attributes", () => {
     expect(
       parser.parseEval(
         `// Line 1
-    #[ Pure ( )/* Pure */ ]
+    #[ Pure ( ) /* Pure */ ]
     // Line 3
     function a(#[ Unsigned ] $a) {}
     `,

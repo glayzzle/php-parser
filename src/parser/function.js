@@ -54,7 +54,7 @@ module.exports = {
         result.parseFlags(flag);
       }
     }
-    if (attrs) result.attrs = attrs;
+    if (attrs) result.attrGroups = attrs;
     return result;
   },
   /**
@@ -238,7 +238,7 @@ module.exports = {
       nullable,
       flags
     );
-    if (attrs) result.attrs = attrs;
+    if (attrs) result.attrGroups = attrs;
     return result;
   },
   read_types() {
