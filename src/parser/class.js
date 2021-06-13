@@ -117,7 +117,8 @@ module.exports = {
             this.token === this.tok.T_NAMESPACE))
       ) {
         // reads a variable
-        const variables = this.read_variable_list(flags);
+        const variables = this.read_variable_list(flags, attrs);
+        attrs = [];
         this.expect(";");
         this.next();
         result = result.concat(variables);
@@ -142,7 +143,7 @@ module.exports = {
    *  variable_list ::= (variable_declaration ',')* variable_declaration
    * ```
    */
-  read_variable_list: function (flags) {
+  read_variable_list: function (flags, attrs) {
     const result = this.node("propertystatement");
 
     const properties = this.read_list(
@@ -162,13 +163,19 @@ module.exports = {
         this.next();
         propName = propName(name);
         if (this.token === ";" || this.token === ",") {
-          return result(propName, null, nullable, type);
+          return result(propName, null, nullable, type, attrs || []);
         } else if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-          return result(propName, this.next().read_expr(), nullable, type);
+          return result(
+            propName,
+            this.next().read_expr(),
+            nullable,
+            type,
+            attrs || []
+          );
         } else {
           this.expect([",", ";", "="]);
-          return result(propName, null, nullable, type);
+          return result(propName, null, nullable, type, attrs || []);
         }
       },
       ","

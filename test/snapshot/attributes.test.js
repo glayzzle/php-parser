@@ -82,4 +82,18 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse class property attributes", () => {
+    expect(
+      parser.parseEval(`
+      class A {
+        #[B]
+        public B $b;
+        #[C]
+        private C $c;
+        #[D]
+        protected $d;
+      }
+      `)
+    ).toMatchSnapshot();
+  });
 });
