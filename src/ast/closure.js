@@ -19,6 +19,7 @@ const KIND = "closure";
  * @property {boolean} nullable
  * @property {Block|null} body
  * @property {boolean} isStatic
+ * @property {AttrGroup[]} attrGroups
  */
 module.exports = Expression.extends(
   KIND,
@@ -40,5 +41,6 @@ module.exports = Expression.extends(
     this.nullable = nullable;
     this.isStatic = isStatic || false;
     this.body = null;
+    this.attrGroups = [];
   }
 );

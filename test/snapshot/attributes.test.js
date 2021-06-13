@@ -74,4 +74,12 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse anonymous function attributes", () => {
+    expect(
+      parser.parseEval(`
+    $a = #[Pure] fn() => true;
+    $b = #[A] function() {};
+    `)
+    ).toMatchSnapshot();
+  });
 });

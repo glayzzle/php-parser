@@ -225,7 +225,9 @@ module.exports = {
    * ```
    */
   read_expr_item: function () {
-    let result, expr;
+    let result,
+      expr,
+      attrs = [];
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
     if (this.token === "-")
@@ -297,6 +299,10 @@ module.exports = {
       } else {
         return result(assignList, false);
       }
+    }
+
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      attrs = this.read_attr_list();
     }
 
     if (this.token === this.tok.T_CLONE)
@@ -390,7 +396,9 @@ module.exports = {
 
       case this.tok.T_FN:
       case this.tok.T_FUNCTION:
-        return this.read_inline_function();
+        result = this.read_inline_function(undefined, attrs);
+        attrs = [];
+        return result;
 
       case this.tok.T_STATIC: {
         const backup = [this.token, this.lexer.getState()];
@@ -400,7 +408,9 @@ module.exports = {
           (this.version >= 704 && this.token === this.tok.T_FN)
         ) {
           // handles static function
-          return this.read_inline_function([0, 1, 0]);
+          result = this.read_inline_function([0, 1, 0], attrs);
+          attrs = [];
+          return result;
         } else {
           // rollback
           this.lexer.tokens.push(backup);
@@ -574,9 +584,11 @@ module.exports = {
    * 				  ((zend_ast_decl *) $$)->lex_pos = $10;
    * 				  CG(extra_fn_flags) = $9; }   *
    */
-  read_inline_function: function (flags) {
+  read_inline_function: function (flags, attrs) {
     if (this.token === this.tok.T_FUNCTION) {
-      return this.read_function(true, flags);
+      const result = this.read_function(true, flags, attrs);
+      result.attrGroups = attrs;
+      return result;
     }
     // introduced in PHP 7.4
     if (!this.version >= 704) {
@@ -603,7 +615,7 @@ module.exports = {
     }
     if (this.expect(this.tok.T_DOUBLE_ARROW)) this.next();
     const body = this.read_expr();
-    return node(
+    const result = node(
       params,
       isRef,
       body,
@@ -611,6 +623,9 @@ module.exports = {
       nullable,
       flags ? true : false
     );
+    result.attrGroups = attrs;
+    attrs = [];
+    return result;
   },
 
   read_match_expression: function () {
