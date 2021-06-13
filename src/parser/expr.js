@@ -664,9 +664,6 @@ module.exports = {
   },
 
   read_attribute() {
-    if (this.expect(this.tok.T_ATTRIBUTE)) {
-      this.next();
-    }
     const name = this.text();
     let args = [];
     this.next();
@@ -677,20 +674,17 @@ module.exports = {
   },
   read_attr_list() {
     const list = [];
-    let more = true;
-    while (more) {
+    do {
+      this.expect(this.tok.T_ATTRIBUTE);
+      this.next();
       list.push(this.read_attribute());
-      if (this.token === ",") this.next();
-      if (this.token === "]") {
+      while (this.token === ",") {
         this.next();
+        if (this.token !== "]") list.push(this.read_attribute());
       }
-      if (this.token === this.tok.T_ATTRIBUTE) {
-        // this.next();
-        more = true;
-      } else {
-        more = false;
-      }
-    }
+      this.expect("]");
+      this.next();
+    } while (this.token === this.tok.T_ATTRIBUTE);
     return list;
   },
 

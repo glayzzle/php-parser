@@ -43,7 +43,7 @@ module.exports = {
     }
     switch (this.token) {
       case this.tok.T_FUNCTION:
-        return this.read_function(false, false);
+        return this.read_function(false, false, attrs);
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:

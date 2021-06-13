@@ -7,35 +7,53 @@
 
 module.exports = {
   matchST_ATTRIBUTE: function () {
-    const ch = this.input();
-    // console.log("Char:", ch);
+    let listDepth = 0;
+    let ch = this.input();
+    if (this.is_WHITESPACE()) {
+      do {
+        ch = this.input();
+      } while (this.is_WHITESPACE());
+      this.unput(1);
+      return null;
+    }
+    // process.stderr.write("Token:" + JSON.stringify(ch) + "\n");
+    switch (ch) {
+      case "]":
+        if (listDepth === 0) {
+          this.popState();
+        } else {
+          listDepth--;
+        }
+        return "]";
+      case "(":
+      case ")":
+      case ":":
+      case "=":
+        return this.consume_TOKEN();
+      case "[":
+        listDepth++;
+        return "[";
+      case ",":
+        return ",";
+      case '"':
+        return this.ST_DOUBLE_QUOTES();
+      case "'":
+        return this.T_CONSTANT_ENCAPSED_STRING();
+      case "/":
+        if (this._input[this.offset] === "/") {
+          return this.T_COMMENT();
+        } else if (this._input[this.offset] === "*") {
+          this.input();
+          return this.T_DOC_COMMENT();
+        }
+    }
     if (this.is_LABEL_START()) {
       this.consume_LABEL();
       return this.tok.T_STRING;
-    }
-
-    if (ch === "]") {
-      this.popState();
-      return "]";
-    } else if (ch === "(") {
-      return this.consume_TOKEN();
-      // return "(";
-    } else if (ch === ":") {
-      return this.consume_TOKEN();
-    } else if (ch === ")") {
-      return this.consume_TOKEN();
-    } else if (ch === ",") {
-      return ch;
-    } else if (ch === '"') {
-      return this.ST_DOUBLE_QUOTES();
-    } else if (ch === "'") {
-      return this.T_CONSTANT_ENCAPSED_STRING();
     } else if (this.is_NUM()) {
       return this.consume_NUM();
-    } else if (this.is_TABSPACE()) {
-      return this.consume_TABSPACE();
     }
 
-    throw new Error("what now?");
+    throw new Error("what now? " + JSON.stringify(ch));
   },
 };
