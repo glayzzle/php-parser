@@ -16,14 +16,17 @@ const KIND = "declare";
  * @property {String} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
-const Declare = Block.extends(
-  KIND,
-  function Declare(directives, body, mode, docs, location) {
-    Block.apply(this, [KIND, body, docs, location]);
-    this.directives = directives;
-    this.mode = mode;
-  }
-);
+const Declare = Block.extends(KIND, function Declare(
+  directives,
+  body,
+  mode,
+  docs,
+  location
+) {
+  Block.apply(this, [KIND, body, docs, location]);
+  this.directives = directives;
+  this.mode = mode;
+});
 
 /**
  * The node is declared as a short tag syntax :

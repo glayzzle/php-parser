@@ -16,11 +16,13 @@ const KIND = "namedargument";
  * @property {Expression} value
  * @see https://www.php.net/manual/en/functions.arguments.php#functions.named-arguments
  */
-module.exports = Expression.extends(
-  KIND,
-  function namedargument(name, value, docs, location) {
-    Expression.apply(this, [KIND, docs, location]);
-    this.name = name;
-    this.value = value;
-  }
-);
+module.exports = Expression.extends(KIND, function namedargument(
+  name,
+  value,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.value = value;
+});

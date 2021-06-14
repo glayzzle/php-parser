@@ -15,11 +15,13 @@ const KIND = "exit";
  * @property {Node|null} expression
  * @property {Boolean} useDie
  */
-module.exports = Expression.extends(
-  KIND,
-  function Exit(expression, useDie, docs, location) {
-    Expression.apply(this, [KIND, docs, location]);
-    this.expression = expression;
-    this.useDie = useDie;
-  }
-);
+module.exports = Expression.extends(KIND, function Exit(
+  expression,
+  useDie,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.expression = expression;
+  this.useDie = useDie;
+});

@@ -17,13 +17,17 @@ const KIND = "if";
  * @property {Block|If|null} alternate
  * @property {boolean} shortForm
  */
-module.exports = Statement.extends(
-  KIND,
-  function If(test, body, alternate, shortForm, docs, location) {
-    Statement.apply(this, [KIND, docs, location]);
-    this.test = test;
-    this.body = body;
-    this.alternate = alternate;
-    this.shortForm = shortForm;
-  }
-);
+module.exports = Statement.extends(KIND, function If(
+  test,
+  body,
+  alternate,
+  shortForm,
+  docs,
+  location
+) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.test = test;
+  this.body = body;
+  this.alternate = alternate;
+  this.shortForm = shortForm;
+});

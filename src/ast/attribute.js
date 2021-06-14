@@ -15,11 +15,13 @@ const KIND = "attribute";
  * @property {String} name
  * @property {Parameter[]} args
  */
-module.exports = Node.extends(
-  KIND,
-  function Attribute(name, args, docs, location) {
-    Node.apply(this, [KIND, docs, location]);
-    this.name = name;
-    this.args = args;
-  }
-);
+module.exports = Node.extends(KIND, function Attribute(
+  name,
+  args,
+  docs,
+  location
+) {
+  Node.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.args = args;
+});

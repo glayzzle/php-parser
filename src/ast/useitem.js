@@ -18,15 +18,18 @@ const KIND = "useitem";
  * @see {Namespace}
  * @see http://php.net/manual/en/language.namespaces.importing.php
  */
-const UseItem = Statement.extends(
-  KIND,
-  function UseItem(name, alias, type, docs, location) {
-    Statement.apply(this, [KIND, docs, location]);
-    this.name = name;
-    this.alias = alias;
-    this.type = type;
-  }
-);
+const UseItem = Statement.extends(KIND, function UseItem(
+  name,
+  alias,
+  type,
+  docs,
+  location
+) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.alias = alias;
+  this.type = type;
+});
 
 /**
  * Importing a constant

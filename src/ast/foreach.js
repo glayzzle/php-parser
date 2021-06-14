@@ -19,14 +19,19 @@ const KIND = "foreach";
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.foreach.php
  */
-module.exports = Statement.extends(
-  KIND,
-  function Foreach(source, key, value, body, shortForm, docs, location) {
-    Statement.apply(this, [KIND, docs, location]);
-    this.source = source;
-    this.key = key;
-    this.value = value;
-    this.shortForm = shortForm;
-    this.body = body;
-  }
-);
+module.exports = Statement.extends(KIND, function Foreach(
+  source,
+  key,
+  value,
+  body,
+  shortForm,
+  docs,
+  location
+) {
+  Statement.apply(this, [KIND, docs, location]);
+  this.source = source;
+  this.key = key;
+  this.value = value;
+  this.shortForm = shortForm;
+  this.body = body;
+});

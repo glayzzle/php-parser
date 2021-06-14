@@ -15,11 +15,13 @@ const KIND = "declaredirective";
  * @property {Identifier} name
  * @property {Node|string|number|boolean|null} value
  */
-module.exports = Node.extends(
-  KIND,
-  function DeclareDirective(key, value, docs, location) {
-    Node.apply(this, [KIND, docs, location]);
-    this.key = key;
-    this.value = value;
-  }
-);
+module.exports = Node.extends(KIND, function DeclareDirective(
+  key,
+  value,
+  docs,
+  location
+) {
+  Node.apply(this, [KIND, docs, location]);
+  this.key = key;
+  this.value = value;
+});
