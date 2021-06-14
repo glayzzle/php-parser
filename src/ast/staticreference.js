@@ -11,6 +11,7 @@ const KIND = "staticreference";
 /**
  * Defines a class reference node
  * @constructor StaticReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  */
 const StaticReference = Reference.extends(

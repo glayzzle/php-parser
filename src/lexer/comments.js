@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads a single line comment
    */
   T_COMMENT: function () {
@@ -32,7 +32,7 @@ module.exports = {
     }
     return this.tok.T_COMMENT;
   },
-  /**
+  /*
    * Behaviour : https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1927
    */
   T_DOC_COMMENT: function () {

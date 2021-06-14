@@ -11,6 +11,7 @@ const KIND = "trait";
 /**
  * A trait definition
  * @constructor Trait
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Declaration[]} body
  */

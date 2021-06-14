@@ -11,6 +11,7 @@ const KIND = "parentreference";
 /**
  * Defines a class reference node
  * @constructor ParentReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  */
 const ParentReference = Reference.extends(

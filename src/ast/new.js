@@ -11,9 +11,10 @@ const KIND = "new";
 /**
  * Creates a new instance of the specified class
  * @constructor New
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Identifier|Variable|Class} what
- * @property {Arguments[]} arguments
+ * @property {Variable[]} arguments
  */
 module.exports = Expression.extends(
   KIND,

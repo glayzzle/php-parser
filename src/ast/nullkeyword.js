@@ -11,6 +11,7 @@ const KIND = "nullkeyword";
 /**
  * Represents the null keyword
  * @constructor NullKeyword
+ * @memberOf module:php-parser
  * @extends {Node}
  */
 module.exports = Node.extends(KIND, function NullKeyword(raw, docs, location) {

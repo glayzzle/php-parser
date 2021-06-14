@@ -11,6 +11,7 @@ const KIND = "interface";
 /**
  * An interface definition
  * @constructor Interface
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier[]} extends
  * @property {Declaration[]} body

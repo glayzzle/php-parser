@@ -15,17 +15,18 @@ function isNumber(n) {
 /**
  * The PHP Parser class that build the AST tree from the lexer
  *
- * @class
+ * @constructor Parser
+ * @memberOf module:php-parser
  * @tutorial Parser
  * @property {Lexer} lexer - current lexer instance
  * @property {AST} ast - the AST factory instance
- * @property {Integer|String} token - current token
- * @property {Boolean} extractDoc - should extract documentation as AST node
- * @property {Boolean} extractTokens - should extract each token
- * @property {Boolean} suppressErrors - should ignore parsing errors and continue
- * @property {Boolean} debug - should output debug informations
+ * @property {number|string} token - current token
+ * @property {boolean} extractDoc - should extract documentation as AST node
+ * @property {boolean} extractTokens - should extract each token
+ * @property {boolean} suppressErrors - should ignore parsing errors and continue
+ * @property {boolean} debug - should output debug informations
  */
-const parser = function (lexer, ast) {
+const Parser = function (lexer, ast) {
   this.lexer = lexer;
   this.ast = ast;
   this.tok = lexer.tok;
@@ -243,8 +244,10 @@ const parser = function (lexer, ast) {
 
 /**
  * helper : gets a token name
+ * @function Parser#getTokenName
+ * @memberOf module:php-parser
  */
-parser.prototype.getTokenName = function (token) {
+Parser.prototype.getTokenName = function (token) {
   if (!isNumber(token)) {
     return "'" + token + "'";
   } else {
@@ -255,8 +258,10 @@ parser.prototype.getTokenName = function (token) {
 
 /**
  * main entry point : converts a source code to AST
+ * @function Parser#parse
+ * @memberOf module:php-parser
  */
-parser.prototype.parse = function (code, filename) {
+Parser.prototype.parse = function (code, filename) {
   this._errors = [];
   this.filename = filename || "eval";
   this.currentNamespace = [""];
@@ -323,8 +328,10 @@ parser.prototype.parse = function (code, filename) {
 
 /**
  * Raise an error
+ * @function Parser#raiseError
+ * @memberOf module:php-parser
  */
-parser.prototype.raiseError = function (message, msgExpect, expect, token) {
+Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
   message += " on line " + this.lexer.yylloc.first_line;
   if (!this.suppressErrors) {
     const err = new SyntaxError(
@@ -350,8 +357,10 @@ parser.prototype.raiseError = function (message, msgExpect, expect, token) {
 
 /**
  * handling errors
+ * @function Parser#error
+ * @memberOf module:php-parser
  */
-parser.prototype.error = function (expect) {
+Parser.prototype.error = function (expect) {
   let msg = "Parse Error : syntax error";
   let token = this.getTokenName(this.token);
   let msgExpect = "";
@@ -377,8 +386,10 @@ parser.prototype.error = function (expect) {
 
 /**
  * Creates a new AST node
+ * @function Parser#node
+ * @memberOf module:php-parser
  */
-parser.prototype.node = function (name) {
+Parser.prototype.node = function (name) {
   if (this.extractDoc) {
     let docs = null;
     if (this._docIndex < this._docs.length) {
@@ -392,7 +403,7 @@ parser.prototype.node = function (name) {
       }
     }
     const node = this.ast.prepare(name, docs, this);
-    /**
+    /*
      * TOKENS :
      * node1 commentA token commmentB node2 commentC token commentD node3 commentE token
      *
@@ -453,9 +464,11 @@ parser.prototype.node = function (name) {
 
 /**
  * expects an end of statement or end of file
+ * @function Parser#expectEndOfStatement
+ * @memberOf module:php-parser
  * @return {boolean}
  */
-parser.prototype.expectEndOfStatement = function (node) {
+Parser.prototype.expectEndOfStatement = function (node) {
   if (this.token === ";") {
     // include only real ';' statements
     // https://github.com/glayzzle/php-parser/issues/164
@@ -470,9 +483,14 @@ parser.prototype.expectEndOfStatement = function (node) {
   return true;
 };
 
-/** outputs some debug information on current token **/
 const ignoreStack = ["parser.next", "parser.node", "parser.showlog"];
-parser.prototype.showlog = function () {
+/**
+ * outputs some debug information on current token
+ * @private
+ * @function Parser#showlog
+ * @memberOf module:php-parser
+ */
+Parser.prototype.showlog = function () {
   const stack = new Error().stack.split("\n");
   let line;
   for (let offset = 2; offset < stack.length; offset++) {
@@ -512,11 +530,13 @@ parser.prototype.showlog = function () {
  * If the suppressError mode is activated, then the error will
  * be added to the program error stack and this function will return `false`.
  *
+ * @function Parser#expect
+ * @memberOf module:php-parser
  * @param {String|Number} token
  * @return {boolean}
  * @throws Error
  */
-parser.prototype.expect = function (token) {
+Parser.prototype.expect = function (token) {
   if (Array.isArray(token)) {
     if (token.indexOf(this.token) === -1) {
       this.error(token);
@@ -531,14 +551,20 @@ parser.prototype.expect = function (token) {
 
 /**
  * Returns the current token contents
+ * @function Parser#text
+ * @memberOf module:php-parser
  * @return {String}
  */
-parser.prototype.text = function () {
+Parser.prototype.text = function () {
   return this.lexer.yytext;
 };
 
-/** consume the next token **/
-parser.prototype.next = function () {
+/**
+ * consume the next token
+ * @function Parser#next
+ * @memberOf module:php-parser
+ */
+Parser.prototype.next = function () {
   // prepare the back command
   if (this.token !== ";" || this.lexer.yytext === ";") {
     // ignore '?>' from automated resolution
@@ -578,8 +604,10 @@ parser.prototype.next = function () {
 
 /**
  * Eating a token
+ * @function Parser#lex
+ * @memberOf module:php-parser
  */
-parser.prototype.lex = function () {
+Parser.prototype.lex = function () {
   // append on token stack
   if (this.extractTokens) {
     do {
@@ -629,8 +657,10 @@ parser.prototype.lex = function () {
 
 /**
  * Check if token is of specified type
+ * @function Parser#is
+ * @memberOf module:php-parser
  */
-parser.prototype.is = function (type) {
+Parser.prototype.is = function (type) {
   if (Array.isArray(type)) {
     return type.indexOf(this.token) !== -1;
   }
@@ -656,12 +686,12 @@ parser.prototype.is = function (type) {
   require("./parser/variable.js"),
 ].forEach(function (ext) {
   for (const k in ext) {
-    if (parser.prototype.hasOwnProperty(k)) {
+    if (Parser.prototype.hasOwnProperty(k)) {
       // @see https://github.com/glayzzle/php-parser/issues/234
       throw new Error("Function " + k + " is already defined - collision");
     }
-    parser.prototype[k] = ext[k];
+    Parser.prototype[k] = ext[k];
   }
 });
 
-module.exports = parser;
+module.exports = Parser;

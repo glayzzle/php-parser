@@ -11,8 +11,9 @@ const KIND = "unary";
 /**
  * Unary operations
  * @constructor Unary
+ * @memberOf module:php-parser
  * @extends {Operation}
- * @property {String} type
+ * @property {string} type
  * @property {Expression} what
  */
 module.exports = Operation.extends(

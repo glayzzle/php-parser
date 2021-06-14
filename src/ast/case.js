@@ -11,6 +11,7 @@ const KIND = "case";
 /**
  * A switch case statement
  * @constructor Case
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression|null} test - if null, means that the default case
  * @property {Block|null} body

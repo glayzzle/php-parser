@@ -11,6 +11,7 @@ const KIND = "error";
 /**
  * Defines an error node (used only on silentMode)
  * @constructor Error
+ * @memberOf module:php-parser
  * @extends {Node}
  * @property {string} message
  * @property {number} line

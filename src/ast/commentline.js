@@ -11,6 +11,7 @@ const KIND = "commentline";
 /**
  * A single line comment
  * @constructor CommentLine
+ * @memberOf module:php-parser
  * @extends {Comment}
  */
 module.exports = Comment.extends(

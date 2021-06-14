@@ -16,6 +16,7 @@ const IS_PRIVATE = "private";
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier|string} name
  */
@@ -29,7 +30,10 @@ const Declaration = Statement.extends(
 
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @function
+ * @name Declaration#parseFlags
+ * @memberOf module:php-parser
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 Declaration.prototype.parseFlags = function (flags) {

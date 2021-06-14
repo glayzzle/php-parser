@@ -11,6 +11,7 @@ const KIND = "declare";
 /**
  * The declare construct is used to set execution directives for a block of code
  * @constructor Declare
+ * @memberOf module:php-parser
  * @extends {Block}
  * @property {Array[]} directives
  * @property {String} mode
@@ -33,7 +34,8 @@ const Declare = Block.extends(
  * // some statements
  * enddeclare;
  * ```
- * @constant {String} MODE_SHORT
+ * @constant {String} Declare#MODE_SHORT
+ * @memberOf module:php-parser
  */
 Declare.MODE_SHORT = "short";
 
@@ -45,7 +47,8 @@ Declare.MODE_SHORT = "short";
  * // some statements
  * }
  * ```
- * @constant {String} MODE_BLOCK
+ * @constant {String} Declare#MODE_BLOCK
+ * @memberOf module:php-parser
  */
 Declare.MODE_BLOCK = "block";
 
@@ -60,7 +63,8 @@ Declare.MODE_BLOCK = "block";
  * declare(ticks=2);
  * // some statements
  * ```
- * @constant {String} MODE_NONE
+ * @constant {String} Declare#MODE_NONE
+ * @memberOf module:php-parser
  */
 Declare.MODE_NONE = "none";
 

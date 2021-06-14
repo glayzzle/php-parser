@@ -11,6 +11,7 @@ const KIND = "clone";
 /**
  * Defines a clone call
  * @constructor Clone
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} what
  */

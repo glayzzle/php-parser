@@ -11,6 +11,7 @@ const KIND = "eval";
 /**
  * Defines an eval statement
  * @constructor Eval
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node} source
  */

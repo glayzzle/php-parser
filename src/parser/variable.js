@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * Reads a variable
    *
    * ```ebnf
@@ -233,7 +233,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L1231
    */
   read_encaps_var_offset: function () {
@@ -269,7 +269,7 @@ module.exports = {
     }
     return offset;
   },
-  /**
+  /*
    * ```ebnf
    *  reference_variable ::=  simple_variable ('[' OFFSET ']')* | '{' EXPR '}'
    * ```
@@ -297,7 +297,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * ```ebnf
    *  simple_variable ::= T_VARIABLE | '$' '{' expr '}' | '$' simple_variable
    * ```

@@ -11,9 +11,10 @@ const KIND = "namespace";
 /**
  * The main program node
  * @constructor Namespace
+ * @memberOf module:php-parser
  * @extends {Block}
- * @property {String} name
- * @property {Boolean} withBrackets
+ * @property {string} name
+ * @property {boolean} withBrackets
  */
 module.exports = Block.extends(
   KIND,

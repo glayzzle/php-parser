@@ -11,6 +11,7 @@ const KIND = "property";
 /**
  * Defines a class property
  * @constructor Property
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
  * @property {Node|null} value

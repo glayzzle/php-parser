@@ -11,6 +11,7 @@ const KIND = "echo";
 /**
  * Defines system based call
  * @constructor Echo
+ * @memberOf module:php-parser
  * @property {boolean} shortForm
  * @extends {Statement}
  */

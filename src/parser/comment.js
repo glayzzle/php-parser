@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    *  Comments with // or # or / * ... * /
    */
   read_comment: function () {
@@ -30,7 +30,7 @@ module.exports = {
     this.prev = prev;
     return result;
   },
-  /**
+  /*
    * Comments with / ** ... * /
    */
   read_doc_comment: function () {

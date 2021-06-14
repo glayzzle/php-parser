@@ -11,8 +11,9 @@ const KIND = "byref";
 /**
  * Passing by Reference - so the function can modify the variable
  * @constructor ByRef
+ * @memberOf module:php-parser
  * @extends {Expression}
- * @property {expr} what
+ * @property {ExpressionStatement} what
  */
 module.exports = Expression.extends(KIND, function ByRef(what, docs, location) {
   Expression.apply(this, [KIND, docs, location]);
