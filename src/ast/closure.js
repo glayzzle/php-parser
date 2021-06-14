@@ -21,26 +21,23 @@ const KIND = "closure";
  * @property {boolean} isStatic
  * @property {AttrGroup[]} attrGroups
  */
-module.exports = Expression.extends(
-  KIND,
-  function Closure(
-    args,
-    byref,
-    uses,
-    type,
-    nullable,
-    isStatic,
-    docs,
-    location
-  ) {
-    Expression.apply(this, [KIND, docs, location]);
-    this.uses = uses;
-    this.arguments = args;
-    this.byref = byref;
-    this.type = type;
-    this.nullable = nullable;
-    this.isStatic = isStatic || false;
-    this.body = null;
-    this.attrGroups = [];
-  }
-);
+module.exports = Expression.extends(KIND, function Closure(
+  args,
+  byref,
+  uses,
+  type,
+  nullable,
+  isStatic,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.uses = uses;
+  this.arguments = args;
+  this.byref = byref;
+  this.type = type;
+  this.nullable = nullable;
+  this.isStatic = isStatic || false;
+  this.body = null;
+  this.attrGroups = [];
+});

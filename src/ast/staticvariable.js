@@ -15,11 +15,13 @@ const KIND = "staticvariable";
  * @property {Variable} variable
  * @property {Node|string|number|boolean|null} defaultValue
  */
-module.exports = Node.extends(
-  KIND,
-  function StaticVariable(variable, defaultValue, docs, location) {
-    Node.apply(this, [KIND, docs, location]);
-    this.variable = variable;
-    this.defaultValue = defaultValue;
-  }
-);
+module.exports = Node.extends(KIND, function StaticVariable(
+  variable,
+  defaultValue,
+  docs,
+  location
+) {
+  Node.apply(this, [KIND, docs, location]);
+  this.variable = variable;
+  this.defaultValue = defaultValue;
+});

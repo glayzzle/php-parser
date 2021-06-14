@@ -15,10 +15,11 @@ const KIND = "yieldfrom";
  * @property {Expression} value
  * @see http://php.net/manual/en/language.generators.syntax.php
  */
-module.exports = Expression.extends(
-  KIND,
-  function YieldFrom(value, docs, location) {
-    Expression.apply(this, [KIND, docs, location]);
-    this.value = value;
-  }
-);
+module.exports = Expression.extends(KIND, function YieldFrom(
+  value,
+  docs,
+  location
+) {
+  Expression.apply(this, [KIND, docs, location]);
+  this.value = value;
+});

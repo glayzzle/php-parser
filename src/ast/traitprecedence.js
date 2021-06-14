@@ -16,12 +16,15 @@ const KIND = "traitprecedence";
  * @property {Identifier} method
  * @property {Identifier[]} instead
  */
-module.exports = Node.extends(
-  KIND,
-  function TraitPrecedence(trait, method, instead, docs, location) {
-    Node.apply(this, [KIND, docs, location]);
-    this.trait = trait;
-    this.method = method;
-    this.instead = instead;
-  }
-);
+module.exports = Node.extends(KIND, function TraitPrecedence(
+  trait,
+  method,
+  instead,
+  docs,
+  location
+) {
+  Node.apply(this, [KIND, docs, location]);
+  this.trait = trait;
+  this.method = method;
+  this.instead = instead;
+});

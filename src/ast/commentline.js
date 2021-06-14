@@ -13,9 +13,10 @@ const KIND = "commentline";
  * @constructor CommentLine
  * @extends {Comment}
  */
-module.exports = Comment.extends(
-  KIND,
-  function CommentLine(value, docs, location) {
-    Comment.apply(this, [KIND, value, docs, location]);
-  }
-);
+module.exports = Comment.extends(KIND, function CommentLine(
+  value,
+  docs,
+  location
+) {
+  Comment.apply(this, [KIND, value, docs, location]);
+});
