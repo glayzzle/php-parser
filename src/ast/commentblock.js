@@ -13,10 +13,9 @@ const KIND = "commentblock";
  * @constructor CommentBlock
  * @extends {Comment}
  */
-module.exports = Comment.extends(KIND, function CommentBlock(
-  value,
-  docs,
-  location
-) {
-  Comment.apply(this, [KIND, value, docs, location]);
-});
+module.exports = Comment.extends(
+  KIND,
+  function CommentBlock(value, docs, location) {
+    Comment.apply(this, [KIND, value, docs, location]);
+  }
+);

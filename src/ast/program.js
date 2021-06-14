@@ -16,20 +16,16 @@ const KIND = "program";
  * @property {Doc[]?} comments
  * @property {String[]?} tokens
  */
-module.exports = Block.extends(KIND, function Program(
-  children,
-  errors,
-  comments,
-  tokens,
-  docs,
-  location
-) {
-  Block.apply(this, [KIND, children, docs, location]);
-  this.errors = errors;
-  if (comments) {
-    this.comments = comments;
+module.exports = Block.extends(
+  KIND,
+  function Program(children, errors, comments, tokens, docs, location) {
+    Block.apply(this, [KIND, children, docs, location]);
+    this.errors = errors;
+    if (comments) {
+      this.comments = comments;
+    }
+    if (tokens) {
+      this.tokens = tokens;
+    }
   }
-  if (tokens) {
-    this.tokens = tokens;
-  }
-});
+);

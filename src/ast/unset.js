@@ -13,11 +13,10 @@ const KIND = "unset";
  * @constructor Unset
  * @extends {Statement}
  */
-module.exports = Statement.extends(KIND, function Unset(
-  variables,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.variables = variables;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Unset(variables, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.variables = variables;
+  }
+);

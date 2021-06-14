@@ -24,7 +24,6 @@ module.exports = {
    */
   read_variable: function (read_only, encapsed) {
     let result;
-
     // check the byref flag
     if (this.token === "&") {
       return this.read_byref(

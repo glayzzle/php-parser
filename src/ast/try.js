@@ -16,15 +16,12 @@ const KIND = "try";
  * @property {Catch[]} catches
  * @property {Block} allways
  */
-module.exports = Statement.extends(KIND, function Try(
-  body,
-  catches,
-  always,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.body = body;
-  this.catches = catches;
-  this.always = always;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Try(body, catches, always, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.body = body;
+    this.catches = catches;
+    this.always = always;
+  }
+);

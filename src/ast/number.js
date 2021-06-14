@@ -13,11 +13,9 @@ const KIND = "number";
  * @constructor Number
  * @extends {Literal}
  */
-module.exports = Literal.extends(KIND, function Number(
-  value,
-  raw,
-  docs,
-  location
-) {
-  Literal.apply(this, [KIND, value, raw, docs, location]);
-});
+module.exports = Literal.extends(
+  KIND,
+  function Number(value, raw, docs, location) {
+    Literal.apply(this, [KIND, value, raw, docs, location]);
+  }
+);

@@ -14,16 +14,14 @@ const KIND = "typereference";
  * @extends {Reference}
  * @property {string} name
  */
-const TypeReference = Reference.extends(KIND, function TypeReference(
-  name,
-  raw,
-  docs,
-  location
-) {
-  Reference.apply(this, [KIND, docs, location]);
-  this.name = name;
-  this.raw = raw;
-});
+const TypeReference = Reference.extends(
+  KIND,
+  function TypeReference(name, raw, docs, location) {
+    Reference.apply(this, [KIND, docs, location]);
+    this.name = name;
+    this.raw = raw;
+  }
+);
 
 TypeReference.types = [
   "int",

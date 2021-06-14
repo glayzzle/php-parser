@@ -630,7 +630,13 @@ module.exports = {
       );
     }
     // Already existing class
-    const name = this.read_new_class_name();
+    let name = this.read_new_class_name();
+    while (this.token === "[") {
+      const offsetNode = this.node("offsetlookup");
+      const offset = this.next().read_encaps_var_offset();
+      this.expect("]") && this.next();
+      name = offsetNode(name, offset);
+    }
     if (this.token === "(") {
       args = this.read_argument_list();
     }
