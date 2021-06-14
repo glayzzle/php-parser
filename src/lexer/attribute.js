@@ -16,7 +16,6 @@ module.exports = {
       this.unput(1);
       return null;
     }
-    // process.stderr.write("Token:" + JSON.stringify(ch) + "\n");
     switch (ch) {
       case "]":
         if (listDepth === 0) {
@@ -54,6 +53,8 @@ module.exports = {
       return this.consume_NUM();
     }
 
-    throw new Error("what now? " + JSON.stringify(ch));
+    throw new Error(
+      `Bad terminal sequence "${ch}" at line ${this.yylineno} (offset ${this.offset})`
+    );
   },
 };
