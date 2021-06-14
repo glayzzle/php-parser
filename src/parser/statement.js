@@ -162,7 +162,6 @@ module.exports = {
       case this.tok.T_FUNCTION: {
         const result = this.read_function(false, false);
         result.attrGroups = attrs;
-        attrs = [];
         return result;
       }
       // optional flags

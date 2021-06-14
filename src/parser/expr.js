@@ -396,9 +396,7 @@ module.exports = {
 
       case this.tok.T_FN:
       case this.tok.T_FUNCTION:
-        result = this.read_inline_function(undefined, attrs);
-        attrs = [];
-        return result;
+        return this.read_inline_function(undefined, attrs);
 
       case this.tok.T_STATIC: {
         const backup = [this.token, this.lexer.getState()];
@@ -408,9 +406,7 @@ module.exports = {
           (this.version >= 704 && this.token === this.tok.T_FN)
         ) {
           // handles static function
-          result = this.read_inline_function([0, 1, 0], attrs);
-          attrs = [];
-          return result;
+          return this.read_inline_function([0, 1, 0], attrs);
         } else {
           // rollback
           this.lexer.tokens.push(backup);
@@ -624,7 +620,6 @@ module.exports = {
       flags ? true : false
     );
     result.attrGroups = attrs;
-    attrs = [];
     return result;
   },
 

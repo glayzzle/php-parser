@@ -55,7 +55,6 @@ module.exports = {
       }
     }
     if (attrs) result.attrGroups = attrs;
-    attrs = [];
     return result;
   },
   /**
@@ -240,7 +239,6 @@ module.exports = {
       flags
     );
     if (attrs) result.attrGroups = attrs;
-    attrs = [];
     return result;
   },
   read_types() {
