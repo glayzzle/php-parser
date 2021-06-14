@@ -35,6 +35,10 @@ describe("Parse Attributes", () => {
         `// Line 1
     #[ Pure ( ) /* Pure */ ]
     // Line 3
+    #[
+      // Try using b
+      Deprecated
+    ]
     function a(#[ Unsigned ] $a) {}
     `,
         {
@@ -48,7 +52,7 @@ describe("Parse Attributes", () => {
   it("can parse parms with array values", () => {
     expect(
       parser.parseEval(`
-    #[List(["a"=>1, 'b' => Test::class])]
+    #[List(["a"=>1, 'b' => Test::class, 'c'=>[]])]
     function a() {}
     `)
     ).toMatchSnapshot();

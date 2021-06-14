@@ -691,7 +691,7 @@ module.exports = {
     const list = [];
     do {
       this.expect(this.tok.T_ATTRIBUTE);
-      const attrGr = this.node("attrgroup")();
+      const attrGr = this.node("attrgroup")([]);
       this.next();
       attrGr.attrs.push(this.read_attribute());
       while (this.token === ",") {
