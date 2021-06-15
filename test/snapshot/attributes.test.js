@@ -100,4 +100,17 @@ describe("Parse Attributes", () => {
       `)
     ).toMatchSnapshot();
   });
+  it("can parse class const attributes", () => {
+    expect(
+      parser.parseEval(`
+      class A {
+        #[B]
+        const B = 1;
+      }
+      `)
+    ).toMatchSnapshot();
+  });
+  it("can parse anon-class attributes", () => {
+    expect(parser.parseEval(`$a = new #[T] class {};`)).toMatchSnapshot();
+  });
 });

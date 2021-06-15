@@ -18,16 +18,19 @@ const IS_PRIVATE = "private";
  * @constructor ClassConstant
  * @extends {ConstantStatement}
  * @property {string} visibility
+ * @property {AttrGroup[]} attrGroups
  */
 const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
   kind,
   constants,
   flags,
+  attrGroups,
   docs,
   location
 ) {
   ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
   this.parseFlags(flags);
+  this.attrGroups = attrGroups;
 });
 
 /**

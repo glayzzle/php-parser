@@ -87,7 +87,7 @@ module.exports = {
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-        const constants = this.read_constant_list(flags);
+        const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();
         }
@@ -189,7 +189,7 @@ module.exports = {
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
    * ```
    */
-  read_constant_list: function (flags) {
+  read_constant_list: function (flags, attrs) {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
@@ -226,7 +226,7 @@ module.exports = {
       ","
     );
 
-    return result(null, items, flags);
+    return result(null, items, flags, attrs || []);
   },
   /**
    * Read member flags
@@ -375,7 +375,8 @@ module.exports = {
    * ```
    */
   read_interface_body: function () {
-    let result = [];
+    let result = [],
+      attrs = [];
 
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
@@ -387,13 +388,13 @@ module.exports = {
         result.push(this.read_doc_comment());
         continue;
       }
-
+      attrs = this.read_attr_list();
       // read member flags
       const flags = this.read_member_flags(true);
 
       // check constant
       if (this.token == this.tok.T_CONST) {
-        const constants = this.read_constant_list(flags);
+        const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();
         }

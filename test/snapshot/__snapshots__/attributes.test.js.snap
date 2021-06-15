@@ -1,5 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Parse Attributes can parse anon-class attributes 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Class {
+            "attrGroups": Array [
+              AttrGroup {
+                "attrs": Array [
+                  Attribute {
+                    "args": Array [],
+                    "kind": "attribute",
+                    "name": "T",
+                  },
+                ],
+                "kind": "attrgroup",
+              },
+            ],
+            "body": Array [],
+            "extends": null,
+            "implements": null,
+            "isAbstract": false,
+            "isAnonymous": true,
+            "isFinal": false,
+            "kind": "class",
+            "name": null,
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Parse Attributes can parse anonymous function attributes 1`] = `
 Program {
   "children": Array [
@@ -127,6 +174,59 @@ Program {
       "name": Identifier {
         "kind": "identifier",
         "name": "DepClass",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Parse Attributes can parse class const attributes 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [
+            AttrGroup {
+              "attrs": Array [
+                Attribute {
+                  "args": Array [],
+                  "kind": "attribute",
+                  "name": "B",
+                },
+              ],
+              "kind": "attrgroup",
+            },
+          ],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "B",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "1",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
       },
     },
   ],

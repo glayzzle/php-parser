@@ -684,19 +684,19 @@ module.exports = {
   },
   read_attr_list() {
     const list = [];
-    do {
-      this.expect(this.tok.T_ATTRIBUTE);
-      const attrGr = this.node("attrgroup")([]);
-      this.next();
-      attrGr.attrs.push(this.read_attribute());
-      while (this.token === ",") {
+    if (this.token === this.tok.T_ATTRIBUTE)
+      do {
+        const attrGr = this.node("attrgroup")([]);
         this.next();
-        if (this.token !== "]") attrGr.attrs.push(this.read_attribute());
-      }
-      list.push(attrGr);
-      this.expect("]");
-      this.next();
-    } while (this.token === this.tok.T_ATTRIBUTE);
+        attrGr.attrs.push(this.read_attribute());
+        while (this.token === ",") {
+          this.next();
+          if (this.token !== "]") attrGr.attrs.push(this.read_attribute());
+        }
+        list.push(attrGr);
+        this.expect("]");
+        this.next();
+      } while (this.token === this.tok.T_ATTRIBUTE);
     return list;
   },
 
@@ -710,6 +710,7 @@ module.exports = {
     const result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     let args = [];
+    const attrs = this.read_attr_list();
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
@@ -722,10 +723,9 @@ module.exports = {
       if (this.expect("{")) {
         body = this.next().read_class_body();
       }
-      return result(
-        what(null, propExtends, propImplements, body, [0, 0, 0]),
-        args
-      );
+      const whatNode = what(null, propExtends, propImplements, body, [0, 0, 0]);
+      whatNode.attrGroups = attrs;
+      return result(whatNode, args);
     }
     // Already existing class
     const name = this.read_new_class_name();
