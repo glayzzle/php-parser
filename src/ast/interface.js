@@ -14,15 +14,18 @@ const KIND = "interface";
  * @extends {Declaration}
  * @property {Identifier[]} extends
  * @property {Declaration[]} body
+ * @property {AttrGroup[]} attrGroups
  */
 module.exports = Declaration.extends(KIND, function Interface(
   name,
   ext,
   body,
+  attrGroups,
   docs,
   location
 ) {
   Declaration.apply(this, [KIND, name, docs, location]);
   this.extends = ext;
   this.body = body;
+  this.attrGroups = attrGroups;
 });

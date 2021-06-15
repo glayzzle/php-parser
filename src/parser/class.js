@@ -351,7 +351,7 @@ module.exports = {
    * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
    * ```
    */
-  read_interface_declaration_statement: function () {
+  read_interface_declaration_statement: function (attrs) {
     const result = this.node("interface");
     if (this.token !== this.tok.T_INTERFACE) {
       this.error(this.tok.T_INTERFACE);
@@ -366,7 +366,7 @@ module.exports = {
     const propExtends = this.read_interface_extends_list();
     this.expect("{");
     const body = this.next().read_interface_body();
-    return result(propName, propExtends, body);
+    return result(propName, propExtends, body, attrs || []);
   },
   /**
    * Reads an interface body
@@ -401,7 +401,7 @@ module.exports = {
         result = result.concat(constants);
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        const method = this.read_function_declaration(2, flags);
+        const method = this.read_function_declaration(2, flags, attrs);
         method.parseFlags(flags);
         result.push(method);
         if (this.expect(";")) {

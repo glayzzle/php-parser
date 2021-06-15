@@ -35,7 +35,8 @@ module.exports = {
   read_function: function (closure, flag, attrs) {
     const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
-      flag && flag[1] === 1
+      flag && flag[1] === 1,
+      attrs || []
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -54,7 +55,6 @@ module.exports = {
         result.parseFlags(flag);
       }
     }
-    if (attrs) result.attrGroups = attrs;
     return result;
   },
   /**
@@ -63,7 +63,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  read_function_declaration: function (type, isStatic) {
+  read_function_declaration: function (type, isStatic, attrs) {
     let nodeName = "function";
     if (type === 1) {
       nodeName = "closure";
@@ -133,9 +133,13 @@ module.exports = {
     }
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType, nullable, isStatic);
+      const fnNode = result(params, isRef, use, returnType, nullable, isStatic);
+      fnNode.attrGroups = attrs || [];
+      return fnNode;
     }
-    return result(name, params, isRef, returnType, nullable);
+    const fnNode = result(name, params, isRef, returnType, nullable);
+    fnNode.attrGroups = attrs || [];
+    return fnNode;
   },
 
   read_lexical_vars: function () {

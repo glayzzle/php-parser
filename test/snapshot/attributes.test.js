@@ -113,4 +113,17 @@ describe("Parse Attributes", () => {
   it("can parse anon-class attributes", () => {
     expect(parser.parseEval(`$a = new #[T] class {};`)).toMatchSnapshot();
   });
+  it("can parse interface attributes", () => {
+    expect(
+      parser.parseEval(`
+    #[A]
+    interface b {
+      #[C]
+      const D = 0;
+      #[E]
+      public function f();
+    }
+    `)
+    ).toMatchSnapshot();
+  });
 });
