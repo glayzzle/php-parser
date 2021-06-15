@@ -126,4 +126,14 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse attributes in inner statements", () => {
+    expect(
+      parser.parseEval(`
+    namespace A {
+      function b() {
+        return #[C] fn() => #[Pure] function() {};
+      } 
+    }`)
+    ).toMatchSnapshot();
+  });
 });
