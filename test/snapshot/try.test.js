@@ -8,6 +8,11 @@ describe("boolean", () => {
       )
     ).toMatchSnapshot();
   });
+  it("without variable", () => {
+    expect(
+      parser.parseEval("try { call(); } catch (Exception) { do_something(); }")
+    ).toMatchSnapshot();
+  });
   it("qualified name", () => {
     expect(
       parser.parseEval(
