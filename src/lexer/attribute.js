@@ -46,8 +46,14 @@ module.exports = {
           return this.T_DOC_COMMENT();
         }
     }
-    if (this.is_LABEL_START()) {
-      this.consume_LABEL();
+    if (this.is_LABEL_START() || ch === "\\") {
+      while (this.offset < this.size) {
+        const ch = this.input();
+        if (!(this.is_LABEL() || ch === "\\")) {
+          if (ch) this.unput(1);
+          break;
+        }
+      }
       return this.tok.T_STRING;
     } else if (this.is_NUM()) {
       return this.consume_NUM();

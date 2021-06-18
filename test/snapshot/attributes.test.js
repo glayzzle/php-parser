@@ -136,4 +136,12 @@ describe("Parse Attributes", () => {
     }`)
     ).toMatchSnapshot();
   });
+  it("can parse attributes with namespace", () => {
+    expect(
+      parser.parseEval(`
+      #[\\JetBrains\\PhpStorm\\Pure]
+      function b() {} 
+    `)
+    ).toMatchSnapshot();
+  });
 });
