@@ -56,6 +56,13 @@ describe("boolean", () => {
       )
     ).toMatchSnapshot();
   });
+  it("multiple catch without variable", () => {
+    expect(
+      parser.parseEval(
+        "try { call(); } catch (MyException | MyOtherException) { do_something(); }"
+      )
+    ).toMatchSnapshot();
+  });
   it("multiple catch #2", () => {
     expect(
       parser.parseEval(
