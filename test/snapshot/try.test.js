@@ -8,6 +8,11 @@ describe("boolean", () => {
       )
     ).toMatchSnapshot();
   });
+  it("without variable", () => {
+    expect(
+      parser.parseEval("try { call(); } catch (Exception) { do_something(); }")
+    ).toMatchSnapshot();
+  });
   it("qualified name", () => {
     expect(
       parser.parseEval(
@@ -48,6 +53,13 @@ describe("boolean", () => {
     expect(
       parser.parseEval(
         "try { call(); } catch (MyException | MyOtherException $e) { do_something(); }"
+      )
+    ).toMatchSnapshot();
+  });
+  it("multiple catch without variable", () => {
+    expect(
+      parser.parseEval(
+        "try { call(); } catch (MyException | MyOtherException) { do_something(); }"
       )
     ).toMatchSnapshot();
   });
