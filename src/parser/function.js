@@ -182,6 +182,9 @@ module.exports = {
         result.push(this.read_parameter());
         if (this.token == ",") {
           this.next();
+          if (this.version >= 800 && this.token === ")") {
+            return result;
+          }
         } else if (this.token == ")") {
           break;
         } else {
@@ -190,6 +193,9 @@ module.exports = {
         }
       }
     }
+    process.stderr.write(
+      "Version: " + this.version + " " + JSON.stringify(result) + "\n"
+    );
     return result;
   },
   /**
