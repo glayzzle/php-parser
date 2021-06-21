@@ -684,7 +684,7 @@ module.exports = {
   },
   read_attr_list() {
     const list = [];
-    if (this.token === this.tok.T_ATTRIBUTE)
+    if (this.token === this.tok.T_ATTRIBUTE) {
       do {
         const attrGr = this.node("attrgroup")([]);
         this.next();
@@ -697,6 +697,7 @@ module.exports = {
         this.expect("]");
         this.next();
       } while (this.token === this.tok.T_ATTRIBUTE);
+    }
     return list;
   },
 
