@@ -18,59 +18,85 @@ module.exports = {
       expr = this.read_expr_item();
     }
     // binary operations
-    if (this.token === "|")
+    if (this.token === "|") {
       return result("bin", "|", expr, this.next().read_expr());
-    if (this.token === "&")
+    }
+    if (this.token === "&") {
       return result("bin", "&", expr, this.next().read_expr());
-    if (this.token === "^")
+    }
+    if (this.token === "^") {
       return result("bin", "^", expr, this.next().read_expr());
-    if (this.token === ".")
+    }
+    if (this.token === ".") {
       return result("bin", ".", expr, this.next().read_expr());
-    if (this.token === "+")
+    }
+    if (this.token === "+") {
       return result("bin", "+", expr, this.next().read_expr());
-    if (this.token === "-")
+    }
+    if (this.token === "-") {
       return result("bin", "-", expr, this.next().read_expr());
-    if (this.token === "*")
+    }
+    if (this.token === "*") {
       return result("bin", "*", expr, this.next().read_expr());
-    if (this.token === "/")
+    }
+    if (this.token === "/") {
       return result("bin", "/", expr, this.next().read_expr());
-    if (this.token === "%")
+    }
+    if (this.token === "%") {
       return result("bin", "%", expr, this.next().read_expr());
-    if (this.token === this.tok.T_POW)
+    }
+    if (this.token === this.tok.T_POW) {
       return result("bin", "**", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SL)
+    }
+    if (this.token === this.tok.T_SL) {
       return result("bin", "<<", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SR)
+    }
+    if (this.token === this.tok.T_SR) {
       return result("bin", ">>", expr, this.next().read_expr());
+    }
     // more binary operations (formerly bool)
-    if (this.token === this.tok.T_BOOLEAN_OR)
+    if (this.token === this.tok.T_BOOLEAN_OR) {
       return result("bin", "||", expr, this.next().read_expr());
-    if (this.token === this.tok.T_LOGICAL_OR)
+    }
+    if (this.token === this.tok.T_LOGICAL_OR) {
       return result("bin", "or", expr, this.next().read_expr());
-    if (this.token === this.tok.T_BOOLEAN_AND)
+    }
+    if (this.token === this.tok.T_BOOLEAN_AND) {
       return result("bin", "&&", expr, this.next().read_expr());
-    if (this.token === this.tok.T_LOGICAL_AND)
+    }
+    if (this.token === this.tok.T_LOGICAL_AND) {
       return result("bin", "and", expr, this.next().read_expr());
-    if (this.token === this.tok.T_LOGICAL_XOR)
+    }
+    if (this.token === this.tok.T_LOGICAL_XOR) {
       return result("bin", "xor", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_IDENTICAL)
+    }
+    if (this.token === this.tok.T_IS_IDENTICAL) {
       return result("bin", "===", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_NOT_IDENTICAL)
+    }
+    if (this.token === this.tok.T_IS_NOT_IDENTICAL) {
       return result("bin", "!==", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_EQUAL) {
       return result("bin", "==", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_NOT_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_NOT_EQUAL) {
       return result("bin", "!=", expr, this.next().read_expr());
-    if (this.token === "<")
+    }
+    if (this.token === "<") {
       return result("bin", "<", expr, this.next().read_expr());
-    if (this.token === ">")
+    }
+    if (this.token === ">") {
       return result("bin", ">", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL) {
       return result("bin", "<=", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_GREATER_OR_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_GREATER_OR_EQUAL) {
       return result("bin", ">=", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SPACESHIP)
+    }
+    if (this.token === this.tok.T_SPACESHIP) {
       return result("bin", "<=>", expr, this.next().read_expr());
+    }
     if (this.token === this.tok.T_INSTANCEOF) {
       expr = result(
         "bin",
@@ -89,8 +115,9 @@ module.exports = {
 
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
-    if (this.token === this.tok.T_COALESCE)
+    if (this.token === this.tok.T_COALESCE) {
       return result("bin", "??", expr, this.next().read_expr());
+    }
 
     // extra operations :
     // $username = $_GET['user'] ? true : false;
@@ -226,14 +253,18 @@ module.exports = {
    */
   read_expr_item: function () {
     let result, expr;
-    if (this.token === "+")
+    if (this.token === "+") {
       return this.node("unary")("+", this.next().read_expr());
-    if (this.token === "-")
+    }
+    if (this.token === "-") {
       return this.node("unary")("-", this.next().read_expr());
-    if (this.token === "!")
+    }
+    if (this.token === "!") {
       return this.node("unary")("!", this.next().read_expr());
-    if (this.token === "~")
+    }
+    if (this.token === "~") {
       return this.node("unary")("~", this.next().read_expr());
+    }
 
     if (this.token === "(") {
       expr = this.next().read_expr();
@@ -299,8 +330,9 @@ module.exports = {
       }
     }
 
-    if (this.token === this.tok.T_CLONE)
+    if (this.token === this.tok.T_CLONE) {
       return this.node("clone")(this.next().read_expr());
+    }
 
     switch (this.token) {
       case this.tok.T_INC:
