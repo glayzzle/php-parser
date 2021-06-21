@@ -117,9 +117,13 @@ module.exports = {
       }
       name = nameNode(name);
     }
-    if (this.expect("(")) this.next();
+    if (this.expect("(")) {
+      this.next();
+    }
     const params = this.read_parameter_list();
-    if (this.expect(")")) this.next();
+    if (this.expect(")")) {
+      this.next();
+    }
     if (type === 1) {
       use = this.read_lexical_vars();
     }
@@ -240,7 +244,9 @@ module.exports = {
     const types = [];
     const unionType = this.node("uniontype");
     let type = this.read_type();
-    if (!type) return null;
+    if (!type) {
+      return null;
+    }
     types.push(type);
     while (this.token === "|") {
       this.next();

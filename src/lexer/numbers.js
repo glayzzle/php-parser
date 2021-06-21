@@ -37,7 +37,9 @@ module.exports = {
         }
         // @fixme check octal notation ? not usefull
       } else if (!this.is_NUM()) {
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
       }
     }
 
@@ -97,7 +99,9 @@ module.exports = {
 
       if (!this.is_NUM()) {
         // example : 10.0a
-        if (ch) this.unput(1); // keep 10.0
+        if (ch) {
+          this.unput(1);
+        } // keep 10.0
         break;
       }
     }
@@ -122,7 +126,9 @@ module.exports = {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_HEX()) {
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
         break;
       }
     }
@@ -133,7 +139,9 @@ module.exports = {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_NUM()) {
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
         break;
       }
     }
@@ -145,7 +153,9 @@ module.exports = {
     while (this.offset < this.size) {
       ch = this.input();
       if (ch !== "0" && ch !== "1" && ch !== "_") {
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
         break;
       }
     }

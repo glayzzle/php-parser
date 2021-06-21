@@ -71,7 +71,9 @@ module.exports = {
         const yylabel = this._input.substring(yyoffset, this.offset - 1);
         if (!tChar || tChar === this._input[this.offset - 1]) {
           // required ending quote
-          if (tChar) this.offset++;
+          if (tChar) {
+            this.offset++;
+          }
           // require newline
           if (newline.includes(this._input[this.offset - 1])) {
             // go go go
@@ -110,14 +112,18 @@ module.exports = {
           this.unput(2);
           break;
         }
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
       } else if (ch == "{") {
         ch = this.input();
         if (ch == "$") {
           this.unput(2);
           break;
         }
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
       }
     }
     if (ch == '"') {
@@ -365,7 +371,9 @@ module.exports = {
         this.unput(2);
       }
     } else {
-      if (ch) this.unput(1);
+      if (ch) {
+        this.unput(1);
+      }
     }
     return this.tok.T_VARIABLE;
   },
@@ -498,7 +506,9 @@ module.exports = {
             return next;
           }
         }
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
       } else if (ch === "{") {
         ch = this.input();
         if (ch === "$") {
@@ -514,7 +524,9 @@ module.exports = {
             return this.tok.T_CURLY_OPEN;
           }
         }
-        if (ch) this.unput(1);
+        if (ch) {
+          this.unput(1);
+        }
       }
       ch = this.input();
     }

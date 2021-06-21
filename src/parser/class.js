@@ -275,8 +275,12 @@ module.exports = {
       } while (this.next().is("T_MEMBER_FLAGS"));
     }
 
-    if (result[1] == -1) result[1] = 0;
-    if (result[2] == -1) result[2] = 0;
+    if (result[1] == -1) {
+      result[1] = 0;
+    }
+    if (result[2] == -1) {
+      result[2] = 0;
+    }
     return result;
   },
 
@@ -447,7 +451,9 @@ module.exports = {
       adaptations = [];
       // defines alias statements
       while (this.next().token !== this.EOF) {
-        if (this.token === "}") break;
+        if (this.token === "}") {
+          break;
+        }
         adaptations.push(this.read_trait_use_alias());
         this.expect(";");
       }

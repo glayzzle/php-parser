@@ -18,59 +18,85 @@ module.exports = {
       expr = this.read_expr_item();
     }
     // binary operations
-    if (this.token === "|")
+    if (this.token === "|") {
       return result("bin", "|", expr, this.next().read_expr());
-    if (this.token === "&")
+    }
+    if (this.token === "&") {
       return result("bin", "&", expr, this.next().read_expr());
-    if (this.token === "^")
+    }
+    if (this.token === "^") {
       return result("bin", "^", expr, this.next().read_expr());
-    if (this.token === ".")
+    }
+    if (this.token === ".") {
       return result("bin", ".", expr, this.next().read_expr());
-    if (this.token === "+")
+    }
+    if (this.token === "+") {
       return result("bin", "+", expr, this.next().read_expr());
-    if (this.token === "-")
+    }
+    if (this.token === "-") {
       return result("bin", "-", expr, this.next().read_expr());
-    if (this.token === "*")
+    }
+    if (this.token === "*") {
       return result("bin", "*", expr, this.next().read_expr());
-    if (this.token === "/")
+    }
+    if (this.token === "/") {
       return result("bin", "/", expr, this.next().read_expr());
-    if (this.token === "%")
+    }
+    if (this.token === "%") {
       return result("bin", "%", expr, this.next().read_expr());
-    if (this.token === this.tok.T_POW)
+    }
+    if (this.token === this.tok.T_POW) {
       return result("bin", "**", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SL)
+    }
+    if (this.token === this.tok.T_SL) {
       return result("bin", "<<", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SR)
+    }
+    if (this.token === this.tok.T_SR) {
       return result("bin", ">>", expr, this.next().read_expr());
+    }
     // more binary operations (formerly bool)
-    if (this.token === this.tok.T_BOOLEAN_OR)
+    if (this.token === this.tok.T_BOOLEAN_OR) {
       return result("bin", "||", expr, this.next().read_expr());
-    if (this.token === this.tok.T_LOGICAL_OR)
+    }
+    if (this.token === this.tok.T_LOGICAL_OR) {
       return result("bin", "or", expr, this.next().read_expr());
-    if (this.token === this.tok.T_BOOLEAN_AND)
+    }
+    if (this.token === this.tok.T_BOOLEAN_AND) {
       return result("bin", "&&", expr, this.next().read_expr());
-    if (this.token === this.tok.T_LOGICAL_AND)
+    }
+    if (this.token === this.tok.T_LOGICAL_AND) {
       return result("bin", "and", expr, this.next().read_expr());
-    if (this.token === this.tok.T_LOGICAL_XOR)
+    }
+    if (this.token === this.tok.T_LOGICAL_XOR) {
       return result("bin", "xor", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_IDENTICAL)
+    }
+    if (this.token === this.tok.T_IS_IDENTICAL) {
       return result("bin", "===", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_NOT_IDENTICAL)
+    }
+    if (this.token === this.tok.T_IS_NOT_IDENTICAL) {
       return result("bin", "!==", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_EQUAL) {
       return result("bin", "==", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_NOT_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_NOT_EQUAL) {
       return result("bin", "!=", expr, this.next().read_expr());
-    if (this.token === "<")
+    }
+    if (this.token === "<") {
       return result("bin", "<", expr, this.next().read_expr());
-    if (this.token === ">")
+    }
+    if (this.token === ">") {
       return result("bin", ">", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_SMALLER_OR_EQUAL) {
       return result("bin", "<=", expr, this.next().read_expr());
-    if (this.token === this.tok.T_IS_GREATER_OR_EQUAL)
+    }
+    if (this.token === this.tok.T_IS_GREATER_OR_EQUAL) {
       return result("bin", ">=", expr, this.next().read_expr());
-    if (this.token === this.tok.T_SPACESHIP)
+    }
+    if (this.token === this.tok.T_SPACESHIP) {
       return result("bin", "<=>", expr, this.next().read_expr());
+    }
     if (this.token === this.tok.T_INSTANCEOF) {
       expr = result(
         "bin",
@@ -89,8 +115,9 @@ module.exports = {
 
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
-    if (this.token === this.tok.T_COALESCE)
+    if (this.token === this.tok.T_COALESCE) {
       return result("bin", "??", expr, this.next().read_expr());
+    }
 
     // extra operations :
     // $username = $_GET['user'] ? true : false;
@@ -226,14 +253,18 @@ module.exports = {
    */
   read_expr_item: function () {
     let result, expr;
-    if (this.token === "+")
+    if (this.token === "+") {
       return this.node("unary")("+", this.next().read_expr());
-    if (this.token === "-")
+    }
+    if (this.token === "-") {
       return this.node("unary")("-", this.next().read_expr());
-    if (this.token === "!")
+    }
+    if (this.token === "!") {
       return this.node("unary")("!", this.next().read_expr());
-    if (this.token === "~")
+    }
+    if (this.token === "~") {
       return this.node("unary")("~", this.next().read_expr());
+    }
 
     if (this.token === "(") {
       expr = this.next().read_expr();
@@ -258,7 +289,9 @@ module.exports = {
         this.next();
       }
 
-      if (!this.innerList) this.innerList = true;
+      if (!this.innerList) {
+        this.innerList = true;
+      }
 
       // reads inner items
       const assignList = this.read_array_pair_list(false);
@@ -299,8 +332,9 @@ module.exports = {
       }
     }
 
-    if (this.token === this.tok.T_CLONE)
+    if (this.token === this.tok.T_CLONE) {
       return this.node("clone")(this.next().read_expr());
+    }
 
     switch (this.token) {
       case this.tok.T_INC:
@@ -423,7 +457,9 @@ module.exports = {
       // VARIABLES SPECIFIC OPERATIONS
       switch (this.token) {
         case "=": {
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           if (this.next().token == "&") {
             return this.read_assignref(result, expr);
           }
@@ -432,63 +468,93 @@ module.exports = {
 
         // operations :
         case this.tok.T_PLUS_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "+=");
 
         case this.tok.T_MINUS_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "-=");
 
         case this.tok.T_MUL_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "*=");
 
         case this.tok.T_POW_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "**=");
 
         case this.tok.T_DIV_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "/=");
 
         case this.tok.T_CONCAT_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), ".=");
 
         case this.tok.T_MOD_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "%=");
 
         case this.tok.T_AND_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "&=");
 
         case this.tok.T_OR_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "|=");
 
         case this.tok.T_XOR_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "^=");
 
         case this.tok.T_SL_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "<<=");
 
         case this.tok.T_SR_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), ">>=");
 
         case this.tok.T_COALESCE_EQUAL:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           return result("assign", expr, this.next().read_expr(), "??=");
 
         case this.tok.T_INC:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           this.next();
           return result("post", "+", expr);
         case this.tok.T_DEC:
-          if (isConst) this.error("VARIABLE");
+          if (isConst) {
+            this.error("VARIABLE");
+          }
           this.next();
           return result("post", "-", expr);
         default:
@@ -501,7 +567,9 @@ module.exports = {
       if (expr.kind === "array" && expr.shortForm && this.token === "=") {
         // list assign
         const list = this.convertToList(expr);
-        if (expr.loc) list.loc = expr.loc;
+        if (expr.loc) {
+          list.loc = expr.loc;
+        }
         const right = this.next().read_expr();
         return result("assign", list, right, "=");
       } else {
@@ -534,9 +602,15 @@ module.exports = {
       return entry;
     });
     const node = this.node("list")(convertedItems, true);
-    if (array.loc) node.loc = array.loc;
-    if (array.leadingComments) node.leadingComments = array.leadingComments;
-    if (array.trailingComments) node.trailingComments = array.trailingComments;
+    if (array.loc) {
+      node.loc = array.loc;
+    }
+    if (array.leadingComments) {
+      node.leadingComments = array.leadingComments;
+    }
+    if (array.trailingComments) {
+      node.trailingComments = array.trailingComments;
+    }
     return node;
   },
 
@@ -585,13 +659,19 @@ module.exports = {
     // as an arrowfunc
     const node = this.node("arrowfunc");
     // eat T_FN
-    if (this.expect(this.tok.T_FN)) this.next();
+    if (this.expect(this.tok.T_FN)) {
+      this.next();
+    }
     // check the &
     const isRef = this.is_reference();
     // ...
-    if (this.expect("(")) this.next();
+    if (this.expect("(")) {
+      this.next();
+    }
     const params = this.read_parameter_list();
-    if (this.expect(")")) this.next();
+    if (this.expect(")")) {
+      this.next();
+    }
     let nullable = false;
     let returnType = null;
     if (this.token === ":") {
@@ -601,7 +681,9 @@ module.exports = {
       }
       returnType = this.read_types();
     }
-    if (this.expect(this.tok.T_DOUBLE_ARROW)) this.next();
+    if (this.expect(this.tok.T_DOUBLE_ARROW)) {
+      this.next();
+    }
     const body = this.read_expr();
     return node(
       params,
@@ -621,12 +703,20 @@ module.exports = {
     }
     let cond = null;
     let arms = [];
-    if (this.expect("(")) this.next();
+    if (this.expect("(")) {
+      this.next();
+    }
     cond = this.read_expr();
-    if (this.expect(")")) this.next();
-    if (this.expect("{")) this.next();
+    if (this.expect(")")) {
+      this.next();
+    }
+    if (this.expect("{")) {
+      this.next();
+    }
     arms = this.read_match_arms();
-    if (this.expect("}")) this.next();
+    if (this.expect("}")) {
+      this.next();
+    }
     return node(cond, arms);
   },
 

@@ -186,7 +186,9 @@ lexer.prototype.setInput = function (input) {
  */
 lexer.prototype.input = function () {
   const ch = this._input[this.offset];
-  if (!ch) return "";
+  if (!ch) {
+    return "";
+  }
   this.yytext += ch;
   this.offset++;
   if (ch === "\r" && this._input[this.offset] === "\n") {
@@ -295,7 +297,9 @@ lexer.prototype.ahead = function (size) {
 lexer.prototype.consume = function (size) {
   for (let i = 0; i < size; i++) {
     const ch = this._input[this.offset];
-    if (!ch) break;
+    if (!ch) {
+      break;
+    }
     this.yytext += ch;
     this.offset++;
     if (ch === "\r" && this._input[this.offset] === "\n") {

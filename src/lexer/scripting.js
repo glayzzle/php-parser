@@ -36,7 +36,9 @@ module.exports = {
         if (!this.aspTagMode && this.tryMatch(">")) {
           this.input();
           const nextCH = this._input[this.offset];
-          if (nextCH === "\n" || nextCH === "\r") this.input();
+          if (nextCH === "\n" || nextCH === "\r") {
+            this.input();
+          }
           if (this.conditionStack.length > 1) {
             this.begin("INITIAL");
           }
@@ -72,7 +74,9 @@ module.exports = {
           if (this.is_NUM_START()) {
             return this.consume_NUM();
           } else {
-            if (ch) this.unput(1);
+            if (ch) {
+              this.unput(1);
+            }
           }
         }
         if (this.is_NUM_START()) {
@@ -100,7 +104,9 @@ module.exports = {
       if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {
         continue;
       }
-      if (ch) this.unput(1);
+      if (ch) {
+        this.unput(1);
+      }
       break;
     }
     return this.tok.T_WHITESPACE;

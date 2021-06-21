@@ -320,7 +320,9 @@ module.exports = {
       this.next();
       result = result(name, false);
     } else {
-      if (this.token === "$") this.next();
+      if (this.token === "$") {
+        this.next();
+      }
       // dynamic variable name
       switch (this.token) {
         case "{": {

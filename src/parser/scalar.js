@@ -297,7 +297,9 @@ module.exports = {
     const node = this.node("offsetlookup");
     if (this.token === "[") {
       offset = this.next().read_expr();
-      if (this.expect("]")) this.next();
+      if (this.expect("]")) {
+        this.next();
+      }
       result = node(expr, offset);
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       offset = this.read_encapsed_string_item(false);

@@ -64,7 +64,9 @@ module.exports = {
     let alternate = null;
     const result = this.node("if");
     const test = this.next().read_if_expr();
-    if (this.expect(":")) this.next();
+    if (this.expect(":")) {
+      this.next();
+    }
     const body = this.node("block");
     const items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
@@ -83,7 +85,9 @@ module.exports = {
    *
    */
   read_else_short: function () {
-    if (this.next().expect(":")) this.next();
+    if (this.next().expect(":")) {
+      this.next();
+    }
     const body = this.node("block");
     const items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {

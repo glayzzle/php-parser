@@ -14,7 +14,9 @@ module.exports = {
   read_short_form: function (token) {
     const body = this.node("block");
     const items = [];
-    if (this.expect(":")) this.next();
+    if (this.expect(":")) {
+      this.next();
+    }
     while (this.token != this.EOF && this.token !== token) {
       items.push(this.read_inner_statement());
     }
@@ -25,7 +27,9 @@ module.exports = {
     ) {
       items.push(this.node("noop")());
     }
-    if (this.expect(token)) this.next();
+    if (this.expect(token)) {
+      this.next();
+    }
     this.expectEndOfStatement();
     return body(null, items);
   },
@@ -86,9 +90,13 @@ module.exports = {
         return [];
       }
       while (this.next().token != this.EOF) {
-        if (this.token != separator) break;
+        if (this.token != separator) {
+          break;
+        }
         // trim current separator & check item
-        if (this.next().token != item) break;
+        if (this.next().token != item) {
+          break;
+        }
         result.push(this.text());
       }
     }

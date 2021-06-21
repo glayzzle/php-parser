@@ -61,8 +61,12 @@ module.exports = {
         return this.read_namespace();
       case this.tok.T_HALT_COMPILER: {
         const result = this.node("halt");
-        if (this.next().expect("(")) this.next();
-        if (this.expect(")")) this.next();
+        if (this.next().expect("(")) {
+          this.next();
+        }
+        if (this.expect(")")) {
+          this.next();
+        }
         this.expect(";");
         this.lexer.done = true;
         return result(this.lexer._input.substring(this.lexer.offset));
@@ -138,7 +142,9 @@ module.exports = {
         value = this.next().read_expr();
       }
       result.push(directive(key, value));
-      if (this.token !== ",") break;
+      if (this.token !== ",") {
+        break;
+      }
       this.next();
     }
     return result;

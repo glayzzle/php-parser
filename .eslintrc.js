@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: ["prettier"],
   extends: ["eslint:recommended", "plugin:jest/recommended"],
@@ -11,19 +11,20 @@ module.exports = {
     node: true,
     mocha: true,
     jest: true,
-    es6: true
+    es6: true,
   },
   rules: {
     "prefer-const": "error",
     "no-var": "error",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    curly: 2,
   },
   overrides: [
     {
       files: ["test/**/*.js"],
       rules: {
-        "no-console": "off"
-      }
-    }
-  ]
+        "no-console": "off",
+      },
+    },
+  ],
 };

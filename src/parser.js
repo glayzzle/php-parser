@@ -250,7 +250,9 @@ parser.prototype.getTokenName = function (token) {
   if (!isNumber(token)) {
     return "'" + token + "'";
   } else {
-    if (token == this.EOF) return "the end of file (EOF)";
+    if (token == this.EOF) {
+      return "the end of file (EOF)";
+    }
     return this.lexer.engine.tokens.values[token];
   }
 };
@@ -587,7 +589,9 @@ parser.prototype.lex = function () {
     do {
       // the token
       this.token = this.lexer.lex() || this.EOF;
-      if (this.token === this.EOF) return this;
+      if (this.token === this.EOF) {
+        return this;
+      }
       let entry = this.lexer.yytext;
       if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
         entry = [

@@ -14,7 +14,9 @@ module.exports = {
         // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1296
         return this.tok.T_OBJECT_OPERATOR;
       }
-      if (ch) this.unput(1);
+      if (ch) {
+        this.unput(1);
+      }
     } else if (this.is_WHITESPACE()) {
       return this.tok.T_WHITESPACE;
     } else if (this.is_LABEL_START()) {
@@ -25,7 +27,9 @@ module.exports = {
     }
     // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1306
     this.popState();
-    if (ch) this.unput(1);
+    if (ch) {
+      this.unput(1);
+    }
     return false;
   },
   matchST_LOOKING_FOR_VARNAME: function () {
@@ -47,7 +51,9 @@ module.exports = {
       }
     } else {
       // any char (thats not a label start sequence)
-      if (ch) this.unput(1);
+      if (ch) {
+        this.unput(1);
+      }
     }
     // stops looking for a varname and starts the scripting mode
     return false;

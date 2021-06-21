@@ -146,7 +146,9 @@ module.exports = {
   read_use_declaration: function (typed) {
     const result = this.node("useitem");
     let type = null;
-    if (typed) type = this.read_use_type();
+    if (typed) {
+      type = this.read_use_type();
+    }
     const name = this.read_namespace_name();
     const alias = this.read_use_alias();
     return result(name.name, alias, type);

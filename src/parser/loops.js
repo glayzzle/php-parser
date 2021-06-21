@@ -20,9 +20,13 @@ module.exports = {
     let test = null;
     let body = null;
     let shortForm = false;
-    if (this.expect("(")) this.next();
+    if (this.expect("(")) {
+      this.next();
+    }
     test = this.read_expr();
-    if (this.expect(")")) this.next();
+    if (this.expect(")")) {
+      this.next();
+    }
     if (this.token === ":") {
       shortForm = true;
       body = this.read_short_form(this.tok.T_ENDWHILE);
@@ -46,10 +50,16 @@ module.exports = {
     let body = null;
     body = this.read_statement();
     if (this.expect(this.tok.T_WHILE)) {
-      if (this.next().expect("(")) this.next();
+      if (this.next().expect("(")) {
+        this.next();
+      }
       test = this.read_expr();
-      if (this.expect(")")) this.next();
-      if (this.expect(";")) this.next();
+      if (this.expect(")")) {
+        this.next();
+      }
+      if (this.expect(";")) {
+        this.next();
+      }
     }
     return result(test, body);
   },
@@ -71,22 +81,30 @@ module.exports = {
     let increment = [];
     let body = null;
     let shortForm = false;
-    if (this.expect("(")) this.next();
+    if (this.expect("(")) {
+      this.next();
+    }
     if (this.token !== ";") {
       init = this.read_list(this.read_expr, ",");
-      if (this.expect(";")) this.next();
+      if (this.expect(";")) {
+        this.next();
+      }
     } else {
       this.next();
     }
     if (this.token !== ";") {
       test = this.read_list(this.read_expr, ",");
-      if (this.expect(";")) this.next();
+      if (this.expect(";")) {
+        this.next();
+      }
     } else {
       this.next();
     }
     if (this.token !== ")") {
       increment = this.read_list(this.read_expr, ",");
-      if (this.expect(")")) this.next();
+      if (this.expect(")")) {
+        this.next();
+      }
     } else {
       this.next();
     }
@@ -114,7 +132,9 @@ module.exports = {
     let value = null;
     let body = null;
     let shortForm = false;
-    if (this.expect("(")) this.next();
+    if (this.expect("(")) {
+      this.next();
+    }
     source = this.read_expr();
     if (this.expect(this.tok.T_AS)) {
       this.next();
@@ -130,7 +150,9 @@ module.exports = {
       this.raiseError("Fatal Error : Cannot use list as key element");
     }
 
-    if (this.expect(")")) this.next();
+    if (this.expect(")")) {
+      this.next();
+    }
 
     if (this.token === ":") {
       shortForm = true;
@@ -157,9 +179,13 @@ module.exports = {
       const isShort = this.token === "[";
       const result = this.node("list");
       this.next();
-      if (!isShort && this.expect("(")) this.next();
+      if (!isShort && this.expect("(")) {
+        this.next();
+      }
       const assignList = this.read_array_pair_list(isShort);
-      if (this.expect(isShort ? "]" : ")")) this.next();
+      if (this.expect(isShort ? "]" : ")")) {
+        this.next();
+      }
       return result(assignList, isShort);
     } else {
       return this.read_variable(false, false);
