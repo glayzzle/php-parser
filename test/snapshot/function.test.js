@@ -102,7 +102,6 @@ describe("Function tests", function () {
       {
         parser: {
           version: "8.0",
-          suppressErrors: true,
         },
       }
     );
