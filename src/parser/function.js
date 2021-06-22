@@ -193,9 +193,6 @@ module.exports = {
         }
       }
     }
-    process.stderr.write(
-      "Version: " + this.version + " " + JSON.stringify(result) + "\n"
-    );
     return result;
   },
   /**
