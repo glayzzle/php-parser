@@ -91,4 +91,20 @@ describe("Function tests", function () {
     });
     expect(astErr).toMatchSnapshot();
   });
+
+  it("test danging comma in function php 8.0", function () {
+    const astErr = parser.parseEval(
+      `function (
+    $a,
+    $b,
+    $c,
+  ) {}`,
+      {
+        parser: {
+          version: "8.0",
+        },
+      }
+    );
+    expect(astErr).toMatchSnapshot();
+  });
 });
