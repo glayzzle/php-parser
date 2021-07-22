@@ -160,6 +160,12 @@ module.exports = {
    * ```
    */
   read_lexical_var: function () {
+    // a trailing separator is allowed in PHP8, which would put us right on the
+    // closing parenthesis. the ")" can be ignored here, the actually closing
+    // of the list is done in `read_lexical_vars`
+    if (this.version >= 800 && this.token === ")") {
+      return;
+    }
     if (this.token === "&") {
       return this.read_byref(this.read_lexical_var.bind(this));
     }

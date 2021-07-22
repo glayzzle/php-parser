@@ -107,4 +107,13 @@ describe("Function tests", function () {
     );
     expect(astErr).toMatchSnapshot();
   });
+
+  it("test danging comma in closure use-block php 8.0", function () {
+    const astErr = parser.parseEval("$test = function () use ($one,) {}", {
+      parser: {
+        version: "8.0",
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
 });
