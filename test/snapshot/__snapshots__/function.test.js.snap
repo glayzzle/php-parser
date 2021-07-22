@@ -273,6 +273,165 @@ Program {
 }
 `;
 
+exports[`Function tests test danging comma in closure use-block with multiple php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "one",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "two",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test danging comma in closure use-block with multiple/refs php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [
+            Parameter {
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "one",
+              },
+              "nullable": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "two",
+              },
+              "nullable": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "three",
+            },
+            Variable {
+              "byref": true,
+              "curly": false,
+              "kind": "variable",
+              "name": "four",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test danging comma in closure use-block with refs php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "byref": true,
+              "curly": false,
+              "kind": "variable",
+              "name": "one",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Function tests test danging comma in function php 8.0 1`] = `
 Program {
   "children": Array [
@@ -333,6 +492,59 @@ Program {
     },
   ],
   "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test double danging comma in closure use-block php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "one",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": 222,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ',', expecting T_VARIABLE on line 1",
+      "token": "','",
+    },
+  ],
   "kind": "program",
 }
 `;
@@ -907,6 +1119,87 @@ Program {
       "token": undefined,
     },
   ],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test without danging comma in closure use-block php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "one",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test without danging comma in closure use-block with refs php 8.0 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "byref": true,
+              "curly": false,
+              "kind": "variable",
+              "name": "one",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;
