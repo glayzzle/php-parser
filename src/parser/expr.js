@@ -225,7 +225,9 @@ module.exports = {
    * ```
    */
   read_expr_item: function () {
-    let result, expr;
+    let result,
+      expr,
+      attrs = [];
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
     if (this.token === "-")
@@ -297,6 +299,10 @@ module.exports = {
       } else {
         return result(assignList, false);
       }
+    }
+
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      attrs = this.read_attr_list();
     }
 
     if (this.token === this.tok.T_CLONE)
@@ -390,7 +396,7 @@ module.exports = {
 
       case this.tok.T_FN:
       case this.tok.T_FUNCTION:
-        return this.read_inline_function();
+        return this.read_inline_function(undefined, attrs);
 
       case this.tok.T_STATIC: {
         const backup = [this.token, this.lexer.getState()];
@@ -400,7 +406,7 @@ module.exports = {
           (this.version >= 704 && this.token === this.tok.T_FN)
         ) {
           // handles static function
-          return this.read_inline_function([0, 1, 0]);
+          return this.read_inline_function([0, 1, 0], attrs);
         } else {
           // rollback
           this.lexer.tokens.push(backup);
@@ -574,9 +580,11 @@ module.exports = {
    * 				  ((zend_ast_decl *) $$)->lex_pos = $10;
    * 				  CG(extra_fn_flags) = $9; }   *
    */
-  read_inline_function: function (flags) {
+  read_inline_function: function (flags, attrs) {
     if (this.token === this.tok.T_FUNCTION) {
-      return this.read_function(true, flags);
+      const result = this.read_function(true, flags, attrs);
+      result.attrGroups = attrs;
+      return result;
     }
     // introduced in PHP 7.4
     if (!this.version >= 704) {
@@ -603,7 +611,7 @@ module.exports = {
     }
     if (this.expect(this.tok.T_DOUBLE_ARROW)) this.next();
     const body = this.read_expr();
-    return node(
+    const result = node(
       params,
       isRef,
       body,
@@ -611,6 +619,8 @@ module.exports = {
       nullable,
       flags ? true : false
     );
+    result.attrGroups = attrs;
+    return result;
   },
 
   read_match_expression: function () {
@@ -663,6 +673,34 @@ module.exports = {
     return conds;
   },
 
+  read_attribute() {
+    const name = this.text();
+    let args = [];
+    this.next();
+    if (this.token === "(") {
+      args = this.read_argument_list();
+    }
+    return this.node("attribute")(name, args);
+  },
+  read_attr_list() {
+    const list = [];
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      do {
+        const attrGr = this.node("attrgroup")([]);
+        this.next();
+        attrGr.attrs.push(this.read_attribute());
+        while (this.token === ",") {
+          this.next();
+          if (this.token !== "]") attrGr.attrs.push(this.read_attribute());
+        }
+        list.push(attrGr);
+        this.expect("]");
+        this.next();
+      } while (this.token === this.tok.T_ATTRIBUTE);
+    }
+    return list;
+  },
+
   /**
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
@@ -673,6 +711,7 @@ module.exports = {
     const result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     let args = [];
+    const attrs = this.read_attr_list();
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
@@ -685,10 +724,9 @@ module.exports = {
       if (this.expect("{")) {
         body = this.next().read_class_body();
       }
-      return result(
-        what(null, propExtends, propImplements, body, [0, 0, 0]),
-        args
-      );
+      const whatNode = what(null, propExtends, propImplements, body, [0, 0, 0]);
+      whatNode.attrGroups = attrs;
+      return result(whatNode, args);
     }
     // Already existing class
     const name = this.read_new_class_name();
