@@ -155,8 +155,28 @@ module.exports = {
     return result;
   },
 
+  read_list_with_dangling_comma: function (item) {
+    const result = [];
+
+    while (this.token != this.EOF) {
+      result.push(item());
+      if (this.token == ",") {
+        this.next();
+        if (this.version >= 800 && this.token === ")") {
+          return result;
+        }
+      } else if (this.token == ")") {
+        break;
+      } else {
+        this.error([",", ")"]);
+        break;
+      }
+    }
+    return result;
+  },
+
   read_lexical_var_list: function () {
-    return this.read_list(this.read_lexical_var, ",");
+    return this.read_list_with_dangling_comma(this.read_lexical_var.bind(this));
   },
 
   /**
@@ -181,24 +201,10 @@ module.exports = {
    * ```
    */
   read_parameter_list: function () {
-    const result = [];
     if (this.token != ")") {
-      while (this.token != this.EOF) {
-        result.push(this.read_parameter());
-        if (this.token == ",") {
-          this.next();
-          if (this.version >= 800 && this.token === ")") {
-            return result;
-          }
-        } else if (this.token == ")") {
-          break;
-        } else {
-          this.error([",", ")"]);
-          break;
-        }
-      }
+      return this.read_list_with_dangling_comma(this.read_parameter.bind(this));
     }
-    return result;
+    return [];
   },
   /**
    * ```ebnf

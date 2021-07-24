@@ -107,4 +107,71 @@ describe("Function tests", function () {
     );
     expect(astErr).toMatchSnapshot();
   });
+
+  it("test without danging comma in closure use-block php 8.0", function () {
+    const ast = parser.parseEval("$test = function () use ($one) {}", {
+      parser: {
+        version: "8.0",
+      },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test danging comma in closure use-block php 8.0", function () {
+    const ast = parser.parseEval("$test = function () use ($one,) {}", {
+      parser: {
+        version: "8.0",
+      },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test without danging comma in closure use-block with refs php 8.0", function () {
+    const ast = parser.parseEval("$test = function () use (&$one) {}", {
+      parser: {
+        version: "8.0",
+      },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test danging comma in closure use-block with refs php 8.0", function () {
+    const ast = parser.parseEval("$test = function () use (&$one) {}", {
+      parser: {
+        version: "8.0",
+      },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test danging comma in closure use-block with multiple php 8.0", function () {
+    const ast = parser.parseEval("$test = function () use ($one, $two,) {}", {
+      parser: {
+        version: "8.0",
+      },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test danging comma in closure use-block with multiple/refs php 8.0", function () {
+    const ast = parser.parseEval(
+      "$test = function ($one, $two) use ($three, &$four,) {}",
+      {
+        parser: {
+          version: "8.0",
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test double danging comma in closure use-block php 8.0", function () {
+    const astErr = parser.parseEval("$test = function () use ($one, ,) {}", {
+      parser: {
+        version: "8.0",
+        suppressErrors: true,
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
 });
