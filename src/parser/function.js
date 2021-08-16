@@ -220,11 +220,11 @@ module.exports = {
     let nullable = false;
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
+    const flags = this.read_promoted();
     if (this.token === "?") {
       this.next();
       nullable = true;
     }
-    const flags = this.read_promoted();
     types = this.read_types();
     if (nullable && !types) {
       this.raiseError(
