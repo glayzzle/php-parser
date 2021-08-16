@@ -145,6 +145,22 @@ describe("Test classes", function () {
     expect(ast).toMatchSnapshot();
   });
 
+  it("Test promoted nullable properties php 8", function () {
+    const ast = parser.parseEval(
+      `
+      class __proto__ {
+        public function constructor(public ?string $maybe, private ?int $opt) {}
+      }`,
+      {
+        parser: {
+          version: "8.0",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("empty", function () {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
