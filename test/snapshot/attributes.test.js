@@ -144,4 +144,17 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+
+  it("doesnt repeat attributes from previous function", () => {
+    expect(
+      parser.parseEval(`
+      class a {
+        #[Att1]
+        function b(){}
+        function c(){}
+        function d(){}
+        }
+    `)
+    ).toMatchSnapshot();
+  });
 });

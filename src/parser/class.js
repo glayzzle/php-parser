@@ -105,6 +105,7 @@ module.exports = {
       if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         result.push(this.read_function(false, flags, attrs));
+        attrs = [];
       } else if (
         this.token === this.tok.T_VARIABLE ||
         // support https://wiki.php.net/rfc/typed_properties_v2
@@ -399,6 +400,7 @@ module.exports = {
           this.next();
         }
         result = result.concat(constants);
+        attrs = [];
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         const method = this.read_function_declaration(2, flags, attrs);
@@ -407,6 +409,7 @@ module.exports = {
         if (this.expect(";")) {
           this.next();
         }
+        attrs = [];
       } else {
         // raise an error
         this.error([this.tok.T_CONST, this.tok.T_FUNCTION]);
