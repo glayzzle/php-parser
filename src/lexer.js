@@ -35,6 +35,7 @@ const Lexer = function (engine) {
   this.keywords = {
     __class__: this.tok.T_CLASS_C,
     __trait__: this.tok.T_TRAIT_C,
+    __enum__: this.tok.T_ENUM_C,
     __function__: this.tok.T_FUNC_C,
     __method__: this.tok.T_METHOD_C,
     __line__: this.tok.T_LINE,
@@ -77,6 +78,7 @@ const Lexer = function (engine) {
     class: this.tok.T_CLASS,
     interface: this.tok.T_INTERFACE,
     trait: this.tok.T_TRAIT,
+    enum: this.tok.T_ENUM,
     extends: this.tok.T_EXTENDS,
     implements: this.tok.T_IMPLEMENTS,
     new: this.tok.T_NEW,
