@@ -149,6 +149,7 @@ module.exports = {
     236: "T_NULLSAFE_OBJECT_OPERATOR",
     237: "T_MATCH",
     238: "T_ATTRIBUTE",
+    239: "T_ENUM",
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -289,5 +290,6 @@ module.exports = {
     T_NULLSAFE_OBJECT_OPERATOR: 236,
     T_MATCH: 237,
     T_ATTRIBUTE: 238,
+    T_ENUM: 239,
   },
 };

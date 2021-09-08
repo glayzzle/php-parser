@@ -479,6 +479,8 @@ AST.prototype.checkNodes = function () {
   require("./ast/encapsed"),
   require("./ast/encapsedpart"),
   require("./ast/entry"),
+  require("./ast/enum"),
+  require("./ast/enumcase"),
   require("./ast/error"),
   require("./ast/eval"),
   require("./ast/exit"),
