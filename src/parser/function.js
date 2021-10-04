@@ -364,7 +364,10 @@ module.exports = {
       const type = this.text();
       this.next();
       return result("typereference", type.toLowerCase(), type);
-    } else if (this.token === this.tok.T_STRING) {
+    } else if (
+      this.token === this.tok.T_STRING ||
+      this.token === this.tok.T_STATIC
+    ) {
       const type = this.text();
       const backup = [this.token, this.lexer.getState()];
       this.next();
