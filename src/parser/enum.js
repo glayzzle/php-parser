@@ -7,9 +7,9 @@
 
 module.exports = {
   /*
-   * reading a class
+   * reading an enum
    * ```ebnf
-   * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
+   * enum ::= enum_scope? T_ENUM T_STRING (':' NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' ENUM_BODY '}'
    * ```
    */
   read_enum_declaration_statement: function () {
@@ -41,9 +41,9 @@ module.exports = {
   },
 
   /*
-   * Reads a class body
+   * Reads an enum body
    * ```ebnf
-   *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
+   *   enum_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
    * ```
    */
   read_enum_body: function () {
