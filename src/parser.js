@@ -5,6 +5,8 @@
  */
 "use strict";
 
+const Position = require("./ast/position");
+
 /**
  * @private
  */
@@ -375,6 +377,19 @@ parser.prototype.error = function (expect) {
     msg += msgExpect;
   }
   return this.raiseError(msg, msgExpect, expect, token);
+};
+
+/**
+ * Create a position node from the lexers position
+ *
+ * @return {Position}
+ */
+parser.prototype.position = function () {
+  return new Position(
+    this.lexer.yylloc.first_line,
+    this.lexer.yylloc.first_column,
+    this.lexer.yylloc.first_offset
+  );
 };
 
 /**

@@ -32,11 +32,12 @@ module.exports = {
    * function ::= function_declaration code_block
    * ```
    */
-  read_function: function (closure, flag, attrs) {
+  read_function: function (closure, flag, attrs, locStart) {
     const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1,
-      attrs || []
+      attrs || [],
+      locStart
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -63,7 +64,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  read_function_declaration: function (type, isStatic, attrs) {
+  read_function_declaration: function (type, isStatic, attrs, locStart) {
     let nodeName = "function";
     if (type === 1) {
       nodeName = "closure";
@@ -131,15 +132,30 @@ module.exports = {
       }
       returnType = this.read_types();
     }
+    const apply_attrgroup_location = (node) => {
+      node.attrGroups = attrs || [];
+
+      if (locStart && node.loc) {
+        node.loc.start = locStart;
+        if (node.loc.source) {
+          node.loc.source = this.lexer._input.substr(
+            node.loc.start.offset,
+            node.loc.end.offset - node.loc.start.offset
+          );
+        }
+      }
+      return node;
+    };
+
     if (type === 1) {
       // closure
-      const fnNode = result(params, isRef, use, returnType, nullable, isStatic);
-      fnNode.attrGroups = attrs || [];
-      return fnNode;
+      return apply_attrgroup_location(
+        result(params, isRef, use, returnType, nullable, isStatic)
+      );
     }
-    const fnNode = result(name, params, isRef, returnType, nullable);
-    fnNode.attrGroups = attrs || [];
-    return fnNode;
+    return apply_attrgroup_location(
+      result(name, params, isRef, returnType, nullable)
+    );
   },
 
   read_lexical_vars: function () {
