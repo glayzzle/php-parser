@@ -82,6 +82,9 @@ module.exports = {
       if (this.token === this.tok.T_ATTRIBUTE) {
         attrs = this.read_attr_list();
       }
+
+      const locStart = this.position();
+
       // read member flags
       const flags = this.read_member_flags(false);
 
@@ -104,7 +107,7 @@ module.exports = {
 
       if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        result.push(this.read_function(false, flags, attrs));
+        result.push(this.read_function(false, flags, attrs, locStart));
         attrs = [];
       } else if (
         this.token === this.tok.T_VARIABLE ||
@@ -389,6 +392,9 @@ module.exports = {
         result.push(this.read_doc_comment());
         continue;
       }
+
+      const locStart = this.position();
+
       attrs = this.read_attr_list();
       // read member flags
       const flags = this.read_member_flags(true);
@@ -403,7 +409,12 @@ module.exports = {
         attrs = [];
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        const method = this.read_function_declaration(2, flags, attrs);
+        const method = this.read_function_declaration(
+          2,
+          flags,
+          attrs,
+          locStart
+        );
         method.parseFlags(flags);
         result.push(method);
         if (this.expect(";")) {

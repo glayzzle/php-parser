@@ -128,21 +128,6 @@ const AST = function (withPositions, withSource) {
   this.withSource = withSource;
 };
 
-/**
- * Create a position node from specified parser
- * including it's lexer current state
- * @param {Parser}
- * @return {Position}
- * @private
- */
-AST.prototype.position = function (parser) {
-  return new Position(
-    parser.lexer.yylloc.first_line,
-    parser.lexer.yylloc.first_column,
-    parser.lexer.yylloc.first_offset
-  );
-};
-
 // operators in ascending order of precedence
 AST.precedence = {};
 [
@@ -353,7 +338,7 @@ AST.prototype.resolvePrecedence = function (result, parser) {
 AST.prototype.prepare = function (kind, docs, parser) {
   let start = null;
   if (this.withPositions || this.withSource) {
-    start = this.position(parser);
+    start = parser.position();
   }
   const self = this;
   // returns the node

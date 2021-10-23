@@ -184,4 +184,27 @@ describe("Test classes", function () {
       })
     ).toMatchSnapshot();
   });
+
+  it("knows where a function definiton starts", function () {
+    const phpCode = `
+class b { 
+  // prettier-ignore
+  public static function a() {}
+}
+    `;
+    const ast = parser.parseEval(phpCode, {
+      ast: {
+        withPositions: true,
+        withSource: true,
+      },
+    });
+    const funcStart = ast.children[0].body[0].loc.start.offset;
+    const funcEnd = ast.children[0].body[0].loc.end.offset;
+    expect(phpCode.substr(funcStart, funcEnd - funcStart)).toEqual(
+      "public static function a() {}"
+    );
+    expect(ast.children[0].body[0].loc.source).toEqual(
+      "public static function a()"
+    );
+  });
 });
