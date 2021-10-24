@@ -129,7 +129,7 @@ declare module "php-parser" {
      */
     class Class extends Declaration {
         extends: Identifier | null;
-        implements: Identifier[];
+        implements: Identifier[] | null;
         body: Declaration[];
         isAnonymous: boolean;
         isAbstract: boolean;
