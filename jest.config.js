@@ -10,14 +10,14 @@ module.exports = {
       displayName: "test",
       testEnvironment: "node",
     },
-    {
-      runner: "jest-runner-eslint",
-      displayName: "lint",
-      testMatch: ["<rootDir>/**/*.js"],
-      testPathIgnorePatterns: [
-        "<rootDir>/node_modules/",
-        "<rootDir>/coverage/",
-      ],
-    },
+    //{
+    //  runner: "jest-runner-eslint",
+    //  displayName: "lint",
+    //  testMatch: ["<rootDir>/**/*.js"],
+    //  testPathIgnorePatterns: [
+    //    "<rootDir>/node_modules/",
+    //    "<rootDir>/coverage/",
+    //  ],
+    //},
   ],
 };
