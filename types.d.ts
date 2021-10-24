@@ -129,7 +129,7 @@ declare module "php-parser" {
      */
     class Class extends Declaration {
         extends: Identifier | null;
-        implements: Identifier[];
+        implements: Identifier[] | null;
         body: Declaration[];
         isAnonymous: boolean;
         isAbstract: boolean;
@@ -700,6 +700,8 @@ declare module "php-parser" {
          */
         parseFlags(flags: (number | null)[]): void;
         properties: Property[];
+        visibility: string|null;
+        isStatic: bool;
     }
     /**
      * Defines a reference node
@@ -990,7 +992,7 @@ declare module "php-parser" {
          * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
          * @returns - Each item can be a string or an array with following informations [token_name, text, line_number]
          */
-        tokenGetAll(buffer: string): String[];
+        tokenGetAll(buffer: string): (string | string[])[];
         lexer: Lexer;
         parser: Parser;
         ast: AST;

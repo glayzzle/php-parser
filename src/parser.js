@@ -632,7 +632,12 @@ Parser.prototype.lex = function () {
       this.token = this.lexer.lex() || this.EOF;
       if (this.token === this.EOF) return this;
       let entry = this.lexer.yytext;
-      if (this.lexer.engine.tokens.values.hasOwnProperty(this.token)) {
+      if (
+        Object.prototype.hasOwnProperty.call(
+          this.lexer.engine.tokens.values,
+          this.token
+        )
+      ) {
         entry = [
           this.lexer.engine.tokens.values[this.token],
           entry,
@@ -703,7 +708,7 @@ Parser.prototype.is = function (type) {
   require("./parser/variable.js"),
 ].forEach(function (ext) {
   for (const k in ext) {
-    if (Parser.prototype.hasOwnProperty(k)) {
+    if (Object.prototype.hasOwnProperty.call(Parser.prototype, k)) {
       // @see https://github.com/glayzzle/php-parser/issues/234
       throw new Error("Function " + k + " is already defined - collision");
     }
