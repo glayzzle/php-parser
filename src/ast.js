@@ -475,7 +475,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 AST.prototype.checkNodes = function () {
   const errors = [];
   for (const k in AST.stack) {
-    if (AST.stack.hasOwnProperty(k)) {
+    if (Object.prototype.hasOwnProperty.call(AST.stack, k)) {
       errors.push(AST.stack[k]);
     }
   }
