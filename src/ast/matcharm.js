@@ -15,13 +15,11 @@ const KIND = "matcharm";
  * @property {Expression[]|null} conds The match condition expression list - null indicates default arm
  * @property {Expression} body The return value expression
  */
-module.exports = Expression.extends(KIND, function MatchArm(
-  conds,
-  body,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.conds = conds;
-  this.body = body;
-});
+module.exports = Expression.extends(
+  KIND,
+  function MatchArm(conds, body, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.conds = conds;
+    this.body = body;
+  }
+);
