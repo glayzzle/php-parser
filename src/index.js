@@ -213,7 +213,7 @@ Engine.prototype.tokenGetAll = function (buffer) {
   const result = [];
   while (token != EOF) {
     let entry = this.lexer.yytext;
-    if (names.hasOwnProperty(token)) {
+    if (Object.prototype.hasOwnProperty.call(names, token)) {
       entry = [names[token], entry, this.lexer.yylloc.first_line];
     }
     result.push(entry);
