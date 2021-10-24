@@ -700,6 +700,8 @@ declare module "php-parser" {
          */
         parseFlags(flags: (number | null)[]): void;
         properties: Property[];
+        visibility: string|null;
+        isStatic: bool;
     }
     /**
      * Defines a reference node
