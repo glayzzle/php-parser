@@ -16,26 +16,26 @@ const IS_PRIVATE = "private";
 /**
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
+ * @memberOf module:php-parser
  * @extends {ConstantStatement}
  * @property {string} visibility
  * @property {AttrGroup[]} attrGroups
  */
-const ClassConstant = ConstantStatement.extends(KIND, function ClassConstant(
-  kind,
-  constants,
-  flags,
-  attrGroups,
-  docs,
-  location
-) {
-  ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
-  this.parseFlags(flags);
-  this.attrGroups = attrGroups;
-});
+const ClassConstant = ConstantStatement.extends(
+  KIND,
+  function ClassConstant(kind, constants, flags, attrGroups, docs, location) {
+    ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
+    this.parseFlags(flags);
+    this.attrGroups = attrGroups;
+  }
+);
 
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @function
+ * @name ClassConstant#parseFlags
+ * @memberOf module:php-parser
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 ClassConstant.prototype.parseFlags = function (flags) {

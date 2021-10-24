@@ -11,18 +11,16 @@ const KIND = "lookup";
 /**
  * Lookup on an offset in the specified object
  * @constructor Lookup
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} what
  * @property {Expression} offset
  */
-module.exports = Expr.extends(KIND, function Lookup(
-  kind,
-  what,
-  offset,
-  docs,
-  location
-) {
-  Expr.apply(this, [kind || KIND, docs, location]);
-  this.what = what;
-  this.offset = offset;
-});
+module.exports = Expr.extends(
+  KIND,
+  function Lookup(kind, what, offset, docs, location) {
+    Expr.apply(this, [kind || KIND, docs, location]);
+    this.what = what;
+    this.offset = offset;
+  }
+);

@@ -119,6 +119,7 @@ const Position = require("./ast/position");
 /**
  * The AST builder class
  * @constructor AST
+ * @memberOf module:php-parser
  * @tutorial AST
  * @property {Boolean} withPositions - Should locate any node (by default false)
  * @property {Boolean} withSource - Should extract the node original code (by default false)
@@ -159,12 +160,22 @@ AST.precedence = {};
   });
 });
 
+/**
+ * @private
+ * @function AST#isRightAssociative
+ * @memberOf module:php-parser
+ * @param operator
+ * @return {boolean}
+ */
 AST.prototype.isRightAssociative = function (operator) {
   return operator === "**" || operator === "??";
 };
 
 /**
  * Change parent node informations after swapping childs
+ * @private
+ * @function AST#swapLocations
+ * @memberOf module:php-parser
  */
 AST.prototype.swapLocations = function (target, first, last, parser) {
   if (this.withPositions) {
@@ -181,6 +192,9 @@ AST.prototype.swapLocations = function (target, first, last, parser) {
 
 /**
  * Includes locations from first & last into the target
+ * @private
+ * @function AST#resolveLocations
+ * @memberOf module:php-parser
  */
 AST.prototype.resolveLocations = function (target, first, last, parser) {
   if (this.withPositions) {
@@ -201,6 +215,9 @@ AST.prototype.resolveLocations = function (target, first, last, parser) {
 
 /**
  * Check and fix precence, by default using right
+ * @private
+ * @function AST#resolvePrecedence
+ * @memberOf module:php-parser
  */
 AST.prototype.resolvePrecedence = function (result, parser) {
   let buffer, lLevel, rLevel;
@@ -330,8 +347,11 @@ AST.prototype.resolvePrecedence = function (result, parser) {
 
 /**
  * Prepares an AST node
+ * @private
+ * @function AST#prepare
+ * @memberOf module:php-parser
  * @param {String|null} kind - Defines the node type
- * (if null, the kind must be passed at the function call)
+ * @param {*} docs - (if null, the kind must be passed at the function call)
  * @param {Parser} parser - The parser instance (use for extracting locations)
  * @return {Function}
  */
@@ -398,6 +418,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
 
   /**
    * Sets a list of trailing comments
+   * @private
    * @param {*} docs
    */
   result.setTrailingComments = function (docs) {
@@ -411,6 +432,8 @@ AST.prototype.prepare = function (kind, docs, parser) {
 
   /**
    * Release a node without using it on the AST
+   * @private
+   * @param {*} target
    */
   result.destroy = function (target) {
     if (docs) {

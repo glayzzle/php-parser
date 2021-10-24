@@ -11,13 +11,13 @@ const KIND = "unset";
 /**
  * Deletes references to a list of variables
  * @constructor Unset
+ * @memberOf module:php-parser
  * @extends {Statement}
  */
-module.exports = Statement.extends(KIND, function Unset(
-  variables,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.variables = variables;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Unset(variables, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.variables = variables;
+  }
+);

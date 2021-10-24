@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  /**
+  /*
    * ```ebnf
    *  try ::= T_TRY '{' inner_statement* '}'
    *          (

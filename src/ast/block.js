@@ -11,15 +11,14 @@ const KIND = "block";
 /**
  * A block statement, i.e., a sequence of statements surrounded by braces.
  * @constructor Block
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Node[]} children
  */
-module.exports = Statement.extends(KIND, function Block(
-  kind,
-  children,
-  docs,
-  location
-) {
-  Statement.apply(this, [kind || KIND, docs, location]);
-  this.children = children.filter(Boolean);
-});
+module.exports = Statement.extends(
+  KIND,
+  function Block(kind, children, docs, location) {
+    Statement.apply(this, [kind || KIND, docs, location]);
+    this.children = children.filter(Boolean);
+  }
+);

@@ -11,20 +11,18 @@ const KIND = "encapsed";
 /**
  * Defines an encapsed string (contains expressions)
  * @constructor Encapsed
+ * @memberOf module:php-parser
  * @extends {Literal}
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
  */
-const Encapsed = Literal.extends(KIND, function Encapsed(
-  value,
-  raw,
-  type,
-  docs,
-  location
-) {
-  Literal.apply(this, [KIND, value, raw, docs, location]);
-  this.type = type;
-});
+const Encapsed = Literal.extends(
+  KIND,
+  function Encapsed(value, raw, type, docs, location) {
+    Literal.apply(this, [KIND, value, raw, docs, location]);
+    this.type = type;
+  }
+);
 
 /**
  * The node is a double quote string :
@@ -32,7 +30,8 @@ const Encapsed = Literal.extends(KIND, function Encapsed(
  * <?php
  * echo "hello $world";
  * ```
- * @constant {String} TYPE_STRING - `string`
+ * @constant {String} Encapsed#TYPE_STRING - `string`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_STRING = "string";
 
@@ -42,7 +41,8 @@ Encapsed.TYPE_STRING = "string";
  * <?php
  * echo `ls -larth $path`;
  * ```
- * @constant {String} TYPE_SHELL - `shell`
+ * @constant {String} Encapsed#TYPE_SHELL - `shell`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_SHELL = "shell";
 
@@ -55,7 +55,8 @@ Encapsed.TYPE_SHELL = "shell";
  * STR
  * ;
  * ```
- * @constant {String} TYPE_HEREDOC - `heredoc`
+ * @constant {String} Encapsed#TYPE_HEREDOC - `heredoc`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_HEREDOC = "heredoc";
 
@@ -65,7 +66,8 @@ Encapsed.TYPE_HEREDOC = "heredoc";
  * <?php
  * echo $foo->bar_$baz;
  * ```
- * @constant {String} TYPE_OFFSET - `offset`
+ * @constant {String} Encapsed#TYPE_OFFSET - `offset`
+ * @memberOf module:php-parser
  */
 Encapsed.TYPE_OFFSET = "offset";
 

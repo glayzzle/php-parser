@@ -11,17 +11,16 @@ const KIND = "exit";
 /**
  * Defines an exit / die call
  * @constructor Exit
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Node|null} expression
- * @property {Boolean} useDie
+ * @property {boolean} useDie
  */
-module.exports = Expression.extends(KIND, function Exit(
-  expression,
-  useDie,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.expression = expression;
-  this.useDie = useDie;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Exit(expression, useDie, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.expression = expression;
+    this.useDie = useDie;
+  }
+);

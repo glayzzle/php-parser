@@ -11,16 +11,15 @@ const KIND = "list";
 /**
  * Defines list assignment
  * @constructor List
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {boolean} shortForm
  */
-module.exports = Expression.extends(KIND, function List(
-  items,
-  shortForm,
-  docs,
-  location
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.items = items;
-  this.shortForm = shortForm;
-});
+module.exports = Expression.extends(
+  KIND,
+  function List(items, shortForm, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.items = items;
+    this.shortForm = shortForm;
+  }
+);

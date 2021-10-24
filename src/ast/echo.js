@@ -11,16 +11,15 @@ const KIND = "echo";
 /**
  * Defines system based call
  * @constructor Echo
+ * @memberOf module:php-parser
  * @property {boolean} shortForm
  * @extends {Statement}
  */
-module.exports = Statement.extends(KIND, function Echo(
-  expressions,
-  shortForm,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.shortForm = shortForm;
-  this.expressions = expressions;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Echo(expressions, shortForm, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.shortForm = shortForm;
+    this.expressions = expressions;
+  }
+);

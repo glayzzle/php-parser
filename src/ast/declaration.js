@@ -16,22 +16,24 @@ const IS_PRIVATE = "private";
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier|string} name
  */
-const Declaration = Statement.extends(KIND, function Declaration(
-  kind,
-  name,
-  docs,
-  location
-) {
-  Statement.apply(this, [kind || KIND, docs, location]);
-  this.name = name;
-});
+const Declaration = Statement.extends(
+  KIND,
+  function Declaration(kind, name, docs, location) {
+    Statement.apply(this, [kind || KIND, docs, location]);
+    this.name = name;
+  }
+);
 
 /**
  * Generic flags parser
- * @param {Integer[]} flags
+ * @function
+ * @name Declaration#parseFlags
+ * @memberOf module:php-parser
+ * @param {Array<number|null>} flags
  * @return {void}
  */
 Declaration.prototype.parseFlags = function (flags) {

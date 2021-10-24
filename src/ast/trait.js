@@ -11,15 +11,14 @@ const KIND = "trait";
 /**
  * A trait definition
  * @constructor Trait
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Declaration[]} body
  */
-module.exports = Declaration.extends(KIND, function Trait(
-  name,
-  body,
-  docs,
-  location
-) {
-  Declaration.apply(this, [KIND, name, docs, location]);
-  this.body = body;
-});
+module.exports = Declaration.extends(
+  KIND,
+  function Trait(name, body, docs, location) {
+    Declaration.apply(this, [KIND, name, docs, location]);
+    this.body = body;
+  }
+);

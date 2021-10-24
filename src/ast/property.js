@@ -11,6 +11,7 @@ const KIND = "property";
 /**
  * Defines a class property
  * @constructor Property
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
  * @property {Node|null} value
@@ -18,19 +19,14 @@ const KIND = "property";
  * @property {Identifier|Array<Identifier>|null} type
  * @property {AttrGroup[]} attrGroups
  */
-module.exports = Statement.extends(KIND, function Property(
-  name,
-  value,
-  nullable,
-  type,
-  attrGroups,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.name = name;
-  this.value = value;
-  this.nullable = nullable;
-  this.type = type;
-  this.attrGroups = attrGroups;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Property(name, value, nullable, type, attrGroups, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.name = name;
+    this.value = value;
+    this.nullable = nullable;
+    this.type = type;
+    this.attrGroups = attrGroups;
+  }
+);

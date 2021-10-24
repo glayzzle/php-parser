@@ -11,6 +11,7 @@ const KIND = "operation";
 /**
  * Defines binary operations
  * @constructor Operation
+ * @memberOf module:php-parser
  * @extends {Expression}
  */
 module.exports = Expr.extends(KIND, function Operation(kind, docs, location) {

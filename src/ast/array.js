@@ -11,6 +11,7 @@ const KIND = "array";
 /**
  * Defines an array structure
  * @constructor Array
+ * @memberOf module:php-parser
  * @example
  * // PHP code :
  * [1, 'foo' => 'bar', 3]
@@ -30,16 +31,14 @@ const KIND = "array";
  *  ]
  * }
  * @extends {Expression}
- * @property {Entry|Expr|Variable} items List of array items
+ * @property {Entry|Expression|Variable} items List of array items
  * @property {boolean} shortForm Indicate if the short array syntax is used, ex `[]` instead `array()`
  */
-module.exports = Expr.extends(KIND, function Array(
-  shortForm,
-  items,
-  docs,
-  location
-) {
-  Expr.apply(this, [KIND, docs, location]);
-  this.items = items;
-  this.shortForm = shortForm;
-});
+module.exports = Expr.extends(
+  KIND,
+  function Array(shortForm, items, docs, location) {
+    Expr.apply(this, [KIND, docs, location]);
+    this.items = items;
+    this.shortForm = shortForm;
+  }
+);

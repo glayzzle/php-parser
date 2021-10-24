@@ -11,6 +11,7 @@ const KIND = "class";
 /**
  * A class definition
  * @constructor Class
+ * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier|null} extends
  * @property {Identifier[]} implements
@@ -20,20 +21,15 @@ const KIND = "class";
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
  */
-module.exports = Declaration.extends(KIND, function Class(
-  name,
-  ext,
-  impl,
-  body,
-  flags,
-  docs,
-  location
-) {
-  Declaration.apply(this, [KIND, name, docs, location]);
-  this.isAnonymous = name ? false : true;
-  this.extends = ext;
-  this.implements = impl;
-  this.body = body;
-  this.attrGroups = [];
-  this.parseFlags(flags);
-});
+module.exports = Declaration.extends(
+  KIND,
+  function Class(name, ext, impl, body, flags, docs, location) {
+    Declaration.apply(this, [KIND, name, docs, location]);
+    this.isAnonymous = name ? false : true;
+    this.extends = ext;
+    this.implements = impl;
+    this.body = body;
+    this.attrGroups = [];
+    this.parseFlags(flags);
+  }
+);

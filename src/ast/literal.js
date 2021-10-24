@@ -11,20 +11,18 @@ const KIND = "literal";
 /**
  * Defines an array structure
  * @constructor Literal
+ * @memberOf module:php-parser
  * @extends {Expression}
  * @property {string} raw
  * @property {Node|string|number|boolean|null} value
  */
-module.exports = Expression.extends(KIND, function Literal(
-  kind,
-  value,
-  raw,
-  docs,
-  location
-) {
-  Expression.apply(this, [kind || KIND, docs, location]);
-  this.value = value;
-  if (raw) {
-    this.raw = raw;
+module.exports = Expression.extends(
+  KIND,
+  function Literal(kind, value, raw, docs, location) {
+    Expression.apply(this, [kind || KIND, docs, location]);
+    this.value = value;
+    if (raw) {
+      this.raw = raw;
+    }
   }
-});
+);

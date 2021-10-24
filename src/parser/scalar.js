@@ -17,7 +17,7 @@ const specialChar = {
 };
 
 module.exports = {
-  /**
+  /*
    * Unescape special chars
    */
   resolve_special_chars: function (text, doubleQuote) {
@@ -43,7 +43,7 @@ module.exports = {
       );
   },
 
-  /**
+  /*
    * Remove all leading spaces each line for heredoc text if there is a indentation
    * @param {string} text
    * @param {number} indentation
@@ -86,7 +86,7 @@ module.exports = {
     return text.replace(removementRegExp, "\n");
   },
 
-  /**
+  /*
    * Check indentation level of heredoc in text, if mismatch, raiseError
    * @param {string} text
    * @param {number} indentation
@@ -102,8 +102,9 @@ module.exports = {
     const textSize = text.length;
     let offset = 0;
     let leadingWhitespaceCharCount = 0;
-    /**
+    /*
      * @var inCoutingState {boolean} reset to true after a new line
+     * @private
      */
     let inCoutingState = true;
     const chToCheck = indentation_uses_spaces ? " " : "\t";
@@ -149,7 +150,7 @@ module.exports = {
     }
   },
 
-  /**
+  /*
    * Reads dereferencable scalar
    */
   read_dereferencable_scalar: function () {
@@ -196,7 +197,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * ```ebnf
    *  scalar ::= T_MAGIC_CONST
    *       | T_LNUMBER | T_DNUMBER
@@ -289,7 +290,7 @@ module.exports = {
       }
     }
   },
-  /**
+  /*
    * Handles the dereferencing
    */
   read_dereferencable: function (expr) {
@@ -305,7 +306,7 @@ module.exports = {
     }
     return result;
   },
-  /**
+  /*
    * Reads and extracts an encapsed item
    * ```ebnf
    * encapsed_string_item ::= T_ENCAPSED_AND_WHITESPACE
@@ -421,7 +422,7 @@ module.exports = {
     this.lexer.heredoc_label.first_encaps_node = false;
     return encapsedPart(result, syntax, curly);
   },
-  /**
+  /*
    * Reads an encapsed string
    */
   read_encapsed_string: function (expect, isBinary = false) {
@@ -477,7 +478,7 @@ module.exports = {
     }
     return node;
   },
-  /**
+  /*
    * Constant token
    */
   get_magic_constant: function () {

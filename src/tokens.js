@@ -7,9 +7,14 @@
 
 /**
  * PHP AST Tokens
- * @type {Object}
+ * @readonly
+ * @memberOf module:php-parser
+ *
+ * @type {object}
+ * @property {Object.<number, string>} values
+ * @property {TokenNames} names
  */
-module.exports = {
+const tokens = {
   values: {
     101: "T_HALT_COMPILER",
     102: "T_USE",
@@ -291,3 +296,5 @@ module.exports = {
     T_ATTRIBUTE: 238,
   },
 };
+
+module.exports = Object.freeze(tokens);

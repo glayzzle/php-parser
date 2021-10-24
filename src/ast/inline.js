@@ -11,13 +11,12 @@ const KIND = "inline";
 /**
  * Defines inline html output (treated as echo output)
  * @constructor Inline
+ * @memberOf module:php-parser
  * @extends {Literal}
  */
-module.exports = Literal.extends(KIND, function Inline(
-  value,
-  raw,
-  docs,
-  location
-) {
-  Literal.apply(this, [KIND, value, raw, docs, location]);
-});
+module.exports = Literal.extends(
+  KIND,
+  function Inline(value, raw, docs, location) {
+    Literal.apply(this, [KIND, value, raw, docs, location]);
+  }
+);

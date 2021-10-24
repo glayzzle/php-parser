@@ -11,14 +11,14 @@ const KIND = "global";
 /**
  * Imports a variable from the global scope
  * @constructor Global
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Variable[]} items
  */
-module.exports = Statement.extends(KIND, function Global(
-  items,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.items = items;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Global(items, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.items = items;
+  }
+);

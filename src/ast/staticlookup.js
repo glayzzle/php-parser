@@ -11,13 +11,12 @@ const KIND = "staticlookup";
 /**
  * Lookup to a static property
  * @constructor StaticLookup
+ * @memberOf module:php-parser
  * @extends {Lookup}
  */
-module.exports = Lookup.extends(KIND, function StaticLookup(
-  what,
-  offset,
-  docs,
-  location
-) {
-  Lookup.apply(this, [KIND, what, offset, docs, location]);
-});
+module.exports = Lookup.extends(
+  KIND,
+  function StaticLookup(what, offset, docs, location) {
+    Lookup.apply(this, [KIND, what, offset, docs, location]);
+  }
+);

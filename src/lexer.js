@@ -9,17 +9,18 @@
  * This is the php lexer. It will tokenize the string for helping the
  * parser to build the AST from its grammar.
  *
- * @class
- * @property {Integer} EOF
- * @property {Boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
- * @property {Boolean} comment_tokens extracts comments tokens
- * @property {Boolean} mode_eval enables the evald mode (ignore opening tags)
- * @property {Boolean} asp_tags disables by default asp tags mode
- * @property {Boolean} short_tags enables by default short tags mode
- * @property {Object} keywords List of php keyword
- * @property {Object} castKeywords List of php keywords for type casting
+ * @constructor Lexer
+ * @memberOf module:php-parser
+ * @property {number} EOF
+ * @property {boolean} all_tokens defines if all tokens must be retrieved (used by token_get_all only)
+ * @property {boolean} comment_tokens extracts comments tokens
+ * @property {boolean} mode_eval enables the evald mode (ignore opening tags)
+ * @property {boolean} asp_tags disables by default asp tags mode
+ * @property {boolean} short_tags enables by default short tags mode
+ * @property {object} keywords List of php keyword
+ * @property {object} castKeywords List of php keywords for type casting
  */
-const lexer = function (engine) {
+const Lexer = function (engine) {
   this.engine = engine;
   this.tok = this.engine.tokens.names;
   this.EOF = 1;
@@ -126,8 +127,10 @@ const lexer = function (engine) {
 
 /**
  * Initialize the lexer with the specified input
+ * @function Lexer#setInput
+ * @memberOf module:php-parser
  */
-lexer.prototype.setInput = function (input) {
+Lexer.prototype.setInput = function (input) {
   this._input = input;
   this.size = input.length;
   this.yylineno = 1;
@@ -166,7 +169,7 @@ lexer.prototype.setInput = function (input) {
     indentation: 0,
     indentation_uses_spaces: false,
     finished: false,
-    /**
+    /*
      * this used for parser to detemine the if current node segment is first encaps node.
      * if ture, the indentation will remove from the begining. and if false, the prev node
      * might be a variable '}' ,and the leading spaces should not be removed util meet the
@@ -183,8 +186,10 @@ lexer.prototype.setInput = function (input) {
 
 /**
  * consumes and returns one char from the input
+ * @function Lexer#input
+ * @memberOf module:php-parser
  */
-lexer.prototype.input = function () {
+Lexer.prototype.input = function () {
   const ch = this._input[this.offset];
   if (!ch) return "";
   this.yytext += ch;
@@ -205,8 +210,10 @@ lexer.prototype.input = function () {
 
 /**
  * revert eating specified size
+ * @function Lexer#unput
+ * @memberOf module:php-parser
  */
-lexer.prototype.unput = function (size) {
+Lexer.prototype.unput = function (size) {
   if (size === 1) {
     // 1 char unput (most cases)
     this.offset--;
@@ -269,18 +276,36 @@ lexer.prototype.unput = function (size) {
   return this;
 };
 
-// check if the text matches
-lexer.prototype.tryMatch = function (text) {
+/**
+ * check if the text matches
+ * @function Lexer#tryMatch
+ * @memberOf module:php-parser
+ * @param {string} text
+ * @returns {boolean}
+ */
+Lexer.prototype.tryMatch = function (text) {
   return text === this.ahead(text.length);
 };
 
-// check if the text matches
-lexer.prototype.tryMatchCaseless = function (text) {
+/**
+ * check if the text matches
+ * @function Lexer#tryMatchCaseless
+ * @memberOf module:php-parser
+ * @param {string} text
+ * @returns {boolean}
+ */
+Lexer.prototype.tryMatchCaseless = function (text) {
   return text === this.ahead(text.length).toLowerCase();
 };
 
-// look ahead
-lexer.prototype.ahead = function (size) {
+/**
+ * look ahead
+ * @function Lexer#ahead
+ * @memberOf module:php-parser
+ * @param {number} size
+ * @returns {string}
+ */
+Lexer.prototype.ahead = function (size) {
   let text = this._input.substring(this.offset, this.offset + size);
   if (
     text[text.length - 1] === "\r" &&
@@ -291,8 +316,14 @@ lexer.prototype.ahead = function (size) {
   return text;
 };
 
-// consume the specified size
-lexer.prototype.consume = function (size) {
+/**
+ * consume the specified size
+ * @function Lexer#consume
+ * @memberOf module:php-parser
+ * @param {number} size
+ * @returns {Lexer}
+ */
+Lexer.prototype.consume = function (size) {
   for (let i = 0; i < size; i++) {
     const ch = this._input[this.offset];
     if (!ch) break;
@@ -316,8 +347,10 @@ lexer.prototype.consume = function (size) {
 
 /**
  * Gets the current state
+ * @function Lexer#getState
+ * @memberOf module:php-parser
  */
-lexer.prototype.getState = function () {
+Lexer.prototype.getState = function () {
   return {
     yytext: this.yytext,
     offset: this.offset,
@@ -336,8 +369,10 @@ lexer.prototype.getState = function () {
 
 /**
  * Sets the current lexer state
+ * @function Lexer#setState
+ * @memberOf module:php-parser
  */
-lexer.prototype.setState = function (state) {
+Lexer.prototype.setState = function (state) {
   this.yytext = state.yytext;
   this.offset = state.offset;
   this.yylineno = state.yylineno;
@@ -349,14 +384,26 @@ lexer.prototype.setState = function (state) {
   return this;
 };
 
-// prepend next token
-lexer.prototype.appendToken = function (value, ahead) {
+/**
+ * prepend next token
+ * @function Lexer#appendToken
+ * @memberOf module:php-parser
+ * @param {*} value
+ * @param {*} ahead
+ * @returns {Lexer}
+ */
+Lexer.prototype.appendToken = function (value, ahead) {
   this.tokens.push([value, ahead]);
   return this;
 };
 
-// return next match that has a token
-lexer.prototype.lex = function () {
+/**
+ * return next match that has a token
+ * @function Lexer#lex
+ * @memberOf module:php-parser
+ * @returns {number|string}
+ */
+Lexer.prototype.lex = function () {
   this.yylloc.prev_offset = this.offset;
   this.yylloc.prev_line = this.yylloc.last_line;
   this.yylloc.prev_column = this.yylloc.last_column;
@@ -392,8 +439,14 @@ lexer.prototype.lex = function () {
   return token;
 };
 
-// activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
-lexer.prototype.begin = function (condition) {
+/**
+ * activates a new lexer condition state (pushes the new lexer condition state onto the condition stack)
+ * @function Lexer#begin
+ * @memberOf module:php-parser
+ * @param {*} condition
+ * @returns {Lexer}
+ */
+Lexer.prototype.begin = function (condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
   this.stateCb = this["match" + condition];
@@ -403,8 +456,13 @@ lexer.prototype.begin = function (condition) {
   return this;
 };
 
-// pop the previously active lexer condition state off the condition stack
-lexer.prototype.popState = function () {
+/**
+ * pop the previously active lexer condition state off the condition stack
+ * @function Lexer#popState
+ * @memberOf module:php-parser
+ * @returns {string|*}
+ */
+Lexer.prototype.popState = function () {
   const n = this.conditionStack.length - 1;
   const condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
@@ -415,8 +473,13 @@ lexer.prototype.popState = function () {
   return condition;
 };
 
-// return next match in input
-lexer.prototype.next = function () {
+/**
+ * return next match in input
+ * @function Lexer#next
+ * @memberOf module:php-parser
+ * @returns {number|*}
+ */
+Lexer.prototype.next = function () {
   let token;
   if (!this._input) {
     this.done = true;
@@ -485,8 +548,8 @@ lexer.prototype.next = function () {
   require("./lexer/utils.js"),
 ].forEach(function (ext) {
   for (const k in ext) {
-    lexer.prototype[k] = ext[k];
+    Lexer.prototype[k] = ext[k];
   }
 });
 
-module.exports = lexer;
+module.exports = Lexer;

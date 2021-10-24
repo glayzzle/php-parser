@@ -11,12 +11,12 @@ const KIND = "commentline";
 /**
  * A single line comment
  * @constructor CommentLine
+ * @memberOf module:php-parser
  * @extends {Comment}
  */
-module.exports = Comment.extends(KIND, function CommentLine(
-  value,
-  docs,
-  location
-) {
-  Comment.apply(this, [KIND, value, docs, location]);
-});
+module.exports = Comment.extends(
+  KIND,
+  function CommentLine(value, docs, location) {
+    Comment.apply(this, [KIND, value, docs, location]);
+  }
+);

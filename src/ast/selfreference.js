@@ -11,14 +11,14 @@ const KIND = "selfreference";
 /**
  * Defines a class reference node
  * @constructor SelfReference
+ * @memberOf module:php-parser
  * @extends {Reference}
  */
-const SelfReference = Reference.extends(KIND, function SelfReference(
-  raw,
-  docs,
-  location
-) {
-  Reference.apply(this, [KIND, docs, location]);
-  this.raw = raw;
-});
+const SelfReference = Reference.extends(
+  KIND,
+  function SelfReference(raw, docs, location) {
+    Reference.apply(this, [KIND, docs, location]);
+    this.raw = raw;
+  }
+);
 module.exports = SelfReference;

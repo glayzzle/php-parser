@@ -11,17 +11,16 @@ const KIND = "do";
 /**
  * Defines a do/while statement
  * @constructor Do
+ * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
  * @property {Statement} body
  */
-module.exports = Statement.extends(KIND, function Do(
-  test,
-  body,
-  docs,
-  location
-) {
-  Statement.apply(this, [KIND, docs, location]);
-  this.test = test;
-  this.body = body;
-});
+module.exports = Statement.extends(
+  KIND,
+  function Do(test, body, docs, location) {
+    Statement.apply(this, [KIND, docs, location]);
+    this.test = test;
+    this.body = body;
+  }
+);

@@ -11,17 +11,15 @@ const KIND = "nowdoc";
 /**
  * Defines a nowdoc string
  * @constructor NowDoc
+ * @memberOf module:php-parser
  * @extends {Literal}
- * @property {String} label
- * @property {String} raw
+ * @property {string} label
+ * @property {string} raw
  */
-module.exports = Literal.extends(KIND, function Nowdoc(
-  value,
-  raw,
-  label,
-  docs,
-  location
-) {
-  Literal.apply(this, [KIND, value, raw, docs, location]);
-  this.label = label;
-});
+module.exports = Literal.extends(
+  KIND,
+  function Nowdoc(value, raw, label, docs, location) {
+    Literal.apply(this, [KIND, value, raw, docs, location]);
+    this.label = label;
+  }
+);

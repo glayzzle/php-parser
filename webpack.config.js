@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { name, description, license } = require("./package.json");
 
 const entry = "./src/index.js";
@@ -37,16 +37,10 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         include: /\.min\.js$/,
-        sourceMap: true,
-        uglifyOptions: {
-          compress: {
-            keep_fnames: false,
-          },
-          sourceMap: true,
+        terserOptions: {
           mangle: true,
-          maxLineLen: 1024,
         },
       }),
     ],
@@ -57,8 +51,8 @@ module.exports = {
       banner: `
   Package: ${name}
   ${description}
-  Build: [hash] - ${today}
-  Copyright (C) 2020 Glayzzle (${license})
+  Build: [fullhash] - ${today}
+  Copyright (C) 2021 Glayzzle (${license})
   @authors https://github.com/glayzzle/php-parser/graphs/contributors
   @url http://glayzzle.com        
       `,

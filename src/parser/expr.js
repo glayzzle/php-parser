@@ -109,21 +109,21 @@ module.exports = {
     return expr;
   },
 
-  /**
+  /*
    * Reads a cast expression
    */
   read_expr_cast: function (type) {
     return this.node("cast")(type, this.text(), this.next().read_expr());
   },
 
-  /**
+  /*
    * Read a isset variable
    */
   read_isset_variable: function () {
     return this.read_expr();
   },
 
-  /**
+  /*
    * Reads isset variables
    */
   read_isset_variables: function () {
@@ -192,7 +192,7 @@ module.exports = {
     return result;
   },
 
-  /**
+  /*
    * Reads optional expression
    */
   read_optional_expr: function (stopToken) {
@@ -203,7 +203,7 @@ module.exports = {
     return null;
   },
 
-  /**
+  /*
    * Reads exit expression
    */
   read_exit_expr: function () {
@@ -218,7 +218,7 @@ module.exports = {
     return expression;
   },
 
-  /**
+  /*
    * ```ebnf
    * Reads an expression
    *  expr ::= @todo
@@ -525,7 +525,7 @@ module.exports = {
     return expr;
   },
 
-  /**
+  /*
    * Recursively convert nested array to nested list.
    */
   convertToList: function (array) {
@@ -546,7 +546,7 @@ module.exports = {
     return node;
   },
 
-  /**
+  /*
    * Reads assignment
    * @param {*} left
    */
@@ -565,7 +565,7 @@ module.exports = {
     return result("assignref", left, right);
   },
 
-  /**
+  /*
    *
    * inline_function:
    * 		function returns_ref backup_doc_comment '(' parameter_list ')' lexical_vars return_type
@@ -701,7 +701,7 @@ module.exports = {
     return list;
   },
 
-  /**
+  /*
    * ```ebnf
    *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
    * ```
@@ -735,7 +735,7 @@ module.exports = {
     }
     return result(name, args);
   },
-  /**
+  /*
    * Reads a class name
    * ```ebnf
    * read_new_class_name ::= namespace_name | variable

@@ -217,7 +217,7 @@ module.exports = {
     return false;
   },
 
-  /**
+  /*
    * Prematch the end of HEREDOC/NOWDOC end tag to preset the
    * context of this.heredoc_label
    */
@@ -249,14 +249,14 @@ module.exports = {
   },
 
   matchST_NOWDOC: function () {
-    /** edge case : empty now doc **/
+    // edge case : empty now doc
     if (this.isDOC_MATCH(this.offset, true)) {
       // @fixme : never reached (may be caused by quotes)
       this.consume(this.heredoc_label.length);
       this.popState();
       return this.tok.T_END_HEREDOC;
     }
-    /** SCANNING CONTENTS **/
+    // SCANNING CONTENTS
     let ch = this._input[this.offset - 1];
     while (this.offset < this.size) {
       if (newline.includes(ch)) {
@@ -275,14 +275,14 @@ module.exports = {
   },
 
   matchST_HEREDOC: function () {
-    /** edge case : empty here doc **/
+    // edge case : empty here doc
     let ch = this.input();
     if (this.isDOC_MATCH(this.offset, true)) {
       this.consume(this.heredoc_label.length - 1);
       this.popState();
       return this.tok.T_END_HEREDOC;
     }
-    /** SCANNING CONTENTS **/
+    // SCANNING CONTENTS
     while (this.offset < this.size) {
       if (ch === "\\") {
         ch = this.input(); // ignore next
