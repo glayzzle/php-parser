@@ -34,7 +34,6 @@ const lexer = function (engine) {
   this.keywords = {
     __class__: this.tok.T_CLASS_C,
     __trait__: this.tok.T_TRAIT_C,
-    __enum__: this.tok.T_ENUM_C,
     __function__: this.tok.T_FUNC_C,
     __method__: this.tok.T_METHOD_C,
     __line__: this.tok.T_LINE,
