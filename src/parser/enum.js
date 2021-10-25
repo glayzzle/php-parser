@@ -15,9 +15,7 @@ module.exports = {
   read_enum_declaration_statement: function (attrs) {
     const result = this.node("enum");
     // graceful mode : ignore token & go next
-    if (this.token !== this.tok.T_ENUM) {
-      this.error(this.tok.T_ENUM);
-      this.next();
+    if (!this.expect(this.tok.T_ENUM)) {
       return null;
     }
     this.next().expect(this.tok.T_STRING);
