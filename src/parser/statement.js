@@ -54,7 +54,7 @@ module.exports = {
       case this.tok.T_TRAIT:
         return this.read_trait_declaration_statement();
       case this.tok.T_ENUM:
-        return this.read_enum_declaration_statement();
+        return this.read_enum_declaration_statement(attrs);
       case this.tok.T_USE:
         return this.read_use_statement();
       case this.tok.T_CONST: {
