@@ -722,7 +722,7 @@ module.exports = {
       const propImplements = this.read_implements_list();
       let body = null;
       if (this.expect("{")) {
-        body = this.next().read_class_body();
+        body = this.next().read_class_body(true, false);
       }
       const whatNode = what(null, propExtends, propImplements, body, [0, 0, 0]);
       whatNode.attrGroups = attrs;

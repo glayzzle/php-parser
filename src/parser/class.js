@@ -29,7 +29,7 @@ module.exports = {
     const propExtends = this.read_extends_from();
     const propImplements = this.read_implements_list();
     this.expect("{");
-    const body = this.next().read_class_body();
+    const body = this.next().read_class_body(true, false);
     const node = result(propName, propExtends, propImplements, body, flag);
     if (attrs) node.attrGroups = attrs;
     return node;
@@ -59,7 +59,7 @@ module.exports = {
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
    * ```
    */
-  read_class_body: function () {
+  read_class_body: function (allow_variables, allow_enum_cases) {
     let result = [];
     let attrs = [];
     while (this.token !== this.EOF && this.token !== "}") {
@@ -76,6 +76,16 @@ module.exports = {
       // check T_USE trait
       if (this.token === this.tok.T_USE) {
         result = result.concat(this.read_trait_use_statement());
+        continue;
+      }
+
+      // check enum cases
+      if (allow_enum_cases && this.token === this.tok.T_CASE) {
+        const enumcase = this.read_enum_case();
+        if (this.expect(";")) {
+          this.next();
+        }
+        result = result.concat(enumcase);
         continue;
       }
 
@@ -99,7 +109,7 @@ module.exports = {
       }
 
       // jump over T_VAR then land on T_VARIABLE
-      if (this.token === this.tok.T_VAR) {
+      if (allow_variables && this.token === this.tok.T_VAR) {
         this.next().expect(this.tok.T_VARIABLE);
         flags[0] = null; // public (as null)
         flags[1] = 0; // non static var
@@ -110,15 +120,16 @@ module.exports = {
         result.push(this.read_function(false, flags, attrs, locStart));
         attrs = [];
       } else if (
-        this.token === this.tok.T_VARIABLE ||
-        // support https://wiki.php.net/rfc/typed_properties_v2
-        (this.version >= 704 &&
-          (this.token === "?" ||
-            this.token === this.tok.T_CALLABLE ||
-            this.token === this.tok.T_ARRAY ||
-            this.token === this.tok.T_NS_SEPARATOR ||
-            this.token === this.tok.T_STRING ||
-            this.token === this.tok.T_NAMESPACE))
+        allow_variables &&
+        (this.token === this.tok.T_VARIABLE ||
+          // support https://wiki.php.net/rfc/typed_properties_v2
+          (this.version >= 704 &&
+            (this.token === "?" ||
+              this.token === this.tok.T_CALLABLE ||
+              this.token === this.tok.T_ARRAY ||
+              this.token === this.tok.T_NS_SEPARATOR ||
+              this.token === this.tok.T_STRING ||
+              this.token === this.tok.T_NAMESPACE)))
       ) {
         // reads a variable
         const variables = this.read_variable_list(flags, attrs);
@@ -130,7 +141,8 @@ module.exports = {
         // raise an error
         this.error([
           this.tok.T_CONST,
-          this.tok.T_VARIABLE,
+          ...(allow_variables ? [this.tok.T_VARIABLE] : []),
+          ...(allow_enum_cases ? [this.tok.T_CASE] : []),
           this.tok.T_FUNCTION,
         ]);
         // ignore token
@@ -452,7 +464,7 @@ module.exports = {
     this.next();
     propName = propName(name);
     this.expect("{");
-    const body = this.next().read_class_body();
+    const body = this.next().read_class_body(true, false);
     return result(propName, body);
   },
   /**
