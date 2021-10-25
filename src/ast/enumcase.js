@@ -16,11 +16,13 @@ const KIND = "enumcase";
  * @property {string} name
  * @property {string|number|null} value
  */
-module.exports = Node.extends(
-  KIND,
-  function EnumCase(name, value, docs, location) {
-    Node.apply(this, [KIND, docs, location]);
-    this.name = name;
-    this.value = value;
-  }
-);
+module.exports = Node.extends(KIND, function EnumCase(
+  name,
+  value,
+  docs,
+  location
+) {
+  Node.apply(this, [KIND, docs, location]);
+  this.name = name;
+  this.value = value;
+});
