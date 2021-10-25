@@ -16,13 +16,19 @@ const KIND = "enum";
  * @property {Identifier|null} valueType
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
+ * @property {AttrGroup[]} attrGroups
  */
-module.exports = Declaration.extends(
-  KIND,
-  function Enum(name, valueType, impl, body, docs, location) {
-    Declaration.apply(this, [KIND, name, docs, location]);
-    this.valueType = valueType;
-    this.implements = impl;
-    this.body = body;
-  }
-);
+module.exports = Declaration.extends(KIND, function Enum(
+  name,
+  valueType,
+  impl,
+  body,
+  docs,
+  location
+) {
+  Declaration.apply(this, [KIND, name, docs, location]);
+  this.valueType = valueType;
+  this.implements = impl;
+  this.body = body;
+  this.attrGroups = [];
+});
