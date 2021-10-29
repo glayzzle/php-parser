@@ -260,7 +260,7 @@ declare module "php-parser" {
      */
     class Do extends Statement {
         test: Expression;
-        body: Statement;
+        body: Statement | null;
     }
     /**
      * Defines system based call
@@ -397,7 +397,7 @@ declare module "php-parser" {
         init: Expression[];
         test: Expression[];
         increment: Expression[];
-        body: Statement;
+        body: Statement | null;
         shortForm: boolean;
     }
     /**
@@ -407,7 +407,7 @@ declare module "php-parser" {
         source: Expression;
         key: Expression | null;
         value: Expression;
-        body: Statement;
+        body: Statement | null;
         shortForm: boolean;
     }
     /**
@@ -701,7 +701,7 @@ declare module "php-parser" {
         parseFlags(flags: (number | null)[]): void;
         properties: Property[];
         visibility: string|null;
-        isStatic: bool;
+        isStatic: boolean;
     }
     /**
      * Defines a reference node
@@ -818,7 +818,7 @@ declare module "php-parser" {
     class Try extends Statement {
         body: Block;
         catches: Catch[];
-        allways: Block;
+        always: Block;
     }
     /**
      * Defines a class reference node
@@ -906,7 +906,7 @@ declare module "php-parser" {
      */
     class While extends Statement {
         test: Expression;
-        body: Statement;
+        body: Statement | null;
         shortForm: boolean;
     }
     /**
