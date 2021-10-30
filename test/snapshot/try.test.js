@@ -13,6 +13,14 @@ describe("boolean", () => {
       parser.parseEval("try { call(); } catch (Exception) { do_something(); }")
     ).toMatchSnapshot();
   });
+  it("without variable in PHP < 8", () => {
+    expect(() =>
+      parser.parseEval(
+        "try { call(); } catch (Exception) { do_something(); }",
+        { parser: { version: "7.4" } }
+      )
+    ).toThrow(SyntaxError);
+  });
   it("qualified name", () => {
     expect(
       parser.parseEval(

@@ -29,7 +29,7 @@ module.exports = {
       this.next().expect("(") && this.next();
       const what = this.read_list(this.read_namespace_name, "|", false);
       let variable = null;
-      if (this.token === this.tok.T_VARIABLE) {
+      if (this.version < 800 || this.token === this.tok.T_VARIABLE) {
         variable = this.read_variable(true, false);
       }
       this.expect(")");
