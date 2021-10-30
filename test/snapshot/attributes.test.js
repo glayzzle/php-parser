@@ -86,6 +86,20 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can't parse anonymous function attributes in PHP < 8", () => {
+    expect(() =>
+      parser.parseEval(
+        `
+        $a = #[Pure] fn() => true;
+        `,
+        {
+          parser: {
+            version: "7.4",
+          },
+        }
+      )
+    ).toThrow(SyntaxError);
+  });
   it("can parse class property attributes", () => {
     expect(
       parser.parseEval(`
@@ -113,6 +127,15 @@ describe("Parse Attributes", () => {
   it("can parse anon-class attributes", () => {
     expect(parser.parseEval(`$a = new #[T] class {};`)).toMatchSnapshot();
   });
+  it("can't parse anon-class attributes in PHP < 8", () => {
+    expect(() =>
+      parser.parseEval(`$a = new #[T] class {};`, {
+        parser: {
+          version: "7.4",
+        },
+      })
+    ).toThrow(SyntaxError);
+  });
   it("can parse interface attributes", () => {
     expect(
       parser.parseEval(`
@@ -132,7 +155,7 @@ describe("Parse Attributes", () => {
     namespace A {
       function b() {
         return #[C] fn() => #[Pure] function() {};
-      } 
+      }
     }`)
     ).toMatchSnapshot();
   });
@@ -167,14 +190,25 @@ describe("Parse Attributes", () => {
           #[Att2]
           function b(){}
         }
-      `,
+        `,
         {
           parser: {
             version: "7.4",
-
             extractDoc: true,
           },
         }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("doesnt parse attributes for assignments", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1]
+        $a = 1;
+        `,
+        { parser: { extractDoc: true } }
       )
     ).toMatchSnapshot();
   });
