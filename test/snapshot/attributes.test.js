@@ -157,4 +157,25 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+
+  it("parses attributes as comments for PHP < 8", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1]
+        class a {
+          #[Att2]
+          function b(){}
+        }
+      `,
+        {
+          parser: {
+            version: "7.4",
+
+            extractDoc: true,
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
