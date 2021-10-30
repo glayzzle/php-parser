@@ -21,6 +21,7 @@ module.exports = {
         if (listDepth === 0) {
           this.popState();
         } else {
+          /* istanbul ignore next */
           listDepth--;
         }
         return "]";
@@ -59,6 +60,7 @@ module.exports = {
       return this.consume_NUM();
     }
 
+    /* istanbul ignore next */
     throw new Error(
       `Bad terminal sequence "${ch}" at line ${this.yylineno} (offset ${this.offset})`
     );

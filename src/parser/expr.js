@@ -277,6 +277,7 @@ module.exports = {
         }
       }
       if (!hasItem) {
+        /* istanbul ignore next */
         this.raiseError(
           "Fatal Error :  Cannot use empty list on line " +
             this.lexer.yylloc.first_line
@@ -294,6 +295,7 @@ module.exports = {
           );
         } else {
           // error fallback : list($a, $b);
+          /* istanbul ignore next */
           return result(assignList, false);
         }
       } else {

@@ -201,6 +201,7 @@ AST.prototype.resolveLocations = function (target, first, last, parser) {
     if (target.loc.start.offset > first.loc.start.offset) {
       target.loc.start = first.loc.start;
     }
+    /* istanbul ignore next */
     if (target.loc.end.offset < last.loc.end.offset) {
       target.loc.end = last.loc.end;
     }
@@ -392,6 +393,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
     const astNode = Object.create(node.prototype);
     node.apply(astNode, args);
     result.instance = astNode;
+    /* istanbul ignore next */
     if (result.trailingComments) {
       // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;

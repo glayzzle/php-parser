@@ -42,6 +42,7 @@ ClassConstant.prototype.parseFlags = function (flags) {
   if (flags[0] === -1) {
     this.visibility = IS_UNDEFINED;
   } else if (flags[0] === null) {
+    /* istanbul ignore next */
     this.visibility = null;
   } else if (flags[0] === 0) {
     this.visibility = IS_PUBLIC;

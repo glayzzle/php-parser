@@ -41,6 +41,7 @@ Node.prototype.setTrailingComments = function (docs) {
  */
 Node.prototype.destroy = function (node) {
   if (!node) {
+    /* istanbul ignore next */
     throw new Error(
       "Node already initialized, you must swap with another node"
     );

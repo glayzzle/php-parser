@@ -310,6 +310,7 @@ Parser.prototype.parse = function (code, filename) {
   const result = program(childs, this._errors, this._docs, this._tokens);
   if (this.debug) {
     const errors = this.ast.checkNodes();
+    /* istanbul ignore next */
     if (errors.length > 0) {
       errors.forEach(function (error) {
         if (error.position) {
@@ -372,6 +373,7 @@ Parser.prototype.error = function (expect) {
   if (this.token !== this.EOF) {
     if (isNumber(this.token)) {
       let symbol = this.text();
+      /* istanbul ignore next */
       if (symbol.length > 10) {
         symbol = symbol.substring(0, 7) + "...";
       }
@@ -412,6 +414,7 @@ Parser.prototype.node = function (name) {
     if (this._docIndex < this._docs.length) {
       docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
+      /* istanbul ignore next */
       if (this.debug) {
         // eslint-disable-next-line no-console
         console.log(new Error("Append docs on " + name));
@@ -514,11 +517,13 @@ Parser.prototype.showlog = function () {
     line = stack[offset].trim();
     let found = false;
     for (let i = 0; i < ignoreStack.length; i++) {
+      /* istanbul ignore next */
       if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
         found = true;
         break;
       }
     }
+    /* istanbul ignore next */
     if (!found) {
       break;
     }
@@ -629,7 +634,7 @@ Parser.prototype.lex = function () {
   if (this.extractTokens) {
     do {
       // the token
-      this.token = this.lexer.lex() || this.EOF;
+      this.token = this.lexer.lex() || /* istanbul ignore next */ this.EOF;
       if (this.token === this.EOF) return this;
       let entry = this.lexer.yytext;
       if (
@@ -672,7 +677,7 @@ Parser.prototype.lex = function () {
       this.token === this.tok.T_OPEN_TAG
     );
   } else {
-    this.token = this.lexer.lex() || this.EOF;
+    this.token = this.lexer.lex() || /* istanbul ignore next */ this.EOF;
   }
   return this;
 };
@@ -708,6 +713,7 @@ Parser.prototype.is = function (type) {
   require("./parser/variable.js"),
 ].forEach(function (ext) {
   for (const k in ext) {
+    /* istanbul ignore next */
     if (Object.prototype.hasOwnProperty.call(Parser.prototype, k)) {
       // @see https://github.com/glayzzle/php-parser/issues/234
       throw new Error("Function " + k + " is already defined - collision");

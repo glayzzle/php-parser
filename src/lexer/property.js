@@ -66,6 +66,7 @@ module.exports = {
         this.consume_LABEL();
         return this.tok.T_VARIABLE;
       } else {
+        /* istanbul ignore next */
         throw new Error("Unexpected terminal");
       }
     } else if (this.is_LABEL_START()) {
@@ -88,6 +89,7 @@ module.exports = {
     ) {
       return ch;
     } else {
+      /* istanbul ignore next */
       throw new Error("Unexpected terminal");
     }
   },

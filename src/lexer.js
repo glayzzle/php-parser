@@ -177,6 +177,7 @@ Lexer.prototype.setInput = function (input) {
      */
     first_encaps_node: false,
     // for backward compatible
+    /* istanbul ignore next */
     toString: function () {
       this.label;
     },
@@ -450,6 +451,7 @@ Lexer.prototype.begin = function (condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
   this.stateCb = this["match" + condition];
+  /* istanbul ignore next */
   if (typeof this.stateCb !== "function") {
     throw new Error('Undefined condition state "' + condition + '"');
   }
@@ -467,6 +469,7 @@ Lexer.prototype.popState = function () {
   const condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
   this.stateCb = this["match" + this.curCondition];
+  /* istanbul ignore next */
   if (typeof this.stateCb !== "function") {
     throw new Error('Undefined condition state "' + this.curCondition + '"');
   }
@@ -508,6 +511,7 @@ Lexer.prototype.next = function () {
   if (this.offset >= this.size && this.tokens.length === 0) {
     this.done = true;
   }
+  /* istanbul ignore next */
   if (this.debug) {
     let tName = token;
     if (typeof tName === "number") {
