@@ -15,7 +15,7 @@ const KIND = "try";
  * @extends {Statement}
  * @property {Block} body
  * @property {Catch[]} catches
- * @property {Block} allways
+ * @property {Block} always
  */
 module.exports = Statement.extends(
   KIND,

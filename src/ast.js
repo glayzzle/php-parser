@@ -307,7 +307,7 @@ AST.prototype.resolvePrecedence = function (result, parser) {
   } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
     if (result.what && !result.what.parenthesizedExpression) {
-      // unary precedence is allways lower
+      // unary precedence is always lower
       if (result.what.kind === "bin") {
         buffer = result.what;
         result.what = result.what.left;
@@ -394,7 +394,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
         start,
         new Position(parser.prev[0], parser.prev[1], parser.prev[2])
       );
-      // last argument is allways the location
+      // last argument is always the location
       args.push(location);
     }
     // handle lazy kind definitions
