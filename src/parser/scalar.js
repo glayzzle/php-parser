@@ -263,6 +263,7 @@ module.exports = {
               raw,
               this.lexer.heredoc_label.label
             );
+            this.lexer.heredoc_label.finished = true;
             return node;
           } else {
             return this.read_encapsed_string(this.tok.T_END_HEREDOC);
