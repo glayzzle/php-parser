@@ -144,4 +144,16 @@ TEST;
     `)
     ).toMatchSnapshot();
   });
+
+  it("Followed by string interpolation", function () {
+    expect(
+      parser.parseEval(`
+      $x = <<<'NOWDOC'
+      ...
+      NOWDOC;
+
+      $y = "_$z";
+    `)
+    ).toMatchSnapshot();
+  });
 });
