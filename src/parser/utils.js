@@ -14,6 +14,7 @@ module.exports = {
   read_short_form: function (token) {
     const body = this.node("block");
     const items = [];
+    /* istanbul ignore next */
     if (this.expect(":")) this.next();
     while (this.token != this.EOF && this.token !== token) {
       items.push(this.read_inner_statement());
@@ -25,6 +26,7 @@ module.exports = {
     ) {
       items.push(this.node("noop")());
     }
+    /* istanbul ignore next */
     if (this.expect(token)) this.next();
     this.expectEndOfStatement();
     return body(null, items);
@@ -150,6 +152,7 @@ module.exports = {
       const node = this.node("staticvariable");
       let variable = this.node("variable");
       // plain variable name
+      /* istanbul ignore else */
       if (this.expect(this.tok.T_VARIABLE)) {
         const name = this.text().substring(1);
         this.next();

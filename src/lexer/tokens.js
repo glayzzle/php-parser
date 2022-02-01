@@ -162,6 +162,14 @@ module.exports = {
           return this.tok.T_COALESCE;
         }
       }
+      if (
+        this.version >= 800 &&
+        this._input[this.offset] === "-" &&
+        this._input[this.offset + 1] === ">"
+      ) {
+        this.consume(2);
+        return this.tok.T_NULLSAFE_OBJECT_OPERATOR;
+      }
       return "?";
     },
     "<": function () {

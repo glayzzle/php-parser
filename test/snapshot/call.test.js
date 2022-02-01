@@ -49,6 +49,18 @@ describe("Test call", function () {
     });
     expect(ast).toMatchSnapshot();
   });
+  it("nullsafepropertylookup", function () {
+    const ast = parser.parseEval("$obj?->call();", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (2)", function () {
+    const ast = parser.parseEval("$obj?->property?->call();", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
   it("staticlookup", function () {
     const ast = parser.parseEval("$obj::call();", {
       parser: { debug: false },
@@ -231,5 +243,64 @@ describe("Test call", function () {
       parser: { debug: false },
     });
     expect(ast).toMatchSnapshot();
+  });
+  it("named arguments in php 8.0", function () {
+    const astErr = parser.parseEval(`foo(a: $a);`, {
+      parser: {
+        version: "8.0",
+        debug: false,
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
+  it("named arguments are not supported in php 7.2", function () {
+    expect(() =>
+      parser.parseEval(`foo(a: $a);`, {
+        parser: {
+          version: "7.2",
+          debug: false,
+        },
+      })
+    ).toThrow("PHP 8+ is required to use named arguments");
+  });
+  it("doesnt confused static methods with named arguments", function () {
+    const astErr = parser.parseEval(`foo(a::bar());`, {
+      parser: {
+        version: "8.0",
+        debug: false,
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
+  it("keyword as named argument", function () {
+    const astErr = parser.parseEval(`foo(array: $a);`, {
+      parser: {
+        version: "8.0",
+        debug: false,
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
+  it("mix of unnamed and named arguments", function () {
+    const astErr = parser.parseEval(`foo(50, num: 100, start_index: 0);`, {
+      parser: {
+        version: "8.0",
+        debug: false,
+      },
+    });
+    expect(astErr).toMatchSnapshot();
+  });
+  it("comments", function () {
+    const astErr = parser.parseEval(
+      `foo(array // comment
+      (100, 0));`,
+      {
+        parser: {
+          extractDoc: true,
+          debug: false,
+        },
+      }
+    );
+    expect(astErr).toMatchSnapshot();
   });
 });

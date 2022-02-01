@@ -9,17 +9,25 @@ describe("encapsed", function () {
     ["offsetlookup (2) (simple syntax)", '"string $array[koolaid1] string";'],
     ["offsetlookup (3) (simple syntax)", '"string $array[0][0] string";'],
     ["propertylookup (simple syntax)", '"string $obj->property string";'],
+    [
+      "nullsafepropertylookup (simple syntax)",
+      '"string $obj?->property string";',
+    ],
     ["variable with space opening before curly", '"string { $var} string";'],
     ["variable with before closing curly", '"string {$var } string";'],
     ["variable (complex syntax)", '"string {$var} string";'],
     ["propertylookup (complex syntax)", '"string {$obj->property} string";'],
+    [
+      "nullsafepropertylookup (complex syntax)",
+      '"string {$obj?->property} string";',
+    ],
     ["offsetlookup (complex syntax)", '"string {$array["key"]} string";'],
     ["offsetlookup 2 (complex syntax)", '"string {$array[4][3]} string";'],
     ["offsetlookup 3 (complex syntax)", '"string {$arr[foo][3]} string";'],
     ["offsetlookup 4 (complex syntax)", '"string {$arr["foo"][3]} string";'],
     [
-      "propertylookup and offsetlookup (complex syntax)",
-      '"string {$obj->values[3]->name} string";',
+      "nullsafepropertylookup and offsetlookup (complex syntax)",
+      '"string {$obj?->values[3]?->name} string";',
     ],
     ["value of the var (complex syntax)", '"string {${$name}} string";'],
     [
@@ -51,20 +59,40 @@ describe("encapsed", function () {
       '"string {$obj->$var} string";',
     ],
     [
+      "nullsafepropertylookup by variable (complex syntax)",
+      '"string {$obj?->$var} string";',
+    ],
+    [
       "propertylookup by variable (2) (complex syntax)",
       '"string {$obj->{$array[1]}} string";',
+    ],
+    [
+      "nullsafepropertylookup by variable (2) (complex syntax)",
+      '"string {$obj?->{$array[1]}} string";',
     ],
     [
       "propertylookup with multiple call (complex syntax)",
       '"string {$obj->call()->call()} string";',
     ],
     [
+      "nullsafepropertylookup with multiple call (complex syntax)",
+      '"string {$obj?->call()?->call()} string";',
+    ],
+    [
       "multiple propertylookup (complex syntax)",
       '"string {$obj->property->property} string";',
     ],
     [
+      "multiple nullsafepropertylookup (complex syntax)",
+      '"string {$obj?->property?->property} string";',
+    ],
+    [
       "propertylookup with comments (complex syntax)",
       '"string {$var->foo->bar /* Comment */ } string";',
+    ],
+    [
+      "nullsafepropertylookup with comments (complex syntax)",
+      '"string {$var?->foo?->bar /* Comment */ } string";',
     ],
     [
       "newline before closing curly (complex syntax)",
@@ -97,6 +125,7 @@ describe("encapsed", function () {
     ["curly #3", '"string {$call()} string";'],
     ["no curly", '"string $$juice string";'],
     ["propertylookup", '$this->{"set{$type}"};'],
+    ["nullsafepropertylookup", '$this?->{"set{$type}"};'],
   ])("%s", function (_, code) {
     expect(parser.parseEval(code)).toMatchSnapshot();
   });

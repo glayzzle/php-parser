@@ -12,7 +12,7 @@ module.exports = {
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
    * ```
    */
-  read_class_declaration_statement: function () {
+  read_class_declaration_statement: function (attrs) {
     const result = this.node("class");
     const flag = this.read_class_modifiers();
     // graceful mode : ignore token & go next
@@ -30,7 +30,9 @@ module.exports = {
     const propImplements = this.read_implements_list();
     this.expect("{");
     const body = this.next().read_class_body();
-    return result(propName, propExtends, propImplements, body, flag);
+    const node = result(propName, propExtends, propImplements, body, flag);
+    if (attrs) node.attrGroups = attrs;
+    return node;
   },
 
   read_class_modifiers: function () {
@@ -59,7 +61,7 @@ module.exports = {
    */
   read_class_body: function () {
     let result = [];
-
+    let attrs = [];
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
         result.push(this.read_comment());
@@ -77,12 +79,18 @@ module.exports = {
         continue;
       }
 
+      if (this.token === this.tok.T_ATTRIBUTE) {
+        attrs = this.read_attr_list();
+      }
+
+      const locStart = this.position();
+
       // read member flags
       const flags = this.read_member_flags(false);
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-        const constants = this.read_constant_list(flags);
+        const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();
         }
@@ -99,7 +107,8 @@ module.exports = {
 
       if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        result.push(this.read_function(false, flags));
+        result.push(this.read_function(false, flags, attrs, locStart));
+        attrs = [];
       } else if (
         this.token === this.tok.T_VARIABLE ||
         // support https://wiki.php.net/rfc/typed_properties_v2
@@ -112,7 +121,8 @@ module.exports = {
             this.token === this.tok.T_NAMESPACE))
       ) {
         // reads a variable
-        const variables = this.read_variable_list(flags);
+        const variables = this.read_variable_list(flags, attrs);
+        attrs = [];
         this.expect(";");
         this.next();
         result = result.concat(variables);
@@ -137,7 +147,7 @@ module.exports = {
    *  variable_list ::= (variable_declaration ',')* variable_declaration
    * ```
    */
-  read_variable_list: function (flags) {
+  read_variable_list: function (flags, attrs) {
     const result = this.node("propertystatement");
 
     const properties = this.read_list(
@@ -157,13 +167,19 @@ module.exports = {
         this.next();
         propName = propName(name);
         if (this.token === ";" || this.token === ",") {
-          return result(propName, null, nullable, type);
+          return result(propName, null, nullable, type, attrs || []);
         } else if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-          return result(propName, this.next().read_expr(), nullable, type);
+          return result(
+            propName,
+            this.next().read_expr(),
+            nullable,
+            type,
+            attrs || []
+          );
         } else {
           this.expect([",", ";", "="]);
-          return result(propName, null, nullable, type);
+          return result(propName, null, nullable, type, attrs || []);
         }
       },
       ","
@@ -177,7 +193,7 @@ module.exports = {
    *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
    * ```
    */
-  read_constant_list: function (flags) {
+  read_constant_list: function (flags, attrs) {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
@@ -214,7 +230,7 @@ module.exports = {
       ","
     );
 
-    return result(null, items, flags);
+    return result(null, items, flags, attrs || []);
   },
   /*
    * Read member flags
@@ -309,7 +325,7 @@ module.exports = {
       nullable = true;
       this.next();
     }
-    let type = this.read_type();
+    let type = this.read_types();
     if (nullable && !type) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator"
@@ -339,7 +355,7 @@ module.exports = {
    * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
    * ```
    */
-  read_interface_declaration_statement: function () {
+  read_interface_declaration_statement: function (attrs) {
     const result = this.node("interface");
     if (this.token !== this.tok.T_INTERFACE) {
       this.error(this.tok.T_INTERFACE);
@@ -354,7 +370,7 @@ module.exports = {
     const propExtends = this.read_interface_extends_list();
     this.expect("{");
     const body = this.next().read_interface_body();
-    return result(propName, propExtends, body);
+    return result(propName, propExtends, body, attrs || []);
   },
   /*
    * Reads an interface body
@@ -363,7 +379,8 @@ module.exports = {
    * ```
    */
   read_interface_body: function () {
-    let result = [];
+    let result = [],
+      attrs = [];
 
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
@@ -376,24 +393,34 @@ module.exports = {
         continue;
       }
 
+      const locStart = this.position();
+
+      attrs = this.read_attr_list();
       // read member flags
       const flags = this.read_member_flags(true);
 
       // check constant
       if (this.token == this.tok.T_CONST) {
-        const constants = this.read_constant_list(flags);
+        const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();
         }
         result = result.concat(constants);
+        attrs = [];
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
-        const method = this.read_function_declaration(2, flags);
+        const method = this.read_function_declaration(
+          2,
+          flags,
+          attrs,
+          locStart
+        );
         method.parseFlags(flags);
         result.push(method);
         if (this.expect(";")) {
           this.next();
         }
+        attrs = [];
       } else {
         // raise an error
         this.error([this.tok.T_CONST, this.tok.T_FUNCTION]);

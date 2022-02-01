@@ -19,12 +19,14 @@ const IS_PRIVATE = "private";
  * @memberOf module:php-parser
  * @extends {ConstantStatement}
  * @property {string} visibility
+ * @property {AttrGroup[]} attrGroups
  */
 const ClassConstant = ConstantStatement.extends(
   KIND,
-  function ClassConstant(kind, constants, flags, docs, location) {
+  function ClassConstant(kind, constants, flags, attrGroups, docs, location) {
     ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
     this.parseFlags(flags);
+    this.attrGroups = attrGroups;
   }
 );
 
@@ -40,6 +42,7 @@ ClassConstant.prototype.parseFlags = function (flags) {
   if (flags[0] === -1) {
     this.visibility = IS_UNDEFINED;
   } else if (flags[0] === null) {
+    /* istanbul ignore next */
     this.visibility = null;
   } else if (flags[0] === 0) {
     this.visibility = IS_PUBLIC;

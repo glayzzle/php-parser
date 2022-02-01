@@ -16,6 +16,11 @@ module.exports = {
       case "\r\n":
         return this.T_WHITESPACE();
       case "#":
+        if (this.version >= 800 && this._input[this.offset] === "[") {
+          this.input();
+          this.begin("ST_ATTRIBUTE");
+          return this.tok.T_ATTRIBUTE;
+        }
         return this.T_COMMENT();
       case "/":
         if (this._input[this.offset] === "/") {

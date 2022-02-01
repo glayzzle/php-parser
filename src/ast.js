@@ -129,23 +129,6 @@ const AST = function (withPositions, withSource) {
   this.withSource = withSource;
 };
 
-/**
- * Create a position node from specified parser
- * including it's lexer current state
- * @private
- * @function AST#position
- * @memberOf module:php-parser
- * @param {Parser} parser
- * @return {Position}
- */
-AST.prototype.position = function (parser) {
-  return new Position(
-    parser.lexer.yylloc.first_line,
-    parser.lexer.yylloc.first_column,
-    parser.lexer.yylloc.first_offset
-  );
-};
-
 // operators in ascending order of precedence
 AST.precedence = {};
 [
@@ -218,6 +201,7 @@ AST.prototype.resolveLocations = function (target, first, last, parser) {
     if (target.loc.start.offset > first.loc.start.offset) {
       target.loc.start = first.loc.start;
     }
+    /* istanbul ignore next */
     if (target.loc.end.offset < last.loc.end.offset) {
       target.loc.end = last.loc.end;
     }
@@ -375,7 +359,7 @@ AST.prototype.resolvePrecedence = function (result, parser) {
 AST.prototype.prepare = function (kind, docs, parser) {
   let start = null;
   if (this.withPositions || this.withSource) {
-    start = this.position(parser);
+    start = parser.position();
   }
   const self = this;
   // returns the node
@@ -409,6 +393,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
     const astNode = Object.create(node.prototype);
     node.apply(astNode, args);
     result.instance = astNode;
+    /* istanbul ignore next */
     if (result.trailingComments) {
       // buffer of trailingComments
       astNode.trailingComments = result.trailingComments;
@@ -489,6 +474,8 @@ AST.prototype.checkNodes = function () {
   require("./ast/arrowfunc"),
   require("./ast/assign"),
   require("./ast/assignref"),
+  require("./ast/attribute"),
+  require("./ast/attrgroup"),
   require("./ast/bin"),
   require("./ast/block"),
   require("./ast/boolean"),
@@ -539,14 +526,18 @@ AST.prototype.checkNodes = function () {
   require("./ast/literal"),
   require("./ast/lookup"),
   require("./ast/magic"),
+  require("./ast/match"),
+  require("./ast/matcharm"),
   require("./ast/method"),
   require("./ast/name"),
   require("./ast/namespace"),
+  require("./ast/namedargument"),
   require("./ast/new"),
   require("./ast/node"),
   require("./ast/noop"),
   require("./ast/nowdoc"),
   require("./ast/nullkeyword"),
+  require("./ast/nullsafepropertylookup"),
   require("./ast/number"),
   require("./ast/offsetlookup"),
   require("./ast/operation"),
@@ -579,6 +570,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/try"),
   require("./ast/typereference"),
   require("./ast/unary"),
+  require("./ast/uniontype"),
   require("./ast/unset"),
   require("./ast/usegroup"),
   require("./ast/useitem"),

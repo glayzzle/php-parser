@@ -1,0 +1,455 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`match can be nested 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "v",
+        },
+        "operator": "=",
+        "right": Match {
+          "arms": Array [
+            MatchArm {
+              "body": Match {
+                "arms": Array [
+                  MatchArm {
+                    "body": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'Connect'",
+                      "unicode": false,
+                      "value": "Connect",
+                    },
+                    "conds": Array [
+                      Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    ],
+                    "kind": "matcharm",
+                  },
+                  MatchArm {
+                    "body": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'Auth'",
+                      "unicode": false,
+                      "value": "Auth",
+                    },
+                    "conds": Array [
+                      Number {
+                        "kind": "number",
+                        "value": "2",
+                      },
+                    ],
+                    "kind": "matcharm",
+                  },
+                ],
+                "cond": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "err",
+                },
+                "kind": "match",
+              },
+              "conds": Array [
+                NullKeyword {
+                  "kind": "nullkeyword",
+                  "raw": "null",
+                },
+              ],
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Ok'",
+                "unicode": false,
+                "value": "Ok",
+              },
+              "conds": Array [
+                Match {
+                  "arms": Array [
+                    MatchArm {
+                      "body": Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      "conds": Array [
+                        Boolean {
+                          "kind": "boolean",
+                          "raw": "true",
+                          "value": true,
+                        },
+                      ],
+                      "kind": "matcharm",
+                    },
+                    MatchArm {
+                      "body": Unary {
+                        "kind": "unary",
+                        "type": "-",
+                        "what": Number {
+                          "kind": "number",
+                          "value": "1",
+                        },
+                      },
+                      "conds": Array [
+                        Boolean {
+                          "kind": "boolean",
+                          "raw": "false",
+                          "value": false,
+                        },
+                      ],
+                      "kind": "matcharm",
+                    },
+                  ],
+                  "cond": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                  "kind": "match",
+                },
+              ],
+              "kind": "matcharm",
+            },
+          ],
+          "cond": Call {
+            "arguments": Array [
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+              Number {
+                "kind": "number",
+                "value": "2",
+              },
+              Number {
+                "kind": "number",
+                "value": "3",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "callMe",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "match",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`match can be parsed 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Match {
+          "arms": Array [
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'yes'",
+                "unicode": false,
+                "value": "yes",
+              },
+              "conds": Array [
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+              ],
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'no'",
+                "unicode": false,
+                "value": "no",
+              },
+              "conds": Array [
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+              ],
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+              "conds": null,
+              "kind": "matcharm",
+            },
+          ],
+          "cond": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          "kind": "match",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`match can have hanging comma 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Match {
+          "arms": Array [
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'ok'",
+                "unicode": false,
+                "value": "ok",
+              },
+              "conds": Array [
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+              ],
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": Throw {
+                "kind": "throw",
+                "what": New {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'Nope'",
+                      "unicode": false,
+                      "value": "Nope",
+                    },
+                  ],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              "conds": Array [
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+              ],
+              "kind": "matcharm",
+            },
+          ],
+          "cond": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "test",
+          },
+          "kind": "match",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`match can have lhs, functions 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Match {
+          "arms": Array [
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'yes'",
+                "unicode": false,
+                "value": "yes",
+              },
+              "conds": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "test",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "b",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "abc",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+              "conds": null,
+              "kind": "matcharm",
+            },
+          ],
+          "cond": Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+          "kind": "match",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`match can have multiple values 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": Match {
+          "arms": Array [
+            MatchArm {
+              "body": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "run",
+                  "resolution": "uqn",
+                },
+              },
+              "conds": Array [
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "3",
+                },
+              ],
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+              "conds": null,
+              "kind": "matcharm",
+            },
+          ],
+          "cond": Name {
+            "kind": "name",
+            "name": "trye",
+            "resolution": "uqn",
+          },
+          "kind": "match",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

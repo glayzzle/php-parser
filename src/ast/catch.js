@@ -14,7 +14,7 @@ const KIND = "catch";
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier[]} what
- * @property {Variable} variable
+ * @property {Variable|null} variable
  * @property {Statement} body
  * @see http://php.net/manual/en/language.exceptions.php
  */

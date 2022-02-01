@@ -16,6 +16,7 @@ const KIND = "class";
  * @property {Identifier|null} extends
  * @property {Identifier[]} implements
  * @property {Declaration[]} body
+ * @property {AttrGroup[]} attrGroups
  * @property {boolean} isAnonymous
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
@@ -28,6 +29,7 @@ module.exports = Declaration.extends(
     this.extends = ext;
     this.implements = impl;
     this.body = body;
+    this.attrGroups = [];
     this.parseFlags(flags);
   }
 );

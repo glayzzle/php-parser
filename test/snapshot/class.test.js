@@ -129,6 +129,38 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("Test promoted class properties php 8", function () {
+    const ast = parser.parseEval(
+      `
+      class __proto__ {
+        public function constructor(public int $id, private $name, int $c, protected ServerRequestInterface $req) {}
+      }`,
+      {
+        parser: {
+          version: "8.0",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("Test promoted nullable properties php 8", function () {
+    const ast = parser.parseEval(
+      `
+      class __proto__ {
+        public function constructor(public ?string $maybe, private ?int $opt) {}
+      }`,
+      {
+        parser: {
+          version: "8.0",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("empty", function () {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
@@ -151,5 +183,28 @@ describe("Test classes", function () {
         parser: { suppressErrors: true },
       })
     ).toMatchSnapshot();
+  });
+
+  it("knows where a function definiton starts", function () {
+    const phpCode = `
+class b { 
+  // prettier-ignore
+  public static function a() {}
+}
+    `;
+    const ast = parser.parseEval(phpCode, {
+      ast: {
+        withPositions: true,
+        withSource: true,
+      },
+    });
+    const funcStart = ast.children[0].body[0].loc.start.offset;
+    const funcEnd = ast.children[0].body[0].loc.end.offset;
+    expect(phpCode.substr(funcStart, funcEnd - funcStart)).toEqual(
+      "public static function a() {}"
+    );
+    expect(ast.children[0].body[0].loc.source).toEqual(
+      "public static function a()"
+    );
   });
 });

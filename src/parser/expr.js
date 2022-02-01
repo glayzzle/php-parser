@@ -225,7 +225,9 @@ module.exports = {
    * ```
    */
   read_expr_item: function () {
-    let result, expr;
+    let result,
+      expr,
+      attrs = [];
     if (this.token === "+")
       return this.node("unary")("+", this.next().read_expr());
     if (this.token === "-")
@@ -275,6 +277,7 @@ module.exports = {
         }
       }
       if (!hasItem) {
+        /* istanbul ignore next */
         this.raiseError(
           "Fatal Error :  Cannot use empty list on line " +
             this.lexer.yylloc.first_line
@@ -292,11 +295,16 @@ module.exports = {
           );
         } else {
           // error fallback : list($a, $b);
+          /* istanbul ignore next */
           return result(assignList, false);
         }
       } else {
         return result(assignList, false);
       }
+    }
+
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      attrs = this.read_attr_list();
     }
 
     if (this.token === this.tok.T_CLONE)
@@ -320,6 +328,9 @@ module.exports = {
       case this.tok.T_REQUIRE:
       case this.tok.T_REQUIRE_ONCE:
         return this.read_internal_functions_in_yacc();
+
+      case this.tok.T_MATCH:
+        return this.read_match_expression();
       case this.tok.T_INT_CAST:
         return this.read_expr_cast("int");
 
@@ -343,6 +354,14 @@ module.exports = {
       case this.tok.T_UNSET_CAST:
         return this.read_expr_cast("unset");
 
+      case this.tok.T_THROW: {
+        if (this.version < 800) {
+          this.raiseError("PHP 8+ is required to use throw as an expression");
+        }
+        const result = this.node("throw");
+        const expr = this.next().read_expr();
+        return result(expr);
+      }
       case this.tok.T_EXIT: {
         const useDie = this.lexer.yytext.toLowerCase() === "die";
         result = this.node("exit");
@@ -379,7 +398,7 @@ module.exports = {
 
       case this.tok.T_FN:
       case this.tok.T_FUNCTION:
-        return this.read_inline_function();
+        return this.read_inline_function(undefined, attrs);
 
       case this.tok.T_STATIC: {
         const backup = [this.token, this.lexer.getState()];
@@ -389,7 +408,7 @@ module.exports = {
           (this.version >= 704 && this.token === this.tok.T_FN)
         ) {
           // handles static function
-          return this.read_inline_function([0, 1, 0]);
+          return this.read_inline_function([0, 1, 0], attrs);
         } else {
           // rollback
           this.lexer.tokens.push(backup);
@@ -563,9 +582,11 @@ module.exports = {
    * 				  ((zend_ast_decl *) $$)->lex_pos = $10;
    * 				  CG(extra_fn_flags) = $9; }   *
    */
-  read_inline_function: function (flags) {
+  read_inline_function: function (flags, attrs) {
     if (this.token === this.tok.T_FUNCTION) {
-      return this.read_function(true, flags);
+      const result = this.read_function(true, flags, attrs);
+      result.attrGroups = attrs;
+      return result;
     }
     // introduced in PHP 7.4
     if (!this.version >= 704) {
@@ -588,11 +609,11 @@ module.exports = {
         nullable = true;
         this.next();
       }
-      returnType = this.read_type();
+      returnType = this.read_types();
     }
     if (this.expect(this.tok.T_DOUBLE_ARROW)) this.next();
     const body = this.read_expr();
-    return node(
+    const result = node(
       params,
       isRef,
       body,
@@ -600,6 +621,86 @@ module.exports = {
       nullable,
       flags ? true : false
     );
+    result.attrGroups = attrs;
+    return result;
+  },
+
+  read_match_expression: function () {
+    const node = this.node("match");
+    this.expect(this.tok.T_MATCH) && this.next();
+    if (this.version < 800) {
+      this.raiseError("Match statements are not allowed before PHP 8");
+    }
+    let cond = null;
+    let arms = [];
+    if (this.expect("(")) this.next();
+    cond = this.read_expr();
+    if (this.expect(")")) this.next();
+    if (this.expect("{")) this.next();
+    arms = this.read_match_arms();
+    if (this.expect("}")) this.next();
+    return node(cond, arms);
+  },
+
+  read_match_arms: function () {
+    return this.read_list(() => this.read_match_arm(), ",", true);
+  },
+
+  read_match_arm: function () {
+    if (this.token === "}") {
+      return;
+    }
+    return this.node("matcharm")(this.read_match_arm_conds(), this.read_expr());
+  },
+
+  read_match_arm_conds: function () {
+    let conds = [];
+    if (this.token === this.tok.T_DEFAULT) {
+      conds = null;
+      this.next();
+    } else {
+      conds.push(this.read_expr());
+      while (this.token === ",") {
+        this.next();
+        if (this.token === this.tok.T_DOUBLE_ARROW) {
+          this.next();
+          return conds;
+        }
+        conds.push(this.read_expr());
+      }
+    }
+    if (this.expect(this.tok.T_DOUBLE_ARROW)) {
+      this.next();
+    }
+    return conds;
+  },
+
+  read_attribute() {
+    const name = this.text();
+    let args = [];
+    this.next();
+    if (this.token === "(") {
+      args = this.read_argument_list();
+    }
+    return this.node("attribute")(name, args);
+  },
+  read_attr_list() {
+    const list = [];
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      do {
+        const attrGr = this.node("attrgroup")([]);
+        this.next();
+        attrGr.attrs.push(this.read_attribute());
+        while (this.token === ",") {
+          this.next();
+          if (this.token !== "]") attrGr.attrs.push(this.read_attribute());
+        }
+        list.push(attrGr);
+        this.expect("]");
+        this.next();
+      } while (this.token === this.tok.T_ATTRIBUTE);
+    }
+    return list;
   },
 
   /*
@@ -612,6 +713,7 @@ module.exports = {
     const result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     let args = [];
+    const attrs = this.read_attr_list();
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
@@ -624,10 +726,9 @@ module.exports = {
       if (this.expect("{")) {
         body = this.next().read_class_body();
       }
-      return result(
-        what(null, propExtends, propImplements, body, [0, 0, 0]),
-        args
-      );
+      const whatNode = what(null, propExtends, propImplements, body, [0, 0, 0]);
+      whatNode.attrGroups = attrs;
+      return result(whatNode, args);
     }
     // Already existing class
     const name = this.read_new_class_name();

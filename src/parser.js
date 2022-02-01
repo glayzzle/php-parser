@@ -5,6 +5,8 @@
  */
 "use strict";
 
+const Position = require("./ast/position");
+
 /**
  * @private
  */
@@ -34,7 +36,7 @@ const Parser = function (lexer, ast) {
   this.token = null;
   this.prev = null;
   this.debug = false;
-  this.version = 704;
+  this.version = 800;
   this.extractDoc = false;
   this.extractTokens = false;
   this.suppressErrors = false;
@@ -97,6 +99,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_LOGICAL_AND,
         this.tok.T_LOGICAL_OR,
         this.tok.T_LOGICAL_XOR,
+        this.tok.T_MATCH,
         this.tok.T_METHOD_C,
         this.tok.T_NAMESPACE,
         this.tok.T_NEW,
@@ -193,6 +196,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_NEW,
         this.tok.T_ISSET,
         this.tok.T_EMPTY,
+        this.tok.T_MATCH,
         this.tok.T_INCLUDE,
         this.tok.T_INCLUDE_ONCE,
         this.tok.T_REQUIRE,
@@ -306,6 +310,7 @@ Parser.prototype.parse = function (code, filename) {
   const result = program(childs, this._errors, this._docs, this._tokens);
   if (this.debug) {
     const errors = this.ast.checkNodes();
+    /* istanbul ignore next */
     if (errors.length > 0) {
       errors.forEach(function (error) {
         if (error.position) {
@@ -368,6 +373,7 @@ Parser.prototype.error = function (expect) {
   if (this.token !== this.EOF) {
     if (isNumber(this.token)) {
       let symbol = this.text();
+      /* istanbul ignore next */
       if (symbol.length > 10) {
         symbol = symbol.substring(0, 7) + "...";
       }
@@ -385,6 +391,19 @@ Parser.prototype.error = function (expect) {
 };
 
 /**
+ * Create a position node from the lexers position
+ *
+ * @return {Position}
+ */
+Parser.prototype.position = function () {
+  return new Position(
+    this.lexer.yylloc.first_line,
+    this.lexer.yylloc.first_column,
+    this.lexer.yylloc.first_offset
+  );
+};
+
+/**
  * Creates a new AST node
  * @function Parser#node
  * @memberOf module:php-parser
@@ -395,6 +414,7 @@ Parser.prototype.node = function (name) {
     if (this._docIndex < this._docs.length) {
       docs = this._docs.slice(this._docIndex);
       this._docIndex = this._docs.length;
+      /* istanbul ignore next */
       if (this.debug) {
         // eslint-disable-next-line no-console
         console.log(new Error("Append docs on " + name));
@@ -497,11 +517,13 @@ Parser.prototype.showlog = function () {
     line = stack[offset].trim();
     let found = false;
     for (let i = 0; i < ignoreStack.length; i++) {
+      /* istanbul ignore next */
       if (line.substring(3, 3 + ignoreStack[i].length) === ignoreStack[i]) {
         found = true;
         break;
       }
     }
+    /* istanbul ignore next */
     if (!found) {
       break;
     }
@@ -612,7 +634,7 @@ Parser.prototype.lex = function () {
   if (this.extractTokens) {
     do {
       // the token
-      this.token = this.lexer.lex() || this.EOF;
+      this.token = this.lexer.lex() || /* istanbul ignore next */ this.EOF;
       if (this.token === this.EOF) return this;
       let entry = this.lexer.yytext;
       if (
@@ -655,7 +677,7 @@ Parser.prototype.lex = function () {
       this.token === this.tok.T_OPEN_TAG
     );
   } else {
-    this.token = this.lexer.lex() || this.EOF;
+    this.token = this.lexer.lex() || /* istanbul ignore next */ this.EOF;
   }
   return this;
 };
@@ -691,6 +713,7 @@ Parser.prototype.is = function (type) {
   require("./parser/variable.js"),
 ].forEach(function (ext) {
   for (const k in ext) {
+    /* istanbul ignore next */
     if (Object.prototype.hasOwnProperty.call(Parser.prototype, k)) {
       // @see https://github.com/glayzzle/php-parser/issues/234
       throw new Error("Function " + k + " is already defined - collision");

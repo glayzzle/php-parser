@@ -30,7 +30,7 @@ const Lexer = function (engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = false;
-  this.version = 704;
+  this.version = 800;
   this.yyprevcol = 0;
   this.keywords = {
     __class__: this.tok.T_CLASS_C,
@@ -107,6 +107,7 @@ const Lexer = function (engine) {
     or: this.tok.T_LOGICAL_OR,
     and: this.tok.T_LOGICAL_AND,
     xor: this.tok.T_LOGICAL_XOR,
+    match: this.tok.T_MATCH,
   };
   this.castKeywords = {
     int: this.tok.T_INT_CAST,
@@ -176,6 +177,7 @@ Lexer.prototype.setInput = function (input) {
      */
     first_encaps_node: false,
     // for backward compatible
+    /* istanbul ignore next */
     toString: function () {
       this.label;
     },
@@ -449,6 +451,7 @@ Lexer.prototype.begin = function (condition) {
   this.conditionStack.push(condition);
   this.curCondition = condition;
   this.stateCb = this["match" + condition];
+  /* istanbul ignore next */
   if (typeof this.stateCb !== "function") {
     throw new Error('Undefined condition state "' + condition + '"');
   }
@@ -466,6 +469,7 @@ Lexer.prototype.popState = function () {
   const condition = n > 0 ? this.conditionStack.pop() : this.conditionStack[0];
   this.curCondition = this.conditionStack[this.conditionStack.length - 1];
   this.stateCb = this["match" + this.curCondition];
+  /* istanbul ignore next */
   if (typeof this.stateCb !== "function") {
     throw new Error('Undefined condition state "' + this.curCondition + '"');
   }
@@ -507,6 +511,7 @@ Lexer.prototype.next = function () {
   if (this.offset >= this.size && this.tokens.length === 0) {
     this.done = true;
   }
+  /* istanbul ignore next */
   if (this.debug) {
     let tName = token;
     if (typeof tName === "number") {
@@ -536,6 +541,7 @@ Lexer.prototype.next = function () {
 
 // extends the lexer with states
 [
+  require("./lexer/attribute.js"),
   require("./lexer/comments.js"),
   require("./lexer/initial.js"),
   require("./lexer/numbers.js"),

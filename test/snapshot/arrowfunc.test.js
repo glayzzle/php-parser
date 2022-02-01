@@ -40,4 +40,14 @@ describe("arrow function", () => {
       })
     ).toMatchSnapshot();
   });
+  it("error / arrow functions before PHP 7.4", () => {
+    expect(
+      parser.parseEval(`$fn1 = fn($x) => $x + $y;`, {
+        parser: {
+          version: "7.3",
+          suppressErrors: true,
+        },
+      })
+    ).toMatchSnapshot();
+  });
 });

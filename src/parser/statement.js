@@ -37,16 +37,20 @@ module.exports = {
    * ```
    */
   read_top_statement: function () {
+    let attrs = [];
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      attrs = this.read_attr_list();
+    }
     switch (this.token) {
       case this.tok.T_FUNCTION:
-        return this.read_function(false, false);
+        return this.read_function(false, false, attrs);
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
       case this.tok.T_CLASS:
-        return this.read_class_declaration_statement();
+        return this.read_class_declaration_statement(attrs);
       case this.tok.T_INTERFACE:
-        return this.read_interface_declaration_statement();
+        return this.read_interface_declaration_statement(attrs);
       case this.tok.T_TRAIT:
         return this.read_trait_declaration_statement();
       case this.tok.T_USE:
@@ -150,9 +154,16 @@ module.exports = {
    * ```
    */
   read_inner_statement: function () {
+    let attrs = [];
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      attrs = this.read_attr_list();
+    }
     switch (this.token) {
-      case this.tok.T_FUNCTION:
-        return this.read_function(false, false);
+      case this.tok.T_FUNCTION: {
+        const result = this.read_function(false, false);
+        result.attrGroups = attrs;
+        return result;
+      }
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:

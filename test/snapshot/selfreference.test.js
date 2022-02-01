@@ -25,4 +25,7 @@ describe("selfreference", function () {
   it("return type declarations (uppercase)", function () {
     expect(parser.parseEval("function foo($arg): SELF {}")).toMatchSnapshot();
   });
+  it("return static type declarations", function () {
+    expect(parser.parseEval("function foo($arg): static {}")).toMatchSnapshot();
+  });
 });

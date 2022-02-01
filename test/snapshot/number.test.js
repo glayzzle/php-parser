@@ -22,6 +22,7 @@ describe("Test numbers", function () {
   it.each([
     ["hexa without hex", "$a = 0xx;"],
     ["binary with 2", "$b = 0b2;"],
+    ["multiple points", "$b = 1.0.5;"],
     // @fixme : PHP Parse error:  Invalid numeric literal in %s
     // ["octal with 9", "$c = 01239;"],
     ["exponent with letter", "$d = 7E-a;"],

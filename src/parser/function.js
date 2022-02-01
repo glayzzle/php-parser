@@ -32,10 +32,12 @@ module.exports = {
    * function ::= function_declaration code_block
    * ```
    */
-  read_function: function (closure, flag) {
+  read_function: function (closure, flag, attrs, locStart) {
     const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
-      flag && flag[1] === 1
+      flag && flag[1] === 1,
+      attrs || [],
+      locStart
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -62,7 +64,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  read_function_declaration: function (type, isStatic) {
+  read_function_declaration: function (type, isStatic, attrs, locStart) {
     let nodeName = "function";
     if (type === 1) {
       nodeName = "closure";
@@ -128,13 +130,32 @@ module.exports = {
         nullable = true;
         this.next();
       }
-      returnType = this.read_type();
+      returnType = this.read_types();
     }
+    const apply_attrgroup_location = (node) => {
+      node.attrGroups = attrs || [];
+
+      if (locStart && node.loc) {
+        node.loc.start = locStart;
+        if (node.loc.source) {
+          node.loc.source = this.lexer._input.substr(
+            node.loc.start.offset,
+            node.loc.end.offset - node.loc.start.offset
+          );
+        }
+      }
+      return node;
+    };
+
     if (type === 1) {
       // closure
-      return result(params, isRef, use, returnType, nullable, isStatic);
+      return apply_attrgroup_location(
+        result(params, isRef, use, returnType, nullable, isStatic)
+      );
     }
-    return result(name, params, isRef, returnType, nullable);
+    return apply_attrgroup_location(
+      result(name, params, isRef, returnType, nullable)
+    );
   },
 
   read_lexical_vars: function () {
@@ -150,8 +171,28 @@ module.exports = {
     return result;
   },
 
+  read_list_with_dangling_comma: function (item) {
+    const result = [];
+
+    while (this.token != this.EOF) {
+      result.push(item());
+      if (this.token == ",") {
+        this.next();
+        if (this.version >= 800 && this.token === ")") {
+          return result;
+        }
+      } else if (this.token == ")") {
+        break;
+      } else {
+        this.error([",", ")"]);
+        break;
+      }
+    }
+    return result;
+  },
+
   read_lexical_var_list: function () {
-    return this.read_list(this.read_lexical_var, ",");
+    return this.read_list_with_dangling_comma(this.read_lexical_var.bind(this));
   },
 
   /*
@@ -176,21 +217,10 @@ module.exports = {
    * ```
    */
   read_parameter_list: function () {
-    const result = [];
     if (this.token != ")") {
-      while (this.token != this.EOF) {
-        result.push(this.read_parameter());
-        if (this.token == ",") {
-          this.next();
-        } else if (this.token == ")") {
-          break;
-        } else {
-          this.error([",", ")"]);
-          break;
-        }
-      }
+      return this.read_list_with_dangling_comma(this.read_parameter.bind(this));
     }
-    return result;
+    return [];
   },
   /*
    * ```ebnf
@@ -202,14 +232,17 @@ module.exports = {
     const node = this.node("parameter");
     let parameterName = null;
     let value = null;
-    let type = null;
+    let types = null;
     let nullable = false;
+    let attrs = [];
+    if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
+    const flags = this.read_promoted();
     if (this.token === "?") {
       this.next();
       nullable = true;
     }
-    type = this.read_type();
-    if (nullable && !type) {
+    types = this.read_types();
+    if (nullable && !types) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator"
       );
@@ -225,7 +258,50 @@ module.exports = {
     if (this.token == "=") {
       value = this.next().read_expr();
     }
-    return node(parameterName, type, value, isRef, isVariadic, nullable);
+    const result = node(
+      parameterName,
+      types,
+      value,
+      isRef,
+      isVariadic,
+      nullable,
+      flags
+    );
+    if (attrs) result.attrGroups = attrs;
+    return result;
+  },
+  read_types() {
+    const types = [];
+    const unionType = this.node("uniontype");
+    let type = this.read_type();
+    if (!type) return null;
+    types.push(type);
+    while (this.token === "|") {
+      this.next();
+      type = this.read_type();
+      types.push(type);
+    }
+    if (types.length === 1) {
+      return types[0];
+    } else {
+      return unionType(types);
+    }
+  },
+  read_promoted() {
+    const MODIFIER_PUBLIC = 1;
+    const MODIFIER_PROTECTED = 2;
+    const MODIFIER_PRIVATE = 4;
+    if (this.token === this.tok.T_PUBLIC) {
+      this.next();
+      return MODIFIER_PUBLIC;
+    } else if (this.token === this.tok.T_PROTECTED) {
+      this.next();
+      return MODIFIER_PROTECTED;
+    } else if (this.token === this.tok.T_PRIVATE) {
+      this.next();
+      return MODIFIER_PRIVATE;
+    }
+    return 0;
   },
   /*
    * Reads a list of arguments
@@ -266,12 +342,29 @@ module.exports = {
   },
   /*
    * ```ebnf
-   *    argument_list ::= T_ELLIPSIS? expr
+   *    argument_list ::= T_STRING ':' expr | T_ELLIPSIS? expr
    * ```
    */
   read_argument: function () {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
+    }
+    if (
+      this.token === this.tok.T_STRING ||
+      Object.values(this.lexer.keywords).includes(this.token)
+    ) {
+      const lexerState = this.lexer.getState();
+      const nextToken = this.lexer.lex();
+      this.lexer.setState(lexerState);
+      if (nextToken === ":") {
+        if (this.version < 800) {
+          this.raiseError("PHP 8+ is required to use named arguments");
+        }
+        return this.node("namedargument")(
+          this.text(),
+          this.next().next().read_expr()
+        );
+      }
     }
     return this.read_expr();
   },
@@ -287,7 +380,10 @@ module.exports = {
       const type = this.text();
       this.next();
       return result("typereference", type.toLowerCase(), type);
-    } else if (this.token === this.tok.T_STRING) {
+    } else if (
+      this.token === this.tok.T_STRING ||
+      this.token === this.tok.T_STATIC
+    ) {
       const type = this.text();
       const backup = [this.token, this.lexer.getState()];
       this.next();
