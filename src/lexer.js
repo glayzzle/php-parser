@@ -77,6 +77,7 @@ const Lexer = function (engine) {
     class: this.tok.T_CLASS,
     interface: this.tok.T_INTERFACE,
     trait: this.tok.T_TRAIT,
+    enum: this.tok.T_ENUM,
     extends: this.tok.T_EXTENDS,
     implements: this.tok.T_IMPLEMENTS,
     new: this.tok.T_NEW,

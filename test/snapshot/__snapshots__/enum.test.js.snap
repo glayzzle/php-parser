@@ -1,0 +1,432 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test enums can alias cases 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Bar",
+          },
+          "value": null,
+        },
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "Baz",
+              },
+              "value": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "Bar",
+                },
+                "what": SelfReference {
+                  "kind": "selfreference",
+                  "raw": "self",
+                },
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "public",
+        },
+      ],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+      "valueType": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test enums can have functions 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "MyCase",
+          },
+          "value": Number {
+            "kind": "number",
+            "value": "1",
+          },
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "void",
+            "raw": "void",
+          },
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "value",
+                    },
+                    "what": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "MyCase",
+                      },
+                      "what": SelfReference {
+                        "kind": "selfreference",
+                        "raw": "self",
+                      },
+                    },
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "baz",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "protected",
+        },
+      ],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+      "valueType": Name {
+        "kind": "name",
+        "name": "int",
+        "resolution": "uqn",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test enums can implement interfaces 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [],
+      "implements": Array [
+        Name {
+          "kind": "name",
+          "name": "Bar",
+          "resolution": "uqn",
+        },
+        Name {
+          "kind": "name",
+          "name": "Baz",
+          "resolution": "uqn",
+        },
+      ],
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+      "valueType": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test enums can use traits 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": Array [
+            TraitPrecedence {
+              "instead": Array [
+                Name {
+                  "kind": "name",
+                  "name": "Bar",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "traitprecedence",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "hello",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "Baz",
+                "resolution": "uqn",
+              },
+            },
+            TraitAlias {
+              "as": Identifier {
+                "kind": "identifier",
+                "name": "earth",
+              },
+              "kind": "traitalias",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "world",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "Baz",
+                "resolution": "uqn",
+              },
+              "visibility": "",
+            },
+          ],
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "Bar",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "Baz",
+              "resolution": "uqn",
+            },
+          ],
+        },
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "Bax",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+      "valueType": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test enums cannot have properties 1`] = `"Parse Error : syntax error, unexpected 'int' (T_STRING) on line 3"`;
+
+exports[`Test enums empty 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+      "valueType": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test enums may have a backing type 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Hearts",
+          },
+          "value": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'H'",
+            "unicode": false,
+            "value": "H",
+          },
+        },
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Diamonds",
+          },
+          "value": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'D'",
+            "unicode": false,
+            "value": "D",
+          },
+        },
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Clubs",
+          },
+          "value": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'C'",
+            "unicode": false,
+            "value": "C",
+          },
+        },
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Spades",
+          },
+          "value": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'S'",
+            "unicode": false,
+            "value": "S",
+          },
+        },
+      ],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Suit",
+      },
+      "valueType": Name {
+        "kind": "name",
+        "name": "string",
+        "resolution": "uqn",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test enums non-empty 1`] = `
+Program {
+  "children": Array [
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Hearts",
+          },
+          "value": null,
+        },
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Diamonds",
+          },
+          "value": null,
+        },
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Clubs",
+          },
+          "value": null,
+        },
+        EnumCase {
+          "kind": "enumcase",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "Spades",
+          },
+          "value": null,
+        },
+      ],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Suit",
+      },
+      "valueType": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
