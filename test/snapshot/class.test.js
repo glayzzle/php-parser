@@ -28,6 +28,16 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("Implement readonly property", function () {
+    expect(
+      parser.parseEval(`
+    class User {
+      public readonly int $uid;
+    }
+    `)
+    ).toMatchSnapshot();
+  });
+
   it("Validate usual declarations", function () {
     expect(
       parser.parseEval(`

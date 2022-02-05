@@ -155,6 +155,7 @@ const tokens = {
     237: "T_MATCH",
     238: "T_ATTRIBUTE",
     239: "T_ENUM",
+    240: "T_READ_ONLY",
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -296,6 +297,7 @@ const tokens = {
     T_MATCH: 237,
     T_ATTRIBUTE: 238,
     T_ENUM: 239,
+    T_READ_ONLY: 240,
   },
 };
 
