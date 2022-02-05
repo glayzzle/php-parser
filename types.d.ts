@@ -683,6 +683,7 @@ declare module "php-parser" {
     class Property extends Statement {
         name: string;
         value: Node | null;
+        readonly : boolean;
         nullable: boolean;
         type: Identifier | Identifier[] | null;
     }
