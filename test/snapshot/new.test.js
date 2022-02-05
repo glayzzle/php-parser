@@ -42,6 +42,11 @@ describe("new", function () {
       parser.parseEval("new class($one, $two, $three) {};")
     ).toMatchSnapshot();
   });
+  it("static array", () => {
+    expect(
+      parser.parseEval("return new self::$mapping[$map]();")
+    ).toMatchSnapshot();
+  });
   it("parent", function () {
     expect(parser.parseEval("new parent();")).toMatchSnapshot();
   });
