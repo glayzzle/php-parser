@@ -26,7 +26,7 @@ declare module "php-parser" {
         /**
          * List of array items
         */
-        items: Entry | Expression | Variable;
+        items: (Entry | Expression | Variable)[];
         /**
          * Indicate if the short array syntax is used, ex `[]` instead `array()`
         */
