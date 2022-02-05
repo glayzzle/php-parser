@@ -17,6 +17,7 @@ module.exports = {
     "prefer-const": "error",
     "no-var": "error",
     "prettier/prettier": "error",
+    curly: ["error", "multi-line"],
   },
   overrides: [
     {
