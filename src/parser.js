@@ -109,6 +109,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_PRIVATE,
         this.tok.T_PROTECTED,
         this.tok.T_PUBLIC,
+        this.tok.T_READ_ONLY,
         this.tok.T_REQUIRE,
         this.tok.T_REQUIRE_ONCE,
         this.tok.T_RETURN,
