@@ -121,7 +121,7 @@ module.exports = {
         attrs = [];
       } else if (
         allow_variables &&
-        (this.token === this.tok.T_VARIABLE ||
+        (this.token === this.tok.T_VARIABLE || this.token === this.tok.T_READ_ONLY ||
           // support https://wiki.php.net/rfc/typed_properties_v2
           (this.version >= 704 &&
             (this.token === "?" ||
@@ -173,7 +173,7 @@ module.exports = {
       function read_variable_declaration() {
         const result = this.node("property");
         let readonly = false;
-        if (this.text() === "readonly") {
+        if (this.token === this.tok.T_READ_ONLY) {
           readonly = true;
           this.next();
         }
