@@ -155,6 +155,16 @@ describe("Test classes", function () {
     expect(ast).toMatchSnapshot();
   });
 
+  it("Test promoted readonly class properties", function () {
+    const ast = parser.parseEval(
+      `
+      class Bob {
+        public function constructor(public readonly int $id) {}
+      }`
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
   it("Test promoted nullable properties php 8", function () {
     const ast = parser.parseEval(
       `

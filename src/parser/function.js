@@ -234,9 +234,16 @@ module.exports = {
     let value = null;
     let types = null;
     let nullable = false;
+    let readonly = false;
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
     const flags = this.read_promoted();
+
+    if (this.token === this.tok.T_READ_ONLY) {
+      this.next();
+      readonly = true;
+    }
+
     if (this.token === "?") {
       this.next();
       nullable = true;
@@ -264,6 +271,7 @@ module.exports = {
       value,
       isRef,
       isVariadic,
+      readonly,
       nullable,
       flags
     );
