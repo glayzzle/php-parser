@@ -159,8 +159,23 @@ describe("Test classes", function () {
     const ast = parser.parseEval(
       `
       class Bob {
-        public function constructor(public readonly int $id) {}
+        public function __construct(public readonly int $id) {}
       }`
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("Test that readonly method parameters are throwing errors", function () {
+    const ast = parser.parseEval(
+      `
+      class Bob {
+        public function foo(public readonly int $id) {}
+      }`,
+      {
+        parser: {
+          suppressErrors: true,
+        },
+      }
     );
     expect(ast).toMatchSnapshot();
   });
