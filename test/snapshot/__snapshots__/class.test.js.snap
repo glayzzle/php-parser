@@ -1052,7 +1052,7 @@ Program {
           "kind": "method",
           "name": Identifier {
             "kind": "identifier",
-            "name": "constructor",
+            "name": "__construct",
           },
           "nullable": false,
           "type": null,
@@ -1072,6 +1072,162 @@ Program {
     },
   ],
   "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test classes Test that readonly method parameters are throwing errors 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 1,
+              "kind": "parameter",
+              "name": null,
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": null,
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": null,
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "id",
+              },
+              "nullable": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "readonly": false,
+              "type": Array [],
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Bob",
+      },
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 3,
+      "message": "readonly properties can be used only on class consturctor on line 3",
+      "token": undefined,
+    },
+    Error {
+      "expected": 222,
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY), expecting T_VARIABLE on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": Array [
+        ",",
+        ")",
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY) on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY), expecting ')' on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": "{",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY), expecting '{' on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": Array [
+        ",",
+        ";",
+        "=",
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ')' on line 3",
+      "token": "')'",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ')', expecting ';' on line 3",
+      "token": "')'",
+    },
+    Error {
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected '{' on line 3",
+      "token": "'{'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 4,
+      "message": "Parse Error : syntax error, unexpected '}' on line 4",
+      "token": "'}'",
+    },
+  ],
   "kind": "program",
 }
 `;
