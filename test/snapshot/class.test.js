@@ -30,11 +30,18 @@ describe("Test classes", function () {
 
   it("Implement readonly property", function () {
     expect(
-      parser.parseEval(`
+      parser.parseEval(
+        `
     class User {
       public readonly int $uid;
     }
-    `)
+    `,
+        {
+          parser: {
+            version: "8.1",
+          },
+        }
+      )
     ).toMatchSnapshot();
   });
 
@@ -160,7 +167,12 @@ describe("Test classes", function () {
       `
       class Bob {
         public function __construct(public readonly int $id) {}
-      }`
+      }`,
+      {
+        parser: {
+          version: "8.1",
+        },
+      }
     );
     expect(ast).toMatchSnapshot();
   });
@@ -173,6 +185,7 @@ describe("Test classes", function () {
       }`,
       {
         parser: {
+          version: "8.1",
           suppressErrors: true,
         },
       }

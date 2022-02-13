@@ -182,7 +182,7 @@ describe("Function tests", function () {
       `,
       {
         parser: {
-          version: "8.0",
+          version: "8.1",
           suppressErrors: true,
         },
       }
