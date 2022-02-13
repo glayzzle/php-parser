@@ -122,7 +122,7 @@ module.exports = {
       } else if (
         allow_variables &&
         (this.token === this.tok.T_VARIABLE ||
-          this.token === this.tok.T_READ_ONLY ||
+          (this.version >= 801 && this.token === this.tok.T_READ_ONLY) ||
           // support https://wiki.php.net/rfc/typed_properties_v2
           (this.version >= 704 &&
             (this.token === "?" ||
