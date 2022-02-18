@@ -1,16 +1,12 @@
 <h1 align="center">php-parser</h1>
 <p align="center">
-<a href="https://circleci.com/gh/glayzzle/php-parser/tree/master"><img src="https://circleci.com/gh/glayzzle/php-parser/tree/master.svg?style=svg"></a>
-<a href="https://coveralls.io/github/glayzzle/php-parser?branch=master"><img src="https://coveralls.io/repos/github/glayzzle/php-parser/badge.svg?branch=master&v=20170115" alt="Coverage Status" /></a>
 <a title="npm version" href="https://www.npmjs.com/package/php-parser"><img src="https://badge.fury.io/js/php-parser.svg"></a>
 <a title="npm downloads" href="https://www.npmjs.com/package/php-parser"><img src="https://img.shields.io/npm/dm/php-parser.svg?style=flat"></a>
 <a title="Gitter" href="https://gitter.im/glayzzle/Lobby"><img src="https://img.shields.io/badge/GITTER-join%20chat-green.svg"></a>
-<a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser.svg?type=shield"/></a>
 </p>
-<p align="center">This javascript library parses PHP code and convert it to AST.</p>
+<p align="center">This JavaScript library parses PHP code and converts it to an AST.</p>
 
-Installation
-------------
+## Installation
 
 This library is distributed with [npm](https://www.npmjs.com/package/php-parser) :
 
@@ -18,45 +14,42 @@ This library is distributed with [npm](https://www.npmjs.com/package/php-parser)
 npm install php-parser --save
 ```
 
-Usage
------
+## Usage
 
 ```js
 // initialize the php parser factory class
-var fs = require('fs');
-var path = require('path');
-var engine = require('php-parser');
+const fs = require("fs");
+const path = require("path");
+const engine = require("php-parser");
 
 // initialize a new parser instance
-var parser = new engine({
+const parser = new engine({
   // some options :
   parser: {
     extractDoc: true,
-    php7: true
+    php7: true,
   },
   ast: {
-    withPositions: true
-  }
+    withPositions: true,
+  },
 });
 
 // Retrieve the AST from the specified source
-var eval = parser.parseEval('echo "Hello World";');
+const eval = parser.parseEval('echo "Hello World";');
 
 // Retrieve an array of tokens (same as php function token_get_all)
-var tokens = parser.tokenGetAll('<?php echo "Hello World";');
+const tokens = parser.tokenGetAll('<?php echo "Hello World";');
 
 // Load a static file (Note: this file should exist on your computer)
-var phpFile = fs.readFileSync( './example.php' );
+const phpFile = fs.readFileSync("./example.php");
 
 // Log out results
-console.log( 'Eval parse:', eval );
-console.log( 'Tokens parse:', tokens );
-console.log( 'File parse:', parser.parseCode(phpFile) );
-
+console.log("Eval parse:", eval);
+console.log("Tokens parse:", tokens);
+console.log("File parse:", parser.parseCode(phpFile));
 ```
 
-Sample AST output
------------------
+## Sample AST output
 
 ```js
 {
@@ -79,9 +72,7 @@ Sample AST output
 - Try it online (demo) : http://glayzzle.com/php-parser/
 - Or from AST Explorer : https://astexplorer.net/
 
-
-API Overview
-------------
+## API Overview
 
 The main API exposes a class with the following methods :
 
@@ -91,15 +82,13 @@ The main API exposes a class with the following methods :
 
 You can also [pass options](https://github.com/glayzzle/php-parser/wiki/Options) that change the behavior of the parser/lexer.
 
-Documentation
--------------
+## Documentation
 
 - [AST nodes definition](https://php-parser.glayzzle.com/api/ast.js)
 - [Sandbox](https://php-parser.glayzzle.com/demo)
 - [List of options](https://php-parser.glayzzle.com/guides/options)
 
-Related projects
-----------------
+## Related projects
 
 - [prettier/plugin-php](https://github.com/prettier/plugin-php) : Prettier PHP Plugin
 - [babel-preset-php](https://gitlab.com/kornelski/babel-preset-php) : Babel preset for converting PHP syntax to JavaScript. It can run subset of PHP in the browser or in Node.js
@@ -117,5 +106,3 @@ Related projects
 ## License
 
 This library is released under BSD-3 license clause.
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fglayzzle%2Fphp-parser?ref=badge_large)
