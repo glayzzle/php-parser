@@ -24,6 +24,7 @@ const MODIFIER_PRIVATE = 4;
  * @property {Node|null} value
  * @property {boolean} byref
  * @property {boolean} variadic
+ * @property {boolean} readonly
  * @property {boolean} nullable
  * @property {AttrGroups[]} attrGroups
  * @property {MODIFIER_PUBLIC|MODIFIER_PROTECTED|MODIFIER_PRIVATE} flags
@@ -36,6 +37,7 @@ module.exports = Declaration.extends(
     value,
     isRef,
     isVariadic,
+    readonly,
     nullable,
     flags,
     docs,
@@ -46,6 +48,7 @@ module.exports = Declaration.extends(
     this.type = type;
     this.byref = isRef;
     this.variadic = isVariadic;
+    this.readonly = readonly;
     this.nullable = nullable;
     this.flags = flags || 0;
     this.attrGroups = [];

@@ -109,6 +109,7 @@ const Lexer = function (engine) {
     and: this.tok.T_LOGICAL_AND,
     xor: this.tok.T_LOGICAL_XOR,
     match: this.tok.T_MATCH,
+    readonly: this.tok.T_READ_ONLY,
   };
   this.castKeywords = {
     int: this.tok.T_INT_CAST,

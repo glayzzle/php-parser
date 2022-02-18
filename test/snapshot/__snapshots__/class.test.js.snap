@@ -72,6 +72,7 @@ Program {
                 "name": "var",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": Boolean {
                 "kind": "boolean",
@@ -440,6 +441,53 @@ Program {
 }
 `;
 
+exports[`Test classes Implement readonly property 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "uid",
+              },
+              "nullable": false,
+              "readonly": true,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "User",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test classes Implement typed_properties_v2 / php74 1`] = `
 Program {
   "children": Array [
@@ -458,6 +506,7 @@ Program {
                 "name": "prop",
               },
               "nullable": true,
+              "readonly": false,
               "type": TypeReference {
                 "kind": "typereference",
                 "name": "int",
@@ -483,6 +532,7 @@ Program {
                 "name": "y",
               },
               "nullable": false,
+              "readonly": false,
               "type": UnionType {
                 "kind": "uniontype",
                 "name": null,
@@ -540,6 +590,7 @@ Program {
                 "name": "constructor",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": null,
             },
@@ -779,6 +830,7 @@ Program {
                 "name": "id",
               },
               "nullable": false,
+              "readonly": false,
               "type": TypeReference {
                 "kind": "typereference",
                 "name": "int",
@@ -797,6 +849,7 @@ Program {
                 "name": "name",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": null,
               "variadic": false,
@@ -811,6 +864,7 @@ Program {
                 "name": "c",
               },
               "nullable": false,
+              "readonly": false,
               "type": TypeReference {
                 "kind": "typereference",
                 "name": "int",
@@ -829,6 +883,7 @@ Program {
                 "name": "req",
               },
               "nullable": false,
+              "readonly": false,
               "type": Name {
                 "kind": "name",
                 "name": "ServerRequestInterface",
@@ -892,6 +947,7 @@ Program {
                 "name": "maybe",
               },
               "nullable": true,
+              "readonly": false,
               "type": TypeReference {
                 "kind": "typereference",
                 "name": "string",
@@ -910,6 +966,7 @@ Program {
                 "name": "opt",
               },
               "nullable": true,
+              "readonly": false,
               "type": TypeReference {
                 "kind": "typereference",
                 "name": "int",
@@ -955,6 +1012,226 @@ Program {
 }
 `;
 
+exports[`Test classes Test promoted readonly class properties 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 1,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "id",
+              },
+              "nullable": false,
+              "readonly": true,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Bob",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Test classes Test that readonly method parameters are throwing errors 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 1,
+              "kind": "parameter",
+              "name": null,
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": null,
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": null,
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "id",
+              },
+              "nullable": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "readonly": false,
+              "type": Array [],
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Bob",
+      },
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 3,
+      "message": "readonly properties can be used only on class constructor on line 3",
+      "token": undefined,
+    },
+    Error {
+      "expected": 222,
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY), expecting T_VARIABLE on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": Array [
+        ",",
+        ")",
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY) on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY), expecting ')' on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": "{",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected 'readonly' (T_READ_ONLY), expecting '{' on line 3",
+      "token": "'readonly' (T_READ_ONLY)",
+    },
+    Error {
+      "expected": Array [
+        ",",
+        ";",
+        "=",
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ')' on line 3",
+      "token": "')'",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected ')', expecting ';' on line 3",
+      "token": "')'",
+    },
+    Error {
+      "expected": Array [
+        198,
+        222,
+        182,
+      ],
+      "kind": "error",
+      "line": 3,
+      "message": "Parse Error : syntax error, unexpected '{' on line 3",
+      "token": "'{'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 4,
+      "message": "Parse Error : syntax error, unexpected '}' on line 4",
+      "token": "'}'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test classes Validate usual declarations 1`] = `
 Program {
   "children": Array [
@@ -994,6 +1271,7 @@ Program {
                 "name": "var",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": null,
             },
@@ -1012,6 +1290,7 @@ Program {
                 "name": "data",
               },
               "nullable": false,
+              "readonly": false,
               "type": TypeReference {
                 "kind": "typereference",
                 "name": "array",
@@ -1100,6 +1379,7 @@ Program {
                 "name": "foo",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": StaticLookup {
                 "kind": "staticlookup",
@@ -1161,6 +1441,7 @@ Program {
                 "name": "foo",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": null,
             },
@@ -1179,6 +1460,7 @@ Program {
                 "name": "bar",
               },
               "nullable": false,
+              "readonly": false,
               "type": null,
               "value": null,
             },

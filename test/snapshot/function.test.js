@@ -174,4 +174,19 @@ describe("Function tests", function () {
     });
     expect(astErr).toMatchSnapshot();
   });
+
+  it("Test readonly function properties are only for class constructor", function () {
+    const ast = parser.parseEval(
+      `
+        function fun(public readonly int $id) {}
+      `,
+      {
+        parser: {
+          version: "8.1",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
 });

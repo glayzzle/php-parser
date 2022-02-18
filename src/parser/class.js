@@ -122,6 +122,7 @@ module.exports = {
       } else if (
         allow_variables &&
         (this.token === this.tok.T_VARIABLE ||
+          (this.version >= 801 && this.token === this.tok.T_READ_ONLY) ||
           // support https://wiki.php.net/rfc/typed_properties_v2
           (this.version >= 704 &&
             (this.token === "?" ||
@@ -172,6 +173,11 @@ module.exports = {
        */
       function read_variable_declaration() {
         const result = this.node("property");
+        let readonly = false;
+        if (this.token === this.tok.T_READ_ONLY) {
+          readonly = true;
+          this.next();
+        }
         const [nullable, type] = this.read_optional_type();
         this.expect(this.tok.T_VARIABLE);
         let propName = this.node("identifier");
@@ -179,12 +185,13 @@ module.exports = {
         this.next();
         propName = propName(name);
         if (this.token === ";" || this.token === ",") {
-          return result(propName, null, nullable, type, attrs || []);
+          return result(propName, null, readonly, nullable, type, attrs || []);
         } else if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
           return result(
             propName,
             this.next().read_expr(),
+            readonly,
             nullable,
             type,
             attrs || []

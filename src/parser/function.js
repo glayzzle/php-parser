@@ -120,7 +120,7 @@ module.exports = {
       name = nameNode(name);
     }
     if (this.expect("(")) this.next();
-    const params = this.read_parameter_list();
+    const params = this.read_parameter_list(name.name === "__construct");
     if (this.expect(")")) this.next();
     if (type === 1) {
       use = this.read_lexical_vars();
@@ -216,9 +216,11 @@ module.exports = {
    *  parameter_list ::= (parameter ',')* parameter?
    * ```
    */
-  read_parameter_list: function () {
+  read_parameter_list: function (is_class_constructor) {
     if (this.token != ")") {
-      return this.read_list_with_dangling_comma(this.read_parameter.bind(this));
+      return this.read_list_with_dangling_comma(
+        this.read_parameter.bind(this, is_class_constructor)
+      );
     }
     return [];
   },
@@ -228,15 +230,28 @@ module.exports = {
    * ```
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
-  read_parameter: function () {
+  read_parameter: function (is_class_constructor) {
     const node = this.node("parameter");
     let parameterName = null;
     let value = null;
     let types = null;
     let nullable = false;
+    let readonly = false;
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
     const flags = this.read_promoted();
+
+    if (this.version >= 801 && this.token === this.tok.T_READ_ONLY) {
+      if (is_class_constructor) {
+        this.next();
+        readonly = true;
+      } else {
+        this.raiseError(
+          "readonly properties can be used only on class constructor"
+        );
+      }
+    }
+
     if (this.token === "?") {
       this.next();
       nullable = true;
@@ -264,6 +279,7 @@ module.exports = {
       value,
       isRef,
       isVariadic,
+      readonly,
       nullable,
       flags
     );

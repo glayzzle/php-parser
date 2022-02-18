@@ -28,6 +28,23 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("Implement readonly property", function () {
+    expect(
+      parser.parseEval(
+        `
+    class User {
+      public readonly int $uid;
+    }
+    `,
+        {
+          parser: {
+            version: "8.1",
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
   it("Validate usual declarations", function () {
     expect(
       parser.parseEval(`
@@ -138,6 +155,37 @@ describe("Test classes", function () {
       {
         parser: {
           version: "8.0",
+          suppressErrors: true,
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("Test promoted readonly class properties", function () {
+    const ast = parser.parseEval(
+      `
+      class Bob {
+        public function __construct(public readonly int $id) {}
+      }`,
+      {
+        parser: {
+          version: "8.1",
+        },
+      }
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("Test that readonly method parameters are throwing errors", function () {
+    const ast = parser.parseEval(
+      `
+      class Bob {
+        public function foo(public readonly int $id) {}
+      }`,
+      {
+        parser: {
+          version: "8.1",
           suppressErrors: true,
         },
       }
