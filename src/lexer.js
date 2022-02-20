@@ -30,7 +30,7 @@ const Lexer = function (engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = false;
-  this.version = 810;
+  this.version = 801;
   this.yyprevcol = 0;
   this.keywords = {
     __class__: this.tok.T_CLASS_C,
