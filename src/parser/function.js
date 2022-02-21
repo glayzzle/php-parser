@@ -10,7 +10,10 @@ module.exports = {
    * checks if current token is a reference keyword
    */
   is_reference: function () {
-    if (this.token == "&") {
+    if (this.previous_token === "&") {
+      return true;
+    }
+    if (this.token === "&") {
       this.next();
       return true;
     }
@@ -288,19 +291,24 @@ module.exports = {
   },
   read_types() {
     const types = [];
-    const unionType = this.node("uniontype");
+    let isIntersection = false;
     let type = this.read_type();
     if (!type) return null;
     types.push(type);
-    while (this.token === "|") {
+    while (this.token === "|" || (this.version >= 801 && this.token === "&")) {
+      isIntersection = this.token === "&";
       this.next();
       type = this.read_type();
-      types.push(type);
+      if (type) {
+        types.push(type);
+      }
     }
     if (types.length === 1) {
       return types[0];
     } else {
-      return unionType(types);
+      return isIntersection
+        ? this.node("intersectiontype")(types)
+        : this.node("uniontype")(types);
     }
   },
   read_promoted() {
