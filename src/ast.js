@@ -522,6 +522,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/include"),
   require("./ast/inline"),
   require("./ast/interface"),
+  require("./ast/intersectiontype"),
   require("./ast/isset"),
   require("./ast/label"),
   require("./ast/list"),
