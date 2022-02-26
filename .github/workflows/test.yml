@@ -31,7 +31,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ./cache
-        key: ${{ runner.os }}-benchmark
+        key: ${{ runner.os }}-${{matrix.node-version}}-benchmark
 
     - name: Store benchmark result
       uses: benchmark-action/github-action-benchmark@v1
@@ -39,7 +39,7 @@ jobs:
         tool: 'benchmarkjs'
         output-file-path: output.txt
         external-data-json-path: ./cache/benchmark-data.json
-        alert-threshold: '110%'
+        alert-threshold: '120%'
         fail-on-alert: true
       env:
         CI: true
