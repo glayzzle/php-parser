@@ -10,9 +10,6 @@ module.exports = {
    * checks if current token is a reference keyword
    */
   is_reference: function () {
-    if (this.previous_token === "&") {
-      return true;
-    }
     if (this.token === "&") {
       this.next();
       return true;
@@ -292,16 +289,22 @@ module.exports = {
   read_types() {
     const types = [];
     let isIntersection = false;
-    let type = this.read_type();
+    const type = this.read_type();
     if (!type) return null;
     types.push(type);
     while (this.token === "|" || (this.version >= 801 && this.token === "&")) {
-      isIntersection = this.token === "&";
-      this.next();
-      type = this.read_type();
-      if (type) {
-        types.push(type);
+      if (this.token === "&") {
+        isIntersection = true;
+        const nextToken = this.peek();
+        if (
+          nextToken === this.tok.T_ELLIPSIS ||
+          nextToken === this.tok.T_VARIABLE
+        ) {
+          break;
+        }
       }
+      this.next();
+      types.push(this.read_type());
     }
     if (types.length === 1) {
       return types[0];
@@ -377,9 +380,7 @@ module.exports = {
       this.token === this.tok.T_STRING ||
       Object.values(this.lexer.keywords).includes(this.token)
     ) {
-      const lexerState = this.lexer.getState();
-      const nextToken = this.lexer.lex();
-      this.lexer.setState(lexerState);
+      const nextToken = this.peek();
       if (nextToken === ":") {
         if (this.version < 800) {
           this.raiseError("PHP 8+ is required to use named arguments");
