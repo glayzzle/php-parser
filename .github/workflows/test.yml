@@ -24,8 +24,11 @@ jobs:
         yarn
         yarn test
 
+    - name: install valgrind
+      run: sudo apt-get install -y valgrind
+
     - name: benchmark
-      run: yarn benchmark | tee output.txt
+      run: python cachegrind.py node test/benchmark2.js > output.txt
 
     - name: Download previous benchmark result
       uses: actions/cache@v1
@@ -36,10 +39,10 @@ jobs:
     - name: Store benchmark result
       uses: benchmark-action/github-action-benchmark@v1
       with:
-        tool: 'benchmarkjs'
+        tool: 'customSmallerIsBetter'
         output-file-path: output.txt
         external-data-json-path: ./cache/benchmark-data.json
-        alert-threshold: '200%'
+        alert-threshold: '110%'
         fail-on-alert: true
       env:
         CI: true
