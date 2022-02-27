@@ -35,7 +35,6 @@ const Parser = function (lexer, ast) {
   this.EOF = lexer.EOF;
   this.token = null;
   this.prev = null;
-  this.previous_token = null;
   this.debug = false;
   this.version = 801;
   this.extractDoc = false;
@@ -590,8 +589,6 @@ Parser.prototype.text = function () {
  * @memberOf module:php-parser
  */
 Parser.prototype.next = function () {
-  this.previous_token = this.token;
-
   // prepare the back command
   if (this.token !== ";" || this.lexer.yytext === ";") {
     // ignore '?>' from automated resolution
@@ -627,6 +624,17 @@ Parser.prototype.next = function () {
   }
 
   return this;
+};
+
+/**
+ * Peek at the next token.
+ * @returns string|number Next Token
+ */
+Parser.prototype.peek = function () {
+  const lexerState = this.lexer.getState();
+  const nextToken = this.lexer.lex();
+  this.lexer.setState(lexerState);
+  return nextToken;
 };
 
 /**
