@@ -28,7 +28,7 @@ jobs:
       run: sudo apt-get install -y valgrind
 
     - name: benchmark
-      run: python cachegrind.py node test/benchmark2.js > output.txt
+      run: python cachegrind.py node test/benchmark2.js | tee output.txt
 
     - name: Download previous benchmark result
       uses: actions/cache@v1
@@ -44,5 +44,8 @@ jobs:
         external-data-json-path: ./cache/benchmark-data.json
         alert-threshold: '110%'
         fail-on-alert: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        comment-on-alert: true
+        comment-always: true
       env:
         CI: true
