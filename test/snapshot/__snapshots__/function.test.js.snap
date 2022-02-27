@@ -144,6 +144,51 @@ Program {
 }
 `;
 
+exports[`Function tests array pass by reference are not confused with intersection 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": true,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "params",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "array",
+            "raw": "array",
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Function tests implement #113 : typehint nodes 1`] = `
 Program {
   "children": Array [
@@ -364,6 +409,51 @@ Program {
       "kind": "commentblock",
       "offset": 18,
       "value": "/* f */",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests spread array pass by reference are not intersection 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": true,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "params",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "array",
+            "raw": "array",
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": true,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
     },
   ],
   "errors": Array [],
@@ -724,6 +814,110 @@ Program {
       "token": "','",
     },
   ],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test function intersection types 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "a",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": IntersectionType {
+            "kind": "intersectiontype",
+            "name": null,
+            "types": Array [
+              TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              TypeReference {
+                "kind": "typereference",
+                "name": "float",
+                "raw": "float",
+              },
+            ],
+          },
+          "value": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": IntersectionType {
+            "kind": "intersectiontype",
+            "name": null,
+            "types": Array [
+              Name {
+                "kind": "name",
+                "name": "Foo",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "Bar",
+                "resolution": "uqn",
+              },
+            ],
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": IntersectionType {
+        "kind": "intersectiontype",
+        "name": null,
+        "types": Array [
+          TypeReference {
+            "kind": "typereference",
+            "name": "string",
+            "raw": "string",
+          },
+          TypeReference {
+            "kind": "typereference",
+            "name": "int",
+            "raw": "int",
+          },
+        ],
+      },
+    },
+  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;
@@ -1095,6 +1289,113 @@ Program {
       "token": "'list' (T_LIST)",
     },
   ],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests test short function intersection types 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Closure {
+        "arguments": Array [
+          Parameter {
+            "attrGroups": Array [],
+            "byref": false,
+            "flags": 0,
+            "kind": "parameter",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "a",
+            },
+            "nullable": false,
+            "readonly": false,
+            "type": IntersectionType {
+              "kind": "intersectiontype",
+              "name": null,
+              "types": Array [
+                TypeReference {
+                  "kind": "typereference",
+                  "name": "int",
+                  "raw": "int",
+                },
+                TypeReference {
+                  "kind": "typereference",
+                  "name": "float",
+                  "raw": "float",
+                },
+              ],
+            },
+            "value": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "variadic": false,
+          },
+          Parameter {
+            "attrGroups": Array [],
+            "byref": false,
+            "flags": 0,
+            "kind": "parameter",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "b",
+            },
+            "nullable": false,
+            "readonly": false,
+            "type": IntersectionType {
+              "kind": "intersectiontype",
+              "name": null,
+              "types": Array [
+                Name {
+                  "kind": "name",
+                  "name": "Foo",
+                  "resolution": "uqn",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "Bar",
+                  "resolution": "uqn",
+                },
+              ],
+            },
+            "value": null,
+            "variadic": false,
+          },
+        ],
+        "attrGroups": Array [],
+        "body": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\"",
+          "unicode": false,
+          "value": "",
+        },
+        "byref": false,
+        "isStatic": false,
+        "kind": "arrowfunc",
+        "nullable": false,
+        "type": IntersectionType {
+          "kind": "intersectiontype",
+          "name": null,
+          "types": Array [
+            TypeReference {
+              "kind": "typereference",
+              "name": "string",
+              "raw": "string",
+            },
+            TypeReference {
+              "kind": "typereference",
+              "name": "int",
+              "raw": "int",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
   "kind": "program",
 }
 `;

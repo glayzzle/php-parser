@@ -35,6 +35,7 @@ const Parser = function (lexer, ast) {
   this.EOF = lexer.EOF;
   this.token = null;
   this.prev = null;
+  this.previous_token = null;
   this.debug = false;
   this.version = 801;
   this.extractDoc = false;
@@ -589,6 +590,8 @@ Parser.prototype.text = function () {
  * @memberOf module:php-parser
  */
 Parser.prototype.next = function () {
+  this.previous_token = this.token;
+
   // prepare the back command
   if (this.token !== ";" || this.lexer.yytext === ";") {
     // ignore '?>' from automated resolution
