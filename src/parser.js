@@ -627,6 +627,17 @@ Parser.prototype.next = function () {
 };
 
 /**
+ * Peek at the next token.
+ * @returns string|number Next Token
+ */
+Parser.prototype.peek = function () {
+  const lexerState = this.lexer.getState();
+  const nextToken = this.lexer.lex();
+  this.lexer.setState(lexerState);
+  return nextToken;
+};
+
+/**
  * Eating a token
  * @function Parser#lex
  * @memberOf module:php-parser

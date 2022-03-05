@@ -32,6 +32,48 @@ describe("Function tests", function () {
     expect(ast).toMatchSnapshot();
   });
 
+  it("test function intersection types", function () {
+    const ast = parser.parseEval(
+      `
+      function foo(int&float $a = 1, Foo&Bar $b) : string&int {}
+      `
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("test short function intersection types", function () {
+    const ast = parser.parseEval(
+      `
+      fn (int&float $a = 1, Foo&Bar $b) : string&int => "";
+      `
+    );
+    expect(ast).toMatchSnapshot();
+  });
+
+  it("array pass by reference are not confused with intersection", function () {
+    expect(
+      parser.parseEval(
+        `
+      function foo(array &$params)  {
+        // inner comment
+      }
+      `
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("spread array pass by reference are not intersection", function () {
+    expect(
+      parser.parseEval(
+        `
+      function &foo(array &$params) {
+        // inner comment
+      }
+      `
+      )
+    ).toMatchSnapshot();
+  });
+
   it("implement #113 : typehint nodes", function () {
     expect(
       parser.parseEval(
