@@ -77,6 +77,7 @@ declare module "php-parser" {
      * Defines a boolean value (true/false)
      */
     class Boolean extends Literal {
+        value: boolean;
     }
     /**
      * A break statement
@@ -95,7 +96,7 @@ declare module "php-parser" {
      */
     class Call extends Expression {
         what: Identifier | Variable;
-        arguments: Variable[];
+        arguments: Expression[];
     }
     /**
      * A switch case statement
@@ -120,9 +121,9 @@ declare module "php-parser" {
      * Defines a catch statement
      */
     class Catch extends Statement {
-        what: Identifier[];
+        what: Name[];
         variable: Variable;
-        body: Statement;
+        body: Block;
     }
     /**
      * A class definition
@@ -245,14 +246,14 @@ declare module "php-parser" {
          * ```
          */
         readonly MODE_NONE: string;
-        directives: any[][];
+        directives: DeclareDirective[];
         mode: string;
     }
     /**
      * Defines a constant
      */
     class DeclareDirective extends Node {
-        name: Identifier;
+        key: Identifier;
         value: Node | string | number | boolean | null;
     }
     /**
@@ -260,13 +261,14 @@ declare module "php-parser" {
      */
     class Do extends Statement {
         test: Expression;
-        body: Statement | null;
+        body: Block | null;
     }
     /**
      * Defines system based call
      */
     class Echo extends Statement {
         shortForm: boolean;
+        expressions: Expression[];
     }
     /**
      * Defines an empty check call
@@ -322,13 +324,14 @@ declare module "php-parser" {
          * The heredoc label, defined only when the type is heredoc
         */
         label: string | null;
+        value: EncapsedPart[];
     }
     /**
      * Part of `Encapsed` node
      */
     class EncapsedPart extends Expression {
         expression: Expression;
-        syntax: string;
+        syntax: string; // TODO: limit possiblities
         curly: boolean;
     }
     /**
@@ -397,7 +400,7 @@ declare module "php-parser" {
         init: Expression[];
         test: Expression[];
         increment: Expression[];
-        body: Statement | null;
+        body: Block | null;
         shortForm: boolean;
     }
     /**
@@ -407,7 +410,7 @@ declare module "php-parser" {
         source: Expression;
         key: Expression | null;
         value: Expression;
-        body: Statement | null;
+        body: Block | null;
         shortForm: boolean;
     }
     /**
@@ -469,6 +472,7 @@ declare module "php-parser" {
      * Defines inline html output (treated as echo output)
      */
     class Inline extends Literal {
+        value: string;
     }
     /**
      * An interface definition
@@ -493,6 +497,7 @@ declare module "php-parser" {
      */
     class List extends Expression {
         shortForm: boolean;
+        items: Entry[];
     }
     /**
      * Defines an array structure
@@ -606,6 +611,7 @@ declare module "php-parser" {
     class NowDoc extends Literal {
         label: string;
         raw: string;
+        value: string;
     }
     /**
      * Represents the null keyword
@@ -616,6 +622,7 @@ declare module "php-parser" {
      * Defines a numeric value
      */
     class Number extends Literal {
+        value: number;
     }
     /**
      * Lookup on an offset in an array
@@ -768,6 +775,7 @@ declare module "php-parser" {
     class String extends Literal {
         unicode: boolean;
         isDoubleQuote: boolean;
+        value: string;
     }
     /**
      * Defines a switch statement
@@ -907,7 +915,7 @@ declare module "php-parser" {
      */
     class While extends Statement {
         test: Expression;
-        body: Statement | null;
+        body: Block | null;
         shortForm: boolean;
     }
     /**
