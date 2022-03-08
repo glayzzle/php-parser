@@ -90,4 +90,10 @@ describe("Test enums", function () {
       `);
     }).toThrowErrorMatchingSnapshot();
   });
+
+  it("should not treat enum as reserved word before php 8.1", function () {
+    expect(
+      parser.parseEval(`class Enum {}`, { parser: { version: "8.0" } })
+    ).toMatchSnapshot();
+  });
 });
