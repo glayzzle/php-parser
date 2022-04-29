@@ -287,29 +287,55 @@ module.exports = {
     return result;
   },
   read_types() {
+    const MODE_UNSET = "unset";
+    const MODE_UNION = "union";
+    const MODE_INTERSECTION = "intersection";
+
     const types = [];
-    let isIntersection = false;
+    let mode = MODE_UNSET;
     const type = this.read_type();
     if (!type) return null;
+
+    // we have matched a single type
     types.push(type);
+
+    // is the current token a:
+    // - | for union type
+    // - & for intersection type (> php 8.1)
     while (this.token === "|" || (this.version >= 801 && this.token === "&")) {
-      if (this.token === "&") {
-        isIntersection = true;
-        const nextToken = this.peek();
+      const nextToken = this.peek();
+
+      if (
+        nextToken === this.tok.T_ELLIPSIS ||
+        nextToken === this.tok.T_VARIABLE
+      ) {
+        // the next token is part of the variable (or the variable itself),
+        // we're not gonna match anymore types
+        break;
+      }
+
+      if (mode === MODE_UNSET) {
+        // are we in union or intersection "mode"
+        mode = this.token === "|" ? MODE_UNION : MODE_INTERSECTION;
+      } else {
+        // it is not possible to mix "modes"
         if (
-          nextToken === this.tok.T_ELLIPSIS ||
-          nextToken === this.tok.T_VARIABLE
+          (mode === MODE_UNION && this.token !== "|") ||
+          (mode === MODE_INTERSECTION && this.token !== "&")
         ) {
-          break;
+          this.raiseError(
+            'Unexpect token "' + this.token + '", "|" and "&" can not be mixed'
+          );
         }
       }
+
       this.next();
       types.push(this.read_type());
     }
     if (types.length === 1) {
       return types[0];
     } else {
-      return isIntersection
+      return mode === MODE_INTERSECTION
         ? this.node("intersectiontype")(types)
         : this.node("uniontype")(types);
     }
