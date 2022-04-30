@@ -65,6 +65,31 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse params with bitwise operations", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(Att1::FOO | Att1::BAR)]
+        #[Att2(Att2::FOO & Att2::BAR)]
+        #[Att2(Att2::FOO ^ Att2::BAR)]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
+  it("can parse params with logical operations", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(Att1::FOO || Att1::BAR)]
+        #[Att2(Att2::FOO && Att2::BAR)]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
   it("can parse params with end characters", () => {
     expect(
       parser.parseEval(`
