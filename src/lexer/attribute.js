@@ -32,6 +32,10 @@ module.exports = {
       case "|":
       case "&":
       case "^":
+      case "-":
+      case "+":
+      case "*":
+      case "%":
         return this.consume_TOKEN();
       case "[":
         listDepth++;
@@ -48,6 +52,8 @@ module.exports = {
         } else if (this._input[this.offset] === "*") {
           this.input();
           return this.T_DOC_COMMENT();
+        } else {
+          return this.consume_TOKEN();
         }
     }
     if (this.is_LABEL_START() || ch === "\\") {

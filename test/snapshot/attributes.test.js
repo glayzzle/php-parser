@@ -65,6 +65,17 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse params with mathematical expressions", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(-20 * (+10 / 5) % 2 + 8 ** 2 - +-2)]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
   it("can parse params with bitwise operations", () => {
     expect(
       parser.parseEval(
