@@ -57,6 +57,14 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse params with argument labels", () => {
+    expect(
+      parser.parseEval(`
+    #[MyAttribute(value: 1234)]
+    function a() {}
+    `)
+    ).toMatchSnapshot();
+  });
   it("can parse params with end characters", () => {
     expect(
       parser.parseEval(`
