@@ -428,13 +428,6 @@ module.exports = {
         result.destroy();
         return this.read_namespace_name();
       }
-    } else if (
-      this.token === this.tok.T_NAMESPACE ||
-      this.token === this.tok.T_NS_SEPARATOR
-    ) {
-      // fix : destroy not consumed node (release comments)
-      result.destroy();
-      return this.read_namespace_name();
     }
     // fix : destroy not consumed node (release comments)
     result.destroy();
