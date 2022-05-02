@@ -40,4 +40,23 @@ describe("useitem", () => {
       parser.parseEval("use const My\\Full\\CONSTANT as MY_CONST;")
     ).toMatchSnapshot();
   });
+  it("invalid use", () => {
+    expect(
+      parser.parseEval(
+        `use function $foo;
+        use const namespace\\{
+          FOO,
+          BAR,
+        };
+        use some\\{
+          namespace\\foo,
+          $error,
+          function $bar,
+        };`,
+        {
+          parser: { suppressErrors: true },
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
