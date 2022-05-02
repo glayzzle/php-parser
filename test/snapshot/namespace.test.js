@@ -90,6 +90,7 @@ describe("Test namespace statements", function () {
         `
       namespace\\enum();
       \\foo\\trait\\class();
+      use \\foo\\bar\\{ a, b };
       $var = namespace\\bar;
     `,
         {
@@ -98,6 +99,16 @@ describe("Test namespace statements", function () {
           },
         }
       )
+    ).toMatchSnapshot();
+  });
+
+  it("test bare namespace separator", function () {
+    expect(
+      parser.parseEval(`\\`, {
+        parser: {
+          suppressErrors: true,
+        },
+      })
     ).toMatchSnapshot();
   });
 
