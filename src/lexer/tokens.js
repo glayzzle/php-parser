@@ -20,7 +20,7 @@ module.exports = {
       } else {
         id = this.tok.T_STRING;
         if (token === "b" || token === "B") {
-          const ch = this.input(1);
+          const ch = this.input();
           if (ch === '"') {
             return this.ST_DOUBLE_QUOTES();
           } else if (ch === "'") {
@@ -31,6 +31,32 @@ module.exports = {
         }
       }
     }
+
+    if (this.offset < this.size && id !== this.tok.T_YIELD_FROM) {
+      // If immediately followed by a backslash, this is a T_NAME_RELATIVE or T_NAME_QUALIFIED.
+      let ch = this.input();
+      if (ch === "\\") {
+        id =
+          token === "namespace"
+            ? this.tok.T_NAME_RELATIVE
+            : this.tok.T_NAME_QUALIFIED;
+        do {
+          if (this._input[this.offset] === "{") {
+            // e.g. when using group use statements, the last '\\' is followed by a '{'
+            this.input();
+            break;
+          }
+
+          this.consume_LABEL();
+          ch = this.input();
+        } while (ch === "\\");
+      }
+
+      if (ch) {
+        this.unput(1);
+      }
+    }
+
     return id;
   },
   // reads a custom token
@@ -71,6 +97,29 @@ module.exports = {
       return "-";
     },
     "\\": function () {
+      if (this.offset < this.size) {
+        this.input();
+        if (this.is_LABEL_START()) {
+          let ch;
+          do {
+            if (this._input[this.offset] === "{") {
+              // e.g. when using group use statements, the last '\\' is followed by a '{'
+              this.input();
+              break;
+            }
+
+            this.consume_LABEL();
+            ch = this.input();
+          } while (ch === "\\");
+
+          console.log(ch);
+          this.unput(1);
+
+          return this.tok.T_NAME_FULLY_QUALIFIED;
+        } else {
+          this.unput(1);
+        }
+      }
       return this.tok.T_NS_SEPARATOR;
     },
     "/": function () {
