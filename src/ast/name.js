@@ -18,18 +18,10 @@ const KIND = "name";
  */
 const Name = Reference.extends(
   KIND,
-  function Name(name, isRelative, docs, location) {
+  function Name(name, resolution, docs, location) {
     Reference.apply(this, [KIND, docs, location]);
-    if (isRelative) {
-      this.resolution = Name.RELATIVE_NAME;
-    } else if (name.length === 1) {
-      this.resolution = Name.UNQUALIFIED_NAME;
-    } else if (!name[0]) {
-      this.resolution = Name.FULL_QUALIFIED_NAME;
-    } else {
-      this.resolution = Name.QUALIFIED_NAME;
-    }
-    this.name = name.join("\\");
+    this.name = name.replace(/\\$/, "");
+    this.resolution = resolution;
   }
 );
 

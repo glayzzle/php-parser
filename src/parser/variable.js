@@ -38,6 +38,9 @@ module.exports = {
       this.is([
         this.tok.T_NS_SEPARATOR,
         this.tok.T_STRING,
+        this.tok.T_NAME_RELATIVE,
+        this.tok.T_NAME_QUALIFIED,
+        this.tok.T_NAME_FULLY_QUALIFIED,
         this.tok.T_NAMESPACE,
       ])
     ) {
