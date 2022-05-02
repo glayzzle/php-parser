@@ -23,7 +23,7 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE) && this.next();
     let name;
 
-    if (this.token == "{") {
+    if (this.token === "{") {
       name = {
         name: [""],
       };
@@ -32,12 +32,12 @@ module.exports = {
     }
     this.currentNamespace = name;
 
-    if (this.token == ";") {
+    if (this.token === ";") {
       this.currentNamespace = name;
       body = this.next().read_top_statements();
       this.expect(this.EOF);
       return result(name.name, body, false);
-    } else if (this.token == "{") {
+    } else if (this.token === "{") {
       this.currentNamespace = name;
       body = this.next().read_top_statements();
       this.expect("}") && this.next();
@@ -49,12 +49,6 @@ module.exports = {
         body.push(this.node("noop")());
       }
       return result(name.name, body, true);
-    } else if (this.token === "(") {
-      // @fixme after merging #478
-      name.resolution = this.ast.reference.RELATIVE_NAME;
-      name.name = name.name.substring(1);
-      result.destroy();
-      return this.node("call")(name, this.read_argument_list());
     } else {
       this.error(["{", ";"]);
       // graceful mode :
