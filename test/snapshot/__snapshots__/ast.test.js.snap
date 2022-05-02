@@ -529,6 +529,62 @@ Program {
 }
 `;
 
+exports[`Test AST structure test invalid namespace separator 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Error {
+        "expected": "SCALAR",
+        "kind": "error",
+        "line": 1,
+        "message": "Parse Error : syntax error, unexpected '\\\\' (T_NS_SEPARATOR) on line 1",
+        "token": "'\\\\' (T_NS_SEPARATOR)",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+ !",
+      "value": " !",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "SCALAR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '\\\\' (T_NS_SEPARATOR) on line 1",
+      "token": "'\\\\' (T_NS_SEPARATOR)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '$var' (T_VARIABLE), expecting ';' on line 1",
+      "token": "'$var' (T_VARIABLE)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Test AST structure test magics 1`] = `
 Program {
   "children": Array [

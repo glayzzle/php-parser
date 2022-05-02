@@ -56,6 +56,14 @@ describe("Test AST structure", function () {
     expect(parser.parseCode("<?php echo 'World'; ?>\r\n !")).toMatchSnapshot();
   });
 
+  it("test invalid namespace separator", function () {
+    expect(
+      parser.parseCode("<?php \\$var = 1; ?>\r\n !", {
+        parser: { suppressErrors: true },
+      })
+    ).toMatchSnapshot();
+  });
+
   it("test magics", function () {
     expect(parser.parseEval("echo __FILE__, __DIR__;")).toMatchSnapshot();
   });

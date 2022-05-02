@@ -130,7 +130,6 @@ const Parser = function (lexer, ast) {
         this.tok.T_VARIABLE,
         "$",
         "&",
-        this.tok.T_NS_SEPARATOR,
         this.tok.T_STRING,
         this.tok.T_NAME_RELATIVE,
         this.tok.T_NAME_QUALIFIED,
