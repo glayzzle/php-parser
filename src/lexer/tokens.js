@@ -112,7 +112,6 @@ module.exports = {
             ch = this.input();
           } while (ch === "\\");
 
-          console.log(ch);
           this.unput(1);
 
           return this.tok.T_NAME_FULLY_QUALIFIED;
