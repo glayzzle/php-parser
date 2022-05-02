@@ -84,6 +84,23 @@ describe("Test namespace statements", function () {
     ).toMatchSnapshot();
   });
 
+  it("test keywords", function () {
+    expect(
+      parser.parseEval(
+        `
+      namespace\\enum();
+      \\foo\\trait\\class();
+      $var = namespace\\bar;
+    `,
+        {
+          parser: {
+            debug: false,
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
   it("test namespace error", function () {
     expect(
       parser.parseEval(
