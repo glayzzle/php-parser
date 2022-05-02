@@ -402,20 +402,21 @@ AST.prototype.prepare = function (kind, docs, parser) {
       result.postBuild(astNode);
     }
     if (parser.debug) {
-      delete AST.stack[result.stackUid];
+      delete self.stack[result.stackUid];
     }
     return self.resolvePrecedence(astNode, parser);
   };
   if (parser.debug) {
-    if (!AST.stack) {
-      AST.stack = {};
-      AST.stackUid = 1;
+    if (!this.stack) {
+      this.stack = {};
+      this.stackUid = 1;
     }
-    AST.stack[++AST.stackUid] = {
+    this.stack[++this.stackUid] = {
       position: start,
       stack: new Error().stack.split("\n").slice(3, 5),
     };
-    result.stackUid = AST.stackUid;
+    result.stackUid = this.stackUid;
+    // console.trace("node: ", kind, result.stackUid);
   }
 
   /**
@@ -451,7 +452,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
       }
     }
     if (parser.debug) {
-      delete AST.stack[result.stackUid];
+      delete self.stack[result.stackUid];
     }
   };
   return result;
@@ -459,12 +460,13 @@ AST.prototype.prepare = function (kind, docs, parser) {
 
 AST.prototype.checkNodes = function () {
   const errors = [];
-  for (const k in AST.stack) {
-    if (Object.prototype.hasOwnProperty.call(AST.stack, k)) {
-      errors.push(AST.stack[k]);
+  for (const k in this.stack) {
+    if (Object.prototype.hasOwnProperty.call(this.stack, k)) {
+      this.stack[k].key = k;
+      errors.push(this.stack[k]);
     }
   }
-  AST.stack = {};
+  this.stack = {};
   return errors;
 };
 
