@@ -82,7 +82,10 @@ describe("Parse Attributes", () => {
         `
         #[Att1(Att1::FOO | Att1::BAR)]
         #[Att2(Att2::FOO & Att2::BAR)]
-        #[Att2(Att2::FOO ^ Att2::BAR)]
+        #[Att3(Att3::FOO ^ Att3::BAR)]
+        #[Att4(~ Att4::BAR)]
+        #[Att5(Att5::BAR >> 1)]
+        #[Att6(Att6::BAR << 1)]
         class A {}
         `,
         { parser: { extractDoc: true } }
