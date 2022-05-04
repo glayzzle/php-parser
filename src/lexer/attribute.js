@@ -36,6 +36,9 @@ module.exports = {
       case "+":
       case "*":
       case "%":
+      case "~":
+      case "<":
+      case ">":
         return this.consume_TOKEN();
       case "[":
         listDepth++;
