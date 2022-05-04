@@ -1832,3 +1832,150 @@ Program {
   "kind": "program",
 }
 `;
+
+exports[`Parse Attributes parses this complicated edge case 1`] = `
+Program {
+  "children": Array [
+    UseGroup {
+      "items": Array [
+        UseItem {
+          "alias": Identifier {
+            "kind": "identifier",
+            "name": "Assert",
+          },
+          "kind": "useitem",
+          "name": "Symfony\\\\Component\\\\Validator\\\\Constraints",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": null,
+      "type": null,
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [
+                AttrGroup {
+                  "attrs": Array [
+                    Attribute {
+                      "args": Array [
+                        namedargument {
+                          "kind": "namedargument",
+                          "name": "allowNull",
+                          "value": Boolean {
+                            "kind": "boolean",
+                            "raw": "false",
+                            "value": false,
+                          },
+                        },
+                        namedargument {
+                          "kind": "namedargument",
+                          "name": "groups",
+                          "value": Array {
+                            "items": Array [
+                              Entry {
+                                "byRef": false,
+                                "key": null,
+                                "kind": "entry",
+                                "unpack": false,
+                                "value": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "'foo'",
+                                  "unicode": false,
+                                  "value": "foo",
+                                },
+                              },
+                            ],
+                            "kind": "array",
+                            "shortForm": true,
+                          },
+                        },
+                      ],
+                      "kind": "attribute",
+                      "name": "Assert\\\\NotBlank",
+                    },
+                    Attribute {
+                      "args": Array [
+                        namedargument {
+                          "kind": "namedargument",
+                          "name": "max",
+                          "value": Number {
+                            "kind": "number",
+                            "value": "255",
+                          },
+                        },
+                        namedargument {
+                          "kind": "namedargument",
+                          "name": "groups",
+                          "value": Array {
+                            "items": Array [
+                              Entry {
+                                "byRef": false,
+                                "key": null,
+                                "kind": "entry",
+                                "unpack": false,
+                                "value": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "'foo'",
+                                  "unicode": false,
+                                  "value": "foo",
+                                },
+                              },
+                            ],
+                            "kind": "array",
+                            "shortForm": true,
+                          },
+                        },
+                      ],
+                      "kind": "attribute",
+                      "name": "Assert\\\\Length",
+                    },
+                  ],
+                  "kind": "attrgroup",
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "value",
+              },
+              "nullable": true,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "ValueModel",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

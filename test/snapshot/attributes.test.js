@@ -252,6 +252,24 @@ describe("Parse Attributes", () => {
     ).toMatchSnapshot();
   });
 
+  it("parses this complicated edge case", () => {
+    expect(
+      parser.parseEval(
+        `
+        use Symfony\\Component\\Validator\\Constraints as Assert;
+
+        class ValueModel
+        {
+            #[
+                Assert\\NotBlank(allowNull: false, groups: ['foo']),
+                Assert\\Length(max: 255, groups: ['foo']),
+            ]
+            public ?string $value = null;
+        }`
+      )
+    ).toMatchSnapshot();
+  });
+
   it("doesnt parse attributes for assignments", () => {
     expect(
       parser.parseEval(
