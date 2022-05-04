@@ -98,6 +98,10 @@ describe("Parse Attributes", () => {
         `
         #[Att1(Att1::FOO || Att1::BAR)]
         #[Att2(Att2::FOO && Att2::BAR)]
+        #[Att3(Att3::FOO or Att3::BAR)]
+        #[Att4(Att4::FOO and Att4::BAR)]
+        #[Att5(Att5::FOO xor Att5::BAR)]
+        #[Att6(!Att6::FOO)]
         class A {}
         `,
         { parser: { extractDoc: true } }
