@@ -39,6 +39,7 @@ module.exports = {
       case "~":
       case "<":
       case ">":
+      case "!":
         return this.consume_TOKEN();
       case "[":
         listDepth++;
@@ -67,7 +68,7 @@ module.exports = {
           break;
         }
       }
-      return this.tok.T_STRING;
+      return this.T_STRING();
     } else if (this.is_NUM()) {
       return this.consume_NUM();
     }
