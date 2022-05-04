@@ -6,8 +6,9 @@
 "use strict";
 
 module.exports = {
+  attributeIndex: 0,
+  attributeListDepth: {},
   matchST_ATTRIBUTE: function () {
-    let listDepth = 0;
     let ch = this.input();
     if (this.is_WHITESPACE()) {
       do {
@@ -18,11 +19,13 @@ module.exports = {
     }
     switch (ch) {
       case "]":
-        if (listDepth === 0) {
+        if (this.attributeListDepth[this.attributeIndex] === 0) {
+          delete this.attributeListDepth[this.attributeIndex];
+          this.attributeIndex--;
           this.popState();
         } else {
           /* istanbul ignore next */
-          listDepth--;
+          this.attributeListDepth[this.attributeIndex]--;
         }
         return "]";
       case "(":
@@ -42,7 +45,7 @@ module.exports = {
       case "!":
         return this.consume_TOKEN();
       case "[":
-        listDepth++;
+        this.attributeListDepth[this.attributeIndex]++;
         return "[";
       case ",":
         return ",";
