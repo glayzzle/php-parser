@@ -57,6 +57,57 @@ describe("Parse Attributes", () => {
     `)
     ).toMatchSnapshot();
   });
+  it("can parse params with argument labels", () => {
+    expect(
+      parser.parseEval(`
+    #[MyAttribute(value: 1234)]
+    function a() {}
+    `)
+    ).toMatchSnapshot();
+  });
+  it("can parse params with mathematical expressions", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(-20 * (+10 / 5) % 2 + 8 ** 2 - +-2)]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
+  it("can parse params with bitwise operations", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(Att1::FOO | Att1::BAR)]
+        #[Att2(Att2::FOO & Att2::BAR)]
+        #[Att3(Att3::FOO ^ Att3::BAR)]
+        #[Att4(~ Att4::BAR)]
+        #[Att5(Att5::BAR >> 1)]
+        #[Att6(Att6::BAR << 1)]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
+  it("can parse params with logical operations", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(Att1::FOO || Att1::BAR)]
+        #[Att2(Att2::FOO && Att2::BAR)]
+        #[Att3(Att3::FOO or Att3::BAR)]
+        #[Att4(Att4::FOO and Att4::BAR)]
+        #[Att5(Att5::FOO xor Att5::BAR)]
+        #[Att6(!Att6::FOO)]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
   it("can parse params with end characters", () => {
     expect(
       parser.parseEval(`
@@ -197,6 +248,24 @@ describe("Parse Attributes", () => {
             extractDoc: true,
           },
         }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("parses this complicated edge case", () => {
+    expect(
+      parser.parseEval(
+        `
+        use Symfony\\Component\\Validator\\Constraints as Assert;
+
+        class ValueModel
+        {
+            #[
+                Assert\\NotBlank(allowNull: false, groups: ['foo']),
+                Assert\\Length(max: 255, groups: ['foo']),
+            ]
+            public ?string $value = null;
+        }`
       )
     ).toMatchSnapshot();
   });

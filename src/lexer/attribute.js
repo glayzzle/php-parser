@@ -6,8 +6,9 @@
 "use strict";
 
 module.exports = {
+  attributeIndex: 0,
+  attributeListDepth: {},
   matchST_ATTRIBUTE: function () {
-    let listDepth = 0;
     let ch = this.input();
     if (this.is_WHITESPACE()) {
       do {
@@ -18,20 +19,33 @@ module.exports = {
     }
     switch (ch) {
       case "]":
-        if (listDepth === 0) {
+        if (this.attributeListDepth[this.attributeIndex] === 0) {
+          delete this.attributeListDepth[this.attributeIndex];
+          this.attributeIndex--;
           this.popState();
         } else {
           /* istanbul ignore next */
-          listDepth--;
+          this.attributeListDepth[this.attributeIndex]--;
         }
         return "]";
       case "(":
       case ")":
       case ":":
       case "=":
+      case "|":
+      case "&":
+      case "^":
+      case "-":
+      case "+":
+      case "*":
+      case "%":
+      case "~":
+      case "<":
+      case ">":
+      case "!":
         return this.consume_TOKEN();
       case "[":
-        listDepth++;
+        this.attributeListDepth[this.attributeIndex]++;
         return "[";
       case ",":
         return ",";
@@ -45,6 +59,8 @@ module.exports = {
         } else if (this._input[this.offset] === "*") {
           this.input();
           return this.T_DOC_COMMENT();
+        } else {
+          return this.consume_TOKEN();
         }
     }
     if (this.is_LABEL_START() || ch === "\\") {
@@ -55,7 +71,7 @@ module.exports = {
           break;
         }
       }
-      return this.tok.T_STRING;
+      return this.T_STRING();
     } else if (this.is_NUM()) {
       return this.consume_NUM();
     }

@@ -18,6 +18,7 @@ module.exports = {
       case "#":
         if (this.version >= 800 && this._input[this.offset] === "[") {
           this.input();
+          this.attributeListDepth[++this.attributeIndex] = 0;
           this.begin("ST_ATTRIBUTE");
           return this.tok.T_ATTRIBUTE;
         }
