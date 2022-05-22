@@ -35,4 +35,14 @@ describe("usegroup", () => {
       )
     ).toMatchSnapshot();
   });
+  it("nested 4", () => {
+    expect(
+      parser.parseEval(
+        `use Vendor\\Package\\SomeNamespace\\{
+            SubnamespaceOne\\ClassA,
+            SubnamespaceOne\\ClassB
+        };`
+      )
+    ).toMatchSnapshot();
+  });
 });
