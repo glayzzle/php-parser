@@ -416,7 +416,6 @@ AST.prototype.prepare = function (kind, docs, parser) {
       stack: new Error().stack.split("\n").slice(3, 5),
     };
     result.stackUid = this.stackUid;
-    // console.trace("node: ", kind, result.stackUid);
   }
 
   /**
