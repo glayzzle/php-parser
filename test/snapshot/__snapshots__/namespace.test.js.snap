@@ -1143,6 +1143,102 @@ Program {
 }
 `;
 
+exports[`Test namespace statements test bare namespace separator 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Error {
+        "expected": "SCALAR",
+        "kind": "error",
+        "line": 1,
+        "message": "Parse Error : syntax error, unexpected '\\\\' (T_NS_SEPARATOR) on line 1",
+        "token": "'\\\\' (T_NS_SEPARATOR)",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "SCALAR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '\\\\' (T_NS_SEPARATOR) on line 1",
+      "token": "'\\\\' (T_NS_SEPARATOR)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test namespace statements test keywords 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "enum",
+          "resolution": "rn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "\\\\foo\\\\trait\\\\class",
+          "resolution": "fqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    UseGroup {
+      "items": Array [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "a",
+          "type": null,
+        },
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "b",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": "\\\\foo\\\\bar",
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "var",
+        },
+        "operator": "=",
+        "right": Name {
+          "kind": "name",
+          "name": "bar",
+          "resolution": "rn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test namespace statements test multiple namespace 1`] = `
 Program {
   "children": Array [
@@ -1250,14 +1346,17 @@ Program {
 exports[`Test namespace statements test namespace keyword 1`] = `
 Program {
   "children": Array [
-    Call {
-      "arguments": Array [],
-      "kind": "call",
-      "what": Name {
-        "kind": "name",
-        "name": "foo",
-        "resolution": undefined,
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "rn",
+        },
       },
+      "kind": "expressionstatement",
     },
     ExpressionStatement {
       "expression": Assign {

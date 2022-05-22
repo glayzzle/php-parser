@@ -784,6 +784,9 @@ module.exports = {
   read_new_class_name: function () {
     if (
       this.token === this.tok.T_NS_SEPARATOR ||
+      this.token === this.tok.T_NAME_RELATIVE ||
+      this.token === this.tok.T_NAME_QUALIFIED ||
+      this.token === this.tok.T_NAME_FULLY_QUALIFIED ||
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_NAMESPACE
     ) {

@@ -84,6 +84,34 @@ describe("Test namespace statements", function () {
     ).toMatchSnapshot();
   });
 
+  it("test keywords", function () {
+    expect(
+      parser.parseEval(
+        `
+      namespace\\enum();
+      \\foo\\trait\\class();
+      use \\foo\\bar\\{ a, b };
+      $var = namespace\\bar;
+    `,
+        {
+          parser: {
+            debug: false,
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  it("test bare namespace separator", function () {
+    expect(
+      parser.parseEval(`\\`, {
+        parser: {
+          suppressErrors: true,
+        },
+      })
+    ).toMatchSnapshot();
+  });
+
   it("test namespace error", function () {
     expect(
       parser.parseEval(

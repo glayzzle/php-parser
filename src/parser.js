@@ -130,8 +130,10 @@ const Parser = function (lexer, ast) {
         this.tok.T_VARIABLE,
         "$",
         "&",
-        this.tok.T_NS_SEPARATOR,
         this.tok.T_STRING,
+        this.tok.T_NAME_RELATIVE,
+        this.tok.T_NAME_QUALIFIED,
+        this.tok.T_NAME_FULLY_QUALIFIED,
         this.tok.T_NAMESPACE,
         this.tok.T_STATIC,
       ].map(mapIt)
@@ -222,6 +224,9 @@ const Parser = function (lexer, ast) {
         "$",
         this.tok.T_NS_SEPARATOR,
         this.tok.T_STRING,
+        this.tok.T_NAME_RELATIVE,
+        this.tok.T_NAME_QUALIFIED,
+        this.tok.T_NAME_FULLY_QUALIFIED,
         // using SCALAR :
         this.tok.T_STRING, // @see variable.js line 45 > conflict with variable = shift/reduce :)
         this.tok.T_CONSTANT_ENCAPSED_STRING,

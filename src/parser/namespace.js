@@ -23,7 +23,7 @@ module.exports = {
     this.expect(this.tok.T_NAMESPACE) && this.next();
     let name;
 
-    if (this.token == "{") {
+    if (this.token === "{") {
       name = {
         name: [""],
       };
@@ -32,12 +32,12 @@ module.exports = {
     }
     this.currentNamespace = name;
 
-    if (this.token == ";") {
+    if (this.token === ";") {
       this.currentNamespace = name;
       body = this.next().read_top_statements();
       this.expect(this.EOF);
       return result(name.name, body, false);
-    } else if (this.token == "{") {
+    } else if (this.token === "{") {
       this.currentNamespace = name;
       body = this.next().read_top_statements();
       this.expect("}") && this.next();
@@ -49,12 +49,6 @@ module.exports = {
         body.push(this.node("noop")());
       }
       return result(name.name, body, true);
-    } else if (this.token === "(") {
-      // @fixme after merging #478
-      name.resolution = this.ast.reference.RELATIVE_NAME;
-      name.name = name.name.substring(1);
-      result.destroy();
-      return this.node("call")(name, this.read_argument_list());
     } else {
       this.error(["{", ";"]);
       // graceful mode :
@@ -74,28 +68,38 @@ module.exports = {
    */
   read_namespace_name: function (resolveReference) {
     const result = this.node();
-    let relative = false;
-    if (this.token === this.tok.T_NAMESPACE) {
-      this.next().expect(this.tok.T_NS_SEPARATOR) && this.next();
-      relative = true;
+    let resolution;
+    let name = this.text();
+    switch (this.token) {
+      case this.tok.T_NAME_RELATIVE:
+        resolution = this.ast.name.RELATIVE_NAME;
+        name = name.replace(/^namespace\\/, "");
+        break;
+      case this.tok.T_NAME_QUALIFIED:
+        resolution = this.ast.name.QUALIFIED_NAME;
+        break;
+      case this.tok.T_NAME_FULLY_QUALIFIED:
+        resolution = this.ast.name.FULL_QUALIFIED_NAME;
+        break;
+      default:
+        resolution = this.ast.name.UNQUALIFIED_NAME;
+        if (!this.expect(this.tok.T_STRING)) {
+          // graceful mode
+          return result("name", "", this.ast.name.FULL_QUALIFIED_NAME);
+        }
     }
-    const names = this.read_list(
-      this.tok.T_STRING,
-      this.tok.T_NS_SEPARATOR,
-      true
-    );
-    if (
-      !relative &&
-      names.length === 1 &&
-      (resolveReference || this.token !== "(")
-    ) {
-      if (names[0].toLowerCase() === "parent") {
-        return result("parentreference", names[0]);
-      } else if (names[0].toLowerCase() === "self") {
-        return result("selfreference", names[0]);
+
+    this.next();
+
+    if (resolveReference || this.token !== "(") {
+      if (name.toLowerCase() === "parent") {
+        return result("parentreference", name);
+      } else if (name.toLowerCase() === "self") {
+        return result("selfreference", name);
       }
     }
-    return result("name", names, relative);
+
+    return result("name", name, resolution);
   },
   /*
    * Reads a use statement
@@ -172,6 +176,9 @@ module.exports = {
           break;
         }
       } else if (
+        this.token !== this.tok.T_NAME_RELATIVE &&
+        this.token !== this.tok.T_NAME_QUALIFIED &&
+        this.token !== this.tok.T_NAME_FULLY_QUALIFIED &&
         this.token !== this.tok.T_STRING &&
         this.token !== this.tok.T_NS_SEPARATOR
       ) {

@@ -432,6 +432,9 @@ module.exports = {
       this.next();
       return result("typereference", type.toLowerCase(), type);
     } else if (
+      this.token === this.tok.T_NAME_RELATIVE ||
+      this.token === this.tok.T_NAME_QUALIFIED ||
+      this.token === this.tok.T_NAME_FULLY_QUALIFIED ||
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_STATIC
     ) {
@@ -451,13 +454,6 @@ module.exports = {
         result.destroy();
         return this.read_namespace_name();
       }
-    } else if (
-      this.token === this.tok.T_NAMESPACE ||
-      this.token === this.tok.T_NS_SEPARATOR
-    ) {
-      // fix : destroy not consumed node (release comments)
-      result.destroy();
-      return this.read_namespace_name();
     }
     // fix : destroy not consumed node (release comments)
     result.destroy();

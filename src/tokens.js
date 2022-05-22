@@ -156,6 +156,9 @@ const tokens = {
     238: "T_ATTRIBUTE",
     239: "T_ENUM",
     240: "T_READ_ONLY",
+    241: "T_NAME_RELATIVE",
+    242: "T_NAME_QUALIFIED",
+    243: "T_NAME_FULLY_QUALIFIED",
   },
   names: {
     T_HALT_COMPILER: 101,
@@ -298,6 +301,9 @@ const tokens = {
     T_ATTRIBUTE: 238,
     T_ENUM: 239,
     T_READ_ONLY: 240,
+    T_NAME_RELATIVE: 241,
+    T_NAME_QUALIFIED: 242,
+    T_NAME_FULLY_QUALIFIED: 243,
   },
 };
 
