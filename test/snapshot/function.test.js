@@ -231,4 +231,22 @@ describe("Function tests", function () {
     );
     expect(ast).toMatchSnapshot();
   });
+
+  test("first class callable support", function () {
+    expect(
+      parser.parseEval(
+        `
+        $callable = strlen(...);
+        $callable = $item->doSomething(...);
+        $callable = $item::doSomething(...);
+        $callable = Foo::doSomething(...);
+        `,
+        {
+          parser: {
+            version: "8.1",
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
