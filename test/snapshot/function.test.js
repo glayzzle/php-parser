@@ -231,4 +231,38 @@ describe("Function tests", function () {
     );
     expect(ast).toMatchSnapshot();
   });
+
+  test("first class callable support", function () {
+    expect(
+      parser.parseEval(
+        `
+        $callable = strlen(...);
+        $callable = $item->doSomething(...);
+        $callable = $item::doSomething(...);
+        $callable = Foo::doSomething(...);
+        `,
+        {
+          parser: {
+            version: "8.1",
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
+
+  test("first class callable support requires PHP 8.1+", function () {
+    expect(
+      parser.parseEval(
+        `
+        $callable = strlen(...);
+        `,
+        {
+          parser: {
+            suppressErrors: true,
+            version: "8.0",
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });

@@ -189,6 +189,186 @@ Program {
 }
 `;
 
+exports[`Function tests first class callable support 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callable",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            VariadicPlaceholder {
+              "kind": "variadicplaceholder",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strlen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callable",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            VariadicPlaceholder {
+              "kind": "variadicplaceholder",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "doSomething",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "item",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callable",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            VariadicPlaceholder {
+              "kind": "variadicplaceholder",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "doSomething",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "item",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callable",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            VariadicPlaceholder {
+              "kind": "variadicplaceholder",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "doSomething",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
+exports[`Function tests first class callable support requires PHP 8.1+ 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callable",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            variadic {
+              "kind": "variadic",
+              "what": undefined,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strlen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected ')' on line 2",
+      "token": "')'",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 2,
+      "message": "Parse Error : syntax error, unexpected ';', expecting ')' on line 2",
+      "token": "';'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`Function tests implement #113 : typehint nodes 1`] = `
 Program {
   "children": Array [

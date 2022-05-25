@@ -365,7 +365,14 @@ module.exports = {
   read_argument_list: function () {
     let result = [];
     this.expect("(") && this.next();
-    if (this.token !== ")") {
+    if (
+      this.version >= 801 &&
+      this.token === this.tok.T_ELLIPSIS &&
+      this.peek() === ")"
+    ) {
+      result.push(this.node("variadicplaceholder")());
+      this.next();
+    } else if (this.token !== ")") {
       result = this.read_non_empty_argument_list();
     }
     this.expect(")") && this.next();
