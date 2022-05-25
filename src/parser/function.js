@@ -365,7 +365,10 @@ module.exports = {
   read_argument_list: function () {
     let result = [];
     this.expect("(") && this.next();
-    if (this.token !== ")") {
+    if (this.token === this.tok.T_ELLIPSIS && this.peek() === ")") {
+      result.push(this.token);
+      this.next();
+    } else if (this.token !== ")") {
       result = this.read_non_empty_argument_list();
     }
     this.expect(")") && this.next();
