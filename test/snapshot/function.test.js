@@ -249,4 +249,20 @@ describe("Function tests", function () {
       )
     ).toMatchSnapshot();
   });
+
+  test("first class callable support requires PHP 8.1+", function () {
+    expect(
+      parser.parseEval(
+        `
+        $callable = strlen(...);
+        `,
+        {
+          parser: {
+            suppressErrors: true,
+            version: "8.0",
+          },
+        }
+      )
+    ).toMatchSnapshot();
+  });
 });
