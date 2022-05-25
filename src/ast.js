@@ -580,6 +580,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/useitem"),
   require("./ast/variable"),
   require("./ast/variadic"),
+  require("./ast/variadicplaceholder"),
   require("./ast/while"),
   require("./ast/yield"),
   require("./ast/yieldfrom"),
