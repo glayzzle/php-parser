@@ -21,7 +21,7 @@ module.exports = {
       this.next();
       return null;
     }
-    this.next().expect(this.tok.T_STRING);
+    this.next().expect([this.tok.T_STRING, this.tok.T_ENUM]);
     let propName = this.node("identifier");
     const name = this.text();
     this.next();
@@ -381,7 +381,7 @@ module.exports = {
       this.next();
       return null;
     }
-    this.next().expect(this.tok.T_STRING);
+    this.next().expect([this.tok.T_STRING, this.tok.T_ENUM]);
     let propName = this.node("identifier");
     const name = this.text();
     this.next();
@@ -465,7 +465,7 @@ module.exports = {
       this.next();
       return null;
     }
-    this.next().expect(this.tok.T_STRING);
+    this.next().expect([this.tok.T_STRING, this.tok.T_ENUM]);
     let propName = this.node("identifier");
     const name = this.text();
     this.next();

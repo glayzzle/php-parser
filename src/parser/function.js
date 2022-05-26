@@ -99,7 +99,10 @@ module.exports = {
         }
       } else {
         if (this.version >= 700) {
-          if (this.token === this.tok.T_STRING) {
+          if (
+            this.token === this.tok.T_STRING ||
+            this.token === this.tok.T_ENUM
+          ) {
             name = this.text();
             this.next();
           } else if (this.version >= 704) {
@@ -111,7 +114,7 @@ module.exports = {
             this.next();
           }
         } else {
-          if (this.expect(this.tok.T_STRING)) {
+          if (this.expect([this.tok.T_STRING, this.tok.T_ENUM])) {
             name = this.text();
           }
           this.next();

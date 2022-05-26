@@ -90,4 +90,15 @@ describe("Test enums", function () {
       `);
     }).toThrowErrorMatchingSnapshot();
   });
+
+  it("doesn't cause problems when used as identifier", function () {
+    expect(
+      parser.parseEval(`
+      class Enum { function enum () {} }
+      interface Enum {}
+      trait Enum {}
+      function enum() {}
+    `)
+    ).toMatchSnapshot();
+  });
 });
