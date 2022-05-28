@@ -33,6 +33,9 @@ module.exports = {
     }
 
     if (id === this.tok.T_ENUM) {
+      if (this.version < 801) {
+        return this.tok.T_STRING;
+      }
       const initial = this.offset;
       let ch = this.input();
       while (ch == " ") {

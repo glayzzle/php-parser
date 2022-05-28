@@ -101,4 +101,10 @@ describe("Test enums", function () {
     `)
     ).toMatchSnapshot();
   });
+
+  it("can't be parsed with PHP < 8", function () {
+    expect(() => {
+      parser.parseEval("enum Foo {}", { parser: { version: "8.0" } });
+    }).toThrowErrorMatchingSnapshot();
+  });
 });
