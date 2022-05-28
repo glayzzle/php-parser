@@ -32,6 +32,18 @@ module.exports = {
       }
     }
 
+    if (id === this.tok.T_ENUM) {
+      const initial = this.offset;
+      let ch = this.input();
+      while (ch == " ") {
+        ch = this.input();
+      }
+
+      const is_enum = this.is_LABEL_START();
+      this.unput(this.offset - initial);
+      return is_enum ? this.tok.T_ENUM : this.tok.T_STRING;
+    }
+
     if (this.offset < this.size && id !== this.tok.T_YIELD_FROM) {
       // If immediately followed by a backslash, this is a T_NAME_RELATIVE or T_NAME_QUALIFIED.
       let ch = this.input();
