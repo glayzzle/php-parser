@@ -32,6 +32,7 @@ module.exports = {
       }
     }
 
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1546
     if (id === this.tok.T_ENUM) {
       if (this.version < 801) {
         return this.tok.T_STRING;
@@ -41,10 +42,17 @@ module.exports = {
       while (ch == " ") {
         ch = this.input();
       }
+      let isEnum = false;
+      if (this.is_LABEL_START()) {
+        while (this.is_LABEL()) {
+          ch += this.input();
+        }
+        const label = ch.slice(0, -1).toLowerCase();
+        isEnum = label !== "extends" && label !== "implements";
+      }
 
-      const is_enum = this.is_LABEL_START();
       this.unput(this.offset - initial);
-      return is_enum ? this.tok.T_ENUM : this.tok.T_STRING;
+      return isEnum ? this.tok.T_ENUM : this.tok.T_STRING;
     }
 
     if (this.offset < this.size && id !== this.tok.T_YIELD_FROM) {

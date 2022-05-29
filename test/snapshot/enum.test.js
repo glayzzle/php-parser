@@ -91,13 +91,17 @@ describe("Test enums", function () {
     }).toThrowErrorMatchingSnapshot();
   });
 
-  it("doesn't cause problems when used as identifier", function () {
+  it("doesn't confuse enums with identifiers", function () {
     expect(
       parser.parseEval(`
       class Enum { function enum () {} }
       interface Enum {}
       trait Enum  {}
       function enum() {}
+      class Enum extends Foo {}
+      class Enum implements Foo {}
+      class Enum exTends Foo {}
+      enum extendsFoo {}
     `)
     ).toMatchSnapshot();
   });
