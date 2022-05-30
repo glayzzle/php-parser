@@ -275,7 +275,154 @@ Program {
 }
 `;
 
+exports[`Test enums can't be parsed with PHP < 8 1`] = `"Parse Error : syntax error, unexpected 'Foo' (T_STRING), expecting ';' on line 1"`;
+
 exports[`Test enums cannot have properties 1`] = `"Parse Error : syntax error, unexpected 'int' (T_STRING) on line 3"`;
+
+exports[`Test enums doesn't confuse enums with identifiers 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "enum",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Enum",
+      },
+    },
+    Interface {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": null,
+      "kind": "interface",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Enum",
+      },
+    },
+    Trait {
+      "body": Array [],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Enum",
+      },
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "enum",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": Name {
+        "kind": "name",
+        "name": "Foo",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Enum",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": null,
+      "implements": Array [
+        Name {
+          "kind": "name",
+          "name": "Foo",
+          "resolution": "uqn",
+        },
+      ],
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Enum",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": Name {
+        "kind": "name",
+        "name": "Foo",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Enum",
+      },
+    },
+    Enum {
+      "attrGroups": Array [],
+      "body": Array [],
+      "implements": null,
+      "kind": "enum",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "extendsFoo",
+      },
+      "valueType": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
 
 exports[`Test enums empty 1`] = `
 Program {
