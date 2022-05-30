@@ -90,4 +90,25 @@ describe("Test enums", function () {
       `);
     }).toThrowErrorMatchingSnapshot();
   });
+
+  it("doesn't confuse enums with identifiers", function () {
+    expect(
+      parser.parseEval(`
+      class Enum { function enum () {} }
+      interface Enum {}
+      trait Enum  {}
+      function enum() {}
+      class Enum extends Foo {}
+      class Enum implements Foo {}
+      class Enum exTends Foo {}
+      enum extendsFoo {}
+    `)
+    ).toMatchSnapshot();
+  });
+
+  it("can't be parsed with PHP < 8", function () {
+    expect(() => {
+      parser.parseEval("enum Foo {}", { parser: { version: "8.0" } });
+    }).toThrowErrorMatchingSnapshot();
+  });
 });
