@@ -14,7 +14,7 @@ include_once 'foo.php';
 namespace foo\\bar {
   ?>Hello<?php
   # single line comment
-  use function foo {
+  use function foo\\{
     // sample code
     baz,
     // with alias

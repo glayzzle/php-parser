@@ -122,7 +122,9 @@ module.exports = {
     items.push(this.read_use_declaration(false));
     if (this.token === ",") {
       items = items.concat(this.next().read_use_declarations(false));
-    } else if (this.token === "{") {
+    } else if (this.token === this.tok.T_NS_SEPARATOR) {
+      this.next();
+      this.expect("{");
       name = items[0].name;
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();

@@ -26,11 +26,11 @@ describe("Test namespace statements", function () {
         use bar\\baz as barBaz;
         use const bar\\baz as barBaz, baz\\boo as bazBoo;
         use function bar\\baz as barBaz, baz\\boo as bazBoo;
-        use bar\\baz {
+        use bar\\baz\\{
            const FOO as BAZ_FOO,
            function BOO as BAZ_BOO
         };
-        use const azerty {
+        use const azerty\\{
            A as AZERTY_A,
            B as AZERTY_B
         };
@@ -103,13 +103,7 @@ describe("Test namespace statements", function () {
   });
 
   it("test bare namespace separator", function () {
-    expect(
-      parser.parseEval(`\\`, {
-        parser: {
-          suppressErrors: true,
-        },
-      })
-    ).toMatchSnapshot();
+    expect(() => parser.parseEval(`\\`)).toThrowErrorMatchingSnapshot();
   });
 
   it("test namespace error", function () {
