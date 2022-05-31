@@ -811,6 +811,7 @@ module.exports = {
     while (this.token !== this.EOF) {
       if (
         this.token === this.tok.T_OBJECT_OPERATOR ||
+        this.token === this.tok.T_NULLSAFE_OBJECT_OPERATOR ||
         this.token === this.tok.T_DOUBLE_COLON
       ) {
         expr = this.recursive_variable_chain_scan(expr, false, false, true);
