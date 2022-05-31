@@ -256,7 +256,7 @@ module.exports = {
       this.next();
       nullable = true;
     }
-    types = this.read_types();
+    types = this.read_types(false);
     if (nullable && !types) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator"
@@ -286,14 +286,14 @@ module.exports = {
     if (attrs) result.attrGroups = attrs;
     return result;
   },
-  read_types() {
+  read_types(allowStatic = true) {
     const MODE_UNSET = "unset";
     const MODE_UNION = "union";
     const MODE_INTERSECTION = "intersection";
 
     const types = [];
     let mode = MODE_UNSET;
-    const type = this.read_type();
+    const type = this.read_type(allowStatic);
     if (!type) return null;
 
     // we have matched a single type
@@ -432,7 +432,7 @@ module.exports = {
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name
    * ```
    */
-  read_type: function () {
+  read_type: function (allowStatic = true) {
     const result = this.node();
     if (this.token === this.tok.T_ARRAY || this.token === this.tok.T_CALLABLE) {
       const type = this.text();
@@ -443,7 +443,7 @@ module.exports = {
       this.token === this.tok.T_NAME_QUALIFIED ||
       this.token === this.tok.T_NAME_FULLY_QUALIFIED ||
       this.token === this.tok.T_STRING ||
-      this.token === this.tok.T_STATIC
+      (allowStatic && this.token === this.tok.T_STATIC)
     ) {
       const type = this.text();
       const backup = [this.token, this.lexer.getState()];
@@ -461,6 +461,10 @@ module.exports = {
         result.destroy();
         return this.read_namespace_name();
       }
+    }
+    if (!allowStatic && this.token === this.tok.T_STATIC) {
+      this.error();
+      this.next(); // graceful mode
     }
     // fix : destroy not consumed node (release comments)
     result.destroy();
