@@ -184,6 +184,15 @@ const Parser = function (lexer, ast) {
       ].map(mapIt)
     ),
     EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
+    CLASS_NAME: new Map(
+      [
+        this.tok.T_STATIC,
+        this.tok.T_STRING,
+        this.tok.T_NAME_QUALIFIED,
+        this.tok.T_NAME_FULLY_QUALIFIED,
+        this.tok.T_NAME_RELATIVE,
+      ].map(mapIt)
+    ),
     EXPR: new Map(
       [
         "@",

@@ -27,7 +27,7 @@ module.exports = {
     while (this.token === this.tok.T_CATCH) {
       const item = this.node("catch");
       this.next().expect("(") && this.next();
-      const what = this.read_list(this.read_namespace_name, "|", false);
+      const what = this.read_list(this.read_name, "|", false);
       let variable = null;
       if (this.version < 800 || this.token === this.tok.T_VARIABLE) {
         variable = this.read_variable(true, false);
