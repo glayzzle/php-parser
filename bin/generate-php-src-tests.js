@@ -131,6 +131,13 @@ const testsThatExpectParseErrors = [
   // These should also throw parse errors according to PHP 8.1, but we also
   // support older versions.
   // "Zend/tests/real_cast.phpt",
+
+  // These are not parse errors in PHP strictly speaking, but they test syntax
+  // that is still invalid (i.e. it generates a fatal error).
+  "Zend/tests/readonly_props/readonly_const.phpt",
+  "Zend/tests/readonly_props/readonly_method.phpt",
+  "Zend/tests/readonly_props/readonly_method_trait.phpt",
+  "Zend/tests/static_in_trait_insteadof_list.phpt",
 ];
 
 let contents = `// eslint-disable prettier/prettier
