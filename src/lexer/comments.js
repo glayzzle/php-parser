@@ -55,9 +55,11 @@ module.exports = {
       ch = this.input();
       if (ch === "*" && this._input[this.offset] === "/") {
         this.input();
-        break;
+        return token;
       }
     }
-    return token;
+
+    /* istanbul ignore next */
+    throw new Error(`Unterminated comment starting line ${this.yylineno}`);
   },
 };
