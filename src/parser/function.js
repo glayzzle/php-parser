@@ -217,11 +217,29 @@ module.exports = {
    * ```
    */
   read_parameter_list: function (is_class_constructor) {
-    if (this.token != ")") {
+    if (this.token !== ")") {
+      let wasVariadic = false;
+
       return this.read_list_with_dangling_comma(
-        this.read_parameter.bind(this, is_class_constructor)
+        function () {
+          const parameter = this.read_parameter(is_class_constructor);
+          if (parameter) {
+            // variadic parameters can only be defined at the end of the parameter list
+            if (wasVariadic) {
+              this.raiseError(
+                "Unexpected parameter after a variadic parameter"
+              );
+            }
+            if (parameter.variadic) {
+              wasVariadic = true;
+            }
+          }
+          return parameter;
+        }.bind(this),
+        ","
       );
     }
+
     return [];
   },
   /*
@@ -388,10 +406,14 @@ module.exports = {
       function () {
         const argument = this.read_argument();
         if (argument) {
-          if (wasVariadic) {
-            this.raiseError("Unexpected argument after a variadic argument");
+          const isVariadic = argument.kind === "variadic";
+          // variadic arguments can only be followed by other variadic arguments
+          if (wasVariadic && !isVariadic) {
+            this.raiseError(
+              "Unexpected non-variadic argument after a variadic argument"
+            );
           }
-          if (argument.kind === "variadic") {
+          if (isVariadic) {
             wasVariadic = true;
           }
         }
