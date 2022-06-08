@@ -99,4 +99,14 @@ module.exports = {
     // else
     return false;
   },
+  // check if current char can be an octal number
+  is_OCTAL: function () {
+    const ch = this._input.charCodeAt(this.offset - 1);
+    // 0 - 7
+    if (ch > 47 && ch < 56) return true;
+    // _ (code 95)
+    if (ch === 95) return true;
+    // else
+    return false;
+  },
 };
