@@ -1,0 +1,235 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #26866 (segfault when exception raised in __get) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'bar'",
+                  "unicode": false,
+                  "value": "bar",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "get_name",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bar",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "sName",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Throw {
+                "kind": "throw",
+                "what": New {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'Exception!'",
+                      "unicode": false,
+                      "value": "Exception!",
+                    },
+                  ],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              Return {
+                "expr": New {
+                  "arguments": Array [],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "bar",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__get",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "foo",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "get_name",
+                  },
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "bar",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "foo",
+                    },
+                  },
+                },
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Exception raised!\\\\n\\"",
+                    "unicode": false,
+                    "value": "Exception raised!
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "E",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

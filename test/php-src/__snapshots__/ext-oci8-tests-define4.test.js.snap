@@ -1,0 +1,658 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests oci_define_by_name() on partial number of columns 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/connect.inc\\"",
+            "unicode": false,
+            "value": "/connect.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop table define4_tab\\"",
+                "unicode": false,
+                "value": "drop table define4_tab",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"create table define4_tab (value number, string varchar(10))\\"",
+                "unicode": false,
+                "value": "create table define4_tab (value number, string varchar(10))",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"insert into define4_tab (value, string) values (1234, 'some')\\"",
+                "unicode": false,
+                "value": "insert into define4_tab (value, string) values (1234, 'some')",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"select value, string from define4_tab\\"",
+              "unicode": false,
+              "value": "select value, string from define4_tab",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"STRING\\"",
+                "unicode": false,
+                "value": "STRING",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "string",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_define_by_name",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    While {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "stmt",
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'VALUE'",
+                      "unicode": false,
+                      "value": "VALUE",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_result",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "string",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "stmt",
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'STRING'",
+                      "unicode": false,
+                      "value": "STRING",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_result",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "string",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "stmt",
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'VALUE'",
+                      "unicode": false,
+                      "value": "VALUE",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_result",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "stmt",
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'STRING'",
+                      "unicode": false,
+                      "value": "STRING",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_result",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_fetch",
+          "resolution": "uqn",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_free_statement",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "string",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "stmt",
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'STRING'",
+                      "unicode": false,
+                      "value": "STRING",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_result",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "exception",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "exception",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\TypeError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop table define4_tab\\"",
+                "unicode": false,
+                "value": "drop table define4_tab",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

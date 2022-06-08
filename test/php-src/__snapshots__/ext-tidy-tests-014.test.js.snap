@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Passing configuration options through tidy_parse_string(). 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "text",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"<B>testing</I>\\"",
+          "unicode": false,
+          "value": "<B>testing</I>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tidy",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "text",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'show-body-only'",
+                    "unicode": false,
+                    "value": "show-body-only",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "tidy_parse_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tidy",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "tidy_clean_repair",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "tidy",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "tidy_get_output",
+            "resolution": "uqn",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

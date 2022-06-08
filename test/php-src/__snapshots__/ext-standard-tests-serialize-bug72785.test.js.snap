@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72785: allowed_classes only applies to outermost unserialize() 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "p",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'x:i:0;a:1:{i:0;O:1:\\"A\\":0:{}};m:a:0:{}'",
+          "unicode": false,
+          "value": "x:i:0;a:1:{i:0;O:1:\\"A\\":0:{}};m:a:0:{}",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'C:11:\\"ArrayObject\\":'",
+                  "unicode": false,
+                  "value": "C:11:\\"ArrayObject\\":",
+                },
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "p",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "strlen",
+                    "resolution": "uqn",
+                  },
+                },
+                "type": ".",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':{'",
+                "unicode": false,
+                "value": ":{",
+              },
+              "type": ".",
+            },
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "p",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'}'",
+            "unicode": false,
+            "value": "}",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'allowed_classes'",
+                      "unicode": false,
+                      "value": "allowed_classes",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'ArrayObject'",
+                            "unicode": false,
+                            "value": "ArrayObject",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": true,
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "unserialize",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/crc32_variation2.phpt
+  it("Test crc32() function : usage variations - single quoted strings", function () {
+    expect(parser.parseCode("<?php\n/*\n* Testing crc32() : with different strings in single quotes passed to the function\n*/\necho \"*** Testing crc32() : with different strings in single quotes ***\\n\";\n// defining an array of strings\n$string_array = array(\n  '',\n  ' ',\n  'hello world',\n  'HELLO WORLD',\n  ' helloworld ',\n  '(hello world)',\n  'hello(world)',\n  'helloworld()',\n  'hello()(world',\n  '\"hello\" world',\n  'hello \"world\"',\n  'hello\"\"world',\n  'hello\\tworld',\n  'hellowor\\\\tld',\n  '\\thello world\\t',\n  'hello\\nworld',\n  'hellowor\\\\nld',\n  '\\nhello world\\n',\n  '\\n\\thelloworld',\n  'hel\\tlo\\n world',\n  '!@#$%&',\n  '#hello@world.com',\n  '$hello$world',\n  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbb\n   cccccccccccccccccccccccccccccccccddddddddddddddddddddddddddddddddd\n   eeeeeeeeeeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffff\n   gggggggggggggggggggggggggggggggggggggggggghhhhhhhhhhhhhhhhhhhhhhhh\n   111111111111111111111122222222222222222222222222222222222222222222\n   333333333333333333333333333333333334444444444444444444444444444444\n   555555555555555555555555555555555555555555556666666666666666666666\n   777777777777777777777777777777777777777777777777777777777777777777\n   /t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t/t\n   /n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n'\n);\n// looping to check the behaviour of the function for each string in the array\n$count = 1;\nforeach($string_array as $str) {\n  echo \"\\n-- Iteration $count --\\n\";\n  var_dump( crc32($str) );\n  $count++;\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

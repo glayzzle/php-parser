@@ -1,0 +1,1397 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #42841 (REF CURSOR and oci_new_cursor PHP crash) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/details.inc'",
+            "unicode": false,
+            "value": "/details.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "password",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dbase",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"create or replace procedure bug42841_proc(out_1 out sys_refcursor) is
+   begin
+      open out_1 for select 11 from dual union all select 12 from dual union all select 13 from dual;
+   end bug42841_proc;\\"",
+                "unicode": false,
+                "value": "create or replace procedure bug42841_proc(out_1 out sys_refcursor) is
+   begin
+      open out_1 for select 11 from dual union all select 12 from dual union all select 13 from dual;
+   end bug42841_proc;",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"create or replace package bug43449_pkg is
+        type cursortype is ref Cursor;
+        function testcursor return cursortype;
+    end bug43449_pkg;\\"",
+                "unicode": false,
+                "value": "create or replace package bug43449_pkg is
+        type cursortype is ref Cursor;
+        function testcursor return cursortype;
+    end bug43449_pkg;",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"create or replace package body bug43449_pkg is
+    function testcursor return cursortype is
+    retCursor cursorType;
+    begin
+        Open retCursor For 'select * from dual';
+        return retCursor;
+    end;
+    end bug43449_pkg;\\"",
+                "unicode": false,
+                "value": "create or replace package body bug43449_pkg is
+    function testcursor return cursortype is
+    retCursor cursorType;
+    begin
+        Open retCursor For 'select * from dual';
+        return retCursor;
+    end;
+    end bug43449_pkg;",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "c",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"First attempt\\\\n\\"",
+                "unicode": false,
+                "value": "First attempt
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "sql",
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"BEGIN bug42841_proc(:cursor); END;\\"",
+                "unicode": false,
+                "value": "BEGIN bug42841_proc(:cursor); END;",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "sql",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cursor",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_new_cursor",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\":cursor\\"",
+                  "unicode": false,
+                  "value": ":cursor",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cursor",
+                },
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_B_CURSOR",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_bind_by_name",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_DEFAULT",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cursor",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          While {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": false,
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "data1",
+                      },
+                    },
+                    "operator": "=",
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "row",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "row",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "cursor",
+                  },
+                  Bin {
+                    "kind": "bin",
+                    "left": Name {
+                      "kind": "name",
+                      "name": "OCI_ASSOC",
+                      "resolution": "uqn",
+                    },
+                    "right": Name {
+                      "kind": "name",
+                      "name": "OCI_RETURN_LOBS",
+                      "resolution": "uqn",
+                    },
+                    "type": "+",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_fetch_array",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_free_statement",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cursor",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_free_statement",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "data1",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Second attempt\\\\n\\"",
+                "unicode": false,
+                "value": "Second attempt
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "sql",
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"BEGIN bug42841_proc(:cursor); END;\\"",
+                "unicode": false,
+                "value": "BEGIN bug42841_proc(:cursor); END;",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "sql",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cursor",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_new_cursor",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\":cursor\\"",
+                  "unicode": false,
+                  "value": ":cursor",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cursor",
+                },
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_B_CURSOR",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_bind_by_name",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_DEFAULT",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cursor",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          While {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": false,
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "data2",
+                      },
+                    },
+                    "operator": "=",
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "row",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "row",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "cursor",
+                  },
+                  Bin {
+                    "kind": "bin",
+                    "left": Name {
+                      "kind": "name",
+                      "name": "OCI_ASSOC",
+                      "resolution": "uqn",
+                    },
+                    "right": Name {
+                      "kind": "name",
+                      "name": "OCI_RETURN_LOBS",
+                      "resolution": "uqn",
+                    },
+                    "type": "+",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_fetch_array",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_free_statement",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cursor",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_free_statement",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "data2",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "do_bug42841",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "c",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          For {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "c",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "bug43449_getCur",
+                          "resolution": "uqn",
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                "type": "<",
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "do_bug43449",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "c",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cur",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_new_cursor",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'begin :cur := bug43449_pkg.testcursor; end;'",
+                    "unicode": false,
+                    "value": "begin :cur := bug43449_pkg.testcursor; end;",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "':cur'",
+                  "unicode": false,
+                  "value": ":cur",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cur",
+                },
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_B_CURSOR",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_bind_by_name",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_DEFAULT",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cur",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "OCI_DEFAULT",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ret",
+              },
+              "operator": "=",
+              "right": Array {
+                "items": Array [],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          While {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": false,
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "ret",
+                      },
+                    },
+                    "operator": "=",
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "row",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "row",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "cur",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_fetch_assoc",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cur",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_free_statement",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_free_statement",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ret",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bug43449_getCur",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test bug 42841: Procedure with OUT cursor parameter\\\\n\\"",
+          "unicode": false,
+          "value": "Test bug 42841: Procedure with OUT cursor parameter
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_bug42841",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "password",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dbase",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_new_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test bug 43449: Cursor as function result\\\\n\\"",
+          "unicode": false,
+          "value": "Test bug 43449: Cursor as function result
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_bug43449",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop procedure bug42841_proc\\"",
+                "unicode": false,
+                "value": "drop procedure bug42841_proc",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop package bug43449_pkg\\"",
+                "unicode": false,
+                "value": "drop package bug43449_pkg",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #39036 (Unsetting key of foreach() yields segmentation fault) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'asdf'",
+          "unicode": false,
+          "value": "asdf",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Unset {
+            "kind": "unset",
+            "variables": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "key",
+                },
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "key": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "key",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "get_defined_vars",
+          "resolution": "uqn",
+        },
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "value",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "key",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

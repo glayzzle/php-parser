@@ -1,0 +1,763 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests OpenSSL private key functions 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Creating private key\\\\n\\"",
+          "unicode": false,
+          "value": "Creating private key
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "conf",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'config'",
+                "unicode": false,
+                "value": "config",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Magic {
+                    "kind": "magic",
+                    "raw": "__DIR__",
+                    "value": "__DIR__",
+                  },
+                  "right": Name {
+                    "kind": "name",
+                    "name": "DIRECTORY_SEPARATOR",
+                    "resolution": "uqn",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'openssl.cnf'",
+                  "unicode": false,
+                  "value": "openssl.cnf",
+                },
+                "type": ".",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "privkey",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conf",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_pkey_new",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"failed to create private key\\"",
+                "unicode": false,
+                "value": "failed to create private key",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "privkey",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "passphrase",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"banana\\"",
+          "unicode": false,
+          "value": "banana",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key_file_name",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/001-tmp.key'",
+            "unicode": false,
+            "value": "/001-tmp.key",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"failed to get a temporary filename!\\"",
+                "unicode": false,
+                "value": "failed to get a temporary filename!",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key_file_name",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Export key to file\\\\n\\"",
+          "unicode": false,
+          "value": "Export key to file
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"failed to export to file $key_file_name\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "failed to export to file ",
+                      "unicode": false,
+                      "value": "failed to export to file ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "key_file_name",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                ],
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "privkey",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "key_file_name",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passphrase",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conf",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_pkey_export_to_file",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "privkey",
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "OpenSSLAsymmetricKey",
+              "resolution": "uqn",
+            },
+            "type": "instanceof",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Load key from file - array syntax\\\\n\\"",
+          "unicode": false,
+          "value": "Load key from file - array syntax
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loaded_key",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Encapsed {
+                    "kind": "encapsed",
+                    "raw": "\\"file://$key_file_name\\"",
+                    "type": "string",
+                    "value": Array [
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "file://",
+                          "unicode": false,
+                          "value": "file://",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "key_file_name",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                    ],
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "passphrase",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_pkey_get_private",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"failed to load key using array syntax\\"",
+                "unicode": false,
+                "value": "failed to load key using array syntax",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loaded_key",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "loaded_key",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "openssl_pkey_free",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Load key using direct syntax\\\\n\\"",
+          "unicode": false,
+          "value": "Load key using direct syntax
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loaded_key",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Encapsed {
+              "kind": "encapsed",
+              "raw": "\\"file://$key_file_name\\"",
+              "type": "string",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "file://",
+                    "unicode": false,
+                    "value": "file://",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "key_file_name",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+              ],
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passphrase",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_pkey_get_private",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"failed to load key using direct syntax\\"",
+                "unicode": false,
+                "value": "failed to load key using direct syntax",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loaded_key",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "loaded_key",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "openssl_pkey_free",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Load key manually and use string syntax\\\\n\\"",
+          "unicode": false,
+          "value": "Load key manually and use string syntax
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key_content",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "key_file_name",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "file_get_contents",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loaded_key",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "key_content",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passphrase",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_pkey_get_private",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"failed to load key using string syntax\\"",
+                "unicode": false,
+                "value": "failed to load key using string syntax",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loaded_key",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "loaded_key",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "openssl_pkey_free",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"OK!\\\\n\\"",
+          "unicode": false,
+          "value": "OK!
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

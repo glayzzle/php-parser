@@ -1,0 +1,218 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #77578 (Crash when php unload) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Name {
+          "kind": "name",
+          "name": "PHP_BINARY",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ini",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "php_ini_loaded_file",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "iniopt",
+        },
+        "operator": "=",
+        "right": RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "''",
+            "unicode": false,
+            "value": "",
+          },
+          "kind": "retif",
+          "test": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ini",
+          },
+          "trueExpr": Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"-c $ini\\" ",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "-c ",
+                  "unicode": false,
+                  "value": "-c ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ini",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+            ],
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "command",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"$php $iniopt -d extension=com_dotnet -d com.autoregister_typelib=1 -r \\\\\\"new COM('WbemScripting.SWbemLocator');\\\\\\"\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "php",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " ",
+                "unicode": false,
+                "value": " ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "iniopt",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " -d extension=com_dotnet -d com.autoregister_typelib=1 -r \\\\\\"new COM('WbemScripting.SWbemLocator');\\\\\\"",
+                "unicode": false,
+                "value": " -d extension=com_dotnet -d com.autoregister_typelib=1 -r \\"new COM('WbemScripting.SWbemLocator');\\\\\\"",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "command",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "output",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "status",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "output",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "status",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

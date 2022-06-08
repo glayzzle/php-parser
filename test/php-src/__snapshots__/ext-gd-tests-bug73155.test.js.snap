@@ -1,0 +1,312 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #73155 (imagegd2() writes wrong chunk sizes on boundaries) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "im",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Number {
+              "kind": "number",
+              "value": "64",
+            },
+            Number {
+              "kind": "number",
+              "value": "64",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "imagecreate",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "im",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "imagecolorallocate",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_start",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "im",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          Number {
+            "kind": "number",
+            "value": "64",
+          },
+          Name {
+            "kind": "name",
+            "name": "IMG_GD2_RAW",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "imagegd2",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "buffer",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ob_get_clean",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "header",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'@10/nchunk_size/nformat/nx_count/ny_count'",
+              "unicode": false,
+              "value": "@10/nchunk_size/nformat/nx_count/ny_count",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "buffer",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unpack",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"chunk size: %d\\\\n\\"",
+            "unicode": false,
+            "value": "chunk size: %d
+",
+          },
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'chunk_size'",
+              "unicode": false,
+              "value": "chunk_size",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "header",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"x chunk count: %d\\\\n\\"",
+            "unicode": false,
+            "value": "x chunk count: %d
+",
+          },
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'x_count'",
+              "unicode": false,
+              "value": "x_count",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "header",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"y chunk count: %d\\\\n\\"",
+            "unicode": false,
+            "value": "y chunk count: %d
+",
+          },
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'y_count'",
+              "unicode": false,
+              "value": "y_count",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "header",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"file size: %d\\\\n\\"",
+            "unicode": false,
+            "value": "file size: %d
+",
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "buffer",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "strlen",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

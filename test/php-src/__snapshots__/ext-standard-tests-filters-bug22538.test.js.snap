@@ -1,0 +1,909 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #22538 (filtered stream doesn't update file pointer) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "fin",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "fout",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          While {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "fout",
+                      },
+                      Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "fin",
+                          },
+                          Number {
+                            "kind": "number",
+                            "value": "4096",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "fread",
+                          "resolution": "uqn",
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "fwrite",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "fin",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "feof",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "my_stream_copy_to_stream",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "size",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "65536",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Do {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path1",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"%s/%s%da\\"",
+                    "unicode": false,
+                    "value": "%s/%s%da",
+                  },
+                  Magic {
+                    "kind": "magic",
+                    "raw": "__DIR__",
+                    "value": "__DIR__",
+                  },
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "uniqid",
+                      "resolution": "uqn",
+                    },
+                  },
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "time",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "sprintf",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path2",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"%s/%s%db\\"",
+                    "unicode": false,
+                    "value": "%s/%s%db",
+                  },
+                  Magic {
+                    "kind": "magic",
+                    "raw": "__DIR__",
+                    "value": "__DIR__",
+                  },
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "uniqid",
+                      "resolution": "uqn",
+                    },
+                  },
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "time",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "sprintf",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "do",
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "path1",
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "path2",
+        },
+        "type": "==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path1",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"w\\"",
+                "unicode": false,
+                "value": "w",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "fopen",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"Can not open $path1\\\\n\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "Can not open ",
+                  "unicode": false,
+                  "value": "Can not open ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "path1",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "\\\\n",
+                  "unicode": false,
+                  "value": "",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "str",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"abcdefghijklmnopqrstuvwxyz\\\\n\\"",
+          "unicode": false,
+          "value": "abcdefghijklmnopqrstuvwxyz
+",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "str_len",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strlen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cnt",
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "size",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    While {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "fp",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "str",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fwrite",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cnt",
+          },
+          "operator": "-=",
+          "parenthesizedExpression": true,
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "str_len",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+        "type": ">",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cnt",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "size",
+          },
+          "right": Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "str_len",
+            },
+            "parenthesizedExpression": true,
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "cnt",
+            },
+            "type": "+",
+          },
+          "type": "-",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fin",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path1",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"r\\"",
+                "unicode": false,
+                "value": "r",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "fopen",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"Can not open $path1\\\\n\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "Can not open ",
+                  "unicode": false,
+                  "value": "Can not open ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "path1",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "\\\\n",
+                  "unicode": false,
+                  "value": "",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fout",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path2",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"w\\"",
+                "unicode": false,
+                "value": "w",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "fopen",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"Can not open $path2\\\\n\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "Can not open ",
+                  "unicode": false,
+                  "value": "Can not open ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "path2",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "\\\\n",
+                  "unicode": false,
+                  "value": "",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fout",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"string.rot13\\"",
+            "unicode": false,
+            "value": "string.rot13",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_filter_append",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fin",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fout",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "my_stream_copy_to_stream",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fout",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cnt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "filesize",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "md5_file",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "md5_file",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "path1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "path2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

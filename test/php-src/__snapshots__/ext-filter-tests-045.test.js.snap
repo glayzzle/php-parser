@@ -1,0 +1,1118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Options must not be changed by filter_var() 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"flags\\"",
+                "unicode": false,
+                "value": "flags",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Cast {
+                "expr": Name {
+                  "kind": "name",
+                  "name": "FILTER_FLAG_ALLOW_HEX",
+                  "resolution": "uqn",
+                },
+                "kind": "cast",
+                "raw": "(string)",
+                "type": "string",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"options\\"",
+                "unicode": false,
+                "value": "options",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"min_range\\"",
+                      "unicode": false,
+                      "value": "min_range",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"0\\"",
+                      "unicode": false,
+                      "value": "0",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"max_range\\"",
+                      "unicode": false,
+                      "value": "max_range",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"1024\\"",
+                      "unicode": false,
+                      "value": "1024",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ret",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"0xff\\"",
+              "unicode": false,
+              "value": "0xff",
+            },
+            Name {
+              "kind": "name",
+              "name": "FILTER_VALIDATE_INT",
+              "resolution": "uqn",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "filter_var",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ret",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "255",
+              },
+              "type": "===",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"min_range\\"",
+                  "unicode": false,
+                  "value": "min_range",
+                },
+                "what": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"options\\"",
+                    "unicode": false,
+                    "value": "options",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                },
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"0\\"",
+                "unicode": false,
+                "value": "0",
+              },
+              "type": "===",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ret",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "255",
+              },
+              "type": "===",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"max_range\\"",
+                  "unicode": false,
+                  "value": "max_range",
+                },
+                "what": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"options\\"",
+                    "unicode": false,
+                    "value": "options",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                },
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"1024\\"",
+                "unicode": false,
+                "value": "1024",
+              },
+              "type": "===",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ret",
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "255",
+                },
+                "type": "===",
+              },
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"flags\\"",
+                      "unicode": false,
+                      "value": "flags",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "is_string",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "&&",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"flags\\"",
+                  "unicode": false,
+                  "value": "flags",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "FILTER_FLAG_ALLOW_HEX",
+                "resolution": "uqn",
+              },
+              "type": "==",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Cast {
+          "expr": Name {
+            "kind": "name",
+            "name": "FILTER_FLAG_ALLOW_HEX",
+            "resolution": "uqn",
+          },
+          "kind": "cast",
+          "raw": "(string)",
+          "type": "string",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ret",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"0xff\\"",
+              "unicode": false,
+              "value": "0xff",
+            },
+            Name {
+              "kind": "name",
+              "name": "FILTER_VALIDATE_INT",
+              "resolution": "uqn",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "filter_var",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ret",
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "255",
+                },
+                "type": "===",
+              },
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "is_string",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "&&",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "FILTER_FLAG_ALLOW_HEX",
+                "resolution": "uqn",
+              },
+              "type": "==",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"test\\"",
+                "unicode": false,
+                "value": "test",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"filter\\"",
+                      "unicode": false,
+                      "value": "filter",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Cast {
+                      "expr": Name {
+                        "kind": "name",
+                        "name": "FILTER_VALIDATE_INT",
+                        "resolution": "uqn",
+                      },
+                      "kind": "cast",
+                      "raw": "(string)",
+                      "type": "string",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"flags\\"",
+                      "unicode": false,
+                      "value": "flags",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Cast {
+                      "expr": Name {
+                        "kind": "name",
+                        "name": "FILTER_FLAG_ALLOW_HEX",
+                        "resolution": "uqn",
+                      },
+                      "kind": "cast",
+                      "raw": "(string)",
+                      "type": "string",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ret",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"0xff\\"",
+                    "unicode": false,
+                    "value": "0xff",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "filter_var_array",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ret",
+                  },
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "255",
+                },
+                "type": "===",
+              },
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"filter\\"",
+                      "unicode": false,
+                      "value": "filter",
+                    },
+                    "what": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"test\\"",
+                        "unicode": false,
+                        "value": "test",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "a",
+                      },
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "is_string",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "&&",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"filter\\"",
+                  "unicode": false,
+                  "value": "filter",
+                },
+                "what": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "FILTER_VALIDATE_INT",
+                "resolution": "uqn",
+              },
+              "type": "==",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ret",
+                  },
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "255",
+                },
+                "type": "===",
+              },
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"flags\\"",
+                      "unicode": false,
+                      "value": "flags",
+                    },
+                    "what": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"test\\"",
+                        "unicode": false,
+                        "value": "test",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "a",
+                      },
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "is_string",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "&&",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"flags\\"",
+                  "unicode": false,
+                  "value": "flags",
+                },
+                "what": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "FILTER_FLAG_ALLOW_HEX",
+                "resolution": "uqn",
+              },
+              "type": "==",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"test\\"",
+                "unicode": false,
+                "value": "test",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Cast {
+                "expr": Name {
+                  "kind": "name",
+                  "name": "FILTER_VALIDATE_INT",
+                  "resolution": "uqn",
+                },
+                "kind": "cast",
+                "raw": "(string)",
+                "type": "string",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ret",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"255\\"",
+                    "unicode": false,
+                    "value": "255",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "filter_var_array",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+          "kind": "retif",
+          "test": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"test\\"",
+                    "unicode": false,
+                    "value": "test",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ret",
+                  },
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "255",
+                },
+                "type": "===",
+              },
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"test\\"",
+                      "unicode": false,
+                      "value": "test",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "is_string",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "&&",
+            },
+            "parenthesizedExpression": true,
+            "right": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"test\\"",
+                  "unicode": false,
+                  "value": "test",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "FILTER_VALIDATE_INT",
+                "resolution": "uqn",
+              },
+              "type": "==",
+            },
+            "type": "&&",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

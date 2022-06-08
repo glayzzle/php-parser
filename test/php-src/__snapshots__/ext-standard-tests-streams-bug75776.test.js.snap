@@ -1,0 +1,402 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #75776 (Flushing streams with compression filter is broken) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "compression",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'gz'",
+                "unicode": false,
+                "value": "gz",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'zlib.deflate'",
+                      "unicode": false,
+                      "value": "zlib.deflate",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'gzinflate'",
+                      "unicode": false,
+                      "value": "gzinflate",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'bz2'",
+                "unicode": false,
+                "value": "bz2",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'bzip2.compress'",
+                      "unicode": false,
+                      "value": "bzip2.compress",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'bzdecompress'",
+                      "unicode": false,
+                      "value": "bzdecompress",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stream",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Magic {
+                      "kind": "magic",
+                      "raw": "__DIR__",
+                      "value": "__DIR__",
+                    },
+                    "right": Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"/75776.$ext\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "/75776.",
+                            "unicode": false,
+                            "value": "/75776.",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "ext",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                      ],
+                    },
+                    "type": ".",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'w'",
+                    "unicode": false,
+                    "value": "w",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "fopen",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stream",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "filter",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "stream_filter_append",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stream",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"sdfgdfg\\"",
+                  "unicode": false,
+                  "value": "sdfgdfg",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fwrite",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stream",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fflush",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stream",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fclose",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "compressed",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Magic {
+                      "kind": "magic",
+                      "raw": "__DIR__",
+                      "value": "__DIR__",
+                    },
+                    "right": Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"/75776.$ext\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "/75776.",
+                            "unicode": false,
+                            "value": "/75776.",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "ext",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                      ],
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "file_get_contents",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "compressed",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "function",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "ext",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "compression",
+      },
+      "value": List {
+        "items": Array [
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "filter",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "function",
+            },
+          },
+        ],
+        "kind": "list",
+        "shortForm": true,
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

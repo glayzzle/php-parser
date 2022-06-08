@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #63741 (Crash when autoloading from spl) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/bug63741.tmp.php\\"",
+              "unicode": false,
+              "value": "/bug63741.tmp.php",
+            },
+            "type": ".",
+          },
+          Nowdoc {
+            "kind": "nowdoc",
+            "label": "EOT",
+            "raw": "<<<'EOT'
+<?php
+if (isset($autoloading))
+{
+    class ClassToLoad
+    {
+        static function func ()
+        {
+            print \\"OK!\\\\n\\";
+        }
+    }
+    return;
+}
+else
+{
+    class autoloader
+    {
+        static function autoload($classname)
+        {
+            print \\"autoloading...\\\\n\\";
+            $autoloading = true;
+            include __FILE__;
+        }
+    }
+    spl_autoload_register([\\"autoloader\\", \\"autoload\\"]);
+    function start()
+    {
+        ClassToLoad::func();
+    }
+    start();
+}
+?>
+EOT
+",
+            "value": "<?php
+if (isset($autoloading))
+{
+    class ClassToLoad
+    {
+        static function func ()
+        {
+            print \\"OK!\\\\n\\";
+        }
+    }
+    return;
+}
+else
+{
+    class autoloader
+    {
+        static function autoload($classname)
+        {
+            print \\"autoloading...\\\\n\\";
+            $autoloading = true;
+            include __FILE__;
+        }
+    }
+    spl_autoload_register([\\"autoloader\\", \\"autoload\\"]);
+    function start()
+    {
+        ClassToLoad::func();
+    }
+    start();
+}
+?>",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/bug63741.tmp.php\\"",
+            "unicode": false,
+            "value": "/bug63741.tmp.php",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

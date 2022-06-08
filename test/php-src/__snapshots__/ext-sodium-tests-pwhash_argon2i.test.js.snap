@@ -1,0 +1,568 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Check for libsodium argon2i 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "passwd",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'password'",
+          "unicode": false,
+          "value": "password",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "hash",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash_str",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "hash",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                Call {
+                  "arguments": Array [
+                    Name {
+                      "kind": "name",
+                      "name": "SODIUM_CRYPTO_PWHASH_STRPREFIX",
+                      "resolution": "uqn",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "strlen",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "substr",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_STRPREFIX",
+              "resolution": "uqn",
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "testHash",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'$argon2i$v=19$m=4096,t=3,p=1$MzE4ODFiZWFlMjAzOWUAAA$FWUV6tsyJ32qThiLi1cCsLIbf3dIOG/RwXcTzt536KY'",
+          "unicode": false,
+          "value": "$argon2i$v=19$m=4096,t=3,p=1$MzE4ODFiZWFlMjAzOWUAAA$FWUV6tsyJ32qThiLi1cCsLIbf3dIOG/RwXcTzt536KY",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "testHash",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash_str_verify",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "testHash",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'$argon2i$v=19$m=4096,t=0,p=1$c29tZXNhbHQAAAAAAAAAAA$JTBozgKQiCn5yKAm3Hz0vUSX/XgfqhZloNCxDWmeDr0'",
+          "unicode": false,
+          "value": "$argon2i$v=19$m=4096,t=0,p=1$c29tZXNhbHQAAAAAAAAAAA$JTBozgKQiCn5yKAm3Hz0vUSX/XgfqhZloNCxDWmeDr0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "testHash",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash_str_verify",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "hash",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash_str_verify",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "hash",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'passwd'",
+              "unicode": false,
+              "value": "passwd",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash_str_verify",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "salt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_SALTBYTES",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "random_bytes",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "out_len",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "100",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "out_len",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "salt",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_ALG_DEFAULT",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "key",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "strlen",
+                "resolution": "uqn",
+              },
+            },
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "out_len",
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key2",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "out_len",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "salt",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sodium_crypto_pwhash",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "key2",
+            },
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "key",
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

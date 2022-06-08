@@ -1,0 +1,1627 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PostgreSQL async prepared queries 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn_str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "version",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_version",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_send_prepare() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_send_prepare() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'php_test'",
+                    "unicode": false,
+                    "value": "php_test",
+                  },
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"SELECT * FROM \\"",
+                        "unicode": false,
+                        "value": "SELECT * FROM ",
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "table_name",
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\" WHERE num > \\\\$1;\\"",
+                      "unicode": false,
+                      "value": " WHERE num > $1;",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_send_prepare",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          While {
+            "body": null,
+            "kind": "while",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_connection_busy",
+                "resolution": "uqn",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_connection_status() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_connection_status() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_connection_status",
+                  "resolution": "uqn",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "PGSQL_CONNECTION_BAD",
+                "resolution": "uqn",
+              },
+              "type": "===",
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_get_result() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_get_result() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_get_result",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_free_result",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_send_execute() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_send_execute() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'php_test'",
+                    "unicode": false,
+                    "value": "php_test",
+                  },
+                  Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Number {
+                          "kind": "number",
+                          "value": "100",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": false,
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_send_execute",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          While {
+            "body": null,
+            "kind": "while",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_connection_busy",
+                "resolution": "uqn",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_connection_status() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_connection_status() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_connection_status",
+                  "resolution": "uqn",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "PGSQL_CONNECTION_BAD",
+                "resolution": "uqn",
+              },
+              "type": "===",
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_get_result() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_get_result() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_get_result",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_num_rows() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_num_rows() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "rows",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "result",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_num_rows",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+          },
+          For {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "result",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "PGSQL_NUM",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pg_fetch_array",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "rows",
+                },
+                "type": "<",
+              },
+            ],
+          },
+          For {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "result",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pg_fetch_object",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "rows",
+                },
+                "type": "<",
+              },
+            ],
+          },
+          For {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "result",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pg_fetch_row",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "rows",
+                },
+                "type": "<",
+              },
+            ],
+          },
+          For {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "result",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pg_fetch_result",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "rows",
+                },
+                "type": "<",
+              },
+            ],
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                    Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"SELECT * FROM \\"",
+                          "unicode": false,
+                          "value": "SELECT * FROM ",
+                        },
+                        "right": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "table_name",
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\" WHERE num > \\\\$1;\\"",
+                        "unicode": false,
+                        "value": " WHERE num > $1;",
+                      },
+                      "type": ".",
+                    },
+                    Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Number {
+                            "kind": "number",
+                            "value": "100",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_query_params",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_num_rows",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                    Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"SELECT * FROM \\"",
+                          "unicode": false,
+                          "value": "SELECT * FROM ",
+                        },
+                        "right": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "table_name",
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\" WHERE num > \\\\$1;\\"",
+                        "unicode": false,
+                        "value": " WHERE num > $1;",
+                      },
+                      "type": ".",
+                    },
+                    Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Number {
+                            "kind": "number",
+                            "value": "100",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_query_params",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_num_fields",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_field_name",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "field_name",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_field_num",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_field_size",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_field_type",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_field_prtlen",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_field_is_null",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_send_prepare() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_send_prepare() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"php_test2\\"",
+                    "unicode": false,
+                    "value": "php_test2",
+                  },
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"INSERT INTO \\"",
+                        "unicode": false,
+                        "value": "INSERT INTO ",
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "table_name",
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\" VALUES (\\\\$1, \\\\$2);\\"",
+                      "unicode": false,
+                      "value": " VALUES ($1, $2);",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_send_prepare",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          While {
+            "body": null,
+            "kind": "while",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_connection_busy",
+                "resolution": "uqn",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_connection_status() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_connection_status() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_connection_status",
+                  "resolution": "uqn",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "PGSQL_CONNECTION_BAD",
+                "resolution": "uqn",
+              },
+              "type": "===",
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_get_result() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_get_result() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_get_result",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_free_result",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_send_execute() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_send_execute() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"php_test2\\"",
+                    "unicode": false,
+                    "value": "php_test2",
+                  },
+                  Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Number {
+                          "kind": "number",
+                          "value": "9999",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"A'BC\\"",
+                          "unicode": false,
+                          "value": "A'BC",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": false,
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_send_execute",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+          While {
+            "body": null,
+            "kind": "while",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_connection_busy",
+                "resolution": "uqn",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_connection_status() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_connection_status() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_connection_status",
+                  "resolution": "uqn",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "PGSQL_CONNECTION_BAD",
+                "resolution": "uqn",
+              },
+              "type": "===",
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_get_result() error\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_get_result() error
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "pg_get_result",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_last_oid",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_free_result",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'protocol'",
+            "unicode": false,
+            "value": "protocol",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "version",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "3",
+        },
+        "type": ">=",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"OK\\"",
+          "unicode": false,
+          "value": "OK",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

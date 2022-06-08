@@ -1,0 +1,298 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81255: Memory leak in PHPUnit with functional JIT 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Eval {
+        "kind": "eval",
+        "source": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'class B {}'",
+          "unicode": false,
+          "value": "class B {}",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "x",
+              },
+              "nullable": true,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "a",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    Throw {
+                      "kind": "throw",
+                      "what": New {
+                        "arguments": Array [
+                          String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'ops'",
+                            "unicode": false,
+                            "value": "ops",
+                          },
+                        ],
+                        "kind": "new",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "Exception",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Unary {
+                  "kind": "unary",
+                  "type": "!",
+                  "what": Assign {
+                    "kind": "assign",
+                    "left": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "x",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                    "operator": "=",
+                    "parenthesizedExpression": true,
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "a",
+                        },
+                        Number {
+                          "kind": "number",
+                          "value": "5",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "str_repeat",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                },
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "x",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "x",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  "operator": "=",
+                  "right": NullKeyword {
+                    "kind": "nullkeyword",
+                    "raw": "null",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "B",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "A",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'a'",
+            "unicode": false,
+            "value": "a",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'b'",
+            "unicode": false,
+            "value": "b",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

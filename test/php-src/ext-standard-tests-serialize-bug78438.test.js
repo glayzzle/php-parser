@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/serialize/bug78438.phpt
+  it("Bug #78438 (Corruption when __unserializing deeply nested structures)", function () {
+    expect(parser.parseCode("<?php\nclass Node\n{\n    public $childs = [];\n    public function __serialize()\n    {\n        return [$this->childs];\n    }\n    public function __unserialize(array $data)\n    {\n        list($this->childs) = $data;\n    }\n}\nfunction createTree ($width, $depth) {\n    $root = new Node();\n    $nextLevel = [$root];\n    for ($level=1; $level<$depth; $level++) {\n        $levelRoots = $nextLevel;\n        $nextLevel = [];\n        while (count($levelRoots) > 0) {\n            $levelRoot = array_shift($levelRoots);\n            for ($w = 0; $w < $width; $w++) {\n                $tester = new Node();\n                $levelRoot->childs[] = $tester;\n                $nextLevel[] = $tester;\n            }\n        }\n    }\n    return $root;\n}\n$width = 3;\nob_implicit_flush();\nforeach (range(1, 8) as $depth) {\n    $tree = createTree($width, $depth);\n    echo \"Testcase tree $width x $depth\".PHP_EOL;\n    echo \"> Serializing now\".PHP_EOL;\n    $serialized = serialize($tree);\n    echo \"> Unserializing now\".PHP_EOL;\n    $tree = unserialize($serialized);\n    // Lets test whether all is ok!\n    $expectedSize = ($width**$depth - 1)/($width-1);\n    $nodes = [$tree];\n    $count = 0;\n    while (count($nodes) > 0) {\n        $count++;\n        $node = array_shift($nodes);\n        foreach ($node->childs as $node) {\n            $nodes[] = $node;\n        }\n    }\n    echo \"> Unserialized total node count was $count, expected $expectedSize: \".($expectedSize === $count ? 'CORRECT!' : 'INCORRECT');\n    echo PHP_EOL;\n    echo PHP_EOL;\n}\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #69975 (PHP segfaults when accessing nvarchar(max) defined columns) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "conn",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dsn",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pass",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "odbc_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'CREATE DATABASE odbcTEST'",
+              "unicode": false,
+              "value": "CREATE DATABASE odbcTEST",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "odbc_exec",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "conn",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'CREATE TABLE FOO (ID INT, VARCHAR_COL NVARCHAR(MAX))'",
+            "unicode": false,
+            "value": "CREATE TABLE FOO (ID INT, VARCHAR_COL NVARCHAR(MAX))",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "odbc_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "conn",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"INSERT INTO FOO VALUES (1, 'foo')\\"",
+            "unicode": false,
+            "value": "INSERT INTO FOO VALUES (1, 'foo')",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "odbc_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "result",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"SELECT VARCHAR_COL FROM FOO\\"",
+              "unicode": false,
+              "value": "SELECT VARCHAR_COL FROM FOO",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "odbc_exec",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "result",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "odbc_fetch_array",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ready\\"",
+          "unicode": false,
+          "value": "ready",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

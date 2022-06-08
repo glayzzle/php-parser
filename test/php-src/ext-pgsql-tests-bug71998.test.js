@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pgsql/tests/bug71998.phpt
+  it("Bug #71998 Function pg_insert does not insert when column type = inet", function () {
+    expect(parser.parseCode("<?php\n// Kudos for the IP regex to\n// http://stackoverflow.com/a/17871737/3358424\ninclude('config.inc');\n$db = pg_connect($conn_str);\npg_query($db, \"CREATE TABLE tmp_statistics (id integer NOT NULL, remote_addr inet);\");\n$ips = array(\n    /* IPv4*/\n    \"127.0.0.1\",\n    \"10.0.0.1\",\n    \"192.168.1.1\",\n    \"0.0.0.0\",\n    \"255.255.255.255\",\n    \"192.168.1.35/24\",\n    /* IPv6 */\n    \"::1\",\n    \"::10.2.3.4\",\n    \"::ffff:10.4.3.2\",\n    \"1:2:3:4:5:6:7:8\",\n    \"::ffff:10.0.0.1\",\n    \"::ffff:1.2.3.4\",\n    \"::ffff:0.0.0.0\",\n    \"1:2:3:4:5:6:77:88\",\n    \"::ffff:255.255.255.255\",\n    \"fe08::7:8\",\n    \"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff\",\n    \"::5:aef1:ffff/128\",\n    \"2001:4f8:3:ba::/112\",\n);\n$bad = array(\n    /* bad */\n    \"256.257.258.259\",\n    \"fe08::7:8interface\",\n    \"schnitzel\",\n    \"10002.3.4\",\n    \"1.2.3.4.5\",\n    \"256.0.0.0\",\n    \"260.0.0.0\",\n);\n$ips = array_merge($ips, $bad);\n$i = 0;\n$errors = 0;\nforeach ($ips as $ip) {\n    $data = array(\"id\" => ++$i, \"remote_addr\" => $ip);\n    $r = @pg_insert($db, 'tmp_statistics', $data);\n    if (!$r && in_array($ip, $bad)) {\n        $errors++;\n        //echo pg_last_error($db);\n    }\n    //pg_query($db, \"INSERT INTO tmp_statistics (id, remote_addr) VALUES (2, '127.0.0.1')\"); // OK, record inserted\n}\n$r = pg_query($db, \"SELECT * FROM tmp_statistics\");\nwhile (false != ($row = pg_fetch_row($r))) {\n    var_dump($row);\n}\necho $errors, \" errors caught\\n\";\npg_query($db, \"DROP TABLE tmp_statistics\");\npg_close($db);\n?>")).toMatchSnapshot();
+  });
+});

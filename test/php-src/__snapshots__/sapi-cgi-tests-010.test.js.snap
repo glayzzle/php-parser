@@ -1,0 +1,438 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #45860 (header() function fails to correctly replace all Status lines) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"include.inc\\"",
+          "unicode": false,
+          "value": "include.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "get_cgi_path",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "reset_env_vars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "sys_get_temp_dir",
+                "resolution": "uqn",
+              },
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'cgitest'",
+              "unicode": false,
+              "value": "cgitest",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "tempnam",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"TRANSLATED_PATH=\\"",
+                "unicode": false,
+                "value": "TRANSLATED_PATH=",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/x\\"",
+              "unicode": false,
+              "value": "/x",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "putenv",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SCRIPT_FILENAME=\\"",
+                "unicode": false,
+                "value": "SCRIPT_FILENAME=",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/x\\"",
+              "unicode": false,
+              "value": "/x",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "putenv",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php
+header(\\"HTTP/1.1 403 Forbidden\\");
+header(\\"Status: 403 Also Forbidden\\");
+?>'",
+            "unicode": false,
+            "value": "<?php
+header(\\"HTTP/1.1 403 Forbidden\\");
+header(\\"Status: 403 Also Forbidden\\");
+?>",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "parenthesizedExpression": true,
+          "raw": "\`$php -n $f\`",
+          "type": "shell",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "php",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " -n ",
+                "unicode": false,
+                "value": " -n ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php
+header(\\"HTTP/1.1 403 Forbidden\\");
+?>'",
+            "unicode": false,
+            "value": "<?php
+header(\\"HTTP/1.1 403 Forbidden\\");
+?>",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "parenthesizedExpression": true,
+          "raw": "\`$php -n $f\`",
+          "type": "shell",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "php",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " -n ",
+                "unicode": false,
+                "value": " -n ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php
+header(\\"Status: 403 Also Forbidden\\");
+?>'",
+            "unicode": false,
+            "value": "<?php
+header(\\"Status: 403 Also Forbidden\\");
+?>",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "parenthesizedExpression": true,
+          "raw": "\`$php -n $f\`",
+          "type": "shell",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "php",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " -n ",
+                "unicode": false,
+                "value": " -n ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "f",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

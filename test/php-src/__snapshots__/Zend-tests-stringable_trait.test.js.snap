@@ -1,0 +1,314 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81582: Stringable not implicitly declared if __toString() came from a trait 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"ok\\"",
+                  "unicode": false,
+                  "value": "ok",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__toString",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "string",
+            "raw": "string",
+          },
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "T",
+      },
+    },
+    Trait {
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "T",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "T2",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "T",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "T2",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C2",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": New {
+              "arguments": Array [],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "C",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "Stringable",
+              "resolution": "uqn",
+            },
+            "type": "instanceof",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": New {
+              "arguments": Array [],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "C2",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "Stringable",
+              "resolution": "uqn",
+            },
+            "type": "instanceof",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "class",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "T",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionClass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getInterfaceNames",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "rc",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "class",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "T2",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionClass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getInterfaceNames",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "rc",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

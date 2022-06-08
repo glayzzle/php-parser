@@ -1,0 +1,1992 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PostgreSQL large object 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn_str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"create/write/close LO\\\\n\\"",
+          "unicode": false,
+          "value": "create/write/close LO
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"begin\\"",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_create",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_create() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_create() error
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "handle",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "oid",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"w\\"",
+              "unicode": false,
+              "value": "w",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_open() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_open() error
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "handle",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "handle",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"large object data\\"",
+            "unicode": false,
+            "value": "large object data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_write",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "handle",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"commit\\"",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"open/read/tell/seek/close LO\\\\n\\"",
+          "unicode": false,
+          "value": "open/read/tell/seek/close LO
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"begin\\"",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "handle",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "oid",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"w\\"",
+              "unicode": false,
+              "value": "w",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+              Number {
+                "kind": "number",
+                "value": "5",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_read",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_tell",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+              Number {
+                "kind": "number",
+                "value": "2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_seek",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+              Number {
+                "kind": "number",
+                "value": "100",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_read",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_tell",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Name {
+                "kind": "name",
+                "name": "PGSQL_SEEK_SET",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_seek",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_read",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "4",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "PGSQL_SEEK_END",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_seek",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "handle",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_read",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "handle",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"commit\\"",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"open/read_all/close LO\\\\n\\"",
+          "unicode": false,
+          "value": "open/read_all/close LO
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"begin\\"",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "handle",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "oid",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"w\\"",
+              "unicode": false,
+              "value": "w",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bytesWritten",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "handle",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_read_all",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bytesWritten",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"pg_lo_read_all() error\\\\n\\"",
+              "unicode": false,
+              "value": "pg_lo_read_all() error
+",
+            },
+            "right": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_last_error",
+                "resolution": "uqn",
+              },
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_last_error",
+          "resolution": "uqn",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "handle",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"commit\\"",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"unlink LO\\\\n\\"",
+          "unicode": false,
+          "value": "unlink LO
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"begin\\"",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "oid",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_unlink",
+            "resolution": "uqn",
+          },
+        },
+        "right": Print {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_unlink() error 1\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_unlink() error 1
+",
+          },
+          "kind": "print",
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"commit\\"",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test without connection\\\\n\\"",
+          "unicode": false,
+          "value": "Test without connection
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"begin\\"",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oid",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_create",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Print {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_create() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_create() error
+",
+          },
+          "kind": "print",
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "oid",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_unlink",
+            "resolution": "uqn",
+          },
+        },
+        "right": Print {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_unlink() error 2\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_unlink() error 2
+",
+          },
+          "kind": "print",
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"commit\\"",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test with string oid value\\\\n\\"",
+          "unicode": false,
+          "value": "Test with string oid value
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"begin\\"",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oid",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_lo_create",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Print {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_create() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_create() error
+",
+          },
+          "kind": "print",
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Cast {
+              "expr": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oid",
+              },
+              "kind": "cast",
+              "raw": "(string)",
+              "type": "string",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_unlink",
+            "resolution": "uqn",
+          },
+        },
+        "right": Print {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_unlink() error 3\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_unlink() error 3
+",
+          },
+          "kind": "print",
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"commit\\"",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"import/export LO\\\\n\\"",
+          "unicode": false,
+          "value": "import/export LO
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "path",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/'",
+            "unicode": false,
+            "value": "/",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'begin'",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'php.gif'",
+                "unicode": false,
+                "value": "php.gif",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_import",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'commit'",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'begin'",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'php.gif.exported'",
+                "unicode": false,
+                "value": "php.gif.exported",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oid",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "path",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'php.gif.exported'",
+              "unicode": false,
+              "value": "php.gif.exported",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_export",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Export failed\\\\n\\"",
+                "unicode": false,
+                "value": "Export failed
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'php.gif.exported'",
+                "unicode": false,
+                "value": "php.gif.exported",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "file_exists",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'php.gif.exported'",
+                "unicode": false,
+                "value": "php.gif.exported",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'commit'",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "15",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_create",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "15",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_create",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'giberrish'",
+                  "unicode": false,
+                  "value": "giberrish",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_create",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'giberrish'",
+                  "unicode": false,
+                  "value": "giberrish",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_create",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"OK\\"",
+          "unicode": false,
+          "value": "OK",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

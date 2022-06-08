@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #55007 (compiler fail after previous fail) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "classname",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": null,
+                  "body": ExpressionStatement {
+                    "expression": Eval {
+                      "kind": "eval",
+                      "source": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'class CompileErrorClass { function foo() { $a[]; } }'",
+                        "unicode": false,
+                        "value": "class CompileErrorClass { function foo() { $a[]; } }",
+                      },
+                    },
+                    "kind": "expressionstatement",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'CompileErrorClass'",
+                      "unicode": false,
+                      "value": "CompileErrorClass",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "classname",
+                    },
+                    "type": "==",
+                  },
+                },
+                If {
+                  "alternate": null,
+                  "body": ExpressionStatement {
+                    "expression": Eval {
+                      "kind": "eval",
+                      "source": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'class MyErrorHandler { function __construct() { print \\"My error handler runs.\\\\n\\"; } }'",
+                        "unicode": false,
+                        "value": "class MyErrorHandler { function __construct() { print \\"My error handler runs.\\\\n\\"; } }",
+                      },
+                    },
+                    "kind": "expressionstatement",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'MyErrorHandler'",
+                      "unicode": false,
+                      "value": "MyErrorHandler",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "classname",
+                    },
+                    "type": "==",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": New {
+              "arguments": Array [],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "MyErrorHandler",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "shutdown",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'shutdown'",
+            "unicode": false,
+            "value": "shutdown",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "register_shutdown_function",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": Name {
+          "kind": "name",
+          "name": "CompileErrorClass",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

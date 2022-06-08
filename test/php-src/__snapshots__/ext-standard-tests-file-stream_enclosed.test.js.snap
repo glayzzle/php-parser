@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Unexposed/leaked stream encloses another stream 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'php://temp/maxmemory=1024'",
+              "unicode": false,
+              "value": "php://temp/maxmemory=1024",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'wb+'",
+              "unicode": false,
+              "value": "wb+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "t",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'php://temp/maxmemory=1024'",
+              "unicode": false,
+              "value": "php://temp/maxmemory=1024",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'wb+'",
+              "unicode": false,
+              "value": "wb+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "i",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    While {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "t",
+                },
+                Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'a'",
+                      "unicode": false,
+                      "value": "a",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "1024",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "str_repeat",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fwrite",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Post {
+          "kind": "post",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "5000",
+        },
+        "type": "<",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "zend_leak_variable",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "t",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "zend_leak_variable",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

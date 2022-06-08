@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests CWD on open_basedir should not imply that everything is accessible 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cwd",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getcwd",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'open_basedir'",
+            "unicode": false,
+            "value": "open_basedir",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cwd",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/some/path/outside/open/basedir'",
+                "unicode": false,
+                "value": "/some/path/outside/open/basedir",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "file_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,521 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test the File Modification Time as described in http://tools.ietf.org/html/rfc3659#section-3.1 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'server.inc'",
+          "unicode": false,
+          "value": "server.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ftp",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'127.0.0.1'",
+              "unicode": false,
+              "value": "127.0.0.1",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Couldn't connect to the server\\"",
+            "unicode": false,
+            "value": "Couldn't connect to the server",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ftp",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ftp",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'user'",
+                "unicode": false,
+                "value": "user",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pass'",
+                "unicode": false,
+                "value": "pass",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "ftp_login",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'UTC'",
+            "unicode": false,
+            "value": "UTC",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "date_default_timezone_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "time",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ftp",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"A\\"",
+              "unicode": false,
+              "value": "A",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_mdtm",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"F d Y H:i:s u\\"",
+              "unicode": false,
+              "value": "F d Y H:i:s u",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "time",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "date",
+            "resolution": "uqn",
+          },
+        },
+        Name {
+          "kind": "name",
+          "name": "PHP_EOL",
+          "resolution": "uqn",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "time",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ftp",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"B\\"",
+              "unicode": false,
+              "value": "B",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_mdtm",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"F d Y H:i:s u\\"",
+              "unicode": false,
+              "value": "F d Y H:i:s u",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "time",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "date",
+            "resolution": "uqn",
+          },
+        },
+        Name {
+          "kind": "name",
+          "name": "PHP_EOL",
+          "resolution": "uqn",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "time",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ftp",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"C\\"",
+              "unicode": false,
+              "value": "C",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_mdtm",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"F d Y H:i:s u\\"",
+              "unicode": false,
+              "value": "F d Y H:i:s u",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "time",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "date",
+            "resolution": "uqn",
+          },
+        },
+        Name {
+          "kind": "name",
+          "name": "PHP_EOL",
+          "resolution": "uqn",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "time",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ftp",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"D\\"",
+              "unicode": false,
+              "value": "D",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_mdtm",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "time",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "time",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ftp",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"19990929043300 File6\\"",
+              "unicode": false,
+              "value": "19990929043300 File6",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_mdtm",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"F d Y H:i:s u\\"",
+              "unicode": false,
+              "value": "F d Y H:i:s u",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "time",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "date",
+            "resolution": "uqn",
+          },
+        },
+        Name {
+          "kind": "name",
+          "name": "PHP_EOL",
+          "resolution": "uqn",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "time",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ftp",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"MdTm 19990929043300 file6\\"",
+              "unicode": false,
+              "value": "MdTm 19990929043300 file6",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ftp_mdtm",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "time",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

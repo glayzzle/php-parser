@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SimpleXML: Element check 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ok",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "doc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'<root><exists>foo</exists></root>'",
+              "unicode": false,
+              "value": "<root><exists>foo</exists></root>",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ok",
+              },
+              "operator": "*=",
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Isset {
+          "kind": "isset",
+          "variables": Array [
+            PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "exists",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "doc",
+              },
+            },
+          ],
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ok",
+              },
+              "operator": "*=",
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Isset {
+        "kind": "isset",
+        "variables": Array [
+          PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "doesnotexist",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "doc",
+            },
+          },
+        ],
+      },
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Error\\\\n\\"",
+                "unicode": false,
+                "value": "Error
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Works\\\\n\\"",
+                "unicode": false,
+                "value": "Works
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "ok",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

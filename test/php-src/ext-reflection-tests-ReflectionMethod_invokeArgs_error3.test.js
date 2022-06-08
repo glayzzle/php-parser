@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/reflection/tests/ReflectionMethod_invokeArgs_error3.phpt
+  it("ReflectionMethod::invokeArgs() further errors", function () {
+    expect(parser.parseCode("<?php\nclass TestClass {\n    public $prop = 2;\n    public function foo() {\n        echo \"Called foo(), property = $this->prop\\n\";\n        var_dump($this);\n        return \"Return Val\";\n    }\n    public static function staticMethod() {\n        echo \"Called staticMethod()\\n\";\n        try {\n            var_dump($this);\n        } catch (Throwable $e) {\n            echo \"Exception: \" . $e->getMessage() . \"\\n\";\n        }\n    }\n    private static function privateMethod() {\n        echo \"Called privateMethod()\\n\";\n    }\n}\nabstract class AbstractClass {\n    abstract function foo();\n}\n$testClassInstance = new TestClass();\n$testClassInstance->prop = \"Hello\";\n$foo = new ReflectionMethod($testClassInstance, 'foo');\n$staticMethod = new ReflectionMethod('TestClass::staticMethod');\n$privateMethod = new ReflectionMethod(\"TestClass::privateMethod\");\necho \"\\nNon-instance:\\n\";\ntry {\n    var_dump($foo->invokeArgs(new stdClass(), array()));\n} catch (ReflectionException $e) {\n    var_dump($e->getMessage());\n}\necho \"\\nStatic method:\\n\";\nvar_dump($staticMethod->invokeArgs(null, array()));\necho \"\\nPrivate method:\\n\";\nvar_dump($privateMethod->invokeArgs($testClassInstance, array()));\necho \"\\nAbstract method:\\n\";\n$abstractMethod = new ReflectionMethod(\"AbstractClass::foo\");\ntry {\n    $abstractMethod->invokeArgs($testClassInstance, array());\n} catch (ReflectionException $e) {\n    var_dump($e->getMessage());\n}\ntry {\n    $abstractMethod->invokeArgs(true);\n} catch (ReflectionException $e) {\n    var_dump($e->getMessage());\n}\n?>")).toMatchSnapshot();
+  });
+});

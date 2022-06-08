@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #67539 (ArrayIterator use-after-free due to object change during sorting) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "it",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Call {
+              "arguments": Array [
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'X'",
+                  "unicode": false,
+                  "value": "X",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "array_fill",
+                "resolution": "uqn",
+              },
+            },
+            Number {
+              "kind": "number",
+              "value": "1",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ArrayIterator",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "a",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "serialize",
+                          },
+                          "what": OffsetLookup {
+                            "kind": "offsetlookup",
+                            "offset": String {
+                              "isDoubleQuote": false,
+                              "kind": "string",
+                              "raw": "'it'",
+                              "unicode": false,
+                              "value": "it",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "GLOBALS",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "unserialize",
+                      },
+                      "what": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'it'",
+                          "unicode": false,
+                          "value": "it",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "GLOBALS",
+                        },
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "getMessage",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "e",
+                            },
+                          },
+                        },
+                        String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"\\\\n\\"",
+                          "unicode": false,
+                          "value": "
+",
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "e",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Error",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+          Return {
+            "expr": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "badsort",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'badsort'",
+            "unicode": false,
+            "value": "badsort",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "uksort",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "it",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

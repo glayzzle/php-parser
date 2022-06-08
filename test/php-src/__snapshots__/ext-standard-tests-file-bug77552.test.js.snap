@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #77552 Uninitialized php_stream_statbuf in stat functions 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tmpDir",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/test-bug77552'",
+            "unicode": false,
+            "value": "/test-bug77552",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "target",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tmpDir",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/folder/target'",
+            "unicode": false,
+            "value": "/folder/target",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "target",
+          },
+          Number {
+            "kind": "number",
+            "value": "0777",
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mkdir",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "junction",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tmpDir",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/junction'",
+            "unicode": false,
+            "value": "/junction",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cmd",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'mklink /J \\"%s\\" \\"%s\\"'",
+              "unicode": false,
+              "value": "mklink /J \\"%s\\" \\"%s\\"",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "junction",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "target",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sprintf",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cmd",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stat",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "junction",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "lstat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'mode'",
+              "unicode": false,
+              "value": "mode",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "stat",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

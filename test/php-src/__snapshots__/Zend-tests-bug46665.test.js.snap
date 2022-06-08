@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #46665 (Triggering autoload with a variable classname causes truncated autoload param) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "class",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "class",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Include {
+                    "kind": "include",
+                    "once": false,
+                    "require": true,
+                    "target": Bin {
+                      "kind": "bin",
+                      "left": Magic {
+                        "kind": "magic",
+                        "raw": "__DIR__",
+                        "value": "__DIR__",
+                      },
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'/bug46665_autoload.inc'",
+                        "unicode": false,
+                        "value": "/bug46665_autoload.inc",
+                      },
+                      "type": ".",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "baz",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'\\\\\\\\Foo\\\\\\\\Bar\\\\\\\\Baz'",
+          "unicode": false,
+          "value": "\\\\Foo\\\\Bar\\\\Baz",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "baz",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

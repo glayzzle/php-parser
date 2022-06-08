@@ -1,0 +1,1006 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests mysqli fetch mixed / mysql_query (may fail when using 4.1 library with 5.x server) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "\\"connect.inc\\"",
+          "unicode": false,
+          "value": "connect.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "link",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "host",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "my_mysqli_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[001] [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[001] [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"DROP TABLE IF EXISTS test_bind_result\\"",
+              "unicode": false,
+              "value": "DROP TABLE IF EXISTS test_bind_result",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_query",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+            Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"CREATE TABLE test_bind_result(c1 tinyint, c2 smallint,
+                                                        c3 int, c4 bigint,
+                                                        c5 decimal(4,2), c6 double,
+                                                        c7 varbinary(10),
+                                                        c8 varchar(10)) ENGINE=\\"",
+                "unicode": false,
+                "value": "CREATE TABLE test_bind_result(c1 tinyint, c2 smallint,
+                                                        c3 int, c4 bigint,
+                                                        c5 decimal(4,2), c6 double,
+                                                        c7 varbinary(10),
+                                                        c8 varchar(10)) ENGINE=",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "engine",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_query",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[002] [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[002] [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rc",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[003] [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[003] [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO test_bind_result VALUES(120,2999,3999,54,
+                                                              2.6,58.89,
+                                                              '206','6.7')\\"",
+              "unicode": false,
+              "value": "INSERT INTO test_bind_result VALUES(120,2999,3999,54,
+                                                              2.6,58.89,
+                                                              '206','6.7')",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_query",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"SELECT * FROM test_bind_result\\"",
+              "unicode": false,
+              "value": "SELECT * FROM test_bind_result",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_prepare",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b_res",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "stmt",
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "2",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "3",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "4",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "5",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "6",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": Number {
+                "kind": "number",
+                "value": "7",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_stmt_bind_result",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_stmt_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_stmt_fetch",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_stmt_fetch",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_stmt_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "result",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"select * from test_bind_result\\"",
+              "unicode": false,
+              "value": "select * from test_bind_result",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_query",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "d",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "result",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_fetch_row",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "result",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_free_result",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\"",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": ExpressionStatement {
+        "expression": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "test",
+          },
+          "operator": ".=",
+          "right": RetIf {
+            "falseExpr": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"0\\"",
+              "unicode": false,
+              "value": "0",
+            },
+            "kind": "retif",
+            "test": Bin {
+              "kind": "bin",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "c",
+                },
+              },
+              "parenthesizedExpression": true,
+              "right": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "d",
+                },
+              },
+              "type": "==",
+            },
+            "trueExpr": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"1\\"",
+              "unicode": false,
+              "value": "1",
+            },
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "increment": Array [
+        Post {
+          "kind": "post",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "count",
+              "resolution": "uqn",
+            },
+          },
+          "type": "<",
+        },
+      ],
+    },
+    If {
+      "alternate": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"error\\"",
+            "unicode": false,
+            "value": "error",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"11111111\\"",
+          "unicode": false,
+          "value": "11111111",
+        },
+        "type": "==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"DROP TABLE IF EXISTS test_bind_result\\"",
+            "unicode": false,
+            "value": "DROP TABLE IF EXISTS test_bind_result",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done!\\"",
+          "unicode": false,
+          "value": "done!",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

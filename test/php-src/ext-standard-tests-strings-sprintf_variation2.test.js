@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/sprintf_variation2.phpt
+  it("Test sprintf() function : usage variations - with all types of values for arg1 argument", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing sprintf() : with different types of values passed for arg1 argument ***\\n\";\n// initialing required variables\n$format = '%s';\n$arg2 = 'third argument';\n//get an unset variable\n$unset_var = 10;\nunset ($unset_var);\n// declaring class\nclass sample\n{\n  public function __toString() {\n    return \"Object\";\n  }\n}\n// creating a file resource\n$file_handle = fopen(__FILE__, 'r');\n//array of values to iterate over\n$values = array(\n      // int data\n      0,\n      1,\n      12345,\n      -2345,\n      // float data\n      10.5,\n      -10.5,\n      10.1234567e10,\n      10.7654321E-10,\n      .5,\n      // array data\n      array(),\n      array(0),\n      array(1),\n      array(1, 2),\n      array('color' => 'red', 'item' => 'pen'),\n      // null data\n      NULL,\n      null,\n      // boolean data\n      true,\n      false,\n      TRUE,\n      FALSE,\n      // empty data\n      \"\",\n      '',\n      // string data\n      \"string\",\n      'string',\n      // object data\n      new sample(),\n      // undefined data\n      @$undefined_var,\n      // unset data\n      @$unset_var,\n      // resource data\n      $file_handle\n);\n// loop through each element of the array for arg1\n$count = 1;\nforeach($values as $value) {\n  echo \"\\n-- Iteration $count --\\n\";\n  // with two arguments\n  var_dump( sprintf($format, $value) );\n  // with three arguments\n  var_dump( sprintf($format, $value, $arg2) );\n  $count++;\n};\n// closing the resource\nfclose($file_handle);\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test compress.zlib:// scheme with the file_get_contents 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "outputFileName",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__FILE__",
+            "value": "__FILE__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'tmp'",
+            "unicode": false,
+            "value": "tmp",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "outFile",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"compress.zlib://$outputFileName\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "compress.zlib://",
+                "unicode": false,
+                "value": "compress.zlib://",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "outputFileName",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+Here is some plain
+text to be read
+and displayed.
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Here is some plain
+text to be read
+and displayed.
+",
+                "unicode": false,
+                "value": "Here is some plain
+text to be read
+and displayed.",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "outFile",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "h",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "outputFileName",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'r'",
+              "unicode": false,
+              "value": "r",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "gzopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "h",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "gzpassthru",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "h",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "gzclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "outputFileName",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

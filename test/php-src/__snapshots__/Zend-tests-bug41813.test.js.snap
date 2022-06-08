@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #41813 (segmentation fault when using string offset as an object) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"50\\"",
+          "unicode": false,
+          "value": "50",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "foo",
+            },
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"xyz\\"",
+          "unicode": false,
+          "value": "xyz",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

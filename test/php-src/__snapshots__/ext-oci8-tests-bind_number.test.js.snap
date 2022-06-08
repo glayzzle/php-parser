@@ -1,0 +1,1696 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bind with NUMBER column variants 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/connect.inc'",
+            "unicode": false,
+            "value": "/connect.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop table bind_number_tab\\"",
+                "unicode": false,
+                "value": "drop table bind_number_tab",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"create table bind_number_tab (
+                    id				  number,
+                    number_t6		  number(6),
+                    float_t			  float,
+                    binary_float_t	  binary_float,
+                    binary_double_t	  binary_double,
+                    decimal_t		  decimal,
+                    integer_t		  integer)\\"",
+                "unicode": false,
+                "value": "create table bind_number_tab (
+                    id				  number,
+                    number_t6		  number(6),
+                    float_t			  float,
+                    binary_float_t	  binary_float,
+                    binary_double_t	  binary_double,
+                    decimal_t		  decimal,
+                    integer_t		  integer)",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "c",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "colname",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "id",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  Encapsed {
+                    "kind": "encapsed",
+                    "raw": "\\"select $colname from bind_number_tab where id = :id\\"",
+                    "type": "string",
+                    "value": Array [
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "select ",
+                          "unicode": false,
+                          "value": "select ",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "colname",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": " from bind_number_tab where id = :id",
+                          "unicode": false,
+                          "value": " from bind_number_tab where id = :id",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                    ],
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "s",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\":id\\"",
+                  "unicode": false,
+                  "value": ":id",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "id",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_bind_by_name",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "s",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_execute",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "s",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "oci_fetch_all",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "check_col",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1 - invalid number\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1 - invalid number
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, number_t6) VALUES (1, :n1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, number_t6) VALUES (1, :n1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "n1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Hello\\"",
+          "unicode": false,
+          "value": "Hello",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":n1\\"",
+            "unicode": false,
+            "value": ":n1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "n1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"number_t6\\"",
+            "unicode": false,
+            "value": "number_t6",
+          },
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST66 insert a float\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST66 insert a float
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, float_t) VALUES (66, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, float_t) VALUES (66, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "123.456",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'float_t'",
+            "unicode": false,
+            "value": "float_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "66",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST67 insert a binary float\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST67 insert a binary float
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, binary_float_t) VALUES (67, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, binary_float_t) VALUES (67, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "567.456",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'binary_float_t'",
+            "unicode": false,
+            "value": "binary_float_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "67",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST69 insert a binary double\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST69 insert a binary double
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, binary_double_t) VALUES (69, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, binary_double_t) VALUES (69, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "567.456",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'binary_double_t'",
+            "unicode": false,
+            "value": "binary_double_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "69",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST71 insert a decimal\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST71 insert a decimal
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, decimal_t) VALUES (71, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, decimal_t) VALUES (71, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "123.789",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'decimal_t'",
+            "unicode": false,
+            "value": "decimal_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "71",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST72 insert a decimal\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST72 insert a decimal
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, decimal_t) VALUES (72, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, decimal_t) VALUES (72, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "123.789",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+          Unary {
+            "kind": "unary",
+            "type": "-",
+            "what": Number {
+              "kind": "number",
+              "value": "1",
+            },
+          },
+          Name {
+            "kind": "name",
+            "name": "SQLT_NUM",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'decimal_t'",
+            "unicode": false,
+            "value": "decimal_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "72",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST73 insert a double\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST73 insert a double
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, binary_double_t) VALUES (73, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, binary_double_t) VALUES (73, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "483.589",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'binary_double_t'",
+            "unicode": false,
+            "value": "binary_double_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "73",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST75 insert a INTEGER\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST75 insert a INTEGER
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, integer_t) VALUES (75, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, integer_t) VALUES (75, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "589",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'integer_t'",
+            "unicode": false,
+            "value": "integer_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "75",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTEST76 insert a INTEGER\\\\n\\"",
+          "unicode": false,
+          "value": "
+TEST76 insert a INTEGER
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"INSERT INTO bind_number_tab (id, integer_t) VALUES (76, :f1)\\"",
+              "unicode": false,
+              "value": "INSERT INTO bind_number_tab (id, integer_t) VALUES (76, :f1)",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f1",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "42",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\":f1\\"",
+            "unicode": false,
+            "value": ":f1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+          Unary {
+            "kind": "unary",
+            "type": "-",
+            "what": Number {
+              "kind": "number",
+              "value": "1",
+            },
+          },
+          Name {
+            "kind": "name",
+            "name": "SQLT_INT",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_bind_by_name",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'integer_t'",
+            "unicode": false,
+            "value": "integer_t",
+          },
+          Number {
+            "kind": "number",
+            "value": "76",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "check_col",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop table bind_number_tab\\"",
+                "unicode": false,
+                "value": "drop table bind_number_tab",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

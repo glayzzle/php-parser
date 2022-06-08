@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #39538 (fgetcsv can't handle starting newlines and trailing odd number of backslashes) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "content",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\\\"\\\\nthis is an test\\\\\\", \\\\\\"next data\\\\\\", \\\\\\"p\\\\narsed\\\\\\"\\"",
+                "unicode": false,
+                "value": "\\"
+this is an test\\\\\\", \\\\\\"next data\\\\\\", \\\\\\"p
+arsed\\\\\\"",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\\\"\\\\r\\\\nthis is an test\\\\\\", \\\\\\"next data\\\\\\", \\\\\\"p\\\\r\\\\narsed\\\\\\"\\"",
+                "unicode": false,
+                "value": "\\"
+this is an test\\\\\\", \\\\\\"next data\\\\\\", \\\\\\"p
+arsed\\\\\\"",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\\\"\\\\n\\\\rthis is an test\\\\\\", \\\\\\"next data\\\\\\", \\\\\\"p\\\\n\\\\rarsed\\\\\\"\\"",
+                "unicode": false,
+                "value": "\\"
+
+this is an test\\\\\\", \\\\\\"next data\\\\\\", \\\\\\"p
+
+arsed\\\\\\"",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "file",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/bug39538.csv\\"",
+            "unicode": false,
+            "value": "/bug39538.csv",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "file",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "file",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "v",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "file_put_contents",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "file",
+                        },
+                        String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"r\\"",
+                          "unicode": false,
+                          "value": "r",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "fopen",
+                        "resolution": "uqn",
+                      },
+                    },
+                    Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "file",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "filesize",
+                        "resolution": "uqn",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "fgetcsv",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "print_r",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "content",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "v",
+      },
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "file",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

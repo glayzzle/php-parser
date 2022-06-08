@@ -1,0 +1,550 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests HOST/PATH ini sections test for cli 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"TEST_PHP_EXECUTABLE\\"",
+              "unicode": false,
+              "value": "TEST_PHP_EXECUTABLE",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cwd",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getcwd",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ini_file",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/023.ini\\"",
+            "unicode": false,
+            "value": "/023.ini",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ini_file",
+          },
+          Encapsed {
+            "kind": "encapsed",
+            "label": "INI",
+            "raw": "<<<INI
+; no sections should match as cli doesn't support any
+memory_limit = 40M
+[PATH={$cwd}]
+memory_limit = 50M
+[PATH=/does/not/exist]
+memory_limit = 60M
+[HOST=some_fake_host]
+memory_limit = 70M
+INI
+",
+            "type": "heredoc",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "; no sections should match as cli doesn't support any
+memory_limit = 40M
+[PATH=",
+                  "unicode": false,
+                  "value": "; no sections should match as cli doesn't support any
+memory_limit = 40M
+[PATH=",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cwd",
+                },
+                "kind": "encapsedpart",
+                "syntax": "complex",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "]
+memory_limit = 50M
+[PATH=/does/not/exist]
+memory_limit = 60M
+[HOST=some_fake_host]
+memory_limit = 70M
+",
+                  "unicode": false,
+                  "value": "]
+memory_limit = 50M
+[PATH=/does/not/exist]
+memory_limit = 60M
+[HOST=some_fake_host]
+memory_limit = 70M",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "desc",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pipe\\"",
+                      "unicode": false,
+                      "value": "pipe",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"r\\"",
+                      "unicode": false,
+                      "value": "r",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pipe\\"",
+                      "unicode": false,
+                      "value": "pipe",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"w\\"",
+                      "unicode": false,
+                      "value": "w",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": Number {
+                "kind": "number",
+                "value": "2",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pipe\\"",
+                      "unicode": false,
+                      "value": "pipe",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"w\\"",
+                      "unicode": false,
+                      "value": "w",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pipes",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Encapsed {
+              "kind": "encapsed",
+              "raw": "\\"$php -c $ini_file -r 'echo ini_get(\\\\\\"memory_limit\\\\\\");'\\"",
+              "type": "string",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "php",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": " -c ",
+                    "unicode": false,
+                    "value": " -c ",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ini_file",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": " -r 'echo ini_get(\\\\\\"memory_limit\\\\\\");'",
+                    "unicode": false,
+                    "value": " -r 'echo ini_get(\\\\\\"memory_limit\\\\\\");'",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+              ],
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "desc",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "proc_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "kind": "exit",
+              "useDie": false,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pipes",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "stream_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pipes",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "stream_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "proc_terminate",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "proc_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

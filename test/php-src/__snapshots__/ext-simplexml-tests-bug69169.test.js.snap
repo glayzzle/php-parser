@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #69169 (simplexml_load_string parse wrongly when xml given in one row) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<root a=\\"b\\">
+    <row b=\\"y\\">
+        <item s=\\"t\\" />
+    </row>
+    <row p=\\"c\\">
+        <item y=\\"n\\" />
+    </row>
+</root>'",
+          "unicode": false,
+          "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<root a=\\"b\\">
+    <row b=\\"y\\">
+        <item s=\\"t\\" />
+    </row>
+    <row p=\\"c\\">
+        <item y=\\"n\\" />
+    </row>
+</root>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"\\\\n\\"",
+                    "unicode": false,
+                    "value": "
+",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"\\\\r\\"",
+                    "unicode": false,
+                    "value": "
+",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"\\\\t\\"",
+                    "unicode": false,
+                    "value": "	",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"\\"",
+              "unicode": false,
+              "value": "",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_replace",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "simple_xml",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "b",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "simple_xml",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

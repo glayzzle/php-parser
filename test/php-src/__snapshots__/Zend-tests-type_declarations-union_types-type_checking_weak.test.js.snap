@@ -1,0 +1,1141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Behavior of union type checks (weak) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "value",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Bin {
+                    "kind": "bin",
+                    "left": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'new '",
+                      "unicode": false,
+                      "value": "new ",
+                    },
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "value",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "get_class",
+                        "resolution": "uqn",
+                      },
+                    },
+                    "type": ".",
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "value",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_object",
+                "resolution": "uqn",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'INF'",
+                    "unicode": false,
+                    "value": "INF",
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "value",
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "INF",
+                "resolution": "uqn",
+              },
+              "type": "===",
+            },
+          },
+          Return {
+            "expr": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "value",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "JSON_PRESERVE_ZERO_FRACTION",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "json_encode",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "dump",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "type",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "string",
+            "raw": "string",
+          },
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "values",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "array",
+            "raw": "array",
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "alignment",
+              },
+              "operator": "=",
+              "right": Number {
+                "kind": "number",
+                "value": "16",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"\\\\nType $type:\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\nType ",
+                      "unicode": false,
+                      "value": "
+Type ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "type",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": ":\\\\n",
+                      "unicode": false,
+                      "value": ":",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "fn",
+              },
+              "operator": "=",
+              "right": Eval {
+                "kind": "eval",
+                "source": Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\"return function($type \\\\$arg) { return \\\\$arg; };\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "return function(",
+                        "unicode": false,
+                        "value": "return function(",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "type",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": " \\\\$arg) { return \\\\$arg; };",
+                        "unicode": false,
+                        "value": " $arg) { return $arg; };",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                  ],
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Foreach {
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    Call {
+                      "arguments": Array [
+                        Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "value",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "dump",
+                            "resolution": "uqn",
+                          },
+                        },
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "alignment",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "str_pad",
+                        "resolution": "uqn",
+                      },
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "' => '",
+                      "unicode": false,
+                      "value": " => ",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Try {
+                  "always": null,
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "error_clear_last",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "value",
+                          },
+                          "operator": "=",
+                          "right": Silent {
+                            "expr": Call {
+                              "arguments": Array [
+                                Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "value",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "fn",
+                              },
+                            },
+                            "kind": "silent",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      Echo {
+                        "expressions": Array [
+                          Call {
+                            "arguments": Array [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "value",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "dump",
+                              "resolution": "uqn",
+                            },
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                      If {
+                        "alternate": null,
+                        "body": Block {
+                          "children": Array [
+                            Echo {
+                              "expressions": Array [
+                                String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "' ('",
+                                  "unicode": false,
+                                  "value": " (",
+                                },
+                                OffsetLookup {
+                                  "kind": "offsetlookup",
+                                  "offset": String {
+                                    "isDoubleQuote": false,
+                                    "kind": "string",
+                                    "raw": "'message'",
+                                    "unicode": false,
+                                    "value": "message",
+                                  },
+                                  "what": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "e",
+                                  },
+                                },
+                                String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "')'",
+                                  "unicode": false,
+                                  "value": ")",
+                                },
+                              ],
+                              "kind": "echo",
+                              "shortForm": false,
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "if",
+                        "shortForm": false,
+                        "test": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": Array [],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "error_get_last",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "catches": Array [
+                    Catch {
+                      "body": Block {
+                        "children": Array [
+                          ExpressionStatement {
+                            "expression": Assign {
+                              "kind": "assign",
+                              "left": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "msg",
+                              },
+                              "operator": "=",
+                              "right": Call {
+                                "arguments": Array [],
+                                "kind": "call",
+                                "what": PropertyLookup {
+                                  "kind": "propertylookup",
+                                  "offset": Identifier {
+                                    "kind": "identifier",
+                                    "name": "getMessage",
+                                  },
+                                  "what": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "e",
+                                  },
+                                },
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                          ExpressionStatement {
+                            "expression": Assign {
+                              "kind": "assign",
+                              "left": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "msg",
+                              },
+                              "operator": "=",
+                              "right": Call {
+                                "arguments": Array [
+                                  Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "msg",
+                                  },
+                                  String {
+                                    "isDoubleQuote": false,
+                                    "kind": "string",
+                                    "raw": "', called in'",
+                                    "unicode": false,
+                                    "value": ", called in",
+                                  },
+                                  Boolean {
+                                    "kind": "boolean",
+                                    "raw": "true",
+                                    "value": true,
+                                  },
+                                ],
+                                "kind": "call",
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "strstr",
+                                  "resolution": "uqn",
+                                },
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                          ExpressionStatement {
+                            "expression": Assign {
+                              "kind": "assign",
+                              "left": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "msg",
+                              },
+                              "operator": "=",
+                              "right": Call {
+                                "arguments": Array [
+                                  String {
+                                    "isDoubleQuote": false,
+                                    "kind": "string",
+                                    "raw": "'{closure}(): Argument #1 ($arg)'",
+                                    "unicode": false,
+                                    "value": "{closure}(): Argument #1 ($arg)",
+                                  },
+                                  String {
+                                    "isDoubleQuote": false,
+                                    "kind": "string",
+                                    "raw": "'Argument ...'",
+                                    "unicode": false,
+                                    "value": "Argument ...",
+                                  },
+                                  Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "msg",
+                                  },
+                                ],
+                                "kind": "call",
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "str_replace",
+                                  "resolution": "uqn",
+                                },
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                          Echo {
+                            "expressions": Array [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "msg",
+                              },
+                            ],
+                            "kind": "echo",
+                            "shortForm": false,
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "kind": "catch",
+                      "variable": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                      "what": Array [
+                        Name {
+                          "kind": "name",
+                          "name": "TypeError",
+                          "resolution": "uqn",
+                        },
+                      ],
+                    },
+                  ],
+                  "kind": "try",
+                },
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "values",
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "value",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"__toString()\\"",
+                  "unicode": false,
+                  "value": "__toString()",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__toString",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "WithToString",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "values",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "42.0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Name {
+                "kind": "name",
+                "name": "INF",
+                "resolution": "uqn",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"42\\"",
+                "unicode": false,
+                "value": "42",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"42.0\\"",
+                "unicode": false,
+                "value": "42.0",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"42x\\"",
+                "unicode": false,
+                "value": "42x",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"x\\"",
+                "unicode": false,
+                "value": "x",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\"",
+                "unicode": false,
+                "value": "",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stdClass",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "WithToString",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'int|float'",
+            "unicode": false,
+            "value": "int|float",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'int|float|false'",
+            "unicode": false,
+            "value": "int|float|false",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'int|float|bool'",
+            "unicode": false,
+            "value": "int|float|bool",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'int|bool'",
+            "unicode": false,
+            "value": "int|bool",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'int|string|null'",
+            "unicode": false,
+            "value": "int|string|null",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'string|bool'",
+            "unicode": false,
+            "value": "string|bool",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'float|array'",
+            "unicode": false,
+            "value": "float|array",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'string|array'",
+            "unicode": false,
+            "value": "string|array",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'bool|array'",
+            "unicode": false,
+            "value": "bool|array",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "values",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

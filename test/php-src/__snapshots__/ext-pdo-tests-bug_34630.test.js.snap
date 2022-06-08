@@ -1,0 +1,682 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PDO Common: Bug #34630 (inserting streams as LOBs) 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'REDIR_TEST_DIR='",
+                  "unicode": false,
+                  "value": "REDIR_TEST_DIR=",
+                },
+                "right": Magic {
+                  "kind": "magic",
+                  "raw": "__DIR__",
+                  "value": "__DIR__",
+                },
+                "type": ".",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/../../pdo/tests/'",
+                "unicode": false,
+                "value": "/../../pdo/tests/",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "putenv",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'REDIR_TEST_DIR'",
+              "unicode": false,
+              "value": "REDIR_TEST_DIR",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'REDIR_TEST_DIR'",
+                "unicode": false,
+                "value": "REDIR_TEST_DIR",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "getenv",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'pdo_test.inc'",
+            "unicode": false,
+            "value": "pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "driver",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "ATTR_DRIVER_NAME",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "PDO",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getAttribute",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "is_oci",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "driver",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'oci'",
+            "unicode": false,
+            "value": "oci",
+          },
+          "type": "==",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'CREATE TABLE test (id int NOT NULL PRIMARY KEY, val VARCHAR(256))'",
+                  "unicode": false,
+                  "value": "CREATE TABLE test (id int NOT NULL PRIMARY KEY, val VARCHAR(256))",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'CREATE TABLE test (id int NOT NULL PRIMARY KEY, val BLOB)'",
+                  "unicode": false,
+                  "value": "CREATE TABLE test (id int NOT NULL PRIMARY KEY, val BLOB)",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "is_oci",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ATTR_ERRMODE",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ERRMODE_EXCEPTION",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "fp",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "tmpfile",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"I am the LOB data\\"",
+            "unicode": false,
+            "value": "I am the LOB data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "rewind",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "insert",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"insert into test (id, val) values (1, :blob)\\"",
+                    "unicode": false,
+                    "value": "insert into test (id, val) values (1, :blob)",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "prepare",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "beginTransaction",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "insert",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"insert into test (id, val) values (1, EMPTY_BLOB()) RETURNING val INTO :blob\\"",
+                    "unicode": false,
+                    "value": "insert into test (id, val) values (1, EMPTY_BLOB()) RETURNING val INTO :blob",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "prepare",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "is_oci",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "':blob'",
+            "unicode": false,
+            "value": ":blob",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "PARAM_LOB",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bindValue",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "insert",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "execute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "insert",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "insert",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ATTR_STRINGIFY_FETCHES",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "FETCH_ASSOC",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PDO",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "fetchAll",
+              },
+              "what": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"SELECT * from test\\"",
+                    "unicode": false,
+                    "value": "SELECT * from test",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "query",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

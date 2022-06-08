@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Returning an object from stream_read() is invalid, but should not leak 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "stream_open",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "stream_stat",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": New {
+                  "arguments": Array [],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "stdClass",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "stream_read",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "MyStream",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'mystream'",
+            "unicode": false,
+            "value": "mystream",
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "class",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "MyStream",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_wrapper_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'mystream://'",
+                      "unicode": false,
+                      "value": "mystream://",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "file_get_contents",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"\\\\n\\"",
+                    "unicode": false,
+                    "value": "
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Error",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

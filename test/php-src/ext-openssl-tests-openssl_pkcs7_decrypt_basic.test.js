@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/openssl/tests/openssl_pkcs7_decrypt_basic.phpt
+  it("openssl_pkcs7_decrypt() tests", function () {
+    expect(parser.parseCode("<?php\n$infile = __DIR__ . \"/cert.crt\";\n$privkey = \"file://\" . __DIR__ . \"/private_rsa_1024.key\";\n$encrypted = tempnam(sys_get_temp_dir(), \"ssl\");\nif ($encrypted === false)\n    die(\"failed to get a temporary filename!\");\n$outfile = tempnam(sys_get_temp_dir(), \"ssl\");\nif ($outfile === false) {\n    unlink($outfile);\n    die(\"failed to get a temporary filename!\");\n}\n$single_cert = \"file://\" . __DIR__ . \"/cert.crt\";\n$headers = array(\"test@test\", \"testing openssl_pkcs7_encrypt()\");\n$wrong = \"wrong\";\n$empty = \"\";\n$cipher = OPENSSL_CIPHER_AES_128_CBC;\nopenssl_pkcs7_encrypt($infile, $encrypted, $single_cert, $headers, 0, $cipher);\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, $single_cert, $privkey));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, openssl_x509_read($single_cert), $privkey));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, $single_cert, $wrong));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, $wrong, $privkey));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, null, $privkey));\nvar_dump(openssl_pkcs7_decrypt($wrong, $outfile, $single_cert, $privkey));\nvar_dump(openssl_pkcs7_decrypt($empty, $outfile, $single_cert, $privkey));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $empty, $single_cert, $privkey));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, $empty, $privkey));\nvar_dump(openssl_pkcs7_decrypt($encrypted, $outfile, $single_cert, $empty));\nif (file_exists($encrypted)) {\n    echo \"true\\n\";\n    unlink($encrypted);\n}\nif (file_exists($outfile)) {\n    echo \"true\\n\";\n    unlink($outfile);\n}\n?>")).toMatchSnapshot();
+  });
+});

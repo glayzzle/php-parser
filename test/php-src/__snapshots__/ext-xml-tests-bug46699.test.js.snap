@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #46699: (xml_parse crash when parser is namespace aware) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "parser",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "data",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "data",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "defaultfunc",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "HERE",
+          "raw": "<<<HERE
+<a xmlns=\\"http://example.com/foo\\"
+    xmlns:bar=\\"http://example.com/bar\\">
+  <bar:b foo=\\"bar\\">1</bar:b>
+  <bar:c bar:nix=\\"null\\" foo=\\"bar\\">2</bar:c>
+</a>
+HERE",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<a xmlns=\\"http://example.com/foo\\"
+    xmlns:bar=\\"http://example.com/bar\\">
+  <bar:b foo=\\"bar\\">1</bar:b>
+  <bar:c bar:nix=\\"null\\" foo=\\"bar\\">2</bar:c>
+</a>
+",
+                "unicode": false,
+                "value": "<a xmlns=\\"http://example.com/foo\\"
+    xmlns:bar=\\"http://example.com/bar\\">
+  <bar:b foo=\\"bar\\">1</bar:b>
+  <bar:c bar:nix=\\"null\\" foo=\\"bar\\">2</bar:c>
+</a>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "parser",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"ISO-8859-1\\"",
+              "unicode": false,
+              "value": "ISO-8859-1",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"@\\"",
+              "unicode": false,
+              "value": "@",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "xml_parser_create_ns",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "parser",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'defaultfunc'",
+            "unicode": false,
+            "value": "defaultfunc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "xml_set_default_handler",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "parser",
+          },
+          Name {
+            "kind": "name",
+            "name": "XML_OPTION_CASE_FOLDING",
+            "resolution": "uqn",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "xml_parser_set_option",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "parser",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xml",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "xml_parse",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "parser",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "xml_parser_free",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

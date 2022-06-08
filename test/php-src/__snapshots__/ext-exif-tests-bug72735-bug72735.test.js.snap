@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72735 (Samsung picture thumb not read (zero size)) 1`] = `
+Program {
+  "children": Array [
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "picture",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "': '",
+                  "unicode": false,
+                  "value": ": ",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "len",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Call {
+                    "arguments": Array [
+                      Bin {
+                        "kind": "bin",
+                        "left": Bin {
+                          "kind": "bin",
+                          "left": Magic {
+                            "kind": "magic",
+                            "raw": "__DIR__",
+                            "value": "__DIR__",
+                          },
+                          "right": Name {
+                            "kind": "name",
+                            "name": "DIRECTORY_SEPARATOR",
+                            "resolution": "uqn",
+                          },
+                          "type": ".",
+                        },
+                        "right": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "picture",
+                        },
+                        "type": ".",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "exif_thumbnail",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "strlen",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'Error, no length returned'",
+                      "unicode": false,
+                      "value": "Error, no length returned",
+                    },
+                    Name {
+                      "kind": "name",
+                      "name": "PHP_EOL",
+                      "resolution": "uqn",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Continue {
+                  "kind": "continue",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "len",
+              },
+            },
+          },
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'int('",
+                    "unicode": false,
+                    "value": "int(",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "len",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "')'",
+                  "unicode": false,
+                  "value": ")",
+                },
+                "type": ".",
+              },
+              Name {
+                "kind": "name",
+                "name": "PHP_EOL",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Array {
+        "items": Array [
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'nokia.jpg'",
+              "unicode": false,
+              "value": "nokia.jpg",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'samsung.jpg'",
+              "unicode": false,
+              "value": "samsung.jpg",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'panasonic.jpg'",
+              "unicode": false,
+              "value": "panasonic.jpg",
+            },
+          },
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "picture",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

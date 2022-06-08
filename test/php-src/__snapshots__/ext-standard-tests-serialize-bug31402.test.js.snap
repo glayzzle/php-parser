@@ -1,0 +1,459 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #31402 (unserialize() generates references when it should not) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "i",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": null,
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "i",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "i",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  "operator": "=",
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "i",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "TestX",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "A",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Array {
+                "items": Array [],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "visibility": null,
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "B",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": null,
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "1",
+                    },
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "A",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  },
+                  "operator": "=",
+                  "right": New {
+                    "arguments": Array [
+                      Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "TestX",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "obj",
+                  },
+                  "operator": "=",
+                  "right": New {
+                    "arguments": Array [
+                      Number {
+                        "kind": "number",
+                        "value": "2",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "TestX",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": AssignRef {
+                  "kind": "assignref",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "A",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "obj",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": AssignRef {
+                  "kind": "assignref",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "3",
+                    },
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "A",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  },
+                  "right": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "A",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "B",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  "operator": "=",
+                  "right": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "1",
+                    },
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "A",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "TestY",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "before",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "TestY",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ser",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "before",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "serialize",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ser",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unserialize",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "before",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "after",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #46569 (SplFileObject: fgetcsv after seek returns wrong line) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "file",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/bug46569.csv'",
+                "unicode": false,
+                "value": "/bug46569.csv",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SplFileObject",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "seek",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "file",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "fgetcsv",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "file",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

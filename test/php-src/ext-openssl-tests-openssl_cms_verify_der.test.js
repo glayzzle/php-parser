@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/openssl/tests/openssl_cms_verify_der.phpt
+  it("openssl_cms_verify() der tests", function () {
+    expect(parser.parseCode("<?php\n$outfile = tempnam(sys_get_temp_dir(), \"ssl\");\nif ($outfile === false) {\n    die(\"failed to get a temporary filename!\");\n}\n$contentfile = tempnam(sys_get_temp_dir(), \"ssl\");\nif ($contentfile === false) {\n    die(\"failed to get a temporary filename!\");\n}\n$pkcsfile = __DIR__ . \"/openssl_cms_verify__pkcsfile.tmp\";\n$eml = __DIR__ . \"/signed.eml\";\n$wrong = \"wrong\";\n$empty = \"\";\n$cainfo = array();\n$plain = __DIR__ . \"/plain.txt\";\n$p7file = __DIR__ . \"/shakespeare.p7s\";\n$pemfile = __DIR__ . \"/shakespeare.pem\";\nvar_dump(openssl_cms_verify($wrong, 0));\nvar_dump(openssl_cms_verify($empty, 0));\nvar_dump(openssl_cms_verify($eml, 0));\nvar_dump(openssl_cms_verify($eml, 0, $empty));\nvar_dump(openssl_cms_verify($eml, OPENSSL_CMS_NOVERIFY, $outfile));\nvar_dump(openssl_cms_verify($eml, OPENSSL_CMS_NOVERIFY, $outfile, $cainfo, $outfile, $contentfile));\nvar_dump(openssl_cms_verify($eml, OPENSSL_CMS_NOVERIFY, $outfile, $cainfo, $outfile, $contentfile, $pkcsfile));\nvar_dump(openssl_cms_verify($plain, OPENSSL_CMS_NOVERIFY|OPENSSL_CMS_BINARY|OPENSSL_CMS_DETACHED,$outfile,$cainfo,NULL,$contentfile,$pkcsfile,$p7file,OPENSSL_ENCODING_DER));\nvar_dump(openssl_cms_verify($plain, OPENSSL_CMS_NOVERIFY|OPENSSL_CMS_BINARY|OPENSSL_CMS_DETACHED,$outfile,$cainfo,NULL,$contentfile,$pkcsfile,$pemfile,OPENSSL_ENCODING_PEM));\nvar_dump(file_get_contents($pkcsfile));\nif (file_exists($outfile)) {\n    echo \"true\\n\";\n    unlink($outfile);\n}\nif (file_exists($contentfile)) {\n    echo \"true\\n\";\n    unlink($contentfile);\n}\n?>")).toMatchSnapshot();
+  });
+});

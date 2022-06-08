@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/rtrim.phpt
+  it("Testing rtrim() function", function () {
+    expect(parser.parseCode("<?php\n/* Testing the Normal behaviour of rtrim() function */\n echo \"\\n *** Output for Normal Behaviour ***\\n\";\n var_dump ( rtrim(\"rtrim test   \\t\\0 \") );                       /* without second Argument */\n var_dump ( rtrim(\"rtrim test   \" , \"\") );                       /* no characters in second Argument */\n var_dump ( rtrim(\"rtrim test        \", true) );                 /* with boolean value as second Argument */\n var_dump ( rtrim(\"rtrim test        \", \" \") );                  /* with single space as second Argument */\n var_dump ( rtrim(\"rtrim test \\t\\n\\r\\0\\x0B\", \"\\t\\n\\r\\0\\x0B\") );  /* with multiple escape sequences as second Argument */\n var_dump ( rtrim(\"rtrim testABCXYZ\", \"A..Z\") );                 /* with characters range as second Argument */\n var_dump ( rtrim(\"rtrim test0123456789\", \"0..9\") );             /* with numbers range as second Argument */\n var_dump ( rtrim(\"rtrim test$#@\", \"#@$\") );                     /* with some special characters as second Argument */\n/* Use of class and objects */\necho \"\\n*** Checking with OBJECTS ***\\n\";\nclass string1 {\n  public function __toString() {\n    return \"Object\";\n  }\n}\n$obj = new string1;\nvar_dump( rtrim($obj, \"tc\") );\n/* String with embedded NULL */\necho \"\\n*** String with embedded NULL ***\\n\";\nvar_dump( rtrim(\"234\\x0005678\\x0000efgh\\xijkl\\x0n1\", \"\\x0n1\") );\n/* heredoc string */\n$str = <<<EOD\nus\ning heredoc string\nEOD;\necho \"\\n *** Using heredoc string ***\\n\";\nvar_dump( rtrim($str, \"ing\") );\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

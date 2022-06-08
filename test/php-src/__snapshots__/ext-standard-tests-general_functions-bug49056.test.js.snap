@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #49056 (parse_ini_*() regression in 5.3.0 when using non-ASCII strings as option keys) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "string",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+Cooking_furniture=\\"KÃ¼chen MÃ¶bel (en)\\"
+KÃ¼chen_MÃ¶bel=\\"Cooking furniture (en)\\"
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Cooking_furniture=\\"KÃ¼chen MÃ¶bel (en)\\"
+KÃ¼chen_MÃ¶bel=\\"Cooking furniture (en)\\"
+",
+                "unicode": false,
+                "value": "Cooking_furniture=\\"KÃ¼chen MÃ¶bel (en)\\"
+KÃ¼chen_MÃ¶bel=\\"Cooking furniture (en)\\"",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "filename",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/bug49056.tmp'",
+            "unicode": false,
+            "value": "/bug49056.tmp",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filename",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "string",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "filename",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "parse_ini_file",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

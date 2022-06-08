@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #41655 (open_basedir bypass via glob()) 2/2 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dir",
+        },
+        "operator": "=",
+        "right": Magic {
+          "kind": "magic",
+          "raw": "__DIR__",
+          "value": "__DIR__",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "dir",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/test*csv\\"",
+                "unicode": false,
+                "value": "/test*csv",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "glob",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

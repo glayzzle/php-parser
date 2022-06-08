@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Phar: PHP bug #74991: include_path has a 4096 char (minus "__DIR__:") limit, in some PHAR cases 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'path'",
+            "unicode": false,
+            "value": "path",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mkdir",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'path/needle.php'",
+            "unicode": false,
+            "value": "path/needle.php",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "touch",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "p",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'sample.phar'",
+              "unicode": false,
+              "value": "sample.phar",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Phar",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'some/file'",
+            "unicode": false,
+            "value": "some/file",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "p",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"<?php const MAXPATHLEN = 4096, OVERFLOW = 1, PATH = 'path'; set_include_path(str_repeat('x', MAXPATHLEN - strlen(__DIR__ . PATH_SEPARATOR . PATH_SEPARATOR . PATH) + OVERFLOW) . PATH_SEPARATOR . PATH); require('needle.php');\\"",
+          "unicode": false,
+          "value": "<?php const MAXPATHLEN = 4096, OVERFLOW = 1, PATH = 'path'; set_include_path(str_repeat('x', MAXPATHLEN - strlen(__DIR__ . PATH_SEPARATOR . PATH_SEPARATOR . PATH) + OVERFLOW) . PATH_SEPARATOR . PATH); require('needle.php');",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"<?php Phar::mapPhar('sample.phar'); __HALT_COMPILER();\\"",
+            "unicode": false,
+            "value": "<?php Phar::mapPhar('sample.phar'); __HALT_COMPILER();",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setStub",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "p",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'phar://sample.phar/some/file'",
+          "unicode": false,
+          "value": "phar://sample.phar/some/file",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

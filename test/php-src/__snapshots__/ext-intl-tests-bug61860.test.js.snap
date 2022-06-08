@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #61860: Offsets may be wrong for grapheme_stri* functions 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "haystack",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'Auf der Straße nach Paris habe ich mit dem Fahrer gesprochen'",
+          "unicode": false,
+          "value": "Auf der Straße nach Paris habe ich mit dem Fahrer gesprochen",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "haystack",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pariS '",
+                "unicode": false,
+                "value": "pariS ",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "grapheme_stripos",
+              "resolution": "uqn",
+            },
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "haystack",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'paRis '",
+                "unicode": false,
+                "value": "paRis ",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "grapheme_stristr",
+              "resolution": "uqn",
+            },
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "haystack",
+              },
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "haystack",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'Paris'",
+                    "unicode": false,
+                    "value": "Paris",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "grapheme_stripos",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "grapheme_substr",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

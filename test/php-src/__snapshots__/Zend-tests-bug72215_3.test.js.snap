@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72215.3 (Wrong return value if var modified in finally) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                    "operator": "=",
+                    "right": Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": true,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "test",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

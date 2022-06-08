@@ -1,0 +1,854 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test pcntl wait functionality 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\\\nTesting pcntl_wifexited and wexitstatus....\\"",
+                "unicode": false,
+                "value": "
+
+Testing pcntl_wifexited and wexitstatus....",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pid",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pcntl_fork",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "options",
+                    },
+                    "operator": "=",
+                    "right": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pid",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "status",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "options",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pcntl_waitpid",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                If {
+                  "alternate": null,
+                  "body": ExpressionStatement {
+                    "expression": Print {
+                      "expression": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"\\\\nExited With: \\"",
+                          "unicode": false,
+                          "value": "
+Exited With: ",
+                        },
+                        "right": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "status",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "pcntl_wexitstatus",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "kind": "print",
+                    },
+                    "kind": "expressionstatement",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "status",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pcntl_wifexited",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "sleep",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Exit {
+                    "expression": Unary {
+                      "kind": "unary",
+                      "type": "-",
+                      "what": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    },
+                    "kind": "exit",
+                    "useDie": false,
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pid",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "type": "==",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test_exit_waits",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\\\nTesting pcntl_wifsignaled....\\"",
+                "unicode": false,
+                "value": "
+
+Testing pcntl_wifsignaled....",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pid",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pcntl_fork",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "options",
+                    },
+                    "operator": "=",
+                    "right": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pid",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "SIGTERM",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "posix_kill",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pid",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "status",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "options",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pcntl_waitpid",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "signal_print",
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": Array [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "status",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "pcntl_wtermsig",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      If {
+                        "alternate": null,
+                        "body": ExpressionStatement {
+                          "expression": Assign {
+                            "kind": "assign",
+                            "left": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "signal_print",
+                            },
+                            "operator": "=",
+                            "right": String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"SIGTERM\\"",
+                              "unicode": false,
+                              "value": "SIGTERM",
+                            },
+                          },
+                          "kind": "expressionstatement",
+                        },
+                        "kind": "if",
+                        "shortForm": false,
+                        "test": Bin {
+                          "kind": "bin",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "signal_print",
+                          },
+                          "right": Name {
+                            "kind": "name",
+                            "name": "SIGTERM",
+                            "resolution": "uqn",
+                          },
+                          "type": "==",
+                        },
+                      },
+                      ExpressionStatement {
+                        "expression": Print {
+                          "expression": Bin {
+                            "kind": "bin",
+                            "left": String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"\\\\nProcess was terminated by signal : \\"",
+                              "unicode": false,
+                              "value": "
+Process was terminated by signal : ",
+                            },
+                            "right": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "signal_print",
+                            },
+                            "type": ".",
+                          },
+                          "kind": "print",
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "status",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pcntl_wifsignaled",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                While {
+                  "body": null,
+                  "kind": "while",
+                  "shortForm": false,
+                  "test": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                ExpressionStatement {
+                  "expression": Exit {
+                    "expression": null,
+                    "kind": "exit",
+                    "useDie": false,
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pid",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "type": "==",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test_exit_signal",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\\\nTesting pcntl_wifstopped and pcntl_wstopsig....\\"",
+                "unicode": false,
+                "value": "
+
+Testing pcntl_wifstopped and pcntl_wstopsig....",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pid",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pcntl_fork",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "options",
+                    },
+                    "operator": "=",
+                    "right": Name {
+                      "kind": "name",
+                      "name": "WUNTRACED",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pid",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "SIGSTOP",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "posix_kill",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pid",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "status",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "options",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pcntl_waitpid",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "signal_print",
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": Array [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "status",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "pcntl_wstopsig",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      If {
+                        "alternate": null,
+                        "body": ExpressionStatement {
+                          "expression": Assign {
+                            "kind": "assign",
+                            "left": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "signal_print",
+                            },
+                            "operator": "=",
+                            "right": String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"SIGSTOP\\"",
+                              "unicode": false,
+                              "value": "SIGSTOP",
+                            },
+                          },
+                          "kind": "expressionstatement",
+                        },
+                        "kind": "if",
+                        "shortForm": false,
+                        "test": Bin {
+                          "kind": "bin",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "signal_print",
+                          },
+                          "right": Name {
+                            "kind": "name",
+                            "name": "SIGSTOP",
+                            "resolution": "uqn",
+                          },
+                          "type": "==",
+                        },
+                      },
+                      ExpressionStatement {
+                        "expression": Print {
+                          "expression": Bin {
+                            "kind": "bin",
+                            "left": String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"\\\\nProcess was stopped by signal : \\"",
+                              "unicode": false,
+                              "value": "
+Process was stopped by signal : ",
+                            },
+                            "right": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "signal_print",
+                            },
+                            "type": ".",
+                          },
+                          "kind": "print",
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "status",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "pcntl_wifstopped",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pid",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "SIGCONT",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "posix_kill",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "sleep",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Exit {
+                    "expression": null,
+                    "kind": "exit",
+                    "useDie": false,
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pid",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "type": "==",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test_stop_signal",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Staring wait.h tests....\\"",
+          "unicode": false,
+          "value": "Staring wait.h tests....",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test_exit_waits",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test_exit_signal",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test_stop_signal",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,299 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70944 (try{ } finally{} can create infinite chains of exceptions) 1`] = `
+Program {
+  "children": Array [
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "e",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Foo\\"",
+                    "unicode": false,
+                    "value": "Foo",
+                  },
+                ],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "Exception",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Try {
+            "always": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "e",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"Bar\\"",
+                        "unicode": false,
+                        "value": "Bar",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Cast {
+                      "expr": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                      "kind": "cast",
+                      "raw": "(string)",
+                      "type": "string",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "e",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Foo\\"",
+                    "unicode": false,
+                    "value": "Foo",
+                  },
+                ],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "Exception",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Try {
+            "always": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"Dummy\\"",
+                        "unicode": false,
+                        "value": "Dummy",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"Bar\\"",
+                        "unicode": false,
+                        "value": "Bar",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Cast {
+                      "expr": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                      "kind": "cast",
+                      "raw": "(string)",
+                      "type": "string",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

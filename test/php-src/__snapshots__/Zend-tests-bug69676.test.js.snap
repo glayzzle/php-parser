@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #69676: Resolution of self::FOO in class constants not correct 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "myConst",
+              },
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"const in A\\"",
+                "unicode": false,
+                "value": "const in A",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "myDynConst",
+              },
+              "value": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "myConst",
+                },
+                "what": SelfReference {
+                  "kind": "selfreference",
+                  "raw": "self",
+                },
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "myConst",
+              },
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"const in B\\"",
+                "unicode": false,
+                "value": "const in B",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "A",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "B",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "myDynConst",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "B",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "myDynConst",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "A",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

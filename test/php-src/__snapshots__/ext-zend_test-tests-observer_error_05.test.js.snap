@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Observer: End handlers fire after a userland fatal error 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "errno",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "errstr",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "errfile",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "errline",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'Foo error'",
+                        "unicode": false,
+                        "value": "Foo error",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "E_USER_ERROR",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "trigger_error",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "set_error_handler",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "x",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'You should not see this.'",
+          "unicode": false,
+          "value": "You should not see this.",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

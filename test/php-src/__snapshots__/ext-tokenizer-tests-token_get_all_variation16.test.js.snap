@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test token_get_all() function : usage variations - with function constructs 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"*** Testing token_get_all() : with different function constructs ***\\\\n\\"",
+          "unicode": false,
+          "value": "*** Testing token_get_all() : with different function constructs ***
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "source",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?php
+declare(VALUE=100);
+include(\\"addfile.php\\");
+require(\\"sumfile.php\\");
+function myFunction($a)
+{
+  if($a % 2)
+    return 1;
+  else
+    exit;
+}
+$a = VALUE;
+$b = 20;
+$c = array(1,2);
+$b >>= 2;
+if($b <= 0)
+  die;
+else
+  print($b);
+list($value1,$value2) = $c;
+if(empty($value1) && !isset($value1)) {
+  myFunction();
+}
+?>'",
+          "unicode": false,
+          "value": "<?php
+declare(VALUE=100);
+include(\\"addfile.php\\");
+require(\\"sumfile.php\\");
+function myFunction($a)
+{
+  if($a % 2)
+    return 1;
+  else
+    exit;
+}
+$a = VALUE;
+$b = 20;
+$c = array(1,2);
+$b >>= 2;
+if($b <= 0)
+  die;
+else
+  print($b);
+list($value1,$value2) = $c;
+if(empty($value1) && !isset($value1)) {
+  myFunction();
+}
+?>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tokens",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "source",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "token_get_all",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tokens",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\"",
+          "unicode": false,
+          "value": "Done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

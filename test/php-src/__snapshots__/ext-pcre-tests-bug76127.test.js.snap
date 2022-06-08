@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #76127: preg_split does not raise an error on invalid UTF-8 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/a/u\\"",
+                "unicode": false,
+                "value": "/a/u",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"a\\\\xff\\"",
+                "unicode": false,
+                "value": "aÿ",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_split",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "preg_last_error",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "PREG_BAD_UTF8_ERROR",
+              "resolution": "uqn",
+            },
+            "type": "==",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

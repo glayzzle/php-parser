@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests stream context tcp_nodelay server 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "serverCode",
+        },
+        "operator": "=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "CODE",
+          "raw": "<<<'CODE'
+   $ctxt = stream_context_create([
+        \\"socket\\" => [
+            \\"tcp_nodelay\\" => true
+        ]
+    ]);
+    $server = stream_socket_server(
+        \\"tcp://127.0.0.1:9099\\", $errno, $errstr, STREAM_SERVER_BIND | STREAM_SERVER_LISTEN, $ctxt);
+    $client = stream_socket_accept($server);
+    var_dump(socket_get_option(
+                socket_import_stream($server),
+                    SOL_TCP, TCP_NODELAY) > 0);
+    var_dump(socket_get_option(
+                socket_import_stream($client),
+                    SOL_TCP, TCP_NODELAY) > 0);
+    fclose($client);
+    fclose($server);
+CODE",
+          "value": "   $ctxt = stream_context_create([
+        \\"socket\\" => [
+            \\"tcp_nodelay\\" => true
+        ]
+    ]);
+    $server = stream_socket_server(
+        \\"tcp://127.0.0.1:9099\\", $errno, $errstr, STREAM_SERVER_BIND | STREAM_SERVER_LISTEN, $ctxt);
+    $client = stream_socket_accept($server);
+    var_dump(socket_get_option(
+                socket_import_stream($server),
+                    SOL_TCP, TCP_NODELAY) > 0);
+    var_dump(socket_get_option(
+                socket_import_stream($client),
+                    SOL_TCP, TCP_NODELAY) > 0);
+    fclose($client);
+    fclose($server);",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "clientCode",
+        },
+        "operator": "=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "CODE",
+          "raw": "<<<'CODE'
+    $test = stream_socket_client(
+        \\"tcp://127.0.0.1:9099\\", $errno, $errstr, 10);
+    sleep(1);
+    fclose($test);
+CODE",
+          "value": "    $test = stream_socket_client(
+        \\"tcp://127.0.0.1:9099\\", $errno, $errstr, 10);
+    sleep(1);
+    fclose($test);",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"%s/../../../openssl/tests/ServerClientTestCase.inc\\"",
+              "unicode": false,
+              "value": "%s/../../../openssl/tests/ServerClientTestCase.inc",
+            },
+            Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sprintf",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "serverCode",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "clientCode",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "run",
+          },
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getInstance",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "ServerClientTestCase",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

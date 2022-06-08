@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #65911 (scope resolution operator - strange behavior with $this) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "foo",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  "operator": "=",
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'bar'",
+                    "unicode": false,
+                    "value": "bar",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Echo {
+                "expressions": Array [
+                  PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "foo",
+                    },
+                    "what": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                      "what": Name {
+                        "kind": "name",
+                        "name": "A",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "go",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "B",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "obj",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "B",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "go",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "obj",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

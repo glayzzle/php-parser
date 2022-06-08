@@ -1,0 +1,264 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests execute a file with -f 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TEST_PHP_EXECUTABLE'",
+              "unicode": false,
+              "value": "TEST_PHP_EXECUTABLE",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "filename",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/008.test.php'",
+            "unicode": false,
+            "value": "/008.test.php",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "code",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'
+<?php
+class test {
+    private $pri;
+}
+var_dump(test::$pri);
+?>
+'",
+          "unicode": false,
+          "value": "
+<?php
+class test {
+    private $pri;
+}
+var_dump(test::$pri);
+?>
+",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filename",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "code",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\`$php -n -f \\"$filename\\"\`",
+            "type": "shell",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "php",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": " -n -f \\"",
+                  "unicode": false,
+                  "value": " -n -f \\"",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "filename",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "\\"",
+                  "unicode": false,
+                  "value": "\\"",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\`$php -n -f \\"wrong\\"\`",
+            "type": "shell",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "php",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": " -n -f \\"wrong\\"",
+                  "unicode": false,
+                  "value": " -n -f \\"wrong\\"",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "filename",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

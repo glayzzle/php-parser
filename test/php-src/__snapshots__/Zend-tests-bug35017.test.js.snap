@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #35017 (Exception thrown in error handler may cause unexpected behavior) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'errorHandler'",
+            "unicode": false,
+            "value": "errorHandler",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "set_error_handler",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"0\\\\n\\"",
+                      "unicode": false,
+                      "value": "0
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"1\\\\n\\"",
+                      "unicode": false,
+                      "value": "1
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"?\\\\n\\"",
+                "unicode": false,
+                "value": "?
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"This Exception should be caught\\\\n\\"",
+                    "unicode": false,
+                    "value": "This Exception should be caught
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "errno",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "errstr",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "errfile",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "errline",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Throw {
+            "kind": "throw",
+            "what": New {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Some Exception'",
+                  "unicode": false,
+                  "value": "Some Exception",
+                },
+              ],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "Exception",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "errorHandler",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

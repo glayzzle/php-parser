@@ -1,0 +1,200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SimpleXML: CDATA 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sxe",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Encapsed {
+              "kind": "encapsed",
+              "label": "EOF",
+              "raw": "<<<EOF
+<?xml version='1.0'?>
+<!DOCTYPE sxe SYSTEM \\"notfound.dtd\\">
+<sxe id=\\"elem1\\">
+ Plain text.
+ <elem1 attr1='first'>
+  <!-- comment -->
+  <elem2>
+   <![CDATA[CDATA block]]>
+   <elem3>
+    <elem4>
+     <?test processing instruction ?>
+    </elem4>
+   </elem3>
+  </elem2>
+ </elem1>
+</sxe>
+EOF
+",
+              "type": "heredoc",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "<?xml version='1.0'?>
+<!DOCTYPE sxe SYSTEM \\"notfound.dtd\\">
+<sxe id=\\"elem1\\">
+ Plain text.
+ <elem1 attr1='first'>
+  <!-- comment -->
+  <elem2>
+   <![CDATA[CDATA block]]>
+   <elem3>
+    <elem4>
+     <?test processing instruction ?>
+    </elem4>
+   </elem3>
+  </elem2>
+ </elem1>
+</sxe>
+",
+                    "unicode": false,
+                    "value": "<?xml version='1.0'?>
+<!DOCTYPE sxe SYSTEM \\"notfound.dtd\\">
+<sxe id=\\"elem1\\">
+ Plain text.
+ <elem1 attr1='first'>
+  <!-- comment -->
+  <elem2>
+   <![CDATA[CDATA block]]>
+   <elem3>
+    <elem4>
+     <?test processing instruction ?>
+    </elem4>
+   </elem3>
+  </elem2>
+ </elem1>
+</sxe>",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+              ],
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sxe",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "elem1",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "elem1",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sxe",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "elem2",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "elem2",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "elem1",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Cast {
+                "expr": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "elem2",
+                },
+                "kind": "cast",
+                "raw": "(string)",
+                "type": "string",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "trim",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #29368.1 (The destructor is called when an exception is thrown from the constructor). 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "arg",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Throw {
+            "kind": "throw",
+            "what": New {
+              "arguments": Array [],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "Exception",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "throwme",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Inside constructor\\\\n\\"",
+                    "unicode": false,
+                    "value": "Inside constructor
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "throwme",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Inside destructor\\\\n\\"",
+                    "unicode": false,
+                    "value": "Inside destructor
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__destruct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bar",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "foo",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Caught exception!\\\\n\\"",
+                    "unicode": false,
+                    "value": "Caught exception!
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "exc",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

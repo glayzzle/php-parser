@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #48601 (xpath() returns FALSE for legitimate query) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sxe",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'<root><node1>1</node1></root>'",
+              "unicode": false,
+              "value": "<root><node1>1</node1></root>",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "nodes",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/root/node2/@test\\"",
+              "unicode": false,
+              "value": "/root/node2/@test",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "xpath",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sxe",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Result Count: \\"",
+                    "unicode": false,
+                    "value": "Result Count: ",
+                  },
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "nodes",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "count",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"An error occurred\\\\n\\"",
+                "unicode": false,
+                "value": "An error occurred
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "nodes",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "is_array",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

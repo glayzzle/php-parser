@@ -1,0 +1,125 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #47983 (mixed LF and CRLF line endings in mail()) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'user@example.com'",
+                "unicode": false,
+                "value": "user@example.com",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Test Subject'",
+                "unicode": false,
+                "value": "Test Subject",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'A Message'",
+                "unicode": false,
+                "value": "A Message",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'KHeaders'",
+                "unicode": false,
+                "value": "KHeaders",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mail",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "mail",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'bug47983.out'",
+              "unicode": false,
+              "value": "bug47983.out",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "file_get_contents",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/(?<!\\\\r)\\\\n/'",
+                "unicode": false,
+                "value": "/(?<!\\\\r)\\\\n/",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "mail",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_match_all",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

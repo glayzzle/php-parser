@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests xml_parser_free - Test setting skip whitespace and invalid encoding type 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xmlParser",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "xml_parser_create",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "xmlParser",
+              },
+              Name {
+                "kind": "name",
+                "name": "XML_OPTION_SKIP_WHITE",
+                "resolution": "uqn",
+              },
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "xml_parser_set_option",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "xmlParser",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "XML_OPTION_TARGET_ENCODING",
+                  "resolution": "uqn",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Invalid Encoding'",
+                  "unicode": false,
+                  "value": "Invalid Encoding",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "xml_parser_set_option",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "exception",
+                        },
+                      },
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "exception",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "ValueError",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

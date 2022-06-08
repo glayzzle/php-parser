@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Glob wrapper bypasses open_basedir 1`] = `
+Program {
+  "children": Array [
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"** Opening $spec\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "** Opening ",
+                      "unicode": false,
+                      "value": "** Opening ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "spec",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "dir",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "spec",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "opendir",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"Failed to open $spec\\\\n\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "Failed to open ",
+                            "unicode": false,
+                            "value": "Failed to open ",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "spec",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "\\\\n",
+                            "unicode": false,
+                            "value": "",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                      ],
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Continue {
+                  "kind": "continue",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "dir",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"No files in $spec\\\\n\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "No files in ",
+                            "unicode": false,
+                            "value": "No files in ",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "spec",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "\\\\n",
+                            "unicode": false,
+                            "value": "",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                      ],
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Continue {
+                  "kind": "continue",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "dir",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "readdir",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "===",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Array {
+        "items": Array [
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"glob://\\"",
+                "unicode": false,
+                "value": "glob://",
+              },
+              "right": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "type": ".",
+            },
+          },
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "spec",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

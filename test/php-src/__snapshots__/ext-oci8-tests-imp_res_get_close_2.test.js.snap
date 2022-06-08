@@ -1,0 +1,361 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Oracle Database 12c Implicit Result Sets: oci_get_implicit_resultset: oci_free_statement #2 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/connect.inc'",
+            "unicode": false,
+            "value": "/connect.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "plsql",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"declare
+      c1 sys_refcursor;
+    begin
+      open c1 for select 1 from dual union all select 2 from dual;
+      dbms_sql.return_result(c1);
+      open c1 for select 3 from dual union all select 4 from dual;
+      dbms_sql.return_result(c1);
+      open c1 for select 5 from dual union all select 6 from dual;
+      dbms_sql.return_result(c1);
+    end;\\"",
+          "unicode": false,
+          "value": "declare
+      c1 sys_refcursor;
+    begin
+      open c1 for select 1 from dual union all select 2 from dual;
+      dbms_sql.return_result(c1);
+      open c1 for select 3 from dual union all select 4 from dual;
+      dbms_sql.return_result(c1);
+      open c1 for select 5 from dual union all select 6 from dual;
+      dbms_sql.return_result(c1);
+    end;",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "plsql",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          While {
+            "body": Block {
+              "children": Array [
+                While {
+                  "body": Block {
+                    "children": Array [
+                      Foreach {
+                        "body": Block {
+                          "children": Array [
+                            Echo {
+                              "expressions": Array [
+                                Bin {
+                                  "kind": "bin",
+                                  "left": String {
+                                    "isDoubleQuote": true,
+                                    "kind": "string",
+                                    "raw": "\\"  \\"",
+                                    "unicode": false,
+                                    "value": "  ",
+                                  },
+                                  "right": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "item",
+                                  },
+                                  "type": ".",
+                                },
+                              ],
+                              "kind": "echo",
+                              "shortForm": false,
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "key": null,
+                        "kind": "foreach",
+                        "shortForm": false,
+                        "source": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "row",
+                        },
+                        "value": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "item",
+                        },
+                      },
+                      Echo {
+                        "expressions": Array [
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"\\\\n\\"",
+                            "unicode": false,
+                            "value": "
+",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "s",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "oci_free_statement",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "while",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "row",
+                      },
+                      "operator": "=",
+                      "parenthesizedExpression": true,
+                      "right": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "s1",
+                          },
+                          Bin {
+                            "kind": "bin",
+                            "left": Name {
+                              "kind": "name",
+                              "name": "OCI_ASSOC",
+                              "resolution": "uqn",
+                            },
+                            "right": Name {
+                              "kind": "name",
+                              "name": "OCI_RETURN_NULLS",
+                              "resolution": "uqn",
+                            },
+                            "type": "+",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "oci_fetch_array",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                    "right": Boolean {
+                      "kind": "boolean",
+                      "raw": "false",
+                      "value": false,
+                    },
+                    "type": "!=",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s1",
+              },
+              "operator": "=",
+              "parenthesizedExpression": true,
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "s",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_get_implicit_resultset",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "exception",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "exception",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\TypeError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

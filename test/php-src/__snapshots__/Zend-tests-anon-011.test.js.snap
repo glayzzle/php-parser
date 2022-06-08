@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Ensure proper inheritance with get_class(anon class instance) used via class_alias (see also bug #70106) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Class {
+                  "attrGroups": Array [],
+                  "body": Array [
+                    PropertyStatement {
+                      "isStatic": false,
+                      "kind": "propertystatement",
+                      "properties": Array [
+                        Property {
+                          "attrGroups": Array [],
+                          "kind": "property",
+                          "name": Identifier {
+                            "kind": "identifier",
+                            "name": "foo",
+                          },
+                          "nullable": false,
+                          "readonly": false,
+                          "type": null,
+                          "value": Number {
+                            "kind": "number",
+                            "value": "1",
+                          },
+                        },
+                      ],
+                      "visibility": "protected",
+                    },
+                  ],
+                  "extends": null,
+                  "implements": null,
+                  "isAbstract": false,
+                  "isAnonymous": true,
+                  "isFinal": false,
+                  "kind": "class",
+                  "name": null,
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "get_class",
+              "resolution": "uqn",
+            },
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"AnonBase\\"",
+            "unicode": false,
+            "value": "AnonBase",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "class_alias",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getFoo",
+              },
+              "what": New {
+                "arguments": Array [],
+                "kind": "new",
+                "parenthesizedExpression": true,
+                "what": Class {
+                  "attrGroups": Array [],
+                  "body": Array [
+                    Method {
+                      "arguments": Array [],
+                      "attrGroups": Array [],
+                      "body": Block {
+                        "children": Array [
+                          Return {
+                            "expr": PropertyLookup {
+                              "kind": "propertylookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "foo",
+                              },
+                              "what": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "this",
+                              },
+                            },
+                            "kind": "return",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "byref": false,
+                      "isAbstract": false,
+                      "isFinal": false,
+                      "isStatic": false,
+                      "kind": "method",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "getFoo",
+                      },
+                      "nullable": false,
+                      "type": null,
+                      "visibility": "",
+                    },
+                  ],
+                  "extends": Name {
+                    "kind": "name",
+                    "name": "AnonBase",
+                    "resolution": "uqn",
+                  },
+                  "implements": null,
+                  "isAbstract": false,
+                  "isAnonymous": true,
+                  "isFinal": false,
+                  "kind": "class",
+                  "name": null,
+                },
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

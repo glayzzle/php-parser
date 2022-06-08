@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #54305 (Crash in gc_remove_zval_from_buffer) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "a",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "b",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "methodWithArgs",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "TestClass",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": true,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "AbstractClass",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "methodWithArgs",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TestClass'",
+              "unicode": false,
+              "value": "TestClass",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'methodWithArgs'",
+              "unicode": false,
+              "value": "methodWithArgs",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionMethod",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "methodWithArgs",
+                },
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"\\\\n\\"",
+                    "unicode": false,
+                    "value": "
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "TypeError",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

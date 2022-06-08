@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72767: PHP Segfaults when trying to expand an infinite operator 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "iterator",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            New {
+              "arguments": Array [
+                New {
+                  "arguments": Array [
+                    Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Number {
+                            "kind": "number",
+                            "value": "42",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": true,
+                    },
+                  ],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "ArrayIterator",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "InfiniteIterator",
+                "resolution": "uqn",
+              },
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+            Number {
+              "kind": "number",
+              "value": "17000",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "LimitIterator",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          variadic {
+            "kind": "variadic",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "iterator",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+===DONE===",
+      "value": "===DONE===",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

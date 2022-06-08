@@ -1,0 +1,712 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #65634 (HTTP wrapper is very slow with protocol_version 1.1) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'server.inc'",
+          "unicode": false,
+          "value": "server.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "version",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "connection",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "options",
+              },
+              "operator": "=",
+              "right": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'http'",
+                      "unicode": false,
+                      "value": "http",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'protocol_version'",
+                            "unicode": false,
+                            "value": "protocol_version",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "version",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": true,
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'header'",
+                        "unicode": false,
+                        "value": "header",
+                      },
+                      "what": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'http'",
+                          "unicode": false,
+                          "value": "http",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "options",
+                        },
+                      },
+                    },
+                    "operator": "=",
+                    "right": Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"Connection: $connection\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "Connection: ",
+                            "unicode": false,
+                            "value": "Connection: ",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "connection",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                      ],
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "connection",
+            },
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ctx",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "options",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stream_context_create",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "responses",
+              },
+              "operator": "=",
+              "right": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"data://text/plain,HTTP/$version 204 No Content\\\\r\\\\n\\\\r\\\\n\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "data://text/plain,HTTP/",
+                            "unicode": false,
+                            "value": "data://text/plain,HTTP/",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "version",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": " 204 No Content\\\\r\\\\n\\\\r\\\\n",
+                            "unicode": false,
+                            "value": " 204 No Content
+",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                      ],
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": List {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'pid'",
+                      "unicode": false,
+                      "value": "pid",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "pid",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'uri'",
+                      "unicode": false,
+                      "value": "uri",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "uri",
+                    },
+                  },
+                ],
+                "kind": "list",
+                "shortForm": true,
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "responses",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "output",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "http_server",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "fd",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "uri",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'rb'",
+                    "unicode": false,
+                    "value": "rb",
+                  },
+                  Boolean {
+                    "kind": "boolean",
+                    "raw": "false",
+                    "value": false,
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ctx",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "fopen",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "output",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "SEEK_SET",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fseek",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "output",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stream_get_contents",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pid",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "http_server_kill",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "do_test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"HTTP/1.0, default behaviour:\\\\n\\"",
+          "unicode": false,
+          "value": "HTTP/1.0, default behaviour:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'1.0'",
+            "unicode": false,
+            "value": "1.0",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"HTTP/1.0, connection: close:\\\\n\\"",
+          "unicode": false,
+          "value": "HTTP/1.0, connection: close:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'1.0'",
+            "unicode": false,
+            "value": "1.0",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'close'",
+            "unicode": false,
+            "value": "close",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"HTTP/1.0, connection: keep-alive:\\\\n\\"",
+          "unicode": false,
+          "value": "HTTP/1.0, connection: keep-alive:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'1.0'",
+            "unicode": false,
+            "value": "1.0",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'keep-alive'",
+            "unicode": false,
+            "value": "keep-alive",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"HTTP/1.1, default behaviour:\\\\n\\"",
+          "unicode": false,
+          "value": "HTTP/1.1, default behaviour:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'1.1'",
+            "unicode": false,
+            "value": "1.1",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"HTTP/1.1, connection: close:\\\\n\\"",
+          "unicode": false,
+          "value": "HTTP/1.1, connection: close:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'1.1'",
+            "unicode": false,
+            "value": "1.1",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'close'",
+            "unicode": false,
+            "value": "close",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"HTTP/1.1, connection: keep-alive:\\\\n\\"",
+          "unicode": false,
+          "value": "HTTP/1.1, connection: keep-alive:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'1.1'",
+            "unicode": false,
+            "value": "1.1",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'keep-alive'",
+            "unicode": false,
+            "value": "keep-alive",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

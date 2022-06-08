@@ -1,0 +1,503 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SOAP Bug #69137 - Peer verification fails when using a proxy with SoapClient 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "licenseKey",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "ipAddress",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "IpLookup",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": List {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "proxyHost",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "proxyPort",
+              },
+            },
+          ],
+          "kind": "list",
+          "shortForm": false,
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "':'",
+              "unicode": false,
+              "value": ":",
+            },
+            Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'http://'",
+                  "unicode": false,
+                  "value": "http://",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "''",
+                  "unicode": false,
+                  "value": "",
+                },
+                OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'http_proxy'",
+                    "unicode": false,
+                    "value": "http_proxy",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "_ENV",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "str_replace",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "explode",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "testServiceWsdl",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'https://ws.cdyne.com/ip2geo/ip2geo.asmx?wsdl'",
+          "unicode": false,
+          "value": "https://ws.cdyne.com/ip2geo/ip2geo.asmx?wsdl",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "client",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "testServiceWsdl",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SoapClient",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "client",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "parameters",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'proxy_host'",
+                "unicode": false,
+                "value": "proxy_host",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "proxyHost",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'proxy_port'",
+                "unicode": false,
+                "value": "proxy_port",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "proxyPort",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'trace'",
+                "unicode": false,
+                "value": "trace",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "1",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "client",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "testServiceWsdl",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "parameters",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SoapClient",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "lookup",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "IpLookup",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "licenseKey",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "lookup",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "ipAddress",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "lookup",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'72.52.91.14'",
+          "unicode": false,
+          "value": "72.52.91.14",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "result",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "lookup",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ResolveIP",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "client",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"successful lookup\\"",
+                "unicode": false,
+                "value": "successful lookup",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "result",
+            },
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "result",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_object",
+                "resolution": "uqn",
+              },
+            },
+            "type": "&&",
+          },
+          "right": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ResolveIPResult",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "result",
+            },
+          },
+          "type": "&&",
+        },
+        "right": Call {
+          "arguments": Array [
+            PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "ResolveIPResult",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "result",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "is_object",
+            "resolution": "uqn",
+          },
+        },
+        "type": "&&",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

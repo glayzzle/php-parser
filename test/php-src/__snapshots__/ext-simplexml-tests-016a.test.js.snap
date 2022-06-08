@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SimpleXML: concatenating attributes 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOF",
+          "raw": "<<<EOF
+<people>
+   <person name=\\"Foo\\"></person>
+</people>
+EOF",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<people>
+   <person name=\\"Foo\\"></person>
+</people>
+",
+                "unicode": false,
+                "value": "<people>
+   <person name=\\"Foo\\"></person>
+</people>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "people",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "xml",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'name'",
+              "unicode": false,
+              "value": "name",
+            },
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "person",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "people",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'name'",
+            "unicode": false,
+            "value": "name",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "person",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "people",
+            },
+          },
+        },
+        "operator": ".=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'Bar'",
+          "unicode": false,
+          "value": "Bar",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'name'",
+              "unicode": false,
+              "value": "name",
+            },
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "person",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "people",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

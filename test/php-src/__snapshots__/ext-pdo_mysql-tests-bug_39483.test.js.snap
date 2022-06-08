@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PDO MySQL Bug #39483 (Problem with handling of \\ char in prepared statements) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/../../../ext/pdo/tests/pdo_test.inc'",
+            "unicode": false,
+            "value": "/../../../ext/pdo/tests/pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/common.phpt'",
+                "unicode": false,
+                "value": "/common.phpt",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "test_factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ATTR_EMULATE_PREPARES",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "TRUE",
+            "value": true,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'SELECT UPPER(\\\\'\\\\0:D\\\\0\\\\'),?'",
+              "unicode": false,
+              "value": "SELECT UPPER('\\\\0:D\\\\0'),?",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "execute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "FETCH_NUM",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PDO",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "fetchAll",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

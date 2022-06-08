@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #20382 [1] (strtotime ("Monday", $date) produces wrong result on DST changeover) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tStamp",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Number {
+              "kind": "number",
+              "value": "17",
+            },
+            Number {
+              "kind": "number",
+              "value": "17",
+            },
+            Number {
+              "kind": "number",
+              "value": "17",
+            },
+            Number {
+              "kind": "number",
+              "value": "10",
+            },
+            Number {
+              "kind": "number",
+              "value": "27",
+            },
+            Number {
+              "kind": "number",
+              "value": "2004",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mktime",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"tStamp=\\"",
+              "unicode": false,
+              "value": "tStamp=",
+            },
+            "right": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"l Y-m-d H:i:s T\\"",
+                  "unicode": false,
+                  "value": "l Y-m-d H:i:s T",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tStamp",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "date",
+                "resolution": "uqn",
+              },
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "strtotime_timestamp",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"Monday\\"",
+              "unicode": false,
+              "value": "Monday",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "tStamp",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strtotime",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"result=\\"",
+              "unicode": false,
+              "value": "result=",
+            },
+            "right": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"l Y-m-d H:i:s T\\"",
+                  "unicode": false,
+                  "value": "l Y-m-d H:i:s T",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "strtotime_timestamp",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "date",
+                "resolution": "uqn",
+              },
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"wanted=Monday 2004-11-01 00:00:00 CET\\\\n\\"",
+          "unicode": false,
+          "value": "wanted=Monday 2004-11-01 00:00:00 CET
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

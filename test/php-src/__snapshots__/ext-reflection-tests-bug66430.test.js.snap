@@ -1,0 +1,527 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #66430: ReflectionFunction::invoke does not invoke closure with object scope 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "message",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Valid representation\\"",
+                "unicode": false,
+                "value": "Valid representation",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "message",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "this",
+                  },
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "bravo",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Alpha",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "alpha",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Alpha",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"alpha.bravo:                   \\"",
+          "unicode": false,
+          "value": "alpha.bravo:                   ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "bravo",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "alpha",
+              },
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "reflection",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "alpha",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionObject",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "method",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"bravo\\"",
+              "unicode": false,
+              "value": "bravo",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getMethod",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "reflection",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "closure",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "alpha",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getClosure",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "method",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "reflectionC",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "closure",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionFunction",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"reflection of alpha.bravo:     \\"",
+          "unicode": false,
+          "value": "reflection of alpha.bravo:     ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "alpha",
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "invoke",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "method",
+              },
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"closure of alpha.bravo:        \\"",
+          "unicode": false,
+          "value": "closure of alpha.bravo:        ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "closure",
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"call_user_func of closure:     \\"",
+          "unicode": false,
+          "value": "call_user_func of closure:     ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "closure",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "call_user_func",
+              "resolution": "uqn",
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        Name {
+          "kind": "name",
+          "name": "PHP_EOL",
+          "resolution": "uqn",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"closure cl of c(alpha.bravo):  \\"",
+          "unicode": false,
+          "value": "closure cl of c(alpha.bravo):  ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "getClosureThis",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "reflectionC",
+                  },
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "get_class",
+              "resolution": "uqn",
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"scope cl of c(alpha.bravo):    \\"",
+          "unicode": false,
+          "value": "scope cl of c(alpha.bravo):    ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getName",
+              },
+              "what": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "getClosureScopeClass",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "reflectionC",
+                  },
+                },
+              },
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"reflection of c(alpha.bravo):  \\"",
+          "unicode": false,
+          "value": "reflection of c(alpha.bravo):  ",
+        },
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "invoke",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "reflectionC",
+              },
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

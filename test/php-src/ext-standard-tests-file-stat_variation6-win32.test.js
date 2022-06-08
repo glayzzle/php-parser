@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/stat_variation6-win32.phpt
+  it("Test stat() functions: usage variations - changing permissions of dir/file", function () {
+    expect(parser.parseCode("<?php\n/* test the effects on the stats of dir/file for changing permissions of dir/file */\n$file_path = __DIR__;\nrequire \"$file_path/file.inc\";\n/* create temp file and directory */\n$dirname = \"$file_path/stat_variation6\";\nmkdir($dirname);  // temp dir\n$filename = \"$file_path/stat_variation6.tmp\";\n$file_handle = fopen($filename, \"w\");  // temp file\nfclose($file_handle);\n// checking stat() on file\necho \"\\n*** Testing stat() on file with miscellaneous file permission and content ***\\n\";\nclearstatcache();\n$old_stat = stat($filename);\nsleep(1);\nvar_dump( chmod($filename, 0777) );\n// clear the stat\nclearstatcache();\n$new_stat = stat($filename);\n// compare self stats\nvar_dump( compare_self_stat($old_stat) );\nvar_dump( compare_self_stat($new_stat) );\n// compare the stat\n$affected_members = array( 10, 'ctime');\nvar_dump( compare_stats($old_stat, $new_stat, $affected_members, \"==\") );\n// clear the stat\nclearstatcache();  // clear statement cache\n// checking stat() on directory\necho \"\\n*** Testing stat() on directory with miscellaneous file permission ***\\n\";\n$old_stat = stat($dirname);\nsleep(1);\nvar_dump( chmod($dirname, 0777) );\n// clear the stat\nclearstatcache();\n$new_stat = stat($dirname);\n// compare self stats\nvar_dump( compare_self_stat($old_stat) );\nvar_dump( compare_self_stat($new_stat) );\n// compare the stat\n$affected_members = array( 10, 'ctime');\nvar_dump( compare_stats($old_stat, $new_stat, $affected_members, \"==\") );\n// clear the stat\nclearstatcache();  // clear statement cache\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

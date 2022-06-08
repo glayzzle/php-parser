@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #74922 (Composed class has fatal error with duplicate, equal const properties) 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "x",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "X",
+                },
+                "what": SelfReference {
+                  "kind": "selfreference",
+                  "raw": "self",
+                },
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "T",
+      },
+    },
+    Trait {
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "x",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "X",
+                },
+                "what": SelfReference {
+                  "kind": "selfreference",
+                  "raw": "self",
+                },
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "T2",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "T",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "T2",
+              "resolution": "uqn",
+            },
+          ],
+        },
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "X",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "x",
+            },
+            "what": New {
+              "arguments": Array [],
+              "kind": "new",
+              "parenthesizedExpression": true,
+              "what": Name {
+                "kind": "name",
+                "name": "C",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

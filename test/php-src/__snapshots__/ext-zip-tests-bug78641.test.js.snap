@@ -1,0 +1,304 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #78641 (addGlob can modify given remove_path value) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"TMPDIR\\"",
+            "unicode": false,
+            "value": "TMPDIR",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/\\"",
+              "unicode": false,
+              "value": "/",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "define",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "file",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Name {
+            "kind": "name",
+            "name": "TMPDIR",
+            "resolution": "uqn",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'bug78641'",
+            "unicode": false,
+            "value": "bug78641",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "file",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "touch",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "zip",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ZipArchive",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Name {
+              "kind": "name",
+              "name": "TMPDIR",
+              "resolution": "uqn",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"bug78641.zip\\"",
+              "unicode": false,
+              "value": "bug78641.zip",
+            },
+            "type": ".",
+          },
+          Bin {
+            "kind": "bin",
+            "left": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "CREATE",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "ZipArchive",
+                "resolution": "uqn",
+              },
+            },
+            "right": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "OVERWRITE",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "ZipArchive",
+                "resolution": "uqn",
+              },
+            },
+            "type": "|",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "open",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "zip",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "TMPDIR",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "basename",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "file",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"remove_path\\"",
+                  "unicode": false,
+                  "value": "remove_path",
+                },
+                "kind": "entry",
+                "unpack": false,
+                "value": Name {
+                  "kind": "name",
+                  "name": "TMPDIR",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "addGlob",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "zip",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "TMPDIR",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "basename",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "close",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "zip",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

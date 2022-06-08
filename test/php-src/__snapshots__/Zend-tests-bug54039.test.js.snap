@@ -1,0 +1,827 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #54039 (use() of static variables in lambda functions can break staticness) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              StaticVariable {
+                "defaultValue": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                "kind": "staticvariable",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "v",
+                },
+              },
+            ],
+          },
+          ExpressionStatement {
+            "expression": Pre {
+              "kind": "pre",
+              "type": "+",
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "v",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"Outer function increments \\\\$v to $v\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Outer function increments \\\\$v to ",
+                      "unicode": false,
+                      "value": "Outer function increments $v to ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "v",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "operator": "=",
+              "right": Closure {
+                "arguments": Array [],
+                "attrGroups": Array [],
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Encapsed {
+                          "kind": "encapsed",
+                          "raw": "\\"Inner function reckons \\\\$v is $v\\\\n\\"",
+                          "type": "string",
+                          "value": Array [
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "Inner function reckons \\\\$v is ",
+                                "unicode": false,
+                                "value": "Inner function reckons $v is ",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "v",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": "simple",
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "\\\\n",
+                                "unicode": false,
+                                "value": "",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "byref": false,
+                "isStatic": false,
+                "kind": "closure",
+                "nullable": false,
+                "type": null,
+                "uses": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "v",
+                  },
+                ],
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "f",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test_1",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test_1",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test_1",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              StaticVariable {
+                "defaultValue": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                "kind": "staticvariable",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "v",
+                },
+              },
+            ],
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "operator": "=",
+              "right": Closure {
+                "arguments": Array [],
+                "attrGroups": Array [],
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Encapsed {
+                          "kind": "encapsed",
+                          "raw": "\\"Inner function reckons \\\\$v is $v\\\\n\\"",
+                          "type": "string",
+                          "value": Array [
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "Inner function reckons \\\\$v is ",
+                                "unicode": false,
+                                "value": "Inner function reckons $v is ",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "v",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": "simple",
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "\\\\n",
+                                "unicode": false,
+                                "value": "",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "byref": false,
+                "isStatic": false,
+                "kind": "closure",
+                "nullable": false,
+                "type": null,
+                "uses": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "v",
+                  },
+                ],
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Pre {
+              "kind": "pre",
+              "type": "+",
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "v",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"Outer function increments \\\\$v to $v\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Outer function increments \\\\$v to ",
+                      "unicode": false,
+                      "value": "Outer function increments $v to ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "v",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "f",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test_2",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test_2",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test_2",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              StaticVariable {
+                "defaultValue": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\"",
+                  "unicode": false,
+                  "value": "",
+                },
+                "kind": "staticvariable",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "v",
+                },
+              },
+            ],
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "v",
+              },
+              "operator": ".=",
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'b'",
+                "unicode": false,
+                "value": "b",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"Outer function catenates 'b' onto \\\\$v to give $v\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Outer function catenates 'b' onto \\\\$v to give ",
+                      "unicode": false,
+                      "value": "Outer function catenates 'b' onto $v to give ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "v",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "operator": "=",
+              "right": Closure {
+                "arguments": Array [],
+                "attrGroups": Array [],
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Encapsed {
+                          "kind": "encapsed",
+                          "raw": "\\"Inner function reckons \\\\$v is $v\\\\n\\"",
+                          "type": "string",
+                          "value": Array [
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "Inner function reckons \\\\$v is ",
+                                "unicode": false,
+                                "value": "Inner function reckons $v is ",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "v",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": "simple",
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "\\\\n",
+                                "unicode": false,
+                                "value": "",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "byref": false,
+                "isStatic": false,
+                "kind": "closure",
+                "nullable": false,
+                "type": null,
+                "uses": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "v",
+                  },
+                ],
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "v",
+              },
+              "operator": ".=",
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'a'",
+                "unicode": false,
+                "value": "a",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"Outer function catenates 'a' onto \\\\$v to give $v\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Outer function catenates 'a' onto \\\\$v to give ",
+                      "unicode": false,
+                      "value": "Outer function catenates 'a' onto $v to give ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "v",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "f",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test_3",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test_3",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test_3",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "f",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

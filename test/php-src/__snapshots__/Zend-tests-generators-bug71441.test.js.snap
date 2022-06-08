@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71441 (Typehinted Generator with return in try/finally crashes) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "2000",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "add",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"1 +\\"",
+              "unicode": false,
+              "value": "1 +",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "num",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "gen",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Eval {
+            "kind": "eval",
+            "parenthesizedExpression": true,
+            "source": Encapsed {
+              "kind": "encapsed",
+              "label": "PHP",
+              "raw": "<<<PHP
+return function (): \\\\Generator {
+    try {
+        \\\\$a = 1;
+        \\\\$foo = \\\\$a + $add \\\\$a;
+        return yield \\\\$foo;
+    } finally {
+        print \\"Ok\\\\n\\";
+    }
+};
+PHP
+",
+              "type": "heredoc",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "return function (): \\\\Generator {
+    try {
+        \\\\$a = 1;
+        \\\\$foo = \\\\$a + ",
+                    "unicode": false,
+                    "value": "return function (): \\\\Generator {
+    try {
+        $a = 1;
+        $foo = $a + ",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "add",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": " \\\\$a;
+        return yield \\\\$foo;
+    } finally {
+        print \\"Ok\\\\n\\";
+    }
+};
+",
+                    "unicode": false,
+                    "value": " $a;
+        return yield $foo;
+    } finally {
+        print \\"Ok
+\\";
+    }
+};",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+              ],
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "current",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "gen",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Success\\"",
+            "unicode": false,
+            "value": "Success",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "send",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "gen",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getReturn",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "gen",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

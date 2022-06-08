@@ -1,0 +1,563 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72941 (Modifying bucket->data by-ref has no effect any longer) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "in",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "out",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": true,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "consumed",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "closing",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              While {
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Call {
+                        "arguments": Array [
+                          PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "data",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "bucket",
+                            },
+                          },
+                        ],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "rotate",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "this",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "consumed",
+                        },
+                        "operator": "+=",
+                        "right": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "datalen",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "bucket",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                    ExpressionStatement {
+                      "expression": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "out",
+                          },
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "bucket",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "stream_bucket_prepend",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "while",
+                "shortForm": false,
+                "test": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bucket",
+                  },
+                  "operator": "=",
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "in",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "stream_bucket_make_writeable",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              },
+              Return {
+                "expr": Name {
+                  "kind": "name",
+                  "name": "PSFS_PASS_ON",
+                  "resolution": "uqn",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "filter",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "int",
+            "raw": "int",
+          },
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": true,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "data",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "n",
+                  },
+                  "operator": "=",
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "data",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "strlen",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              For {
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": OffsetLookup {
+                          "kind": "offsetlookup",
+                          "offset": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "i",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "data",
+                          },
+                        },
+                        "operator": "=",
+                        "right": OffsetLookup {
+                          "kind": "offsetlookup",
+                          "offset": Bin {
+                            "kind": "bin",
+                            "left": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "i",
+                            },
+                            "right": Number {
+                              "kind": "number",
+                              "value": "1",
+                            },
+                            "type": "+",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "data",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "increment": Array [
+                  Pre {
+                    "kind": "pre",
+                    "type": "+",
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                  },
+                ],
+                "init": Array [
+                  Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "operator": "=",
+                    "right": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                  },
+                ],
+                "kind": "for",
+                "shortForm": false,
+                "test": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "n",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                      "type": "-",
+                    },
+                    "type": "<",
+                  },
+                ],
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "rotate",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "php_user_filter",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "rotate_filter_nw",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"rotator_notWorking\\"",
+            "unicode": false,
+            "value": "rotator_notWorking",
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "class",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "rotate_filter_nw",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_filter_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stream",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'php://memory'",
+              "unicode": false,
+              "value": "php://memory",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'w+'",
+              "unicode": false,
+              "value": "w+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'hello, world'",
+            "unicode": false,
+            "value": "hello, world",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "rewind",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"rotator_notWorking\\"",
+            "unicode": false,
+            "value": "rotator_notWorking",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_filter_append",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stream",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "stream_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,242 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81430 (Attribute instantiation leaves dangling execute_data pointer) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [
+        AttrGroup {
+          "attrs": Array [
+            Attribute {
+              "args": Array [],
+              "kind": "attribute",
+              "name": "\\\\Attribute",
+            },
+          ],
+          "kind": "attrgroup",
+        },
+      ],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"str_repeat\\"",
+                      "unicode": false,
+                      "value": "str_repeat",
+                    },
+                    Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"\\\\xFF\\"",
+                            "unicode": false,
+                            "value": "ÿ",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": true,
+                    },
+                    Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Number {
+                            "kind": "number",
+                            "value": "100000000",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": true,
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "array_map",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [
+        AttrGroup {
+          "attrs": Array [
+            Attribute {
+              "args": Array [],
+              "kind": "attribute",
+              "name": "A",
+            },
+          ],
+          "kind": "attrgroup",
+        },
+      ],
+      "body": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "B",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"B\\"",
+              "unicode": false,
+              "value": "B",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "\\\\ReflectionFunction",
+            "resolution": "fqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "what": Call {
+                    "arguments": Array [
+                      StaticLookup {
+                        "kind": "staticlookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "class",
+                        },
+                        "what": Name {
+                          "kind": "name",
+                          "name": "A",
+                          "resolution": "uqn",
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getAttributes",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "r",
+                      },
+                    },
+                  },
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'newInstance'",
+                  "unicode": false,
+                  "value": "newInstance",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "call_user_func",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

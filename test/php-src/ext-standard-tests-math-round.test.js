@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/math/round.phpt
+  it("Simple math tests", function () {
+    expect(parser.parseCode("<?php\ndefine('LONG_MAX', is_int(5000000000)? 9223372036854775807 : 0x7FFFFFFF);\ndefine('LONG_MIN', -LONG_MAX - 1);\nprintf(\"%d,%d,%d,%d\\n\",is_int(LONG_MIN  ),is_int(LONG_MAX  ),\n                       is_int(LONG_MIN-1),is_int(LONG_MAX+1));\nfunction epsilon_equal($left, $right): bool {\n    return abs(($left-$right) / $left) < 1e-12;\n}\nvar_dump(epsilon_equal( -1 , ceil(-1.5) ));\nvar_dump(epsilon_equal( 2 , ceil( 1.5) ));\nvar_dump(epsilon_equal( -2 , floor(-1.5) ));\nvar_dump(epsilon_equal( 1 , floor(1.5) ));\nvar_dump(epsilon_equal( LONG_MIN   , ceil(LONG_MIN - 0.5) ));\nvar_dump(epsilon_equal( LONG_MIN+1 , ceil(LONG_MIN + 0.5) ));\nvar_dump(epsilon_equal( LONG_MIN-1 , round(LONG_MIN - 0.6) ));\nvar_dump(epsilon_equal( LONG_MIN   , round(LONG_MIN - 0.4) ));\nvar_dump(epsilon_equal( LONG_MIN   , round(LONG_MIN + 0.4) ));\nvar_dump(epsilon_equal( LONG_MIN+1 , round(LONG_MIN + 0.6) ));\nvar_dump(epsilon_equal( LONG_MIN-1 , floor(LONG_MIN - 0.5) ));\nvar_dump(epsilon_equal( LONG_MIN   , floor(LONG_MIN + 0.5) ));\nvar_dump(epsilon_equal( LONG_MAX   , ceil(LONG_MAX - 0.5) ));\nvar_dump(epsilon_equal( LONG_MAX+1 , ceil(LONG_MAX + 0.5) ));\nvar_dump(epsilon_equal( LONG_MAX-1 , round(LONG_MAX - 0.6) ));\nvar_dump(epsilon_equal( LONG_MAX   , round(LONG_MAX - 0.4) ));\nvar_dump(epsilon_equal( LONG_MAX   , round(LONG_MAX + 0.4) ));\nvar_dump(epsilon_equal( LONG_MAX+1 , round(LONG_MAX + 0.6) ));\nvar_dump(epsilon_equal( LONG_MAX-1 , floor(LONG_MAX - 0.5) ));\nvar_dump(epsilon_equal( LONG_MAX   , floor(LONG_MAX + 0.5) ));\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,288 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #49847 (exec() fails on lines larger then 4095 bytes) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "iswin",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "PHP_OS",
+                "resolution": "uqn",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Number {
+                "kind": "number",
+                "value": "3",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "substr",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"WIN\\"",
+            "unicode": false,
+            "value": "WIN",
+          },
+          "type": "==",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"printf %4098d 1\\"",
+                  "unicode": false,
+                  "value": "printf %4098d 1",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "output",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "exec",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "f",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Magic {
+                  "kind": "magic",
+                  "raw": "__DIR__",
+                  "value": "__DIR__",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'\\\\\\\\bug49847.tmp'",
+                  "unicode": false,
+                  "value": "\\\\bug49847.tmp",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "' '",
+                    "unicode": false,
+                    "value": " ",
+                  },
+                  Number {
+                    "kind": "number",
+                    "value": "4097",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "str_repeat",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              "operator": ".=",
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'1'",
+                "unicode": false,
+                "value": "1",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "f",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "s",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "file_put_contents",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'type '",
+                    "unicode": false,
+                    "value": "type ",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "f",
+                  },
+                  "type": ".",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "output",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "exec",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "iswin",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "output",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "f",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "unlink",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "iswin",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

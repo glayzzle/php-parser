@@ -1,0 +1,625 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #77177 (Serializing or unserializing COM objects crashes) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "com",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"WScript.Shell\\"",
+              "unicode": false,
+              "value": "WScript.Shell",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "COM",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dotnet",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"mscorlib\\"",
+              "unicode": false,
+              "value": "mscorlib",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"System.Collections.Stack\\"",
+              "unicode": false,
+              "value": "System.Collections.Stack",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOTNET",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "variant",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "VARIANT",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "object",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "serialize",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Encapsed {
+                          "kind": "encapsed",
+                          "raw": "\\"Exception: {$ex->getMessage()}\\\\n\\"",
+                          "type": "string",
+                          "value": Array [
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "Exception: ",
+                                "unicode": false,
+                                "value": "Exception: ",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": Call {
+                                "arguments": Array [],
+                                "kind": "call",
+                                "what": PropertyLookup {
+                                  "kind": "propertylookup",
+                                  "offset": Identifier {
+                                    "kind": "identifier",
+                                    "name": "getMessage",
+                                  },
+                                  "what": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "ex",
+                                  },
+                                },
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": "complex",
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "\\\\n",
+                                "unicode": false,
+                                "value": "",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ex",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Array {
+        "items": Array [
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "com",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dotnet",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "variant",
+            },
+          },
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "object",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "strings",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'C:3:\\"com\\":0:{}'",
+                "unicode": false,
+                "value": "C:3:\\"com\\":0:{}",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'C:6:\\"dotnet\\":0:{}'",
+                "unicode": false,
+                "value": "C:6:\\"dotnet\\":0:{}",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'C:7:\\"variant\\":0:{}'",
+                "unicode": false,
+                "value": "C:7:\\"variant\\":0:{}",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "string",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "unserialize",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Encapsed {
+                          "kind": "encapsed",
+                          "raw": "\\"Exception: {$ex->getMessage()}\\\\n\\"",
+                          "type": "string",
+                          "value": Array [
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "Exception: ",
+                                "unicode": false,
+                                "value": "Exception: ",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": Call {
+                                "arguments": Array [],
+                                "kind": "call",
+                                "what": PropertyLookup {
+                                  "kind": "propertylookup",
+                                  "offset": Identifier {
+                                    "kind": "identifier",
+                                    "name": "getMessage",
+                                  },
+                                  "what": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "ex",
+                                  },
+                                },
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": "complex",
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "\\\\n",
+                                "unicode": false,
+                                "value": "",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ex",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "strings",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "string",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "strings",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'O:3:\\"com\\":0:{}'",
+                "unicode": false,
+                "value": "O:3:\\"com\\":0:{}",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'O:6:\\"dotnet\\":0:{}'",
+                "unicode": false,
+                "value": "O:6:\\"dotnet\\":0:{}",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'O:7:\\"variant\\":0:{}'",
+                "unicode": false,
+                "value": "O:7:\\"variant\\":0:{}",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "string",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "unserialize",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        Encapsed {
+                          "kind": "encapsed",
+                          "raw": "\\"Exception: {$ex->getMessage()}\\\\n\\"",
+                          "type": "string",
+                          "value": Array [
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "Exception: ",
+                                "unicode": false,
+                                "value": "Exception: ",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": Call {
+                                "arguments": Array [],
+                                "kind": "call",
+                                "what": PropertyLookup {
+                                  "kind": "propertylookup",
+                                  "offset": Identifier {
+                                    "kind": "identifier",
+                                    "name": "getMessage",
+                                  },
+                                  "what": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "ex",
+                                  },
+                                },
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": "complex",
+                            },
+                            EncapsedPart {
+                              "curly": false,
+                              "expression": String {
+                                "isDoubleQuote": false,
+                                "kind": "string",
+                                "raw": "\\\\n",
+                                "unicode": false,
+                                "value": "",
+                              },
+                              "kind": "encapsedpart",
+                              "syntax": null,
+                            },
+                          ],
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ex",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "strings",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "string",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

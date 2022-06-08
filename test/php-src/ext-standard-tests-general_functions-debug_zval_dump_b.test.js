@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/general_functions/debug_zval_dump_b.phpt
+  it("Test debug_zval_dump() function : basic operations", function () {
+    expect(parser.parseCode("<?php\n/* creating file resource */\n$file_handle = fopen(__FILE__, \"r\");\necho \"*** Testing debug_zval_dump() on scalar and non-scalar variables ***\\n\";\n$values = array (\n  /* integers */\n  0,  // zero as argument\n  000000123,  //octal value of 83\n  123000000,\n  -00000123,  //octal value of 83\n  -12300000,\n  0xffffff,  //hexadecimal value\n  123456789,\n  1,\n  -1,\n  /* floats */\n  -0.0,\n  +0.0,\n  1.234,\n  -1.234,\n  -2.000000,\n  2.0000000,\n  -4.0001e+5,\n  4.0001E+5,\n  6.99999989,\n  -.5,\n  .567,\n  -.6700000e-3,\n  -.6700000E+3,\n  1E-5,\n  -1e+5,\n  1e+5,\n  1E-5,\n  /* strings */\n  \"\",\n  '',\n  \" \",\n  ' ',\n  \"0\",\n  \"\\0\",\n  '\\0',\n  \"\\t\",\n  '\\t',\n  \"PHP\",\n  'PHP',\n  \"1234\\t\\n5678\\n\\t9100\\rabcda\\x0000cdeh\\0stuv\",  // strings with escape chars\n  /* boolean */\n  TRUE,\n  FALSE,\n  true,\n  false,\n  /* arrays */\n  array(),\n  array(NULL),\n  array(true),\n  array(\"\"),\n  array(''),\n  array(array(1, 2), array('a', 'b')),\n  array(\"test\" => \"is_array\", 1 => 'One'),\n  array(0),\n  array(-1),\n  array(10.5, 5.6),\n  array(\"string\", \"test\"),\n  array('string', 'test'),\n  /* resources */\n  $file_handle\n);\n/* loop to display the variables and its reference count using\n    debug_zval_dump() */\n$counter = 1;\nforeach( $values as $value ) {\n  echo \"-- Iteration $counter --\\n\";\n  debug_zval_dump( $value );\n  $counter++;\n}\n/* closing resource handle */\nfclose($file_handle);\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

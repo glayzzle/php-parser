@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81092 (fflush before stream_filter_remove corrupts stream) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stream",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/81092.bz2\\"",
+                "unicode": false,
+                "value": "/81092.bz2",
+              },
+              "type": ".",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'wb+'",
+              "unicode": false,
+              "value": "wb+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "filter",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "stream",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'bzip2.compress'",
+              "unicode": false,
+              "value": "bzip2.compress",
+            },
+            Name {
+              "kind": "name",
+              "name": "STREAM_FILTER_WRITE",
+              "resolution": "uqn",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'blocks'",
+                    "unicode": false,
+                    "value": "blocks",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "9",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'work'",
+                    "unicode": false,
+                    "value": "work",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "stream_filter_append",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+          Call {
+            "arguments": Array [
+              Number {
+                "kind": "number",
+                "value": "8192",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "random_bytes",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fflush",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filter",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_filter_remove",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Call {
+                "arguments": Array [
+                  Call {
+                    "arguments": Array [
+                      Bin {
+                        "kind": "bin",
+                        "left": Magic {
+                          "kind": "magic",
+                          "raw": "__DIR__",
+                          "value": "__DIR__",
+                        },
+                        "right": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"/81092.bz2\\"",
+                          "unicode": false,
+                          "value": "/81092.bz2",
+                        },
+                        "type": ".",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "file_get_contents",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "bzdecompress",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "strlen",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

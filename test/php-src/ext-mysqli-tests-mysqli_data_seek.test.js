@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mysqli/tests/mysqli_data_seek.phpt
+  it("mysqli_data_seek()", function () {
+    expect(parser.parseCode("<?php\n    require_once(\"connect.inc\");\n    require('table.inc');\n    if (!$res = mysqli_query($link, 'SELECT * FROM test ORDER BY id LIMIT 4', MYSQLI_STORE_RESULT))\n        printf(\"[004] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    if (true !== ($tmp = mysqli_data_seek($res, 3)))\n        printf(\"[005] Expecting boolean/true, got %s/%s\\n\", gettype($tmp), $tmp);\n    $row = mysqli_fetch_assoc($res);\n    if (4 != $row['id'])\n        printf(\"[006] Expecting record 4/d, got record %s/%s\\n\", $row['id'], $row['label']);\n    if (true !== ($tmp = mysqli_data_seek($res, 0)))\n        printf(\"[007] Expecting boolean/true, got %s/%s\\n\", gettype($tmp), $tmp);\n    $row = mysqli_fetch_assoc($res);\n    if (1 != $row['id'])\n        printf(\"[008] Expecting record 1/a, got record %s/%s\\n\", $row['id'], $row['label']);\n    if (false !== ($tmp = mysqli_data_seek($res, 4)))\n        printf(\"[009] Expecting boolean/false, got %s/%s\\n\", gettype($tmp), $tmp);\n    try {\n        mysqli_data_seek($res, -1);\n    } catch (\\ValueError $e) {\n        echo $e->getMessage() . \\PHP_EOL;\n    }\n    mysqli_free_result($res);\n    if (!$res = mysqli_query($link, 'SELECT * FROM test ORDER BY id', MYSQLI_USE_RESULT))\n        printf(\"[011] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    try {\n        var_dump(mysqli_data_seek($res, 3));\n    } catch (\\Error $e) {\n        echo $e->getMessage() . \\PHP_EOL;\n    }\n    mysqli_free_result($res);\n    try {\n        mysqli_data_seek($res, 1);\n    } catch (Error $exception) {\n        echo $exception->getMessage() . \"\\n\";\n    }\n    mysqli_close($link);\n    print \"done!\";\n?>")).toMatchSnapshot();
+  });
+});

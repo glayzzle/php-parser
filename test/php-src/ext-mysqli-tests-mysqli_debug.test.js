@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mysqli/tests/mysqli_debug.phpt
+  it("mysqli_debug()", function () {
+    expect(parser.parseCode("<?php\n    require_once('connect.inc');\n    // NOTE: documentation is not clear on this: function always return NULL or TRUE\n    if (true !== ($tmp = mysqli_debug(sprintf('d:t:O,%s/mysqli_debug_phpt.trace', sys_get_temp_dir()))))\n        printf(\"[002] Expecting boolean/true, got %s/%s\\n\", gettype($tmp), $tmp);\n    if ($IS_MYSQLND) {\n        // let's make this mysqlnd only - for libmysql we need debug installation\n        // table.inc will create a database connection and run some SQL queries, therefore\n        // the debug file should have entries\n        require_once('table.inc');\n        clearstatcache();\n        $trace_file = sprintf('%s/mysqli_debug_phpt.trace', sys_get_temp_dir());\n        if (!file_exists($trace_file))\n            printf(\"[003] Trace file '%s' has not been created\\n\", $trace_file);\n        if (filesize($trace_file) < 50)\n            printf(\"[004] Trace file '%s' is very small. filesize() reports only %d bytes. Please check.\\n\",\n                $trace_file,\n                filesize($trace_file));\n        // will mysqli_debug() mind if the trace file gets removed?\n        unlink($trace_file);\n        clearstatcache();\n        if (!$res = mysqli_query($link, 'SELECT * FROM test'))\n                printf(\"[005] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n            else\n                mysqli_free_result($res);\n        mysqli_close($link);\n        clearstatcache();\n        if (!file_exists($trace_file))\n            printf(\"[006] Trace file '%s' does not exist\\n\", $trace_file);\n        unlink($trace_file);\n    }\n    print \"done!\";\n?>")).toMatchSnapshot();
+  });
+});

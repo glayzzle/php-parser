@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #80255: Opcache bug (bad condition result) in 8.0.0rc1 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "a",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "c",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Do {
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": If {
+                    "alternate": null,
+                    "body": Block {
+                      "children": Array [
+                        Echo {
+                          "expressions": Array [
+                            String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"foo\\\\n\\"",
+                              "unicode": false,
+                              "value": "foo
+",
+                            },
+                          ],
+                          "kind": "echo",
+                          "shortForm": false,
+                        },
+                      ],
+                      "kind": "block",
+                    },
+                    "kind": "if",
+                    "shortForm": false,
+                    "test": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "b",
+                    },
+                  },
+                  "body": Block {
+                    "children": Array [
+                      Break {
+                        "kind": "break",
+                        "level": null,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                    "right": Unary {
+                      "kind": "unary",
+                      "type": "!",
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "b",
+                      },
+                    },
+                    "type": "&&",
+                  },
+                },
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"bar\\\\n\\"",
+                      "unicode": false,
+                      "value": "bar
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "do",
+            "test": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"baz\\\\n\\"",
+                "unicode": false,
+                "value": "baz
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "false",
+            "value": false,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

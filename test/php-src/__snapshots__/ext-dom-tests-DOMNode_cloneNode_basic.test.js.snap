@@ -1,0 +1,1200 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests DOM cloneNode : Basic Functionality 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOXML",
+          "raw": "<<< EOXML
+<?xml version=\\"1.0\\" encoding=\\"ISO-8859-1\\"?>
+<courses>
+    <course title=\\"one\\">
+        <notes>
+            <note>c1n1</note>
+            <note>c1n2</note>
+        </notes>
+    </course>
+    <course title=\\"two\\">
+        <notes>
+            <note>c2n1</note>
+            <note>c2n2</note>
+        </notes>
+    </course>
+</courses>
+EOXML",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"ISO-8859-1\\"?>
+<courses>
+    <course title=\\"one\\">
+        <notes>
+            <note>c1n1</note>
+            <note>c1n2</note>
+        </notes>
+    </course>
+    <course title=\\"two\\">
+        <notes>
+            <note>c2n1</note>
+            <note>c2n2</note>
+        </notes>
+    </course>
+</courses>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"ISO-8859-1\\"?>
+<courses>
+    <course title=\\"one\\">
+        <notes>
+            <note>c1n1</note>
+            <note>c1n2</note>
+        </notes>
+    </course>
+    <course title=\\"two\\">
+        <notes>
+            <note>c2n1</note>
+            <note>c2n2</note>
+        </notes>
+    </course>
+</courses>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "current",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "title",
+              },
+              "operator": "=",
+              "right": RetIf {
+                "falseExpr": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"no title\\"",
+                  "unicode": false,
+                  "value": "no title",
+                },
+                "kind": "retif",
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "nodeType",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "current",
+                      },
+                    },
+                    "right": Name {
+                      "kind": "name",
+                      "name": "XML_TEXT_NODE",
+                      "resolution": "uqn",
+                    },
+                    "type": "!=",
+                  },
+                  "parenthesizedExpression": true,
+                  "right": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'title'",
+                        "unicode": false,
+                        "value": "title",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "hasAttribute",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "current",
+                      },
+                    },
+                  },
+                  "type": "&&",
+                },
+                "trueExpr": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'title'",
+                      "unicode": false,
+                      "value": "title",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "getAttribute",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "current",
+                    },
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"Course: $title:\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Course: ",
+                      "unicode": false,
+                      "value": "Course: ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "title",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": ":",
+                      "unicode": false,
+                      "value": ":",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "current",
+                  },
+                ],
+                "kind": "call",
+                "parenthesizedExpression": true,
+                "what": Name {
+                  "kind": "name",
+                  "name": "get_class",
+                  "resolution": "uqn",
+                },
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"~\\"",
+                "unicode": false,
+                "value": "~",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "textContent",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "current",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "dumpcourse",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dom",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOMDocument",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xml",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "loadXML",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "dom",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "root",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "documentElement",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "dom",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "children",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "childNodes",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "root",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "len",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "length",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "children",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "current",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "index",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "item",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "children",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "noderemoved",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "current",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "removeChild",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "root",
+                        },
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "nodeType",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "current",
+                },
+              },
+              "right": Name {
+                "kind": "name",
+                "name": "XML_TEXT_NODE",
+                "resolution": "uqn",
+              },
+              "type": "==",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Post {
+          "kind": "post",
+          "type": "-",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "index",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "index",
+          },
+          "operator": "=",
+          "right": Bin {
+            "kind": "bin",
+            "left": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "length",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "children",
+              },
+            },
+            "right": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "type": "-",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "index",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "type": ">=",
+        },
+      ],
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Start cloneNode test\\\\n\\"",
+          "unicode": false,
+          "value": "Start cloneNode test
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "first_course",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "item",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "children",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cloned_first_course_default",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "cloneNode",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "first_course",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'title'",
+            "unicode": false,
+            "value": "title",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'new title1'",
+            "unicode": false,
+            "value": "new title1",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "first_course",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cloned_first_course_true",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Boolean {
+              "kind": "boolean",
+              "raw": "true",
+              "value": true,
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "cloneNode",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "first_course",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'title'",
+            "unicode": false,
+            "value": "title",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'new title2'",
+            "unicode": false,
+            "value": "new title2",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "first_course",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cloned_first_course_false",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Boolean {
+              "kind": "boolean",
+              "raw": "false",
+              "value": false,
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "cloneNode",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "first_course",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'title'",
+            "unicode": false,
+            "value": "title",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'new title3'",
+            "unicode": false,
+            "value": "new title3",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "first_course",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'title'",
+            "unicode": false,
+            "value": "title",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'new title default'",
+            "unicode": false,
+            "value": "new title default",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cloned_first_course_default",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'title'",
+            "unicode": false,
+            "value": "title",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'new title true'",
+            "unicode": false,
+            "value": "new title true",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cloned_first_course_true",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'title'",
+            "unicode": false,
+            "value": "title",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'new title false'",
+            "unicode": false,
+            "value": "new title false",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cloned_first_course_false",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cloned_first_course_default",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "appendChild",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "root",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cloned_first_course_true",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "appendChild",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "root",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cloned_first_course_false",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "appendChild",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "root",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "children",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "childNodes",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "root",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"node $index\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "node ",
+                      "unicode": false,
+                      "value": "node ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "index",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "\\\\n",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "index",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "item",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "children",
+                    },
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "dumpcourse",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Post {
+          "kind": "post",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "index",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "index",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "index",
+          },
+          "right": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "length",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "children",
+            },
+          },
+          "type": "<",
+        },
+      ],
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

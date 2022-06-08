@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #23650 (strip_tags() removes hyphens) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "str",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "HERE",
+          "raw": "<<< HERE
+1:<!-- abc -  -->
+2:<!doctype -- >
+3:
+4:<abc - def>
+5:abc - def
+6:</abc>
+HERE",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "1:<!-- abc -  -->
+2:<!doctype -- >
+3:
+4:<abc - def>
+5:abc - def
+6:</abc>
+",
+                "unicode": false,
+                "value": "1:<!-- abc -  -->
+2:<!doctype -- >
+3:
+4:<abc - def>
+5:abc - def
+6:</abc>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strip_tags",
+            "resolution": "uqn",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "str",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'<abc>'",
+              "unicode": false,
+              "value": "<abc>",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strip_tags",
+            "resolution": "uqn",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,243 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71601 (finally block not executed after yield from) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Inner finally\\\\n\\"",
+                      "unicode": false,
+                      "value": "Inner finally
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Yield {
+                    "key": null,
+                    "kind": "yield",
+                    "value": Number {
+                      "kind": "number",
+                      "value": "1",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Yield {
+                    "key": null,
+                    "kind": "yield",
+                    "value": Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                Return {
+                  "expr": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "gen1",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Finally\\\\n\\"",
+                      "unicode": false,
+                      "value": "Finally
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Entered try/catch\\\\n\\"",
+                      "unicode": false,
+                      "value": "Entered try/catch
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      YieldFrom {
+                        "kind": "yieldfrom",
+                        "value": Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "gen1",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "gen2",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "generator",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "gen2",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "current",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "generator",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "generator",
+        },
+      ],
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

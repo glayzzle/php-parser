@@ -1,0 +1,517 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests DomDocument::$strictErrorChecking - ensure turning off actually works 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Load document\\\\n\\"",
+          "unicode": false,
+          "value": "Load document
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "doc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOMDocument",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/book.xml\\"",
+              "unicode": false,
+              "value": "/book.xml",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "load",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "doc",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"See if strictErrorChecking is on\\\\n\\"",
+          "unicode": false,
+          "value": "See if strictErrorChecking is on
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "strictErrorChecking",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "doc",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Should throw DOMException when strictErrorChecking is on\\\\n\\"",
+          "unicode": false,
+          "value": "Should throw DOMException when strictErrorChecking is on
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "attr",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "createAttribute",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "doc",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"GOOD. DOMException thrown\\\\n\\"",
+                    "unicode": false,
+                    "value": "GOOD. DOMException thrown
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "e",
+                        },
+                      },
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "DOMException",
+              "resolution": "uqn",
+            },
+          ],
+        },
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"OOPS. Other exception thrown\\\\n\\"",
+                    "unicode": false,
+                    "value": "OOPS. Other exception thrown
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Turn strictErrorChecking off\\\\n\\"",
+          "unicode": false,
+          "value": "Turn strictErrorChecking off
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "strictErrorChecking",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "doc",
+          },
+        },
+        "operator": "=",
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"See if strictErrorChecking is off\\\\n\\"",
+          "unicode": false,
+          "value": "See if strictErrorChecking is off
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "strictErrorChecking",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "doc",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Should raise PHP error because strictErrorChecking is off\\\\n\\"",
+          "unicode": false,
+          "value": "Should raise PHP error because strictErrorChecking is off
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "attr",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "createAttribute",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "doc",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"OOPS. DOMException thrown\\\\n\\"",
+                    "unicode": false,
+                    "value": "OOPS. DOMException thrown
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "e",
+                        },
+                      },
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "DOMException",
+              "resolution": "uqn",
+            },
+          ],
+        },
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"OOPS. Other exception thrown\\\\n\\"",
+                    "unicode": false,
+                    "value": "OOPS. Other exception thrown
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

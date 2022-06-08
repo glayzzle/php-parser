@@ -1,0 +1,763 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #76675 (Segfault with H2 server push write/writeheader handlers) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "transfers",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callback",
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "parent",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "passed",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "passed",
+                    },
+                    Name {
+                      "kind": "name",
+                      "name": "CURLOPT_WRITEFUNCTION",
+                      "resolution": "uqn",
+                    },
+                    Closure {
+                      "arguments": Array [
+                        Parameter {
+                          "attrGroups": Array [],
+                          "byref": false,
+                          "flags": 0,
+                          "kind": "parameter",
+                          "name": Identifier {
+                            "kind": "identifier",
+                            "name": "ch",
+                          },
+                          "nullable": false,
+                          "readonly": false,
+                          "type": null,
+                          "value": null,
+                          "variadic": false,
+                        },
+                        Parameter {
+                          "attrGroups": Array [],
+                          "byref": false,
+                          "flags": 0,
+                          "kind": "parameter",
+                          "name": Identifier {
+                            "kind": "identifier",
+                            "name": "data",
+                          },
+                          "nullable": false,
+                          "readonly": false,
+                          "type": null,
+                          "value": null,
+                          "variadic": false,
+                        },
+                      ],
+                      "attrGroups": Array [],
+                      "body": Block {
+                        "children": Array [
+                          Echo {
+                            "expressions": Array [
+                              Bin {
+                                "kind": "bin",
+                                "left": String {
+                                  "isDoubleQuote": true,
+                                  "kind": "string",
+                                  "raw": "\\"Received \\"",
+                                  "unicode": false,
+                                  "value": "Received ",
+                                },
+                                "right": Call {
+                                  "arguments": Array [
+                                    Variable {
+                                      "curly": false,
+                                      "kind": "variable",
+                                      "name": "data",
+                                    },
+                                  ],
+                                  "kind": "call",
+                                  "what": Name {
+                                    "kind": "name",
+                                    "name": "strlen",
+                                    "resolution": "uqn",
+                                  },
+                                },
+                                "type": ".",
+                              },
+                            ],
+                            "kind": "echo",
+                            "shortForm": false,
+                          },
+                          Return {
+                            "expr": Call {
+                              "arguments": Array [
+                                Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "data",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "strlen",
+                                "resolution": "uqn",
+                              },
+                            },
+                            "kind": "return",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "byref": false,
+                      "isStatic": false,
+                      "kind": "closure",
+                      "nullable": false,
+                      "type": null,
+                      "uses": Array [],
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "curl_setopt",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Post {
+                  "kind": "post",
+                  "type": "+",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "transfers",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Return {
+                "expr": Name {
+                  "kind": "name",
+                  "name": "CURL_PUSH_OK",
+                  "resolution": "uqn",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [
+            Variable {
+              "byref": true,
+              "curly": false,
+              "kind": "variable",
+              "name": "transfers",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "mh",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "curl_multi_init",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "mh",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLMOPT_PIPELINING",
+            "resolution": "uqn",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLPIPE_MULTIPLEX",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_multi_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "mh",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLMOPT_PUSHFUNCTION",
+            "resolution": "uqn",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "callback",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_multi_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ch",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "curl_init",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ch",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLOPT_URL",
+            "resolution": "uqn",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'https://http2.golang.org/serverpush'",
+            "unicode": false,
+            "value": "https://http2.golang.org/serverpush",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ch",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLOPT_HTTP_VERSION",
+            "resolution": "uqn",
+          },
+          Number {
+            "kind": "number",
+            "value": "3",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ch",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLOPT_SSL_VERIFYHOST",
+            "resolution": "uqn",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ch",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLOPT_SSL_VERIFYPEER",
+            "resolution": "uqn",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ch",
+          },
+          Name {
+            "kind": "name",
+            "name": "CURLOPT_RETURNTRANSFER",
+            "resolution": "uqn",
+          },
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_setopt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "mh",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ch",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_multi_add_handle",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "active",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Do {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "status",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "mh",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "active",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "curl_multi_exec",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Do {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "info",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "mh",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "curl_multi_info_read",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "handle",
+                          },
+                          "operator": "=",
+                          "right": OffsetLookup {
+                            "kind": "offsetlookup",
+                            "offset": String {
+                              "isDoubleQuote": false,
+                              "kind": "string",
+                              "raw": "'handle'",
+                              "unicode": false,
+                              "value": "handle",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "info",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      If {
+                        "alternate": null,
+                        "body": Block {
+                          "children": Array [
+                            ExpressionStatement {
+                              "expression": Post {
+                                "kind": "post",
+                                "type": "-",
+                                "what": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "transfers",
+                                },
+                              },
+                              "kind": "expressionstatement",
+                            },
+                            ExpressionStatement {
+                              "expression": Call {
+                                "arguments": Array [
+                                  Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "mh",
+                                  },
+                                  Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "handle",
+                                  },
+                                ],
+                                "kind": "call",
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "curl_multi_remove_handle",
+                                  "resolution": "uqn",
+                                },
+                              },
+                              "kind": "expressionstatement",
+                            },
+                            ExpressionStatement {
+                              "expression": Call {
+                                "arguments": Array [
+                                  Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "handle",
+                                  },
+                                ],
+                                "kind": "call",
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "curl_close",
+                                  "resolution": "uqn",
+                                },
+                              },
+                              "kind": "expressionstatement",
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "if",
+                        "shortForm": false,
+                        "test": Bin {
+                          "kind": "bin",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "handle",
+                          },
+                          "right": NullKeyword {
+                            "kind": "nullkeyword",
+                            "raw": "null",
+                          },
+                          "type": "!==",
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Boolean {
+                        "kind": "boolean",
+                        "raw": "false",
+                        "value": false,
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "info",
+                      },
+                      "type": "!==",
+                    },
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'msg'",
+                          "unicode": false,
+                          "value": "msg",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "info",
+                        },
+                      },
+                      "right": Name {
+                        "kind": "name",
+                        "name": "CURLMSG_DONE",
+                        "resolution": "uqn",
+                      },
+                      "type": "==",
+                    },
+                    "type": "&&",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "do",
+            "test": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "info",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "do",
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "transfers",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "mh",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "curl_multi_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

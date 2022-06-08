@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pcntl/tests/001.phpt
+  it("Test pcntl wait functionality", function () {
+    expect(parser.parseCode("<?php\nfunction test_exit_waits(){\n    print \"\\n\\nTesting pcntl_wifexited and wexitstatus....\";\n    $pid=pcntl_fork();\n    if ($pid==0) {\n        sleep(1);\n        exit(-1);\n    } else {\n        $options=0;\n        pcntl_waitpid($pid, $status, $options);\n        if ( pcntl_wifexited($status) ) print \"\\nExited With: \". pcntl_wexitstatus($status);\n    }\n}\nfunction test_exit_signal(){\n    print \"\\n\\nTesting pcntl_wifsignaled....\";\n    $pid=pcntl_fork();\n    if ($pid==0) {\n        while(1);\n        exit;\n    } else {\n        $options=0;\n        posix_kill($pid, SIGTERM);\n        pcntl_waitpid($pid, $status, $options);\n        if ( pcntl_wifsignaled($status) ) {\n            $signal_print=pcntl_wtermsig($status);\n            if ($signal_print==SIGTERM) $signal_print=\"SIGTERM\";\n            print \"\\nProcess was terminated by signal : \". $signal_print;\n        }\n    }\n}\nfunction test_stop_signal(){\n    print \"\\n\\nTesting pcntl_wifstopped and pcntl_wstopsig....\";\n    $pid=pcntl_fork();\n    if ($pid==0) {\n        sleep(1);\n        exit;\n    } else {\n        $options=WUNTRACED;\n        posix_kill($pid, SIGSTOP);\n        pcntl_waitpid($pid, $status, $options);\n        if ( pcntl_wifstopped($status) ) {\n            $signal_print=pcntl_wstopsig($status);\n            if ($signal_print==SIGSTOP) $signal_print=\"SIGSTOP\";\n            print \"\\nProcess was stopped by signal : \". $signal_print;\n        }\n        posix_kill($pid, SIGCONT);\n    }\n}\nprint \"Staring wait.h tests....\";\ntest_exit_waits();\ntest_exit_signal();\ntest_stop_signal();\n?>")).toMatchSnapshot();
+  });
+});

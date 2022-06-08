@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70221 (persistent sqlite connection + custom function segfaults) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dbfile",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/test.sqlite'",
+            "unicode": false,
+            "value": "/test.sqlite",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'sqlite:'",
+                "unicode": false,
+                "value": "sqlite:",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "dbfile",
+              },
+              "type": ".",
+            },
+            NullKeyword {
+              "kind": "nullkeyword",
+              "raw": "null",
+            },
+            NullKeyword {
+              "kind": "nullkeyword",
+              "raw": "null",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "ATTR_PERSISTENT",
+                    },
+                    "what": Name {
+                      "kind": "name",
+                      "name": "PDO",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "PDO",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": Number {
+              "kind": "number",
+              "value": "42",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "_test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'test'",
+            "unicode": false,
+            "value": "test",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'_test'",
+            "unicode": false,
+            "value": "_test",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "sqliteCreateFunction",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "\\"Everything is fine, no exceptions here\\\\n\\"",
+          "unicode": false,
+          "value": "Everything is fine, no exceptions here
+",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+      ],
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test dirname() function : regression with path normalization 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'/php_sanity/sanity.php?'",
+          "unicode": false,
+          "value": "/php_sanity/sanity.php?",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    While {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              "operator": ".=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'X'",
+                    "unicode": false,
+                    "value": "X",
+                  },
+                  Number {
+                    "kind": "number",
+                    "value": "250",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "str_repeat",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "dirname",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/php_sanity\\"",
+            "unicode": false,
+            "value": "/php_sanity",
+          },
+          "type": "==",
+        },
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "strlen",
+              "resolution": "uqn",
+            },
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "10000",
+          },
+          "type": "<",
+        },
+        "type": "&&",
+      },
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"ERROR: \\"",
+                  "unicode": false,
+                  "value": "ERROR: ",
+                },
+                "right": Name {
+                  "kind": "name",
+                  "name": "PHP_EOL",
+                  "resolution": "uqn",
+                },
+                "type": ".",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "dirname",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "strlen",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"OK\\\\n\\"",
+                "unicode": false,
+                "value": "OK
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strlen",
+            "resolution": "uqn",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "10000",
+        },
+        "type": ">=",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

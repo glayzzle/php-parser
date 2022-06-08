@@ -1,0 +1,975 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests proc_open() regression test 1 (proc_open() leak) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pipes",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "1",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "2",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "3",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "orig_pipes",
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pipes",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TEST_PHP_EXECUTABLE'",
+              "unicode": false,
+              "value": "TEST_PHP_EXECUTABLE",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"no php executable defined\\"",
+                "unicode": false,
+                "value": "no php executable defined",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Encapsed {
+              "kind": "encapsed",
+              "raw": "\\"$php -n\\"",
+              "type": "string",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "php",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": " -n",
+                    "unicode": false,
+                    "value": " -n",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+              ],
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'pipe'",
+                          "unicode": false,
+                          "value": "pipe",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'r'",
+                          "unicode": false,
+                          "value": "r",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": false,
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'pipe'",
+                          "unicode": false,
+                          "value": "pipe",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'w'",
+                          "unicode": false,
+                          "value": "w",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": false,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "getcwd",
+                "resolution": "uqn",
+              },
+            },
+            Array {
+              "items": Array [],
+              "kind": "array",
+              "shortForm": false,
+            },
+            Array {
+              "items": Array [],
+              "kind": "array",
+              "shortForm": false,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "proc_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"something went wrong.\\\\n\\"",
+                "unicode": false,
+                "value": "something went wrong.
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "pipes",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "FALSE",
+            "value": false,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_set_blocking",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test_string",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"yay!\\\\n\\"",
+          "unicode": false,
+          "value": "yay!
+",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "test_string",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fflush",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cnt",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "n",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Print {
+                    "expression": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"terminated after 1000 iterations\\\\n\\"",
+                      "unicode": false,
+                      "value": "terminated after 1000 iterations
+",
+                    },
+                    "kind": "print",
+                  },
+                  "kind": "expressionstatement",
+                },
+                Break {
+                  "kind": "break",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Pre {
+                "kind": "pre",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "n",
+                },
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "1000",
+              },
+              "type": ">",
+            },
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "read_fds",
+              },
+              "operator": "=",
+              "right": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pipes",
+                      },
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "write_fds",
+              },
+              "operator": "=",
+              "right": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "exp_fds",
+              },
+              "operator": "=",
+              "right": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retval",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "read_fds",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "write_fds",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "exp_fds",
+                  },
+                  Number {
+                    "kind": "number",
+                    "value": "5",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stream_select",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Print {
+                    "expression": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"select() failed\\\\n\\"",
+                      "unicode": false,
+                      "value": "select() failed
+",
+                    },
+                    "kind": "print",
+                  },
+                  "kind": "expressionstatement",
+                },
+                Break {
+                  "kind": "break",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retval",
+              },
+              "right": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+              "type": "===",
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Print {
+                    "expression": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"timed out\\\\n\\"",
+                      "unicode": false,
+                      "value": "timed out
+",
+                    },
+                    "kind": "print",
+                  },
+                  "kind": "expressionstatement",
+                },
+                Break {
+                  "kind": "break",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retval",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "type": "===",
+            },
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "buf",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "1",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "pipes",
+                    },
+                  },
+                  Number {
+                    "kind": "number",
+                    "value": "1024",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "fread",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cnt",
+              },
+              "operator": ".=",
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "buf",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "left",
+              },
+              "operator": "-=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "buf",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "strlen",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "left",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "test_string",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "strlen",
+              "resolution": "uqn",
+            },
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "left",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "type": ">",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cnt",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "1",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "proc_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "orig_pipes",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

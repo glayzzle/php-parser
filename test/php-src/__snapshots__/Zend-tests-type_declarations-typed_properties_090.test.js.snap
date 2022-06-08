@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Unsetting typed properties containing a reference must respect shadowing 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "prop",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": AssignRef {
+                  "kind": "assignref",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "x",
+                  },
+                  "right": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "prop",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Unset {
+                "kind": "unset",
+                "variables": Array [
+                  PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "prop",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                ],
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "x",
+                  },
+                  "operator": "=",
+                  "right": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"foo\\"",
+                    "unicode": false,
+                    "value": "foo",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "x",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "prop",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "private",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "A",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "B",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "B",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

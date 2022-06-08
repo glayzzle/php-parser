@@ -1,0 +1,1296 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PostgreSQL import large object with given oid 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn_str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"import LO from int\\\\n\\"",
+          "unicode": false,
+          "value": "import LO from int
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'begin'",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Magic {
+              "kind": "magic",
+              "raw": "__FILE__",
+              "value": "__FILE__",
+            },
+            Number {
+              "kind": "number",
+              "value": "21003",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_import",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_import() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_import() error
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_import() wrong id\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_import() wrong id
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "21003",
+        },
+        "type": "!=",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oid",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'commit'",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"import LO from string\\\\n\\"",
+          "unicode": false,
+          "value": "import LO from string
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'begin'",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Magic {
+              "kind": "magic",
+              "raw": "__FILE__",
+              "value": "__FILE__",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"21004\\"",
+              "unicode": false,
+              "value": "21004",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_import",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_import() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_import() error
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_import() wrong id\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_import() wrong id
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "21004",
+        },
+        "type": "!=",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oid",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'commit'",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"import LO using default connection\\\\n\\"",
+          "unicode": false,
+          "value": "import LO using default connection
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'begin'",
+            "unicode": false,
+            "value": "begin",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Magic {
+              "kind": "magic",
+              "raw": "__FILE__",
+              "value": "__FILE__",
+            },
+            Number {
+              "kind": "number",
+              "value": "21005",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_lo_import",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_import() error\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_import() error
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "parenthesizedExpression": true,
+            "raw": "\\"pg_lo_import() wrong id\\\\n\\"",
+            "unicode": false,
+            "value": "pg_lo_import() wrong id
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oid",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "21005",
+        },
+        "type": "!=",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oid",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_lo_unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'commit'",
+            "unicode": false,
+            "value": "commit",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "15",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                Unary {
+                  "kind": "unary",
+                  "type": "-",
+                  "what": Number {
+                    "kind": "number",
+                    "value": "15",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'giberrish'",
+                  "unicode": false,
+                  "value": "giberrish",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'giberrish'",
+                  "unicode": false,
+                  "value": "giberrish",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\TypeError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                Array {
+                  "items": Array [],
+                  "kind": "array",
+                  "shortForm": true,
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\TypeError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                New {
+                  "arguments": Array [],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "stdClass",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\TypeError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_lo_import",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getMessage",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "\\\\PHP_EOL",
+                    "resolution": "fqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\TypeError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"OK\\"",
+          "unicode": false,
+          "value": "OK",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #78776: Abstract method implementation from trait does not check "static" 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": null,
+          "byref": false,
+          "isAbstract": true,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "createApp",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": true,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "C",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "A",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "B",
+      },
+    },
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"You should not be here\\\\n\\"",
+                    "unicode": false,
+                    "value": "You should not be here
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "createApp",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "createApp",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "B",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,530 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #52113 (Seg fault while creating (by unserialization) DatePeriod) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "start",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'2003-01-02 08:00:00'",
+              "unicode": false,
+              "value": "2003-01-02 08:00:00",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DateTime",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "end",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'2003-01-02 12:00:00'",
+              "unicode": false,
+              "value": "2003-01-02 12:00:00",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DateTime",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "diff",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "end",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "diff",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "start",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "p",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "start",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "diff",
+            },
+            Number {
+              "kind": "number",
+              "value": "2",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DatePeriod",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "diff_s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "diff",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "serialize",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "diff",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "diff_s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "diff",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_export",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "diff_un",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "diff_s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unserialize",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "p",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "start",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "diff_un",
+            },
+            Number {
+              "kind": "number",
+              "value": "2",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DatePeriod",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "diff_un",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "p",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "unser",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'y'",
+                    "unicode": false,
+                    "value": "y",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "7",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'m'",
+                    "unicode": false,
+                    "value": "m",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "6",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'d'",
+                    "unicode": false,
+                    "value": "d",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "5",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'h'",
+                    "unicode": false,
+                    "value": "h",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "4",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'i'",
+                    "unicode": false,
+                    "value": "i",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "3",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'s'",
+                    "unicode": false,
+                    "value": "s",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'f'",
+                    "unicode": false,
+                    "value": "f",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "0.876543",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'invert'",
+                    "unicode": false,
+                    "value": "invert",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'days'",
+                    "unicode": false,
+                    "value": "days",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "2400",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "__set_state",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "DateInterval",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "p",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "start",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "diff_un",
+            },
+            Number {
+              "kind": "number",
+              "value": "2",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DatePeriod",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "unser",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "p",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

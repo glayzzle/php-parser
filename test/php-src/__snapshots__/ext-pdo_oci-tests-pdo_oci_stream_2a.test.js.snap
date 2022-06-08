@@ -1,0 +1,1523 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PDO OCI: Inserts 1K with 1 number and 2 LOB columns (stress test) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/../../pdo/tests/pdo_test.inc'",
+            "unicode": false,
+            "value": "/../../pdo/tests/pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "query",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"begin execute immediate 'drop table pdo_oci_stream_2'; exception when others then if sqlcode <> -942 then raise; end if; end;\\"",
+          "unicode": false,
+          "value": "begin execute immediate 'drop table pdo_oci_stream_2'; exception when others then if sqlcode <> -942 then raise; end if; end;",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "query",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "execute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "query",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"create table pdo_oci_stream_2 (id number, data1 blob, data2 blob)\\"",
+          "unicode": false,
+          "value": "create table pdo_oci_stream_2 (id number, data1 blob, data2 blob)",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "query",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "execute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "db",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "id",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "data1",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "data2",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "beginTransaction",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"insert into pdo_oci_stream_2 (id, data1, data2) values (:id, empty_blob(), empty_blob()) returning data1, data2 into :blob1, :blob2\\"",
+                    "unicode": false,
+                    "value": "insert into pdo_oci_stream_2 (id, data1, data2) values (:id, empty_blob(), empty_blob()) returning data1, data2 into :blob1, :blob2",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "prepare",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "':id'",
+                  "unicode": false,
+                  "value": ":id",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "id",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "bindParam",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "':blob1'",
+                  "unicode": false,
+                  "value": ":blob1",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "blob1",
+                },
+                StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "PARAM_LOB",
+                  },
+                  "what": Name {
+                    "kind": "name",
+                    "name": "PDO",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "bindParam",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "':blob2'",
+                  "unicode": false,
+                  "value": ":blob2",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "blob2",
+                },
+                StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "PARAM_LOB",
+                  },
+                  "what": Name {
+                    "kind": "name",
+                    "name": "PDO",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "bindParam",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "blob1",
+              },
+              "operator": "=",
+              "right": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "blob2",
+              },
+              "operator": "=",
+              "right": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "execute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "blob1",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "data1",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fwrite",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "blob1",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fclose",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "blob2",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "data2",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fwrite",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "blob2",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fclose",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "commit",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "do_insert",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a1",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'a'",
+              "unicode": false,
+              "value": "a",
+            },
+            Number {
+              "kind": "number",
+              "value": "4086",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a2",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'b'",
+              "unicode": false,
+              "value": "b",
+            },
+            Number {
+              "kind": "number",
+              "value": "4087",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a3",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'c'",
+              "unicode": false,
+              "value": "c",
+            },
+            Number {
+              "kind": "number",
+              "value": "4088",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a4",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'d'",
+              "unicode": false,
+              "value": "d",
+            },
+            Number {
+              "kind": "number",
+              "value": "4089",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a5",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'e'",
+              "unicode": false,
+              "value": "e",
+            },
+            Number {
+              "kind": "number",
+              "value": "4090",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a6",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'f'",
+              "unicode": false,
+              "value": "f",
+            },
+            Number {
+              "kind": "number",
+              "value": "4091",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a7",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'g'",
+              "unicode": false,
+              "value": "g",
+            },
+            Number {
+              "kind": "number",
+              "value": "4092",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a8",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'h'",
+              "unicode": false,
+              "value": "h",
+            },
+            Number {
+              "kind": "number",
+              "value": "4093",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a9",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'i'",
+              "unicode": false,
+              "value": "i",
+            },
+            Number {
+              "kind": "number",
+              "value": "4094",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a10",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'j'",
+              "unicode": false,
+              "value": "j",
+            },
+            Number {
+              "kind": "number",
+              "value": "4095",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "str_repeat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Inserting 1000 Records ... \\"",
+            "unicode": false,
+            "value": "Inserting 1000 Records ... ",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a1",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a10",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a2",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a9",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "3",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a3",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a8",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "4",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a4",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a7",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "5",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a5",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a6",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "6",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a6",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a5",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "7",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a7",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a4",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "8",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a8",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a3",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "9",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a9",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a2",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                    "type": "*",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "10",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a10",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a1",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "do_insert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Post {
+          "kind": "post",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "100",
+          },
+          "type": "<",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Done\\\\n\\"",
+            "unicode": false,
+            "value": "Done
+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

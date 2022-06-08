@@ -1,0 +1,442 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #75124 (gdImageGrayScale() may produce colors) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "im",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/bug75124.png'",
+                "unicode": false,
+                "value": "/bug75124.png",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "imagecreatefrompng",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "im",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "imageistruecolor",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "im",
+          },
+          Name {
+            "kind": "name",
+            "name": "IMG_FILTER_GRAYSCALE",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "imagefilter",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          For {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "color",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "im",
+                        },
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "i",
+                        },
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "j",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "imagecolorat",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "red",
+                    },
+                    "operator": "=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "color",
+                        },
+                        "parenthesizedExpression": true,
+                        "right": Number {
+                          "kind": "number",
+                          "value": "16",
+                        },
+                        "type": ">>",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "0xff",
+                      },
+                      "type": "&",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "green",
+                    },
+                    "operator": "=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "color",
+                        },
+                        "parenthesizedExpression": true,
+                        "right": Number {
+                          "kind": "number",
+                          "value": "8",
+                        },
+                        "type": ">>",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "0xff",
+                      },
+                      "type": "&",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "blue",
+                    },
+                    "operator": "=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "color",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "0xff",
+                      },
+                      "type": "&",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"non grayscale pixel detected\\\\n\\"",
+                            "unicode": false,
+                            "value": "non grayscale pixel detected
+",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                      Break {
+                        "kind": "break",
+                        "level": Number {
+                          "kind": "number",
+                          "value": "2",
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "red",
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "green",
+                      },
+                      "type": "!=",
+                    },
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "green",
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "blue",
+                      },
+                      "type": "!=",
+                    },
+                    "type": "||",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "j",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "j",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              },
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "height",
+                },
+                "operator": "=",
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "im",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "imagesy",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "j",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "height",
+                },
+                "type": "<",
+              },
+            ],
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Post {
+          "kind": "post",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "width",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "im",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "imagesx",
+              "resolution": "uqn",
+            },
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "width",
+          },
+          "type": "<",
+        },
+      ],
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

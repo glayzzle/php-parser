@@ -1,0 +1,467 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71062 pg_convert() doesn't accept ISO 8601 for datatype timestamp 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn_str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "table",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"public.test_table_bug71062_bug71062\\"",
+          "unicode": false,
+          "value": "public.test_table_bug71062_bug71062",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"CREATE TABLE $table ( test_field TIMESTAMPTZ )\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "CREATE TABLE ",
+                  "unicode": false,
+                  "value": "CREATE TABLE ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "table",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": " ( test_field TIMESTAMPTZ )",
+                  "unicode": false,
+                  "value": " ( test_field TIMESTAMPTZ )",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "date_string_php_iso8601",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "ISO8601",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "DateTime",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "format",
+            },
+            "what": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'8 Dec 2015 5:38'",
+                  "unicode": false,
+                  "value": "8 Dec 2015 5:38",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "date_create",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "modified_format",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'Y-m-d H:i:sO'",
+          "unicode": false,
+          "value": "Y-m-d H:i:sO",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "date_string_modified_iso8601",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "modified_format",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "format",
+            },
+            "what": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'8 Dec 2015 5:38'",
+                  "unicode": false,
+                  "value": "8 Dec 2015 5:38",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "date_create",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"trying format %s \\\\n\\"",
+            "unicode": false,
+            "value": "trying format %s 
+",
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ISO8601",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "DateTime",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "table",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'test_field'",
+                  "unicode": false,
+                  "value": "test_field",
+                },
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "date_string_php_iso8601",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_convert",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"trying format %s \\\\n\\"",
+            "unicode": false,
+            "value": "trying format %s 
+",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "modified_format",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "table",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'test_field'",
+                  "unicode": false,
+                  "value": "test_field",
+                },
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "date_string_modified_iso8601",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_convert",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done\\\\n\\"",
+          "unicode": false,
+          "value": "done
+",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"DROP TABLE $table\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "DROP TABLE ",
+                  "unicode": false,
+                  "value": "DROP TABLE ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "table",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+==OK==",
+      "value": "==OK==",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

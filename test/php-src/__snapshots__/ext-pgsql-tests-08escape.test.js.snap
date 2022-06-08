@@ -1,0 +1,1340 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PostgreSQL escape functions 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'FILE_NAME'",
+            "unicode": false,
+            "value": "FILE_NAME",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'/php.gif'",
+              "unicode": false,
+              "value": "/php.gif",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "define",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "before",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\ABC\\\\'\\"",
+          "unicode": false,
+          "value": "ABC\\\\ABC\\\\'",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\\\\\\\\\ABC\\\\\\\\'\\"",
+          "unicode": false,
+          "value": "ABC\\\\\\\\ABC\\\\'",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect2",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\\\\\\\\\ABC\\\\\\\\\\\\\\\\''\\"",
+          "unicode": false,
+          "value": "ABC\\\\\\\\ABC\\\\\\\\''",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "before",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_escape_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_string() is NOT Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_string() is NOT Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "before",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "after",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "expect",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_string() is Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_string() is Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "expect",
+          },
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "after",
+          },
+          "type": "===",
+        },
+        "right": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "expect2",
+          },
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "after",
+          },
+          "type": "===",
+        },
+        "type": "||",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "before",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\ABC\\"",
+          "unicode": false,
+          "value": "ABC\\\\ABC",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ABC\\"",
+          "unicode": false,
+          "value": "ABC\\\\\\\\\\\\\\\\ABC",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "before",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_escape_bytea",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_byte() is NOT Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_byte() is NOT Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "before",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "after",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "expect",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_bytea() is Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_bytea() is Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "FILE_NAME",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "file_get_contents",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn_str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "escaped_data",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "data",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_escape_bytea",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"DELETE FROM \\"",
+                "unicode": false,
+                "value": "DELETE FROM ",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "table_name",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\" WHERE num = 10000;\\"",
+              "unicode": false,
+              "value": " WHERE num = 10000;",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sql",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"INSERT INTO \\"",
+                  "unicode": false,
+                  "value": "INSERT INTO ",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "table_name",
+                },
+                "type": ".",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\" (num, bin) VALUES (10000, CAST ('\\"",
+                "unicode": false,
+                "value": " (num, bin) VALUES (10000, CAST ('",
+              },
+              "type": ".",
+            },
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "escaped_data",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"' AS BYTEA));\\"",
+            "unicode": false,
+            "value": "' AS BYTEA));",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sql",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "sql",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"SELECT bin::bytea FROM \\"",
+                    "unicode": false,
+                    "value": "SELECT bin::bytea FROM ",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "table_name",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\" WHERE num = 10000\\"",
+                  "unicode": false,
+                  "value": " WHERE num = 10000",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "result",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "sql",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_query",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "row",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "result",
+                  },
+                  Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "PGSQL_ASSOC",
+                    "resolution": "uqn",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_fetch_array",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": If {
+              "alternate": Block {
+                "children": Array [
+                  ExpressionStatement {
+                    "expression": Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "result",
+                      },
+                      "operator": "=",
+                      "right": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "db",
+                          },
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "sql",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "pg_query",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                    "kind": "expressionstatement",
+                  },
+                  Echo {
+                    "expressions": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"pg_escape_bytea() is broken\\\\n\\"",
+                        "unicode": false,
+                        "value": "pg_escape_bytea() is broken
+",
+                      },
+                    ],
+                    "kind": "echo",
+                    "shortForm": false,
+                  },
+                  Break {
+                    "kind": "break",
+                    "level": null,
+                  },
+                ],
+                "kind": "block",
+              },
+              "body": Block {
+                "children": Array [
+                  ExpressionStatement {
+                    "expression": Silent {
+                      "expr": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "db",
+                          },
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"SET bytea_output = 'escape'\\"",
+                            "unicode": false,
+                            "value": "SET bytea_output = 'escape'",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "pg_query",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "kind": "silent",
+                    },
+                    "kind": "expressionstatement",
+                  },
+                ],
+                "kind": "block",
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Unary {
+                "kind": "unary",
+                "type": "!",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "i",
+                },
+              },
+            },
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"pg_escape_bytea() actually works with database\\\\n\\"",
+                      "unicode": false,
+                      "value": "pg_escape_bytea() actually works with database
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Break {
+                  "kind": "break",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "data",
+              },
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'bin'",
+                      "unicode": false,
+                      "value": "bin",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "row",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_unescape_bytea",
+                  "resolution": "uqn",
+                },
+              },
+              "type": "===",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Post {
+          "kind": "post",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "2",
+          },
+          "type": "<",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "before",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\ABC\\\\'\\"",
+          "unicode": false,
+          "value": "ABC\\\\ABC\\\\'",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\" E'ABC\\\\\\\\\\\\\\\\ABC\\\\\\\\\\\\\\\\'''\\"",
+          "unicode": false,
+          "value": " E'ABC\\\\\\\\ABC\\\\\\\\'''",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "before",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_escape_literal",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_literal() is NOT Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_literal() is NOT Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "before",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "after",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "expect",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_literal() is Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_literal() is Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "before",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ABC\\\\\\\\ABC\\\\'\\"",
+          "unicode": false,
+          "value": "ABC\\\\ABC\\\\'",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\\\"ABC\\\\ABC\\\\'\\\\\\"\\"",
+          "unicode": false,
+          "value": "\\"ABC\\\\ABC\\\\'\\\\\\"",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "before",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_escape_identifier",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_identifier() is NOT Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_identifier() is NOT Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "before",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "after",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "expect",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_escape_identifier() is Ok\\\\n\\"",
+                "unicode": false,
+                "value": "pg_escape_identifier() is Ok
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expect",
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "after",
+        },
+        "type": "===",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

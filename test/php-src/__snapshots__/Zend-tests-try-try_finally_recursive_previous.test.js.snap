@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test case where the implicit previous finally exception would result in recursion 1`] = `
+Program {
+  "children": Array [
+    Try {
+      "always": Block {
+        "children": Array [],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "e",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"M1\\"",
+                    "unicode": false,
+                    "value": "M1",
+                  },
+                ],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "Exception",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Try {
+            "always": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "e",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"M2\\"",
+                        "unicode": false,
+                        "value": "M2",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

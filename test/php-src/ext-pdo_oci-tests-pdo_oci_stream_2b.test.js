@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pdo_oci/tests/pdo_oci_stream_2b.phpt
+  it("PDO OCI: Fetches 1K records from a table that contains 1 number and 2 LOB columns (stress test)", function () {
+    expect(parser.parseCode("<?php\n// !! Note: uses data inserted in pdo_oci_stream_2a.phpt !!\nrequire('ext/pdo/tests/pdo_test.inc');\n$db = PDOTest::test_factory('ext/pdo_oci/tests/common.phpt');\n$db->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);  // Let's use streams\n// Since each column only has one lob descriptor, the last row is\n// shown twice because the lob descriptor for each column is reused in\n// the stream\n$i = 0;\n$j = 9;\n$a_val = ord('a');\nforeach($db->query(\"select data1 as d4_1, data2 as d4_2 from pdo_oci_stream_2 order by id\") as $row) {\n    $a = $row['d4_1'];\n    $a1 = $row['d4_2'];\n    $str1 = stream_get_contents($a);\n    $str2 = stream_get_contents($a1);\n    $str1len = strlen($str1);\n    $str2len = strlen($str2);\n    $b = ord($str1[0]);\n    $b1 = ord($str2[0]);\n    if (($b != ($a_val + $i)) && ($str1len != (4086 + $i)) &&\n        ($b1 != ($a_val + $j)) && ($str2len != (4086 + $j))) {\n        printf(\"There is a bug!\\n\");\n        printf(\"Col1:\\n\");\n        printf(\"a_val = %d\\n\", $a_val);\n        printf(\"b     = %d\\n\", $b);\n        printf(\"i     = %d\\n\", $i);\n        printf(\"str1len = %d\\n\", $str1len);\n        printf(\"Col2:\\n\");\n        printf(\"a_val = %d\\n\", $a_val);\n        printf(\"b1    = %d\\n\", $b1);\n        printf(\"j     = %d\\n\", $j);\n        printf(\"str2len = %d\\n\", $str1len);\n    }\n    $i++;\n    if ($i>9)\n        $i = 0;\n    $j--;\n    if ($j<0)\n        $j = 9;\n}\necho \"Fetch operation done!\\n\";\n/* Cleanup */\n$db->exec(\"drop table pdo_oci_stream_2\");\n?>")).toMatchSnapshot();
+  });
+});

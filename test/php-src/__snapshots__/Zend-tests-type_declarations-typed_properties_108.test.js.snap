@@ -1,0 +1,437 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Variable assignment in catch must respect typed references 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "i",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "s",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"str\\"",
+                "unicode": false,
+                "value": "str",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Test",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "test",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Test",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": AssignRef {
+        "kind": "assignref",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ref",
+        },
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "i",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "test",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"ex\\"",
+                        "unicode": false,
+                        "value": "ex",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"Unreachable\\\\n\\"",
+                          "unicode": false,
+                          "value": "Unreachable
+",
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ref",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "i",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "test",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "e",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "TypeError",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    ExpressionStatement {
+      "expression": AssignRef {
+        "kind": "assignref",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ref",
+        },
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "s",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "test",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"ex\\"",
+                        "unicode": false,
+                        "value": "ex",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    Echo {
+                      "expressions": Array [
+                        String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"Unreachable\\\\n\\"",
+                          "unicode": false,
+                          "value": "Unreachable
+",
+                        },
+                      ],
+                      "kind": "echo",
+                      "shortForm": false,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ref",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "s",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "test",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "e",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "TypeError",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

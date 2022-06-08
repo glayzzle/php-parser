@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #77111 php-win.exe corrupts unicode symbols from cli parameters 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'TEST_PHP_EXECUTABLE'",
+                      "unicode": false,
+                      "value": "TEST_PHP_EXECUTABLE",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "getenv",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "dirname",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "DIRECTORY_SEPARATOR",
+              "resolution": "uqn",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"php-win.exe\\"",
+            "unicode": false,
+            "value": "php-win.exe",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "out_fl",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\\\\\argv_bug77111.txt\\"",
+            "unicode": false,
+            "value": "\\\\argv_bug77111.txt",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "argv_fl",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "DIRECTORY_SEPARATOR",
+              "resolution": "uqn",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"argv_test.php\\"",
+            "unicode": false,
+            "value": "argv_test.php",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "argv_fl",
+          },
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"<?php file_put_contents('$out_fl', implode(' ', array_slice(\\\\$argv, 1))); ?>\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "<?php file_put_contents('",
+                  "unicode": false,
+                  "value": "<?php file_put_contents('",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "out_fl",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "', implode(' ', array_slice(\\\\$argv, 1))); ?>",
+                  "unicode": false,
+                  "value": "', implode(' ', array_slice($argv, 1))); ?>",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Encapsed {
+        "kind": "encapsed",
+        "raw": "\`$php -n $argv_fl Ästhetik Æstetik Esthétique Estética Эстетика\`",
+        "type": "shell",
+        "value": Array [
+          EncapsedPart {
+            "curly": false,
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "php",
+            },
+            "kind": "encapsedpart",
+            "syntax": "simple",
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": " -n ",
+              "unicode": false,
+              "value": " -n ",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "argv_fl",
+            },
+            "kind": "encapsedpart",
+            "syntax": "simple",
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": " Ästhetik Æstetik Esthétique Estética Эстетика",
+              "unicode": false,
+              "value": " Ästhetik Æstetik Esthétique Estética Эстетика",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+        ],
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "out_fl",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "file_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

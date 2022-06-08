@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71145: Multiple statements in init command triggers unbuffered query error 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "DIRECTORY_SEPARATOR",
+              "resolution": "uqn",
+            },
+            "type": ".",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'mysql_pdo_test.inc'",
+            "unicode": false,
+            "value": "mysql_pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "attr",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "ATTR_ERRMODE",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PDO",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "ERRMODE_EXCEPTION",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PDO",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "MYSQL_ATTR_INIT_COMMAND",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PDO",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci; SET SESSION sql_mode=traditional'",
+                "unicode": false,
+                "value": "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci; SET SESSION sql_mode=traditional",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "ATTR_STRINGIFY_FETCHES",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PDO",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'PDOTEST_ATTR='",
+              "unicode": false,
+              "value": "PDOTEST_ATTR=",
+            },
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "attr",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "serialize",
+                "resolution": "uqn",
+              },
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "putenv",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pdo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "MySQLPDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "fetchColumn",
+              },
+              "what": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'SELECT 42'",
+                    "unicode": false,
+                    "value": "SELECT 42",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "query",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "pdo",
+                  },
+                },
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

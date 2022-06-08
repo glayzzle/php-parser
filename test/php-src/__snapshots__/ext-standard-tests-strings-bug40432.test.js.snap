@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #40432 (strip_tags() fails with greater than in attribute) 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'<span title=\\"test > all\\">this</span>'",
+                "unicode": false,
+                "value": "<span title=\\"test > all\\">this</span>",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "strip_tags",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,450 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Null pipes in proc_open() 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TEST_PHP_EXECUTABLE'",
+              "unicode": false,
+              "value": "TEST_PHP_EXECUTABLE",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cmd",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "php",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'-r'",
+                "unicode": false,
+                "value": "-r",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'echo \\"Test\\"; fprintf(STDERR, \\"Error\\");'",
+                "unicode": false,
+                "value": "echo \\"Test\\"; fprintf(STDERR, \\"Error\\");",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "cmd",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'null'",
+                          "unicode": false,
+                          "value": "null",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'pipe'",
+                          "unicode": false,
+                          "value": "pipe",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'w'",
+                          "unicode": false,
+                          "value": "w",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "proc_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "pipes",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pipes",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "stream_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "proc_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "cmd",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'pipe'",
+                          "unicode": false,
+                          "value": "pipe",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'w'",
+                          "unicode": false,
+                          "value": "w",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'null'",
+                          "unicode": false,
+                          "value": "null",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "proc_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "pipes",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pipes",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "stream_get_contents",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "proc_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

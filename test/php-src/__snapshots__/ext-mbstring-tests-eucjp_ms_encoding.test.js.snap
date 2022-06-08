@@ -1,0 +1,1173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Exhaustive test of EUC-JP-MS (AKA EUC-JP-WIN) text encoding 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Number {
+            "kind": "number",
+            "value": "555",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "srand",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'encoding_tests.inc'",
+          "unicode": false,
+          "value": "encoding_tests.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Number {
+            "kind": "number",
+            "value": "0x25",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mb_substitute_character",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'/data/EUC-JP-MS.txt'",
+              "unicode": false,
+              "value": "/data/EUC-JP-MS.txt",
+            },
+            "type": ".",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "toUnicode",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "readConversionTable",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'/data/EUC-JP-MS.IRREVERSIBLE.txt'",
+              "unicode": false,
+              "value": "/data/EUC-JP-MS.IRREVERSIBLE.txt",
+            },
+            "type": ".",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "toUnicodeIrreversible",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "_",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "readConversionTable",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": ExpressionStatement {
+              "expression": Assign {
+                "kind": "assign",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "codepoint",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "fromUnicode",
+                  },
+                },
+                "operator": "=",
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "char",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Isset {
+                "kind": "isset",
+                "variables": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "codepoint",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "fromUnicode",
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "key": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "char",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "toUnicodeIrreversible",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "codepoint",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x21\\"",
+            "unicode": false,
+            "value": "!!",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xE4\\"",
+          "unicode": false,
+          "value": "­ä",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x61\\"",
+            "unicode": false,
+            "value": "!a",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xB6\\"",
+          "unicode": false,
+          "value": "­¶",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x62\\"",
+            "unicode": false,
+            "value": "!b",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xB7\\"",
+          "unicode": false,
+          "value": "­·",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x63\\"",
+            "unicode": false,
+            "value": "!c",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xB8\\"",
+          "unicode": false,
+          "value": "­¸",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x65\\"",
+            "unicode": false,
+            "value": "!e",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xBA\\"",
+          "unicode": false,
+          "value": "­º",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x68\\"",
+            "unicode": false,
+            "value": "!h",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xBD\\"",
+          "unicode": false,
+          "value": "­½",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x21\\\\x69\\"",
+            "unicode": false,
+            "value": "!i",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xBE\\"",
+          "unicode": false,
+          "value": "­¾",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x1A\\"",
+            "unicode": false,
+            "value": "\\"",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xE5\\"",
+          "unicode": false,
+          "value": "¢å",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x20\\"",
+            "unicode": false,
+            "value": "\\" ",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xDC\\"",
+          "unicode": false,
+          "value": "¢Ü",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x29\\"",
+            "unicode": false,
+            "value": "\\")",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xC1\\"",
+          "unicode": false,
+          "value": "¢Á",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x2A\\"",
+            "unicode": false,
+            "value": "\\"*",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xC0\\"",
+          "unicode": false,
+          "value": "¢À",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x2B\\"",
+            "unicode": false,
+            "value": "\\"+",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xE9\\"",
+          "unicode": false,
+          "value": "¢é",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x35\\"",
+            "unicode": false,
+            "value": "\\"5",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xE8\\"",
+          "unicode": false,
+          "value": "¢è",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x52\\"",
+            "unicode": false,
+            "value": "\\"R",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xE2\\"",
+          "unicode": false,
+          "value": "¢â",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\x61\\"",
+            "unicode": false,
+            "value": "\\"a",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xE1\\"",
+          "unicode": false,
+          "value": "¢á",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x22\\\\xA5\\"",
+            "unicode": false,
+            "value": "\\"¥",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA2\\\\xDD\\"",
+          "unicode": false,
+          "value": "¢Ý",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x32\\\\x31\\"",
+            "unicode": false,
+            "value": "21",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xAD\\\\xEA\\"",
+          "unicode": false,
+          "value": "­ê",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\xFF\\\\x5E\\"",
+            "unicode": false,
+            "value": "ÿ^",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\xA1\\\\xC1\\"",
+          "unicode": false,
+          "value": "¡Á",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "toUnicode",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "invalid",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "truncated",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Number {
+                      "kind": "number",
+                      "value": "0xA1",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "0xFE",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "range",
+                    "resolution": "uqn",
+                  },
+                },
+                Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "array_fill_keys",
+                "resolution": "uqn",
+              },
+            },
+            "right": Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": Number {
+                    "kind": "number",
+                    "value": "0x8F",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "3",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+            "type": "+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "findInvalidChars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "toUnicode",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'eucJP-win'",
+            "unicode": false,
+            "value": "eucJP-win",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'UTF-16BE'",
+            "unicode": false,
+            "value": "UTF-16BE",
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "false",
+            "value": false,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "testAllValidChars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "invalid",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "toUnicode",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'eucJP-win'",
+            "unicode": false,
+            "value": "eucJP-win",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'UTF-16BE'",
+            "unicode": false,
+            "value": "UTF-16BE",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x00%\\"",
+            "unicode": false,
+            "value": " %",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "testAllInvalidChars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "truncated",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'eucJP-win'",
+            "unicode": false,
+            "value": "eucJP-win",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'UTF-16BE'",
+            "unicode": false,
+            "value": "UTF-16BE",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x00%\\"",
+            "unicode": false,
+            "value": " %",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "testTruncatedChars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Tested eucJP-win -> UTF-16BE\\\\n\\"",
+          "unicode": false,
+          "value": "Tested eucJP-win -> UTF-16BE
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "invalid",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "unused",
+          },
+          Call {
+            "arguments": Array [
+              Call {
+                "arguments": Array [
+                  Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  Number {
+                    "kind": "number",
+                    "value": "0xFF",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "range",
+                  "resolution": "uqn",
+                },
+              },
+              Number {
+                "kind": "number",
+                "value": "2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "array_fill_keys",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "findInvalidChars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "invalid",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fromUnicode",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'UTF-16BE'",
+            "unicode": false,
+            "value": "UTF-16BE",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'eucJP-win'",
+            "unicode": false,
+            "value": "eucJP-win",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'%'",
+            "unicode": false,
+            "value": "%",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "convertAllInvalidChars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Tested UTF-16BE -> eucJP-win\\\\n\\"",
+          "unicode": false,
+          "value": "Tested UTF-16BE -> eucJP-win
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"long\\"",
+            "unicode": false,
+            "value": "long",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mb_substitute_character",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\x80\\"",
+            "unicode": false,
+            "value": "",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"%\\"",
+            "unicode": false,
+            "value": "%",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"eucJP-win\\"",
+            "unicode": false,
+            "value": "eucJP-win",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"UTF-8\\"",
+            "unicode": false,
+            "value": "UTF-8",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "convertInvalidString",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\xFE\\\\xFF\\"",
+            "unicode": false,
+            "value": "þÿ",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"%\\"",
+            "unicode": false,
+            "value": "%",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"eucJP-win\\"",
+            "unicode": false,
+            "value": "eucJP-win",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"UTF-8\\"",
+            "unicode": false,
+            "value": "UTF-8",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "convertInvalidString",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

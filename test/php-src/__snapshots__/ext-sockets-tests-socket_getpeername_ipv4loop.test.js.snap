@@ -1,0 +1,670 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests ext/sockets - socket_getpeername_ipv4loop - basic test 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "localhost",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'127.0.0.1'",
+          "unicode": false,
+          "value": "127.0.0.1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "server",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "AF_INET",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SOCK_STREAM",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SOL_TCP",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_create",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to create AF_INET socket [server]'",
+                "unicode": false,
+                "value": "Unable to create AF_INET socket [server]",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "server",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "minport",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "31337",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "maxport",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "31356",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bound",
+        },
+        "operator": "=",
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "bound",
+                    },
+                    "operator": "=",
+                    "right": Boolean {
+                      "kind": "boolean",
+                      "raw": "true",
+                      "value": true,
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                Break {
+                  "kind": "break",
+                  "level": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Silent {
+              "expr": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "server",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "localhost",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "port",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "socket_bind",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "silent",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Pre {
+          "kind": "pre",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "port",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "port",
+          },
+          "operator": "=",
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "minport",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "port",
+          },
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "maxport",
+          },
+          "type": "<=",
+        },
+      ],
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Unable to bind to '",
+                  "unicode": false,
+                  "value": "Unable to bind to ",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "localhost",
+                },
+                "type": ".",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bound",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to listen on socket'",
+                "unicode": false,
+                "value": "Unable to listen on socket",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "server",
+            },
+            Number {
+              "kind": "number",
+              "value": "2",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_listen",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "client",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "AF_INET",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SOCK_STREAM",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SOL_TCP",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_create",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to create AF_INET socket [client]'",
+                "unicode": false,
+                "value": "Unable to create AF_INET socket [client]",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "client",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to connect to server socket'",
+                "unicode": false,
+                "value": "Unable to connect to server socket",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "client",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "localhost",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "socket",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "server",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_accept",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to accept connection'",
+                "unicode": false,
+                "value": "Unable to accept connection",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "socket",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to retrieve peer name'",
+                "unicode": false,
+                "value": "Unable to retrieve peer name",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "client",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "address",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "peerport",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_getpeername",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "address",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "peerport",
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "client",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "socket_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "socket",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "socket_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "server",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "socket_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

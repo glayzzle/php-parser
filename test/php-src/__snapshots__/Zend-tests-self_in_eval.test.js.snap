@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests self etc. can be used in eval() in a class scope 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "FOO",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "1",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "2",
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Eval {
+                  "kind": "eval",
+                  "source": Nowdoc {
+                    "kind": "nowdoc",
+                    "label": "PHP",
+                    "raw": "<<<'PHP'
+var_dump(self::FOO);
+var_dump(self::$bar);
+var_dump(self::class);
+var_dump(static::class);
+PHP
+        ",
+                    "value": "var_dump(self::FOO);
+var_dump(self::$bar);
+var_dump(self::class);
+var_dump(static::class);",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "f",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "f",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "C",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

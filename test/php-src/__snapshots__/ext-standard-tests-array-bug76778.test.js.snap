@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #76778 (array_reduce leaks memory if callback throws exception) 1`] = `
+Program {
+  "children": Array [
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Array {
+                  "items": Array [
+                    Entry {
+                      "byRef": false,
+                      "key": null,
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    },
+                  ],
+                  "kind": "array",
+                  "shortForm": true,
+                },
+                Closure {
+                  "arguments": Array [
+                    Parameter {
+                      "attrGroups": Array [],
+                      "byref": false,
+                      "flags": 0,
+                      "kind": "parameter",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "carry",
+                      },
+                      "nullable": false,
+                      "readonly": false,
+                      "type": null,
+                      "value": null,
+                      "variadic": false,
+                    },
+                    Parameter {
+                      "attrGroups": Array [],
+                      "byref": false,
+                      "flags": 0,
+                      "kind": "parameter",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "item",
+                      },
+                      "nullable": false,
+                      "readonly": false,
+                      "type": null,
+                      "value": null,
+                      "variadic": false,
+                    },
+                  ],
+                  "attrGroups": Array [],
+                  "body": Block {
+                    "children": Array [
+                      Throw {
+                        "kind": "throw",
+                        "what": New {
+                          "arguments": Array [],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "Exception",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isStatic": false,
+                  "kind": "closure",
+                  "nullable": false,
+                  "type": null,
+                  "uses": Array [],
+                },
+                Call {
+                  "arguments": Array [
+                    Number {
+                      "kind": "number",
+                      "value": "1",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "3",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "range",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "array_reduce",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+===DONE===",
+      "value": "===DONE===",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

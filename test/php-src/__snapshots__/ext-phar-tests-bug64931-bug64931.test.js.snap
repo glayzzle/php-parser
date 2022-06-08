@@ -1,0 +1,696 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #64931 (phar_add_file is too restrictive on filename) 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test\\\\n\\"",
+          "unicode": false,
+          "value": "Test
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/bug64931.phar\\"",
+                "unicode": false,
+                "value": "/bug64931.phar",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phar",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/bug64931.phar\\"",
+                "unicode": false,
+                "value": "/bug64931.phar",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Phar",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"/src/.pharignore\\"",
+              "unicode": false,
+              "value": "/src/.pharignore",
+            },
+            "type": ".",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\".pharignore\\"",
+            "unicode": false,
+            "value": ".pharignore",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "addFile",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "phar",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": Magic {
+                    "kind": "magic",
+                    "raw": "__DIR__",
+                    "value": "__DIR__",
+                  },
+                  "right": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"/src/.pharignore\\"",
+                    "unicode": false,
+                    "value": "/src/.pharignore",
+                  },
+                  "type": ".",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\".phar/gotcha\\"",
+                  "unicode": false,
+                  "value": ".phar/gotcha",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "addFile",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phar",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"CAUGHT: \\"",
+                        "unicode": false,
+                        "value": "CAUGHT: ",
+                      },
+                      "right": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getMessage",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                        },
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\".phar\\"",
+                  "unicode": false,
+                  "value": ".phar",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"gotcha\\"",
+                  "unicode": false,
+                  "value": "gotcha",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "addFromString",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phar",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"CAUGHT: \\"",
+                        "unicode": false,
+                        "value": "CAUGHT: ",
+                      },
+                      "right": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getMessage",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                        },
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\".phar//\\"",
+                  "unicode": false,
+                  "value": ".phar//",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"gotcha\\"",
+                  "unicode": false,
+                  "value": "gotcha",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "addFromString",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phar",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"CAUGHT: \\"",
+                        "unicode": false,
+                        "value": "CAUGHT: ",
+                      },
+                      "right": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getMessage",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                        },
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\".phar\\\\\\\\\\"",
+                  "unicode": false,
+                  "value": ".phar\\\\",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"gotcha\\"",
+                  "unicode": false,
+                  "value": "gotcha",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "addFromString",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phar",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"CAUGHT: \\"",
+                        "unicode": false,
+                        "value": "CAUGHT: ",
+                      },
+                      "right": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getMessage",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                        },
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\".phar\\\\0\\"",
+                  "unicode": false,
+                  "value": ".phar ",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"gotcha\\"",
+                  "unicode": false,
+                  "value": "gotcha",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "addFromString",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phar",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"CAUGHT: \\"",
+                        "unicode": false,
+                        "value": "CAUGHT: ",
+                      },
+                      "right": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getMessage",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                        },
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "ValueError",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

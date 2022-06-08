@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests 022: Name search priority (first look into import, then into current namespace and then for class) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": Identifier {
+                "kind": "identifier",
+                "name": "test",
+              },
+              "kind": "useitem",
+              "name": "a\\\\b\\\\c",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": null,
+        },
+        ExpressionStatement {
+          "expression": Include {
+            "kind": "include",
+            "once": false,
+            "require": true,
+            "target": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"ns_022.inc\\"",
+              "unicode": false,
+              "value": "ns_022.inc",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        _Function {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Magic {
+                    "kind": "magic",
+                    "raw": "__FUNCTION__",
+                    "value": "__FUNCTION__",
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"\\\\n\\"",
+                    "unicode": false,
+                    "value": "
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "kind": "function",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "nullable": false,
+          "type": null,
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "test\\\\foo",
+              "resolution": "qn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "\\\\test",
+                "resolution": "fqn",
+              },
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "a\\\\b\\\\c",
+      "withBrackets": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

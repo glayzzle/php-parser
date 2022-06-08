@@ -1,0 +1,526 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PDO PgSQL Bug #75402 Possible Memory Leak using PDO::CURSOR_SCROLL option 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/../../../ext/pdo/tests/pdo_test.inc'",
+            "unicode": false,
+            "value": "/../../../ext/pdo/tests/pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/common.phpt'",
+                "unicode": false,
+                "value": "/common.phpt",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "test_factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "resp",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "\\\\stdClass",
+            "resolution": "fqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "entries",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "resp",
+          },
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'DROP TABLE IF EXISTS bug75402 CASCADE'",
+            "unicode": false,
+            "value": "DROP TABLE IF EXISTS bug75402 CASCADE",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'CREATE TABLE bug75402 (
+    \\"id\\" character varying(64) NOT NULL,
+    \\"group_id\\" character varying(64) NOT NULL,
+    \\"submitter\\" character varying(320) NOT NULL,
+    \\"operation\\" character varying(32) NOT NULL,
+    \\"description\\" character varying(320) NOT NULL,
+    \\"stage\\" character varying(16) NOT NULL,
+    \\"status\\" character varying(64) NOT NULL,
+    \\"progress\\" integer NOT NULL,
+    \\"insert_datetime\\" timestamp(3) NOT NULL,
+    \\"begin_datetime\\" timestamp(3),
+    \\"end_datetime\\" timestamp(3),
+    \\"life_hours\\" integer NOT NULL,
+    \\"family\\" character varying(32) NOT NULL,
+    \\"parallelism_group\\" character varying(32) NOT NULL,
+    \\"max_parallelism\\" integer NOT NULL,
+    \\"hidden\\" boolean NOT NULL,
+    \\"abort\\" boolean NOT NULL,
+    \\"order_folder_pathname\\" character varying(320),
+    \\"worker\\" character varying(32) NOT NULL,
+    CONSTRAINT \\"pk_bug75402\\" PRIMARY KEY (\\"id\\")
+) WITH (oids = false);'",
+            "unicode": false,
+            "value": "CREATE TABLE bug75402 (
+    \\"id\\" character varying(64) NOT NULL,
+    \\"group_id\\" character varying(64) NOT NULL,
+    \\"submitter\\" character varying(320) NOT NULL,
+    \\"operation\\" character varying(32) NOT NULL,
+    \\"description\\" character varying(320) NOT NULL,
+    \\"stage\\" character varying(16) NOT NULL,
+    \\"status\\" character varying(64) NOT NULL,
+    \\"progress\\" integer NOT NULL,
+    \\"insert_datetime\\" timestamp(3) NOT NULL,
+    \\"begin_datetime\\" timestamp(3),
+    \\"end_datetime\\" timestamp(3),
+    \\"life_hours\\" integer NOT NULL,
+    \\"family\\" character varying(32) NOT NULL,
+    \\"parallelism_group\\" character varying(32) NOT NULL,
+    \\"max_parallelism\\" integer NOT NULL,
+    \\"hidden\\" boolean NOT NULL,
+    \\"abort\\" boolean NOT NULL,
+    \\"order_folder_pathname\\" character varying(320),
+    \\"worker\\" character varying(32) NOT NULL,
+    CONSTRAINT \\"pk_bug75402\\" PRIMARY KEY (\\"id\\")
+) WITH (oids = false);",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"INSERT INTO bug75402 (\\\\\\"id\\\\\\", \\\\\\"group_id\\\\\\", \\\\\\"submitter\\\\\\", \\\\\\"operation\\\\\\", \\\\\\"description\\\\\\", \\\\\\"stage\\\\\\", \\\\\\"status\\\\\\", \\\\\\"progress\\\\\\", \\\\\\"insert_datetime\\\\\\", \\\\\\"begin_datetime\\\\\\", \\\\\\"end_datetime\\\\\\", \\\\\\"life_hours\\\\\\", \\\\\\"family\\\\\\", \\\\\\"parallelism_group\\\\\\", \\\\\\"max_parallelism\\\\\\", \\\\\\"hidden\\\\\\", \\\\\\"abort\\\\\\", \\\\\\"order_folder_pathname\\\\\\", \\\\\\"worker\\\\\\") VALUES
+('20171016083645_5337',	'G_20171016083645_5337',	'TESTPetunia',	'IMPORT',	'',	'DON',	'Completed',	100,	'2017-10-16 08:36:45',	'2017-10-16 08:36:46',	'2017-10-16 08:36:46',	96,	'IMPORT',	'',	-1,	'f',	'f',	'C:\\\\ProgramData\\\\TestPath\\\\TestApp\\\\Jobs\\\\Jobs\\\\\\\\20171016083645_5337',	'MainService')\\"",
+            "unicode": false,
+            "value": "INSERT INTO bug75402 (\\"id\\\\\\", \\\\\\"group_id\\\\\\", \\\\\\"submitter\\\\\\", \\\\\\"operation\\\\\\", \\\\\\"description\\\\\\", \\\\\\"stage\\\\\\", \\\\\\"status\\\\\\", \\\\\\"progress\\\\\\", \\\\\\"insert_datetime\\\\\\", \\\\\\"begin_datetime\\\\\\", \\\\\\"end_datetime\\\\\\", \\\\\\"life_hours\\\\\\", \\\\\\"family\\\\\\", \\\\\\"parallelism_group\\\\\\", \\\\\\"max_parallelism\\\\\\", \\\\\\"hidden\\\\\\", \\\\\\"abort\\\\\\", \\\\\\"order_folder_pathname\\\\\\", \\\\\\"worker\\\\\\") VALUES
+('20171016083645_5337',	'G_20171016083645_5337',	'TESTPetunia',	'IMPORT',	'',	'DON',	'Completed',	100,	'2017-10-16 08:36:45',	'2017-10-16 08:36:46',	'2017-10-16 08:36:46',	96,	'IMPORT',	'',	-1,	'f',	'f',	'C:\\\\ProgramData\\\\TestPath\\\\TestApp\\\\Jobs\\\\Jobs\\\\20171016083645_5337',	'MainService')",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sql",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"SELECT
+            ID as \\\\\\"sID\\\\\\",
+            GROUP_ID as \\\\\\"sGroupID\\\\\\",
+            SUBMITTER as \\\\\\"sOwner\\\\\\",
+            OPERATION as \\\\\\"sOperation\\\\\\",
+            DESCRIPTION as \\\\\\"sInfo\\\\\\",
+            STAGE as \\\\\\"sShortStatus\\\\\\",
+            STATUS as \\\\\\"sStatus\\\\\\",
+            PROGRESS as \\\\\\"sProgress\\\\\\",
+            HIDDEN as \\\\\\"bHidden\\\\\\",
+            to_char(INSERT_DATETIME, 'IYYY.MM.DD HH24:MI:SS')  as \\\\\\"sDatetime\\\\\\"
+          FROM bug75402
+          ORDER BY INSERT_DATETIME DESC\\"",
+          "unicode": false,
+          "value": "SELECT
+            ID as \\"sID\\\\\\",
+            GROUP_ID as \\\\\\"sGroupID\\\\\\",
+            SUBMITTER as \\\\\\"sOwner\\\\\\",
+            OPERATION as \\\\\\"sOperation\\\\\\",
+            DESCRIPTION as \\\\\\"sInfo\\\\\\",
+            STAGE as \\\\\\"sShortStatus\\\\\\",
+            STATUS as \\\\\\"sStatus\\\\\\",
+            PROGRESS as \\\\\\"sProgress\\\\\\",
+            HIDDEN as \\\\\\"bHidden\\\\\\",
+            to_char(INSERT_DATETIME, 'IYYY.MM.DD HH24:MI:SS')  as \\\\\\"sDatetime\\\\\\"
+          FROM bug75402
+          ORDER BY INSERT_DATETIME DESC",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "sql",
+                  },
+                  Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": StaticLookup {
+                          "kind": "staticlookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "ATTR_CURSOR",
+                          },
+                          "what": Name {
+                            "kind": "name",
+                            "name": "\\\\PDO",
+                            "resolution": "fqn",
+                          },
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": StaticLookup {
+                          "kind": "staticlookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "CURSOR_SCROLL",
+                          },
+                          "what": Name {
+                            "kind": "name",
+                            "name": "\\\\PDO",
+                            "resolution": "fqn",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": false,
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "prepare",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "execute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          While {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": false,
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "entries",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "resp",
+                        },
+                      },
+                    },
+                    "operator": "=",
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "entry",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "entry",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "fetchObject",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "stmt",
+                  },
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "closeCursor",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+              "operator": "=",
+              "right": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "null",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "db",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "resp",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,469 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #77812 (Interactive mode does not support PHP 7.3-style heredoc) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TEST_PHP_EXECUTABLE'",
+              "unicode": false,
+              "value": "TEST_PHP_EXECUTABLE",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ini",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TEST_PHP_EXTRA_ARGS'",
+              "unicode": false,
+              "value": "TEST_PHP_EXTRA_ARGS",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "descriptorspec",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'pipe'",
+                      "unicode": false,
+                      "value": "pipe",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'r'",
+                      "unicode": false,
+                      "value": "r",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Name {
+                "kind": "name",
+                "name": "STDOUT",
+                "resolution": "uqn",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Name {
+                "kind": "name",
+                "name": "STDERR",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Encapsed {
+              "kind": "encapsed",
+              "raw": "\\"$php $ini -a\\"",
+              "type": "string",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "php",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": " ",
+                    "unicode": false,
+                    "value": " ",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ini",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": " -a",
+                    "unicode": false,
+                    "value": " -a",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+              ],
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "descriptorspec",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "proc_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"echo <<<FOO\\\\n    bar\\\\n    FOO;\\\\n\\"",
+            "unicode": false,
+            "value": "echo <<<FOO
+    bar
+    FOO;
+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"print(<<<FOO\\\\nxx\\\\nFOO);\\\\n\\"",
+            "unicode": false,
+            "value": "print(<<<FOO
+xx
+FOO);
+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"echo <<<FOO\\\\n    xxx\\\\n    FOO;\\\\nFOO\\\\n;\\\\n\\"",
+            "unicode": false,
+            "value": "echo <<<FOO
+    xxx
+    FOO;
+FOO
+;
+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"echo <<<FOO\\\\nFOOL\\\\nFOO\\\\n,1;\\\\n\\"",
+            "unicode": false,
+            "value": "echo <<<FOO
+FOOL
+FOO
+,1;
+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"echo <<<FOO\\\\nFOO4\\\\nFOO\\\\n,2;\\\\n\\"",
+            "unicode": false,
+            "value": "echo <<<FOO
+FOO4
+FOO
+,2;
+",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pipes",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "proc_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

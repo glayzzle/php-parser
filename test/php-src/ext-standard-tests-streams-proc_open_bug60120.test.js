@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/streams/proc_open_bug60120.phpt
+  it("Bug #60120 proc_open hangs with stdin/out with >2048 bytes", function () {
+    expect(parser.parseCode("<?php\nerror_reporting(E_ALL);\n$file = preg_replace(\n    \"~\\.phpt?$~\", \".io.php\", __FILE__);\nfile_put_contents($file, <<<TMPFILE\n<?php\n\\$input = stream_get_contents(STDIN);\nif (\\$input) {\n    fwrite(STDOUT, \\$input);\n    fwrite(STDERR, \\$input);\n}\n?>\nTMPFILE\n);\n$command = sprintf(\"%s -n %s\", PHP_BINARY, $file);\n$process = proc_open(\n    $command,\n    [\n        ['pipe', 'r'],\n        ['pipe', 'w'],\n        ['pipe', 'w']\n    ],\n    $pipes,\n    getcwd(),\n    [],\n    [\n        'suppress_errors' => true,\n        'bypass_shell' => false\n    ]\n);\nif (!is_resource($process)) {\n    die(sprintf(\n        \"could not open process \\\"%s\\\"\",\n        $command));\n}\nfwrite($pipes[0], str_repeat('*', 10000));\nfclose($pipes[0]);\nstream_set_blocking($pipes[1], false);\nstream_set_blocking($pipes[2], false);\n$buffers = [\n    1 => \"\",\n    2 => \"\"\n];\ndo {\n    $r = [$pipes[1], $pipes[2]];\n    $w = [];\n    $e = [];\n    $s = stream_select($r, $w, $e, 60);\n    if (!$s) {\n        if ($s === false) {\n            proc_terminate($process);\n        }\n        break;\n    }\n    foreach ($r as $ready) {\n        $buffers[\n            array_search($ready, $pipes)\n        ] .= fread($ready, 8192);\n    }\n    if (strlen($buffers[1]) === 10000 &&\n        strlen($buffers[2]) === 10000) {\n        break;\n    }\n} while (1);\nvar_dump(\n    $buffers[1],\n    $buffers[2],\n    fread($pipes[1], 1),\n    fread($pipes[2], 1));\nfclose($pipes[1]);\nfclose($pipes[2]);\n?>")).toMatchSnapshot();
+  });
+});

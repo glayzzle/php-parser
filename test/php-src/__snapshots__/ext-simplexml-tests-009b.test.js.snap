@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SimpleXML: foreach 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sxe",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Encapsed {
+              "kind": "encapsed",
+              "label": "EOF",
+              "raw": "<<<EOF
+<?xml version='1.0'?>
+<!DOCTYPE sxe SYSTEM \\"notfound.dtd\\">
+<sxe id=\\"elem1\\">
+ Plain text.
+ <elem1 attr1='first'>Bla bla 1.<!-- comment --><elem2>
+   Here we have some text data.
+  </elem2></elem1>
+ <elem11 attr2='second'>Bla bla 2.</elem11>
+</sxe>
+EOF
+",
+              "type": "heredoc",
+              "value": Array [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "<?xml version='1.0'?>
+<!DOCTYPE sxe SYSTEM \\"notfound.dtd\\">
+<sxe id=\\"elem1\\">
+ Plain text.
+ <elem1 attr1='first'>Bla bla 1.<!-- comment --><elem2>
+   Here we have some text data.
+  </elem2></elem1>
+ <elem11 attr2='second'>Bla bla 2.</elem11>
+</sxe>
+",
+                    "unicode": false,
+                    "value": "<?xml version='1.0'?>
+<!DOCTYPE sxe SYSTEM \\"notfound.dtd\\">
+<sxe id=\\"elem1\\">
+ Plain text.
+ <elem1 attr1='first'>Bla bla 1.<!-- comment --><elem2>
+   Here we have some text data.
+  </elem2></elem1>
+ <elem11 attr2='second'>Bla bla 2.</elem11>
+</sxe>",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+              ],
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "children",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "sxe",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

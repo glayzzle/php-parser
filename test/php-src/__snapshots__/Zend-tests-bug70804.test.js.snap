@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70804 (Unary add on negative zero produces positive zero) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Unary {
+            "kind": "unary",
+            "type": "+",
+            "what": Unary {
+              "kind": "unary",
+              "parenthesizedExpression": true,
+              "type": "-",
+              "what": Number {
+                "kind": "number",
+                "value": "0.0",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Unary {
+            "kind": "unary",
+            "type": "+",
+            "what": Cast {
+              "expr": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"-0\\"",
+                "unicode": false,
+                "value": "-0",
+              },
+              "kind": "cast",
+              "raw": "(float)",
+              "type": "float",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": Unary {
+          "kind": "unary",
+          "type": "+",
+          "what": Unary {
+            "kind": "unary",
+            "parenthesizedExpression": true,
+            "type": "-",
+            "what": Call {
+              "arguments": Array [
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "sin",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "foo",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

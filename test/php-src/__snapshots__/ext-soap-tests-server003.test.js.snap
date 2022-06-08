@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SOAP Server 3: all functions 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "server",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            NullKeyword {
+              "kind": "nullkeyword",
+              "raw": "null",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'uri'",
+                    "unicode": false,
+                    "value": "uri",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"http://testuri.org\\"",
+                    "unicode": false,
+                    "value": "http://testuri.org",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "soapserver",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Name {
+            "kind": "name",
+            "name": "SOAP_FUNCTIONS_ALL",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "addfunction",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "server",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "HTTP_RAW_POST_DATA",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOF",
+          "raw": "<<<EOF
+<?xml version=\\"1.0\\" encoding=\\"ISO-8859-1\\"?>
+<SOAP-ENV:Envelope
+  SOAP-ENV:encodingStyle=\\"http://schemas.xmlsoap.org/soap/encoding/\\"
+  xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\"
+  xmlns:xsd=\\"http://www.w3.org/2001/XMLSchema\\"
+  xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\"
+  xmlns:si=\\"http://soapinterop.org/xsd\\">
+  <SOAP-ENV:Body>
+    <ns1:strlen xmlns:ns1=\\"http://testuri.org\\">
+      <x xsi:type=\\"xsd:string\\">Hello World</x>
+    </ns1:strlen>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+EOF",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"ISO-8859-1\\"?>
+<SOAP-ENV:Envelope
+  SOAP-ENV:encodingStyle=\\"http://schemas.xmlsoap.org/soap/encoding/\\"
+  xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\"
+  xmlns:xsd=\\"http://www.w3.org/2001/XMLSchema\\"
+  xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\"
+  xmlns:si=\\"http://soapinterop.org/xsd\\">
+  <SOAP-ENV:Body>
+    <ns1:strlen xmlns:ns1=\\"http://testuri.org\\">
+      <x xsi:type=\\"xsd:string\\">Hello World</x>
+    </ns1:strlen>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"ISO-8859-1\\"?>
+<SOAP-ENV:Envelope
+  SOAP-ENV:encodingStyle=\\"http://schemas.xmlsoap.org/soap/encoding/\\"
+  xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\"
+  xmlns:xsd=\\"http://www.w3.org/2001/XMLSchema\\"
+  xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\"
+  xmlns:si=\\"http://soapinterop.org/xsd\\">
+  <SOAP-ENV:Body>
+    <ns1:strlen xmlns:ns1=\\"http://testuri.org\\">
+      <x xsi:type=\\"xsd:string\\">Hello World</x>
+    </ns1:strlen>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "HTTP_RAW_POST_DATA",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "handle",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "server",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ok\\\\n\\"",
+          "unicode": false,
+          "value": "ok
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70573 (Cloning SplPriorityQueue leads to memory leaks) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "q1",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SplPriorityQueue",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "insert",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "q1",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+          Number {
+            "kind": "number",
+            "value": "2",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "insert",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "q1",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "q2",
+        },
+        "operator": "=",
+        "right": Clone {
+          "kind": "clone",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "q1",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ok\\\\n\\"",
+          "unicode": false,
+          "value": "ok
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

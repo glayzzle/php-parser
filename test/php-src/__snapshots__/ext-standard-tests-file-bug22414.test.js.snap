@@ -1,0 +1,513 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #22414 (passthru() does not read data correctly) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'TEST_PHP_EXECUTABLE'",
+              "unicode": false,
+              "value": "TEST_PHP_EXECUTABLE",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tmpfile",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'phpt'",
+              "unicode": false,
+              "value": "phpt",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "tempnam",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "args",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "' -n '",
+          "unicode": false,
+          "value": " -n ",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "php",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "args",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "' -r \\" echo \\\\\\"HELLO\\\\\\"; \\"'",
+              "unicode": false,
+              "value": " -r \\" echo \\\\\\"HELLO\\\\\\"; \\"",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "passthru",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cmd",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "php",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "args",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "' -r \\\\\\"readfile(@getenv(\\\\\\\\\\\\\\\\\\\\\\\\\\"TEST_PHP_EXECUTABLE\\\\\\\\\\\\\\\\\\\\\\\\\\")); \\\\\\"'",
+                  "unicode": false,
+                  "value": " -r \\\\\\"readfile(@getenv(\\\\\\\\\\\\\\"TEST_PHP_EXECUTABLE\\\\\\\\\\\\\\")); \\\\\\"",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cmd",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "php",
+                        },
+                        "right": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "args",
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' -r \\" passthru(\\\\''",
+                        "unicode": false,
+                        "value": " -r \\" passthru('",
+                      },
+                      "type": ".",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "cmd",
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'\\\\');\\" > '",
+                    "unicode": false,
+                    "value": "');\\" > ",
+                  },
+                  "type": ".",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmpfile",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cmd",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "php",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "args",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "' -r \\\\\\"readfile(@getenv(\\\\'\\\\\\\\\\\\'\\\\'TEST_PHP_EXECUTABLE\\\\'\\\\\\\\\\\\'\\\\')); \\\\\\"'",
+                  "unicode": false,
+                  "value": " -r \\\\\\"readfile(@getenv('\\\\''TEST_PHP_EXECUTABLE'\\\\'')); \\\\\\"",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "cmd",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "php",
+                        },
+                        "right": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "args",
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' -r \\\\' passthru(\\"'",
+                        "unicode": false,
+                        "value": " -r ' passthru(\\"",
+                      },
+                      "type": ".",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "cmd",
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'\\"); \\\\' > '",
+                    "unicode": false,
+                    "value": "\\"); ' > ",
+                  },
+                  "type": ".",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmpfile",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "PHP_OS",
+              "resolution": "uqn",
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+            Number {
+              "kind": "number",
+              "value": "3",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "substr",
+            "resolution": "uqn",
+          },
+        },
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'WIN'",
+          "unicode": false,
+          "value": "WIN",
+        },
+        "type": "!=",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cmd",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "exec",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Does not work\\\\n\\"",
+                "unicode": false,
+                "value": "Does not work
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Works\\\\n\\"",
+                "unicode": false,
+                "value": "Works
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "php",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "md5_file",
+            "resolution": "uqn",
+          },
+        },
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "tmpfile",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "md5_file",
+            "resolution": "uqn",
+          },
+        },
+        "type": "==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Silent {
+        "expr": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "tmpfile",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unlink",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "silent",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

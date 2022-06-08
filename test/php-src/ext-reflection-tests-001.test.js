@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/reflection/tests/001.phpt
+  it("Reflection inheritance", function () {
+    expect(parser.parseCode("<?php\nclass ReflectionClassEx extends ReflectionClass\n{\n    public $bla;\n    function getMethodNames()\n    {\n        $res = array();\n        foreach($this->getMethods() as $m)\n        {\n            $res[] = $m->class . '::' . $m->name;\n        }\n        return $res;\n    }\n}\n$r = new ReflectionClassEx('ReflectionClassEx');\n$exp = array (\n  'UMLClass::__clone',\n  'UMLClass::__construct',\n  'UMLClass::__toString',\n  'UMLClass::getName',\n  'UMLClass::isInternal',\n  'UMLClass::isUserDefined',\n  'UMLClass::isInstantiable',\n  'UMLClass::getFileName',\n  'UMLClass::getStartLine',\n  'UMLClass::getEndLine',\n  'UMLClass::getDocComment',\n  'UMLClass::getConstructor',\n  'UMLClass::getMethod',\n  'UMLClass::getMethods',\n  'UMLClass::getProperty',\n  'UMLClass::getProperties',\n  'UMLClass::getConstants',\n  'UMLClass::getConstant',\n  'UMLClass::getInterfaces',\n  'UMLClass::isInterface',\n  'UMLClass::isAbstract',\n  'UMLClass::isFinal',\n  'UMLClass::getModifiers',\n  'UMLClass::isInstance',\n  'UMLClass::newInstance',\n  'UMLClass::getParentClass',\n  'UMLClass::isSubclassOf',\n  'UMLClass::getStaticProperties',\n  'UMLClass::getDefaultProperties',\n  'UMLClass::isIterateable',\n  'UMLClass::implementsInterface',\n  'UMLClass::getExtension',\n  'UMLClass::getExtensionName');\n$miss = array();\n$res = $r->getMethodNames();\nforeach($exp as $m)\n{\n    if (!in_array($m, $exp))\n    {\n        $miss[] = $m;\n    }\n}\nvar_dump($miss);\n$props = array_keys(get_class_vars('ReflectionClassEx'));\nsort($props);\nvar_dump($props);\nvar_dump($r->name);\n?>")).toMatchSnapshot();
+  });
+});

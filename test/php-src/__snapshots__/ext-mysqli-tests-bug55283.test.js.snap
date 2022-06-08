@@ -1,0 +1,469 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #55283 (SSL options set by mysqli_ssl_set ignored for MySQLi persistent connections) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"connect.inc\\"",
+          "unicode": false,
+          "value": "connect.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db1",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "flags",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Name {
+            "kind": "name",
+            "name": "MYSQLI_CLIENT_SSL",
+            "resolution": "uqn",
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT",
+            "resolution": "uqn",
+          },
+          "type": "|",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "link",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_init",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"AES256-SHA\\"",
+            "unicode": false,
+            "value": "AES256-SHA",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_ssl_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"SHOW STATUS LIKE 'Ssl_cipher'\\"",
+                    "unicode": false,
+                    "value": "SHOW STATUS LIKE 'Ssl_cipher'",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "query",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "link",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "fetch_row",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r",
+                    },
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+          Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'p:'",
+              "unicode": false,
+              "value": "p:",
+            },
+            "right": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "host",
+            },
+            "type": ".",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "user",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "passwd",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "port",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "flags",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "my_mysqli_real_connect",
+          "resolution": "uqn",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "link2",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_init",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link2",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"AES256-SHA\\"",
+            "unicode": false,
+            "value": "AES256-SHA",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_ssl_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r2",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"SHOW STATUS LIKE 'Ssl_cipher'\\"",
+                    "unicode": false,
+                    "value": "SHOW STATUS LIKE 'Ssl_cipher'",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "query",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "link2",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "fetch_row",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r2",
+                    },
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link2",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "host",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "user",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "passwd",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "port",
+          },
+          NullKeyword {
+            "kind": "nullkeyword",
+            "raw": "null",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "flags",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "my_mysqli_real_connect",
+          "resolution": "uqn",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done\\\\n\\"",
+          "unicode": false,
+          "value": "done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

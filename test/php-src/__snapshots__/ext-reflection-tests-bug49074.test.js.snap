@@ -1,0 +1,322 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #49074 (private class static fields can be modified by using reflection) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "data1",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "1",
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "data4",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "4",
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Test",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "data2",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "2",
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "data3",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "3",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "Test",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Test2",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'Test2'",
+              "unicode": false,
+              "value": "Test2",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionClass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "m",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getStaticProperties",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "r",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'data1'",
+            "unicode": false,
+            "value": "data1",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "100",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'data2'",
+            "unicode": false,
+            "value": "data2",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "200",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'data3'",
+            "unicode": false,
+            "value": "data3",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "300",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'data4'",
+            "unicode": false,
+            "value": "data4",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "400",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getStaticProperties",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

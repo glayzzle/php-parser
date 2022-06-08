@@ -1,0 +1,330 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Semi reserved words support: member access 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tokens",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'<?php
+X::continue;
+X::$continue;
+$x->$continue;
+X::continue();
+$x->continue();
+X::class;
+$x->__halt_compiler();
+class X {
+    const CONTINUE = 1;
+    public $x = self::CONTINUE + 1;
+}
+'",
+              "unicode": false,
+              "value": "<?php
+X::continue;
+X::$continue;
+$x->$continue;
+X::continue();
+$x->continue();
+X::class;
+$x->__halt_compiler();
+class X {
+    const CONTINUE = 1;
+    public $x = self::CONTINUE + 1;
+}
+",
+            },
+            Name {
+              "kind": "name",
+              "name": "TOKEN_PARSE",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "token_get_all",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tokens",
+          },
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "tk",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": Echo {
+                    "expressions": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tk",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "PHP_EOL",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "echo",
+                    "shortForm": false,
+                  },
+                  "body": Block {
+                    "children": Array [
+                      If {
+                        "alternate": null,
+                        "body": Return {
+                          "expr": null,
+                          "kind": "return",
+                        },
+                        "kind": "if",
+                        "shortForm": false,
+                        "test": Bin {
+                          "kind": "bin",
+                          "left": Assign {
+                            "kind": "assign",
+                            "left": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "t",
+                            },
+                            "operator": "=",
+                            "parenthesizedExpression": true,
+                            "right": Call {
+                              "arguments": Array [
+                                OffsetLookup {
+                                  "kind": "offsetlookup",
+                                  "offset": Number {
+                                    "kind": "number",
+                                    "value": "0",
+                                  },
+                                  "what": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "tk",
+                                  },
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "token_name",
+                                "resolution": "uqn",
+                              },
+                            },
+                          },
+                          "right": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'T_WHITESPACE'",
+                            "unicode": false,
+                            "value": "T_WHITESPACE",
+                          },
+                          "type": "==",
+                        },
+                      },
+                      Echo {
+                        "expressions": Array [
+                          Bin {
+                            "kind": "bin",
+                            "left": Bin {
+                              "kind": "bin",
+                              "left": Encapsed {
+                                "kind": "encapsed",
+                                "raw": "\\"L{$tk[2]}: \\"",
+                                "type": "string",
+                                "value": Array [
+                                  EncapsedPart {
+                                    "curly": false,
+                                    "expression": String {
+                                      "isDoubleQuote": false,
+                                      "kind": "string",
+                                      "raw": "L",
+                                      "unicode": false,
+                                      "value": "L",
+                                    },
+                                    "kind": "encapsedpart",
+                                    "syntax": null,
+                                  },
+                                  EncapsedPart {
+                                    "curly": false,
+                                    "expression": OffsetLookup {
+                                      "kind": "offsetlookup",
+                                      "offset": Number {
+                                        "kind": "number",
+                                        "value": "2",
+                                      },
+                                      "what": Variable {
+                                        "curly": false,
+                                        "kind": "variable",
+                                        "name": "tk",
+                                      },
+                                    },
+                                    "kind": "encapsedpart",
+                                    "syntax": "complex",
+                                  },
+                                  EncapsedPart {
+                                    "curly": false,
+                                    "expression": String {
+                                      "isDoubleQuote": false,
+                                      "kind": "string",
+                                      "raw": ": ",
+                                      "unicode": false,
+                                      "value": ": ",
+                                    },
+                                    "kind": "encapsedpart",
+                                    "syntax": null,
+                                  },
+                                ],
+                              },
+                              "right": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "t",
+                              },
+                              "type": ".",
+                            },
+                            "right": Encapsed {
+                              "kind": "encapsed",
+                              "raw": "\\" {$tk[1]}\\"",
+                              "type": "string",
+                              "value": Array [
+                                EncapsedPart {
+                                  "curly": false,
+                                  "expression": String {
+                                    "isDoubleQuote": false,
+                                    "kind": "string",
+                                    "raw": " ",
+                                    "unicode": false,
+                                    "value": " ",
+                                  },
+                                  "kind": "encapsedpart",
+                                  "syntax": null,
+                                },
+                                EncapsedPart {
+                                  "curly": false,
+                                  "expression": OffsetLookup {
+                                    "kind": "offsetlookup",
+                                    "offset": Number {
+                                      "kind": "number",
+                                      "value": "1",
+                                    },
+                                    "what": Variable {
+                                      "curly": false,
+                                      "kind": "variable",
+                                      "name": "tk",
+                                    },
+                                  },
+                                  "kind": "encapsedpart",
+                                  "syntax": "complex",
+                                },
+                              ],
+                            },
+                            "type": ".",
+                          },
+                          Name {
+                            "kind": "name",
+                            "name": "PHP_EOL",
+                            "resolution": "uqn",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tk",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "is_array",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "array_walk",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\"",
+          "unicode": false,
+          "value": "Done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

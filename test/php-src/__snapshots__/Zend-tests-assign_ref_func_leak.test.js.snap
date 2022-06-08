@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Assigning the result of a non-reference function by-reference should not leak 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "func",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "x",
+        },
+        "operator": "=",
+        "right": AssignRef {
+          "kind": "assignref",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "y",
+          },
+          "right": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "func",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "x",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "y",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

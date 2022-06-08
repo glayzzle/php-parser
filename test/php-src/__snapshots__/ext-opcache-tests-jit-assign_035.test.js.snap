@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests JIT ASSIGN: Segfault & memleak if no RC info 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "closure",
+                  },
+                  "operator": "=",
+                  "right": Closure {
+                    "arguments": Array [],
+                    "attrGroups": Array [],
+                    "body": Block {
+                      "children": Array [
+                        Return {
+                          "expr": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"string\\"",
+                            "unicode": false,
+                            "value": "string",
+                          },
+                          "kind": "return",
+                        },
+                      ],
+                      "kind": "block",
+                    },
+                    "byref": false,
+                    "isStatic": false,
+                    "kind": "closure",
+                    "nullable": false,
+                    "type": null,
+                    "uses": Array [],
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "arr",
+                  },
+                  "operator": "=",
+                  "right": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'a'",
+                          "unicode": false,
+                          "value": "a",
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "closure",
+                          },
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'b'",
+                          "unicode": false,
+                          "value": "b",
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Array {
+                          "items": Array [
+                            Entry {
+                              "byRef": false,
+                              "key": Call {
+                                "arguments": Array [],
+                                "kind": "call",
+                                "what": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "closure",
+                                },
+                              },
+                              "kind": "entry",
+                              "unpack": false,
+                              "value": Array {
+                                "items": Array [],
+                                "kind": "array",
+                                "shortForm": true,
+                              },
+                            },
+                          ],
+                          "kind": "array",
+                          "shortForm": true,
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "x",
+                  },
+                  "operator": "=",
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "arr",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Unset {
+                "kind": "unset",
+                "variables": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'d'",
+                      "unicode": false,
+                      "value": "d",
+                    },
+                    "what": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "closure",
+                        },
+                      },
+                      "what": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'b'",
+                          "unicode": false,
+                          "value": "b",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "x",
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "x",
+                  },
+                  "operator": "=",
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "arr",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'a'",
+                      "unicode": false,
+                      "value": "a",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "x",
+                    },
+                  },
+                  "operator": "=",
+                  "right": Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "closure",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Return {
+                "expr": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"okey\\"",
+                  "unicode": false,
+                  "value": "okey",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "A",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "test",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

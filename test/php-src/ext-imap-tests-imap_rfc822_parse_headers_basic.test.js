@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/imap/tests/imap_rfc822_parse_headers_basic.phpt
+  it("imap_rfc822_parse_headers() function : basic functionality", function () {
+    expect(parser.parseCode("<?php\nrequire_once(__DIR__.'/setup/imap_include.inc');\n$stream_id = setup_test_mailbox('imaprfc822parseheadersbasic', 1);\n$z = imap_headerinfo($stream_id, 1);\n$fields = array ('toaddress','to','fromaddress','from',\n'reply_toaddress','reply_to',\n    'senderaddress', 'sender',\n'subject','Subject',\n    'MailDate','Size','udate');\necho \"Check general fields\\n\";\nforeach ($fields as $key) {\n    var_dump(isset($z->$key));\n}\necho \"Check type\\n\";\nvar_dump($z->toaddress);\nvar_dump($z->fromaddress);\nvar_dump($z->reply_toaddress);\nvar_dump($z->senderaddress);\nvar_dump($z->subject);\nvar_dump($z->Subject);\nif ($z->Recent == 'R' || $z->Recent == 'N' || $z->Recent == ' ') {\n    echo \"Recent: OK\";\n} else {\n    echo \"Recent: error\";\n}\necho \"\\n\";\nif ($z->Unseen == 'U' || $z->Unseen == ' ') {\n    echo \"Unseen: OK\";\n} else {\n    echo \"Unseen: error\";\n}\necho \"\\n\";\nif ($z->Flagged == 'F' || $z->Flagged == ' ') {\n    echo \"Flagged: OK\";\n} else {\n    echo \"Flagged: error\";\n}\necho \"\\n\";\nif ($z->Answered == 'A' || $z->Answered == ' ') {\n    echo \"Answered: OK\";\n} else {\n    echo \"Answered: error\";\n}\necho \"\\n\";\nif ($z->Deleted == 'D' || $z->Deleted == ' ') {\n    echo \"Deleted: OK\";\n} else {\n    echo \"Deleted: error\";\n}\necho \"\\n\";\nif ($z->Draft == 'X' || $z->Draft == ' ') {\n    echo \"Draft: OK\";\n} else {\n    echo \"Draft: error\";\n}\necho \"\\n\";\nvar_dump($z->Msgno);\nvar_dump($z->Size);\nvar_dump($z->udate);\nimap_close($stream_id);\n?>")).toMatchSnapshot();
+  });
+});

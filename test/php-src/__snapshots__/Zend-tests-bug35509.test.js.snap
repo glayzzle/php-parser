@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #35509 (string constant as array key has different behavior inside object) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "classConstant",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'01'",
+                "unicode": false,
+                "value": "01",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "classArray",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "classConstant",
+                      },
+                      "what": Name {
+                        "kind": "name",
+                        "name": "mytest",
+                        "resolution": "uqn",
+                      },
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'value'",
+                      "unicode": false,
+                      "value": "value",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "classArray",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "print_r",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "mytest",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "classtest",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "mytest",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"normalConstant\\"",
+            "unicode": false,
+            "value": "normalConstant",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'01'",
+            "unicode": false,
+            "value": "01",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "define",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "normalArray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": Name {
+                "kind": "name",
+                "name": "normalConstant",
+                "resolution": "uqn",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'value'",
+                "unicode": false,
+                "value": "value",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "normalArray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

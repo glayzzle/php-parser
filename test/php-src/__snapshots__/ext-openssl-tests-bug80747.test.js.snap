@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #80747: Providing RSA key size < 512 generates key that crash PHP 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "conf",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'config'",
+                "unicode": false,
+                "value": "config",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Magic {
+                    "kind": "magic",
+                    "raw": "__DIR__",
+                    "value": "__DIR__",
+                  },
+                  "right": Name {
+                    "kind": "name",
+                    "name": "DIRECTORY_SEPARATOR",
+                    "resolution": "uqn",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'openssl.cnf'",
+                  "unicode": false,
+                  "value": "openssl.cnf",
+                },
+                "type": ".",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'private_key_bits'",
+                "unicode": false,
+                "value": "private_key_bits",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "511",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "conf",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "openssl_pkey_new",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "openssl_error_string",
+                "resolution": "uqn",
+              },
+            },
+            "right": Boolean {
+              "kind": "boolean",
+              "raw": "false",
+              "value": false,
+            },
+            "type": "!==",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

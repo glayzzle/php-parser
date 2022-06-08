@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/soap/tests/bugs/bug50675.phpt
+  it("Bug #50675 SoapClient can't handle object references correctly.", function () {
+    expect(parser.parseCode("<?php\nclass TestSoapClient extends SoapClient {\n  function __doRequest($request, $location, $action, $version, $one_way = 0): ?string {\n    return <<<EOF\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soapenv:Envelope\nxmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\nxmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\nxmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <soapenv:Body>\n        <soapenv:Fault>\n            <faultcode>soapenv:Server.userException</faultcode>\n            <faultstring>service.EchoServiceException</faultstring>\n            <detail>\n                <service.EchoServiceException xsi:type=\"ns1:EchoServiceException\" xmlns:ns1=\"urn:service.EchoService\">\n                    <intParameter xsi:type=\"xsd:int\">105</intParameter>\n                    <parameter xsi:type=\"soapenc:string\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">string param</parameter>\n                </service.EchoServiceException>\n                <ns2:hostname xmlns:ns2=\"http://xml.apache.org/axis/\">steckovic</ns2:hostname>\n            </detail>\n        </soapenv:Fault>\n    </soapenv:Body>\n</soapenv:Envelope>\nEOF;\n    }\n}\nini_set('soap.wsdl_cache_enabled', 0);\n$parameters = [\n    'trace' => 1,\n    'exceptions' => 0,\n];\n$client = new TestSoapClient(__DIR__ . '/bug50675.wsdl', $parameters);\n$person = new stdClass();\n$person->name = 'name';\n$result = $client->echoPerson($person, $person);\nprint($client->__getLastRequest());\n?>")).toMatchSnapshot();
+  });
+});

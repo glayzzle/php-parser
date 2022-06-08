@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #77843: Use after free with json serializer 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "prop",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"value\\"",
+                "unicode": false,
+                "value": "value",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Global {
+                "items": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "arr",
+                  },
+                ],
+                "kind": "global",
+              },
+              Unset {
+                "kind": "unset",
+                "variables": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "arr",
+                    },
+                  },
+                ],
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Return {
+                "expr": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "this",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "jsonSerialize",
+          },
+          "nullable": false,
+          "type": Name {
+            "kind": "name",
+            "name": "mixed",
+            "resolution": "uqn",
+          },
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": Array [
+        Name {
+          "kind": "name",
+          "name": "JsonSerializable",
+          "resolution": "uqn",
+        },
+      ],
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "X",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "arr",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "X",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Array {
+                "items": Array [
+                  Entry {
+                    "byRef": true,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "arr",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "json_encode",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

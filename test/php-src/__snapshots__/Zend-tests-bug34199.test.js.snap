@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #34199 (if($obj)/if(!$obj) inconsistency because of cast handler) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"<root></root>\\"",
+          "unicode": false,
+          "value": "<root></root>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "xml",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "kids",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "children",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "xml",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Cast {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "kids",
+            },
+            "kind": "cast",
+            "raw": "(bool)",
+            "type": "bool",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "kids",
+      },
+    },
+    If {
+      "alternate": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"bug\\\\n\\"",
+            "unicode": false,
+            "value": "bug
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"ok\\\\n\\"",
+            "unicode": false,
+            "value": "ok
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "kids",
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/openssl/tests/capture_peer_cert_001.phpt
+  it("capture_peer_cert context captures on verify failure", function () {
+    expect(parser.parseCode("<?php\n$certFile = __DIR__ . DIRECTORY_SEPARATOR . 'capture_peer_cert_001.pem.tmp';\n$cacertFile = __DIR__ . DIRECTORY_SEPARATOR . 'capture_peer_cert_001-ca.pem.tmp';\n$serverCode = <<<'CODE'\n    $serverUri = \"ssl://127.0.0.1:64321\";\n    $serverFlags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN;\n    $serverCtx = stream_context_create(['ssl' => [\n        'local_cert' => '%s'\n    ]]);\n    $server = stream_socket_server($serverUri, $errno, $errstr, $serverFlags, $serverCtx);\n    phpt_notify();\n    @stream_socket_accept($server, 1);\nCODE;\n$serverCode = sprintf($serverCode, $certFile);\n$peerName = 'capture_peer_cert_001';\n$clientCode = <<<'CODE'\n    $serverUri = \"ssl://127.0.0.1:64321\";\n    $clientFlags = STREAM_CLIENT_CONNECT;\n    $clientCtx = stream_context_create(['ssl' => [\n        'capture_peer_cert' => true,\n        'cafile' => '%s'\n    ]]);\n    phpt_wait();\n    $client = @stream_socket_client($serverUri, $errno, $errstr, 1, $clientFlags, $clientCtx);\n    $cert = stream_context_get_options($clientCtx)['ssl']['peer_certificate'];\n    var_dump(openssl_x509_parse($cert)['subject']['CN']);\nCODE;\n$clientCode = sprintf($clientCode, $cacertFile);\ninclude 'CertificateGenerator.inc';\n$certificateGenerator = new CertificateGenerator();\n$certificateGenerator->saveCaCert($cacertFile);\n$certificateGenerator->saveNewCertAsFileWithKey($peerName, $certFile);\ninclude 'ServerClientTestCase.inc';\nServerClientTestCase::getInstance()->run($clientCode, $serverCode);\n?>")).toMatchSnapshot();
+  });
+});

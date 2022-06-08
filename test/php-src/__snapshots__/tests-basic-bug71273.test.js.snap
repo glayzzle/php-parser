@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71273 A wrong ext directory setup in php.ini leads to crash 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cmd",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'TEST_PHP_EXECUTABLE'",
+                "unicode": false,
+                "value": "TEST_PHP_EXECUTABLE",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "getenv",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\" -n -d html_errors=on -d extension_dir=a/�/w -d extension=php_kartoffelbrei.dll -v 2>&1\\"",
+            "unicode": false,
+            "value": " -n -d html_errors=on -d extension_dir=a/�/w -d extension=php_kartoffelbrei.dll -v 2>&1",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "out",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "cmd",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "shell_exec",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\",.+a[\\\\\\\\/].+[\\\\\\\\/]w.php_kartoffelbrei.dll.+,s\\"",
+                "unicode": false,
+                "value": ",.+a[\\\\/].+[\\\\/]w.php_kartoffelbrei.dll.+,s",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "out",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_match",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,372 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71202 (Autoload function registered by another not activated immediately) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "name",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": Block {
+              "children": Array [
+                Class {
+                  "attrGroups": Array [],
+                  "body": Array [
+                    Method {
+                      "arguments": Array [],
+                      "attrGroups": Array [],
+                      "body": Block {
+                        "children": Array [
+                          ExpressionStatement {
+                            "expression": Exit {
+                              "expression": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"error\\"",
+                                "unicode": false,
+                                "value": "error",
+                              },
+                              "kind": "exit",
+                              "useDie": true,
+                            },
+                            "kind": "expressionstatement",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "byref": false,
+                      "isAbstract": false,
+                      "isFinal": false,
+                      "isStatic": false,
+                      "kind": "method",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "__construct",
+                      },
+                      "nullable": false,
+                      "type": null,
+                      "visibility": "",
+                    },
+                  ],
+                  "extends": null,
+                  "implements": null,
+                  "isAbstract": false,
+                  "isAnonymous": false,
+                  "isFinal": false,
+                  "kind": "class",
+                  "name": Identifier {
+                    "kind": "identifier",
+                    "name": "B",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Class {
+                  "attrGroups": Array [],
+                  "body": Array [
+                    Method {
+                      "arguments": Array [],
+                      "attrGroups": Array [],
+                      "body": Block {
+                        "children": Array [
+                          Echo {
+                            "expressions": Array [
+                              String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"okey, \\"",
+                                "unicode": false,
+                                "value": "okey, ",
+                              },
+                            ],
+                            "kind": "echo",
+                            "shortForm": false,
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "byref": false,
+                      "isAbstract": false,
+                      "isFinal": false,
+                      "isStatic": false,
+                      "kind": "method",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "__construct",
+                      },
+                      "nullable": false,
+                      "type": null,
+                      "visibility": "",
+                    },
+                  ],
+                  "extends": null,
+                  "implements": null,
+                  "isAbstract": false,
+                  "isAnonymous": false,
+                  "isFinal": false,
+                  "kind": "class",
+                  "name": Identifier {
+                    "kind": "identifier",
+                    "name": "A",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "name",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'A'",
+                "unicode": false,
+                "value": "A",
+              },
+              "type": "==",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "inner_autoload",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "name",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"inner_autoload\\"",
+                              "unicode": false,
+                              "value": "inner_autoload",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "spl_autoload_unregister",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"inner_autoload\\"",
+                              "unicode": false,
+                              "value": "inner_autoload",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "spl_autoload_register",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "name",
+                    },
+                    "right": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'A'",
+                      "unicode": false,
+                      "value": "A",
+                    },
+                    "type": "==",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "c",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "A",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "B",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"done\\"",
+                    "unicode": false,
+                    "value": "done",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Error",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

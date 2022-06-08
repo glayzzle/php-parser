@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests FFI 200: PHP callbacks 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'utils.inc'",
+          "unicode": false,
+          "value": "utils.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "zend",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"
+    typedef size_t (*zend_write_func_t)(const char *str, size_t str_length);
+    extern zend_write_func_t zend_write;
+\\"",
+              "unicode": false,
+              "value": "
+    typedef size_t (*zend_write_func_t)(const char *str, size_t str_length);
+    extern zend_write_func_t zend_write;
+",
+            },
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ffi_get_php_dll_name",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "cdef",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "FFI",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Hello World!\\\\n\\"",
+          "unicode": false,
+          "value": "Hello World!
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "orig_zend_write",
+        },
+        "operator": "=",
+        "right": Clone {
+          "kind": "clone",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "zend_write",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "zend",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "zend_write",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "zend",
+          },
+        },
+        "operator": "=",
+        "right": Closure {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "str",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "len",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Global {
+                "items": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "orig_zend_write",
+                  },
+                ],
+                "kind": "global",
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"{\\\\n\\\\t\\"",
+                      "unicode": false,
+                      "value": "{
+	",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "3",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "orig_zend_write",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ret",
+                  },
+                  "operator": "=",
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "str",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "len",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "orig_zend_write",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"}\\\\n\\"",
+                      "unicode": false,
+                      "value": "}
+",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "orig_zend_write",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Return {
+                "expr": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ret",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isStatic": false,
+          "kind": "closure",
+          "nullable": false,
+          "type": null,
+          "uses": Array [],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Hello World!\\\\n\\"",
+          "unicode": false,
+          "value": "Hello World!
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "zend_write",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "zend",
+          },
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "orig_zend_write",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Hello World!\\\\n\\"",
+          "unicode": false,
+          "value": "Hello World!
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

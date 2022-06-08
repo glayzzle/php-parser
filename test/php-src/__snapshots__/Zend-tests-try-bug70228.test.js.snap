@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70228 (memleak if return in finally block) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": Block {
+              "children": Array [
+                Return {
+                  "expr": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"b\\"",
+                        "unicode": false,
+                        "value": "b",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "2",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "str_repeat",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"a\\"",
+                        "unicode": false,
+                        "value": "a",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "2",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "str_repeat",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "foo",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

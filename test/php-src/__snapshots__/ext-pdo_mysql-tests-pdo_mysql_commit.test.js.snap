@@ -1,0 +1,1549 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests MySQL PDO->commit() 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "DIRECTORY_SEPARATOR",
+              "resolution": "uqn",
+            },
+            "type": ".",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'mysql_pdo_test.inc'",
+            "unicode": false,
+            "value": "mysql_pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "MySQLPDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+            ],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "detect_transactional_mysql_engine",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "MySQLPDOTest",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "createTestTable",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "MySQLPDOTest",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"[001] Expecting true, got %s/%s\\\\n\\"",
+                        "unicode": false,
+                        "value": "[001] Expecting true, got %s/%s
+",
+                      },
+                      Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "tmp",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "gettype",
+                          "resolution": "uqn",
+                        },
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tmp",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "printf",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmp",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "beginTransaction",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+              },
+              "type": "!==",
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'DROP TABLE IF EXISTS test_commit'",
+                      "unicode": false,
+                      "value": "DROP TABLE IF EXISTS test_commit",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "sprintf",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'CREATE TABLE test_commit(id INT) ENGINE=%s'",
+                      "unicode": false,
+                      "value": "CREATE TABLE test_commit(id INT) ENGINE=%s",
+                    },
+                    Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "db",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": StaticLookup {
+                        "kind": "staticlookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "detect_transactional_mysql_engine",
+                        },
+                        "what": Name {
+                          "kind": "name",
+                          "name": "MySQLPDOTest",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "sprintf",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "commit",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "db",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "failed",
+                    },
+                    "operator": "=",
+                    "right": Boolean {
+                      "kind": "boolean",
+                      "raw": "false",
+                      "value": false,
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "failed",
+                        },
+                        "operator": "=",
+                        "right": Boolean {
+                          "kind": "boolean",
+                          "raw": "true",
+                          "value": true,
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "e",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "PDOException",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"[002] Commit should have failed\\\\n\\"",
+                        "unicode": false,
+                        "value": "[002] Commit should have failed
+",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "printf",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "failed",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"[003] According to the manual we should be back to autocommit mode, got %s/%s\\\\n\\"",
+                    "unicode": false,
+                    "value": "[003] According to the manual we should be back to autocommit mode, got %s/%s
+",
+                  },
+                  Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tmp",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "gettype",
+                      "resolution": "uqn",
+                    },
+                  },
+                  Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tmp",
+                      },
+                      Boolean {
+                        "kind": "boolean",
+                        "raw": "true",
+                        "value": true,
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_export",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "printf",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmp",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [
+                    StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "ATTR_AUTOCOMMIT",
+                      },
+                      "what": Name {
+                        "kind": "name",
+                        "name": "PDO",
+                        "resolution": "uqn",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "getAttribute",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+              },
+              "type": "!==",
+            },
+          },
+          If {
+            "alternate": null,
+            "body": ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"[004] Expecting true, got %s/%s\\\\n\\"",
+                    "unicode": false,
+                    "value": "[004] Expecting true, got %s/%s
+",
+                  },
+                  Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tmp",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "gettype",
+                      "resolution": "uqn",
+                    },
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "tmp",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "printf",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmp",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "beginTransaction",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+              },
+              "type": "!==",
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"INSERT INTO test(id, label) VALUES (100, 'z')\\"",
+                  "unicode": false,
+                  "value": "INSERT INTO test(id, label) VALUES (100, 'z')",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"[005] No commit allowed? [%s] %s\\\\n\\"",
+                    "unicode": false,
+                    "value": "[005] No commit allowed? [%s] %s
+",
+                  },
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "errorCode",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "db",
+                      },
+                    },
+                  },
+                  Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' '",
+                        "unicode": false,
+                        "value": " ",
+                      },
+                      Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "errorInfo",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "db",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "implode",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "printf",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmp",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "commit",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+              },
+              "type": "!==",
+            },
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'SELECT id, label FROM test WHERE id = 100'",
+                    "unicode": false,
+                    "value": "SELECT id, label FROM test WHERE id = 100",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "query",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "rows",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "FETCH_ASSOC",
+                    },
+                    "what": Name {
+                      "kind": "name",
+                      "name": "PDO",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "fetchAll",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "stmt",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"[006] Record data is strange, dumping rows\\\\n\\"",
+                        "unicode": false,
+                        "value": "[006] Record data is strange, dumping rows
+",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "printf",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "rows",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Unary {
+                "kind": "unary",
+                "type": "!",
+                "what": Isset {
+                  "kind": "isset",
+                  "variables": Array [
+                    OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'label'",
+                        "unicode": false,
+                        "value": "label",
+                      },
+                      "what": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": Number {
+                          "kind": "number",
+                          "value": "0",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "rows",
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              "right": Bin {
+                "kind": "bin",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'label'",
+                    "unicode": false,
+                    "value": "label",
+                  },
+                  "what": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "rows",
+                    },
+                  },
+                },
+                "parenthesizedExpression": true,
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'z'",
+                  "unicode": false,
+                  "value": "z",
+                },
+                "type": "!=",
+              },
+              "type": "||",
+            },
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "factory",
+                  },
+                  "what": Name {
+                    "kind": "name",
+                    "name": "MySQLPDOTest",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'MyISAM'",
+                  "unicode": false,
+                  "value": "MyISAM",
+                },
+              ],
+              "kind": "call",
+              "what": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "createTestTable",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "MySQLPDOTest",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"[007] Expecting true, got %s/%s\\\\n\\"",
+                    "unicode": false,
+                    "value": "[007] Expecting true, got %s/%s
+",
+                  },
+                  Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tmp",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "gettype",
+                      "resolution": "uqn",
+                    },
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "tmp",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "printf",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmp",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "beginTransaction",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+              },
+              "type": "!==",
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"INSERT INTO test(id, label) VALUES (100, 'z')\\"",
+                  "unicode": false,
+                  "value": "INSERT INTO test(id, label) VALUES (100, 'z')",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"[008] No commit allowed? [%s] %s\\\\n\\"",
+                    "unicode": false,
+                    "value": "[008] No commit allowed? [%s] %s
+",
+                  },
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "errorCode",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "db",
+                      },
+                    },
+                  },
+                  Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' '",
+                        "unicode": false,
+                        "value": " ",
+                      },
+                      Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "errorInfo",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "db",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "implode",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "printf",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tmp",
+                },
+                "operator": "=",
+                "parenthesizedExpression": true,
+                "right": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "commit",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+              },
+              "type": "!==",
+            },
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'SELECT id, label FROM test WHERE id = 100'",
+                    "unicode": false,
+                    "value": "SELECT id, label FROM test WHERE id = 100",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "query",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "rows",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "FETCH_ASSOC",
+                    },
+                    "what": Name {
+                      "kind": "name",
+                      "name": "PDO",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "fetchAll",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "stmt",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"[009] Record data is strange, dumping rows\\\\n\\"",
+                        "unicode": false,
+                        "value": "[009] Record data is strange, dumping rows
+",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "printf",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "rows",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Unary {
+                "kind": "unary",
+                "type": "!",
+                "what": Isset {
+                  "kind": "isset",
+                  "variables": Array [
+                    OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'label'",
+                        "unicode": false,
+                        "value": "label",
+                      },
+                      "what": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": Number {
+                          "kind": "number",
+                          "value": "0",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "rows",
+                        },
+                      },
+                    },
+                  ],
+                },
+              },
+              "right": Bin {
+                "kind": "bin",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'label'",
+                    "unicode": false,
+                    "value": "label",
+                  },
+                  "what": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "rows",
+                    },
+                  },
+                },
+                "parenthesizedExpression": true,
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'z'",
+                  "unicode": false,
+                  "value": "z",
+                },
+                "type": "!=",
+              },
+              "type": "||",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"[002] %s, [%s] %s\\\\n\\"",
+                      "unicode": false,
+                      "value": "[002] %s, [%s] %s
+",
+                    },
+                    Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "e",
+                        },
+                      },
+                    },
+                    Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "errorCode",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "db",
+                        },
+                      },
+                    },
+                    Call {
+                      "arguments": Array [
+                        String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "' '",
+                          "unicode": false,
+                          "value": " ",
+                        },
+                        Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "errorInfo",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "db",
+                            },
+                          },
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "implode",
+                        "resolution": "uqn",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "printf",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "PDOException",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done!\\"",
+          "unicode": false,
+          "value": "done!",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

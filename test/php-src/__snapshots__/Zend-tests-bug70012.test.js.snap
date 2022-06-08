@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70012 (Exception lost with nested finally block) 1`] = `
+Program {
+  "children": Array [
+    Try {
+      "always": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Outer finally\\\\n\\"",
+                "unicode": false,
+                "value": "Outer finally
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Outer try\\\\n\\"",
+                "unicode": false,
+                "value": "Outer try
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Try {
+            "always": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"  Middle finally\\\\n\\"",
+                      "unicode": false,
+                      "value": "  Middle finally
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Try {
+                  "always": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"    Inner finally\\\\n\\"",
+                            "unicode": false,
+                            "value": "    Inner finally
+",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "body": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"    Inner try\\\\n\\"",
+                            "unicode": false,
+                            "value": "    Inner try
+",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "catches": Array [],
+                  "kind": "try",
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"  Middle try\\\\n\\"",
+                      "unicode": false,
+                      "value": "  Middle try
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Outer shouldn't get here\\\\n\\"",
+                "unicode": false,
+                "value": "Outer shouldn't get here
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Outer catch\\\\n\\"",
+                    "unicode": false,
+                    "value": "Outer catch
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

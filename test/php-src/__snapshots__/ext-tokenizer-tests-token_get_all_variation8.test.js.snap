@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test token_get_all() function : usage variations - with type casting operators 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"*** Testing token_get_all() : 'source' string with different type casting operators ***\\\\n\\"",
+          "unicode": false,
+          "value": "*** Testing token_get_all() : 'source' string with different type casting operators ***
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "source",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?php
+$a = 1, $b = 10.5
+$c = (int)$b + $a;
+$d = (float)$a + $b;
+$e = (string)$a.(string)$b;
+if((bool)$a) echo \\"true\\";
+if(!(boolean)$b) echo \\"false\\";
+$c = $c + (integer) 123.4e2;
+$d = $c - (real) 12;
+$b = (unset)$a;
+?>'",
+          "unicode": false,
+          "value": "<?php
+$a = 1, $b = 10.5
+$c = (int)$b + $a;
+$d = (float)$a + $b;
+$e = (string)$a.(string)$b;
+if((bool)$a) echo \\"true\\";
+if(!(boolean)$b) echo \\"false\\";
+$c = $c + (integer) 123.4e2;
+$d = $c - (real) 12;
+$b = (unset)$a;
+?>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "source",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "token_get_all",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\"",
+          "unicode": false,
+          "value": "Done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

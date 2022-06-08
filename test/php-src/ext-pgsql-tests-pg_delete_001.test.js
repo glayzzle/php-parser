@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pgsql/tests/pg_delete_001.phpt
+  it("PostgreSQL pg_delete() - basic test using schema", function () {
+    expect(parser.parseCode("<?php\ninclude('config.inc');\n$conn = pg_connect($conn_str);\npg_query($conn, 'CREATE SCHEMA phptests');\npg_query($conn, 'CREATE TABLE foo (id INT, id2 INT)');\npg_query($conn, 'CREATE TABLE phptests.foo (id INT, id2 INT)');\npg_insert($conn, 'foo', array('id' => 1, 'id2' => 1));\npg_insert($conn, 'foo', array('id' => 1, 'id2' => 2));\npg_insert($conn, 'foo', array('id' => 1, 'id2' => 2));\npg_insert($conn, 'foo', array('id' => 3, 'id2' => 3));\npg_insert($conn, 'phptests.foo', array('id' => 1, 'id2' => 1));\npg_insert($conn, 'phptests.foo', array('id' => 1, 'id2' => 2));\npg_insert($conn, 'phptests.foo', array('id' => 2, 'id2' => 3));\npg_insert($conn, 'phptests.foo', array('id' => 2, 'id2' => 3));\npg_delete($conn, 'foo', array('id' => 1, 'id2' => 0));\npg_delete($conn, 'foo', array('id' => 1, 'id2' => 2));\nvar_dump(pg_delete($conn, 'foo', array('id' => 1, 'id2' => 2), PGSQL_DML_STRING));\npg_delete($conn, 'phptests.foo', array('id' => 2, 'id2' => 1));\npg_delete($conn, 'phptests.foo', array('id' => 2, 'id2' => 3));\nvar_dump(pg_delete($conn, 'phptests.foo', array('id' => 2, 'id2' => 3), PGSQL_DML_STRING));\nvar_dump(pg_fetch_all(pg_query($conn, 'SELECT * FROM foo')));\nvar_dump(pg_fetch_all(pg_query($conn, 'SELECT * FROM phptests.foo')));\n/* Inexistent */\npg_delete($conn, 'bar', array('id' => 1, 'id2' => 2));\nvar_dump(pg_delete($conn, 'bar', array('id' => 1, 'id2' => 2), PGSQL_DML_STRING));\npg_query($conn, 'DROP TABLE foo');\npg_query($conn, 'DROP TABLE phptests.foo');\npg_query($conn, 'DROP SCHEMA phptests');\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81225: Wrong result with pow operator with JIT enabled 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "offset",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "int",
+            "raw": "int",
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "normalizedOffset",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "offset",
+                },
+                "right": Bin {
+                  "kind": "bin",
+                  "left": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "parenthesizedExpression": true,
+                  "right": Number {
+                    "kind": "number",
+                    "value": "32",
+                  },
+                  "type": "**",
+                },
+                "type": "%",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "normalizedOffset",
+                    },
+                    "operator": "+=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Number {
+                        "kind": "number",
+                        "value": "2",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "32",
+                      },
+                      "type": "**",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "normalizedOffset",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "type": "<",
+            },
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "normalizedOffset",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "unsignedLong",
+      },
+      "nullable": false,
+      "type": TypeReference {
+        "kind": "typereference",
+        "name": "int",
+        "raw": "int",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "offset",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Unary {
+            "kind": "unary",
+            "type": "-",
+            "what": Number {
+              "kind": "number",
+              "value": "0x100000000",
+            },
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "2",
+          },
+          "type": "+",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "offset",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "unsignedLong",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "type": "===",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "assert",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Pre {
+          "kind": "pre",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "200",
+          },
+          "type": "<",
+        },
+      ],
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+OK",
+      "value": "OK",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

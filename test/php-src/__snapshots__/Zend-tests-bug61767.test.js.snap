@@ -1,0 +1,272 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #61767 (Shutdown functions not called in certain error situation) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "code",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "msg",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "file",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": NullKeyword {
+                  "kind": "nullkeyword",
+                  "raw": "null",
+                },
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "line",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": NullKeyword {
+                  "kind": "nullkeyword",
+                  "raw": "null",
+                },
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"Error handler called ($msg)\\\\n\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "Error handler called (",
+                            "unicode": false,
+                            "value": "Error handler called (",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "msg",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": ")\\\\n",
+                            "unicode": false,
+                            "value": ")",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                      ],
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "msg",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "code",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "file",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "line",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "\\\\ErrorException",
+                      "resolution": "fqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "set_error_handler",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Shutting down\\\\n\\"",
+                      "unicode": false,
+                      "value": "Shutting down
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "error_get_last",
+                          "resolution": "uqn",
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "print_r",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "register_shutdown_function",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "undefined",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

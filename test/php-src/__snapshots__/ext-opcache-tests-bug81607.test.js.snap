@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81607: CE_CACHE allocation with concurrent access 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pid",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pcntl_fork",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": If {
+        "alternate": Block {
+          "children": Array [
+            Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"pcntl_fork() failed\\\\n\\"",
+                  "unicode": false,
+                  "value": "pcntl_fork() failed
+",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+          ],
+          "kind": "block",
+        },
+        "body": Block {
+          "children": Array [
+            ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "status",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pcntl_wait",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+            ExpressionStatement {
+              "expression": Call {
+                "arguments": Array [
+                  New {
+                    "arguments": Array [],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "FooBar",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "var_dump",
+                  "resolution": "uqn",
+                },
+              },
+              "kind": "expressionstatement",
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "pid",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "type": ">",
+        },
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Include {
+              "kind": "include",
+              "once": false,
+              "require": true,
+              "target": Bin {
+                "kind": "bin",
+                "left": Magic {
+                  "kind": "magic",
+                  "raw": "__DIR__",
+                  "value": "__DIR__",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'/bug81607.inc'",
+                  "unicode": false,
+                  "value": "/bug81607.inc",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pid",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+        "type": "==",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests JIT NOVAL: 001 (bug in zend_jit_compute_false_dependencies()) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "X",
+              },
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "count",
+                  },
+                  "operator": "=",
+                  "right": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "count",
+                        },
+                        "operator": "=",
+                        "right": Call {
+                          "arguments": Array [
+                            Number {
+                              "kind": "number",
+                              "value": "9223372036854775807",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "intval",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "X",
+                  },
+                  "what": SelfReference {
+                    "kind": "selfreference",
+                    "raw": "self",
+                  },
+                },
+              },
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "count",
+                        },
+                        "operator": "=",
+                        "right": Number {
+                          "kind": "number",
+                          "value": "2",
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "X",
+                  },
+                  "what": SelfReference {
+                    "kind": "selfreference",
+                    "raw": "self",
+                  },
+                },
+              },
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    Return {
+                      "expr": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"bug\\"",
+                        "unicode": false,
+                        "value": "bug",
+                      },
+                      "kind": "return",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "count",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "type": "!=",
+                },
+              },
+              Return {
+                "expr": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"ok\\"",
+                  "unicode": false,
+                  "value": "ok",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "Foo",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,3026 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Persistent connections and mysqli.max_links 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "\\"connect.inc\\"",
+          "unicode": false,
+          "value": "connect.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'table.inc'",
+          "unicode": false,
+          "value": "table.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"[000] Init failed, [%d] %s\\\\n\\"",
+                  "unicode": false,
+                  "value": "[000] Init failed, [%d] %s
+",
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "plink",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "mysqli_errno",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "plink",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "mysqli_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "printf",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": Unary {
+                  "kind": "unary",
+                  "type": "!",
+                  "what": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "link",
+                      },
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'DROP USER pcontest'",
+                        "unicode": false,
+                        "value": "DROP USER pcontest",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "mysqli_query",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "right": Unary {
+                  "kind": "unary",
+                  "type": "!",
+                  "what": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "link",
+                      },
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'DROP USER pcontest@localhost'",
+                        "unicode": false,
+                        "value": "DROP USER pcontest@localhost",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "mysqli_query",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "type": "||",
+              },
+              "right": Unary {
+                "kind": "unary",
+                "type": "!",
+                "what": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "link",
+                    },
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'CREATE USER pcontest@\\"%\\" IDENTIFIED BY \\"pcontest\\"'",
+                      "unicode": false,
+                      "value": "CREATE USER pcontest@\\"%\\" IDENTIFIED BY \\"pcontest\\"",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "mysqli_query",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              "type": "||",
+            },
+            "right": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "link",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'CREATE USER pcontest@localhost IDENTIFIED BY \\"pcontest\\"'",
+                    "unicode": false,
+                    "value": "CREATE USER pcontest@localhost IDENTIFIED BY \\"pcontest\\"",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "mysqli_query",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "type": "||",
+          },
+          "right": Unary {
+            "kind": "unary",
+            "type": "!",
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"GRANT SELECT ON TABLE %s.test TO pcontest@'%%'\\"",
+                      "unicode": false,
+                      "value": "GRANT SELECT ON TABLE %s.test TO pcontest@'%%'",
+                    },
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "sprintf",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_query",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "type": "||",
+        },
+        "right": Unary {
+          "kind": "unary",
+          "type": "!",
+          "what": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"GRANT SELECT ON TABLE %s.test TO pcontest@'localhost'\\"",
+                    "unicode": false,
+                    "value": "GRANT SELECT ON TABLE %s.test TO pcontest@'localhost'",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "sprintf",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_query",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "type": "||",
+      },
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_get_links_stats",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "exception",
+                        },
+                      },
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "exception",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "ArgumentCountError",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Before pconnect:\\"",
+          "unicode": false,
+          "value": "Before pconnect:",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_get_links_stats",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[001] Cannot connect using the second DB user created during SKIPIF, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[001] Cannot connect using the second DB user created during SKIPIF, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_connect_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_connect_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "plink",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'p:'",
+                  "unicode": false,
+                  "value": "p:",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "host",
+                },
+                "type": ".",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pcontest'",
+                "unicode": false,
+                "value": "pcontest",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pcontest'",
+                "unicode": false,
+                "value": "pcontest",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "port",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "socket",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "my_mysqli_connect",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"After pconnect:\\"",
+          "unicode": false,
+          "value": "After pconnect:",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_get_links_stats",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_start",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "phpinfo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phpinfo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ob_get_contents",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strip_tags",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_end_clean",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phpinfo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "phpinfo",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phpinfo",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'MysqlI Support => enabled'",
+                  "unicode": false,
+                  "value": "MysqlI Support => enabled",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "strpos",
+                "resolution": "uqn",
+              },
+            },
+            Number {
+              "kind": "number",
+              "value": "500",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "substr",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[002] Cannot get # active persistent links from phpinfo()\\\\n\\"",
+              "unicode": false,
+              "value": "[002] Cannot get # active persistent links from phpinfo()
+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'@Active Persistent Links\\\\s+=>\\\\s+(\\\\d+)@ismU'",
+              "unicode": false,
+              "value": "@Active Persistent Links\\\\s+=>\\\\s+(\\\\d+)@ismU",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "phpinfo",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "matches",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "preg_match",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks",
+        },
+        "operator": "=",
+        "right": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "matches",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[003] Cannot run query on persistent connection of second DB user, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[003] Cannot run query on persistent connection of second DB user, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "plink",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'SELECT id, label FROM test WHERE id = 1'",
+                "unicode": false,
+                "value": "SELECT id, label FROM test WHERE id = 1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_query",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[004] Cannot run fetch result, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[004] Cannot run fetch result, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "row",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "res",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_fetch_assoc",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_free_result",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "row",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[005] Cannot change PW of second DB user, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[005] Cannot change PW of second DB user, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Unary {
+            "kind": "unary",
+            "type": "!",
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'SET PASSWORD FOR pcontest = \\"newpass\\"'",
+                  "unicode": false,
+                  "value": "SET PASSWORD FOR pcontest = \\"newpass\\"",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_query",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "parenthesizedExpression": true,
+          "right": Unary {
+            "kind": "unary",
+            "type": "!",
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'SET PASSWORD FOR pcontest = PASSWORD(\\"newpass\\")'",
+                  "unicode": false,
+                  "value": "SET PASSWORD FOR pcontest = PASSWORD(\\"newpass\\")",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_query",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "type": "&&",
+        },
+        "right": Unary {
+          "kind": "unary",
+          "type": "!",
+          "what": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'FLUSH PRIVILEGES'",
+                "unicode": false,
+                "value": "FLUSH PRIVILEGES",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_query",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "type": "||",
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[006] Cannot change PW of second DB user, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[006] Cannot change PW of second DB user, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Unary {
+            "kind": "unary",
+            "type": "!",
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'SET PASSWORD FOR pcontest@localhost = \\"newpass\\"'",
+                  "unicode": false,
+                  "value": "SET PASSWORD FOR pcontest@localhost = \\"newpass\\"",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_query",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "parenthesizedExpression": true,
+          "right": Unary {
+            "kind": "unary",
+            "type": "!",
+            "what": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'SET PASSWORD FOR pcontest@localhost = PASSWORD(\\"newpass\\")'",
+                  "unicode": false,
+                  "value": "SET PASSWORD FOR pcontest@localhost = PASSWORD(\\"newpass\\")",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_query",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "type": "&&",
+        },
+        "right": Unary {
+          "kind": "unary",
+          "type": "!",
+          "what": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'FLUSH PRIVILEGES'",
+                "unicode": false,
+                "value": "FLUSH PRIVILEGES",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_query",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "type": "||",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pthread_id",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "plink",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_thread_id",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[007] Cannot KILL persistent connection of second DB user, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[007] Cannot KILL persistent connection of second DB user, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+            Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'KILL %d'",
+                  "unicode": false,
+                  "value": "KILL %d",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pthread_id",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "sprintf",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_query",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "sleep",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[008] [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[008] [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SHOW FULL PROCESSLIST\\"",
+                "unicode": false,
+                "value": "SHOW FULL PROCESSLIST",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_query",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "running_threads",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    While {
+      "body": ExpressionStatement {
+        "expression": Assign {
+          "kind": "assign",
+          "left": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Id'",
+                "unicode": false,
+                "value": "Id",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "row",
+              },
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "running_threads",
+            },
+          },
+          "operator": "=",
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "row",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "row",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "res",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_fetch_assoc",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_free_result",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[009] Persistent connection has not been killed\\\\n\\"",
+              "unicode": false,
+              "value": "[009] Persistent connection has not been killed
+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Isset {
+        "kind": "isset",
+        "variables": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pthread_id",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "running_threads",
+            },
+          },
+        ],
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Before second pconnect:\\"",
+          "unicode": false,
+          "value": "Before second pconnect:",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_get_links_stats",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[010] Can connect using the old password, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[010] Can connect using the old password, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_connect_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_connect_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "plink",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'p:'",
+                  "unicode": false,
+                  "value": "p:",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "host",
+                },
+                "type": ".",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pcontest'",
+                "unicode": false,
+                "value": "pcontest",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pcontest'",
+                "unicode": false,
+                "value": "pcontest",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "port",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "socket",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "my_mysqli_connect",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"After second pconnect:\\"",
+          "unicode": false,
+          "value": "After second pconnect:",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_get_links_stats",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_start",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "phpinfo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phpinfo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ob_get_contents",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strip_tags",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_end_clean",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phpinfo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "phpinfo",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phpinfo",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'MysqlI Support => enabled'",
+                  "unicode": false,
+                  "value": "MysqlI Support => enabled",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "stripos",
+                "resolution": "uqn",
+              },
+            },
+            Number {
+              "kind": "number",
+              "value": "500",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "substr",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[010] Cannot get # of active persistent links from phpinfo()\\\\n\\"",
+              "unicode": false,
+              "value": "[010] Cannot get # of active persistent links from phpinfo()
+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'@Active Persistent Links\\\\s+=>\\\\s+(\\\\d+)@ismU'",
+              "unicode": false,
+              "value": "@Active Persistent Links\\\\s+=>\\\\s+(\\\\d+)@ismU",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "phpinfo",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "matches",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "preg_match",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_get_links_stats",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks_kill",
+        },
+        "operator": "=",
+        "right": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "matches",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sstats",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli_get_links_stats",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"[010.2] Num of active plinks differ %s %s\\\\n\\"",
+                  "unicode": false,
+                  "value": "[010.2] Num of active plinks differ %s %s
+",
+                },
+                OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'active_plinks'",
+                    "unicode": false,
+                    "value": "active_plinks",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "sstats",
+                  },
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "num_plinks_kill",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "printf",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'active_plinks'",
+            "unicode": false,
+            "value": "active_plinks",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sstats",
+          },
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks_kill",
+        },
+        "type": "!=",
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[011] Expecting Active Persistent Links < %d, got %d\\\\n\\"",
+              "unicode": false,
+              "value": "[011] Expecting Active Persistent Links < %d, got %d
+",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "num_plinks",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "num_plinks_kill",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks_kill",
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks",
+        },
+        "type": ">",
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[012] Cannot connect using the new password, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[012] Cannot connect using the new password, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_connect_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_connect_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "plink",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'p:'",
+                  "unicode": false,
+                  "value": "p:",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "host",
+                },
+                "type": ".",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pcontest'",
+                "unicode": false,
+                "value": "pcontest",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'newpass'",
+                "unicode": false,
+                "value": "newpass",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "port",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "socket",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "my_mysqli_connect",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[013] Cannot run query on persistent connection of second DB user, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[013] Cannot run query on persistent connection of second DB user, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "plink",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'SELECT id, label FROM test WHERE id = 1'",
+                "unicode": false,
+                "value": "SELECT id, label FROM test WHERE id = 1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_query",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[014] Cannot run fetch result, [%d] %s\\\\n\\"",
+              "unicode": false,
+              "value": "[014] Cannot run fetch result, [%d] %s
+",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_errno",
+                "resolution": "uqn",
+              },
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "plink",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "mysqli_error",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "row",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "res",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "mysqli_fetch_assoc",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_free_result",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "row",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"[015] Can open more persistent connections than allowed, [%d] %s\\\\n\\"",
+                  "unicode": false,
+                  "value": "[015] Can open more persistent connections than allowed, [%d] %s
+",
+                },
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "mysqli_connect_errno",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "mysqli_connect_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "printf",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "mysqli_get_links_stats",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "plink2",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'p:'",
+                "unicode": false,
+                "value": "p:",
+              },
+              "right": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "host",
+              },
+              "type": ".",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'pcontest'",
+              "unicode": false,
+              "value": "pcontest",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'newpass'",
+              "unicode": false,
+              "value": "newpass",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "my_mysqli_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_start",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "phpinfo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phpinfo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ob_get_contents",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strip_tags",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ob_end_clean",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "phpinfo",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "phpinfo",
+            },
+            Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "phpinfo",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'MysqlI Support => enabled'",
+                  "unicode": false,
+                  "value": "MysqlI Support => enabled",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "stripos",
+                "resolution": "uqn",
+              },
+            },
+            Number {
+              "kind": "number",
+              "value": "500",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "substr",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[016] Cannot get # of active persistent links from phpinfo()\\\\n\\"",
+              "unicode": false,
+              "value": "[016] Cannot get # of active persistent links from phpinfo()
+",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'@Active Persistent Links\\\\s+=>\\\\s+(\\\\d+)@ismU'",
+              "unicode": false,
+              "value": "@Active Persistent Links\\\\s+=>\\\\s+(\\\\d+)@ismU",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "phpinfo",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "matches",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "preg_match",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks",
+        },
+        "operator": "=",
+        "right": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "1",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "matches",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"[017] mysqli.max_persistent=%d allows %d open connections!\\\\n\\"",
+              "unicode": false,
+              "value": "[017] mysqli.max_persistent=%d allows %d open connections!
+",
+            },
+            Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'mysqli.max_persistent'",
+                  "unicode": false,
+                  "value": "mysqli.max_persistent",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ini_get",
+                "resolution": "uqn",
+              },
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "num_plinks",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "printf",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "num_plinks",
+        },
+        "right": Cast {
+          "expr": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'mysqli.max_persistent'",
+                "unicode": false,
+                "value": "mysqli.max_persistent",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "ini_get",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "cast",
+          "raw": "(int)",
+          "type": "int",
+        },
+        "type": ">",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'REVOKE ALL PRIVILEGES, GRANT OPTION FROM pcontest'",
+            "unicode": false,
+            "value": "REVOKE ALL PRIVILEGES, GRANT OPTION FROM pcontest",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'DROP USER pcontest'",
+            "unicode": false,
+            "value": "DROP USER pcontest",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "mysqli_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done!\\"",
+          "unicode": false,
+          "value": "done!",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

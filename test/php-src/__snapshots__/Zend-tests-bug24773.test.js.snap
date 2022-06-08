@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #24773 (unset() of integers treated as arrays causes a crash) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "array",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'test'",
+          "unicode": false,
+          "value": "test",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"b\\"",
+            "unicode": false,
+            "value": "b",
+          },
+          "what": OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"lvl2\\"",
+              "unicode": false,
+              "value": "lvl2",
+            },
+            "what": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"lvl1\\"",
+                "unicode": false,
+                "value": "lvl1",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "array",
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,2835 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #51291 (oci_error() doesn't report last error when called two times) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/connect.inc'",
+            "unicode": false,
+            "value": "/connect.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1 - Parse\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1 - Parse
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"select ' from dual\\"",
+                "unicode": false,
+                "value": "select ' from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 2 - Parse\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 2 - Parse
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"select ' from dual\\"",
+                "unicode": false,
+                "value": "select ' from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 3 - Execute\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 3 - Execute
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 4 - Execute - consecutive oci_error calls of different kinds\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 4 - Execute - consecutive oci_error calls of different kinds
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 5 - Execute - after oci_rollback\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 5 - Execute - after oci_rollback
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_rollback",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Rollback status is \\"",
+                "unicode": false,
+                "value": "Rollback status is ",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": If {
+              "alternate": If {
+                "alternate": Echo {
+                  "expressions": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "body": Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"true\\"",
+                      "unicode": false,
+                      "value": "true",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "type": "===",
+                },
+              },
+              "body": Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"false\\"",
+                    "unicode": false,
+                    "value": "false",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+                "right": Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+                "type": "===",
+              },
+            },
+            "body": Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"null\\"",
+                  "unicode": false,
+                  "value": "null",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_null",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call after oci_rollback\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call after oci_rollback
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 6 - Execute - after successful 2nd query with new handle\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 6 - Execute - after successful 2nd query with new handle
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s2",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'select 1 from dual'",
+                    "unicode": false,
+                    "value": "select 1 from dual",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "s2",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "OCI_DEFAULT",
+                    "resolution": "uqn",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_execute",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Execute status is \\"",
+                "unicode": false,
+                "value": "Execute status is ",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": If {
+              "alternate": If {
+                "alternate": Echo {
+                  "expressions": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "body": Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"true\\"",
+                      "unicode": false,
+                      "value": "true",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "type": "===",
+                },
+              },
+              "body": Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"false\\"",
+                    "unicode": false,
+                    "value": "false",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+                "right": Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+                "type": "===",
+              },
+            },
+            "body": Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"null\\"",
+                  "unicode": false,
+                  "value": "null",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_null",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call after successful execute\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call after successful execute
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s2",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 7 - Execute - after successful 2nd query with same handle\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 7 - Execute - after successful 2nd query with same handle
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'select 1 from dual'",
+                    "unicode": false,
+                    "value": "select 1 from dual",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "s",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "OCI_DEFAULT",
+                    "resolution": "uqn",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_execute",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Execute status is \\"",
+                "unicode": false,
+                "value": "Execute status is ",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": If {
+              "alternate": If {
+                "alternate": Echo {
+                  "expressions": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "body": Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"true\\"",
+                      "unicode": false,
+                      "value": "true",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "type": "===",
+                },
+              },
+              "body": Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"false\\"",
+                    "unicode": false,
+                    "value": "false",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+                "right": Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+                "type": "===",
+              },
+            },
+            "body": Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"null\\"",
+                  "unicode": false,
+                  "value": "null",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_null",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call after successful execute\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call after successful execute
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 8 - Execute - after unsuccessful 2nd query with new handle\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 8 - Execute - after unsuccessful 2nd query with new handle
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s2",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'select reallynothere from dual'",
+                    "unicode": false,
+                    "value": "select reallynothere from dual",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "s2",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "OCI_DEFAULT",
+                    "resolution": "uqn",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_execute",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Execute status is \\"",
+                "unicode": false,
+                "value": "Execute status is ",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": If {
+              "alternate": If {
+                "alternate": Echo {
+                  "expressions": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "body": Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"true\\"",
+                      "unicode": false,
+                      "value": "true",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "type": "===",
+                },
+              },
+              "body": Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"false\\"",
+                    "unicode": false,
+                    "value": "false",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+                "right": Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+                "type": "===",
+              },
+            },
+            "body": Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"null\\"",
+                  "unicode": false,
+                  "value": "null",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_null",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call after unsuccessful execute\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call after unsuccessful execute
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s2",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\nTest 9 - Execute - after unsuccessful 2nd query with same handle\\\\n\\"",
+          "unicode": false,
+          "value": "
+Test 9 - Execute - after unsuccessful 2nd query with same handle
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "c",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'select doesnotexist from dual'",
+                "unicode": false,
+                "value": "select doesnotexist from dual",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_parse",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              Name {
+                "kind": "name",
+                "name": "OCI_DEFAULT",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_execute",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "c",
+                  },
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'select reallynothere from dual'",
+                    "unicode": false,
+                    "value": "select reallynothere from dual",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_parse",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "s",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "OCI_DEFAULT",
+                    "resolution": "uqn",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "oci_execute",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Execute status is \\"",
+                "unicode": false,
+                "value": "Execute status is ",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": If {
+              "alternate": If {
+                "alternate": Echo {
+                  "expressions": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "r",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "body": Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"true\\"",
+                      "unicode": false,
+                      "value": "true",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "right": Boolean {
+                    "kind": "boolean",
+                    "raw": "true",
+                    "value": true,
+                  },
+                  "type": "===",
+                },
+              },
+              "body": Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"false\\"",
+                    "unicode": false,
+                    "value": "false",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+                "right": Boolean {
+                  "kind": "boolean",
+                  "raw": "false",
+                  "value": false,
+                },
+                "type": "===",
+              },
+            },
+            "body": Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"null\\"",
+                  "unicode": false,
+                  "value": "null",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "is_null",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2nd call after unsuccessful execute\\\\n\\"",
+                "unicode": false,
+                "value": "2nd call after unsuccessful execute
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_error",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

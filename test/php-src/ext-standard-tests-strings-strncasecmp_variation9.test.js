@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/strncasecmp_variation9.phpt
+  it("Test strncasecmp() function: usage variations - heredoc strings", function () {
+    expect(parser.parseCode("<?php\n/* Test strncasecmp() function with here-doc strings for 'str1', 'str2' */\necho \"*** Test strncasecmp() function: with here-doc strings ***\\n\";\n/* multi line heredoc string */\n$multi_line_str = <<<EOD\nExample of string\nspanning multiple lines\nusing heredoc syntax.\nEOD;\n/* identifier name contains underscore */\n$identifier_str1 = <<<identifier_str1\nExample of heredoc\nstring, whose identifier\nhaving underscore(\"_\")\n& numeric value.\nidentifier_str1;\n/* identifier name starts with underscore */\n$identifier_str2 = <<<_identifier_str2\nHello, World\nhello, world\n_identifier_str2;\n/* string containing control character */\n$control_char_str = <<<EOD\nHello, World\\n\nHello\\0World\nEOD;\n/* heredoc string with quote chars & slash */\n$quote_char_string = <<<EOD\nit's bright,but i cann't see it.\n\"things in double quote\"\n'things in single quote'\nthis\\line is /with\\slashs\nEOD;\n/* heredoc string with blank line */\n$blank_line = <<<EOD\nEOD;\n/* empty heredoc string */\n$empty_string = <<<EOD\nEOD;\n$strings = array(\n  $multi_line_str,\n  $identifier_str1,\n  $identifier_str2,\n  $control_char_str,\n  $quote_char_string,\n  $blank_line,\n  $empty_string\n);\n/* loop through to compare the strings */\n$index2 = count($strings);\nfor($index1 = 0; $index1 < count($strings); $index1++) {\n  $index2--;\n  var_dump( strncasecmp( $strings[$index1], $strings[$index1], strlen($strings[$index1]) ) );\n  var_dump( strncasecmp( $strings[$index1], $strings[$index2], strlen($strings[$index1]) ) );\n}\necho \"*** Done ***\\n\";\n?>")).toMatchSnapshot();
+  });
+});

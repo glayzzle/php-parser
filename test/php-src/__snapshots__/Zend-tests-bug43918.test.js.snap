@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #43918 (Segmentation fault in garbage collector) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xmlstr",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "XML",
+          "raw": "<<<XML
+<?xml version='1.0' standalone='yes'?>
+<movies>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+</movies>
+XML",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version='1.0' standalone='yes'?>
+<movies>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+</movies>
+",
+                "unicode": false,
+                "value": "<?xml version='1.0' standalone='yes'?>
+<movies>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+ <movie>
+  <title>TEST</title>
+ </movie>
+</movies>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "Array",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": false,
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "Array",
+                },
+              },
+              "operator": "=",
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "xml",
+                },
+                "operator": "=",
+                "right": New {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "xmlstr",
+                    },
+                  ],
+                  "kind": "new",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "SimpleXMLElement",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Pre {
+          "kind": "pre",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "XX",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "XX",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "XX",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "2000",
+          },
+          "type": "<",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "gc_collect_cycles",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ok\\\\n\\"",
+          "unicode": false,
+          "value": "ok
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

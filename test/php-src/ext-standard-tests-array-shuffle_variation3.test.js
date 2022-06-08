@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/shuffle_variation3.phpt
+  it("Test shuffle() function : usage variation - arrays with diff types of values", function () {
+    expect(parser.parseCode("<?php\n/*\n* Test behaviour of shuffle() function when arrays having different\n* types of values, are passed to 'array_arg' argument\n*/\necho \"*** Testing shuffle() : arrays with diff types of values ***\\n\";\n// initialise different arrays\n$array_arg = array(\n       // array with positive int values\n/*1*/  array(0, 1, 2, 2147483647 ),\n       // array with negative int values\n       array(-1, -2, -2147483647 ),\n       // array with positive float values\n/*3*/  array(0.23, 1.34, 0e2, 200e-2, 30e2, 10e0, 2147473648.90),\n       // array with negative float values\n       array(-0.23, -1.34, -200e-2, -30e2, -10e0, -2147473649.80),\n       // array with single quoted and double quoted strings\n/*5*/  array('one', \"123numbers\", 'hello\\tworld', \"hello world\\0\", '12.34floatnum'),\n       // array with bool values\n       array(true, TRUE, FALSE, false),\n       // array with positive hexa values\n/*7*/  array(0x123, 0xabc, 0xABC, 0xac, 0xAb1, 0x9fa),\n       // array with negative hexa values\n       array(-0x123, -0xabc, -0xABC, -0xAb1, -0x9fa),\n       // array with positive octal values\n/*9*/  array(0123, 0234, 034, 00),\n       // array with negative octal values\n/*10*/ array(-0123, -0234, -034),\n);\n// looping to test shuffle() with each sub-array in the $array_arg array\necho \"\\n*** Testing shuffle() with arrays having different types of values ***\\n\";\n$counter = 1;\nforeach($array_arg as $arr) {\n  echo \"\\n-- Iteration $counter --\\n\";\n  var_dump( shuffle($arr) );\n  echo \"\\nThe output array is:\\n\";\n  var_dump( $arr );\n  $counter++;\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

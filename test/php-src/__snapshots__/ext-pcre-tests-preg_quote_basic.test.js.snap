@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test preg_quote() function : basic functionality 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "string_before",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'/this *-has \\\\ metacharacters^ in $'",
+          "unicode": false,
+          "value": "/this *-has \\\\ metacharacters^ in $",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"\\\\$string_before looks like: $string_before\\\\n\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\\\$string_before looks like: ",
+                "unicode": false,
+                "value": "$string_before looks like: ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "string_before",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\\\n",
+                "unicode": false,
+                "value": "",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "string_after",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "string_before",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'/'",
+              "unicode": false,
+              "value": "/",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "preg_quote",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"\\\\$string_after looks like: $string_after, with metacharacters and / (set as delimiter) escaped\\\\n\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\\\$string_after looks like: ",
+                "unicode": false,
+                "value": "$string_after looks like: ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "string_after",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": ", with metacharacters and / (set as delimiter) escaped\\\\n",
+                "unicode": false,
+                "value": ", with metacharacters and / (set as delimiter) escaped",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "string1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'testing - /this *-has \\\\ metacharacters^ in $ should   work'",
+          "unicode": false,
+          "value": "testing - /this *-has \\\\ metacharacters^ in $ should   work",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'/^[tT]\\\\w{6} - '",
+                    "unicode": false,
+                    "value": "/^[tT]\\\\w{6} - ",
+                  },
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "string_before",
+                      },
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'/'",
+                        "unicode": false,
+                        "value": "/",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "preg_quote",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "' [a-z]*\\\\s*work$/'",
+                  "unicode": false,
+                  "value": " [a-z]*\\\\s*work$/",
+                },
+                "type": ".",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "string1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "matches1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_match",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "matches1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

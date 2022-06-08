@@ -1,0 +1,639 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests FPM: UNIX socket owner and group settings can be numeric 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"tester.inc\\"",
+          "unicode": false,
+          "value": "tester.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cfg",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+[global]
+error_log = {{FILE:LOG}}
+[unconfined]
+listen = {{ADDR:UDS}}
+listen.owner = 1234
+listen.group = 1234
+user = 1234
+ping.path = /ping
+ping.response = pong
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "[global]
+error_log = {{FILE:LOG}}
+[unconfined]
+listen = {{ADDR:UDS}}
+listen.owner = 1234
+listen.group = 1234
+user = 1234
+ping.path = /ping
+ping.response = pong
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+",
+                "unicode": false,
+                "value": "[global]
+error_log = {{FILE:LOG}}
+[unconfined]
+listen = {{ADDR:UDS}}
+listen.owner = 1234
+listen.group = 1234
+user = 1234
+ping.path = /ping
+ping.response = pong
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tester",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "cfg",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "FPM\\\\Tester",
+            "resolution": "qn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "start",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "expectLogStartNotices",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'{{ADDR:UDS}}'",
+            "unicode": false,
+            "value": "{{ADDR:UDS}}",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "ping",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "st",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'{{ADDR:UDS}}'",
+                  "unicode": false,
+                  "value": "{{ADDR:UDS}}",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "getListen",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tester",
+                },
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "stat",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"stat failed for \\"",
+                  "unicode": false,
+                  "value": "stat failed for ",
+                },
+                "right": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'{{ADDR:UDS}}'",
+                      "unicode": false,
+                      "value": "{{ADDR:UDS}}",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "getListen",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "tester",
+                    },
+                  },
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "pw",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'uid'",
+                      "unicode": false,
+                      "value": "uid",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "st",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "posix_getpwuid",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "gr",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'gid'",
+                      "unicode": false,
+                      "value": "gid",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "st",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "posix_getgrgid",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "user",
+              },
+              "operator": "=",
+              "right": RetIf {
+                "falseExpr": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'UNKNOWN'",
+                  "unicode": false,
+                  "value": "UNKNOWN",
+                },
+                "kind": "retif",
+                "test": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pw",
+                },
+                "trueExpr": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'name'",
+                    "unicode": false,
+                    "value": "name",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "pw",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "group",
+              },
+              "operator": "=",
+              "right": RetIf {
+                "falseExpr": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'UNKNOWN'",
+                  "unicode": false,
+                  "value": "UNKNOWN",
+                },
+                "kind": "retif",
+                "test": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "gr",
+                },
+                "trueExpr": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'name'",
+                    "unicode": false,
+                    "value": "name",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "gr",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"{$st['uid']}/{$user},{$st['gid']}/{$group}\\\\n\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'uid'",
+                        "unicode": false,
+                        "value": "uid",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "st",
+                      },
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "complex",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "/",
+                      "unicode": false,
+                      "value": "/",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "user",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "complex",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": ",",
+                      "unicode": false,
+                      "value": ",",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'gid'",
+                        "unicode": false,
+                        "value": "gid",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "st",
+                      },
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "complex",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "/",
+                      "unicode": false,
+                      "value": "/",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "group",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "complex",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "\\\\n",
+                      "unicode": false,
+                      "value": "\\\\n",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "st",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "terminate",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "expectLogTerminatingNotices",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "close",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+Done",
+      "value": "Done",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

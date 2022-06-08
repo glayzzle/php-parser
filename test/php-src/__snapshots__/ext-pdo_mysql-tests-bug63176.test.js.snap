@@ -1,0 +1,488 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #63176 (Segmentation fault when instantiate 2 persistent PDO to the same db server) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "DIRECTORY_SEPARATOR",
+              "resolution": "uqn",
+            },
+            "type": ".",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'config.inc'",
+            "unicode": false,
+            "value": "config.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "transLevel",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "protected",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "PDO",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "PDO2",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "tomato",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "protected",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "PDO",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "PDO3",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "h",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "h",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "var_dump",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              If {
+                "alternate": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "db",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "this",
+                          },
+                        },
+                        "operator": "=",
+                        "right": New {
+                          "arguments": Array [
+                            Name {
+                              "kind": "name",
+                              "name": "PDO_MYSQL_TEST_DSN",
+                              "resolution": "uqn",
+                            },
+                            Name {
+                              "kind": "name",
+                              "name": "PDO_MYSQL_TEST_USER",
+                              "resolution": "uqn",
+                            },
+                            Name {
+                              "kind": "name",
+                              "name": "PDO_MYSQL_TEST_PASS",
+                              "resolution": "uqn",
+                            },
+                            Array {
+                              "items": Array [
+                                Entry {
+                                  "byRef": false,
+                                  "key": StaticLookup {
+                                    "kind": "staticlookup",
+                                    "offset": Identifier {
+                                      "kind": "identifier",
+                                      "name": "ATTR_PERSISTENT",
+                                    },
+                                    "what": Name {
+                                      "kind": "name",
+                                      "name": "PDO",
+                                      "resolution": "uqn",
+                                    },
+                                  },
+                                  "kind": "entry",
+                                  "unpack": false,
+                                  "value": Boolean {
+                                    "kind": "boolean",
+                                    "raw": "true",
+                                    "value": true,
+                                  },
+                                },
+                              ],
+                              "kind": "array",
+                              "shortForm": false,
+                            },
+                          ],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "PDO3",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "db",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "this",
+                          },
+                        },
+                        "operator": "=",
+                        "right": New {
+                          "arguments": Array [
+                            Name {
+                              "kind": "name",
+                              "name": "PDO_MYSQL_TEST_DSN",
+                              "resolution": "uqn",
+                            },
+                            Name {
+                              "kind": "name",
+                              "name": "PDO_MYSQL_TEST_USER",
+                              "resolution": "uqn",
+                            },
+                            Name {
+                              "kind": "name",
+                              "name": "PDO_MYSQL_TEST_PASS",
+                              "resolution": "uqn",
+                            },
+                            Array {
+                              "items": Array [
+                                Entry {
+                                  "byRef": false,
+                                  "key": StaticLookup {
+                                    "kind": "staticlookup",
+                                    "offset": Identifier {
+                                      "kind": "identifier",
+                                      "name": "ATTR_PERSISTENT",
+                                    },
+                                    "what": Name {
+                                      "kind": "name",
+                                      "name": "PDO",
+                                      "resolution": "uqn",
+                                    },
+                                  },
+                                  "kind": "entry",
+                                  "unpack": false,
+                                  "value": Boolean {
+                                    "kind": "boolean",
+                                    "raw": "true",
+                                    "value": true,
+                                  },
+                                },
+                              ],
+                              "kind": "array",
+                              "shortForm": false,
+                            },
+                          ],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "PDO2",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "h",
+                },
+              },
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "fetchAll",
+                    },
+                    "what": Call {
+                      "arguments": Array [
+                        String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'SELECT 1'",
+                          "unicode": false,
+                          "value": "SELECT 1",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "query",
+                        },
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "db",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "this",
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "ModelA",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Boolean {
+              "kind": "boolean",
+              "raw": "true",
+              "value": true,
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ModelA",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Boolean {
+              "kind": "boolean",
+              "raw": "false",
+              "value": false,
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ModelA",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

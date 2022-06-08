@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #76829 Incorrect validation of domain on idn_to_utf8() function 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "punycode",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаеж.рф'",
+              "unicode": false,
+              "value": "абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаежзи.абвгдаеж.рф",
+            },
+            Name {
+              "kind": "name",
+              "name": "IDNA_DEFAULT",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "INTL_IDNA_VARIANT_UTS46",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "idn_to_ascii",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "unicode",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "punycode",
+            },
+            Name {
+              "kind": "name",
+              "name": "IDNA_DEFAULT",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "INTL_IDNA_VARIANT_UTS46",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "idn_to_utf8",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "unicode",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

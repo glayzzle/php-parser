@@ -1,0 +1,630 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #28442 (Changing a static variables in a class changes it across sub/super classes.) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "prop",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "ClassA",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "prop",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "ClassA",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "ClassB",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": Name {
+        "kind": "name",
+        "name": "ClassB",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "ClassC",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"===INIT===\\\\n\\"",
+          "unicode": false,
+          "value": "===INIT===
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "prop",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "ClassA",
+            "resolution": "uqn",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'A'",
+          "unicode": false,
+          "value": "A",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "prop",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "ClassB",
+            "resolution": "uqn",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'B'",
+          "unicode": false,
+          "value": "B",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "prop",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "ClassC",
+            "resolution": "uqn",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'C'",
+          "unicode": false,
+          "value": "C",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassA",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassB",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassC",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"===SetA===\\\\n\\"",
+          "unicode": false,
+          "value": "===SetA===
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "prop",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "ClassA",
+            "resolution": "uqn",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'A2'",
+          "unicode": false,
+          "value": "A2",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassA",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassB",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassC",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"===SetB===\\\\n\\"",
+          "unicode": false,
+          "value": "===SetB===
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "prop",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "ClassB",
+            "resolution": "uqn",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'B2'",
+          "unicode": false,
+          "value": "B2",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassA",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassB",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassC",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"===SetC===\\\\n\\"",
+          "unicode": false,
+          "value": "===SetC===
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "prop",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "ClassC",
+            "resolution": "uqn",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'C2'",
+          "unicode": false,
+          "value": "C2",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassA",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassB",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "prop",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "ClassC",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

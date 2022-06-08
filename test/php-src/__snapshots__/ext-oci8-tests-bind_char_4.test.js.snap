@@ -1,0 +1,3849 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PL/SQL oci_bind_by_name with SQLT_AFC aka CHAR to VARCHAR2 parameter 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/connect.inc'",
+            "unicode": false,
+            "value": "/connect.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"create or replace function bind_char_3_fn(p1 varchar2) return varchar2 as begin return p1; end;\\"",
+                "unicode": false,
+                "value": "create or replace function bind_char_3_fn(p1 varchar2) return varchar2 as begin return p1; end;",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.1 In Length: default.  In Type: default.  Out Length: default.          Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.1 In Length: default.  In Type: default.  Out Length: default.          Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"begin :bv2 := bind_char_3_fn(:bv1); end;\\"",
+              "unicode": false,
+              "value": "begin :bv2 := bind_char_3_fn(:bv1); end;",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "oci_parse",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.2 In Length: default.  In Type: default.  Out Length: 10.               Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.2 In Length: default.  In Type: default.  Out Length: 10.               Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.3 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.3 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.4 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.4 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.5 In Length: strlen.   In Type: AFC.      Out Length: strlen(input).    Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.5 In Length: strlen.   In Type: AFC.      Out Length: strlen(input).    Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bv1",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "strlen",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bv1",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "strlen",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.6 In Length: strlen.   In Type: AFC.      Out Length: strlen(input)-1.  Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.6 In Length: strlen.   In Type: AFC.      Out Length: strlen(input)-1.  Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bv1",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "strlen",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "bv1",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "strlen",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "type": "-",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 1.7 In Length: strlen.   In Type: AFC.      Out Length: strlen(input)+1.  Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 1.7 In Length: strlen.   In Type: AFC.      Out Length: strlen(input)+1.  Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'abc'",
+          "unicode": false,
+          "value": "abc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bv1",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "strlen",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "bv1",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "strlen",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "type": "+",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\\\nTests with ''\\\\n\\\\n\\"",
+          "unicode": false,
+          "value": "
+
+Tests with ''
+
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.1 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.1 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.2 In Length: default.  In Type: default.  Out Length: 10.               Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.2 In Length: default.  In Type: default.  Out Length: 10.               Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.3 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.3 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.4 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.4 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.5 In Length: -1.       In Type: AFC.      Out Length: 0.                Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.5 In Length: -1.       In Type: AFC.      Out Length: 0.                Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.6 In Length: 0.        In Type: AFC.      Out Length: 0.                Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.6 In Length: 0.        In Type: AFC.      Out Length: 0.                Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 2.7 In Length: 1.        In Type: AFC.      Out Length: 1.                Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 2.7 In Length: 1.        In Type: AFC.      Out Length: 1.                Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "''",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\\\nTests with NULL\\\\n\\"",
+          "unicode": false,
+          "value": "
+
+Tests with NULL
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3.1 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3.1 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3.2 In Length: default.  In Type: default.  Out Length: 10.               Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3.2 In Length: default.  In Type: default.  Out Length: 10.               Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3.3 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: default\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3.3 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: default
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3.4 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3.4 In Length: -1.       In Type: AFC.      Out Length: 10.               Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "10",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3.5 In Length: -1.       In Type: AFC.      Out Length: 0.                Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3.5 In Length: -1.       In Type: AFC.      Out Length: 0.                Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Test 3.6 In Length: -1.       In Type: AFC.      Out Length: 1.                Out Type: AFC\\\\n\\"",
+          "unicode": false,
+          "value": "Test 3.6 In Length: -1.       In Type: AFC.      Out Length: 1.                Out Type: AFC
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bv1",
+        },
+        "operator": "=",
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv1'",
+                "unicode": false,
+                "value": ":bv1",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv1",
+              },
+              Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "':bv2'",
+                "unicode": false,
+                "value": ":bv2",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bv2",
+              },
+              Number {
+                "kind": "number",
+                "value": "1",
+              },
+              Name {
+                "kind": "name",
+                "name": "SQLT_AFC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "oci_bind_by_name",
+              "resolution": "uqn",
+            },
+          },
+          "type": "&&",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "do_e",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "r",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv1",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bv2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "s",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"  Executing:\\\\n\\"",
+                "unicode": false,
+                "value": "  Executing:
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              "operator": "=",
+              "right": Silent {
+                "expr": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "s",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "oci_execute",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "silent",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "m",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "s",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "oci_error",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                Echo {
+                  "expressions": Array [
+                    Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"    Oci_execute error ORA-\\"",
+                          "unicode": false,
+                          "value": "    Oci_execute error ORA-",
+                        },
+                        "right": OffsetLookup {
+                          "kind": "offsetlookup",
+                          "offset": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'code'",
+                            "unicode": false,
+                            "value": "code",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "m",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"\\\\n\\"",
+                        "unicode": false,
+                        "value": "
+",
+                      },
+                      "type": ".",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                Return {
+                  "expr": null,
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "do_e",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmtarray",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"drop function bind_char_3_fn\\"",
+                "unicode": false,
+                "value": "drop function bind_char_3_fn",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "c",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmtarray",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "oci8_test_sql_execute",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

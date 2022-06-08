@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #39832 (SOAP Server: parameter not matching the WSDL specified type are set to 0) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "HTTP_RAW_POST_DATA",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOF",
+          "raw": "<<<EOF
+<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:ns1=\\"http://test.pl\\"><SOAP-ENV:Body>
+<SOAP-ENV:Test>
+<parameters priority=\\"high\\">
+<ns1:NetworkErrorCode>1</ns1:NetworkErrorCode>
+</parameters>
+</SOAP-ENV:Test></SOAP-ENV:Body></SOAP-ENV:Envelope>
+EOF",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:ns1=\\"http://test.pl\\"><SOAP-ENV:Body>
+<SOAP-ENV:Test>
+<parameters priority=\\"high\\">
+<ns1:NetworkErrorCode>1</ns1:NetworkErrorCode>
+</parameters>
+</SOAP-ENV:Test></SOAP-ENV:Body></SOAP-ENV:Envelope>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV=\\"http://schemas.xmlsoap.org/soap/envelope/\\" xmlns:ns1=\\"http://test.pl\\"><SOAP-ENV:Body>
+<SOAP-ENV:Test>
+<parameters priority=\\"high\\">
+<ns1:NetworkErrorCode>1</ns1:NetworkErrorCode>
+</parameters>
+</SOAP-ENV:Test></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "x",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "priority",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "x",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/bug39832.wsdl\\"",
+                "unicode": false,
+                "value": "/bug39832.wsdl",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SoapServer",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Test\\"",
+            "unicode": false,
+            "value": "Test",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "addFunction",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "x",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "HTTP_RAW_POST_DATA",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "handle",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "x",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

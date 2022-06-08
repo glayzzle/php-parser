@@ -1,0 +1,364 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #80745 (JIT produces Assert failure and UNKNOWN:0 var_dumps in code involving bitshifts) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "qr",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "opcode",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "aa",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": true,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Message",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Starting...\\\\n\\"",
+          "unicode": false,
+          "value": "Starting...
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "message",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": Name {
+            "kind": "name",
+            "name": "Message",
+            "resolution": "uqn",
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "flags",
+              },
+              "operator": "=",
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "flags",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "flags",
+                  },
+                  "parenthesizedExpression": true,
+                  "right": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "type": "<<",
+                },
+                "right": RetIf {
+                  "falseExpr": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "kind": "retif",
+                  "parenthesizedExpression": true,
+                  "test": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "qr",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "message",
+                    },
+                  },
+                  "trueExpr": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                "type": "|",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "flags",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "flags",
+                  },
+                  "parenthesizedExpression": true,
+                  "right": Number {
+                    "kind": "number",
+                    "value": "4",
+                  },
+                  "type": "<<",
+                },
+                "right": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "opcode",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "message",
+                  },
+                },
+                "type": "|",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "flags",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "flags",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "flags",
+                  },
+                  "parenthesizedExpression": true,
+                  "right": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "type": "<<",
+                },
+                "right": RetIf {
+                  "falseExpr": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "kind": "retif",
+                  "parenthesizedExpression": true,
+                  "test": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "aa",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "message",
+                    },
+                  },
+                  "trueExpr": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                "type": "|",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "headerToBinary",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          New {
+            "arguments": Array [],
+            "kind": "new",
+            "what": Name {
+              "kind": "name",
+              "name": "Message",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "headerToBinary",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"PROBLEM NOT REPRODUCED !\\\\n\\"",
+          "unicode": false,
+          "value": "PROBLEM NOT REPRODUCED !
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

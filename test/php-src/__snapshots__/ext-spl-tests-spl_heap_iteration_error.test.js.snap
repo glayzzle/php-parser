@@ -1,0 +1,441 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SPL: Attempt to corrupt the heap while iterating 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "fail",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "val1",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "val2",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              If {
+                "alternate": null,
+                "body": Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'Corrupting heap'",
+                        "unicode": false,
+                        "value": "Corrupting heap",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "99",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "fail",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "this",
+                  },
+                },
+              },
+              Return {
+                "expr": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "compare",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "int",
+            "raw": "int",
+          },
+          "visibility": "public",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "SplMaxHeap",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "ext_heap",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "h",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ext_heap",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'foobar'",
+                  "unicode": false,
+                  "value": "foobar",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "insert",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "h",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'foobar1'",
+                  "unicode": false,
+                  "value": "foobar1",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "insert",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "h",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'foobar2'",
+                  "unicode": false,
+                  "value": "foobar2",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "insert",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "h",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "fail",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "h",
+                },
+              },
+              "operator": "=",
+              "right": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Foreach {
+            "body": Block {
+              "children": Array [],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "h",
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "value",
+            },
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"I should have raised an exception here\\"",
+                "unicode": false,
+                "value": "I should have raised an exception here",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              If {
+                "alternate": null,
+                "body": Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Unexpected exception\\"",
+                      "unicode": false,
+                      "value": "Unexpected exception",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getCode",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "e",
+                      },
+                    },
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "99",
+                  },
+                  "type": "!=",
+                },
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "h",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

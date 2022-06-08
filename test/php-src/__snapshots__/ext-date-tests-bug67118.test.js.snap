@@ -1,0 +1,323 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #67118 crashes in DateTime when this used after failed __construct 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "time",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'now'",
+                "unicode": false,
+                "value": "now",
+              },
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "tz",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+              "variadic": false,
+            },
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "format",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "tz",
+                        },
+                        "operator": "=",
+                        "right": New {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "tz",
+                            },
+                          ],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "DateTimeZone",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Unary {
+                    "kind": "unary",
+                    "type": "!",
+                    "what": Empty {
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "tz",
+                      },
+                      "kind": "empty",
+                    },
+                  },
+                  "right": Unary {
+                    "kind": "unary",
+                    "type": "!",
+                    "what": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "tz",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "is_object",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "type": "&&",
+                },
+              },
+              Try {
+                "always": null,
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Silent {
+                        "expr": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "time",
+                            },
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "tz",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": StaticLookup {
+                            "kind": "staticlookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "__construct",
+                            },
+                            "what": ParentReference {
+                              "kind": "parentreference",
+                              "raw": "parent",
+                            },
+                          },
+                        },
+                        "kind": "silent",
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "catches": Array [
+                  Catch {
+                    "body": Block {
+                      "children": Array [
+                        Echo {
+                          "expressions": Array [
+                            Bin {
+                              "kind": "bin",
+                              "left": Bin {
+                                "kind": "bin",
+                                "left": String {
+                                  "isDoubleQuote": true,
+                                  "kind": "string",
+                                  "raw": "\\"Bad date\\"",
+                                  "unicode": false,
+                                  "value": "Bad date",
+                                },
+                                "right": Call {
+                                  "arguments": Array [
+                                    String {
+                                      "isDoubleQuote": true,
+                                      "kind": "string",
+                                      "raw": "\\"Y\\"",
+                                      "unicode": false,
+                                      "value": "Y",
+                                    },
+                                  ],
+                                  "kind": "call",
+                                  "what": PropertyLookup {
+                                    "kind": "propertylookup",
+                                    "offset": Identifier {
+                                      "kind": "identifier",
+                                      "name": "format",
+                                    },
+                                    "what": Variable {
+                                      "curly": false,
+                                      "kind": "variable",
+                                      "name": "this",
+                                    },
+                                  },
+                                },
+                                "type": ".",
+                              },
+                              "right": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"\\\\n\\"",
+                                "unicode": false,
+                                "value": "
+",
+                              },
+                              "type": ".",
+                            },
+                          ],
+                          "kind": "echo",
+                          "shortForm": false,
+                        },
+                      ],
+                      "kind": "block",
+                    },
+                    "kind": "catch",
+                    "variable": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "e",
+                    },
+                    "what": Array [
+                      Name {
+                        "kind": "name",
+                        "name": "Exception",
+                        "resolution": "uqn",
+                      },
+                    ],
+                  },
+                ],
+                "kind": "try",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "datetime",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "mydt",
+      },
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Funktionsansvarig rådgivning och juridik\\"",
+            "unicode": false,
+            "value": "Funktionsansvarig rådgivning och juridik",
+          },
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"UTC\\"",
+            "unicode": false,
+            "value": "UTC",
+          },
+        ],
+        "kind": "new",
+        "what": Name {
+          "kind": "name",
+          "name": "mydt",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

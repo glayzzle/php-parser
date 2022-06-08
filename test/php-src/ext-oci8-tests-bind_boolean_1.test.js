@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/oci8/tests/bind_boolean_1.phpt
+  it("Basic PL/SQL \"BOOLEAN\" (SQLT_BOL) bind test", function () {
+    expect(parser.parseCode("<?php\nrequire(__DIR__.'/connect.inc');\n// Run Test\necho \"Test 1\\n\";\n$sql = \"begin\n        :output1 := true;\n        :output2 := false;\n       end;\";\n$s = oci_parse($c, $sql);\noci_bind_by_name($s, ':output1', $output1, -1, OCI_B_BOL);\noci_bind_by_name($s, ':output2', $output2, -1, OCI_B_BOL);\noci_execute($s);\nvar_dump($output1);\nvar_dump($output2);\necho \"Test 2\\n\";\n$b = \"abc\";  // bind var type will change\n$sql = \"begin :b := true; end;\";\n$s = oci_parse($c, $sql);\noci_bind_by_name($s, ':b', $b, -1, OCI_B_BOL);\noci_execute($s);\nvar_dump($b);\necho \"Test 3\\n\";\n$sql =\n    \"begin\n    if (:input < 10) then\n        :output := true;\n    else\n        :output := false;\n    end if;\nend;\";\n$s = oci_parse($c, $sql);\noci_bind_by_name($s, ':output', $output, -1, OCI_B_BOL);\nfor ($input = 5; $input < 15; ++$input) {\n    oci_bind_by_name($s, ':input', $input);\n    oci_execute($s);\n    var_dump($output);\n}\necho \"Test 4\\n\";\n$sql =\n\"begin\n  if (mod(:userid,2) = 0) then\n    :b := true;\n  else\n    :b := false;\n  end if;\nend;\";\n$s = oci_parse($c, $sql);\noci_bind_by_name($s, ':b', $b, -1, OCI_B_BOL);\nfor ($userid = 1; $userid <= 10; ++$userid) {\n    oci_bind_by_name($s, ':userid', $userid, -1, SQLT_INT);\n    oci_execute($s);\n    var_dump($b);\n}\necho \"Test 5\\n\";\n$sql =\n\"declare\n  l boolean;\nbegin\n  l := :b1;\n  :b1 := :b2;\n  :b2 := l;\nend;\";\n$s = oci_parse($c, $sql);\n$b1 = true;\n$b2 = false;\nvar_dump($b1, $b2);\noci_bind_by_name($s, ':b1', $b1, -1, OCI_B_BOL);\noci_bind_by_name($s, ':b2', $b2, -1, OCI_B_BOL);\noci_execute($s);\nvar_dump($b1, $b2);\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/session/tests/session_set_save_handler_error4.phpt
+  it("Test session_set_save_handler() function : error functionality", function () {
+    expect(parser.parseCode("<?php\nob_start();\necho \"*** Testing session_set_save_handler() : error functionality ***\\n\";\nfunction callback() { return true; }\ntry {\n    session_set_save_handler(\"callback\", \"callback\", \"callback\", \"callback\", \"callback\", \"callback\");\n} catch (TypeError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    session_set_save_handler(\"callback\", \"echo\", \"callback\", \"callback\", \"callback\", \"callback\");\n} catch (TypeError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    session_set_save_handler(\"callback\", \"callback\", \"echo\", \"callback\", \"callback\", \"callback\");\n} catch (TypeError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    session_set_save_handler(\"callback\", \"callback\", \"callback\", \"echo\", \"callback\", \"callback\");\n} catch (TypeError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    session_set_save_handler(\"callback\", \"callback\", \"callback\", \"callback\", \"echo\", \"callback\");\n} catch (TypeError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    session_set_save_handler(\"callback\", \"callback\", \"callback\", \"callback\", \"callback\", \"echo\");\n} catch (TypeError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\nsession_set_save_handler(\"callback\", \"callback\", \"callback\", \"callback\", \"callback\", \"callback\");\nvar_dump(session_start());\nob_end_flush();\n?>")).toMatchSnapshot();
+  });
+});

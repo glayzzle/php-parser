@@ -1,0 +1,380 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #53198 (From: header cannot be changed with ini_set) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'server.inc'",
+          "unicode": false,
+          "value": "server.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "responses",
+              },
+              "operator": "=",
+              "right": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"data://text/plain,HTTP/1.1 200 OK\\\\r\\\\n\\\\r\\\\n\\"",
+                      "unicode": false,
+                      "value": "data://text/plain,HTTP/1.1 200 OK
+
+",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": List {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'pid'",
+                      "unicode": false,
+                      "value": "pid",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "pid",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'uri'",
+                      "unicode": false,
+                      "value": "uri",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "uri",
+                    },
+                  },
+                ],
+                "kind": "list",
+                "shortForm": true,
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "responses",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "output",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "http_server",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Foreach {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "fd",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "uri",
+                        },
+                        String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'rb'",
+                          "unicode": false,
+                          "value": "rb",
+                        },
+                        Boolean {
+                          "kind": "boolean",
+                          "raw": "false",
+                          "value": false,
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "fopen",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "output",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "SEEK_SET",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "fseek",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "output",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "stream_get_contents",
+                          "resolution": "uqn",
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "output",
+                      },
+                      Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                      Name {
+                        "kind": "name",
+                        "name": "SEEK_SET",
+                        "resolution": "uqn",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "fseek",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "responses",
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "r",
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pid",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "http_server_kill",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "do_test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"-- Test: leave default --\\\\n\\"",
+          "unicode": false,
+          "value": "-- Test: leave default --
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"-- Test: after ini_set --\\\\n\\"",
+          "unicode": false,
+          "value": "-- Test: after ini_set --
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'from'",
+            "unicode": false,
+            "value": "from",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'junk@junk.com'",
+            "unicode": false,
+            "value": "junk@junk.com",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "do_test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,529 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #33386 (ScriptControl only sees last function of class) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Name {
+            "kind": "name",
+            "name": "E_ALL",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "error_reporting",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\" func one\\\\n\\"",
+                    "unicode": false,
+                    "value": " func one
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "func1",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\" func two\\\\n\\"",
+                    "unicode": false,
+                    "value": " func two
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "func2",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "twoFuncs",
+      },
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ciTF",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "twoFuncs",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oScript",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"MSScriptControl.ScriptControl\\"",
+                    "unicode": false,
+                    "value": "MSScriptControl.ScriptControl",
+                  },
+                ],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "COM",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "Language",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "oScript",
+                },
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"VBScript\\"",
+                "unicode": false,
+                "value": "VBScript",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"tfA\\"",
+                  "unicode": false,
+                  "value": "tfA",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ciTF",
+                },
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "AddObject",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "oScript",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Foreach {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Encapsed {
+                        "kind": "encapsed",
+                        "raw": "\\"tfA.func$i\\"",
+                        "type": "string",
+                        "value": Array [
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": String {
+                              "isDoubleQuote": false,
+                              "kind": "string",
+                              "raw": "tfA.func",
+                              "unicode": false,
+                              "value": "tfA.func",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": null,
+                          },
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "i",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": "simple",
+                          },
+                        ],
+                      },
+                    ],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "ExecuteStatement",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "oScript",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Encapsed {
+                        "kind": "encapsed",
+                        "raw": "\\"func$i\\"",
+                        "type": "string",
+                        "value": Array [
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": String {
+                              "isDoubleQuote": false,
+                              "kind": "string",
+                              "raw": "func",
+                              "unicode": false,
+                              "value": "func",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": null,
+                          },
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "i",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": "simple",
+                          },
+                        ],
+                      },
+                    ],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "ExecuteStatement",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "oScript",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "i",
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"tfB\\"",
+                  "unicode": false,
+                  "value": "tfB",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ciTF",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "AddObject",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "oScript",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Foreach {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Encapsed {
+                        "kind": "encapsed",
+                        "raw": "\\"tfB.func$i\\"",
+                        "type": "string",
+                        "value": Array [
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": String {
+                              "isDoubleQuote": false,
+                              "kind": "string",
+                              "raw": "tfB.func",
+                              "unicode": false,
+                              "value": "tfB.func",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": null,
+                          },
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "i",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": "simple",
+                          },
+                        ],
+                      },
+                    ],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "ExecuteStatement",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "oScript",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": null,
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": false,
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "i",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Print {
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "e",
+                  },
+                  "kind": "print",
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Exception",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

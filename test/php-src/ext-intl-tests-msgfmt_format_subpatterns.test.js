@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/intl/tests/msgfmt_format_subpatterns.phpt
+  it("msgfmt_format() with subpatterns", function () {
+    expect(parser.parseCode("<?php\n/*\n * Format a number using misc locales/patterns.\n */\nfunction ut_main()\n{\n$pattern=<<<_MSG_\n{0, select,\n  female {{1, plural, offset:1\n      =0 {{2} does not give a party.}\n      =1 {{2} invites {3} to her party.}\n      =2 {{2} invites {3} and one other person to her party.}\n     other {{2} invites {3} as one of the # people invited to her party.}}}\n  male   {{1, plural, offset:1\n      =0 {{2} does not give a party.}\n      =1 {{2} invites {3} to his party.}\n      =2 {{2} invites {3} and one other person to his party.}\n     other {{2} invites {3} as one of the # other people invited to his party.}}}\n  other {{1, plural, offset:1\n      =0 {{2} does not give a party.}\n      =1 {{2} invites {3} to their party.}\n      =2 {{2} invites {3} and one other person to their party.}\n      other {{2} invites {3} as one of the # other people invited to their party.}}}}\n_MSG_;\n$args = array(\n      array('female', 0,  'Alice', 'Bob'),\n      array('male',   1,  'Alice', 'Bob'),\n      array('none',   2,  'Alice', 'Bob'),\n      array('female', 27, 'Alice', 'Bob'),\n);\n$str_res = '';\n        $fmt = ut_msgfmt_create( 'en_US', $pattern );\n        if(!$fmt) {\n            $str_res .= dump(intl_get_error_message()).\"\\n\";\n            return $str_res;\n        }\n        foreach ($args as $arg) {\n            $str_res .= dump( ut_msgfmt_format($fmt, $arg) ). \"\\n\";\n            $str_res .= dump( ut_msgfmt_format_message('en_US', $pattern, $arg) ) . \"\\n\";\n    }\n    return $str_res;\n}\ninclude_once( 'ut_common.inc' );\n// Run the test\nut_run();\n?>")).toMatchSnapshot();
+  });
+});

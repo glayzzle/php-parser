@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/streams/stream_get_line_nb.phpt
+  it("stream_get_line() on non-blocking stream", function () {
+    expect(parser.parseCode("<?php\n/**\n * Tests that stream_get_line() behaves as documented on non-blocking streams:\n * Never return incomplete lines, except on documented conditions:\n * length bytes have been read, the string specified by ending is found, EOF.\n */\n$sockets = stream_socket_pair(STREAM_PF_UNIX, STREAM_SOCK_STREAM, 0);\nvar_dump($sockets);\nstream_set_blocking($sockets[1], 0);\n$eol = '<EOL>';\nfwrite($sockets[0], \"line start\");\nvar_dump(stream_get_line($sockets[1], 8192, $eol)); // Does not returns incomplete line (EOL not found)\nvar_dump(stream_get_line($sockets[1], 8192, $eol));\nfwrite($sockets[0], \", line end\");\nfwrite($sockets[0], \", $eol\");\nvar_dump(stream_get_line($sockets[1], 8192, $eol)); // Returns full line (EOL found)\nvar_dump(stream_get_line($sockets[1], 8192, $eol)); // Nothing to read\nvar_dump(stream_get_line($sockets[1], 8192, $eol));\nfwrite($sockets[0], \"incomplete line\");\nvar_dump(stream_get_line($sockets[1], strlen(\"incomplete line\"), $eol)); // EOL not found but $length has been read, return incomplete line\nfwrite($sockets[0], \"incomplete line\");\nvar_dump(stream_get_line($sockets[1], 8192, $eol)); // Does not returns incomplete line (EOL not found)\nvar_dump(fread($sockets[1], strlen(\"incomplete line\"))); // Returns buffer readden by stream_get_line\nfwrite($sockets[0], \"end of file\");\nvar_dump(stream_get_line($sockets[1], 8192, $eol)); // Does not returns incomplete line (EOL not found)\nfclose($sockets[0]);\nvar_dump(stream_get_line($sockets[1], 8192, $eol)); // Returns incomplete line (End of file)\nfclose($sockets[1]);\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pdo/tests/pdo_029.phpt
+  it("PDO Common: extending PDO (3)", function () {
+    expect(parser.parseCode("<?php\nif (getenv('REDIR_TEST_DIR') === false) putenv('REDIR_TEST_DIR='.__DIR__ . '/../../pdo/tests/');\nrequire_once getenv('REDIR_TEST_DIR') . 'pdo_test.inc';\n$data = array(\n    array('10', 'Abc', 'zxy'),\n    array('20', 'Def', 'wvu'),\n    array('30', 'Ghi', 'tsr'),\n);\nclass PDOStatementX extends PDOStatement\n{\n    public $dbh;\n    protected function __construct($dbh)\n    {\n        $this->dbh = $dbh;\n        echo __METHOD__ . \"()\\n\";\n    }\n    function __destruct()\n    {\n        echo __METHOD__ . \"()\\n\";\n    }\n    function execute($params = array()): bool\n    {\n        echo __METHOD__ . \"()\\n\";\n        return parent::execute();\n    }\n}\nclass PDODatabase extends PDO\n{\n    function __destruct()\n    {\n        echo __METHOD__ . \"()\\n\";\n    }\n    function query($sql, ...$rest): PDOStatement|false\n    {\n        echo __METHOD__ . \"()\\n\";\n        $stmt = $this->prepare($sql, array(PDO::ATTR_STATEMENT_CLASS=>array('PDOStatementx', array($this))));\n        $stmt->setFetchMode(PDO::FETCH_ASSOC);\n        $stmt->execute();\n        return $stmt;\n    }\n}\n$db = PDOTest::factory('PDODatabase');\nvar_dump(get_class($db));\n$db->exec('CREATE TABLE test(id INT NOT NULL PRIMARY KEY, val VARCHAR(10), val2 VARCHAR(16))');\n$stmt = $db->prepare(\"INSERT INTO test VALUES(?, ?, ?)\");\nvar_dump(get_class($stmt));\nforeach ($data as $row) {\n    $stmt->execute($row);\n}\nunset($stmt);\necho \"===QUERY===\\n\";\n$stmt = $db->query('SELECT * FROM test');\nvar_dump(get_class($stmt));\nvar_dump(get_class($stmt->dbh));\necho \"===FOREACH===\\n\";\nforeach($stmt as $obj) {\n    var_dump($obj);\n}\necho \"===DONE===\\n\";\nexit(0);\n?>")).toMatchSnapshot();
+  });
+});

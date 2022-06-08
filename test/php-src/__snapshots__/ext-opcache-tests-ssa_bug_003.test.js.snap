@@ -1,0 +1,400 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Incorrect elision of return type checks 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "x",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": If {
+              "alternate": Block {
+                "children": Array [
+                  ExpressionStatement {
+                    "expression": Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "c",
+                      },
+                      "operator": "=",
+                      "right": Array {
+                        "items": Array [
+                          Entry {
+                            "byRef": true,
+                            "key": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "x",
+                            },
+                            "kind": "entry",
+                            "unpack": false,
+                            "value": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "x",
+                            },
+                          },
+                        ],
+                        "kind": "array",
+                        "shortForm": true,
+                      },
+                    },
+                    "kind": "expressionstatement",
+                  },
+                ],
+                "kind": "block",
+              },
+              "body": Block {
+                "children": Array [
+                  ExpressionStatement {
+                    "expression": Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "c",
+                      },
+                      "operator": "=",
+                      "right": New {
+                        "arguments": Array [],
+                        "kind": "new",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "stdClass",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                    "kind": "expressionstatement",
+                  },
+                ],
+                "kind": "block",
+              },
+              "kind": "if",
+              "shortForm": false,
+              "test": Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "x",
+                },
+                "right": Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                "type": "==",
+              },
+            },
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "c",
+                    },
+                    "operator": "=",
+                    "right": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'foo'",
+                      "unicode": false,
+                      "value": "foo",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "type": "==",
+            },
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "c",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test1",
+      },
+      "nullable": false,
+      "type": TypeReference {
+        "kind": "typereference",
+        "name": "callable",
+        "raw": "callable",
+      },
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "test1",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "e",
+                        },
+                      },
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Error",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "obj",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stdClass",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "obj",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test2",
+      },
+      "nullable": false,
+      "type": Name {
+        "kind": "name",
+        "name": "Foo",
+        "resolution": "uqn",
+      },
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "test2",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "e",
+                        },
+                      },
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\n\\"",
+                      "unicode": false,
+                      "value": "
+",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "Error",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

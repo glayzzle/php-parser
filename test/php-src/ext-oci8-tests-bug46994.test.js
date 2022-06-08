@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/oci8/tests/bug46994.phpt
+  it("Bug #46994 (CLOB size does not update when using CLOB IN OUT param in stored procedure)", function () {
+    expect(parser.parseCode("<?php\nrequire(__DIR__.'/connect.inc');\n// Initialization\n$stmtarray = array(\n    \"create or replace procedure bug46994_proc1(p1 in out nocopy clob) is\n         begin\n             dbms_lob.trim(p1, 0);\n             dbms_lob.writeappend(p1, 26, 'This should be the output.');\n         end bug46994_proc1;\",\n    \"create or replace procedure bug46994_proc2(p1 in out nocopy clob) is\n         begin\n             dbms_lob.trim(p1, 0);\n             dbms_lob.writeappend(p1, 37, 'The output should be even longer now.');\n         end bug46994_proc2;\"\n);\noci8_test_sql_execute($c, $stmtarray);\n// Run Test\n$myclob = oci_new_descriptor($c, OCI_D_LOB);\n$myclob->writeTemporary(\"some data\", OCI_TEMP_CLOB);\necho \"Test 1\\n\";\n$s = oci_parse($c, \"begin bug46994_proc1(:myclob); end;\");\noci_bind_by_name($s, \":myclob\", $myclob, -1, SQLT_CLOB);\noci_execute($s, OCI_DEFAULT);\nvar_dump($myclob->load());\necho \"Test 2\\n\";\n$s = oci_parse($c, \"begin bug46994_proc2(:myclob); end;\");\noci_bind_by_name($s, \":myclob\", $myclob, -1, SQLT_CLOB);\noci_execute($s, OCI_DEFAULT);\nvar_dump($myclob->load());\necho \"Test 3\\n\";\n$s = oci_parse($c, \"begin bug46994_proc1(:myclob); end;\");\noci_bind_by_name($s, \":myclob\", $myclob, -1, SQLT_CLOB);\noci_execute($s, OCI_DEFAULT);\nvar_dump($myclob->load());\necho \"Test 4\\n\";\nvar_dump($myclob->load());  // Use cached size code path\n// Cleanup\n$stmtarray = array(\n    \"drop procedure bug46994_proc1\",\n    \"drop procedure bug46994_proc2\"\n);\noci8_test_sql_execute($c, $stmtarray);\noci_close($c);\n?>")).toMatchSnapshot();
+  });
+});

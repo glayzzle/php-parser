@@ -1,0 +1,502 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #12414 ( extracting files from damaged archives) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "filename",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'MYLOGOV2.GFX'",
+          "unicode": false,
+          "value": "MYLOGOV2.GFX",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "zipname",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/pecl12414.zip\\"",
+            "unicode": false,
+            "value": "/pecl12414.zip",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "za",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ZipArchive",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "res",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "zipname",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "open",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "za",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"zip_readfile could not read from \\"",
+                      "unicode": false,
+                      "value": "zip_readfile could not read from ",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "zipname",
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\" : \\"",
+                    "unicode": false,
+                    "value": " : ",
+                  },
+                  "type": ".",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "filename",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "finfo",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "filename",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "statName",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "za",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "file_size",
+              },
+              "operator": "=",
+              "right": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'size'",
+                  "unicode": false,
+                  "value": "size",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "finfo",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "contents",
+                    },
+                    "operator": "=",
+                    "right": Boolean {
+                      "kind": "boolean",
+                      "raw": "false",
+                      "value": false,
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                Echo {
+                  "expressions": Array [
+                    Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Bin {
+                          "kind": "bin",
+                          "left": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"zip_readfile could not open stream from zero length file \\"",
+                            "unicode": false,
+                            "value": "zip_readfile could not open stream from zero length file ",
+                          },
+                          "right": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "zipname",
+                          },
+                          "type": ".",
+                        },
+                        "right": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\" : \\"",
+                          "unicode": false,
+                          "value": " : ",
+                        },
+                        "type": ".",
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "filename",
+                      },
+                      "type": ".",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "contents",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "filename",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getFromName",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "za",
+                        },
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                Echo {
+                  "expressions": Array [
+                    Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"ZIP contents size: \\"",
+                          "unicode": false,
+                          "value": "ZIP contents size: ",
+                        },
+                        "right": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "contents",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "strlen",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"\\\\n\\"",
+                        "unicode": false,
+                        "value": "
+",
+                      },
+                      "type": ".",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          Bin {
+                            "kind": "bin",
+                            "left": Bin {
+                              "kind": "bin",
+                              "left": Bin {
+                                "kind": "bin",
+                                "left": String {
+                                  "isDoubleQuote": true,
+                                  "kind": "string",
+                                  "raw": "\\"zip_readfile recorded data does not match unpacked size: \\"",
+                                  "unicode": false,
+                                  "value": "zip_readfile recorded data does not match unpacked size: ",
+                                },
+                                "right": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "zipname",
+                                },
+                                "type": ".",
+                              },
+                              "right": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\" : \\"",
+                                "unicode": false,
+                                "value": " : ",
+                              },
+                              "type": ".",
+                            },
+                            "right": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "filename",
+                            },
+                            "type": ".",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "contents",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "strlen",
+                        "resolution": "uqn",
+                      },
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "file_size",
+                    },
+                    "type": "!=",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "file_size",
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "0",
+              },
+              "type": ">",
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "close",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "za",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "res",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "TRUE",
+          "value": true,
+        },
+        "type": "===",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

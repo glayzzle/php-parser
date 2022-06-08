@@ -1,0 +1,1127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests ldap_exop() and ldap_parse_exop() - EXOP operations 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"connect.inc\\"",
+          "unicode": false,
+          "value": "connect.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "link",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "host",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "protocol_version",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "ldap_connect_and_bind",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "base",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "insert_dummy_data",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "user",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "oldpw",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "newpw",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "hex",
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "''",
+                "unicode": false,
+                "value": "",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "hex",
+                    },
+                    "operator": ".=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'80'",
+                          "unicode": false,
+                          "value": "80",
+                        },
+                        "right": Call {
+                          "arguments": Array [
+                            String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"%'.02x\\"",
+                              "unicode": false,
+                              "value": "%'.02x",
+                            },
+                            Call {
+                              "arguments": Array [
+                                Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "user",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "strlen",
+                                "resolution": "uqn",
+                              },
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "sprintf",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "right": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "user",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "bin2hex",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "type": ".",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Empty {
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "user",
+                },
+                "kind": "empty",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "hex",
+                    },
+                    "operator": ".=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'81'",
+                          "unicode": false,
+                          "value": "81",
+                        },
+                        "right": Call {
+                          "arguments": Array [
+                            String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"%'.02x\\"",
+                              "unicode": false,
+                              "value": "%'.02x",
+                            },
+                            Call {
+                              "arguments": Array [
+                                Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "oldpw",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "strlen",
+                                "resolution": "uqn",
+                              },
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "sprintf",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "right": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "oldpw",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "bin2hex",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "type": ".",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Empty {
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "oldpw",
+                },
+                "kind": "empty",
+              },
+            },
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "hex",
+                    },
+                    "operator": ".=",
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'82'",
+                          "unicode": false,
+                          "value": "82",
+                        },
+                        "right": Call {
+                          "arguments": Array [
+                            String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"%'.02x\\"",
+                              "unicode": false,
+                              "value": "%'.02x",
+                            },
+                            Call {
+                              "arguments": Array [
+                                Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "newpw",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "strlen",
+                                "resolution": "uqn",
+                              },
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "sprintf",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "right": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "newpw",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "bin2hex",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "type": ".",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Empty {
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "newpw",
+                },
+                "kind": "empty",
+              },
+            },
+          },
+          Return {
+            "expr": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'30'",
+                      "unicode": false,
+                      "value": "30",
+                    },
+                    "right": Call {
+                      "arguments": Array [
+                        String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"%'.02x\\"",
+                          "unicode": false,
+                          "value": "%'.02x",
+                        },
+                        Bin {
+                          "kind": "bin",
+                          "left": Call {
+                            "arguments": Array [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "hex",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "strlen",
+                              "resolution": "uqn",
+                            },
+                          },
+                          "right": Number {
+                            "kind": "number",
+                            "value": "2",
+                          },
+                          "type": "/",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "sprintf",
+                        "resolution": "uqn",
+                      },
+                    },
+                    "type": ".",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "hex",
+                  },
+                  "type": ".",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "hex2bin",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "build_reqdata_passwd",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "retdata",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "retdata",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "bin2hex",
+                        "resolution": "uqn",
+                      },
+                    },
+                    Bin {
+                      "kind": "bin",
+                      "left": Number {
+                        "kind": "number",
+                        "value": "4",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "2",
+                      },
+                      "type": "*",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "substr",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "hex2bin",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "extract_genpw",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "userAPassword",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"oops\\"",
+          "unicode": false,
+          "value": "oops",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              Name {
+                "kind": "name",
+                "name": "LDAP_EXOP_WHO_AM_I",
+                "resolution": "uqn",
+              },
+              NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+              NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retdata",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retoid",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "ldap_exop",
+              "resolution": "uqn",
+            },
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "retdata",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "retoid",
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              Name {
+                "kind": "name",
+                "name": "LDAP_EXOP_WHO_AM_I",
+                "resolution": "uqn",
+              },
+              NullKeyword {
+                "kind": "nullkeyword",
+                "raw": "NULL",
+              },
+              Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'oid'",
+                            "unicode": false,
+                            "value": "oid",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Name {
+                            "kind": "name",
+                            "name": "LDAP_CONTROL_PROXY_AUTHZ",
+                            "resolution": "uqn",
+                          },
+                        },
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "'value'",
+                            "unicode": false,
+                            "value": "value",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": Encapsed {
+                            "kind": "encapsed",
+                            "raw": "\\"dn:cn=userA,$base\\"",
+                            "type": "string",
+                            "value": Array [
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "dn:cn=userA,",
+                                  "unicode": false,
+                                  "value": "dn:cn=userA,",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": null,
+                              },
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "base",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": "simple",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": true,
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retdata",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "ldap_exop",
+              "resolution": "uqn",
+            },
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "retdata",
+          },
+          Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "r",
+            },
+            "operator": "=",
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "LDAP_EXOP_WHO_AM_I",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ldap_exop",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retdata2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "ldap_parse_exop",
+              "resolution": "uqn",
+            },
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "retdata2",
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "host",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "port",
+              },
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"cn=userA,$base\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "cn=userA,",
+                      "unicode": false,
+                      "value": "cn=userA,",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "base",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                ],
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "userAPassword",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "protocol_version",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "test_bind",
+              "resolution": "uqn",
+            },
+          },
+          Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "r",
+            },
+            "operator": "=",
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "link",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "LDAP_EXOP_MODIFY_PASSWD",
+                  "resolution": "uqn",
+                },
+                Call {
+                  "arguments": Array [
+                    Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"cn=userA,$base\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "cn=userA,",
+                            "unicode": false,
+                            "value": "cn=userA,",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "base",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                      ],
+                    },
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "userAPassword",
+                    },
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\"",
+                      "unicode": false,
+                      "value": "",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "build_reqdata_passwd",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ldap_exop",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "link",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "r",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retpwdata",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "retpwoid",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "ldap_parse_exop",
+              "resolution": "uqn",
+            },
+          },
+          Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "genpw",
+            },
+            "operator": "=",
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "retpwdata",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "extract_genpw",
+                "resolution": "uqn",
+              },
+            },
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "retpwoid",
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "host",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "port",
+              },
+              Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"cn=userA,$base\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "cn=userA,",
+                      "unicode": false,
+                      "value": "cn=userA,",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "base",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                ],
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "genpw",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "protocol_version",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "test_bind",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

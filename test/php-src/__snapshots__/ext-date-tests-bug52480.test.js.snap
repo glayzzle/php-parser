@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #52480 (Incorrect difference using DateInterval) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "expectedDiff",
+        },
+        "operator": "=",
+        "right": Cast {
+          "expr": New {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'P30D'",
+                "unicode": false,
+                "value": "P30D",
+              },
+            ],
+            "kind": "new",
+            "what": Name {
+              "kind": "name",
+              "name": "DateInterval",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "cast",
+          "raw": "(array)",
+          "type": "array",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'days'",
+            "unicode": false,
+            "value": "days",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "expectedDiff",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "30",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "start",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'2017-03-01'",
+                    "unicode": false,
+                    "value": "2017-03-01",
+                  },
+                  New {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "timezone",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "DateTimeZone",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "DateTime",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "end",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'2017-03-31'",
+                    "unicode": false,
+                    "value": "2017-03-31",
+                  },
+                  New {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "timezone",
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "DateTimeZone",
+                      "resolution": "uqn",
+                    },
+                  },
+                ],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "DateTime",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    Encapsed {
+                      "kind": "encapsed",
+                      "raw": "\\"\\\\nWrong result for $timezone!\\\\n\\"",
+                      "type": "string",
+                      "value": Array [
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "\\\\nWrong result for ",
+                            "unicode": false,
+                            "value": "
+Wrong result for ",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "timezone",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": "simple",
+                        },
+                        EncapsedPart {
+                          "curly": false,
+                          "expression": String {
+                            "isDoubleQuote": false,
+                            "kind": "string",
+                            "raw": "!\\\\n",
+                            "unicode": false,
+                            "value": "!",
+                          },
+                          "kind": "encapsedpart",
+                          "syntax": null,
+                        },
+                      ],
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "expectedDiff",
+              },
+              "right": Cast {
+                "expr": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "end",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "diff",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "start",
+                    },
+                  },
+                },
+                "kind": "cast",
+                "raw": "(array)",
+                "type": "array",
+              },
+              "type": "!=",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "listIdentifiers",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "DateTimeZone",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "timezone",
+      },
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+===DONE===",
+      "value": "===DONE===",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

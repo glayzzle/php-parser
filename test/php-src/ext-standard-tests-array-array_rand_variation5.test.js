@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/array_rand_variation5.phpt
+  it("Test array_rand() function : usage variation - invalid values for 'req_num' parameter", function () {
+    expect(parser.parseCode("<?php\n/*\n* Test behaviour of array_rand() function when associative array and\n* various invalid values are passed to the 'input' and 'req_num'\n* parameters respectively\n*/\necho \"*** Testing array_rand() : with invalid values for 'req_num' ***\\n\";\n// initialise associative arrays\n$input = array(\n  1 => 'one',\n  0xabc => 2748, 0x12f => '303', 0xff => \"255\",\n  0123 => 83, 012 => 10, 010 => \"8\"\n);\n// Testing array_rand() function with various invalid 'req_num' values\n// with valid num_req values\necho\"\\n-- With default num_req value --\\n\";\nvar_dump( array_rand($input) );  // with default $num_req value\necho\"\\n-- With num_req = 1 --\\n\";\nvar_dump( array_rand($input, 1) );  // with valid $num_req value\n// with invalid num_req value\necho\"\\n-- With num_req = 0 --\\n\";\ntry {\n    var_dump( array_rand($input, 0) );  // with $num_req=0\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\necho\"\\n-- With num_req = -1 --\\n\";\ntry {\n    var_dump( array_rand($input, -1) );  // with $num_req=-1\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\necho\"\\n-- With num_req = -2 --\\n\";\ntry {\n    var_dump( array_rand($input, -2) );  // with $num_req=-2\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\necho\"\\n-- With num_req more than number of members in 'input' array --\\n\";\ntry {\n    var_dump( array_rand($input, 13) );  // with $num_req=13\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

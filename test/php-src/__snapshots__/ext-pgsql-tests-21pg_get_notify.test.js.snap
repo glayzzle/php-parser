@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PostgreSQL pg_get_notify() functions 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "conn_str",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_connect",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'LISTEN test_msg'",
+            "unicode": false,
+            "value": "LISTEN test_msg",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'NOTIFY test_msg'",
+            "unicode": false,
+            "value": "NOTIFY test_msg",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_query",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "msg",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "pg_get_notify",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": RetIf {
+        "falseExpr": Print {
+          "expression": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'NG'",
+            "unicode": false,
+            "value": "NG",
+          },
+          "kind": "print",
+        },
+        "kind": "retif",
+        "test": Isset {
+          "kind": "isset",
+          "variables": Array [
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'message'",
+                "unicode": false,
+                "value": "message",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "msg",
+              },
+            },
+            OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'pid'",
+                "unicode": false,
+                "value": "pid",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "msg",
+              },
+            },
+          ],
+        },
+        "trueExpr": Print {
+          "expression": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'OK'",
+            "unicode": false,
+            "value": "OK",
+          },
+          "kind": "print",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

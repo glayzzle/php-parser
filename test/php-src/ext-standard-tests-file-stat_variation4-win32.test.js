@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/stat_variation4-win32.phpt
+  it("Test stat() functions: usage variations - effects of is_dir() & is_file()", function () {
+    expect(parser.parseCode("<?php\n/* test the effects on the stats of dir/file for using is_dir() & is_file() on dir/file */\n$file_path = __DIR__;\nrequire \"$file_path/file.inc\";\n/* create temp file and directory */\nmkdir(\"$file_path/stat_variation4/\");  // temp dir\n$file_handle = fopen(\"$file_path/stat_variation4.tmp\", \"w\");  // temp file\nfclose($file_handle);\necho \"\\n*** Testing stat(): on file and directory after accessing it\n    with is_dir() and is_file() functions ***\\n\";\n// is_dir() on a directory\necho \"-- Testing on Directory --\\n\";\n$old_dirname = \"$file_path/stat_variation4\";\n$old_stat = stat($old_dirname);\n// clear the cache\nclearstatcache();\nsleep(1);\nvar_dump( is_dir($old_dirname) );\n$new_stat = stat($old_dirname);\n// compare self stats\nvar_dump( compare_self_stat($old_stat) );\nvar_dump( compare_self_stat($new_stat) );\n// compare the stat\nvar_dump( compare_stats($old_stat, $new_stat, $all_stat_keys, \"==\") );\n// clear the stat\nclearstatcache();\n// is_file() on a file\necho \"-- Testing on file --\\n\";\n$old_filename = \"$file_path/stat_variation4.tmp\";\n$old_stat = stat($old_filename);\n// clear the stat\nclearstatcache();\nsleep(2);\nvar_dump( is_file($old_filename) );\n$new_stat = stat($old_filename);\n// compare self stats\nvar_dump( compare_self_stat($old_stat) );\nvar_dump( compare_self_stat($new_stat) );\n// compare the stat\nvar_dump( compare_stats($old_stat, $new_stat, $all_stat_keys, \"==\") );\n// clear the stat\nclearstatcache();\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

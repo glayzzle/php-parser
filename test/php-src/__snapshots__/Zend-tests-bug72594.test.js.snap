@@ -1,0 +1,280 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72594 (Calling an earlier instance of an included anonymous class fatals) 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": New {
+              "arguments": Array [],
+              "kind": "new",
+              "what": Class {
+                "attrGroups": Array [],
+                "body": Array [
+                  PropertyStatement {
+                    "isStatic": false,
+                    "kind": "propertystatement",
+                    "properties": Array [
+                      Property {
+                        "attrGroups": Array [],
+                        "kind": "property",
+                        "name": Identifier {
+                          "kind": "identifier",
+                          "name": "bar",
+                        },
+                        "nullable": false,
+                        "readonly": false,
+                        "type": null,
+                        "value": null,
+                      },
+                    ],
+                    "visibility": "public",
+                  },
+                  Method {
+                    "arguments": Array [
+                      Parameter {
+                        "attrGroups": Array [],
+                        "byref": false,
+                        "flags": 0,
+                        "kind": "parameter",
+                        "name": Identifier {
+                          "kind": "identifier",
+                          "name": "foo",
+                        },
+                        "nullable": false,
+                        "readonly": false,
+                        "type": null,
+                        "value": NullKeyword {
+                          "kind": "nullkeyword",
+                          "raw": "null",
+                        },
+                        "variadic": false,
+                      },
+                    ],
+                    "attrGroups": Array [],
+                    "body": Block {
+                      "children": Array [
+                        If {
+                          "alternate": null,
+                          "body": ExpressionStatement {
+                            "expression": Call {
+                              "arguments": Array [],
+                              "kind": "call",
+                              "what": PropertyLookup {
+                                "kind": "propertylookup",
+                                "offset": Identifier {
+                                  "kind": "identifier",
+                                  "name": "bing",
+                                },
+                                "what": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "foo",
+                                },
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                          "kind": "if",
+                          "shortForm": false,
+                          "test": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "foo",
+                          },
+                        },
+                      ],
+                      "kind": "block",
+                    },
+                    "byref": false,
+                    "isAbstract": false,
+                    "isFinal": false,
+                    "isStatic": false,
+                    "kind": "method",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "bing",
+                    },
+                    "nullable": false,
+                    "type": null,
+                    "visibility": "public",
+                  },
+                ],
+                "extends": null,
+                "implements": null,
+                "isAbstract": false,
+                "isAnonymous": true,
+                "isFinal": false,
+                "kind": "class",
+                "name": null,
+              },
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Isset {
+        "kind": "isset",
+        "variables": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "runtime",
+          },
+        ],
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "runtime",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oldFoo",
+        },
+        "operator": "=",
+        "right": Include {
+          "kind": "include",
+          "once": false,
+          "require": true,
+          "target": Magic {
+            "kind": "magic",
+            "parenthesizedExpression": true,
+            "raw": "__FILE__",
+            "value": "__FILE__",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "newFoo",
+        },
+        "operator": "=",
+        "right": Include {
+          "kind": "include",
+          "once": false,
+          "require": true,
+          "target": Magic {
+            "kind": "magic",
+            "parenthesizedExpression": true,
+            "raw": "__FILE__",
+            "value": "__FILE__",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oldFoo",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "get_class_methods",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oldFoo",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "get_object_vars",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "oldFoo",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bing",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "newFoo",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

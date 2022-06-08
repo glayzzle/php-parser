@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/reflection/tests/ReflectionClass_implementsInterface_001.phpt
+  it("ReflectionClass::implementsInterface()", function () {
+    expect(parser.parseCode("<?php\ninterface I1 {}\nclass A implements I1 {}\nclass B extends A {}\ninterface I2 extends I1 {}\nclass C implements I2 {}\n$classNames = array('A', 'B', 'C', 'I1', 'I2');\nforeach ($classNames as $className) {\n    $rcs[$className] = new ReflectionClass($className);\n}\nforeach ($rcs as $childName => $child) {\n    foreach ($rcs as $parentName => $parent) {\n        echo \"Does \" . $childName . \" implement \" . $parentName . \"?\\n\";\n        echo \"   - Using object argument: \";\n        try {\n            var_dump($child->implementsInterface($parent));\n        } catch (Exception|TypeError $e) {\n            echo $e->getMessage() . \"\\n\";\n        }\n        echo \"   - Using string argument: \";\n        try {\n            var_dump($child->implementsInterface($parentName));\n        } catch (Exception|TypeError $e) {\n            echo $e->getMessage() . \"\\n\";\n        }\n    }\n}\necho \"\\n\\nTest bad arguments:\\n\";\ntry {\n    $rcs['A']->implementsInterface();\n} catch (ArgumentCountError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    $rcs['A']->implementsInterface('C', 'C');\n} catch (ArgumentCountError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    $rcs['A']->implementsInterface(null);\n} catch (ReflectionException $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    $rcs['A']->implementsInterface('ThisClassDoesNotExist');\n} catch (ReflectionException $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    $rcs['A']->implementsInterface(2);\n} catch (ReflectionException $e) {\n    echo $e->getMessage() . \"\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

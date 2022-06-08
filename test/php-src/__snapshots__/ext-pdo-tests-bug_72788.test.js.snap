@@ -1,0 +1,351 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PDO Common: Bug #72788 (Invalid memory access when using persistent PDO connection) 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'REDIR_TEST_DIR='",
+                  "unicode": false,
+                  "value": "REDIR_TEST_DIR=",
+                },
+                "right": Magic {
+                  "kind": "magic",
+                  "raw": "__DIR__",
+                  "value": "__DIR__",
+                },
+                "type": ".",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/../../pdo/tests/'",
+                "unicode": false,
+                "value": "/../../pdo/tests/",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "putenv",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'REDIR_TEST_DIR'",
+              "unicode": false,
+              "value": "REDIR_TEST_DIR",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "getenv",
+            "resolution": "uqn",
+          },
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "===",
+      },
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'REDIR_TEST_DIR'",
+                "unicode": false,
+                "value": "REDIR_TEST_DIR",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "getenv",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'pdo_test.inc'",
+            "unicode": false,
+            "value": "pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"PDOTEST_ATTR=\\"",
+              "unicode": false,
+              "value": "PDOTEST_ATTR=",
+            },
+            "right": Call {
+              "arguments": Array [
+                Array {
+                  "items": Array [
+                    Entry {
+                      "byRef": false,
+                      "key": StaticLookup {
+                        "kind": "staticlookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "ATTR_PERSISTENT",
+                        },
+                        "what": Name {
+                          "kind": "name",
+                          "name": "PDO",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Boolean {
+                        "kind": "boolean",
+                        "raw": "true",
+                        "value": true,
+                      },
+                    },
+                  ],
+                  "kind": "array",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "serialize",
+                "resolution": "uqn",
+              },
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "putenv",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'PDO'",
+                    "unicode": false,
+                    "value": "PDO",
+                  },
+                  Boolean {
+                    "kind": "boolean",
+                    "raw": "false",
+                    "value": false,
+                  },
+                ],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "factory",
+                  },
+                  "what": Name {
+                    "kind": "name",
+                    "name": "PDOTest",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Silent {
+                "expr": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"SELECT 1 FROM TABLE_DOES_NOT_EXIST\\"",
+                      "unicode": false,
+                      "value": "SELECT 1 FROM TABLE_DOES_NOT_EXIST",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "query",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db",
+                    },
+                  },
+                },
+                "kind": "silent",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Statement failed as expected\\\\n\\"",
+                      "unicode": false,
+                      "value": "Statement failed as expected
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "right": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+              "type": "===",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\"",
+          "unicode": false,
+          "value": "Done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

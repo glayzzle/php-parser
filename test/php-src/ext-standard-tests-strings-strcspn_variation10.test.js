@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/strcspn_variation10.phpt
+  it("Test strcspn() function : usage variations - with varying mask & default start and len args", function () {
+    expect(parser.parseCode("<?php\n/*\n* Testing strcspn() : with varying mask and default start and len arguments\n*/\necho \"*** Testing strcspn() : with different mask strings and default start and len arguments ***\\n\";\n// initialing required variables\n$strings = array(\n                   \"\",\n           '',\n           \"\\n\",\n           '\\n',\n           \"hello\\tworld\\nhello\\nworld\\n\",\n           'hello\\tworld\\nhello\\nworld\\n',\n           \"1234hello45world\\t123\",\n           '1234hello45world\\t123',\n           \"hello\\0world\\012\",\n           'hello\\0world\\012',\n           chr(0).chr(0),\n           chr(0).\"hello\\0world\".chr(0),\n           chr(0).'hello\\0world'.chr(0),\n           \"hello\".chr(0).\"world\",\n           'hello'.chr(0).'world',\n           \"hello\\0\\100\\xaaaworld\",\n           'hello\\0\\100\\xaaaworld'\n                   );\n// defining array of mask strings\n$mask_array = array(\n            \"\",\n            '',\n            \"\\n\\trsti \\l\",\n            '\\n\\trsti \\l',\n            \"\\t\",\n            \"t\\ \",\n            '\\t',\n            \"\\t\\ \",\n            \" \\t\",\n                    \"\\t\\i\\100\\xa\"\n                   );\n// loop through each element of the array for mask argument\n$count = 1;\nforeach($strings as $str) {\n  echo \"\\n-- Itearation $count --\\n\";\n  foreach($mask_array as $mask) {\n      var_dump( strcspn($str,$mask) );\n  }\n  $count++;\n}\necho \"Done\"\n?>")).toMatchSnapshot();
+  });
+});

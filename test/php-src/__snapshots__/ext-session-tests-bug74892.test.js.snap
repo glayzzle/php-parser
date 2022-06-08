@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #74892 Url Rewriting (trans_sid) not working on urls that start with # 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'session.use_cookies'",
+            "unicode": false,
+            "value": "session.use_cookies",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'0'",
+            "unicode": false,
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'session.use_only_cookies'",
+            "unicode": false,
+            "value": "session.use_only_cookies",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'session.use_trans_sid'",
+            "unicode": false,
+            "value": "session.use_trans_sid",
+          },
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'session.trans_sid_hosts'",
+            "unicode": false,
+            "value": "session.trans_sid_hosts",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'php.net'",
+            "unicode": false,
+            "value": "php.net",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'sessionidhere'",
+            "unicode": false,
+            "value": "sessionidhere",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "session_id",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "session_start",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+<p><a href=\\"index.php\\">Click This Anchor Tag!</a></p>
+<p><a href=\\"index.php#place\\">External link with anchor</a></p>
+<p><a href=\\"http://php.net#foo\\">External link with anchor 2</a></p>
+<p><a href=\\"#place\\">Internal link</a></p>",
+      "value": "<p><a href=\\"index.php\\">Click This Anchor Tag!</a></p>
+<p><a href=\\"index.php#place\\">External link with anchor</a></p>
+<p><a href=\\"http://php.net#foo\\">External link with anchor 2</a></p>
+<p><a href=\\"#place\\">Internal link</a></p>",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

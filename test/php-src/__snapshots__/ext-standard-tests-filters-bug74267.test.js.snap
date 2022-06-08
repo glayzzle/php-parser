@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #74267 (segfault with streams and invalid data) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stream",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'php://memory'",
+              "unicode": false,
+              "value": "php://memory",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'w'",
+              "unicode": false,
+              "value": "w",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'convert.quoted-printable-decode'",
+            "unicode": false,
+            "value": "convert.quoted-printable-decode",
+          },
+          Name {
+            "kind": "name",
+            "name": "STREAM_FILTER_WRITE",
+            "resolution": "uqn",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'line-break-chars'",
+                  "unicode": false,
+                  "value": "line-break-chars",
+                },
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\r\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "stream_filter_append",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "lines",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\" -=()\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": " -=()
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\" -=\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": " -=
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stream",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "line",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fwrite",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "lines",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "line",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stream",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done\\\\n\\"",
+          "unicode": false,
+          "value": "done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

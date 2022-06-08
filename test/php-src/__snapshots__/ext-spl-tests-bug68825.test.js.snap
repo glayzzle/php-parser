@@ -1,0 +1,252 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #68825 (Exception in DirectoryIterator::getLinkTarget()) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dir",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/bug68825'",
+            "unicode": false,
+            "value": "/bug68825",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": If {
+        "alternate": null,
+        "body": Block {
+          "children": Array [
+            ExpressionStatement {
+              "expression": Exit {
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Failed to create symbolic link'",
+                  "unicode": false,
+                  "value": "Failed to create symbolic link",
+                },
+                "kind": "exit",
+                "useDie": true,
+              },
+              "kind": "expressionstatement",
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Unary {
+          "kind": "unary",
+          "type": "!",
+          "what": Call {
+            "arguments": Array [
+              Magic {
+                "kind": "magic",
+                "raw": "__FILE__",
+                "value": "__FILE__",
+              },
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "dir",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'/bug'",
+                  "unicode": false,
+                  "value": "/bug",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "symlink",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Failed to create temporary directory for testing'",
+                "unicode": false,
+                "value": "Failed to create temporary directory for testing",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dir",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "mkdir",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "di",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dir",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "\\\\DirectoryIterator",
+            "resolution": "fqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getLinkTarget",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "entry",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'bug'",
+                "unicode": false,
+                "value": "bug",
+              },
+              "right": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "getFilename",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "entry",
+                  },
+                },
+              },
+              "type": "===",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "di",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "entry",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

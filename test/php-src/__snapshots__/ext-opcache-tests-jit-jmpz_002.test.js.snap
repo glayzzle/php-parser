@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests JIT JMPZ: Separate JMPZ for "smart branch" may be only emitted by function JIT 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"Not taken\\\\n\\"",
+                      "unicode": false,
+                      "value": "Not taken
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": RetIf {
+              "falseExpr": Bin {
+                "kind": "bin",
+                "left": Name {
+                  "kind": "name",
+                  "name": "X",
+                  "resolution": "uqn",
+                },
+                "parenthesizedExpression": true,
+                "right": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                "type": ">",
+              },
+              "kind": "retif",
+              "test": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+              "trueExpr": Number {
+                "kind": "number",
+                "value": "0",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+DONE",
+      "value": "DONE",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

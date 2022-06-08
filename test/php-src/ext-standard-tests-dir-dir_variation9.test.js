@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/dir/dir_variation9.phpt
+  it("Test dir() function : usage variations - relative valid and invalid paths", function () {
+    expect(parser.parseCode("<?php\n/*\n * Checking the behavior of dir() function by passing directories which\n * have valid and invalid relative path.\n */\necho \"*** Testing dir() : checking with valid and invalid paths ***\\n\";\n/* create the temporary directories */\n$file_path = __DIR__;\n// directory dir_variation91 with one sub-directory sub_dir11 and sub-sub-directory sub_dir111\n$dir_path1 = $file_path.\"/dir_variation91\";\n$sub_dir11 = $dir_path1.\"/sub_dir11\";\n$sub_dir111 = $sub_dir11.\"/sub_dir111\";\n// directory dir_variation92 with one sub-directory sub_dir21\n$dir_path2 = $file_path.\"/dir_variation92\";\n$sub_dir21 = $dir_path2.\"/sub_dir21\";\n@mkdir($dir_path1);\n@mkdir($dir_path2);\n@mkdir($sub_dir11);\n@mkdir($sub_dir111);\n@mkdir($sub_dir21);\n// open the directory with valid paths\necho \"\\n-- With valid paths --\\n\";\nvar_dump( dir(\"$dir_path1/sub_dir11/sub_dir111/..\") );\nvar_dump( dir(\"$dir_path2/sub_dir21/../../dir_variation91\") );\nvar_dump( dir(\"$dir_path2/sub_dir21/../../dir_variation91/sub_dir11/..\") );\nvar_dump( dir(\"$dir_path1/sub_dir11/sub_dir111/../../../dir_variation92/sub_dir21/..\") );\n// open the directory with invalid path\necho \"\\n-- With invalid paths --\\n\";\nvar_dump( dir(\"$dir_path1/sub_dir12/sub_dir111/..\") );\nvar_dump( dir(\"$dir_path2/sub_dir21/../dir_variation91\") );\nvar_dump( dir(\"$dir_path2/sub_dir21/../../dir_variation91/sub_dir12/..\") );\nvar_dump( dir(\"$dir_path1/sub_dir11/sub_dir111/../../dir_variation92/sub_dir21/..\") );\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

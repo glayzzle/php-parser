@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests eval() constant resolution 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'foo\\\\true'",
+                "unicode": false,
+                "value": "foo\\\\true",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'test'",
+                "unicode": false,
+                "value": "test",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "define",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        Echo {
+          "expressions": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"In eval\\\\n\\"",
+              "unicode": false,
+              "value": "In eval
+",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+        ExpressionStatement {
+          "expression": Eval {
+            "kind": "eval",
+            "source": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'namespace foo { var_dump(true); var_dump(TrUe); var_dump(namespace\\\\true); var_dump(\\\\true); }'",
+              "unicode": false,
+              "value": "namespace foo { var_dump(true); var_dump(TrUe); var_dump(namespace\\\\true); var_dump(\\\\true); }",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        Echo {
+          "expressions": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"Outside eval\\\\n\\"",
+              "unicode": false,
+              "value": "Outside eval
+",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Boolean {
+                "kind": "boolean",
+                "raw": "TrUe",
+                "value": true,
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "\\\\true",
+                "resolution": "fqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "foo",
+      "withBrackets": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

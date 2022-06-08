@@ -1,0 +1,110 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #66094 (unregister_tick_function tries to cast a Closure to a string) 1`] = `
+Program {
+  "children": Array [
+    Declare {
+      "children": Array [],
+      "directives": Array [
+        DeclareDirective {
+          "key": Identifier {
+            "kind": "identifier",
+            "name": "ticks",
+          },
+          "kind": "declaredirective",
+          "value": Number {
+            "kind": "number",
+            "value": "1",
+          },
+        },
+      ],
+      "kind": "declare",
+      "mode": "none",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "closure",
+            },
+            "operator": "=",
+            "right": Closure {
+              "arguments": Array [],
+              "attrGroups": Array [],
+              "body": Block {
+                "children": Array [
+                  Echo {
+                    "expressions": Array [
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"Tick!\\\\n\\"",
+                        "unicode": false,
+                        "value": "Tick!
+",
+                      },
+                    ],
+                    "kind": "echo",
+                    "shortForm": false,
+                  },
+                ],
+                "kind": "block",
+              },
+              "byref": false,
+              "isStatic": false,
+              "kind": "closure",
+              "nullable": false,
+              "type": null,
+              "uses": Array [],
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "register_tick_function",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "closure",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "unregister_tick_function",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"done\\"",
+          "unicode": false,
+          "value": "done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

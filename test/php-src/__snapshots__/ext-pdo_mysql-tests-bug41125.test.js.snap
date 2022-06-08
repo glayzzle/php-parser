@@ -1,0 +1,1627 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #41125 (PDO mysql + quote() + prepare() can result in seg fault) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "DIRECTORY_SEPARATOR",
+              "resolution": "uqn",
+            },
+            "type": ".",
+          },
+          "parenthesizedExpression": true,
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'mysql_pdo_test.inc'",
+            "unicode": false,
+            "value": "mysql_pdo_test.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/common.phpt'",
+                "unicode": false,
+                "value": "/common.phpt",
+              },
+              "type": ".",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "test_factory",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDOTest",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "search",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"o'\\"",
+          "unicode": false,
+          "value": "o'",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sql",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"SELECT 1 FROM DUAL WHERE 'o''riley' LIKE \\"",
+            "unicode": false,
+            "value": "SELECT 1 FROM DUAL WHERE 'o''riley' LIKE ",
+          },
+          "right": Call {
+            "arguments": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'%'",
+                    "unicode": false,
+                    "value": "%",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "search",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'%'",
+                  "unicode": false,
+                  "value": "%",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "quote",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+            },
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sql",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "execute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "' - '",
+                "unicode": false,
+                "value": " - ",
+              },
+              RetIf {
+                "falseExpr": Array {
+                  "items": Array [],
+                  "kind": "array",
+                  "shortForm": false,
+                },
+                "kind": "retif",
+                "parenthesizedExpression": true,
+                "test": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "operator": "=",
+                  "parenthesizedExpression": true,
+                  "right": Silent {
+                    "expr": Call {
+                      "arguments": Array [
+                        StaticLookup {
+                          "kind": "staticlookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "FETCH_NUM",
+                          },
+                          "what": Name {
+                            "kind": "name",
+                            "name": "PDO",
+                            "resolution": "uqn",
+                          },
+                        },
+                      ],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "fetch",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "stmt",
+                        },
+                      },
+                    },
+                    "kind": "silent",
+                  },
+                },
+                "trueExpr": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "implode",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "' - '",
+                "unicode": false,
+                "value": " - ",
+              },
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "errorinfo",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "stmt",
+                  },
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "implode",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"-------------------------------------------------------\\\\n\\"",
+          "unicode": false,
+          "value": "-------------------------------------------------------
+",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "queries",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE 1 = '?\\\\'\\\\''\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE 1 = '?\\\\'\\\\''",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 'a\\\\\\\\'0' FROM DUAL WHERE 1 = ?\\"",
+                "unicode": false,
+                "value": "SELECT 'a\\\\'0' FROM DUAL WHERE 1 = ?",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 'a', 'b\\\\'' FROM DUAL WHERE '''' LIKE '\\\\\\\\'' AND ?\\"",
+                "unicode": false,
+                "value": "SELECT 'a', 'b\\\\'' FROM DUAL WHERE '''' LIKE '\\\\'' AND ?",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 'foo?bar', '', '''' FROM DUAL WHERE ?\\"",
+                "unicode": false,
+                "value": "SELECT 'foo?bar', '', '''' FROM DUAL WHERE ?",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "query",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "prepare",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Array {
+                  "items": Array [
+                    Entry {
+                      "byRef": false,
+                      "key": null,
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    },
+                  ],
+                  "kind": "array",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "execute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"[%d] Query: [[%s]]\\\\n\\"",
+                  "unicode": false,
+                  "value": "[%d] Query: [[%s]]
+",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "k",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "query",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "printf",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "' - '",
+                      "unicode": false,
+                      "value": " - ",
+                    },
+                    RetIf {
+                      "falseExpr": Array {
+                        "items": Array [],
+                        "kind": "array",
+                        "shortForm": false,
+                      },
+                      "kind": "retif",
+                      "parenthesizedExpression": true,
+                      "test": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "r",
+                        },
+                        "operator": "=",
+                        "parenthesizedExpression": true,
+                        "right": Silent {
+                          "expr": Call {
+                            "arguments": Array [
+                              StaticLookup {
+                                "kind": "staticlookup",
+                                "offset": Identifier {
+                                  "kind": "identifier",
+                                  "name": "FETCH_NUM",
+                                },
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "PDO",
+                                  "resolution": "uqn",
+                                },
+                              },
+                            ],
+                            "kind": "call",
+                            "what": PropertyLookup {
+                              "kind": "propertylookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "fetch",
+                              },
+                              "what": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "stmt",
+                              },
+                            },
+                          },
+                          "kind": "silent",
+                        },
+                      },
+                      "trueExpr": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "r",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "implode",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "' - '",
+                      "unicode": false,
+                      "value": " - ",
+                    },
+                    Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "errorinfo",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "stmt",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "implode",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"--------\\\\n\\"",
+                "unicode": false,
+                "value": "--------
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "k",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "queries",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "query",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ATTR_EMULATE_PREPARES",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sql",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"SELECT upper(:id) FROM DUAL WHERE '1'\\"",
+          "unicode": false,
+          "value": "SELECT upper(:id) FROM DUAL WHERE '1'",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sql",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "id",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'o\\\\'\\\\0'",
+          "unicode": false,
+          "value": "o'\\\\0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "':id'",
+            "unicode": false,
+            "value": ":id",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "id",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bindParam",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "execute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "stmt",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Query: [[%s]]\\\\n\\"",
+            "unicode": false,
+            "value": "Query: [[%s]]
+",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sql",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "' - '",
+                "unicode": false,
+                "value": " - ",
+              },
+              RetIf {
+                "falseExpr": Array {
+                  "items": Array [],
+                  "kind": "array",
+                  "shortForm": false,
+                },
+                "kind": "retif",
+                "parenthesizedExpression": true,
+                "test": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "r",
+                  },
+                  "operator": "=",
+                  "parenthesizedExpression": true,
+                  "right": Silent {
+                    "expr": Call {
+                      "arguments": Array [
+                        StaticLookup {
+                          "kind": "staticlookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "FETCH_NUM",
+                          },
+                          "what": Name {
+                            "kind": "name",
+                            "name": "PDO",
+                            "resolution": "uqn",
+                          },
+                        },
+                      ],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "fetch",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "stmt",
+                        },
+                      },
+                    },
+                    "kind": "silent",
+                  },
+                },
+                "trueExpr": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "r",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "implode",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "' - '",
+                "unicode": false,
+                "value": " - ",
+              },
+              Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "errorinfo",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "stmt",
+                  },
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "implode",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"-------------------------------------------------------\\\\n\\"",
+          "unicode": false,
+          "value": "-------------------------------------------------------
+",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "queries",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1, 'foo' FROM DUAL WHERE 1 = :id AND '\\\\\\\\0' IS NULL AND  2 <> :id\\"",
+                "unicode": false,
+                "value": "SELECT 1, 'foo' FROM DUAL WHERE 1 = :id AND '\\\\0' IS NULL AND  2 <> :id",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE 1 = :id AND '' AND  2 <> :id\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE 1 = :id AND '' AND  2 <> :id",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE 1 = :id AND '\\\\'\\\\'' = '''' AND  2 <> :id\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE 1 = :id AND '\\\\'\\\\'' = '''' AND  2 <> :id",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE 1 = :id AND '\\\\'' = '''' AND  2 <> :id\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE 1 = :id AND '\\\\'' = '''' AND  2 <> :id",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 'a', 'b\\\\'' FROM DUAL WHERE '''' LIKE '\\\\\\\\'' AND 1\\"",
+                "unicode": false,
+                "value": "SELECT 'a', 'b\\\\'' FROM DUAL WHERE '''' LIKE '\\\\'' AND 1",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 'a''', '\\\\'b\\\\'' FROM DUAL WHERE '''' LIKE '\\\\\\\\'' AND 1\\"",
+                "unicode": false,
+                "value": "SELECT 'a''', '\\\\'b\\\\'' FROM DUAL WHERE '''' LIKE '\\\\'' AND 1",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT UPPER(:id) FROM DUAL WHERE '1'\\"",
+                "unicode": false,
+                "value": "SELECT UPPER(:id) FROM DUAL WHERE '1'",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE '\\\\''\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE '\\\\''",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE :id AND '\\\\\\\\0' OR :id\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE :id AND '\\\\0' OR :id",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE 'a\\\\\\\\f\\\\\\\\n\\\\\\\\0' AND 1 >= :id\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE 'a\\\\f\\\\n\\\\0' AND 1 >= :id",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 FROM DUAL WHERE '\\\\'' = ''''\\"",
+                "unicode": false,
+                "value": "SELECT 1 FROM DUAL WHERE '\\\\'' = ''''",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT '\\\\\\\\n' '1 FROM DUAL WHERE '''' and :id'\\"",
+                "unicode": false,
+                "value": "SELECT '\\\\n' '1 FROM DUAL WHERE '''' and :id'",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"SELECT 1 'FROM DUAL WHERE :id AND '''' = '''' OR 1 = 1 AND ':id\\"",
+                "unicode": false,
+                "value": "SELECT 1 'FROM DUAL WHERE :id AND '''' = '''' OR 1 = 1 AND ':id",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ATTR_EMULATE_PREPARES",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+          Number {
+            "kind": "number",
+            "value": "1",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "id",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stmt",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "query",
+                  },
+                ],
+                "kind": "call",
+                "what": PropertyLookup {
+                  "kind": "propertylookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "prepare",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "':id'",
+                  "unicode": false,
+                  "value": ":id",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "id",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "bindParam",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "execute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"[%d] Query: [[%s]]\\\\n\\"",
+                  "unicode": false,
+                  "value": "[%d] Query: [[%s]]
+",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "k",
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "type": "+",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "query",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "printf",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "' - '",
+                      "unicode": false,
+                      "value": " - ",
+                    },
+                    RetIf {
+                      "falseExpr": Array {
+                        "items": Array [],
+                        "kind": "array",
+                        "shortForm": false,
+                      },
+                      "kind": "retif",
+                      "parenthesizedExpression": true,
+                      "test": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "r",
+                        },
+                        "operator": "=",
+                        "parenthesizedExpression": true,
+                        "right": Silent {
+                          "expr": Call {
+                            "arguments": Array [
+                              StaticLookup {
+                                "kind": "staticlookup",
+                                "offset": Identifier {
+                                  "kind": "identifier",
+                                  "name": "FETCH_NUM",
+                                },
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "PDO",
+                                  "resolution": "uqn",
+                                },
+                              },
+                            ],
+                            "kind": "call",
+                            "what": PropertyLookup {
+                              "kind": "propertylookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "fetch",
+                              },
+                              "what": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "stmt",
+                              },
+                            },
+                          },
+                          "kind": "silent",
+                        },
+                      },
+                      "trueExpr": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "r",
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "implode",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "' - '",
+                      "unicode": false,
+                      "value": " - ",
+                    },
+                    Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "errorinfo",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "stmt",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "implode",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"--------\\\\n\\"",
+                "unicode": false,
+                "value": "--------
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "k",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "queries",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "query",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

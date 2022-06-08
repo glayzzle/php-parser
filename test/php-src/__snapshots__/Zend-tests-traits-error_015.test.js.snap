@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Trying to add an alias to a trait method where there is another with same name.
+Should warn about the conflict. 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Number {
+                  "kind": "number",
+                  "value": "3",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+    },
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Number {
+                  "kind": "number",
+                  "value": "4",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "baz",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": Array [
+            TraitAlias {
+              "as": Identifier {
+                "kind": "identifier",
+                "name": "zzz",
+              },
+              "kind": "traitalias",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "test",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "baz",
+                "resolution": "uqn",
+              },
+              "visibility": "",
+            },
+          ],
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "foo",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "baz",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bar",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "x",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "bar",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "test",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

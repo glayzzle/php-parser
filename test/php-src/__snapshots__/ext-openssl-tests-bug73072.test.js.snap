@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #73072: Invalid path SNI_server_certs causes segfault 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "serverCode",
+        },
+        "operator": "=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "CODE",
+          "raw": "<<<'CODE'
+    $flags = STREAM_SERVER_BIND|STREAM_SERVER_LISTEN;
+    $ctx = stream_context_create(['ssl' => [
+        'local_cert' => __DIR__ . '/domain1.pem',
+        'SNI_server_certs' => [
+            \\"domain1.com\\" => __DIR__ . \\"/sni_server_domain1.pem\\",
+            \\"domain2.com\\" => __DIR__ . \\"/not_existing.pem\\",
+        ]
+    ]]);
+    $server = stream_socket_server('tls://127.0.0.1:64322', $errno, $errstr, $flags, $ctx);
+    phpt_notify();
+    @stream_socket_accept($server, 3);
+    // if there is a segfault, this won't be called
+    fwrite(STDERR, \\"done\\\\n\\");
+CODE",
+          "value": "    $flags = STREAM_SERVER_BIND|STREAM_SERVER_LISTEN;
+    $ctx = stream_context_create(['ssl' => [
+        'local_cert' => __DIR__ . '/domain1.pem',
+        'SNI_server_certs' => [
+            \\"domain1.com\\" => __DIR__ . \\"/sni_server_domain1.pem\\",
+            \\"domain2.com\\" => __DIR__ . \\"/not_existing.pem\\",
+        ]
+    ]]);
+    $server = stream_socket_server('tls://127.0.0.1:64322', $errno, $errstr, $flags, $ctx);
+    phpt_notify();
+    @stream_socket_accept($server, 3);
+    // if there is a segfault, this won't be called
+    fwrite(STDERR, \\"done\\\\n\\");",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "clientCode",
+        },
+        "operator": "=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "CODE",
+          "raw": "<<<'CODE'
+    $flags = STREAM_CLIENT_CONNECT;
+    $ctxArr = [
+        'cafile' => __DIR__ . '/sni_server_ca.pem',
+        'capture_peer_cert' => true
+    ];
+    phpt_wait();
+    $ctxArr['peer_name'] = 'domain1.com';
+    $ctx = stream_context_create(['ssl' => $ctxArr]);
+    @stream_socket_client(\\"tls://127.0.0.1:64322\\", $errno, $errstr, 1, $flags, $ctx);
+CODE",
+          "value": "    $flags = STREAM_CLIENT_CONNECT;
+    $ctxArr = [
+        'cafile' => __DIR__ . '/sni_server_ca.pem',
+        'capture_peer_cert' => true
+    ];
+    phpt_wait();
+    $ctxArr['peer_name'] = 'domain1.com';
+    $ctx = stream_context_create(['ssl' => $ctxArr]);
+    @stream_socket_client(\\"tls://127.0.0.1:64322\\", $errno, $errstr, 1, $flags, $ctx);",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'ServerClientTestCase.inc'",
+          "unicode": false,
+          "value": "ServerClientTestCase.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "clientCode",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "serverCode",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "run",
+          },
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getInstance",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "ServerClientTestCase",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

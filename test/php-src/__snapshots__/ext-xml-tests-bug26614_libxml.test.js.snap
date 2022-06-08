@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #26614 (CDATA sections skipped on line count) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xmls",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"CDATA\\"",
+            "unicode": false,
+            "value": "CDATA",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xmls",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?xml version=\\"1.0\\" encoding=\\"iso-8859-1\\" ?>
+<data>
+<![CDATA[
+multi
+line
+CDATA
+block
+]]>
+</data>'",
+          "unicode": false,
+          "value": "<?xml version=\\"1.0\\" encoding=\\"iso-8859-1\\" ?>
+<data>
+<![CDATA[
+multi
+line
+CDATA
+block
+]]>
+</data>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Comment\\"",
+            "unicode": false,
+            "value": "Comment",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xmls",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?xml version=\\"1.0\\" encoding=\\"iso-8859-1\\" ?>
+<data>
+<!-- ATA[
+multi
+line
+CDATA
+block",
+          "unicode": false,
+          "value": "<?xml version=\\"1.0\\" encoding=\\"iso-8859-1\\" ?>
+<data>
+<!-- ATA[
+multi
+line
+CDATA
+bloc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

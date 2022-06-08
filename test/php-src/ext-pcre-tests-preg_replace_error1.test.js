@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pcre/tests/preg_replace_error1.phpt
+  it("Test preg_replace() function : error - bad regular expressions", function () {
+    expect(parser.parseCode("<?php\n/*\n* Function is implemented in ext/pcre/php_pcre.c\n*/\n/*\n* Testing how preg_replace reacts to being passed the wrong type of regex argument\n*/\necho \"*** Testing preg_replace() : error conditions***\\n\";\n$regex_array = array('abcdef', //Regex without delimiter\n'/[a-zA-Z]', //Regex without closing delimiter\n'[a-zA-Z]/', //Regex without opening delimiter\n'/[a-zA-Z]/F', array('[a-z]', //Array of Regexes\n'[A-Z]', '[0-9]'), '/[a-zA-Z]/', //Regex string\n);\n$replace = 1;\n$subject = 'a';\nforeach($regex_array as $regex_value) {\n    @print \"\\nArg value is $regex_value\\n\";\n    var_dump(preg_replace($regex_value, $replace, $subject));\n}\n$regex_value = new stdclass(); //Object\ntry {\n    var_dump(preg_replace($regex_value, $replace, $subject));\n} catch (Error $e) {\n    echo $e->getMessage(), \"\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #76539 (Trait attribute is set incorrectly when using self::class with another string) 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "attr",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Bin {
+                "kind": "bin",
+                "left": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "class",
+                  },
+                  "what": SelfReference {
+                    "kind": "selfreference",
+                    "raw": "self",
+                  },
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Test'",
+                  "unicode": false,
+                  "value": "Test",
+                },
+                "type": ".",
+              },
+            },
+          ],
+          "visibility": "protected",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "attr",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "PHP_EOL",
+                    "resolution": "uqn",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "MyTrait",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "MyTrait",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "A",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "MyTrait",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "B",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "what": New {
+            "arguments": Array [],
+            "kind": "new",
+            "parenthesizedExpression": true,
+            "what": Name {
+              "kind": "name",
+              "name": "A",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "what": New {
+            "arguments": Array [],
+            "kind": "new",
+            "parenthesizedExpression": true,
+            "what": Name {
+              "kind": "name",
+              "name": "B",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #67116 (Inconsistent parsing of Nodes w/o linefeed) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "XML",
+          "raw": "<<<XML
+<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<aa>
+    <bs>
+        <b>b</b>
+    </bs>
+    <cs><c>b</c></cs>
+    <ds><d id=\\"d\\"></d></ds>
+    <es>
+        <e id=\\"e\\"></e>
+    </es>
+    <fs><f id=\\"f\\"></f><f id=\\"f\\"></f></fs>
+</aa>
+XML",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<aa>
+    <bs>
+        <b>b</b>
+    </bs>
+    <cs><c>b</c></cs>
+    <ds><d id=\\"d\\"></d></ds>
+    <es>
+        <e id=\\"e\\"></e>
+    </es>
+    <fs><f id=\\"f\\"></f><f id=\\"f\\"></f></fs>
+</aa>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<aa>
+    <bs>
+        <b>b</b>
+    </bs>
+    <cs><c>b</c></cs>
+    <ds><d id=\\"d\\"></d></ds>
+    <es>
+        <e id=\\"e\\"></e>
+    </es>
+    <fs><f id=\\"f\\"></f><f id=\\"f\\"></f></fs>
+</aa>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sxe",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "xml",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sxe",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

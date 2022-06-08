@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #61335 - Access to array node returns wrong truth value 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rec1",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"<foo><bar>aa</bar>\\\\n</foo>\\"",
+              "unicode": false,
+              "value": "<foo><bar>aa</bar>
+</foo>",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rec2",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"<foo><bar>aa</bar></foo>\\"",
+              "unicode": false,
+              "value": "<foo><bar>aa</bar></foo>",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"NONEMPTY1\\\\n\\"",
+            "unicode": false,
+            "value": "NONEMPTY1
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "0",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "rec1",
+          },
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"NONEMPTY2\\\\n\\"",
+            "unicode": false,
+            "value": "NONEMPTY2
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": Number {
+            "kind": "number",
+            "value": "0",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "bar",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "rec1",
+            },
+          },
+        },
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\"",
+          "unicode": false,
+          "value": "",
+        },
+        "type": ".",
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"NONEMPTY3\\\\n\\"",
+            "unicode": false,
+            "value": "NONEMPTY3
+",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": OffsetLookup {
+        "kind": "offsetlookup",
+        "offset": Number {
+          "kind": "number",
+          "value": "0",
+        },
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "rec2",
+          },
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests ZipArchive Bug #76524 (memory leak with ZipArchive::OVERWRITE flag and empty archive) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "i",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Do {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "filename",
+              },
+              "operator": "=",
+              "right": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Magic {
+                      "kind": "magic",
+                      "raw": "__DIR__",
+                      "value": "__DIR__",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"/nonexistent\\"",
+                      "unicode": false,
+                      "value": "/nonexistent",
+                    },
+                    "type": ".",
+                  },
+                  "right": Post {
+                    "kind": "post",
+                    "parenthesizedExpression": true,
+                    "type": "+",
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\".zip\\"",
+                  "unicode": false,
+                  "value": ".zip",
+                },
+                "type": ".",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "do",
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filename",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_exists",
+          "resolution": "uqn",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "zip",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ZipArchive",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filename",
+          },
+          Bin {
+            "kind": "bin",
+            "left": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "CREATE",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "ZipArchive",
+                "resolution": "uqn",
+              },
+            },
+            "right": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "OVERWRITE",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "ZipArchive",
+                "resolution": "uqn",
+              },
+            },
+            "type": "|",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "open",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "zip",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'ok'",
+          "unicode": false,
+          "value": "ok",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

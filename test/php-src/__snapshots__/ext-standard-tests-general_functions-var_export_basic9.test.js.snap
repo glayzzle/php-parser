@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #55082: var_export() doesn't escape properties properly 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "x",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "stdClass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'\\\\'\\\\\\\\'",
+              "unicode": false,
+              "value": "'\\\\",
+            },
+            "kind": "encapsedpart",
+            "syntax": "complex",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "x",
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "7",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "x",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "var_export",
+            "resolution": "uqn",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

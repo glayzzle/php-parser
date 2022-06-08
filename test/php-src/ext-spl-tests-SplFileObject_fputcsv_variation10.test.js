@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/spl/tests/SplFileObject_fputcsv_variation10.phpt
+  it("SplFileObject::fputcsv(): Usage variations -- with line without any CSV fields", function () {
+    expect(parser.parseCode("<?php\n/* Testing fputcsv() to write to a file when the field has no CSV format */\necho \"*** Testing fputcsv() : with no CSV format in the field ***\\n\";\n/* the array is with three elements in it. Each element should be read as\n   1st element is delimiter, 2nd element is enclosure\n   and 3rd element is csv fields\n*/\n$fields = array( array('water_fruit\\n'),\n                array(\"water_fruit\\n\"),\n                array(\"\")\n         );\n$file_path = __DIR__;\n$file = \"$file_path/fputcsv_variation10.tmp\";\n$file_modes = array (\"r+\", \"r+b\", \"r+t\",\n                     \"a+\", \"a+b\", \"a+t\",\n                     \"w+\", \"w+b\", \"w+t\",\n                     \"x+\", \"x+b\", \"x+t\");\n$loop_counter = 1;\nforeach ($fields as $field) {\n  for($mode_counter = 0; $mode_counter < count($file_modes); $mode_counter++) {\n    echo \"\\n-- file opened in $file_modes[$mode_counter] --\\n\";\n    // create the file and add the content with has csv fields\n    if ( strstr($file_modes[$mode_counter], \"r\") ) {\n      $fo = new SplFileObject($file, 'w');\n    } else {\n      $fo = new SplFileObject($file, $file_modes[$mode_counter]);\n    }\n    $csv_field = $field;\n    // write to a file in csv format\n    var_dump( $fo->fputcsv($csv_field) );\n    // check the file pointer position and eof\n    var_dump( $fo->ftell() );\n    var_dump( $fo->eof() );\n    //close the file\n    unset($fo);\n    // print the file contents\n    var_dump( file_get_contents($file) );\n    //delete file\n    unlink($file);\n  } //end of mode loop\n} // end of foreach\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

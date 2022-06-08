@@ -1,0 +1,282 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #75079: self keyword leads to incorrectly generated TypeError when in closure in trait 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "Selfs",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": SelfReference {
+                "kind": "selfreference",
+                "raw": "self",
+              },
+              "value": null,
+              "variadic": true,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Closure {
+                      "arguments": Array [
+                        Parameter {
+                          "attrGroups": Array [],
+                          "byref": false,
+                          "flags": 0,
+                          "kind": "parameter",
+                          "name": Identifier {
+                            "kind": "identifier",
+                            "name": "Self",
+                          },
+                          "nullable": false,
+                          "readonly": false,
+                          "type": SelfReference {
+                            "kind": "selfreference",
+                            "raw": "self",
+                          },
+                          "value": null,
+                          "variadic": false,
+                        },
+                      ],
+                      "attrGroups": Array [],
+                      "body": Block {
+                        "children": Array [
+                          Return {
+                            "expr": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "Self",
+                            },
+                            "kind": "return",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "byref": false,
+                      "isStatic": false,
+                      "kind": "closure",
+                      "nullable": false,
+                      "type": SelfReference {
+                        "kind": "selfreference",
+                        "raw": "self",
+                      },
+                      "uses": Array [],
+                    },
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "Selfs",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "array_map",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "selfDo",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Bar",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Baz",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "Bar",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Bar",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "Baz",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Baz",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "Bar",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "Bar",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "selfDo",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "Bar",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "Baz",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "Baz",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "selfDo",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "Baz",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+===DONE===",
+      "value": "===DONE===",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

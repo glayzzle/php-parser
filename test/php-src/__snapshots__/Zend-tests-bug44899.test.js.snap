@@ -1,0 +1,396 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #44899 (__isset usage changes behavior of empty()) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "_data",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Array {
+                "items": Array [],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "data",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "_data",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  "operator": "=",
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "data",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "field_name",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Isset {
+                  "kind": "isset",
+                  "variables": Array [
+                    OffsetLookup {
+                      "kind": "offsetlookup",
+                      "offset": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "field_name",
+                      },
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "_data",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "this",
+                        },
+                      },
+                    },
+                  ],
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__isset",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "myclass",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "arr",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'foo'",
+                "unicode": false,
+                "value": "foo",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "''",
+                "unicode": false,
+                "value": "",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "myclass",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arr",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "myclass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'not isset'",
+            "unicode": false,
+            "value": "not isset",
+          },
+          "kind": "retif",
+          "test": Isset {
+            "kind": "isset",
+            "parenthesizedExpression": true,
+            "variables": Array [
+              PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "foo",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "myclass",
+                },
+              },
+            ],
+          },
+          "trueExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'isset'",
+            "unicode": false,
+            "value": "isset",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'not empty'",
+            "unicode": false,
+            "value": "not empty",
+          },
+          "kind": "retif",
+          "test": Empty {
+            "expression": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "myclass",
+              },
+            },
+            "kind": "empty",
+            "parenthesizedExpression": true,
+          },
+          "trueExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'empty'",
+            "unicode": false,
+            "value": "empty",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'empty'",
+            "unicode": false,
+            "value": "empty",
+          },
+          "kind": "retif",
+          "test": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "foo",
+            },
+            "parenthesizedExpression": true,
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "myclass",
+            },
+          },
+          "trueExpr": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'not empty'",
+            "unicode": false,
+            "value": "not empty",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

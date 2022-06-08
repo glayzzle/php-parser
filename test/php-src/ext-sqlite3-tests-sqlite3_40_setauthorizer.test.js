@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/sqlite3/tests/sqlite3_40_setauthorizer.phpt
+  it("SQLite3 user authorizer callback", function () {
+    expect(parser.parseCode("<?php\n$db = new SQLite3(':memory:');\n$db->enableExceptions(true);\n$db->setAuthorizer(function (int $action) {\n    if ($action == SQLite3::SELECT) {\n        return SQLite3::OK;\n    }\n    return SQLite3::DENY;\n});\n// This query should be accepted\nvar_dump($db->querySingle('SELECT 1;'));\ntry {\n    // This one should fail\n    var_dump($db->querySingle('CREATE TABLE test (a, b);'));\n} catch (\\Exception $e) {\n    echo $e->getMessage() . \"\\n\";\n}\n// Test disabling the authorizer\n$db->setAuthorizer(null);\n// This should now succeed\nvar_dump($db->exec('CREATE TABLE test (a); INSERT INTO test VALUES (42);'));\nvar_dump($db->querySingle('SELECT a FROM test;'));\n// Test if we are getting the correct arguments\n$db->setAuthorizer(function (int $action) {\n    $constants = (new ReflectionClass('SQLite3'))->getConstants();\n    $constants = array_flip($constants);\n    var_dump($constants[$action], implode(',', array_slice(func_get_args(), 1)));\n    return SQLITE3::OK;\n});\nvar_dump($db->exec('SELECT * FROM test WHERE a = 42;'));\nvar_dump($db->exec('DROP TABLE test;'));\n// Try to return something invalid from the authorizer\n$db->setAuthorizer(function () {\n    return 'FAIL';\n});\ntry {\n    var_dump($db->querySingle('SELECT 1;'));\n} catch (\\Exception $e) {\n    echo $e->getMessage() . \"\\n\";\n    echo $e->getPrevious()->getMessage() . \"\\n\";\n}\n$db->setAuthorizer(function () {\n    return 4200;\n});\ntry {\n    var_dump($db->querySingle('SELECT 1;'));\n} catch (\\Exception $e) {\n    echo $e->getMessage() . \"\\n\";\n    echo $e->getPrevious()->getMessage() . \"\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

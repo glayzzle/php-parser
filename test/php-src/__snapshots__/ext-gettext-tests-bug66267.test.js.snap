@@ -1,0 +1,374 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests #66265: gettext doesn't switch locales within the same script 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "domain",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'domain'",
+          "unicode": false,
+          "value": "domain",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "loc",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"de_DE\\"",
+                "unicode": false,
+                "value": "de_DE",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"fr_FR\\"",
+                "unicode": false,
+                "value": "fr_FR",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"en_US\\"",
+                "unicode": false,
+                "value": "en_US",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\"LC_ALL=$l\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "LC_ALL=",
+                        "unicode": false,
+                        "value": "LC_ALL=",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "l",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                  ],
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "putenv",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Name {
+                  "kind": "name",
+                  "name": "LC_ALL",
+                  "resolution": "uqn",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "l",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "setlocale",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "path",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Magic {
+                        "kind": "magic",
+                        "raw": "__DIR__",
+                        "value": "__DIR__",
+                      },
+                      "right": Name {
+                        "kind": "name",
+                        "name": "DIRECTORY_SEPARATOR",
+                        "resolution": "uqn",
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"66265\\"",
+                      "unicode": false,
+                      "value": "66265",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "realpath",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "domain",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "path",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "bindtextdomain",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "domain",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"UTF-8\\"",
+                  "unicode": false,
+                  "value": "UTF-8",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "bind_textdomain_codeset",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "domain",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "textdomain",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'LC_ALL='",
+                "unicode": false,
+                "value": "LC_ALL=",
+              },
+              Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'LC_ALL'",
+                    "unicode": false,
+                    "value": "LC_ALL",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "getenv",
+                  "resolution": "uqn",
+                },
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'hello='",
+                "unicode": false,
+                "value": "hello=",
+              },
+              Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'hello'",
+                    "unicode": false,
+                    "value": "hello",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "_",
+                  "resolution": "uqn",
+                },
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\"",
+                "unicode": false,
+                "value": "
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "loc",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "l",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

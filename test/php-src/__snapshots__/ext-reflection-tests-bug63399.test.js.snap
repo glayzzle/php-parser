@@ -1,0 +1,299 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #63399 (ReflectionClass::getTraitAliases() incorrectly resolves traitnames) 1`] = `
+Program {
+  "children": Array [
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "run",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "say",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Trait1",
+      },
+    },
+    Trait {
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "run",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "say",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Trait2",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": Array [
+            TraitAlias {
+              "as": Identifier {
+                "kind": "identifier",
+                "name": "execute",
+              },
+              "kind": "traitalias",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "run",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "Trait1",
+                "resolution": "uqn",
+              },
+              "visibility": "",
+            },
+            TraitPrecedence {
+              "instead": Array [
+                Name {
+                  "kind": "name",
+                  "name": "Trait2",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "traitprecedence",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "say",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "Trait1",
+                "resolution": "uqn",
+              },
+            },
+            TraitPrecedence {
+              "instead": Array [
+                Name {
+                  "kind": "name",
+                  "name": "Trait1",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "traitprecedence",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "run",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "Trait2",
+                "resolution": "uqn",
+              },
+            },
+            TraitAlias {
+              "as": Identifier {
+                "kind": "identifier",
+                "name": "talk",
+              },
+              "kind": "traitalias",
+              "method": Identifier {
+                "kind": "identifier",
+                "name": "say",
+              },
+              "trait": Name {
+                "kind": "name",
+                "name": "Trait2",
+                "resolution": "uqn",
+              },
+              "visibility": "",
+            },
+          ],
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "Trait1",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "Trait2",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "MyClass",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ref",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'MyClass'",
+              "unicode": false,
+              "value": "MyClass",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionClass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getTraitAliases",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ref",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getTraits",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ref",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

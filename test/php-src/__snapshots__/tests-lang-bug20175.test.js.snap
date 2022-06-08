@@ -1,0 +1,981 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #20175 (Static vars can't store ref to new instance) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "zend_version",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo_count",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Global {
+            "items": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "foo_count",
+              },
+            ],
+            "kind": "global",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"foo_global()\\\\n\\"",
+                "unicode": false,
+                "value": "foo_global()
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Return {
+            "expr": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'foo:'",
+                "unicode": false,
+                "value": "foo:",
+              },
+              "right": Pre {
+                "kind": "pre",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "foo_count",
+                },
+              },
+              "type": ".",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo_global",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "foo_value",
+              },
+            ],
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"foo_static()\\\\n\\"",
+                "unicode": false,
+                "value": "foo_static()
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "foo_value",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "foo_global",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Isset {
+                "kind": "isset",
+                "variables": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "foo_value",
+                  },
+                ],
+              },
+            },
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "foo_value",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo_static",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bar_count",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Global {
+            "items": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bar_count",
+              },
+            ],
+            "kind": "global",
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"bar_global()\\\\n\\"",
+                "unicode": false,
+                "value": "bar_global()
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Return {
+            "expr": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'bar:'",
+                "unicode": false,
+                "value": "bar:",
+              },
+              "right": Pre {
+                "kind": "pre",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "bar_count",
+                },
+              },
+              "type": ".",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bar_global",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Static {
+            "kind": "static",
+            "variables": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "bar_value",
+              },
+            ],
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"bar_static()\\\\n\\"",
+                "unicode": false,
+                "value": "bar_static()
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": AssignRef {
+                    "kind": "assignref",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "bar_value",
+                    },
+                    "right": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "bar_global",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Unary {
+              "kind": "unary",
+              "type": "!",
+              "what": Isset {
+                "kind": "isset",
+                "variables": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "bar_value",
+                  },
+                ],
+              },
+            },
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "bar_value",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "bar_static",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oop_global",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "oop_name",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": null,
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Global {
+                "items": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "oop_global",
+                  },
+                ],
+                "kind": "global",
+              },
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"oop_class()\\\\n\\"",
+                    "unicode": false,
+                    "value": "oop_class()
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "oop_name",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "this",
+                    },
+                  },
+                  "operator": "=",
+                  "right": Bin {
+                    "kind": "bin",
+                    "left": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'oop:'",
+                      "unicode": false,
+                      "value": "oop:",
+                    },
+                    "right": Pre {
+                      "kind": "pre",
+                      "type": "+",
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "oop_global",
+                      },
+                    },
+                    "type": ".",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "oop_class",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "oop_value",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"oop_test()\\\\n\\"",
+                    "unicode": false,
+                    "value": "oop_test()
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"oop_static()\\\\n\\"",
+                    "unicode": false,
+                    "value": "oop_static()
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": StaticLookup {
+                          "kind": "staticlookup",
+                          "offset": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "oop_value",
+                          },
+                          "what": SelfReference {
+                            "kind": "selfreference",
+                            "raw": "self",
+                          },
+                        },
+                        "operator": "=",
+                        "right": New {
+                          "arguments": Array [],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "oop_class",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Unary {
+                  "kind": "unary",
+                  "type": "!",
+                  "what": Isset {
+                    "kind": "isset",
+                    "variables": Array [
+                      StaticLookup {
+                        "kind": "staticlookup",
+                        "offset": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "oop_value",
+                        },
+                        "what": SelfReference {
+                          "kind": "selfreference",
+                          "raw": "self",
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+              Echo {
+                "expressions": Array [
+                  PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "oop_name",
+                    },
+                    "what": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "oop_value",
+                      },
+                      "what": SelfReference {
+                        "kind": "selfreference",
+                        "raw": "self",
+                      },
+                    },
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "oop_static",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "oop_test",
+      },
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "foo_static",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "foo_static",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "bar_static",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "bar_static",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"wow_static()
+wow_global()
+wow:1
+wow_static()
+wow:1
+\\"",
+          "unicode": false,
+          "value": "wow_static()
+wow_global()
+wow:1
+wow_static()
+wow:1
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oop_tester",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "oop_test",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "oop_static",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oop_tester",
+              },
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "oop_static",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oop_tester",
+              },
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "oop_tester",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "oop_test",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Print {
+        "expression": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "oop_static",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "oop_tester",
+              },
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\\\n\\"",
+            "unicode": false,
+            "value": "
+",
+          },
+          "type": ".",
+        },
+        "kind": "print",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

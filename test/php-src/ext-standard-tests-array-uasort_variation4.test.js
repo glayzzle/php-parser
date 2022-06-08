@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/uasort_variation4.phpt
+  it("Test uasort() function : usage variations - sort different numeric values", function () {
+    expect(parser.parseCode("<?php\n/*\n* sorting different types of numeric arrays containing data of following type:\n*  integer, octal, hexadecimal & float\n*/\n// comparison function\nfunction cmp_function($value1, $value2)\n{\n  if($value1 == $value2) {\n    return 0;\n  }\n  else if($value1 > $value2) {\n    return 1;\n  }\n  else {\n    return -1;\n  }\n}\necho \"*** Testing uasort() : different numeric arrays as 'array_arg' ***\\n\";\n// Int array\n$int_values = array(0 => 3, 1 => 2, 3 => 100, 4 => 150, 5 => 25, 6 => 350, 7 => 0, 8 => -3, 9 => -1200);\necho \"-- Sorting Integer array --\\n\";\nvar_dump( uasort($int_values, 'cmp_function') );  // expecting: bool(true)\nvar_dump($int_values);\n// Octal array\n$octal_values = array(0 => 056, 1 => 023, 2 => 00, 3 => 015, 4 => -045, 5 => 01, 6 => -07);\necho \"-- Sorting Octal array --\\n\";\nvar_dump( uasort($octal_values, 'cmp_function') );  // expecting: bool(true)\nvar_dump($octal_values);\n// Hexadecimal array\n$hex_values = array(0 => 0xAE, 1 => 0x2B, 2 => 0X10, 3 => -0xCF, 4 => 0X12, 5 => -0XF2);\necho \"-- Sorting Hex array --\\n\";\nvar_dump( uasort($hex_values, 'cmp_function') );  // expecting: bool(true)\nvar_dump($hex_values);\n// Float array\n$float_values = array( 0 => 10.2, 1 => 2.4, 2 => -3.4, 3 => 0, 4 => 0.5, 5 => 7.3e3, 6 => -9.34E-2);\necho \"-- Sorting Float array --\\n\";\nvar_dump( uasort($float_values, 'cmp_function') );  // expecting: bool(true)\nvar_dump($float_values);\n// empty array\n$empty_array = array();\necho \"-- Sorting empty array --\\n\";\nvar_dump( uasort($empty_array, 'cmp_function') );  // expecting: bool(true)\nvar_dump($empty_array);\necho \"Done\"\n?>")).toMatchSnapshot();
+  });
+});

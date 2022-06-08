@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Incorrect constant evaluation of and/or (OSS-Fuzz #19255) 1`] = `
+Program {
+  "children": Array [
+    ConstantStatement {
+      "constants": Array [
+        Constant {
+          "kind": "constant",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "C",
+          },
+          "value": Bin {
+            "kind": "bin",
+            "left": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "right": Magic {
+              "kind": "magic",
+              "raw": "__namespace__",
+              "value": "__NAMESPACE__",
+            },
+            "type": "&&",
+          },
+        },
+      ],
+      "kind": "constantstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Name {
+            "kind": "name",
+            "name": "C",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

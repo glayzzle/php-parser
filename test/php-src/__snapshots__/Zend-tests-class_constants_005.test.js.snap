@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests String interning during constants substitution 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"A\\"",
+            "unicode": false,
+            "value": "A",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\".\\"",
+                "unicode": false,
+                "value": ".",
+              },
+              "right": Call {
+                "arguments": Array [
+                  Number {
+                    "kind": "number",
+                    "value": "26",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "ord",
+                  "resolution": "uqn",
+                },
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\".\\"",
+              "unicode": false,
+              "value": ".",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "define",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Eval {
+        "kind": "eval",
+        "source": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"class A {const a = A;}\\"",
+          "unicode": false,
+          "value": "class A {const a = A;}",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "a",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "A",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

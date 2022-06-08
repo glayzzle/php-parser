@@ -1,0 +1,254 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests msg_receive() should return false when unserialize() failed 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "queue",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Call {
+              "arguments": Array [
+                Magic {
+                  "kind": "magic",
+                  "raw": "__FILE__",
+                  "value": "__FILE__",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'r'",
+                  "unicode": false,
+                  "value": "r",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "ftok",
+                "resolution": "uqn",
+              },
+            },
+            Number {
+              "kind": "number",
+              "value": "0600",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "msg_get_queue",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"error\\\\n\\"",
+                "unicode": false,
+                "value": "error
+",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "queue",
+            },
+            Number {
+              "kind": "number",
+              "value": "1",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'Hi'",
+              "unicode": false,
+              "value": "Hi",
+            },
+            Boolean {
+              "kind": "boolean",
+              "raw": "false",
+              "value": false,
+            },
+            Boolean {
+              "kind": "boolean",
+              "raw": "true",
+              "value": true,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "msg_err",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "msg_send",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "res",
+            },
+            "operator": "=",
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "queue",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "msg_type",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "16384",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "msg",
+                },
+                Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "msg_error",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "msg_receive",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"BAD: queue removal failed\\\\n\\"",
+                "unicode": false,
+                "value": "BAD: queue removal failed
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "queue",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "msg_remove_queue",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

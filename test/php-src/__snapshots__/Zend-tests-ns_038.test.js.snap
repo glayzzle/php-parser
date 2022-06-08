@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests 038: Name ambiguity (namespace name or internal class name) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        _Function {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"ok\\\\n\\"",
+                    "unicode": false,
+                    "value": "ok
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "kind": "function",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "foo",
+          },
+          "nullable": false,
+          "type": null,
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "\\\\Exception\\\\foo",
+              "resolution": "fqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "\\\\Exception",
+                "resolution": "fqn",
+              },
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "Exception",
+      "withBrackets": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

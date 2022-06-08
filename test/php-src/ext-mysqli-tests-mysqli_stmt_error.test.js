@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mysqli/tests/mysqli_stmt_error.phpt
+  it("mysqli_stmt_error()", function () {
+    expect(parser.parseCode("<?php\n    require_once(\"connect.inc\");\n    require('table.inc');\n    if (!$stmt = mysqli_stmt_init($link))\n        printf(\"[003] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    // properly initialized?\n    if ('' !== ($tmp = mysqli_stmt_error($stmt)))\n        printf(\"[004] Expecting int/0, got %s/%s\\n\", gettype($tmp), $tmp);\n    if (mysqli_stmt_prepare($stmt, \"SELECT i_do_not_exist_believe_me FROM test ORDER BY id\"))\n        printf(\"[005] Statement should have failed!\\n\");\n    // set after error server?\n    if ('' === ($tmp = mysqli_stmt_error($stmt)))\n        printf(\"[006] Expecting string/any non empty, got %s/%s\\n\", gettype($tmp), $tmp);\n    if (!mysqli_stmt_prepare($stmt, \"SELECT id FROM test ORDER BY id\"))\n        printf(\"[007] [%d] %s\\n\", mysqli_stmt_error($stmt), mysqli_stmt_error($stmt));\n    // reset after error & success\n    if ('' !== ($tmp = mysqli_stmt_error($stmt)))\n        printf(\"[008] Expecting empty string, got %s/%s\\n\", gettype($tmp), $tmp);\n    mysqli_kill($link, mysqli_thread_id($link));\n    if (true === ($tmp = mysqli_stmt_execute($stmt)))\n        printf(\"[009] Expecting boolean/false, got %s/%s\\n\", gettype($tmp), $tmp);\n    // set after client error\n    if ('' === ($tmp = mysqli_stmt_error($stmt)))\n        printf(\"[010] Expecting string/any non empty, got %s/%s\\n\", gettype($tmp), $tmp);\n    mysqli_stmt_close($stmt);\n    try {\n        mysqli_stmt_error($stmt);\n    } catch (Error $exception) {\n        echo $exception->getMessage() . \"\\n\";\n    }\n    mysqli_close($link);\n    print \"done!\";\n?>")).toMatchSnapshot();
+  });
+});

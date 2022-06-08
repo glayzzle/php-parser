@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pdo_mysql/tests/pdo_mysql_attr_server_info.phpt
+  it("PDO::ATTR_SERVER_INFO", function () {
+    expect(parser.parseCode("<?php\n    require_once(__DIR__ . DIRECTORY_SEPARATOR . 'mysql_pdo_test.inc');\n    $db = MySQLPDOTest::factory();\n    assert(('' == $db->errorCode()) || ('00000' == $db->errorCode()));\n    $info = $db->getAttribute(PDO::ATTR_SERVER_INFO);\n    if ('' == $info)\n        printf(\"[001] Server info must not be empty\\n\");\n    // Read-only?\n    if (false !== $db->setAttribute(PDO::ATTR_SERVER_INFO, 'new uptime: 0s'))\n        printf(\"[002] Wonderful, I can change the client version!\\n\");\n    $new_info = $db->getAttribute(PDO::ATTR_SERVER_INFO);\n    if (soundex($new_info) != soundex($info))\n        printf(\"[003] Did we change it from '%s' to '%s'?\\n\", $info, $info);\n    // lets hope we always run this in the same second as we did run the server info request...\n    if (!$stmt = $db->query(\"SHOW STATUS LIKE '%uptime%'\"))\n        printf(\"[004] Cannot run SHOW STATUS, [%s]\\n\", $db->errorCode());\n    else {\n        if (!$row = $stmt->fetch(PDO::FETCH_NUM))\n            printf(\"[005] Unable to fetch uptime, [%s]\\n\", $db->errorCode());\n        else\n            $uptime = $row[1];\n        $stmt->closeCursor();\n    }\n    if (!preg_match('/Uptime/i', $info))\n        printf(\"[006] Can't find uptime in server info '%s'\\n\", $info);\n    if (isset($uptime)) {\n        if (!preg_match('/Uptime: (\\d+)/i', $info, $matches) || $uptime - $matches[1] > 1) {\n            printf(\"[007] SHOW STATUS and server info have reported a different uptime, please check. Server info: '%s', SHOW STATUS: '%s'\\n\", $info, $uptime);\n        }\n    }\n    print \"done!\";\n?>")).toMatchSnapshot();
+  });
+});

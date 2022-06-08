@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/sockets/tests/socket_sentto_recvfrom_unix.phpt
+  it("Test if socket_recvfrom() receives data sent by socket_sendto() through a Unix domain socket", function () {
+    expect(parser.parseCode("<?php\n    $socket = socket_create(AF_UNIX, SOCK_DGRAM, SOL_UDP); // cause warning\n    $socket = socket_create(AF_UNIX, SOCK_DGRAM, 0);\n    if (!$socket) {\n        die('Unable to create AF_UNIX socket');\n    }\n    if (!socket_set_nonblock($socket)) {\n        die('Unable to set nonblocking mode for socket');\n    }\n    var_dump(socket_recvfrom($socket, $buf, 12, 0, $from, $port)); //false (EAGAIN, no warning)\n    $address = sprintf(\"/tmp/%s.sock\", uniqid());\n    if (!socket_bind($socket, $address)) {\n        die(\"Unable to bind to $address\");\n    }\n    $msg = \"Ping!\";\n    $len = strlen($msg);\n    $bytes_sent = socket_sendto($socket, $msg, $len, 0, $address);\n    if ($bytes_sent == -1) {\n        @unlink($address);\n        die('An error occurred while sending to the socket');\n    } else if ($bytes_sent != $len) {\n        @unlink($address);\n        die($bytes_sent . ' bytes have been sent instead of the ' . $len . ' bytes expected');\n    }\n    $from = \"\";\n    var_dump(socket_recvfrom($socket, $buf, 0, 0, $from)); // expect false\n    $bytes_received = socket_recvfrom($socket, $buf, 12, 0, $from);\n    if ($bytes_received == -1) {\n        @unlink($address);\n        die('An error occurred while receiving from the socket');\n    } else if ($bytes_received != $len) {\n        @unlink($address);\n        die($bytes_received . ' bytes have been received instead of the ' . $len . ' bytes expected');\n    }\n    echo \"Received $buf\";\n    socket_close($socket);\n    @unlink($address);\n?>")).toMatchSnapshot();
+  });
+});

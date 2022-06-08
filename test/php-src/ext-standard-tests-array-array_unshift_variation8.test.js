@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/array_unshift_variation8.phpt
+  it("Test array_unshift() function : usage variations - single quoted strings for 'var' argument", function () {
+    expect(parser.parseCode("<?php\n/*\n * Testing the functionality of array_unshift() by passing different\n * single quoted strings for $var argument that is prepended to the array\n * passed through $array argument\n*/\necho \"*** Testing array_unshift() : single quoted strings for \\$var argument ***\\n\";\n// array to be passed to $array argument\n$array = array('f' => \"first\", \"s\" => 'second', 1, 2.222);\n// different variations of single quoted strings to be passed to $var argument\n$vars = array (\n  '\\$ -> This represents the dollar sign. hello dollar!!!',\n  '\\t\\r\\v The quick brown fo\\fx jumped over the lazy dog',\n  'This is a text with special chars: \\!\\@\\#\\$\\%\\^\\&\\*\\(\\)\\\\',\n  'hello world\\\\t',\n  'This is \\ta text in bold letters\\r\\s\\malong with slashes\\n : HELLO WORLD\\t'\n);\n// loop through the various elements of $arrays to test array_unshift()\n$iterator = 1;\nforeach($vars as $var) {\n  echo \"-- Iteration $iterator --\\n\";\n  $temp_array = $array;  // assign $array to another temporary $temp_array\n  /* with default argument */\n  // returns element count in the resulting array after arguments are pushed to\n  // beginning of the given array\n  var_dump( array_unshift($temp_array, $var) );\n  // dump the resulting array\n  var_dump($temp_array);\n  /* with optional arguments */\n  // returns element count in the resulting array after arguments are pushed to\n  // beginning of the given array\n  $temp_array = $array;\n  var_dump( array_unshift($temp_array, $var, \"hello\", 'world') );\n  // dump the resulting array\n  var_dump($temp_array);\n  $iterator++;\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72588 (Using global var doesn't work while accessing SimpleXML element) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tpnb",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "5",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": AssignRef {
+        "kind": "assignref",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dummy",
+        },
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tpnb",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xmlStruct",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOF",
+          "raw": "<<<EOF
+<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<templates>
+    <object type=\\"obj_1\\" label=\\"Label for object 1\\"></object>
+    <object type=\\"obj_2\\" label=\\"Label for object 2\\"></object>
+    <object type=\\"obj_3\\" label=\\"Label for object 3\\"></object>
+    <object type=\\"obj_4\\" label=\\"Label for object 4\\"></object>
+    <object type=\\"obj_5\\" label=\\"Label for object 5\\"></object>
+    <object type=\\"obj_6\\" label=\\"Label for object 6\\"></object>
+    <object type=\\"obj_7\\" label=\\"Label for object 7\\"></object>
+    <object type=\\"obj_8\\" label=\\"Label for object 8\\"></object>
+    <object type=\\"obj_9\\" label=\\"Label for object 9\\"></object>
+    <object type=\\"obj_10\\" label=\\"Label for object 10\\"></object>
+</templates>
+EOF",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<templates>
+    <object type=\\"obj_1\\" label=\\"Label for object 1\\"></object>
+    <object type=\\"obj_2\\" label=\\"Label for object 2\\"></object>
+    <object type=\\"obj_3\\" label=\\"Label for object 3\\"></object>
+    <object type=\\"obj_4\\" label=\\"Label for object 4\\"></object>
+    <object type=\\"obj_5\\" label=\\"Label for object 5\\"></object>
+    <object type=\\"obj_6\\" label=\\"Label for object 6\\"></object>
+    <object type=\\"obj_7\\" label=\\"Label for object 7\\"></object>
+    <object type=\\"obj_8\\" label=\\"Label for object 8\\"></object>
+    <object type=\\"obj_9\\" label=\\"Label for object 9\\"></object>
+    <object type=\\"obj_10\\" label=\\"Label for object 10\\"></object>
+</templates>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<templates>
+    <object type=\\"obj_1\\" label=\\"Label for object 1\\"></object>
+    <object type=\\"obj_2\\" label=\\"Label for object 2\\"></object>
+    <object type=\\"obj_3\\" label=\\"Label for object 3\\"></object>
+    <object type=\\"obj_4\\" label=\\"Label for object 4\\"></object>
+    <object type=\\"obj_5\\" label=\\"Label for object 5\\"></object>
+    <object type=\\"obj_6\\" label=\\"Label for object 6\\"></object>
+    <object type=\\"obj_7\\" label=\\"Label for object 7\\"></object>
+    <object type=\\"obj_8\\" label=\\"Label for object 8\\"></object>
+    <object type=\\"obj_9\\" label=\\"Label for object 9\\"></object>
+    <object type=\\"obj_10\\" label=\\"Label for object 10\\"></object>
+</templates>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tplxml",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "xmlStruct",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "simplexml_load_string",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "tpnb",
+            },
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "object",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "tplxml",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

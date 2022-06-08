@@ -1,0 +1,282 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #54382 DOMNode::getAttributeNodeNS doesn't get xmlns* attributes 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xmlString",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?xml version=\\"1.0\\" encoding=\\"utf-8\\" ?>
+<root xmlns=\\"http://ns\\" xmlns:ns2=\\"http://ns2\\">
+    <ns2:child />
+</root>'",
+          "unicode": false,
+          "value": "<?xml version=\\"1.0\\" encoding=\\"utf-8\\" ?>
+<root xmlns=\\"http://ns\\" xmlns:ns2=\\"http://ns2\\">
+    <ns2:child />
+</root>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOMDocument",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xmlString",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "loadXML",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xml",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "de",
+        },
+        "operator": "=",
+        "right": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "documentElement",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xml",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ns2",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"http://www.w3.org/2000/xmlns/\\"",
+              "unicode": false,
+              "value": "http://www.w3.org/2000/xmlns/",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"ns2\\"",
+              "unicode": false,
+              "value": "ns2",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getAttributeNodeNS",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "de",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'namespace node prefix='",
+                    "unicode": false,
+                    "value": "namespace node prefix=",
+                  },
+                  "right": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "prefix",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "ns2",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'namespace node namespaceURI='",
+                    "unicode": false,
+                    "value": "namespace node namespaceURI=",
+                  },
+                  "right": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "namespaceURI",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "ns2",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'namespace node does not exist.'",
+                  "unicode": false,
+                  "value": "namespace node does not exist.",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ns2",
+        },
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "NULL",
+        },
+        "type": "==",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

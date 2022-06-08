@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71592 (External entity processing never fails) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "XML",
+          "raw": "<<<XML
+<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<!DOCTYPE root [
+  <!ENTITY pic PUBLIC \\"image.gif\\" \\"http://example.org/image.gif\\">
+]>
+<root>
+<p>&pic;</p>
+<p></nop>
+</root>
+XML",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<!DOCTYPE root [
+  <!ENTITY pic PUBLIC \\"image.gif\\" \\"http://example.org/image.gif\\">
+]>
+<root>
+<p>&pic;</p>
+<p></nop>
+</root>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<!DOCTYPE root [
+  <!ENTITY pic PUBLIC \\"image.gif\\" \\"http://example.org/image.gif\\">
+]>
+<root>
+<p>&pic;</p>
+<p></nop>
+</root>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "parser",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'UTF-8'",
+              "unicode": false,
+              "value": "UTF-8",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "xml_parser_create_ns",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "parser",
+          },
+          Closure {
+            "arguments": Array [],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Boolean {
+                    "kind": "boolean",
+                    "raw": "false",
+                    "value": false,
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "xml_set_external_entity_ref_handler",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "parser",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xml",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "xml_parse",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "parser",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "xml_get_error_code",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "XML_ERROR_EXTERNAL_ENTITY_HANDLING",
+              "resolution": "uqn",
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

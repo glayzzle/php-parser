@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/opcache/tests/bug65665.phpt
+  it("Bug #65665 (Exception not properly caught when opcache enabled)", function () {
+    expect(parser.parseCode("<?php\nfunction foo() {\n    try\n    {\n        switch (1)\n        {\n        case 0:\n            try\n            {\n            }\n            catch (Exception $e)\n            {\n            }\n            break;\n        case 1:\n            try\n            {\n                throw new Exception('aaa');\n            }\n            catch (Exception $e)\n            {\n                echo \"correct\\n\";\n            }\n            break;\n        }\n    }\n    catch (Exception $e)\n    {\n        echo \"wrong\\n\";\n    }\n    return;\n}\nfunction foo1() {\n    try\n    {\n        switch (1)\n        {\n        case 0:\n            try\n            {\n            }\n            catch (Exception $e)\n            {\ndummy:\n                echo \"ect\\n\";\n            }\n            break;\n        case 1:\n            try\n            {\n                throw new Exception('aaa');\n            }\n            catch (Exception $e)\n            {\n                echo \"corr\";\n                goto dummy;\n            }\n            break;\n        }\n    }\n    catch (Exception $e)\n    {\n        echo \"wrong\\n\";\n    }\n    return;\n}\nfunction foo2() {\n    try\n    {\n        switch (1)\n        {\n        case 0:\n            try\n            {\ndummy:\n                throw new Exception('aaa');\n            }\n            catch (Exception $e)\n            {\n                echo \"correct\\n\";\n            }\n            break;\n        case 1:\n            goto dummy;\n            break;\n        }\n    }\n    catch (Exception $e)\n    {\n        echo \"wrong\\n\";\n    }\n    return;\n}\nfoo();foo1();foo2();\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/ffi/tests/041.phpt
+  it("FFI 041: Type memory management", function () {
+    expect(parser.parseCode("<?php\nfunction test_new_ownership($str, $transfer) {\n    if ($transfer) {\n        return FFI::new(FFI::type($str));\n    } else {\n        $type = FFI::type($str);\n        return FFI::new($type);\n    }\n}\nvar_dump(test_new_ownership(\"int\", 1));\nvar_dump(test_new_ownership(\"int[2]\", 1));\nvar_dump(test_new_ownership(\"int\", 0));\nvar_dump(test_new_ownership(\"int[2]\", 0));\nfunction test_type_ownership($str, $transfer) {\n    if ($transfer) {\n        return FFI::typeof(FFI::new($str));\n    } else {\n        $data = FFI::new($str);\n        return FFI::typeof($data);\n    }\n}\nvar_dump(test_type_ownership(\"int\", 1));\nvar_dump(test_type_ownership(\"int[2]\", 1));\nvar_dump(test_type_ownership(\"int\", 0));\nvar_dump(test_type_ownership(\"int[2]\", 0));\nfunction test_cast_ownership($str, $transfer) {\n    if ($transfer) {\n        return FFI::cast(FFI::type($str), FFI::new($str));\n    } else {\n        $type = FFI::type($str);\n        return FFI::cast($type, FFI::new($str));\n    }\n}\nvar_dump(test_cast_ownership(\"int\", 1));\nvar_dump(test_cast_ownership(\"int[2]\", 1));\nvar_dump(test_cast_ownership(\"int\", 0));\nvar_dump(test_cast_ownership(\"int[2]\", 0));\nfunction test_array_ownership($str, $transfer) {\n    if ($transfer) {\n        return FFI::arrayType(FFI::type($str), [2]);\n    } else {\n        $type = FFI::type($str);\n        return FFI::arrayType($type, [2]);\n    }\n}\nvar_dump(test_array_ownership(\"int\", 1));\nvar_dump(test_array_ownership(\"int[2]\", 1));\nvar_dump(test_array_ownership(\"int\", 0));\nvar_dump(test_array_ownership(\"int[2]\", 0));\n?>")).toMatchSnapshot();
+  });
+});

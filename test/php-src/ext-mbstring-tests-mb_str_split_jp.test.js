@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mbstring/tests/mb_str_split_jp.phpt
+  it("mb_str_split() tests for the japanese language", function () {
+    expect(parser.parseCode("<?php\nini_set('include_path','.');\ninclude_once('common.inc');\n$string = \"日本\";             /* 2 chars */\n$len = 2;\n$charset = [\n    \"BIG-5\",\n    \"EUC-JP\",\n    \"ISO-2022-JP\",\n    \"SJIS\",\n    \"UTF-16BE\",\n    \"UTF-16LE\",\n    \"UTF-32BE\",\n    \"UTF-32LE\",\n    \"UTF-8\"\n];\nforeach($charset as $cs){\n    $enc = mb_convert_encoding($string, $cs, \"UTF-8\");\n    $split = mb_str_split($enc, 1, $cs);\n    /* check chunks number */\n    for($i = 1; $i <= $len; ++$i){\n        $ceil = ceil($len / $i);\n        $cnt = count(mb_str_split($enc,$i,$cs));\n        if($ceil != $cnt){\n          echo \"$cs WRONG CHUNKS NUMBER: expected/actual: $ceil/$cnt\\n\";\n        }\n    }\n    /* check content */\n    echo \"$cs:\";\n    for($i = 0; $i < $len; ++$i){\n        echo  \" \" . unpack(\"H*\", $split[$i])[1];\n    }\n    echo \"\\n\";\n}\n/* long string test */\n$size = 50000;\n$long = str_repeat($string, $size); /* 50k x 2 chars = 1e5 chars */\n$enc = mb_convert_encoding($long, \"ISO-2022-JP\", \"UTF-8\");\n$array = mb_str_split($enc, $len, \"ISO-2022-JP\");\n$count = count($array);\n/* check array size */\nif($size !== $count) printf(\"Long string splitting error: actual array size: %d expected: %d\\n\", $count, $size);\n/* compare initial string and last array element after splitting */\n$enc = mb_convert_encoding($string, \"ISO-2022-JP\", \"UTF-8\");\nif(end($array) !== $enc){\n    printf(\"Long string splitting error:\n        last array element: %s expected: %s\\n\", unpack(\"H*\", end($array))[1],unpack(\"H*\", $enc)[1]);\n}\n?>")).toMatchSnapshot();
+  });
+});

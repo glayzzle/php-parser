@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #61681: Malformed grammar 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "la",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ooxx\\"",
+          "unicode": false,
+          "value": "ooxx",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"\${substr('laruence', 0, 2)}\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": true,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'laruence'",
+                      "unicode": false,
+                      "value": "laruence",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "substr",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

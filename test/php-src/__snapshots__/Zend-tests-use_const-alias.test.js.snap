@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests aliasing imported constants to resolve naming conflicts 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ConstantStatement {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "baz",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "kind": "constantstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "foo",
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        ConstantStatement {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "baz",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "43",
+              },
+            },
+          ],
+          "kind": "constantstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "bar",
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": Identifier {
+                "kind": "identifier",
+                "name": "foo_baz",
+              },
+              "kind": "useitem",
+              "name": "foo\\\\baz",
+              "type": null,
+            },
+            UseItem {
+              "alias": Identifier {
+                "kind": "identifier",
+                "name": "bar_baz",
+              },
+              "kind": "useitem",
+              "name": "bar\\\\baz",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": "const",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "foo_baz",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "bar_baz",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        Echo {
+          "expressions": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"Done\\\\n\\"",
+              "unicode": false,
+              "value": "Done
+",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+      ],
+      "kind": "namespace",
+      "name": Array [
+        "",
+      ],
+      "withBrackets": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

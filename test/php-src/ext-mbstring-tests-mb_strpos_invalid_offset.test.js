@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mbstring/tests/mb_strpos_invalid_offset.phpt
+  it("mb_strpos() with invalid offsets", function () {
+    expect(parser.parseCode("<?php\nini_set('include_path','.');\ninclude_once('common.inc');\nmb_internal_encoding('UTF-8') or print(\"mb_internal_encoding() failed\\n\");\n// Test string\n$string = '0123この文字列は日本語です。UTF-8を使っています。0123日本語は面倒臭い。';\n$slen = mb_strlen($string);\necho \"String len: $slen\\n\";\nprint (\"== INVALID OFFSET ==\\n\");\ntry {\n    var_dump( mb_strpos($string, '日本語', 44));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump( mb_strpos($string, '日本語', 50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump( mb_strpos($string, '0', 50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, 3, 50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, 0, 50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, '日本語', -50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, '0', -50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, 3, -50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, 0, -50));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(mb_strpos($string, 0, -44));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n?>")).toMatchSnapshot();
+  });
+});

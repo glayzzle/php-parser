@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #78376 (Incorrect preloading of constant static properties) 1`] = `
+Program {
+  "children": Array [
+    ConstantStatement {
+      "constants": Array [
+        Constant {
+          "kind": "constant",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "CNST",
+          },
+          "value": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'bbbb'",
+            "unicode": false,
+            "value": "bbbb",
+          },
+        },
+      ],
+      "kind": "constantstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "\\\\A",
+              "resolution": "fqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

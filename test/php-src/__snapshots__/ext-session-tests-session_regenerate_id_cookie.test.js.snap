@@ -1,0 +1,263 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test session_regenerate_id() function : basic functionality 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"*** Testing session_regenerate_id() : basic functionality for cookie ***\\\\n\\"",
+          "unicode": false,
+          "value": "*** Testing session_regenerate_id() : basic functionality for cookie ***
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/../../../sapi/cgi/tests/include.inc'",
+            "unicode": false,
+            "value": "/../../../sapi/cgi/tests/include.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "php",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "get_cgi_path",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "reset_env_vars",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "file",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/session_regenerate_id_cookie.test.php\\"",
+            "unicode": false,
+            "value": "/session_regenerate_id_cookie.test.php",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "file",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php
+ob_start();
+function find_cookie_header() {
+    $headers = headers_list();
+    $target  = \\"Set-Cookie: PHPSESSID=\\";
+    foreach ($headers as $h) {
+        if (strstr($h, $target) !== FALSE) {
+            echo $h.\\"\\\\n\\";
+            return TRUE;
+        }
+    }
+    var_dump($headers);
+    return FALSE;
+}
+var_dump(session_start());
+var_dump(find_cookie_header());
+$id = session_id();
+var_dump(session_regenerate_id());
+var_dump(find_cookie_header());
+var_dump($id !== session_id());
+var_dump(session_id());
+var_dump(session_destroy());
+ob_end_flush();
+?>'",
+            "unicode": false,
+            "value": "<?php
+ob_start();
+function find_cookie_header() {
+    $headers = headers_list();
+    $target  = \\"Set-Cookie: PHPSESSID=\\";
+    foreach ($headers as $h) {
+        if (strstr($h, $target) !== FALSE) {
+            echo $h.\\"\\\\n\\";
+            return TRUE;
+        }
+    }
+    var_dump($headers);
+    return FALSE;
+}
+var_dump(session_start());
+var_dump(find_cookie_header());
+$id = session_id();
+var_dump(session_regenerate_id());
+var_dump(find_cookie_header());
+var_dump($id !== session_id());
+var_dump(session_id());
+var_dump(session_destroy());
+ob_end_flush();
+?>",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_put_contents",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\`$php -n -d session.name=PHPSESSID $file\`",
+            "type": "shell",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "php",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": " -n -d session.name=PHPSESSID ",
+                  "unicode": false,
+                  "value": " -n -d session.name=PHPSESSID ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "file",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "file",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "unlink",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\"",
+          "unicode": false,
+          "value": "Done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

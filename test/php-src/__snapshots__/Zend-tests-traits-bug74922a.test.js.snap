@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #74922 (Composed class has fatal error with duplicate, equal const properties) 1`] = `
+Program {
+  "children": Array [
+    ConstantStatement {
+      "constants": Array [
+        Constant {
+          "kind": "constant",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "VALUE",
+          },
+          "value": Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+        },
+      ],
+      "kind": "constantstatement",
+    },
+    Trait {
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "var",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Name {
+                "kind": "name",
+                "name": "VALUE",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+    Trait {
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "var",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "kind": "trait",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Bar",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        TraitUse {
+          "adaptations": null,
+          "kind": "traituse",
+          "traits": Array [
+            Name {
+              "kind": "name",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "Bar",
+              "resolution": "uqn",
+            },
+          ],
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Baz",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"DONE\\"",
+          "unicode": false,
+          "value": "DONE",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

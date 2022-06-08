@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #68942 (Use after free vulnerability in unserialize() with DateTime). 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'a:2:{i:0;O:8:\\"DateTime\\":3:{s:4:\\"date\\";s:26:\\"2000-01-01 00:00:00.000000\\";s:13:\\"timezone_type\\";a:2:{i:0;i:1;i:1;i:2;}s:8:\\"timezone\\";s:1:\\"A\\";}i:1;R:5;}'",
+              "unicode": false,
+              "value": "a:2:{i:0;O:8:\\"DateTime\\":3:{s:4:\\"date\\";s:26:\\"2000-01-01 00:00:00.000000\\";s:13:\\"timezone_type\\";a:2:{i:0;i:1;i:1;i:2;}s:8:\\"timezone\\";s:1:\\"A\\";}i:1;R:5;}",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unserialize",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

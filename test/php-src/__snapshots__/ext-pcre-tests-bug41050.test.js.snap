@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #41050 (pcre 7.0 regression) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "regex",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'/(insert|drop|create|select|delete|update)([^;\\\\']*('",
+              "unicode": false,
+              "value": "/(insert|drop|create|select|delete|update)([^;']*(",
+            },
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"('[^']*')+\\"",
+              "unicode": false,
+              "value": "('[^']*')+",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "')?)*(;|$)/i'",
+            "unicode": false,
+            "value": ")?)*(;|$)/i",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sql",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'SELECT * FROM #__components'",
+          "unicode": false,
+          "value": "SELECT * FROM #__components",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'not matched'",
+            "unicode": false,
+            "value": "not matched",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "body": Echo {
+        "expressions": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'matched'",
+            "unicode": false,
+            "value": "matched",
+          },
+        ],
+        "kind": "echo",
+        "shortForm": false,
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "regex",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sql",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "preg_match",
+          "resolution": "uqn",
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

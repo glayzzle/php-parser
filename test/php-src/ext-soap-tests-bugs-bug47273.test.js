@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/soap/tests/bugs/bug47273.phpt
+  it("Bug #47273 (Encoding bug in SoapServer->fault)", function () {
+    expect(parser.parseCode("<?php\n$request1 = <<<EOF\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://127.0.0.1:8080/test/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><SOAP-ENV:Body><ns1:test1/></SOAP-ENV:Body></SOAP-ENV:Envelope>\nEOF;\n$request2 = <<<EOF\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://127.0.0.1:8080/test/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><SOAP-ENV:Body><ns1:test2/></SOAP-ENV:Body></SOAP-ENV:Envelope>\nEOF;\nclass SoapFaultTest\n{\n    public function test1() {\n        //  Test #1\n        return 'Test #1 exception with some special chars: Äßö';\n    }\n    public function test2() {\n        //  Test #2\n    //throw new SoapFault('Server', 'Test #2 exception with some special chars: Äßö');\n        throw new Exception('Test #2 exception with some special chars: Äßö');\n    }\n}\n$server = new SoapServer(null, array(\n'uri' => \"http://127.0.0.1:8080/test/\",\n'encoding' => 'ISO-8859-1'));\n$server->setClass('SoapFaultTest');\ntry {\n    $server->handle($request1);\n} catch (Exception $e) {\n    $server->fault(\"Sender\", $e->getMessage());\n}\ntry {\n        $server->handle($request2);\n} catch (Exception $e) {\n        $server->fault(\"Sender\", $e->getMessage());\n}\n?>")).toMatchSnapshot();
+  });
+});

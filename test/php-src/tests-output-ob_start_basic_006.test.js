@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // tests/output/ob_start_basic_006.phpt
+  it("ob_start(): ensure multiple buffer initialization with a single call using arrays is not supported on PHP6 (http://bugs.php.net/42641)", function () {
+    expect(parser.parseCode("<?php\n/*\n * Function is implemented in main/output.c\n*/\nfunction f($string) {\n    static $i=0;\n    $i++;\n    $len = strlen($string);\n    return \"f[call:$i; len:$len] - $string\\n\";\n}\nClass C {\n    public $id = 'none';\n    function __construct($id) {\n        $this->id = $id;\n    }\n    static function g($string) {\n        static $i=0;\n        $i++;\n        $len = strlen($string);\n        return \"C::g[call:$i; len:$len] - $string\\n\";\n    }\n    function h($string) {\n        static $i=0;\n        $i++;\n        $len = strlen($string);\n        return \"C::h[call:$i; len:$len; id:$this->id] - $string\\n\";\n    }\n}\nfunction checkAndClean() {\n  print_r(ob_list_handlers());\n  while (ob_get_level()>0) {\n    ob_end_flush();\n  }\n}\necho \"\\n ---> Test arrays:\\n\";\nvar_dump(ob_start(array(\"f\")));\ncheckAndClean();\nvar_dump(ob_start(array(\"f\", \"f\")));\ncheckAndClean();\nvar_dump(ob_start(array(\"f\", \"C::g\", \"f\", \"C::g\")));\ncheckAndClean();\nvar_dump(ob_start(array(\"f\", \"non_existent\", \"f\")));\ncheckAndClean();\nvar_dump(ob_start(array(\"f\", \"non_existent\", \"f\", \"f\")));\ncheckAndClean();\n$c = new c('originalID');\nvar_dump(ob_start(array($c, \"h\")));\ncheckAndClean();\nvar_dump(ob_start(array($c, \"h\")));\n$c->id = 'changedID';\ncheckAndClean();\n$c->id = 'changedIDagain';\nvar_dump(ob_start(array('f', 'C::g', array(array($c, \"g\"), array($c, \"h\")))));\ncheckAndClean();\n?>")).toMatchSnapshot();
+  });
+});

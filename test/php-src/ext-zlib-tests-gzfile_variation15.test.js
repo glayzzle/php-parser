@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/zlib/tests/gzfile_variation15.phpt
+  it("Test gzfile() function : variation: use include path (relative directories in path)", function () {
+    expect(parser.parseCode("<?php\n$testName = 'gzfile_variation15';\nrequire_once('reading_include_path.inc');\n//define the files to go into these directories, create one in dir2\nset_include_path($newIncludePath);\ntest_gzfile();\n// remove the directory structure\nchdir($baseDir);\nrmdir($workingDir);\nforeach($newdirs as $newdir) {\n   rmdir($newdir);\n}\nchdir(\"..\");\nrmdir($thisTestDir);\nfunction test_gzfile() {\n   global $scriptFile, $secondFile, $firstFile, $filename;\n   // create a file in the middle directory\n   $h = gzopen($secondFile, \"w\");\n   gzwrite($h, \"This is a file in dir2\");\n   gzclose($h);\n   // should read dir2 file\n   var_dump(gzfile($filename, true));\n   echo \"\\n\";\n   //create a file in dir1\n   $h = gzopen($firstFile, \"w\");\n   gzwrite($h, \"This is a file in dir1\");\n   gzclose($h);\n   //should now read dir1 file\n   var_dump(gzfile($filename, true));\n   echo \"\\n\";\n   // create a file in working directory\n   $h = gzopen($filename, \"w\");\n   gzwrite($h, \"This is a file in working dir\");\n   gzclose($h);\n   //should still read dir1 file\n   var_dump(gzfile($filename, true));\n   echo \"\\n\";\n   unlink($firstFile);\n   unlink($secondFile);\n   //should read the file in working directory\n   var_dump(gzfile($filename, true));\n   echo \"\\n\";\n   // create a file in the script directory\n   $h = gzopen($scriptFile, \"w\");\n   gzwrite($h, \"This is a file in script dir\");\n   gzclose($h);\n   //should read the file in script dir\n   var_dump(gzfile($filename, true));\n   echo \"\\n\";\n   //cleanup\n   unlink($filename);\n   unlink($scriptFile);\n}\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #62907 (Double free when use traits) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "name",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": If {
+                    "alternate": If {
+                      "alternate": null,
+                      "body": Block {
+                        "children": Array [
+                          ExpressionStatement {
+                            "expression": Eval {
+                              "kind": "eval",
+                              "source": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"trait T { public function __construct() { } }\\"",
+                                "unicode": false,
+                                "value": "trait T { public function __construct() { } }",
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "kind": "if",
+                      "shortForm": false,
+                      "test": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "name",
+                        },
+                        "right": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"T\\"",
+                          "unicode": false,
+                          "value": "T",
+                        },
+                        "type": "==",
+                      },
+                    },
+                    "body": Block {
+                      "children": Array [
+                        ExpressionStatement {
+                          "expression": Eval {
+                            "kind": "eval",
+                            "source": String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"abstract class A { use T { T::__construct as __asconstruct; }}\\"",
+                              "unicode": false,
+                              "value": "abstract class A { use T { T::__construct as __asconstruct; }}",
+                            },
+                          },
+                          "kind": "expressionstatement",
+                        },
+                      ],
+                      "kind": "block",
+                    },
+                    "kind": "if",
+                    "shortForm": false,
+                    "test": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "name",
+                      },
+                      "right": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"A\\"",
+                        "unicode": false,
+                        "value": "A",
+                      },
+                      "type": "==",
+                    },
+                  },
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Eval {
+                          "kind": "eval",
+                          "source": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"abstract class B extends A { }\\"",
+                            "unicode": false,
+                            "value": "abstract class B extends A { }",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "name",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"B\\"",
+                      "unicode": false,
+                      "value": "B",
+                    },
+                    "type": "==",
+                  },
+                },
+                Return {
+                  "expr": Boolean {
+                    "kind": "boolean",
+                    "raw": "TRUE",
+                    "value": true,
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "B",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"okey\\"",
+          "unicode": false,
+          "value": "okey",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

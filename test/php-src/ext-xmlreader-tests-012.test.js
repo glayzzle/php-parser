@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/xmlreader/tests/012.phpt
+  it("XMLReader: accessing empty and non existing attributes", function () {
+    expect(parser.parseCode("<?php\n$xmlstring =<<<EOF\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<foo bar=\"\"/>\nEOF;\n$reader = new XMLReader();\n$reader->XML($xmlstring);\n$reader->read();\nvar_dump($reader->getAttribute('bar'));\nvar_dump($reader->getAttribute('baz'));\n$reader->close();\n$xmlstring =<<<EOF\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE foo SYSTEM \"012.dtd\">\n<foo bar=\"\"/>\nEOF;\n$xmlstring = str_replace('012.dtd', __DIR__.'/012.dtd', $xmlstring);\nif (DIRECTORY_SEPARATOR == '\\\\') {\n    $xmlstring = str_replace('\\\\',\"/\", $xmlstring);\n}\n$reader = new XMLReader();\n$reader->XML($xmlstring);\n$reader->setParserProperty(XMLReader::DEFAULTATTRS, true);\nwhile($reader->read() && $reader->nodeType != XMLReader::ELEMENT);\nvar_dump($reader->getAttribute('bar'));\nvar_dump($reader->getAttribute('baz'));\n$reader->close();\necho \"\\nUsing URI:\\n\";\n$reader = new XMLReader();\n$file = __DIR__ . '/012.xml';\nif (DIRECTORY_SEPARATOR == '\\\\') {\n    $file = str_replace('\\\\',\"/\", $file);\n}\n$reader->open($file);\n//$reader->setParserProperty(XMLReader::DEFAULTATTRS, true);\nwhile($reader->read() && $reader->nodeType != XMLReader::ELEMENT);\nvar_dump($reader->getAttribute('bar'));\nvar_dump($reader->getAttribute('baz'));\n$reader->close();\n$reader = new XMLReader();\n$reader->open(__DIR__ . '/012.xml');\n$reader->setParserProperty(XMLReader::DEFAULTATTRS, true);\nwhile($reader->read() && $reader->nodeType != XMLReader::ELEMENT);\nvar_dump($reader->getAttribute('bar'));\nvar_dump($reader->getAttribute('baz'));\n$reader->close();\n?>")).toMatchSnapshot();
+  });
+});

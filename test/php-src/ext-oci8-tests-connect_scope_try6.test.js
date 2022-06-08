@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/oci8/tests/connect_scope_try6.phpt
+  it("Check oci_pconnect try/catch end-of-scope with old_oci_close_semantics On", function () {
+    expect(parser.parseCode("<?php\nrequire(__DIR__.'/details.inc');\n// Initialization\n$stmtarray = array(\n    \"drop table scope_try6_tab\",\n    \"create table scope_try6_tab (c1 number)\"\n);\nif (!empty($dbase))\n    $c1 = oci_new_connect($user,$password,$dbase);\nelse\n    $c1 = oci_new_connect($user,$password);\noci8_test_sql_execute($c1, $stmtarray);\n// Run Test\necho \"Test 1\\n\";\n// Make errors throw exceptions\nset_error_handler(function($x, $y) { throw new Exception($y, $x); });\ntry\n{\n    if (!empty($dbase))\n        $c = oci_pconnect($user,$password,$dbase);\n    else\n        $c = oci_pconnect($user,$password);\n    $s = oci_parse($c, \"insert into scope_try6_tab values (1)\");\n    oci_execute($s, OCI_DEFAULT);  // no commit\n    $s = oci_parse($c, \"insert into scope_try6_tab values (ABC)\"); // syntax error -> throws exception\n    oci_execute($s, OCI_DEFAULT);  // no commit\n}\ncatch (Exception $e)\n{\n    echo \"Caught Exception: \". $e->getMessage(), \"\\n\";\n    var_dump($c);\n    // Verify data is not yet committed\n    $s1 = oci_parse($c1, \"select * from scope_try6_tab\");\n    oci_execute($s1);\n    oci_fetch_all($s1, $r);\n    var_dump($r);\n    // Now commit\n    oci_commit($c);\n}\n// Verify data was committed in the Catch block\n$s1 = oci_parse($c1, \"select * from scope_try6_tab\");\noci_execute($s1);\noci_fetch_all($s1, $r);\nvar_dump($r);\n// Cleanup\n$stmtarray = array(\n    \"drop table scope_try6_tab\"\n);\noci8_test_sql_execute($c1, $stmtarray);\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

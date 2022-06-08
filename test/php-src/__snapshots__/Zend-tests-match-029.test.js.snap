@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test long match with undefined variable 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "errno",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "message",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                Throw {
+                  "kind": "throw",
+                  "what": New {
+                    "arguments": Array [
+                      Encapsed {
+                        "kind": "encapsed",
+                        "raw": "\\"Custom error handler: $message\\"",
+                        "type": "string",
+                        "value": Array [
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": String {
+                              "isDoubleQuote": false,
+                              "kind": "string",
+                              "raw": "Custom error handler: ",
+                              "unicode": false,
+                              "value": "Custom error handler: ",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": null,
+                          },
+                          EncapsedPart {
+                            "curly": false,
+                            "expression": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "message",
+                            },
+                            "kind": "encapsedpart",
+                            "syntax": "simple",
+                          },
+                        ],
+                      },
+                    ],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "Exception",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "set_error_handler",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Match {
+          "arms": Array [
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"This should not get printed with or without opcache\\\\n\\"",
+                "unicode": false,
+                "value": "This should not get printed with or without opcache
+",
+              },
+              "conds": null,
+              "kind": "matcharm",
+            },
+            MatchArm {
+              "body": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Also should not be printed\\\\n\\"",
+                "unicode": false,
+                "value": "Also should not be printed
+",
+              },
+              "conds": Array [
+                Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "2",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "3",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "4",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "5",
+                },
+              ],
+              "kind": "matcharm",
+            },
+          ],
+          "cond": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "undefVar",
+          },
+          "kind": "match",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"unreachable\\\\n\\"",
+          "unicode": false,
+          "value": "unreachable
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

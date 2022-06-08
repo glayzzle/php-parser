@@ -1,0 +1,436 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #69970 (Use-after-free vulnerability in spl_recursive_it_move_forward_ex()) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "count",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "10",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"dummy\\\\n\\"",
+                    "unicode": false,
+                    "value": "dummy
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "rewind",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "void",
+            "raw": "void",
+          },
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Global {
+                "items": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "count",
+                  },
+                ],
+                "kind": "global",
+              },
+              Echo {
+                "expressions": Array [
+                  Call {
+                    "arguments": Array [],
+                    "kind": "call",
+                    "what": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "getDepth",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              If {
+                "alternate": null,
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": StaticLookup {
+                          "kind": "staticlookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "rewind",
+                          },
+                          "what": ParentReference {
+                            "kind": "parentreference",
+                            "raw": "parent",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Pre {
+                    "kind": "pre",
+                    "type": "-",
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "count",
+                    },
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "type": ">",
+                },
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "endChildren",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "void",
+            "raw": "void",
+          },
+          "visibility": "",
+        },
+      ],
+      "extends": Name {
+        "kind": "name",
+        "name": "RecursiveIteratorIterator",
+        "resolution": "uqn",
+      },
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "RecursiveArrayIteratorIterator",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "arr",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"a\\"",
+                "unicode": false,
+                "value": "a",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"ba\\"",
+                      "unicode": false,
+                      "value": "ba",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"bba\\"",
+                            "unicode": false,
+                            "value": "bba",
+                          },
+                        },
+                        Entry {
+                          "byRef": false,
+                          "key": null,
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"bbb\\"",
+                            "unicode": false,
+                            "value": "bbb",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": false,
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "obj",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arr",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "RecursiveArrayIterator",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rit",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "obj",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "RecursiveArrayIteratorIterator",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "parenthesizedExpression": true,
+                  "what": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "getDepth",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "rit",
+                    },
+                  },
+                },
+                "right": Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\"$k=>$v\\\\n\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "k",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "=>",
+                        "unicode": false,
+                        "value": "=>",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "v",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "\\\\n",
+                        "unicode": false,
+                        "value": "",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                  ],
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "key": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "k",
+      },
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "rit",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "v",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

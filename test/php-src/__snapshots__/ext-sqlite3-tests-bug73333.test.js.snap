@@ -1,0 +1,352 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #73333 (2147483647 is fetched as string) 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'PHP_INT_MIN'",
+              "unicode": false,
+              "value": "PHP_INT_MIN",
+            },
+            Bin {
+              "kind": "bin",
+              "left": Unary {
+                "kind": "unary",
+                "type": "-",
+                "what": Name {
+                  "kind": "name",
+                  "name": "PHP_INT_MAX",
+                  "resolution": "uqn",
+                },
+              },
+              "right": Number {
+                "kind": "number",
+                "value": "1",
+              },
+              "type": "-",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "define",
+            "resolution": "uqn",
+          },
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'PHP_INT_MIN'",
+              "unicode": false,
+              "value": "PHP_INT_MIN",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "defined",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "db",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "':memory:'",
+              "unicode": false,
+              "value": ":memory:",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SQLite3",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'CREATE TABLE foo (bar INT)'",
+            "unicode": false,
+            "value": "CREATE TABLE foo (bar INT)",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "exec",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\"INSERT INTO foo VALUES ($value)\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "INSERT INTO foo VALUES (",
+                        "unicode": false,
+                        "value": "INSERT INTO foo VALUES (",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "value",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": ")",
+                        "unicode": false,
+                        "value": ")",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                  ],
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "exec",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Array {
+        "items": Array [
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Name {
+              "kind": "name",
+              "name": "PHP_INT_MIN",
+              "resolution": "uqn",
+            },
+          },
+          Entry {
+            "byRef": false,
+            "key": null,
+            "kind": "entry",
+            "unpack": false,
+            "value": Name {
+              "kind": "name",
+              "name": "PHP_INT_MAX",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "array",
+        "shortForm": true,
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "value",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "res",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'SELECT bar FROM foo'",
+              "unicode": false,
+              "value": "SELECT bar FROM foo",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "query",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    While {
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Call {
+                "arguments": Array [
+                  OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "row",
+                    },
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "gettype",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "PHP_EOL",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "row",
+          },
+          "operator": "=",
+          "parenthesizedExpression": true,
+          "right": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "SQLITE3_NUM",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "fetchArray",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "res",
+              },
+            },
+          },
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "false",
+          "value": false,
+        },
+        "type": "!==",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

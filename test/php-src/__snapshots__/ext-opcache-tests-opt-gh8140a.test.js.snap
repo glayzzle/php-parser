@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests GH-8140 (Wrong first class callable by name optimization) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        _Function {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "name",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Encapsed {
+                    "kind": "encapsed",
+                    "raw": "\\"Hello, \${name}!\\"",
+                    "type": "string",
+                    "value": Array [
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "Hello, ",
+                          "unicode": false,
+                          "value": "Hello, ",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                      EncapsedPart {
+                        "curly": true,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "name",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "!",
+                          "unicode": false,
+                          "value": "!",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                    ],
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "kind": "function",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "greeter",
+          },
+          "nullable": false,
+          "type": null,
+        },
+        ExpressionStatement {
+          "expression": Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "mycallable",
+            },
+            "operator": "=",
+            "right": Call {
+              "arguments": Array [
+                VariadicPlaceholder {
+                  "kind": "variadicplaceholder",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "greeter",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"world\\"",
+                "unicode": false,
+                "value": "world",
+              },
+            ],
+            "kind": "call",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "mycallable",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "Test",
+      "withBrackets": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

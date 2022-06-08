@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/oci8/tests/extauth_03.phpt
+  it("Test External Authentication errors with oci_pconnect", function () {
+    expect(parser.parseCode("<?php\nerror_reporting(E_ALL ^ E_DEPRECATED);\n// Run Test\necho \"Test 1\\n\";\n$c = oci_pconnect('/', 'notemtpy', 'anything', null, OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 2\\n\";\n$c = oci_pconnect('notemtpy', 'notemtpy', 'anything', null, OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 3\\n\";\n$c = oci_pconnect('notemtpy', '', 'anything', null, OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 4\\n\";\n$c = oci_pconnect('a', 'b', 'c', null, OCI_SYSDBA+OCI_SYSOPER);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 5\\n\";\n$c = oci_pconnect('a', 'b', 'c', null, OCI_SYSDBA+OCI_SYSOPER+OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 6\\n\";\n$c = oci_pconnect('', '', 'anything', null, OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 7\\n\";\n$c = oci_pconnect('/', '', 'anything', null, OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 8\\n\";\n$c = oci_pconnect('/', null, 'anything', null, OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 9\\n\";\n$c = oci_pconnect('/', '', 'd', null, OCI_SYSDBA+OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\necho \"Test 10\\n\";\n$c = oci_pconnect('/', '', 'd', null, OCI_SYSOPER+OCI_CRED_EXT);\nif (!$c) {\n    $m = oci_error();\n    var_dump($m);\n}\nvar_dump($c);\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/sprintf_error.phpt
+  it("Test sprintf() function : error conditions", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing sprintf() : error conditions ***\\n\";\n// Zero arguments\necho \"\\n-- Testing sprintf() function with Zero arguments --\\n\";\ntry {\n    var_dump( sprintf() );\n} catch (TypeError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\necho \"\\n-- Testing sprintf() function with less than expected no. of arguments --\\n\";\n$format1 = '%s';\n$format2 = '%s%s';\n$format3 = '%s%s%s';\n$arg1 = 'one';\n$arg2 = 'two';\n// with one argument less than expected\ntry {\n    var_dump( sprintf($format1) );\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\ntry {\n    var_dump( sprintf($format2,$arg1) );\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\ntry {\n    var_dump( sprintf($format3,$arg1,$arg2) );\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\n// with two argument less than expected\ntry {\n    var_dump( sprintf($format2) );\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\ntry {\n    var_dump( sprintf($format3,$arg1) );\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\n// with three argument less than expected\ntry {\n    var_dump( sprintf($format3) );\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\ntry {\n    var_dump(sprintf('%100$d %d'));\n} catch (\\ArgumentCountError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\ntry {\n    var_dump(sprintf(\"foo %\", 42));\n} catch (ValueError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,444 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Request #70438: Add IV parameter for openssl_seal and openssl_open 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"openssl_seal() test\\"",
+          "unicode": false,
+          "value": "openssl_seal() test",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cipher",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'AES-128-CBC'",
+          "unicode": false,
+          "value": "AES-128-CBC",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pub_key",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"file://\\"",
+              "unicode": false,
+              "value": "file://",
+            },
+            "right": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/public.key\\"",
+            "unicode": false,
+            "value": "/public.key",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "priv_key",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"file://\\"",
+              "unicode": false,
+              "value": "file://",
+            },
+            "right": Magic {
+              "kind": "magic",
+              "raw": "__DIR__",
+              "value": "__DIR__",
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/private_rsa_1024.key\\"",
+            "unicode": false,
+            "value": "/private_rsa_1024.key",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Try {
+      "always": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "data",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "sealed",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ekeys",
+                },
+                Array {
+                  "items": Array [
+                    Entry {
+                      "byRef": false,
+                      "key": null,
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pub_key",
+                      },
+                    },
+                    Entry {
+                      "byRef": false,
+                      "key": null,
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "pub_key",
+                      },
+                    },
+                  ],
+                  "kind": "array",
+                  "shortForm": false,
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "cipher",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "openssl_seal",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "catches": Array [
+        Catch {
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Call {
+                      "arguments": Array [],
+                      "kind": "call",
+                      "what": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "getMessage",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "e",
+                        },
+                      },
+                    },
+                    "right": Name {
+                      "kind": "name",
+                      "name": "\\\\PHP_EOL",
+                      "resolution": "fqn",
+                    },
+                    "type": ".",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "catch",
+          "variable": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "e",
+          },
+          "what": Array [
+            Name {
+              "kind": "name",
+              "name": "\\\\ValueError",
+              "resolution": "fqn",
+            },
+          ],
+        },
+      ],
+      "kind": "try",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sealed",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ekeys",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pub_key",
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pub_key",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'sparkles'",
+            "unicode": false,
+            "value": "sparkles",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "iv",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "openssl_seal",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sealed",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ekeys",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pub_key",
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "pub_key",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": false,
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cipher",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "iv",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "openssl_seal",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sealed",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "decrypted",
+          },
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ekeys",
+            },
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "priv_key",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "cipher",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "iv",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "openssl_open",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "decrypted",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

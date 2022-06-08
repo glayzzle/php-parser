@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/tidy/tests/027.phpt
+  it("Bug: tidy segfaults with markup=false", function () {
+    expect(parser.parseCode("<?php\n// bug report from http://sf.net/tracker/?func=detail&atid=390963&aid=1641868&group_id=27659\nabstract class BaseClass {\n        private static $tidyconfig;\n        public function __construct() {\n                self::$tidyconfig = array(\n                        'indent'                        => false,\n                        'clean'                         => true,\n                        'merge-divs'            => false,\n                        'quote-marks'           => true,\n                        'drop-empty-paras'      => false,\n                        'markup'                        => false,\n                        'output-xhtml'          => true,\n                        'wrap'                          => 0);\n        }\n        abstract public function run();\n        public function getURL($url) {\n                $data = \"awerawer\"; // in my code, $data is downloaded from a site\n                $tidy = new tidy;\n                $tidy->parseString($data, self::$tidyconfig, 'utf8');\n                $tidy->cleanRepair();\n                return $tidy;\n        }\n}\nclass ChildClass extends BaseClass {\n        public function __construct() {\n                parent::__construct();\n        }\n        public function run() {\n                $result = $this->getURL('awer');\n                if ($result === null) {\n                        echo \"\\tError:\\n\";\n                }\n                var_dump((string)$result);\n        }\n}\n$instance = new ChildClass();\n$instance->run();\n?>")).toMatchSnapshot();
+  });
+});

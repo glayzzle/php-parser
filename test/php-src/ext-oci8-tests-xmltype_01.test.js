@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/oci8/tests/xmltype_01.phpt
+  it("Basic XMLType test", function () {
+    expect(parser.parseCode("<?php\nrequire(__DIR__.\"/connect.inc\");\n// Initialization\n$stmtarray = array(\n    \"drop table xtt\",\n    \"create table xtt\n           (xt_id number, xt_spec xmltype)\n           xmltype xt_spec store as clob\",\n    \"insert into xtt (xt_id, xt_spec) values\n      (1,\n       xmltype('<?xml version=\\\"1.0\\\"?>\n        <Xt>\n          <XtId>1</XtId>\n          <Size>Big</Size>\n          <Area>12345</Area>\n          <Hardness>20</Hardness>\n          <Lip>Curved</Lip>\n          <Color>Red</Color>\n          <Nice>N</Nice>\n          <Compact>Tiny</Compact>\n          <Material>Steel</Material>\n        </Xt>'))\"\n);\noci8_test_sql_execute($c, str_replace(\"\\r\", \"\", $stmtarray));\nfunction do_query($c)\n{\n    $s = oci_parse($c, 'select XMLType.getClobVal(xt_spec)\n                        from xtt where xt_id = 1');\n    oci_execute($s);\n    $row = oci_fetch_row($s);\n    $data = $row[0]->load();\n    var_dump($data);\n    return($data);\n}\n// Check\necho \"Initial Data\\n\";\n$data = do_query($c);\n// Manipulate the data using SimpleXML\n$sx = simplexml_load_string($data);\n$sx->Hardness = $sx->Hardness - 1;\n$sx->Nice = 'Y';\n// Insert changes using a temporary CLOB\n$s = oci_parse($c, 'update xtt\n                    set xt_spec = XMLType(:clob)\n                    where xt_id = 1');\n$lob = oci_new_descriptor($c, OCI_D_LOB);\noci_bind_by_name($s, ':clob', $lob, -1, OCI_B_CLOB);\n$lob->writeTemporary($sx->asXml());\noci_execute($s);\n$lob->close();\n// Verify\necho \"Verify\\n\";\n$data = do_query($c);\n// Cleanup\n$stmtarray = array(\n    \"drop table xtt\",\n);\noci8_test_sql_execute($c, $stmtarray);\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SCCP 038: Memory leak 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "obj",
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stdClass",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "b",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "obj",
+                },
+              },
+              "operator": "=",
+              "right": Unary {
+                "kind": "unary",
+                "type": "~",
+                "what": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "b",
+                  },
+                  "operator": "=",
+                  "right": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "a",
+                    },
+                    "operator": "=",
+                    "right": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'##'",
+                      "unicode": false,
+                      "value": "##",
+                    },
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Post {
+              "kind": "post",
+              "type": "+",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "obj",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+DONE",
+      "value": "DONE",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

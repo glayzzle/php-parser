@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/htmlentities_html4.phpt
+  it("htmlentities() conformance check (HTML 4)", function () {
+    expect(parser.parseCode("<?php\nfunction utf32_utf8($k) {\n    if ($k < 0x80) {\n        $retval = pack('C', $k);\n    } else if ($k < 0x800) {\n        $retval = pack('C2',\n            0xc0 | ($k >> 6),\n            0x80 | ($k & 0x3f));\n    } else if ($k < 0x10000) {\n        $retval = pack('C3',\n            0xe0 | ($k >> 12),\n            0x80 | (($k >> 6) & 0x3f),\n            0x80 | ($k & 0x3f));\n    } else if ($k < 0x200000) {\n        $retval = pack('C4',\n            0xf0 | ($k >> 18),\n            0x80 | (($k >> 12) & 0x3f),\n            0x80 | (($k >> 6) & 0x3f),\n            0x80 | ($k & 0x3f));\n    } else if ($k < 0x4000000) {\n        $retval = pack('C5',\n            0xf8 | ($k >> 24),\n            0x80 | (($k >> 18) & 0x3f),\n            0x80 | (($k >> 12) & 0x3f),\n            0x80 | (($k >> 6) & 0x3f),\n            0x80 | ($k & 0x3f));\n    } else {\n        $retval = pack('C6',\n            0xfc | ($k >> 30),\n            0x80 | (($k >> 24) & 0x3f),\n            0x80 | (($k >> 18) & 0x3f),\n            0x80 | (($k >> 12) & 0x3f),\n            0x80 | (($k >> 6) & 0x3f),\n            0x80 | ($k & 0x3f));\n    }\n    return $retval;\n}\n$table = get_html_translation_table(HTML_ENTITIES, ENT_QUOTES, 'UTF-8');\nfor ($i = 0; $i < 0x2710; $i++) {\n    if ($i >= 0xd800 && $i < 0xe000)\n        continue;\n    $str = utf32_utf8($i);\n    if (isset($table[$str])) {\n        printf(\"%s\\tU+%05X\\n\", $table[$str], $i);\n        unset($table[$str]);\n    }\n}\nif (!empty($table)) {\n    echo \"Not matched entities: \";\n    var_dump($table);\n}\n?>")).toMatchSnapshot();
+  });
+});

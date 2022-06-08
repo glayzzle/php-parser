@@ -1,0 +1,872 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PDO_DBLIB: Column data types, with or without stringifying 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/config.inc'",
+            "unicode": false,
+            "value": "/config.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Global {
+            "items": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+            ],
+            "kind": "global",
+          },
+          Switch {
+            "body": Block {
+              "children": Array [
+                Case {
+                  "body": Block {
+                    "children": Array [],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'5.0'",
+                    "unicode": false,
+                    "value": "5.0",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'6.0'",
+                    "unicode": false,
+                    "value": "6.0",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'7.0'",
+                    "unicode": false,
+                    "value": "7.0",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'7.1'",
+                    "unicode": false,
+                    "value": "7.1",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'7.2'",
+                    "unicode": false,
+                    "value": "7.2",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      Return {
+                        "expr": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'10.500'",
+                          "unicode": false,
+                          "value": "10.500",
+                        },
+                        "kind": "return",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'8.0'",
+                    "unicode": false,
+                    "value": "8.0",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      Return {
+                        "expr": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'10.5'",
+                          "unicode": false,
+                          "value": "10.5",
+                        },
+                        "kind": "return",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "switch",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "DBLIB_ATTR_TDS_VERSION",
+                  },
+                  "what": Name {
+                    "kind": "name",
+                    "name": "PDO",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "getAttribute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "get_expected_float_string",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "sql",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"
+    SELECT
+        'foo' AS [char],
+        CAST('2030-01-01 23:59:59' AS DATETIME) AS [datetime],
+        CAST(0 AS BIT) AS [false],
+        10.500 AS [float],
+        1000 AS [int],
+        CAST(10.500 AS MONEY) AS [money],
+        CAST('1950-01-18 23:00:00' AS SMALLDATETIME) as [smalldatetime],
+        CAST(1 AS BIT) AS [true]
+\\"",
+          "unicode": false,
+          "value": "
+    SELECT
+        'foo' AS [char],
+        CAST('2030-01-01 23:59:59' AS DATETIME) AS [datetime],
+        CAST(0 AS BIT) AS [false],
+        10.500 AS [float],
+        1000 AS [int],
+        CAST(10.500 AS MONEY) AS [money],
+        CAST('1950-01-18 23:00:00' AS SMALLDATETIME) as [smalldatetime],
+        CAST(1 AS BIT) AS [true]
+",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sql",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "query",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "row",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "FETCH_ASSOC",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "PDO",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "fetch",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "stmt",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'char'",
+              "unicode": false,
+              "value": "char",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'datetime'",
+              "unicode": false,
+              "value": "datetime",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'false'",
+              "unicode": false,
+              "value": "false",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'float'",
+              "unicode": false,
+              "value": "float",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'int'",
+              "unicode": false,
+              "value": "int",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'money'",
+              "unicode": false,
+              "value": "money",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'smalldatetime'",
+              "unicode": false,
+              "value": "smalldatetime",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'true'",
+              "unicode": false,
+              "value": "true",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ATTR_STRINGIFY_FETCHES",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "PDO",
+              "resolution": "uqn",
+            },
+          },
+          Boolean {
+            "kind": "boolean",
+            "raw": "true",
+            "value": true,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setAttribute",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sql",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "query",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "row",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "FETCH_ASSOC",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "PDO",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "fetch",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "stmt",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'char'",
+              "unicode": false,
+              "value": "char",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'datetime'",
+              "unicode": false,
+              "value": "datetime",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'false'",
+              "unicode": false,
+              "value": "false",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": OffsetLookup {
+              "kind": "offsetlookup",
+              "offset": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'float'",
+                "unicode": false,
+                "value": "float",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "row",
+              },
+            },
+            "right": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "get_expected_float_string",
+                "resolution": "uqn",
+              },
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'int'",
+              "unicode": false,
+              "value": "int",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'smalldatetime'",
+              "unicode": false,
+              "value": "smalldatetime",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'true'",
+              "unicode": false,
+              "value": "true",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "row",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

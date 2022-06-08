@@ -1,0 +1,525 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Returning a reference from a static method via another static method 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Number {
+                  "kind": "number",
+                  "value": "100",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "returnConstantByValue",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Number {
+                  "kind": "number",
+                  "value": "100",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "returnConstantByRef",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'a'",
+                    "unicode": false,
+                    "value": "a",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "GLOBALS",
+                  },
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "returnVariableByRef",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "functionToCall",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Return {
+                "expr": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "functionToCall",
+                    },
+                    "what": Name {
+                      "kind": "name",
+                      "name": "C",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": true,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": true,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "returnFunctionCallByRef",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "C",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n---> 1. Via a return by ref function call, assign by reference the return value of a function that returns by value:\\\\n\\"",
+          "unicode": false,
+          "value": "
+---> 1. Via a return by ref function call, assign by reference the return value of a function that returns by value:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "4",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": AssignRef {
+        "kind": "assignref",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'returnConstantByValue'",
+              "unicode": false,
+              "value": "returnConstantByValue",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "returnFunctionCallByRef",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "C",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
+        "type": "+",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n---> 2. Via a return by ref function call, assign by reference the return value of a function that returns a constant by ref:\\\\n\\"",
+          "unicode": false,
+          "value": "
+---> 2. Via a return by ref function call, assign by reference the return value of a function that returns a constant by ref:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "4",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": AssignRef {
+        "kind": "assignref",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'returnConstantByRef'",
+              "unicode": false,
+              "value": "returnConstantByRef",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "returnFunctionCallByRef",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "C",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
+        "type": "+",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n---> 3. Via a return by ref function call, assign by reference the return value of a function that returns by ref:\\\\n\\"",
+          "unicode": false,
+          "value": "
+---> 3. Via a return by ref function call, assign by reference the return value of a function that returns by ref:
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Unset {
+      "kind": "unset",
+      "variables": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+      ],
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "4",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": AssignRef {
+        "kind": "assignref",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "b",
+        },
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'returnVariableByRef'",
+              "unicode": false,
+              "value": "returnVariableByRef",
+            },
+          ],
+          "kind": "call",
+          "what": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "returnFunctionCallByRef",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "C",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
+        "type": "+",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "b",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

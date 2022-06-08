@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/simplexml/tests/sxe_004.phpt
+  it("SPL: SimpleXMLIterator and overridden iterator methods()", function () {
+    expect(parser.parseCode("<?php\n$xml =<<<EOF\n<?xml version='1.0'?>\n<!DOCTYPE sxe SYSTEM \"notfound.dtd\">\n<sxe id=\"elem1\">\n Plain text.\n <elem1 attr1='first'>\n  Bla bla 1.\n  <!-- comment -->\n  <elem2>\n   Here we have some text data.\n   <elem3>\n    And here some more.\n    <elem4>\n     Wow once again.\n    </elem4>\n   </elem3>\n  </elem2>\n </elem1>\n <elem11 attr2='second'>\n  Bla bla 2.\n  <elem111>\n   Foo Bar\n  </elem111>\n </elem11>\n</sxe>\nEOF;\nclass SXETest extends SimpleXMLIterator\n{\n    function rewind(): void\n    {\n        echo __METHOD__ . \"\\n\";\n        parent::rewind();\n    }\n    function valid(): bool\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::valid();\n    }\n    function current(): SimpleXMLElement\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::current();\n    }\n    function key(): string\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::key();\n    }\n    function next(): void\n    {\n        echo __METHOD__ . \"\\n\";\n        parent::next();\n    }\n    function hasChildren(): bool\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::hasChildren();\n    }\n    function getChildren(): ?SimpleXMLIterator\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::getChildren();\n    }\n}\n$sxe = new SXETest($xml);\n$rit = new RecursiveIteratorIterator($sxe, RecursiveIteratorIterator::SELF_FIRST);\nforeach($rit as $data) {\n    var_dump(get_class($data));\n    var_dump(trim($data));\n}\n?>")).toMatchSnapshot();
+  });
+});

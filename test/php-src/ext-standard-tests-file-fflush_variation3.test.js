@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fflush_variation3.phpt
+  it("Test fflush() function: usage variations - hard links as resource", function () {
+    expect(parser.parseCode("<?php\n/* test fflush() with handle to hard links as resource */\n$file_path = __DIR__;\nrequire $file_path.'/file.inc';\necho \"*** Testing fflush(): with hard links to files opened in diff modes ***\\n\";\n$file_types = array(\"empty\", \"numeric\", \"text\", \"text_with_new_line\", \"alphanumeric\");\n$file_modes = array(\"w\", \"wb\", \"wt\", \"w+\", \"w+b\",\"w+t\",\n                    \"a\", \"ab\", \"at\", \"a+\",\"a+b\", \"a+t\");\n$file_name = \"$file_path/fflush_variation3.tmp\";\n$link_name = \"$file_path/lnk_fflush_variation3.tmp\";\n$count = 1;\nforeach( $file_types as $type ) {\n  echo \"-- Iteration $count with file containing $type data --\\n\";\n  foreach( $file_modes as $mode ) {\n    // creating the file\n    $file_handle = fopen($file_name, \"w\");\n    if($file_handle == false)\n      exit(\"Error:failed to open file $file_name\");\n    // fill the fill with some data if mode is append mode\n    if( substr($mode, 0, 1) == \"a\" )\n      fill_file($file_handle, $type, 10);\n    // fclose($file_handle);\n    // creating hard link to the file\n    var_dump( link($file_name, $link_name) );\n    // opening the file in different modes\n    $file_handle = fopen($link_name, $mode);\n    if($file_handle == false)\n      exit(\"Error:failed to open link $link_name\");\n    // writing data to the file\n    var_dump( fill_file($file_handle, $type, 50) );\n    var_dump( fflush($file_handle) );\n    fclose($file_handle);\n    // reading data from the file after flushing\n    var_dump( readfile($link_name) );\n    unlink($link_name);\n    unlink($file_name);\n  }\n  $count++;\n}\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

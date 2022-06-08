@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/spl/tests/iterator_045.phpt
+  it("SPL: CachingIterator and offsetSet/Unset, getCache using flag FULL_CACHE", function () {
+    expect(parser.parseCode("<?php\nclass MyFoo\n{\n    function __toString()\n    {\n        return 'foo';\n    }\n}\nclass MyCachingIterator extends CachingIterator\n{\n    function __construct(Iterator $it, $flags = 0)\n    {\n        parent::__construct($it, $flags);\n    }\n    function testSet($ar)\n    {\n        echo __METHOD__ . \"()\\n\";\n        foreach($ar as $k => $v)\n        {\n            echo \"set($k,$v)\\n\";\n            $this->offsetSet($k, $v);\n        }\n    }\n    function testUnset($ar)\n    {\n        echo __METHOD__ . \"()\\n\";\n        foreach($ar as $k => $v)\n        {\n            echo \"unset($v)\\n\";\n            $this->offsetUnset($v);\n        }\n    }\n    function fill()\n    {\n        echo __METHOD__ . \"()\\n\";\n        foreach($this as $v) ;\n    }\n    function show()\n    {\n        echo __METHOD__ . \"()\\n\";\n        var_dump($this->getCache());\n    }\n}\n$it = new MyCachingIterator(new ArrayIterator(array(0, 'foo'=>1, 2, 'bar'=>3, 4)));\ntry\n{\n    var_dump($it->offsetSet(0, 0));\n}\ncatch(Exception $e)\n{\n    echo \"Exception: \" . $e->getMessage() . \"\\n\";\n}\ntry\n{\n    var_dump($it->offsetUnset(0));\n}\ncatch(Exception $e)\n{\n    echo \"Exception: \" . $e->getMessage() . \"\\n\";\n}\n$it = new MyCachingIterator(new ArrayIterator(array(0, 1, 2, 3)), CachingIterator::FULL_CACHE);\n$checks = array(0 => 25, 1 => 42, 3 => 'FooBar');\n$unsets = array(0, 2);\n$it->testSet($checks);\n$it->show();\n$it->testUnset($unsets);\n$it->show();\n$it->fill();\n$it->show();\n$it->testSet($checks);\n$it->show();\n$it->testUnset($unsets);\n$it->show();\n?>")).toMatchSnapshot();
+  });
+});

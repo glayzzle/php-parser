@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/imap/tests/imap_fetchbody_basic.phpt
+  it("Test imap_fetchbody() function : basic functionality", function () {
+    expect(parser.parseCode("<?php\n/*           [, int $options])\n * Description: Get a specific body section\n * Source code: ext/imap/php_imap.c\n */\necho \"*** Testing imap_fetchbody() : basic functionality ***\\n\";\nrequire_once(__DIR__.'/setup/imap_include.inc');\n// Initialise all required variables\n// set up mailbox with one message\n$stream_id = setup_test_mailbox('imapfetchbodybasic', 1, $mailbox, false);\n$msg_no = 1;\n$section = '2';\n$options = array ('FT_UID' => FT_UID, 'FT_PEEK' => FT_PEEK, 'FT_INTERNAL' => FT_INTERNAL);\n// Calling imap_fetchbody() with all possible arguments\necho \"\\n-- All possible arguments --\\n\";\nforeach ($options as $key => $option) {\n    echo \"-- Option is $key --\\n\";\n    switch ($key) {\n        case 'FT_UID';\n        $msg_uid = imap_uid($stream_id, $msg_no);\n        var_dump( imap_fetchbody($stream_id, $msg_uid, $section, $option) );\n        break;\n        case 'FT_PEEK';\n        var_dump( imap_fetchbody($stream_id, $msg_no, $section, $option) );\n        $overview = imap_fetch_overview($stream_id, 1);\n        echo \"Seen Flag: \";\n        var_dump( $overview[0]->seen );\n        break;\n        case 'FT_INTERNAL';\n        var_dump( imap_fetchbody($stream_id, $msg_no, $section, $option) );\n        break;\n    }\n}\n// Calling imap_fetchbody() with mandatory arguments\necho \"\\n-- Mandatory arguments --\\n\";\nvar_dump( imap_fetchbody($stream_id, $msg_no, $section) );\n$overview = imap_fetch_overview($stream_id, 1);\necho \"Seen Flag: \";\nvar_dump( $overview[0]->seen );\n?>")).toMatchSnapshot();
+  });
+});

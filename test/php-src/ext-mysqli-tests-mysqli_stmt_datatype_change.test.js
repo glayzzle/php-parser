@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mysqli/tests/mysqli_stmt_datatype_change.phpt
+  it("Playing with datatype change between prepare and execute", function () {
+    expect(parser.parseCode("<?php\n    require_once(\"connect.inc\");\n    if (!$c1 = my_mysqli_connect($host, $user, $passwd, $db, $port, $socket)) {\n        printf(\"Cannot connect to the server using host=%s, user=%s, passwd=***, dbname=%s, port=%s, socket=%s\\n\",\n            $host, $user, $db, $port, $socket);\n        exit(1);\n    }\n    if (!$c2 = my_mysqli_connect($host, $user, $passwd, $db, $port, $socket)) {\n        printf(\"Cannot connect to the server using host=%s, user=%s, passwd=***, dbname=%s, port=%s, socket=%s\\n\",\n            $host, $user, $db, $port, $socket);\n        exit(1);\n    }\n    $c1->query(\"use $db\");\n    $c2->query(\"use $db\");\n    $c1->query(\"drop table if exists type_change\");\n    $c1->query(\"create table type_change(a int, b char(10)) ENGINE = \" . $engine);\n    $c1->query(\"insert into type_change values (1, 'one'), (2, 'two')\");\n    $s1 = $c1->prepare(\"select a from type_change order by a\");\n    var_dump($s1->execute(), $s1->bind_result($col1));\n    echo \"---- Row 1\\n\";\n    var_dump($s1->fetch());\n    var_dump($col1);\n    echo \"---- Row 2\\n\";\n    var_dump($s1->fetch());\n    var_dump($col1);\n    echo \"---- Row 3\\n\";\n    var_dump($s1->fetch());\n    echo \"----\\n\";\n    echo \"ALTER\\n\";\n    var_dump($c2->query(\"alter table type_change drop a\"));\n    var_dump($s1->execute());\n    var_dump($c1->error);\n    echo \"---- Row 1\\n\";\n    var_dump($s1->fetch());\n    var_dump($col1);\n    echo \"---- Row 2\\n\";\n    var_dump($s1->fetch());\n    var_dump($col1);\n    echo \"---- Row 3\\n\";\n    var_dump($s1->fetch());\n    echo \"----\\n\";\n    echo \"done!\";\n?>")).toMatchSnapshot();
+  });
+});

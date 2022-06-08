@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/openssl/tests/openssl_pkcs12_export_basic.phpt
+  it("openssl_pkcs12_export() tests", function () {
+    expect(parser.parseCode("<?php\n$cert_file = __DIR__ . \"/public.crt\";\n$cert = file_get_contents($cert_file);\n$cert_path = \"file://\" . $cert_file;\n$priv_file = __DIR__ . \"/private.crt\";\n$priv = file_get_contents($priv_file);\n$priv_path = \"file://\" . $priv_file;\n$cert_res = openssl_x509_read($cert);\n$priv_res = openssl_pkey_get_private($priv);\n$pass = \"test\";\n$invalid = \"\";\n$invalid_path = __DIR__ . \"/invalid_path\";\n$opts = [];\nvar_dump(openssl_pkcs12_export($cert, $output, $priv, $pass)); // read certs as a string\nvar_dump(openssl_pkcs12_read($output, $opts, $pass));\nvar_dump(openssl_pkcs12_export($cert_path, $output, $priv_path, $pass)); // read certs from a filename string\nvar_dump(openssl_pkcs12_read($output, $opts, $pass));\nvar_dump(openssl_pkcs12_export($cert_res, $output, $priv_res, $pass)); // read certs from a resource\nvar_dump(openssl_pkcs12_read($output, $opts, $pass));\nvar_dump(openssl_pkcs12_export($cert, $output, $priv, $pass, array('extracerts' => $cert))); // extra optional cert\nvar_dump(openssl_pkcs12_read($output, $opts, $pass));\nvar_dump(count($opts)); // should be 3 certificates, priv, pub, extra optional cert\nvar_dump(openssl_pkcs12_export($invalid, $output, $invalid, $pass));\nvar_dump(openssl_pkcs12_export($invalid_path, $output, $invalid_path, $pass));\ntry {\n    var_dump(openssl_pkcs12_export($priv_res, $output, $cert_res, $pass));\n} catch (TypeError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\n//var_dump(openssl_pkcs12_export($cert, $output, $priv, $pass, array(\"foo\")));\n?>")).toMatchSnapshot();
+  });
+});

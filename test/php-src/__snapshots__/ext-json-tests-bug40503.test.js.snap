@@ -1,0 +1,292 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #40503 (json_encode() value corruption on 32bit systems with overflown values) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "x",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "y",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Encapsed {
+                    "kind": "encapsed",
+                    "raw": "\\"$x \\"",
+                    "type": "string",
+                    "value": Array [
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "x",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": " ",
+                          "unicode": false,
+                          "value": " ",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                    ],
+                  },
+                  "right": RetIf {
+                    "falseExpr": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"!=\\"",
+                      "unicode": false,
+                      "value": "!=",
+                    },
+                    "kind": "retif",
+                    "parenthesizedExpression": true,
+                    "test": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "x",
+                      },
+                      "right": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "y",
+                      },
+                      "type": "==",
+                    },
+                    "trueExpr": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"==\\"",
+                      "unicode": false,
+                      "value": "==",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\" $y\\\\n\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": " ",
+                        "unicode": false,
+                        "value": " ",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "y",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "\\\\n",
+                        "unicode": false,
+                        "value": "",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                  ],
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "json_test_show_eq",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "value",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0x7FFFFFFF",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"$value\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "value",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+            ],
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "value",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "json_encode",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "json_test_show_eq",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Post {
+        "kind": "post",
+        "type": "+",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "value",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"$value\\"",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "value",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+            ],
+          },
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "value",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "json_encode",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "json_test_show_eq",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/type_declarations/union_types/type_checking_weak.phpt
+  it("Behavior of union type checks (weak)", function () {
+    expect(parser.parseCode("<?php\nfunction dump($value) {\n    if (is_object($value)) {\n        return 'new ' . get_class($value);\n    }\n    if ($value === INF) {\n        return 'INF';\n    }\n    return json_encode($value, JSON_PRESERVE_ZERO_FRACTION);\n}\nfunction test(string $type, array $values) {\n    $alignment = 16;\n    echo \"\\nType $type:\\n\";\n    $fn = eval(\"return function($type \\$arg) { return \\$arg; };\");\n    foreach ($values as $value) {\n        echo str_pad(dump($value), $alignment), ' => ';\n        try {\n            error_clear_last();\n            $value = @$fn($value);\n            echo dump($value);\n            if ($e = error_get_last()) {\n                echo ' (', $e['message'], ')';\n            }\n        } catch (TypeError $e) {\n            $msg = $e->getMessage();\n            $msg = strstr($msg, ', called in', true);\n            $msg = str_replace('{closure}(): Argument #1 ($arg)', 'Argument ...', $msg);\n            echo $msg;\n        }\n        echo \"\\n\";\n    }\n}\nclass WithToString {\n    public function __toString() {\n        return \"__toString()\";\n    }\n}\n$values = [\n    42, 42.0, INF, \"42\", \"42.0\", \"42x\", \"x\", \"\",\n    true, false, null, [], new stdClass, new WithToString,\n];\ntest('int|float', $values);\ntest('int|float|false', $values);\ntest('int|float|bool', $values);\ntest('int|bool', $values);\ntest('int|string|null', $values);\ntest('string|bool', $values);\ntest('float|array', $values);\ntest('string|array', $values);\ntest('bool|array', $values);\n?>")).toMatchSnapshot();
+  });
+});

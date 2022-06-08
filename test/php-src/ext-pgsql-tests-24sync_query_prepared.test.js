@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pgsql/tests/24sync_query_prepared.phpt
+  it("PostgreSQL sync prepared queries", function () {
+    expect(parser.parseCode("<?php\ninclude('config.inc');\n$db = pg_connect($conn_str);\n$version = pg_version($db);\nif ($version['protocol'] >= 3) {\n    $result = pg_prepare($db, \"php_test\", \"SELECT * FROM \".$table_name.\" WHERE num > \\$1;\");\n    pg_result_error($result);\n    pg_free_result($result);\n    $result = pg_execute($db, \"php_test\", array(100));\n    if (!($rows   = pg_num_rows($result)))\n    {\n        echo \"pg_num_row() error\\n\";\n    }\n    for ($i=0; $i < $rows; $i++)\n    {\n        pg_fetch_array($result, $i, PGSQL_NUM);\n    }\n    for ($i=0; $i < $rows; $i++)\n    {\n        pg_fetch_object($result);\n    }\n    for ($i=0; $i < $rows; $i++)\n    {\n        pg_fetch_row($result, $i);\n    }\n    for ($i=0; $i < $rows; $i++)\n    {\n        pg_fetch_result($result, $i, 0);\n    }\n    pg_result_error($result);\n    pg_num_rows(pg_execute($db, \"php_test\", array(100)));\n    pg_num_fields(pg_execute($db, \"php_test\", array(100)));\n    pg_field_name($result, 0);\n    pg_field_num($result, $field_name);\n    pg_field_size($result, 0);\n    pg_field_type($result, 0);\n    pg_field_prtlen($result, 0);\n    pg_field_is_null($result, 0);\n    $result = pg_prepare($db, \"php_test2\", \"INSERT INTO \".$table_name.\" VALUES (\\$1, \\$2);\");\n    pg_result_error($result);\n    pg_free_result($result);\n    $result = pg_execute($db, \"php_test2\", array(9999, \"A'BC\"));\n    pg_last_oid($result);\n    pg_free_result($result);\n}\npg_close($db);\necho \"OK\";\n?>")).toMatchSnapshot();
+  });
+});

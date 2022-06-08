@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #66251 (Constants get statically bound at compile time when Optimized) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"A=%s\\\\n\\"",
+            "unicode": false,
+            "value": "A=%s
+",
+          },
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "getA",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ConstantStatement {
+      "constants": Array [
+        Constant {
+          "kind": "constant",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "A",
+          },
+          "value": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"hello\\"",
+            "unicode": false,
+            "value": "hello",
+          },
+        },
+      ],
+      "kind": "constantstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Return {
+            "expr": Name {
+              "kind": "name",
+              "name": "A",
+              "resolution": "uqn",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "getA",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

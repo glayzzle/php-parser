@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/spl/tests/arrayObject_getIteratorClass_basic1.phpt
+  it("SPL: ArrayObject::getIteratorClass and ArrayObject::setIteratorClass basic functionality", function () {
+    expect(parser.parseCode("<?php\nclass MyIterator extends ArrayIterator {\n    function __construct() {\n        $args = func_get_args();\n        echo \"   In \" . __METHOD__ . \"(\" . implode(',', $args) . \")\\n\";\n    }\n    function rewind(): void {\n        $args = func_get_args();\n        echo \"   In \" . __METHOD__ . \"(\" . implode(',', $args) . \")\\n\";\n        parent::rewind();\n    }\n    function valid(): bool {\n        $args = func_get_args();\n        echo \"   In \" . __METHOD__ . \"(\" . implode(',', $args) . \")\\n\";\n        return parent::valid();\n    }\n    function current(): mixed {\n        $args = func_get_args();\n        echo \"   In \" . __METHOD__ . \"(\" . implode(',', $args) . \")\\n\";\n        return parent::current();\n    }\n    function next(): void {\n        $args = func_get_args();\n        echo \"   In \" . __METHOD__ . \"(\" . implode(',', $args) . \")\\n\";\n        parent::next();\n    }\n    function key(): string|int|null {\n        $args = func_get_args();\n        echo \"   In \" . __METHOD__ . \"(\" . implode(',', $args) . \")\\n\";\n        return parent::key();\n    }\n}\n$ao = new ArrayObject(array('a'=>1,'b'=>2,'c'=>3), 0, \"MyIterator\");\necho \"--> Access using MyIterator:\\n\";\nvar_dump($ao->getIteratorClass());\nvar_dump($ao->getIterator());\nforeach($ao as $key=>$value) {\n    echo \"  $key=>$value\\n\";\n}\necho \"\\n\\n--> Access using ArrayIterator:\\n\";\nvar_dump($ao->setIteratorClass(\"ArrayIterator\"));\nvar_dump($ao->getIteratorClass());\nvar_dump($ao->getIterator());\nforeach($ao as $key=>$value) {\n    echo \"$key=>$value\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

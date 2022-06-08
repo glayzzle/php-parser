@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/pgsql/tests/deprecated_implicit_default_link.phpt
+  it("PostgreSQL fetching default link automatically is deprecated", function () {
+    expect(parser.parseCode("<?php\ninclude('config.inc');\n$db = pg_connect($conn_str);\n// We don't care about warnings\nini_set('error_reporting', E_ALL&~E_WARNING);\n// Special cases\npg_set_error_verbosity(PGSQL_ERRORS_TERSE);\npg_query_params('str', []);\npg_execute('str', []);\npg_lo_unlink(1);\n// deprecated alias 'pg_lounlink',\npg_lo_open(1, 'r');\n// deprecated alias 'pg_loopen',\npg_lo_export(1, '');\n// deprecated alias 'pg_loexport',\n$functions = [\n'pg_dbname',\n'pg_last_error',\n// deprecated alias 'pg_errormessage',\n'pg_options',\n'pg_port',\n'pg_tty',\n'pg_host',\n'pg_version',\n'pg_parameter_status',\n'pg_ping',\n'pg_query',\n'pg_exec',\n'pg_prepare',\n'pg_untrace',\n'pg_lo_create',\n// deprecated alias 'pg_locreate',\n'pg_lo_import',\n// deprecated alias 'pg_loimport',\n'pg_set_client_encoding',\n// deprecated alias 'pg_setclientencoding',\n'pg_client_encoding',\n// deprecated alias 'pg_clientencoding',\n'pg_end_copy',\n'pg_put_line',\n'pg_escape_string',\n'pg_escape_bytea',\n'pg_escape_literal',\n'pg_escape_identifier',\n'pg_close',\n];\nforeach ($functions as $function) {\n    $args = [];\n    $argNum = 0;\n    retry:\n    try {\n        $function(...$args);\n        continue;\n    } catch (ArgumentCountError) {\n        $args[] = 'str';\n        ++$argNum;\n        goto retry;\n    } catch (TypeError $e) {\n        if (str_contains($e->getMessage(), 'type array')) {\n            $args[$argNum] = [];\n            goto retry;\n        }\n        var_dump($e->getMessage());\n    } catch (\\Error $e) {\n        echo $e->getMessage();\n    }\n}\necho \"END\";\n?>")).toMatchSnapshot();
+  });
+});

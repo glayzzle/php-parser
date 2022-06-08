@@ -1,0 +1,231 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #63305 (zend_mm_heap corrupted with traits) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "class",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                Switch {
+                  "body": Block {
+                    "children": Array [
+                      Case {
+                        "body": Block {
+                          "children": Array [
+                            ExpressionStatement {
+                              "expression": Eval {
+                                "kind": "eval",
+                                "source": Nowdoc {
+                                  "kind": "nowdoc",
+                                  "label": "PHP",
+                                  "raw": "<<<'PHP'
+class Attachment extends File {
+}
+PHP
+    ",
+                                  "value": "class Attachment extends File {
+}",
+                                },
+                              },
+                              "kind": "expressionstatement",
+                            },
+                            Break {
+                              "kind": "break",
+                              "level": null,
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "case",
+                        "test": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"Attachment\\"",
+                          "unicode": false,
+                          "value": "Attachment",
+                        },
+                      },
+                      Case {
+                        "body": Block {
+                          "children": Array [
+                            ExpressionStatement {
+                              "expression": Eval {
+                                "kind": "eval",
+                                "source": Nowdoc {
+                                  "kind": "nowdoc",
+                                  "label": "PHP",
+                                  "raw": "<<<'PHP'
+class File {
+    use TDatabaseObject {
+        TDatabaseObject::__construct as private databaseObjectConstruct;
+    }
+    public function __construct() {
+    }
+}
+PHP
+    ",
+                                  "value": "class File {
+    use TDatabaseObject {
+        TDatabaseObject::__construct as private databaseObjectConstruct;
+    }
+    public function __construct() {
+    }
+}",
+                                },
+                              },
+                              "kind": "expressionstatement",
+                            },
+                            Break {
+                              "kind": "break",
+                              "level": null,
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "case",
+                        "test": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"File\\"",
+                          "unicode": false,
+                          "value": "File",
+                        },
+                      },
+                      Case {
+                        "body": Block {
+                          "children": Array [
+                            ExpressionStatement {
+                              "expression": Eval {
+                                "kind": "eval",
+                                "source": Nowdoc {
+                                  "kind": "nowdoc",
+                                  "label": "PHP",
+                                  "raw": "<<<'PHP'
+trait TDatabaseObject {
+    public function __construct() {
+    }
+}
+PHP
+    ",
+                                  "value": "trait TDatabaseObject {
+    public function __construct() {
+    }
+}",
+                                },
+                              },
+                              "kind": "expressionstatement",
+                            },
+                            Break {
+                              "kind": "break",
+                              "level": null,
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "case",
+                        "test": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"TDatabaseObject\\"",
+                          "unicode": false,
+                          "value": "TDatabaseObject",
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "switch",
+                  "shortForm": false,
+                  "test": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "class",
+                  },
+                },
+                Return {
+                  "expr": Boolean {
+                    "kind": "boolean",
+                    "raw": "TRUE",
+                    "value": true,
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"\\"",
+            "unicode": false,
+            "value": "",
+          },
+        ],
+        "kind": "new",
+        "what": Name {
+          "kind": "name",
+          "name": "Attachment",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"okey\\"",
+          "unicode": false,
+          "value": "okey",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

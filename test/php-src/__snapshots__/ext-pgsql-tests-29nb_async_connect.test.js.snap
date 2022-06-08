@@ -1,0 +1,475 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests PostgreSQL non-blocking async connect 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'config.inc'",
+          "unicode": false,
+          "value": "config.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'nonblocking.inc'",
+          "unicode": false,
+          "value": "nonblocking.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": If {
+        "alternate": If {
+          "alternate": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Exit {
+                  "expression": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"pg_socket() error\\"",
+                    "unicode": false,
+                    "value": "pg_socket() error",
+                  },
+                  "kind": "exit",
+                  "useDie": true,
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "db_socket",
+                    },
+                    Boolean {
+                      "kind": "boolean",
+                      "raw": "FALSE",
+                      "value": false,
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "stream_set_blocking",
+                    "resolution": "uqn",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "if",
+          "shortForm": false,
+          "test": Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db_socket",
+            },
+            "operator": "=",
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_socket",
+                "resolution": "uqn",
+              },
+            },
+          },
+        },
+        "body": Block {
+          "children": Array [
+            ExpressionStatement {
+              "expression": Exit {
+                "expression": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"pg_connect() error\\"",
+                  "unicode": false,
+                  "value": "pg_connect() error",
+                },
+                "kind": "exit",
+                "useDie": true,
+              },
+              "kind": "expressionstatement",
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "db",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_connection_status",
+              "resolution": "uqn",
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PGSQL_CONNECTION_BAD",
+            "resolution": "uqn",
+          },
+          "type": "===",
+        },
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"pg_connect() error\\"",
+                "unicode": false,
+                "value": "pg_connect() error",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "conn_str",
+              },
+              Name {
+                "kind": "name",
+                "name": "PGSQL_CONNECT_ASYNC",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "pg_connect",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+    },
+    While {
+      "body": Block {
+        "children": Array [
+          Switch {
+            "body": Block {
+              "children": Array [
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "db_socket",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "nb_is_readable",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      Break {
+                        "kind": "break",
+                        "level": null,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": Name {
+                    "kind": "name",
+                    "name": "PGSQL_POLLING_READING",
+                    "resolution": "uqn",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "db_socket",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "nb_is_writable",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      Break {
+                        "kind": "break",
+                        "level": null,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": Name {
+                    "kind": "name",
+                    "name": "PGSQL_POLLING_WRITING",
+                    "resolution": "uqn",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Exit {
+                          "expression": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"async connection failed\\"",
+                            "unicode": false,
+                            "value": "async connection failed",
+                          },
+                          "kind": "exit",
+                          "useDie": true,
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": Name {
+                    "kind": "name",
+                    "name": "PGSQL_POLLING_FAILED",
+                    "resolution": "uqn",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      Break {
+                        "kind": "break",
+                        "level": Number {
+                          "kind": "number",
+                          "value": "2",
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": Name {
+                    "kind": "name",
+                    "name": "PGSQL_POLLING_OK",
+                    "resolution": "uqn",
+                  },
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Exit {
+                          "expression": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"unknown poll status\\"",
+                            "unicode": false,
+                            "value": "unknown poll status",
+                          },
+                          "kind": "exit",
+                          "useDie": true,
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": null,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "switch",
+            "shortForm": false,
+            "test": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "status",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "db",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "pg_connect_poll",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "while",
+      "shortForm": false,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "TRUE",
+        "value": true,
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "db",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "pg_connection_status",
+                "resolution": "uqn",
+              },
+            },
+            "right": Name {
+              "kind": "name",
+              "name": "PGSQL_CONNECTION_OK",
+              "resolution": "uqn",
+            },
+            "type": "===",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "assert",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"OK\\"",
+          "unicode": false,
+          "value": "OK",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "db",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "pg_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/reflection/tests/ReflectionClass_getStaticPropertyValue_001.phpt
+  it("ReflectionClass::getStaticPropertyValue()", function () {
+    expect(parser.parseCode("<?php\nclass A {\n    static private $privateOverridden = \"original private\";\n    static protected $protectedOverridden = \"original protected\";\n    static public $publicOverridden = \"original public\";\n}\nclass B extends A {\n    static private $privateOverridden = \"changed private\";\n    static protected $protectedOverridden = \"changed protected\";\n    static public $publicOverridden = \"changed public\";\n}\necho \"Retrieving static values from A:\\n\";\n$rcA = new ReflectionClass('A');\nvar_dump($rcA->getStaticPropertyValue(\"privateDoesNotExist\", \"default value\"));\nvar_dump($rcA->getStaticPropertyValue(\"privateOverridden\"));\nvar_dump($rcA->getStaticPropertyValue(\"protectedDoesNotExist\", \"default value\"));\nvar_dump($rcA->getStaticPropertyValue(\"protectedOverridden\"));\nvar_dump($rcA->getStaticPropertyValue(\"publicOverridden\"));\necho \"\\nRetrieving static values from B:\\n\";\n$rcB = new ReflectionClass('B');\nvar_dump($rcB->getStaticPropertyValue(\"privateOverridden\"));\nvar_dump($rcB->getStaticPropertyValue(\"protectedOverridden\"));\nvar_dump($rcB->getStaticPropertyValue(\"publicOverridden\"));\necho \"\\nRetrieving non-existent values from A with no default value:\\n\";\ntry {\n    var_dump($rcA->getStaticPropertyValue(\"protectedDoesNotExist\"));\n    echo \"you should not see this\";\n} catch (Exception $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    var_dump($rcA->getStaticPropertyValue(\"privateDoesNotExist\"));\n    echo \"you should not see this\";\n} catch (Exception $e) {\n    echo $e->getMessage() . \"\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

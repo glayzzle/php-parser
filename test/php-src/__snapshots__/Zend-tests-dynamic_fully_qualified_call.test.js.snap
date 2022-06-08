@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Crash when using dynamic call syntax with fully qualified name in a namespace 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        Try {
+          "always": null,
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Call {
+                  "arguments": Array [],
+                  "kind": "call",
+                  "what": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "parenthesizedExpression": true,
+                    "raw": "'\\\\bar'",
+                    "unicode": false,
+                    "value": "\\\\bar",
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "catches": Array [
+            Catch {
+              "body": Block {
+                "children": Array [
+                  Echo {
+                    "expressions": Array [
+                      Call {
+                        "arguments": Array [],
+                        "kind": "call",
+                        "what": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "getMessage",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "e",
+                          },
+                        },
+                      },
+                      String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"\\\\n\\"",
+                        "unicode": false,
+                        "value": "
+",
+                      },
+                    ],
+                    "kind": "echo",
+                    "shortForm": false,
+                  },
+                ],
+                "kind": "block",
+              },
+              "kind": "catch",
+              "variable": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "e",
+              },
+              "what": Array [
+                Name {
+                  "kind": "name",
+                  "name": "\\\\Error",
+                  "resolution": "fqn",
+                },
+              ],
+            },
+          ],
+          "kind": "try",
+        },
+      ],
+      "kind": "namespace",
+      "name": "Foo",
+      "withBrackets": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

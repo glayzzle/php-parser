@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests DOMDocument::relaxNGValidateSource() should fail if document doesn't validate 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "rng",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "RNG",
+          "raw": "<<< RNG
+<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<grammar ns=\\"\\" xmlns=\\"http://relaxng.org/ns/structure/1.0\\"
+  datatypeLibrary=\\"http://www.w3.org/2001/XMLSchema-datatypes\\">
+  <start>
+    <element name=\\"apple\\">
+      <element name=\\"pear\\">
+        <data type=\\"NCName\\"/>
+      </element>
+    </element>
+  </start>
+</grammar>
+RNG",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<grammar ns=\\"\\" xmlns=\\"http://relaxng.org/ns/structure/1.0\\"
+  datatypeLibrary=\\"http://www.w3.org/2001/XMLSchema-datatypes\\">
+  <start>
+    <element name=\\"apple\\">
+      <element name=\\"pear\\">
+        <data type=\\"NCName\\"/>
+      </element>
+    </element>
+  </start>
+</grammar>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<grammar ns=\\"\\" xmlns=\\"http://relaxng.org/ns/structure/1.0\\"
+  datatypeLibrary=\\"http://www.w3.org/2001/XMLSchema-datatypes\\">
+  <start>
+    <element name=\\"apple\\">
+      <element name=\\"pear\\">
+        <data type=\\"NCName\\"/>
+      </element>
+    </element>
+  </start>
+</grammar>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bad_xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "BAD_XML",
+          "raw": "<<< BAD_XML
+<?xml version=\\"1.0\\"?>
+<apple>
+  <pear>Pear</pear>
+  <pear>Pear</pear>
+</apple>
+BAD_XML",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\"?>
+<apple>
+  <pear>Pear</pear>
+  <pear>Pear</pear>
+</apple>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\"?>
+<apple>
+  <pear>Pear</pear>
+  <pear>Pear</pear>
+</apple>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "doc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOMDocument",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bad_xml",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "loadXML",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "doc",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "result",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "rng",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "relaxNGValidateSource",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "doc",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "result",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

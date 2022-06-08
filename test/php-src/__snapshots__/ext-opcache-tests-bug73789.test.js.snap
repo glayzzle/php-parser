@@ -1,0 +1,393 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #73789 (Strange behavior of class constants in switch/case block) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "T_NONE",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "1",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "T_STRING",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "2",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "T_DOT",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "8",
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "value",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "type",
+                  },
+                  "operator": "=",
+                  "right": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "T_NONE",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Switch {
+                "body": Block {
+                  "children": Array [
+                    Case {
+                      "body": Block {
+                        "children": Array [
+                          ExpressionStatement {
+                            "expression": Assign {
+                              "kind": "assign",
+                              "left": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "name",
+                              },
+                              "operator": "=",
+                              "right": Bin {
+                                "kind": "bin",
+                                "left": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "'Lexer::T_'",
+                                  "unicode": false,
+                                  "value": "Lexer::T_",
+                                },
+                                "right": Call {
+                                  "arguments": Array [
+                                    Variable {
+                                      "curly": false,
+                                      "kind": "variable",
+                                      "name": "value",
+                                    },
+                                  ],
+                                  "kind": "call",
+                                  "what": Name {
+                                    "kind": "name",
+                                    "name": "strtoupper",
+                                    "resolution": "uqn",
+                                  },
+                                },
+                                "type": ".",
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                          ExpressionStatement {
+                            "expression": Assign {
+                              "kind": "assign",
+                              "left": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "type",
+                              },
+                              "operator": "=",
+                              "right": Call {
+                                "arguments": Array [
+                                  Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "name",
+                                  },
+                                ],
+                                "kind": "call",
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "constant",
+                                  "resolution": "uqn",
+                                },
+                              },
+                            },
+                            "kind": "expressionstatement",
+                          },
+                          If {
+                            "alternate": null,
+                            "body": Block {
+                              "children": Array [
+                                Return {
+                                  "expr": Variable {
+                                    "curly": false,
+                                    "kind": "variable",
+                                    "name": "type",
+                                  },
+                                  "kind": "return",
+                                },
+                              ],
+                              "kind": "block",
+                            },
+                            "kind": "if",
+                            "shortForm": false,
+                            "test": Bin {
+                              "kind": "bin",
+                              "left": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "type",
+                              },
+                              "right": Number {
+                                "kind": "number",
+                                "value": "100",
+                              },
+                              "type": ">",
+                            },
+                          },
+                          Return {
+                            "expr": StaticLookup {
+                              "kind": "staticlookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "T_STRING",
+                              },
+                              "what": SelfReference {
+                                "kind": "selfreference",
+                                "raw": "self",
+                              },
+                            },
+                            "kind": "return",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "kind": "case",
+                      "test": Call {
+                        "arguments": Array [
+                          OffsetLookup {
+                            "kind": "offsetlookup",
+                            "offset": Number {
+                              "kind": "number",
+                              "value": "0",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "value",
+                            },
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "ctype_alpha",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                    Case {
+                      "body": Block {
+                        "children": Array [
+                          Return {
+                            "expr": StaticLookup {
+                              "kind": "staticlookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "T_DOT",
+                              },
+                              "what": SelfReference {
+                                "kind": "selfreference",
+                                "raw": "self",
+                              },
+                            },
+                            "kind": "return",
+                          },
+                        ],
+                        "kind": "block",
+                      },
+                      "kind": "case",
+                      "test": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "value",
+                        },
+                        "right": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'.'",
+                          "unicode": false,
+                          "value": ".",
+                        },
+                        "type": "===",
+                      },
+                    },
+                    Case {
+                      "body": Block {
+                        "children": Array [],
+                        "kind": "block",
+                      },
+                      "kind": "case",
+                      "test": null,
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "switch",
+                "shortForm": false,
+                "test": Boolean {
+                  "kind": "boolean",
+                  "raw": "true",
+                  "value": true,
+                },
+              },
+              Return {
+                "expr": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "type",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "getType",
+          },
+          "nullable": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "int",
+            "raw": "int",
+          },
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Lexer",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"dot\\"",
+                "unicode": false,
+                "value": "dot",
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getType",
+              },
+              "what": New {
+                "arguments": Array [],
+                "kind": "new",
+                "parenthesizedExpression": true,
+                "what": Name {
+                  "kind": "name",
+                  "name": "Lexer",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

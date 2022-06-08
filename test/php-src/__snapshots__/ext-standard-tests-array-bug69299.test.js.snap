@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #69299 (Regression in array_filter's $flag argument in PHP 7) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "toFilter",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'foo'",
+                "unicode": false,
+                "value": "foo",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'bar'",
+                "unicode": false,
+                "value": "bar",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'fiz'",
+                "unicode": false,
+                "value": "fiz",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'buz'",
+                "unicode": false,
+                "value": "buz",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "filtered",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "toFilter",
+            },
+            Closure {
+              "arguments": Array [
+                Parameter {
+                  "attrGroups": Array [],
+                  "byref": false,
+                  "flags": 0,
+                  "kind": "parameter",
+                  "name": Identifier {
+                    "kind": "identifier",
+                    "name": "value",
+                  },
+                  "nullable": false,
+                  "readonly": false,
+                  "type": null,
+                  "value": null,
+                  "variadic": false,
+                },
+                Parameter {
+                  "attrGroups": Array [],
+                  "byref": false,
+                  "flags": 0,
+                  "kind": "parameter",
+                  "name": Identifier {
+                    "kind": "identifier",
+                    "name": "key",
+                  },
+                  "nullable": false,
+                  "readonly": false,
+                  "type": null,
+                  "value": null,
+                  "variadic": false,
+                },
+              ],
+              "attrGroups": Array [],
+              "body": Block {
+                "children": Array [
+                  If {
+                    "alternate": null,
+                    "body": Block {
+                      "children": Array [
+                        Return {
+                          "expr": Boolean {
+                            "kind": "boolean",
+                            "raw": "false",
+                            "value": false,
+                          },
+                          "kind": "return",
+                        },
+                      ],
+                      "kind": "block",
+                    },
+                    "kind": "if",
+                    "shortForm": false,
+                    "test": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "value",
+                        },
+                        "right": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'buz'",
+                          "unicode": false,
+                          "value": "buz",
+                        },
+                        "type": "===",
+                      },
+                      "right": Bin {
+                        "kind": "bin",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "key",
+                        },
+                        "right": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'foo'",
+                          "unicode": false,
+                          "value": "foo",
+                        },
+                        "type": "===",
+                      },
+                      "type": "||",
+                    },
+                  },
+                  Return {
+                    "expr": Boolean {
+                      "kind": "boolean",
+                      "raw": "true",
+                      "value": true,
+                    },
+                    "kind": "return",
+                  },
+                ],
+                "kind": "block",
+              },
+              "byref": false,
+              "isStatic": false,
+              "kind": "closure",
+              "nullable": false,
+              "type": null,
+              "uses": Array [],
+            },
+            Name {
+              "kind": "name",
+              "name": "ARRAY_FILTER_USE_BOTH",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "array_filter",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filtered",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

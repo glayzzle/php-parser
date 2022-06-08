@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test token_get_all() function : usage variations - with class/object constructs 1`] = `
+Program {
+  "children": Array [
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"*** Testing token_get_all() : with class/object constructs ***\\\\n\\"",
+          "unicode": false,
+          "value": "*** Testing token_get_all() : with class/object constructs ***
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "source",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'<?php
+interface MyInterface
+{
+  public const var $var = 10;
+}
+abstract class MyClass
+{
+  private var $a;
+  public var $b;
+  protected var $c;
+  static $d;
+  final $e = 10;
+  abstract public function myFunction($a);
+}
+class ChildClass extends MyClass implements MyInterface
+{
+  global $value;
+  function myFunction($a)
+  {
+    $a = new ChildClass();
+    if($a instanceof MyClass)
+      echo \\"object created\\";
+  }
+}
+ChildClass::myFunction(10);
+?>'",
+          "unicode": false,
+          "value": "<?php
+interface MyInterface
+{
+  public const var $var = 10;
+}
+abstract class MyClass
+{
+  private var $a;
+  public var $b;
+  protected var $c;
+  static $d;
+  final $e = 10;
+  abstract public function myFunction($a);
+}
+class ChildClass extends MyClass implements MyInterface
+{
+  global $value;
+  function myFunction($a)
+  {
+    $a = new ChildClass();
+    if($a instanceof MyClass)
+      echo \\"object created\\";
+  }
+}
+ChildClass::myFunction(10);
+?>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tokens",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "source",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "token_get_all",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tokens",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\"",
+          "unicode": false,
+          "value": "Done",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

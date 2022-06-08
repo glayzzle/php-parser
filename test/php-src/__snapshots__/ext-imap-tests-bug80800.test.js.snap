@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #80800: imap_open() fails when the flags parameter includes CL_EXPUNGE 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/setup/imap_include.inc'",
+            "unicode": false,
+            "value": "/setup/imap_include.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "mail_box",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "IMAP_DEFAULT_MAILBOX",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "IMAP_MAILBOX_USERNAME",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "IMAP_MAILBOX_PASSWORD",
+              "resolution": "uqn",
+            },
+            namedargument {
+              "kind": "namedargument",
+              "name": "flags",
+              "value": Name {
+                "kind": "name",
+                "name": "CL_EXPUNGE",
+                "resolution": "uqn",
+              },
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "imap_open",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "mail_box",
+              },
+              Name {
+                "kind": "name",
+                "name": "IMAP_DEFAULT_MAILBOX",
+                "resolution": "uqn",
+              },
+              namedargument {
+                "kind": "namedargument",
+                "name": "flags",
+                "value": Name {
+                  "kind": "name",
+                  "name": "CL_EXPUNGE",
+                  "resolution": "uqn",
+                },
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "imap_reopen",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "mail_box",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "imap_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'Connected without any issues'",
+          "unicode": false,
+          "value": "Connected without any issues",
+        },
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

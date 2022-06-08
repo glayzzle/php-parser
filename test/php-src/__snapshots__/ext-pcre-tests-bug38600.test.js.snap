@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #38600 (infinite loop in pcre with extended class) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'bla bla bla'",
+          "unicode": false,
+          "value": "bla bla bla",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/(?<!\\\\w)(0x[\\\\p{N}]+[lL]?|[\\\\p{Nd}]+(e[\\\\p{Nd}]*)?[lLdDfF]?)(?!\\\\w)/'",
+                "unicode": false,
+                "value": "/(?<!\\\\w)(0x[\\\\p{N}]+[lL]?|[\\\\p{Nd}]+(e[\\\\p{Nd}]*)?[lLdDfF]?)(?!\\\\w)/",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "foo",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "m",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_match",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "m",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

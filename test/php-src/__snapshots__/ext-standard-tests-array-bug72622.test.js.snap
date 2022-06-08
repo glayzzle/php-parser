@@ -1,0 +1,291 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72622 (array_walk + array_replace_recursive create references from nothing) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "arr",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": TypeReference {
+            "kind": "typereference",
+            "name": "array",
+            "raw": "array",
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "arr",
+                },
+                Closure {
+                  "arguments": Array [
+                    Parameter {
+                      "attrGroups": Array [],
+                      "byref": true,
+                      "flags": 0,
+                      "kind": "parameter",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "val",
+                      },
+                      "nullable": false,
+                      "readonly": false,
+                      "type": null,
+                      "value": null,
+                      "variadic": false,
+                    },
+                    Parameter {
+                      "attrGroups": Array [],
+                      "byref": false,
+                      "flags": 0,
+                      "kind": "parameter",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "name",
+                      },
+                      "nullable": false,
+                      "readonly": false,
+                      "type": null,
+                      "value": null,
+                      "variadic": false,
+                    },
+                  ],
+                  "attrGroups": Array [],
+                  "body": Block {
+                    "children": Array [],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isStatic": false,
+                  "kind": "closure",
+                  "nullable": false,
+                  "type": null,
+                  "uses": Array [],
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "array_walk",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          Return {
+            "expr": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arr",
+            },
+            "kind": "return",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "walk",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "arr3",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'foo'",
+                "unicode": false,
+                "value": "foo",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'foo'",
+                "unicode": false,
+                "value": "foo",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "arr4",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'foo'",
+                    "unicode": false,
+                    "value": "foo",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'bar'",
+                    "unicode": false,
+                    "value": "bar",
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "walk",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "arr5",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arr3",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "arr4",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "array_replace_recursive",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'foo'",
+            "unicode": false,
+            "value": "foo",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "arr5",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'baz'",
+          "unicode": false,
+          "value": "baz",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "arr3",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "arr4",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "arr5",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

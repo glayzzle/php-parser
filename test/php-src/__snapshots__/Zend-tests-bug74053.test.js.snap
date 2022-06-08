@@ -1,0 +1,275 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #74053 (Corrupted class entries on shutdown when a destructor spawns another object) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"b::destruct\\\\n\\"",
+                    "unicode": false,
+                    "value": "b::destruct
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__destruct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "b",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "b",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "new",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+            },
+          ],
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "max",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": Number {
+                "kind": "number",
+                "value": "10",
+              },
+            },
+          ],
+          "visibility": "",
+        },
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              If {
+                "alternate": null,
+                "body": Return {
+                  "expr": null,
+                  "kind": "return",
+                },
+                "kind": "if",
+                "shortForm": false,
+                "test": Bin {
+                  "kind": "bin",
+                  "left": Post {
+                    "kind": "post",
+                    "type": "-",
+                    "what": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "max",
+                      },
+                      "what": SelfReference {
+                        "kind": "selfreference",
+                        "raw": "self",
+                      },
+                    },
+                  },
+                  "right": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "type": "<=",
+                },
+              },
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"a::destruct\\\\n\\"",
+                    "unicode": false,
+                    "value": "a::destruct
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": StaticLookup {
+                    "kind": "staticlookup",
+                    "offset": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "b",
+                    },
+                    "what": SelfReference {
+                      "kind": "selfreference",
+                      "raw": "self",
+                    },
+                  },
+                  "operator": "=",
+                  "right": New {
+                    "arguments": Array [],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "b",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": false,
+                    "what": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "new",
+                      },
+                      "what": SelfReference {
+                        "kind": "selfreference",
+                        "raw": "self",
+                      },
+                    },
+                  },
+                  "operator": "=",
+                  "right": New {
+                    "arguments": Array [],
+                    "kind": "new",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "a",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__destruct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "a",
+      },
+    },
+    ExpressionStatement {
+      "expression": New {
+        "arguments": Array [],
+        "kind": "new",
+        "what": Name {
+          "kind": "name",
+          "name": "a",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

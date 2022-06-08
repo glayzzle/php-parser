@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/phar/tests/zip/phar_begin_setstub_commit.phpt
+  it("Phar::startBuffering()/setStub()/stopBuffering() zip-based", function () {
+    expect(parser.parseCode("<?php\n$p = new Phar(__DIR__ . '/phar_begin_setstub_commit.phar.zip', 0, 'phar_begin_setstub_commit.phar');\nvar_dump($p->isFileFormat(Phar::ZIP));\n//var_dump($p->getStub());\nvar_dump($p->isBuffering());\n$p->startBuffering();\nvar_dump($p->isBuffering());\n$p['a.php'] = '<?php var_dump(\"Hello\");';\n$p->setStub('<?php var_dump(\"First\"); Phar::mapPhar(\"phar_begin_setstub_commit.phar\"); __HALT_COMPILER(); ?>');\ninclude 'phar://phar_begin_setstub_commit.phar/a.php';\nvar_dump($p->getStub());\n$p['b.php'] = '<?php var_dump(\"World\");';\n$p->setStub('<?php var_dump(\"Second\"); Phar::mapPhar(\"phar_begin_setstub_commit.phar\"); __HALT_COMPILER();');\ninclude 'phar://phar_begin_setstub_commit.phar/b.php';\nvar_dump($p->getStub());\n$p->stopBuffering();\necho \"===COMMIT===\\n\";\nvar_dump($p->isBuffering());\ninclude 'phar://phar_begin_setstub_commit.phar/a.php';\ninclude 'phar://phar_begin_setstub_commit.phar/b.php';\nvar_dump($p->getStub());\n// add portion to test setting stub from resource\nfile_put_contents(__DIR__ . '/myfakestub.php', '<?php var_dump(\"First resource\"); Phar::mapPhar(\"phar_begin_setstub_commit.phar\"); __HALT_COMPILER(); ?>');\n$a = fopen(__DIR__ . '/myfakestub.php', 'rb');\n$p->setStub($a);\nvar_dump($p->getStub());\n$c = strlen('<?php var_dump(\"First resource\"); Phar::mapPhar(\"phar_begin_setstub_commit.phar\"); __HALT_COMPILER(); ?>');\nfile_put_contents(__DIR__ . '/myfakestub.php', '<?php var_dump(\"First resource\"); Phar::mapPhar(\"phar_begin_setstub_commit.phar\"); __HALT_COMPILER(); ?>' . 'extra stuff');\nfseek($a, 0);\n$p->setStub($a, $c);\nvar_dump($p->getStub());\nfclose($a);\n?>")).toMatchSnapshot();
+  });
+});

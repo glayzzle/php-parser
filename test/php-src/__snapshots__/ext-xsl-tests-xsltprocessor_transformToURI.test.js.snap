@@ -1,0 +1,381 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test the basics to function XSLTProcessor::transformToURI(). 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xml",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOB",
+          "raw": "<<<EOB
+<allusers>
+ <user>
+  <uid>bob</uid>
+ </user>
+ <user>
+  <uid>joe</uid>
+ </user>
+</allusers>
+EOB",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<allusers>
+ <user>
+  <uid>bob</uid>
+ </user>
+ <user>
+  <uid>joe</uid>
+ </user>
+</allusers>
+",
+                "unicode": false,
+                "value": "<allusers>
+ <user>
+  <uid>bob</uid>
+ </user>
+ <user>
+  <uid>joe</uid>
+ </user>
+</allusers>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xsl",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOB",
+          "raw": "<<<EOB
+<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<xsl:stylesheet version=\\"1.0\\"
+     xmlns:xsl=\\"http://www.w3.org/1999/XSL/Transform\\"
+     xmlns:php=\\"http://php.net/xsl\\">
+<xsl:output method=\\"html\\" encoding=\\"utf-8\\" indent=\\"yes\\"/>
+ <xsl:template match=\\"allusers\\">
+  <html><body>
+    <table>
+    <xsl:for-each select=\\"user\\">
+      <tr><td>
+        <xsl:value-of
+             select=\\"php:function('ucfirst',string(uid))\\"/>
+      </td></tr>
+    </xsl:for-each>
+    </table>
+  </body></html>
+ </xsl:template>
+</xsl:stylesheet>
+EOB",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<xsl:stylesheet version=\\"1.0\\"
+     xmlns:xsl=\\"http://www.w3.org/1999/XSL/Transform\\"
+     xmlns:php=\\"http://php.net/xsl\\">
+<xsl:output method=\\"html\\" encoding=\\"utf-8\\" indent=\\"yes\\"/>
+ <xsl:template match=\\"allusers\\">
+  <html><body>
+    <table>
+    <xsl:for-each select=\\"user\\">
+      <tr><td>
+        <xsl:value-of
+             select=\\"php:function('ucfirst',string(uid))\\"/>
+      </td></tr>
+    </xsl:for-each>
+    </table>
+  </body></html>
+ </xsl:template>
+</xsl:stylesheet>
+",
+                "unicode": false,
+                "value": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+<xsl:stylesheet version=\\"1.0\\"
+     xmlns:xsl=\\"http://www.w3.org/1999/XSL/Transform\\"
+     xmlns:php=\\"http://php.net/xsl\\">
+<xsl:output method=\\"html\\" encoding=\\"utf-8\\" indent=\\"yes\\"/>
+ <xsl:template match=\\"allusers\\">
+  <html><body>
+    <table>
+    <xsl:for-each select=\\"user\\">
+      <tr><td>
+        <xsl:value-of
+             select=\\"php:function('ucfirst',string(uid))\\"/>
+      </td></tr>
+    </xsl:for-each>
+    </table>
+  </body></html>
+ </xsl:template>
+</xsl:stylesheet>",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xmldoc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'1.0'",
+              "unicode": false,
+              "value": "1.0",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'utf-8'",
+              "unicode": false,
+              "value": "utf-8",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOMDocument",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xml",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "loadXML",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xmldoc",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "xsldoc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'1.0'",
+              "unicode": false,
+              "value": "1.0",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'utf-8'",
+              "unicode": false,
+              "value": "utf-8",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "DOMDocument",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xsl",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "loadXML",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xsldoc",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "proc",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "XSLTProcessor",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "registerPHPFunctions",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "xsldoc",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "importStyleSheet",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "proc",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "xsldoc",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'php://output'",
+                "unicode": false,
+                "value": "php://output",
+              },
+            ],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "transformToURI",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "proc",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

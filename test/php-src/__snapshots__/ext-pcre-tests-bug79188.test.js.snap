@@ -1,0 +1,166 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #79188: Memory corruption in preg_replace/preg_replace_callback and unicode 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"//u\\"",
+                "unicode": false,
+                "value": "//u",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\"",
+                "unicode": false,
+                "value": "",
+              },
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"a\\"",
+                  "unicode": false,
+                  "value": "a",
+                },
+                "right": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\u{1f612}\\"",
+                      "unicode": false,
+                      "value": "😒",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "str_repeat",
+                    "resolution": "uqn",
+                  },
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_replace",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"//u\\"",
+                "unicode": false,
+                "value": "//u",
+              },
+              Closure {
+                "arguments": Array [],
+                "attrGroups": Array [],
+                "body": Block {
+                  "children": Array [
+                    Return {
+                      "expr": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"\\"",
+                        "unicode": false,
+                        "value": "",
+                      },
+                      "kind": "return",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "byref": false,
+                "isStatic": false,
+                "kind": "closure",
+                "nullable": false,
+                "type": null,
+                "uses": Array [],
+              },
+              Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"a\\"",
+                  "unicode": false,
+                  "value": "a",
+                },
+                "right": Call {
+                  "arguments": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\u{1f612}\\"",
+                      "unicode": false,
+                      "value": "😒",
+                    },
+                    Number {
+                      "kind": "number",
+                      "value": "10",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "str_repeat",
+                    "resolution": "uqn",
+                  },
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "preg_replace_callback",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

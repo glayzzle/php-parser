@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test function getservbyport() by calling it more than or less than its expected arguments 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": If {
+        "alternate": ExpressionStatement {
+          "expression": Exit {
+            "expression": Bin {
+              "kind": "bin",
+              "left": Name {
+                "kind": "name",
+                "name": "PHP_OS",
+                "resolution": "uqn",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\" unsupported\\"",
+                "unicode": false,
+                "value": " unsupported",
+              },
+              "type": ".",
+            },
+            "kind": "exit",
+            "useDie": true,
+          },
+          "kind": "expressionstatement",
+        },
+        "body": ExpressionStatement {
+          "expression": Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "file",
+            },
+            "operator": "=",
+            "right": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"C:/WINDOWS/system32/drivers/etc/services\\"",
+              "unicode": false,
+              "value": "C:/WINDOWS/system32/drivers/etc/services",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "PHP_OS",
+                "resolution": "uqn",
+              },
+              Number {
+                "kind": "number",
+                "value": "0",
+              },
+              Number {
+                "kind": "number",
+                "value": "3",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "substr",
+              "resolution": "uqn",
+            },
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"WIN\\"",
+            "unicode": false,
+            "value": "WIN",
+          },
+          "type": "==",
+        },
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "file",
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/etc/services\\"",
+                "unicode": false,
+                "value": "/etc/services",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/etc/services\\"",
+            "unicode": false,
+            "value": "/etc/services",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_exists",
+          "resolution": "uqn",
+        },
+      },
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Services file not found in expected location\\\\n\\"",
+                "unicode": false,
+                "value": "Services file not found in expected location
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "services",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "file",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "file_get_contents",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "service",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Number {
+                    "kind": "number",
+                    "value": "80",
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"tcp\\"",
+                    "unicode": false,
+                    "value": "tcp",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "getservbyport",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          If {
+            "alternate": null,
+            "body": Block {
+              "children": Array [
+                Echo {
+                  "expressions": Array [
+                    String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"PASS\\\\n\\"",
+                      "unicode": false,
+                      "value": "PASS
+",
+                    },
+                  ],
+                  "kind": "echo",
+                  "shortForm": false,
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "if",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [
+                Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\"/$service\\\\s+80\\\\/tcp/\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "/",
+                        "unicode": false,
+                        "value": "/",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "service",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "\\\\s+80\\\\/tcp/",
+                        "unicode": false,
+                        "value": "\\\\s+80\\\\/tcp/",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                  ],
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "services",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "preg_match",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "file",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "file_exists",
+          "resolution": "uqn",
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

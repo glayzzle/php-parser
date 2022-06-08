@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/readlink_realpath_basic2-win32.phpt
+  it("Test readlink() and realpath functions: basic functionality - diff. path notation for files", function () {
+    expect(parser.parseCode("<?php\n/* creating directories, symbolic links and files */\n$file_path = __DIR__;\nmkdir(\"$file_path/readlink_realpath_basic2/home/test/\", 0777, true);\n$file_handle1 = fopen(\"$file_path/readlink_realpath_basic2/home/test/readlink_realpath_basic2.tmp\", \"w\");\n$file_handle2 = fopen(\"$file_path/readlink_realpath_basic2/home/readlink_realpath_basic2.tmp\", \"w\");\n$file_handle3 = fopen(\"$file_path/readlink_realpath_basic2/readlink_realpath_basic2.tmp\", \"w\");\nfclose($file_handle1);\nfclose($file_handle2);\nfclose($file_handle3);\necho \"\\n*** Testing realpath() on filenames ***\\n\";\n$filenames = array (\n  /* filenames resulting in valid paths */\n  \"$file_path/readlink_realpath_basic2/home/readlink_realpath_basic2.tmp\",\n  \"$file_path/readlink_realpath_basic2/readlink_realpath_basic2.tmp\",\n  \"$file_path/readlink_realpath_basic2//home/test//../test/./readlink_realpath_basic2.tmp\",\n  \"$file_path/readlink_realpath_basic2/home//../././readlink_realpath_basic2.tmp\",\n  /* filenames with invalid path */\n  \"$file_path///readlink_realpath_basic2/home//..//././test//readlink_realpath_basic2.tmp\",\n  \"$file_path/readlink_realpath_basic2/home/../home/../test/../readlink_realpath_basic2.tmp\",\n  \"$file_path/readlink_realpath_basic2/readlink_realpath_basic2.tmp/\"\n);\n$counter = 1;\n/* loop through $files to read the filepath of $file in the above array */\nforeach($filenames as $file) {\n  echo \"\\n-- Iteration $counter --\\n\";\n  var_dump( realpath($file) );\n  $counter++;\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

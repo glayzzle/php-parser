@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/class_name_as_scalar.phpt
+  it("class name as scalar from ::class keyword", function () {
+    expect(parser.parseCode("<?php\nnamespace Foo\\Bar {\n    class One {\n        // compile time constants\n        const A = self::class;\n        const B = Two::class;\n    }\n    class Two extends One {\n        public static function run() {\n            var_dump(self::class); // self compile time lookup\n            var_dump(static::class); // runtime lookup\n            var_dump(parent::class); // runtime lookup\n            var_dump(Baz::class); // default compile time lookup\n        }\n    }\n    class Three extends Two {\n        // compile time static lookups\n        public static function checkCompileTime(\n            $one = self::class,\n            $two = Baz::class,\n            $three = One::A,\n            $four = self::B\n        ) {\n            var_dump($one, $two, $three, $four);\n        }\n    }\n    echo \"In NS\\n\";\n    var_dump(Moo::CLASS); // resolve in namespace\n}\nnamespace {\n    use Bee\\Bop as Moo,\n        Foo\\Bar\\One;\n    echo \"Top\\n\";\n    var_dump(One::class); // resolve from use\n    var_dump(Boo::class); // resolve in global namespace\n    var_dump(Moo::CLASS); // resolve from use as\n    var_dump(\\Moo::Class); // resolve fully qualified\n    $class = One::class; // assign class as scalar to var\n    $x = new $class; // create new class from original scalar assignment\n    var_dump($x);\n    Foo\\Bar\\Two::run(); // resolve runtime lookups\n    echo \"Parent\\n\";\n    Foo\\Bar\\Three::run(); // resolve runtime lookups with inheritance\n    echo \"Compile Check\\n\";\n    Foo\\Bar\\Three::checkCompileTime();\n}\n?>")).toMatchSnapshot();
+  });
+});

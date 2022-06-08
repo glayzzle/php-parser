@@ -1,0 +1,303 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71859 (zend_objects_store_call_destructors operates on realloced memory, crashing) 1`] = `
+Program {
+  "children": Array [
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              For {
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": OffsetLookup {
+                          "kind": "offsetlookup",
+                          "offset": Encapsed {
+                            "kind": "encapsed",
+                            "raw": "\\"a$i\\"",
+                            "type": "string",
+                            "value": Array [
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "a",
+                                  "unicode": false,
+                                  "value": "a",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": null,
+                              },
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "i",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": "simple",
+                              },
+                            ],
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "GLOBALS",
+                          },
+                        },
+                        "operator": "=",
+                        "right": New {
+                          "arguments": Array [],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "stdClass",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "increment": Array [
+                  Pre {
+                    "kind": "pre",
+                    "type": "+",
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                  },
+                ],
+                "init": Array [
+                  Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "operator": "=",
+                    "right": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                  },
+                ],
+                "kind": "for",
+                "shortForm": false,
+                "test": Array [
+                  Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "i",
+                    },
+                    "right": Number {
+                      "kind": "number",
+                      "value": "10000",
+                    },
+                    "type": "<",
+                  },
+                ],
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__destruct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "constructs_in_destructor",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "constructs_in_destructor",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "a",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "a",
+          },
+        },
+        "operator": "=",
+        "right": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    For {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Encapsed {
+                  "kind": "encapsed",
+                  "raw": "\\"b$i\\"",
+                  "type": "string",
+                  "value": Array [
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "b",
+                        "unicode": false,
+                        "value": "b",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": null,
+                    },
+                    EncapsedPart {
+                      "curly": false,
+                      "expression": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                      "kind": "encapsedpart",
+                      "syntax": "simple",
+                    },
+                  ],
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "GLOBALS",
+                },
+              },
+              "operator": "=",
+              "right": New {
+                "arguments": Array [],
+                "kind": "new",
+                "what": Name {
+                  "kind": "name",
+                  "name": "stdClass",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Pre {
+          "kind": "pre",
+          "type": "+",
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "0",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "i",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "200",
+          },
+          "type": "<",
+        },
+      ],
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+okey",
+      "value": "okey",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

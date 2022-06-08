@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/general_functions/var_export_basic1.phpt
+  it("Test var_export() function with integer values", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing var_export() with integer values ***\\n\";\n// different integer values\n$valid_ints = array(\n                '0' => '0',\n                '1' => '1',\n                '-1' => '-1',\n                '-2147483648' => '-2147483648', // max negative integer value\n                '-2147483647' => '-2147483647',\n                '2147483647' => 2147483647,  // max positive integer value\n                '2147483640' => 2147483640,\n                '0x123B' => 0x123B,      // integer as hexadecimal\n                \"'0x12ab'\" => '0x12ab',\n                \"'0Xfff'\" => '0Xfff',\n                \"'0XFA'\" => '0XFA',\n                \"-0x80000000\" => -0x7FFFFFFF - 1, // max negative integer as hexadecimal\n                \"'0x7fffffff'\" => '0x7fffffff',  // max positive integer as hexadecimal\n                \"0x7FFFFFFF\" => 0x7FFFFFFF,  // max positive integer as hexadecimal\n                \"'0123'\" => '0123',        // integer as octal\n                \"01912\" => 01,       // should be quivalent to octal 1\n                \"-020000000000\" => -017777777777 - 1, // max negative integer as octal\n                \"017777777777\" => 017777777777,  // max positive integer as octal\n);\n/* Loop to check for above integer values with var_export() */\necho \"\\n*** Output for integer values ***\\n\";\nforeach($valid_ints as $key => $int_value) {\n    echo \"\\n-- Iteration: $key --\\n\";\n    var_export( $int_value );\n    echo \"\\n\";\n    var_export( $int_value, FALSE);\n    echo \"\\n\";\n    var_dump( var_export( $int_value, TRUE) );\n}\n?>")).toMatchSnapshot();
+  });
+});

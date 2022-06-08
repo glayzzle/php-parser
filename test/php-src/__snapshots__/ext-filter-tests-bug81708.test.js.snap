@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81708 (UAF due to php_filter_float() failing for ints) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "input",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"+\\"",
+            "unicode": false,
+            "value": "+",
+          },
+          "right": Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"1\\"",
+                "unicode": false,
+                "value": "1",
+              },
+              Number {
+                "kind": "number",
+                "value": "2",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "str_repeat",
+              "resolution": "uqn",
+            },
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "input",
+          },
+          Name {
+            "kind": "name",
+            "name": "FILTER_VALIDATE_FLOAT",
+            "resolution": "uqn",
+          },
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"options\\"",
+                  "unicode": false,
+                  "value": "options",
+                },
+                "kind": "entry",
+                "unpack": false,
+                "value": Array {
+                  "items": Array [
+                    Entry {
+                      "byRef": false,
+                      "key": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'min_range'",
+                        "unicode": false,
+                        "value": "min_range",
+                      },
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Unary {
+                        "kind": "unary",
+                        "type": "-",
+                        "what": Number {
+                          "kind": "number",
+                          "value": "1",
+                        },
+                      },
+                    },
+                    Entry {
+                      "byRef": false,
+                      "key": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'max_range'",
+                        "unicode": false,
+                        "value": "max_range",
+                      },
+                      "kind": "entry",
+                      "unpack": false,
+                      "value": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                    },
+                  ],
+                  "kind": "array",
+                  "shortForm": true,
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "filter_var",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "input",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

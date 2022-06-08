@@ -134,16 +134,20 @@ const testsThatExpectParseErrors = [
 
   // These are not parse errors in PHP strictly speaking, but they test syntax
   // that is still invalid (i.e. it generates a fatal error).
+  "Zend/tests/enum/case-in-class.phpt",
   "Zend/tests/readonly_props/readonly_const.phpt",
   "Zend/tests/readonly_props/readonly_method.phpt",
   "Zend/tests/readonly_props/readonly_method_trait.phpt",
   "Zend/tests/static_in_trait_insteadof_list.phpt",
 ];
 
-let contents = `// eslint-disable prettier/prettier
+const header = `// eslint-disable prettier/prettier
 const parser = require("../main");
 
 describe("php-src tests", function () {`;
+
+const footer = `});
+`;
 
 for (const absolutePath of glob.sync(__dirname + "/../php-src/**/*.phpt")) {
   const relativePath = absolutePath.substring(
@@ -152,13 +156,15 @@ for (const absolutePath of glob.sync(__dirname + "/../php-src/**/*.phpt")) {
   const testName = [];
   const testContents = [];
   const expectError = testsThatExpectParseErrors.includes(relativePath);
+  let testFileName = relativePath.replace(/[/\\]/g, "-");
+  testFileName = testFileName.substring(0, testFileName.lastIndexOf("."));
 
   let section = null;
   for (const line of fs
     .readFileSync(absolutePath)
     .toString()
     .split(/[\r\n]+/)) {
-    if (line.startsWith("--")) {
+    if (/^--\w/.test(line)) {
       if (line === "--TEST--") {
         section = "name";
       } else if (line === "--FILE--") {
@@ -181,25 +187,21 @@ for (const absolutePath of glob.sync(__dirname + "/../php-src/**/*.phpt")) {
     continue;
   }
 
-  contents += `
+  const contents = `${header}
   // ${relativePath}
   it(${JSON.stringify(testName.join("\n"))}, function () {
     expect(${expectError ? "() => " : ""}parser.parseCode(${JSON.stringify(
     testContents.join("\n")
   )})).${expectError ? "toThrowErrorMatchingSnapshot" : "toMatchSnapshot"}();
   });
-`;
+${footer}`;
+
+  fs.writeFile(
+    `${__dirname}/../test/php-src/${testFileName}.test.js`,
+    contents,
+    (err) => {
+      if (err) throw err;
+      console.log(`Written ${testFileName}`);
+    }
+  );
 }
-
-contents += `
-});
-`;
-
-fs.writeFile(
-  __dirname + "/../test/snapshot/php-src.test.js",
-  contents,
-  (err) => {
-    if (err) throw err;
-    console.log("The file has been saved!");
-  }
-);

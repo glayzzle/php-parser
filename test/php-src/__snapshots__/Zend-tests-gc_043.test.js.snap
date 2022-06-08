@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests GC buffer shouldn't get reused when removing nested data 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "s",
+        },
+        "operator": "=",
+        "right": Nowdoc {
+          "kind": "nowdoc",
+          "label": "STR",
+          "raw": "<<<'STR'
+O:8:\\"stdClass\\":2:{i:5;C:8:\\"SplStack\\":29:{i:4;:r:1;:O:8:\\"stdClass\\":0:{}}i:0;O:13:\\"RegexIterator\\":1:{i:5;C:8:\\"SplStack\\":29:{i:4;:r:1;:O:8:\\"stdClass\\":0:{}}}}
+STR",
+          "value": "O:8:\\"stdClass\\":2:{i:5;C:8:\\"SplStack\\":29:{i:4;:r:1;:O:8:\\"stdClass\\":0:{}}i:0;O:13:\\"RegexIterator\\":1:{i:5;C:8:\\"SplStack\\":29:{i:4;:r:1;:O:8:\\"stdClass\\":0:{}}}}",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "unserialize",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "gc_collect_cycles",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

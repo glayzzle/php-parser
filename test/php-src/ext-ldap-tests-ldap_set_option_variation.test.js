@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/ldap/tests/ldap_set_option_variation.phpt
+  it("ldap_set_option() - More ldap_set_option() operations", function () {
+    expect(parser.parseCode("<?php\nrequire \"connect.inc\";\n$link = ldap_connect($host, $port);\n$option = null;\n$controls = array(\n    array(\"oid\" => \"1.2.752.58.10.1\", \"iscritical\" => true),\n    array(\"oid\" => \"1.2.752.58.1.10\", \"value\" => \"magic\"),\n);\nvar_dump(ldap_set_option($link, LDAP_OPT_DEREF, LDAP_DEREF_ALWAYS));\nldap_get_option($link, LDAP_OPT_DEREF, $option);\nvar_dump(\n    $option === LDAP_DEREF_ALWAYS,\n    ldap_set_option($link, LDAP_OPT_SIZELIMIT, 123)\n);\nldap_get_option($link, LDAP_OPT_SIZELIMIT, $option);\nvar_dump(\n    $option,\n    ldap_set_option($link, LDAP_OPT_TIMELIMIT, 33)\n);\nldap_get_option($link, LDAP_OPT_TIMELIMIT, $option);\nvar_dump(\n    $option,\n    ldap_set_option($link, LDAP_OPT_NETWORK_TIMEOUT, 44)\n);\nldap_get_option($link, LDAP_OPT_NETWORK_TIMEOUT, $option);\nvar_dump(\n    $option,\n    ldap_set_option($link, LDAP_OPT_REFERRALS, true)\n);\nldap_get_option($link, LDAP_OPT_REFERRALS, $option);\nvar_dump(\n    (bool) $option,\n    ldap_set_option($link, LDAP_OPT_RESTART, false)\n);\nldap_get_option($link, LDAP_OPT_RESTART, $option);\nvar_dump(\n    (bool) $option,\n    ldap_set_option($link, LDAP_OPT_SERVER_CONTROLS, $controls)\n);\nldap_get_option($link, LDAP_OPT_SERVER_CONTROLS, $option);\nvar_dump(\n    $option,\n    ldap_set_option($link, LDAP_OPT_CLIENT_CONTROLS, $controls)\n);\nldap_get_option($link, LDAP_OPT_CLIENT_CONTROLS, $option);\nvar_dump(\n    $option,\n    ldap_set_option($link, LDAP_OPT_MATCHED_DN, \"dc=test,dc=com\")\n);\nldap_get_option($link, LDAP_OPT_MATCHED_DN, $option);\nvar_dump($option);\n?>")).toMatchSnapshot();
+  });
+});

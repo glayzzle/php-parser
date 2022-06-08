@@ -1,0 +1,1004 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests sendmsg()/recvmsg(): test ability to receive multiple messages (WIN32) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": false,
+        "target": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/mcast_helpers.php.inc\\"",
+            "unicode": false,
+            "value": "/mcast_helpers.php.inc",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "addr",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'::1'",
+          "unicode": false,
+          "value": "::1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"creating send socket\\\\n\\"",
+          "unicode": false,
+          "value": "creating send socket
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sends1",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "AF_INET6",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "SOCK_DGRAM",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "SOL_UDP",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "socket_create",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"err\\"",
+            "unicode": false,
+            "value": "err",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "sends1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "br",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "sends1",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'::'",
+                "unicode": false,
+                "value": "::",
+              },
+              Number {
+                "kind": "number",
+                "value": "7003",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "socket_bind",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"err\\"",
+            "unicode": false,
+            "value": "err",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "br",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sends1",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_set_nonblock",
+            "resolution": "uqn",
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Could not put in non-blocking mode\\"",
+            "unicode": false,
+            "value": "Could not put in non-blocking mode",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"creating receive socket\\\\n\\"",
+          "unicode": false,
+          "value": "creating receive socket
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "AF_INET6",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "SOCK_DGRAM",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "SOL_UDP",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "socket_create",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"err\\"",
+            "unicode": false,
+            "value": "err",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "br",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "s",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'::0'",
+                "unicode": false,
+                "value": "::0",
+              },
+              Number {
+                "kind": "number",
+                "value": "3003",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "socket_bind",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"err\\"",
+            "unicode": false,
+            "value": "err",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "br",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+            Name {
+              "kind": "name",
+              "name": "IPPROTO_IPV6",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "IPV6_RECVPKTINFO",
+              "resolution": "uqn",
+            },
+            Number {
+              "kind": "number",
+              "value": "1",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_set_option",
+            "resolution": "uqn",
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"err\\"",
+            "unicode": false,
+            "value": "err",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+            Name {
+              "kind": "name",
+              "name": "IPPROTO_IPV6",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "IPV6_RECVTCLASS",
+              "resolution": "uqn",
+            },
+            Number {
+              "kind": "number",
+              "value": "1",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_set_option",
+            "resolution": "uqn",
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"err\\"",
+            "unicode": false,
+            "value": "err",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "r",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sends1",
+            },
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"name\\"",
+                    "unicode": false,
+                    "value": "name",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"addr\\"",
+                          "unicode": false,
+                          "value": "addr",
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"::1\\"",
+                          "unicode": false,
+                          "value": "::1",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"port\\"",
+                          "unicode": false,
+                          "value": "port",
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Number {
+                          "kind": "number",
+                          "value": "3003",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"iov\\"",
+                    "unicode": false,
+                    "value": "iov",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"test \\"",
+                          "unicode": false,
+                          "value": "test ",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"thing\\"",
+                          "unicode": false,
+                          "value": "thing",
+                        },
+                      },
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"\\\\n\\"",
+                          "unicode": false,
+                          "value": "
+",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"control\\"",
+                    "unicode": false,
+                    "value": "control",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": null,
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Array {
+                          "items": Array [
+                            Entry {
+                              "byRef": false,
+                              "key": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"level\\"",
+                                "unicode": false,
+                                "value": "level",
+                              },
+                              "kind": "entry",
+                              "unpack": false,
+                              "value": Name {
+                                "kind": "name",
+                                "name": "IPPROTO_IPV6",
+                                "resolution": "uqn",
+                              },
+                            },
+                            Entry {
+                              "byRef": false,
+                              "key": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"type\\"",
+                                "unicode": false,
+                                "value": "type",
+                              },
+                              "kind": "entry",
+                              "unpack": false,
+                              "value": Name {
+                                "kind": "name",
+                                "name": "IPV6_PKTINFO",
+                                "resolution": "uqn",
+                              },
+                            },
+                            Entry {
+                              "byRef": false,
+                              "key": String {
+                                "isDoubleQuote": true,
+                                "kind": "string",
+                                "raw": "\\"data\\"",
+                                "unicode": false,
+                                "value": "data",
+                              },
+                              "kind": "entry",
+                              "unpack": false,
+                              "value": Array {
+                                "items": Array [
+                                  Entry {
+                                    "byRef": false,
+                                    "key": String {
+                                      "isDoubleQuote": false,
+                                      "kind": "string",
+                                      "raw": "'addr'",
+                                      "unicode": false,
+                                      "value": "addr",
+                                    },
+                                    "kind": "entry",
+                                    "unpack": false,
+                                    "value": String {
+                                      "isDoubleQuote": false,
+                                      "kind": "string",
+                                      "raw": "'::1'",
+                                      "unicode": false,
+                                      "value": "::1",
+                                    },
+                                  },
+                                  Entry {
+                                    "byRef": false,
+                                    "key": String {
+                                      "isDoubleQuote": false,
+                                      "kind": "string",
+                                      "raw": "'ifindex'",
+                                      "unicode": false,
+                                      "value": "ifindex",
+                                    },
+                                    "kind": "entry",
+                                    "unpack": false,
+                                    "value": Number {
+                                      "kind": "number",
+                                      "value": "1",
+                                    },
+                                  },
+                                ],
+                                "kind": "array",
+                                "shortForm": true,
+                              },
+                            },
+                          ],
+                          "kind": "array",
+                          "shortForm": true,
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_sendmsg",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "r",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "s",
+          },
+          Number {
+            "kind": "number",
+            "value": "500",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "checktimeout",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"name\\"",
+                "unicode": false,
+                "value": "name",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"family\\"",
+                      "unicode": false,
+                      "value": "family",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Name {
+                      "kind": "name",
+                      "name": "AF_INET6",
+                      "resolution": "uqn",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"addr\\"",
+                      "unicode": false,
+                      "value": "addr",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"::1\\"",
+                      "unicode": false,
+                      "value": "::1",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"buffer_size\\"",
+                "unicode": false,
+                "value": "buffer_size",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Number {
+                "kind": "number",
+                "value": "2000",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"controllen\\"",
+                "unicode": false,
+                "value": "controllen",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Bin {
+                "kind": "bin",
+                "left": Call {
+                  "arguments": Array [
+                    Name {
+                      "kind": "name",
+                      "name": "IPPROTO_IPV6",
+                      "resolution": "uqn",
+                    },
+                    Name {
+                      "kind": "name",
+                      "name": "IPV6_PKTINFO",
+                      "resolution": "uqn",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "socket_cmsg_space",
+                    "resolution": "uqn",
+                  },
+                },
+                "right": Call {
+                  "arguments": Array [
+                    Name {
+                      "kind": "name",
+                      "name": "IPPROTO_IPV6",
+                      "resolution": "uqn",
+                    },
+                    Name {
+                      "kind": "name",
+                      "name": "IPV6_TCLASS",
+                      "resolution": "uqn",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "socket_cmsg_space",
+                    "resolution": "uqn",
+                  },
+                },
+                "type": "+",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": ExpressionStatement {
+        "expression": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"recvmsg\\"",
+            "unicode": false,
+            "value": "recvmsg",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "kind": "expressionstatement",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "s",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "data",
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_recvmsg",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

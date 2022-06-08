@@ -1,0 +1,770 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Test if socket_recvfrom() receives data sent by socket_sendto() via IPv6 UDP (Win32) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "socket",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "AF_INET6",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SOCK_DGRAM",
+              "resolution": "uqn",
+            },
+            Name {
+              "kind": "name",
+              "name": "SOL_UDP",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_create",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to create AF_INET6 socket'",
+                "unicode": false,
+                "value": "Unable to create AF_INET6 socket",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "socket",
+        },
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'Unable to set nonblocking mode for socket'",
+                "unicode": false,
+                "value": "Unable to set nonblocking mode for socket",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_set_nonblock",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "socket",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "buf",
+          },
+          Number {
+            "kind": "number",
+            "value": "12",
+          },
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "from",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "port",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "socket_recvfrom",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "address",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'::1'",
+          "unicode": false,
+          "value": "::1",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": Encapsed {
+                "kind": "encapsed",
+                "raw": "\\"Unable to bind to $address:1223\\"",
+                "type": "string",
+                "value": Array [
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "Unable to bind to ",
+                      "unicode": false,
+                      "value": "Unable to bind to ",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "address",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": "simple",
+                  },
+                  EncapsedPart {
+                    "curly": false,
+                    "expression": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": ":1223",
+                      "unicode": false,
+                      "value": ":1223",
+                    },
+                    "kind": "encapsedpart",
+                    "syntax": null,
+                  },
+                ],
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Unary {
+        "kind": "unary",
+        "type": "!",
+        "what": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "address",
+            },
+            Number {
+              "kind": "number",
+              "value": "1223",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_bind",
+            "resolution": "uqn",
+          },
+        },
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "msg",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Ping!\\"",
+          "unicode": false,
+          "value": "Ping!",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "len",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "msg",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strlen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bytes_sent",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "msg",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "len",
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "address",
+            },
+            Number {
+              "kind": "number",
+              "value": "1223",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_sendto",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": If {
+        "alternate": null,
+        "body": Block {
+          "children": Array [
+            ExpressionStatement {
+              "expression": Exit {
+                "expression": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "bytes_sent",
+                      },
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' bytes have been sent instead of the '",
+                        "unicode": false,
+                        "value": " bytes have been sent instead of the ",
+                      },
+                      "type": ".",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "len",
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "' bytes expected'",
+                    "unicode": false,
+                    "value": " bytes expected",
+                  },
+                  "type": ".",
+                },
+                "kind": "exit",
+                "useDie": true,
+              },
+              "kind": "expressionstatement",
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bytes_sent",
+          },
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "len",
+          },
+          "type": "!=",
+        },
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'An error occurred while sending to the socket'",
+                "unicode": false,
+                "value": "An error occurred while sending to the socket",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bytes_sent",
+        },
+        "right": Unary {
+          "kind": "unary",
+          "type": "-",
+          "what": Number {
+            "kind": "number",
+            "value": "1",
+          },
+        },
+        "type": "==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "from",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\"",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "port",
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "0",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bytes_received",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "buf",
+            },
+            Number {
+              "kind": "number",
+              "value": "12",
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "from",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "socket_recvfrom",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": If {
+        "alternate": null,
+        "body": Block {
+          "children": Array [
+            ExpressionStatement {
+              "expression": Exit {
+                "expression": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "bytes_received",
+                      },
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' bytes have been received instead of the '",
+                        "unicode": false,
+                        "value": " bytes have been received instead of the ",
+                      },
+                      "type": ".",
+                    },
+                    "right": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "len",
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "' bytes expected'",
+                    "unicode": false,
+                    "value": " bytes expected",
+                  },
+                  "type": ".",
+                },
+                "kind": "exit",
+                "useDie": true,
+              },
+              "kind": "expressionstatement",
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bytes_received",
+          },
+          "right": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "len",
+          },
+          "type": "!=",
+        },
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'An error occurred while receiving from the socket'",
+                "unicode": false,
+                "value": "An error occurred while receiving from the socket",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bytes_received",
+        },
+        "right": Unary {
+          "kind": "unary",
+          "type": "-",
+          "what": Number {
+            "kind": "number",
+            "value": "1",
+          },
+        },
+        "type": "==",
+      },
+    },
+    Echo {
+      "expressions": Array [
+        Bin {
+          "kind": "bin",
+          "left": Encapsed {
+            "kind": "encapsed",
+            "raw": "\\"Received $buf from remote address $from and remote port $port\\" ",
+            "type": "string",
+            "value": Array [
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "Received ",
+                  "unicode": false,
+                  "value": "Received ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "buf",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": " from remote address ",
+                  "unicode": false,
+                  "value": " from remote address ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "from",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": " and remote port ",
+                  "unicode": false,
+                  "value": " and remote port ",
+                },
+                "kind": "encapsedpart",
+                "syntax": null,
+              },
+              EncapsedPart {
+                "curly": false,
+                "expression": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "port",
+                },
+                "kind": "encapsedpart",
+                "syntax": "simple",
+              },
+            ],
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "socket",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "socket_close",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

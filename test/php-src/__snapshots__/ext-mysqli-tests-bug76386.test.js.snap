@@ -1,0 +1,1114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Prepared Statement formatter truncates fractional seconds from date/time column (bug #76386) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'connect.inc'",
+          "unicode": false,
+          "value": "connect.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "link",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "host",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'DROP TABLE IF EXISTS ts_test;'",
+            "unicode": false,
+            "value": "DROP TABLE IF EXISTS ts_test;",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'CREATE TABLE ts_test (id bigint unsigned auto_increment primary key, '",
+                        "unicode": false,
+                        "value": "CREATE TABLE ts_test (id bigint unsigned auto_increment primary key, ",
+                      },
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'ts timestamp default current_timestamp(), ts2 timestamp(2) default '",
+                        "unicode": false,
+                        "value": "ts timestamp default current_timestamp(), ts2 timestamp(2) default ",
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'current_timestamp(2), ts2b timestamp(2) default \\"2018-01-01 03:04:05.06\\", '",
+                      "unicode": false,
+                      "value": "current_timestamp(2), ts2b timestamp(2) default \\"2018-01-01 03:04:05.06\\", ",
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'ts4 timestamp(4) default current_timestamp(4), ts4b timestamp(4) default '",
+                    "unicode": false,
+                    "value": "ts4 timestamp(4) default current_timestamp(4), ts4b timestamp(4) default ",
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'\\"2018-01-01 03:04:05.0070\\", ts6 timestamp(6) default current_timestamp(6), ts6b '",
+                  "unicode": false,
+                  "value": "\\"2018-01-01 03:04:05.0070\\", ts6 timestamp(6) default current_timestamp(6), ts6b ",
+                },
+                "type": ".",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'timestamp(6) default \\"2018-01-01 03:04:05.008000\\") character set utf8 collate '",
+                "unicode": false,
+                "value": "timestamp(6) default \\"2018-01-01 03:04:05.008000\\") character set utf8 collate ",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'utf8_general_ci;'",
+              "unicode": false,
+              "value": "utf8_general_ci;",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'INSERT INTO ts_test (ts, ts2, ts4, ts6) VALUES (\\"2018-01-01 11:22:33\\", '",
+                "unicode": false,
+                "value": "INSERT INTO ts_test (ts, ts2, ts4, ts6) VALUES (\\"2018-01-01 11:22:33\\", ",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'\\"2018-02-02 11:22:33.77\\", \\"2018-03-03 11:22:33.8888\\", '",
+                "unicode": false,
+                "value": "\\"2018-02-02 11:22:33.77\\", \\"2018-03-03 11:22:33.8888\\", ",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'\\"2018-04-04 11:22:33.999999\\");'",
+              "unicode": false,
+              "value": "\\"2018-04-04 11:22:33.999999\\");",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'SELECT * FROM ts_test;'",
+              "unicode": false,
+              "value": "SELECT * FROM ts_test;",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'[FIRST][FAIL] mysqli::prepare returned false: '",
+                    "unicode": false,
+                    "value": "[FIRST][FAIL] mysqli::prepare returned false: ",
+                  },
+                  "right": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "error",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "link",
+                    },
+                  },
+                  "type": ".",
+                },
+                "parenthesizedExpression": true,
+                "right": Name {
+                  "kind": "name",
+                  "name": "PHP_EOL",
+                  "resolution": "uqn",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "execute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "tsid",
+              },
+              "operator": "=",
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts",
+                },
+                "operator": "=",
+                "right": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "ts2",
+                  },
+                  "operator": "=",
+                  "right": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "ts2b",
+                    },
+                    "operator": "=",
+                    "right": Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "ts4",
+                      },
+                      "operator": "=",
+                      "right": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "ts4b",
+                        },
+                        "operator": "=",
+                        "right": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "ts6",
+                          },
+                          "operator": "=",
+                          "right": Assign {
+                            "kind": "assign",
+                            "left": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "ts6b",
+                            },
+                            "operator": "=",
+                            "right": NullKeyword {
+                              "kind": "nullkeyword",
+                              "raw": "null",
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tsid",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts2",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts2b",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts4",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts4b",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts6",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts6b",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "bind_result",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "fetch",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts2",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts2b",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts4",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts4b",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts6",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ts6b",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "free_result",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "stmt",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "close",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "link",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "host",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "user",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "passwd",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "db",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "port",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "socket",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "mysqli",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'DROP TABLE IF EXISTS t_test;'",
+            "unicode": false,
+            "value": "DROP TABLE IF EXISTS t_test;",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Bin {
+                "kind": "bin",
+                "left": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'CREATE TABLE t_test (id bigint unsigned auto_increment primary key, '",
+                  "unicode": false,
+                  "value": "CREATE TABLE t_test (id bigint unsigned auto_increment primary key, ",
+                },
+                "right": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'t time default \\"11:00:00\\", t2 time(2) default \\"11:00:00.22\\", t4 '",
+                  "unicode": false,
+                  "value": "t time default \\"11:00:00\\", t2 time(2) default \\"11:00:00.22\\", t4 ",
+                },
+                "type": ".",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'time(4) default \\"11:00:00.4444\\", t6 time(6) default \\"11:00:00.006054\\") '",
+                "unicode": false,
+                "value": "time(4) default \\"11:00:00.4444\\", t6 time(6) default \\"11:00:00.006054\\") ",
+              },
+              "type": ".",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'character set utf8 collate utf8_general_ci;'",
+              "unicode": false,
+              "value": "character set utf8 collate utf8_general_ci;",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'INSERT INTO t_test (t, t2, t4, t6) VALUES (\\"21:22:33\\", \\"21:22:33.44\\", '",
+              "unicode": false,
+              "value": "INSERT INTO t_test (t, t2, t4, t6) VALUES (\\"21:22:33\\", \\"21:22:33.44\\", ",
+            },
+            "right": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'\\"21:22:33.5555\\", \\"21:22:33.676767\\");'",
+              "unicode": false,
+              "value": "\\"21:22:33.5555\\", \\"21:22:33.676767\\");",
+            },
+            "type": ".",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'INSERT INTO t_test VALUES ();'",
+            "unicode": false,
+            "value": "INSERT INTO t_test VALUES ();",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "query",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stmt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'SELECT * FROM t_test;'",
+              "unicode": false,
+              "value": "SELECT * FROM t_test;",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "prepare",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "link",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'[SECOND][FAIL] mysqli::prepare returned false: '",
+                    "unicode": false,
+                    "value": "[SECOND][FAIL] mysqli::prepare returned false: ",
+                  },
+                  "right": PropertyLookup {
+                    "kind": "propertylookup",
+                    "offset": Identifier {
+                      "kind": "identifier",
+                      "name": "error",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "link",
+                    },
+                  },
+                  "type": ".",
+                },
+                "parenthesizedExpression": true,
+                "right": Name {
+                  "kind": "name",
+                  "name": "PHP_EOL",
+                  "resolution": "uqn",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "execute",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "tid",
+              },
+              "operator": "=",
+              "right": Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "t",
+                },
+                "operator": "=",
+                "right": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "t2",
+                  },
+                  "operator": "=",
+                  "right": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "t3",
+                    },
+                    "operator": "=",
+                    "right": Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "t4",
+                      },
+                      "operator": "=",
+                      "right": NullKeyword {
+                        "kind": "nullkeyword",
+                        "raw": "null",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "tid",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "t",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "t2",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "t4",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "t6",
+                },
+              ],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "bind_result",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          While {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "t",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "t2",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "t4",
+                      },
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "t6",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "var_dump",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "fetch",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "free_result",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "stmt",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "stmt",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "close",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "link",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

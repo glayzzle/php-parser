@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/reflection/tests/ReflectionMethod_constructor_error1.phpt
+  it("ReflectionMethod constructor errors", function () {
+    expect(parser.parseCode("<?php\nclass TestClass\n{\n    public function foo() {\n    }\n}\ntry {\n    echo \"\\nWrong type of argument (bool):\\n\";\n    $methodInfo = new ReflectionMethod(true);\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nWrong type of argument (int):\\n\";\n    $methodInfo = new ReflectionMethod(3);\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nWrong type of argument (bool, string):\\n\";\n    $methodInfo = new ReflectionMethod(true, \"foo\");\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nWrong type of argument (string, bool):\\n\";\n    $methodInfo = new ReflectionMethod('TestClass', true);\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nNo method given:\\n\";\n    $methodInfo = new ReflectionMethod(\"TestClass\");\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nClass and Method in same string, bad method name:\\n\";\n    $methodInfo = new ReflectionMethod(\"TestClass::foop::dedoop\");\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nClass and Method in same string, bad class name:\\n\";\n    $methodInfo = new ReflectionMethod(\"TestCla::foo\");\n} catch (Exception $e) {\n    print $e->__toString();\n}\ntry {\n    echo \"\\nClass and Method in same string (ok):\\n\";\n    $methodInfo = new ReflectionMethod(\"TestClass::foo\");\n} catch (Exception $e) {\n    print $e->__toString();\n}\n?>")).toMatchSnapshot();
+  });
+});

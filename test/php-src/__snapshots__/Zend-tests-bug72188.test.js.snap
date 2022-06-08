@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72188 (Nested try/finally blocks losing return value) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": Block {
+              "children": Array [
+                Try {
+                  "always": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          Number {
+                            "kind": "number",
+                            "value": "2",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "body": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          Number {
+                            "kind": "number",
+                            "value": "1",
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "catches": Array [],
+                  "kind": "try",
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Return {
+                  "expr": Number {
+                    "kind": "number",
+                    "value": "5",
+                  },
+                  "kind": "return",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "test",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Passed\\"",
+                "unicode": false,
+                "value": "Passed",
+              },
+              Name {
+                "kind": "name",
+                "name": "PHP_EOL",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"FAILED: expected 5, received \\"",
+                "unicode": false,
+                "value": "FAILED: expected 5, received ",
+              },
+              Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "a",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "var_export",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "PHP_EOL",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "5",
+        },
+        "type": "!==",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

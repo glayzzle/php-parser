@@ -1,0 +1,322 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #78189 (file cache strips last character of uname hash) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tmpdir",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "sys_get_temp_dir",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "pattern",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": Bin {
+              "kind": "bin",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "tmpdir",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/*/*/'",
+                "unicode": false,
+                "value": "/*/*/",
+              },
+              "type": ".",
+            },
+            "right": Call {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "':'",
+                  "unicode": false,
+                  "value": ":",
+                },
+                String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "''",
+                  "unicode": false,
+                  "value": "",
+                },
+                Magic {
+                  "kind": "magic",
+                  "raw": "__DIR__",
+                  "value": "__DIR__",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "str_replace",
+                "resolution": "uqn",
+              },
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'/bug78189.php.bin'",
+            "unicode": false,
+            "value": "/bug78189.php.bin",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "filenames",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pattern",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "glob",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"no opcache file found!\\\\n\\"",
+                "unicode": false,
+                "value": "no opcache file found!
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          Foreach {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "part",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "filename",
+                        },
+                        Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "tmpdir",
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "strlen",
+                            "resolution": "uqn",
+                          },
+                        },
+                        Number {
+                          "kind": "number",
+                          "value": "34",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "substr",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      Echo {
+                        "expressions": Array [
+                          Encapsed {
+                            "kind": "encapsed",
+                            "raw": "\\"invalid opcache folder: $part\\\\n\\"",
+                            "type": "string",
+                            "value": Array [
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "invalid opcache folder: ",
+                                  "unicode": false,
+                                  "value": "invalid opcache folder: ",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": null,
+                              },
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "part",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": "simple",
+                              },
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "\\\\n",
+                                  "unicode": false,
+                                  "value": "",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": null,
+                              },
+                            ],
+                          },
+                        ],
+                        "kind": "echo",
+                        "shortForm": false,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Unary {
+                    "kind": "unary",
+                    "type": "!",
+                    "what": Call {
+                      "arguments": Array [
+                        String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'~/[0-9a-f]{32}/~'",
+                          "unicode": false,
+                          "value": "~/[0-9a-f]{32}/~",
+                        },
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "part",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": Name {
+                        "kind": "name",
+                        "name": "preg_match",
+                        "resolution": "uqn",
+                      },
+                    },
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "filenames",
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "filename",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "filenames",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "count",
+          "resolution": "uqn",
+        },
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

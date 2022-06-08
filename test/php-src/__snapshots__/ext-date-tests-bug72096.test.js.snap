@@ -1,0 +1,176 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72096: Swatch time value incorrect for dates before 1970 1`] = `
+Program {
+  "children": Array [
+    For {
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Time:\\"",
+                "unicode": false,
+                "value": "Time:",
+              },
+              Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'Y-m-d H:i:s = B'",
+                    "unicode": false,
+                    "value": "Y-m-d H:i:s = B",
+                  },
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "unix",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "gmdate",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "PHP_EOL",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Time:\\"",
+                "unicode": false,
+                "value": "Time:",
+              },
+              Call {
+                "arguments": Array [
+                  String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'Y-m-d H:i:s = B'",
+                    "unicode": false,
+                    "value": "Y-m-d H:i:s = B",
+                  },
+                  Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "unix",
+                    },
+                    "right": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Bin {
+                          "kind": "bin",
+                          "left": Number {
+                            "kind": "number",
+                            "value": "82",
+                          },
+                          "right": Number {
+                            "kind": "number",
+                            "value": "365",
+                          },
+                          "type": "*",
+                        },
+                        "right": Number {
+                          "kind": "number",
+                          "value": "24",
+                        },
+                        "type": "*",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "3600",
+                      },
+                      "type": "*",
+                    },
+                    "type": "-",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "gmdate",
+                  "resolution": "uqn",
+                },
+              },
+              Name {
+                "kind": "name",
+                "name": "PHP_EOL",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "increment": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "unix",
+          },
+          "operator": "+=",
+          "right": Number {
+            "kind": "number",
+            "value": "8000",
+          },
+        },
+      ],
+      "init": Array [
+        Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "unix",
+          },
+          "operator": "=",
+          "right": Number {
+            "kind": "number",
+            "value": "1461283200",
+          },
+        },
+      ],
+      "kind": "for",
+      "shortForm": false,
+      "test": Array [
+        Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "unix",
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "1461369600",
+          },
+          "type": "<=",
+        },
+      ],
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

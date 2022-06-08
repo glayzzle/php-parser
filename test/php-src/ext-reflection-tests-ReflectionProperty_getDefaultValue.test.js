@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/reflection/tests/ReflectionProperty_getDefaultValue.phpt
+  it("reflection: ReflectionProperty::getDefaultValue", function () {
+    expect(parser.parseCode("<?php\ndefine('FOO', 42);\nclass TestClass\n{\n    public $foo;\n    public $bar = 'baz';\n    public static $static1;\n    public static $static2 = 1234;\n    public int $val1;\n    public int $val2 = 1234;\n    public ?int $nullable;\n    public ?int $nullable2 = null;\n    public $constantAst = 2 * 2;\n    public $constantRuntimeAst = FOO;\n}\n$property = new ReflectionProperty(TestClass::class, 'foo');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'bar');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'static1');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'static2');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'val1');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'val2');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'nullable');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'nullable2');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'constantAst');\nvar_dump($property->getDefaultValue());\n$property = new ReflectionProperty(TestClass::class, 'constantRuntimeAst');\nvar_dump($property->getDefaultValue());\n$test = new TestClass;\n$test->dynamic = null;\n$property = new ReflectionProperty($test, 'dynamic');\nvar_dump($property->getDefaultValue());\n?>")).toMatchSnapshot();
+  });
+});

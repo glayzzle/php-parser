@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/shmop/tests/002.phpt
+  it("shmop extension error messages", function () {
+    expect(parser.parseCode("<?php\necho PHP_EOL, '## shmop_open function tests ##', PHP_EOL;\n// Invalid flag when the flags length != 1\ntry {\n    shmop_open(1338, '', 0644, 1024);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    shmop_open(1338, 'b', 0644, 1024);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\n// Warning outputs: Unable to attach or create shared memory segment\nvar_dump(shmop_open(0, 'a', 0644, 1024));\n// Shared memory segment size must be greater than zero\ntry {\n    shmop_open(0, 'a', 0644, 1024);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\n//Shared memory segment size must be greater than zero\ntry {\n    shmop_open(1338, \"c\", 0666, 0);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\necho PHP_EOL, '## shmop_read function tests ##', PHP_EOL;\n// Start is out of range\n$shm_id = shmop_open(1338, 'n', 0600, 1024);\ntry {\n    shmop_read($shm_id, -10, 0);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\nshmop_delete($shm_id);\n// Count is out of range\n$shm_id = shmop_open(1339, 'n', 0600, 1024);\ntry {\n    shmop_read($shm_id, 0, -10);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\nshmop_delete($shm_id);\necho PHP_EOL, '## shmop_write function tests ##', PHP_EOL;\n// Offset out of range\n$shm_id = shmop_open(1340, 'n', 0600, 1024);\ntry {\n    shmop_write($shm_id, 'text to try write', -10);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\nshmop_delete($shm_id);\n?>")).toMatchSnapshot();
+  });
+});

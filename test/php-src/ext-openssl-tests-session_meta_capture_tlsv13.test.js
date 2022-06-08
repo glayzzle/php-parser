@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/openssl/tests/session_meta_capture_tlsv13.phpt
+  it("Capture SSL session meta array in stream context for TLSv1.3", function () {
+    expect(parser.parseCode("<?php\n$certFile = __DIR__ . DIRECTORY_SEPARATOR . 'session_meta_capture_tlsv13.pem.tmp';\n$cacertFile = __DIR__ . DIRECTORY_SEPARATOR . 'session_meta_capture_tlsv13-ca.pem.tmp';\n$serverCode = <<<'CODE'\n    $serverUri = \"ssl://127.0.0.1:64321\";\n    $serverFlags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN;\n    $serverCtx = stream_context_create(['ssl' => [\n        'local_cert' => '%s',\n        'crypto_method' => STREAM_CRYPTO_METHOD_TLSv1_3_SERVER,\n    ]]);\n    $server = stream_socket_server($serverUri, $errno, $errstr, $serverFlags, $serverCtx);\n    phpt_notify();\n    @stream_socket_accept($server, 1);\nCODE;\n$serverCode = sprintf($serverCode, $certFile);\n$peerName = 'session_meta_capture_tlsv13';\n$clientCode = <<<'CODE'\n    $serverUri = \"ssl://127.0.0.1:64321\";\n    $clientFlags = STREAM_CLIENT_CONNECT;\n    $clientCtx = stream_context_create(['ssl' => [\n        'verify_peer' => true,\n        'cafile' => '%s',\n        'peer_name' => '%s'\n    ]]);\n    phpt_wait();\n    stream_context_set_option($clientCtx, 'ssl', 'crypto_method', STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT);\n    $stream = stream_socket_client($serverUri, $errno, $errstr, 1, $clientFlags, $clientCtx);\n    var_dump(stream_get_meta_data($stream)['crypto']['protocol']);\nCODE;\n$clientCode = sprintf($clientCode, $cacertFile, $peerName);\ninclude 'CertificateGenerator.inc';\n$certificateGenerator = new CertificateGenerator();\n$certificateGenerator->saveCaCert($cacertFile);\n$certificateGenerator->saveNewCertAsFileWithKey($peerName, $certFile);\ninclude 'ServerClientTestCase.inc';\nServerClientTestCase::getInstance()->run($clientCode, $serverCode);\n?>")).toMatchSnapshot();
+  });
+});

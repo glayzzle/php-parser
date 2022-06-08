@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #72051 (The reference in CallbackFilterIterator doesn't work as expected) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Number {
+                      "kind": "number",
+                      "value": "1",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Number {
+                      "kind": "number",
+                      "value": "2",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "callbackTest",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            New {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "data",
+                },
+              ],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "ArrayIterator",
+                "resolution": "uqn",
+              },
+            },
+            Closure {
+              "arguments": Array [
+                Parameter {
+                  "attrGroups": Array [],
+                  "byref": true,
+                  "flags": 0,
+                  "kind": "parameter",
+                  "name": Identifier {
+                    "kind": "identifier",
+                    "name": "current",
+                  },
+                  "nullable": false,
+                  "readonly": false,
+                  "type": null,
+                  "value": null,
+                  "variadic": false,
+                },
+              ],
+              "attrGroups": Array [],
+              "body": Block {
+                "children": Array [
+                  ExpressionStatement {
+                    "expression": Assign {
+                      "kind": "assign",
+                      "left": OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'message'",
+                          "unicode": false,
+                          "value": "message",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "current",
+                        },
+                      },
+                      "operator": "=",
+                      "right": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "'Test message'",
+                        "unicode": false,
+                        "value": "Test message",
+                      },
+                    },
+                    "kind": "expressionstatement",
+                  },
+                  Return {
+                    "expr": Boolean {
+                      "kind": "boolean",
+                      "raw": "true",
+                      "value": true,
+                    },
+                    "kind": "return",
+                  },
+                ],
+                "kind": "block",
+              },
+              "byref": false,
+              "isStatic": false,
+              "kind": "closure",
+              "nullable": false,
+              "type": null,
+              "uses": Array [],
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "CallbackFilterIterator",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "rewind",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "callbackTest",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "current",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "callbackTest",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "next",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "callbackTest",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

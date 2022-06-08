@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/dom/tests/domchardata.phpt
+  it("CharData: DOMCharacterData and related functionality", function () {
+    expect(parser.parseCode("<?php\nrequire_once(\"dom_test.inc\");\n$dom = new DOMDocument;\n$dom->loadXML($xmlstr);\nif(!$dom) {\n  echo \"Error while parsing the document\\n\";\n  exit;\n}\n$node = $dom->documentElement;\n$charnode = $dom->createElement('charnode');\n$node->appendChild($charnode);\n/* DOMComment */\n$comment = new DOMComment('Testing character data and extending nodes');\n$charnode->appendChild($comment);\necho \"Comment Length: \".$comment->length.\"\\n\";\n$comment->data = 'Updated comment';\necho \"New Comment Length: \".$comment->length.\"\\n\";\necho \"New Comment Data: \".$comment->data.\"\\n\";\n/* DOMCDataSection */\n$cdata = new DOMCDataSection('Chars: <>&\"');\n$charnode->appendChild($cdata);\necho \"Substring: \".$cdata->substringData(7, 4).\"\\n\";\n$cdata->replaceData(10, 1, \"'\");\necho \"New Substring: \".$cdata->substringData(7, 4).\"\\n\";\n/* DOMCharacterData using DOMComment */\n$comment = new DOMComment('instructions');\necho \"Comment Value: \".$comment->data.\"\\n\";\n$comment->data = 'some more instructions';\necho \"New Comment Value: \".$comment->data.\"\\n\";\n$comment->insertData(10, 'pi ');\n$comment->replaceData(18, 5, 'i');\n$comment->insertData(20, 'g');\n$comment->deleteData(13, 2);\n$comment->deleteData(10, 3);\n$comment->insertData(10, 'comment ');\necho \"Updated Comment Value: \".$comment->data.\"\\n\";\n/* DOMText */\n$text = new DOMText('some text characters');\necho \"Whole Text: \".$text->wholeText.\"\\n\";\n$text2 = $text->splitText(9);\necho \"Split text: \".$text2->wholeText.\"\\n\";\n$text3 = $text2->splitText(1);\necho \"Is Whitespace?: \".($text2->isElementContentWhitespace()?'YES':'NO');\n?>")).toMatchSnapshot();
+  });
+});

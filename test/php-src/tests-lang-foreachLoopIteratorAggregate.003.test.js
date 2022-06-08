@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // tests/lang/foreachLoopIteratorAggregate.003.phpt
+  it("foreach with nested iteratorAggregates", function () {
+    expect(parser.parseCode("<?php\nclass EnglishMealIterator implements Iterator {\n    private $pos=0;\n    private $myContent=array(\"breakfast\", \"dinner\", \"tea\");\n    public function valid(): bool {\n        global $indent;\n        echo \"$indent--> \" . __METHOD__ . \" ($this->pos)\\n\";\n        return $this->pos<3;\n    }\n    public function next(): void {\n        global $indent;\n        echo \"$indent--> \" . __METHOD__ . \" ($this->pos)\\n\";\n        $this->myContent[$this->pos++];\n    }\n    public function rewind(): void {\n        global $indent;\n        echo \"$indent--> \" . __METHOD__ . \" ($this->pos)\\n\";\n        $this->pos=0;\n    }\n    public function current(): mixed {\n        global $indent;\n        echo \"$indent--> \" . __METHOD__ . \" ($this->pos)\\n\";\n        return $this->myContent[$this->pos];\n    }\n    public function key(): mixed {\n        global $indent;\n        echo \"$indent--> \" . __METHOD__ . \" ($this->pos)\\n\";\n        return \"meal \" . $this->pos;\n    }\n}\nclass A1 implements IteratorAggregate {\n    function getIterator(): Traversable {\n        return new EnglishMealIterator;\n    }\n}\nclass A2 implements IteratorAggregate {\n    function getIterator(): Traversable {\n        return new A1;\n    }\n}\nclass A3 implements IteratorAggregate {\n    function getIterator(): Traversable {\n        return new A2;\n    }\n}\necho \"\\n-----( A1: )-----\\n\";\nforeach (new A1 as $k=>$v) {\n    echo \"$k => $v\\n\";\n}\necho \"\\n-----( A2: )-----\\n\";\nforeach (new A2 as $k=>$v) {\n    echo \"$k => $v\\n\";\n}\necho \"\\n-----( A3: )-----\\n\";\nforeach (new A3 as $k=>$v) {\n    echo \"$k => $v\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mbstring/tests/mb_strripos_basic2.phpt
+  it("Test mb_strripos() function : basic functionality", function () {
+    expect(parser.parseCode("<?php\n/*\n * Test basic functionality of mb_strripos with ASCII and multibyte characters\n */\necho \"*** Testing mb_strripos() : basic functionality***\\n\";\nmb_internal_encoding('UTF-8');\n//ascii strings\n$ascii_haystacks = array(\n   'abc defabc   def',\n   'ABC DEFABC   DEF',\n   'Abc dEFaBC   Def',\n);\n$ascii_needles = array(\n   // 4 good ones\n   'DE',\n   'de',\n   'De',\n   'dE',\n);\n//greek strings in UTF-8\n$greek_lower = base64_decode('zrrOu868zr3Ovs6/z4DPgSDOus67zrzOvc6+zr/PgA==');\n$greek_upper = base64_decode('zprOm86czp3Ons6fzqDOoSDOms6bzpzOnc6ezp/OoA==');\n$greek_mixed = base64_decode('zrrOu868zr3Ovs6fzqDOoSDOus67zpzOnc6+zr/OoA==');\n$greek_haystacks = array($greek_lower, $greek_upper, $greek_mixed);\n$greek_nlower = base64_decode('zrzOvc6+zr8=');\n$greek_nupper = base64_decode('zpzOnc6ezp8=');\n$greek_nmixed1 = base64_decode('zpzOnc6+zr8=');\n$greek_nmixed2 = base64_decode('zrzOvc6+zp8=');\n$greek_needles = array(\n   // 4 good ones\n   $greek_nlower, $greek_nupper, $greek_nmixed1, $greek_nmixed2,\n);\n// try the basic options\necho \"\\n -- ASCII Strings --\\n\";\nforeach ($ascii_needles as $needle) {\n   foreach ($ascii_haystacks as $haystack) {\n      var_dump(mb_strripos($haystack, $needle));\n      var_dump(mb_strripos($haystack, $needle, 14));\n   }\n}\necho \"\\n -- Greek Strings --\\n\";\nforeach ($greek_needles as $needle) {\n   foreach ($greek_haystacks as $haystack) {\n      var_dump(mb_strripos($haystack, $needle));\n      var_dump(mb_strripos($haystack, $needle, 12));\n   }\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

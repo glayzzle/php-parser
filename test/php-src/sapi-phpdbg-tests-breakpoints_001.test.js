@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // sapi/phpdbg/tests/breakpoints_001.phpt
+  it("Fundamental breakpoints functionality", function () {
+    expect(parser.parseCode("<?php\n$i = 1;\necho $i++;\necho $i++;\necho $i++;\necho $i++;\n")).toMatchSnapshot();
+  });
+});

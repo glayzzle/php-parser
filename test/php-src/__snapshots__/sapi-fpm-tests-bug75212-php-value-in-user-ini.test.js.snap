@@ -1,0 +1,402 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests FPM: bug75212 - php_value acts like php_admin_value 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"tester.inc\\"",
+          "unicode": false,
+          "value": "tester.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "cfg",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+[global]
+error_log = {{FILE:LOG}}
+[unconfined]
+listen = {{ADDR}}
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+php_admin_value[memory_limit]=32M
+php_value[date.timezone]=Europe/London
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "[global]
+error_log = {{FILE:LOG}}
+[unconfined]
+listen = {{ADDR}}
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+php_admin_value[memory_limit]=32M
+php_value[date.timezone]=Europe/London
+",
+                "unicode": false,
+                "value": "[global]
+error_log = {{FILE:LOG}}
+[unconfined]
+listen = {{ADDR}}
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 1
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+php_admin_value[memory_limit]=32M
+php_value[date.timezone]=Europe/London",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "code",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+<?php
+echo \\"Test Start\\\\n\\";
+var_dump(ini_get('memory_limit'), ini_get('date.timezone'));
+echo \\"Test End\\\\n\\";
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<?php
+echo \\"Test Start\\\\n\\";
+var_dump(ini_get('memory_limit'), ini_get('date.timezone'));
+echo \\"Test End\\\\n\\";
+",
+                "unicode": false,
+                "value": "<?php
+echo \\"Test Start
+\\";
+var_dump(ini_get('memory_limit'), ini_get('date.timezone'));
+echo \\"Test End
+\\";",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ini",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "EOT",
+          "raw": "<<<EOT
+memory_limit=64M
+date.timezone=Europe/Paris
+EOT",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "memory_limit=64M
+date.timezone=Europe/Paris
+",
+                "unicode": false,
+                "value": "memory_limit=64M
+date.timezone=Europe/Paris",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "tester",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "cfg",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "code",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "FPM\\\\Tester",
+            "resolution": "qn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "ini",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setUserIni",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "start",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "expectLogStartNotices",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Test Start'",
+                  "unicode": false,
+                  "value": "Test Start",
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'string(3) \\"32M\\"'",
+                  "unicode": false,
+                  "value": "string(3) \\"32M\\"",
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'string(12) \\"Europe/Paris\\"'",
+                  "unicode": false,
+                  "value": "string(12) \\"Europe/Paris\\"",
+                },
+              },
+              Entry {
+                "byRef": false,
+                "key": null,
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'Test End'",
+                  "unicode": false,
+                  "value": "Test End",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "expectBody",
+          },
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "request",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "tester",
+              },
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "terminate",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "close",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "tester",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+Done",
+      "value": "Done",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

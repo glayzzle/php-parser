@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/mbstring/tests/mb_strlen.phpt
+  it("mb_strlen()", function () {
+    expect(parser.parseCode("<?php\n// TODO: Add more encodings\nini_set('include_path', __DIR__);\ninclude_once('common.inc');\n// restore detect_order to 'auto'\nmb_detect_order('auto');\n// Test string\n$euc_jp = '0123����ʸ��������ܸ�Ǥ���EUC-JP��ȤäƤ��ޤ���0123���ܸ�����ݽ�����';\n$ascii  = 'abcdefghijklmnopqrstuvwxyz;]=#0123456789';\n// ASCII\necho \"== ASCII ==\\n\";\nprint  mb_strlen($ascii,'ASCII') . \"\\n\";\nprint  strlen($ascii) . \"\\n\";\n// EUC-JP\necho \"== EUC-JP ==\\n\";\nprint  mb_strlen($euc_jp,'EUC-JP') . \"\\n\";\nmb_internal_encoding('EUC-JP') or print(\"mb_internal_encoding() failed\\n\");\nprint  strlen($euc_jp) . \"\\n\";\n// SJIS\necho \"== SJIS ==\\n\";\n$sjis = mb_convert_encoding($euc_jp, 'SJIS','EUC-JP');\nprint  mb_strlen($sjis,'SJIS') . \"\\n\";\nmb_internal_encoding('SJIS') or print(\"mb_internal_encoding() failed\\n\");\nprint  strlen($sjis) . \"\\n\";\n// JIS\n// Note: either convert_encoding or strlen has problem\necho \"== JIS ==\\n\";\n$jis = mb_convert_encoding($euc_jp, 'JIS','EUC-JP');\nprint  mb_strlen($jis,'JIS') . \"\\n\";\nmb_internal_encoding('JIS')  or print(\"mb_internal_encoding() failed\\n\");\nprint  strlen($jis) . \"\\n\";\n// UTF-8\n// Note: either convert_encoding or strlen has problem\necho \"== UTF-8 ==\\n\";\n$utf8 = mb_convert_encoding($euc_jp, 'UTF-8','EUC-JP');\nprint  mb_strlen($utf8,'UTF-8') . \"\\n\";\nmb_internal_encoding('UTF-8')  or print(\"mb_internal_encoding() failed\\n\");\nprint  strlen($utf8) . \"\\n\";\n// Wrong Parameters\necho \"== WRONG PARAMETERS ==\\n\";\n// Wrong encoding\nmb_internal_encoding('EUC-JP');\ntry {\n    var_dump( mb_strlen($euc_jp, 'BAD_NAME') );\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n?>")).toMatchSnapshot();
+  });
+});

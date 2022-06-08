@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/opcache/tests/revalidate_path_01.phpt
+  it("revalidate_path 01: OPCache must cache only resolved real paths when revalidate_path is set", function () {
+    expect(parser.parseCode("<?php\n$dir = __DIR__;\n$dir1 = \"$dir/test1\";\n$dir2 = \"$dir/test2\";\n$link = \"$dir/test\";\n$file1 = \"$dir1/index.php\";\n$file2 = \"$dir2/index.php\";\n$main = \"$dir/main.php\";\n@mkdir($dir1);\n@mkdir($dir2);\n@file_put_contents($main,  '<?php include(\\'' . $link .'/index.php\\');');\n@file_put_contents($file1, \"TEST 1\\n\");\n@file_put_contents($file2, \"TEST 2\\n\");\nwhile (filemtime($file1) != filemtime($file2)) {\n    touch($file1);\n    touch($file2);\n}\nif (substr(PHP_OS, 0, 3) == 'WIN') {\n    @rmdir($link);\n    $ln = str_replace('/', '\\\\', $link);\n    $d1 = realpath($dir1);\n    `mklink /j $ln $d1`;\n} else {\n    @unlink($link);\n    @symlink($dir1, $link);\n}\ninclude \"php_cli_server.inc\";\n//php_cli_server_start('-d opcache.enable=1 -d opcache.enable_cli=1 -d opcache.revalidate_path=1');\nphp_cli_server_start('-d opcache.enable=1 -d opcache.enable_cli=1 -d opcache.revalidate_path=1 -d opcache.file_update_protection=0 -d realpath_cache_size=0');\necho file_get_contents('http://' . PHP_CLI_SERVER_ADDRESS . '/main.php');\necho file_get_contents('http://' . PHP_CLI_SERVER_ADDRESS . '/main.php');\nif (substr(PHP_OS, 0, 3) == 'WIN') {\n    @rmdir($link);\n    $ln = str_replace('/', '\\\\', $link);\n    $d2 = realpath($dir2);\n    `mklink /j $ln $d2`;\n} else {\n    @unlink($link);\n    @symlink($dir2, $link);\n}\necho file_get_contents('http://' . PHP_CLI_SERVER_ADDRESS . '/main.php');\necho file_get_contents('http://' . PHP_CLI_SERVER_ADDRESS . '/main.php');\n?>")).toMatchSnapshot();
+  });
+});

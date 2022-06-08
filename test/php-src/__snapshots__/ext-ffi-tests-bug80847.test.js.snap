@@ -1,0 +1,432 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #80847 (Nested structs) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": true,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "parenthesizedExpression": true,
+          "raw": "'utils.inc'",
+          "unicode": false,
+          "value": "utils.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "header",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "label": "HEADER",
+          "raw": "<<<HEADER
+    typedef struct bug80847_01 {
+        uint64_t b;
+        double c;
+    } bug80847_01;
+    typedef struct bug80847_02 {
+        bug80847_01 a;
+    } bug80847_02;
+	bug80847_02 ffi_bug80847(bug80847_02 s);
+HEADER",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "    typedef struct bug80847_01 {
+        uint64_t b;
+        double c;
+    } bug80847_01;
+    typedef struct bug80847_02 {
+        bug80847_01 a;
+    } bug80847_02;
+	bug80847_02 ffi_bug80847(bug80847_02 s);
+",
+                "unicode": false,
+                "value": "    typedef struct bug80847_01 {
+        uint64_t b;
+        double c;
+    } bug80847_01;
+    typedef struct bug80847_02 {
+        bug80847_01 a;
+    } bug80847_02;
+	bug80847_02 ffi_bug80847(bug80847_02 s);",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          Try {
+            "always": null,
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Assign {
+                    "kind": "assign",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "ffi",
+                    },
+                    "operator": "=",
+                    "right": Call {
+                      "arguments": Array [
+                        Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "header",
+                        },
+                        String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "'php_zend_test.dll'",
+                          "unicode": false,
+                          "value": "php_zend_test.dll",
+                        },
+                      ],
+                      "kind": "call",
+                      "what": StaticLookup {
+                        "kind": "staticlookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "cdef",
+                        },
+                        "what": Name {
+                          "kind": "name",
+                          "name": "FFI",
+                          "resolution": "uqn",
+                        },
+                      },
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Assign {
+                        "kind": "assign",
+                        "left": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "ffi",
+                        },
+                        "operator": "=",
+                        "right": Call {
+                          "arguments": Array [
+                            Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "header",
+                            },
+                            Call {
+                              "arguments": Array [],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "ffi_get_php_dll_name",
+                                "resolution": "uqn",
+                              },
+                            },
+                          ],
+                          "kind": "call",
+                          "what": StaticLookup {
+                            "kind": "staticlookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "cdef",
+                            },
+                            "what": Name {
+                              "kind": "name",
+                              "name": "FFI",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "ex",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "FFI\\\\Exception",
+                    "resolution": "qn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "ffi",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "header",
+                  },
+                ],
+                "kind": "call",
+                "what": StaticLookup {
+                  "kind": "staticlookup",
+                  "offset": Identifier {
+                    "kind": "identifier",
+                    "name": "cdef",
+                  },
+                  "what": Name {
+                    "kind": "name",
+                    "name": "FFI",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Name {
+          "kind": "name",
+          "name": "PHP_OS_FAMILY",
+          "resolution": "uqn",
+        },
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'Windows'",
+          "unicode": false,
+          "value": "Windows",
+        },
+        "type": "!==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "x",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'bug80847_02'",
+              "unicode": false,
+              "value": "bug80847_02",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "new",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ffi",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "b",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "a",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "x",
+            },
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "42",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "c",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "a",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "x",
+            },
+          },
+        },
+        "operator": "=",
+        "right": Number {
+          "kind": "number",
+          "value": "42.5",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "x",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "y",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "x",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "ffi_bug80847",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ffi",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "x",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "y",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Dynamic class names can't be used in compile-time constant refs 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'test'",
+          "unicode": false,
+          "value": "test",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ConstantStatement {
+      "constants": Array [
+        Constant {
+          "kind": "constant",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "C",
+          },
+          "value": StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "BAR",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "foo",
+            },
+          },
+        },
+      ],
+      "kind": "constantstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

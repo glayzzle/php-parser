@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/stripslashes_variation3.phpt
+  it("Test stripslashes() function : usage variations - strings with newline and tab characters", function () {
+    expect(parser.parseCode("<?php\n/*\n * Test stripslashes() with strings containing newline and tab characters.\n*/\necho \"*** Testing stripslashes() : with strings containing newline and tab characters ***\\n\";\n// initialising  heredoc strings\n$heredoc_string_with_newline = <<<EOT\nThis is line 1 \\nof 'heredoc' string\nThis is line 2 \\nof \"heredoc\" string\nEOT;\n$heredoc_string_with_tab = <<<EOT\nThis is line 1 \\tof 'heredoc' string\nThis is line 2 \\tof \"heredoc\" string\nEOT;\n// initialising the string array\n$str_array = array(\n                    // string with newline character\n                    \"\\n\",\n            \"\\\\n\",\n                    \"Hello \\nworld\",\n                    \"Hello \\\\nworld\",\n                    '\\n',\n            '\\\\n',\n                    'Hello \\nworld',\n                    'Hello \\\\nworld',\n                    $heredoc_string_with_newline,\n                    // string with tab character\n            \"\\t\",\n            \"\\\\t\",\n                    \"Hello \\tworld\",\n                    \"Hello \\\\tworld\",\n            '\\t',\n            '\\\\t',\n                    'Hello \\tworld',\n                    'Hello \\\\tworld',\n                    $heredoc_string_with_tab\n                  );\n$count = 1;\n// looping to test for all strings in $str_array\nforeach( $str_array as $str )  {\n  echo \"\\n-- Iteration $count --\\n\";\n  var_dump( stripslashes($str) );\n  $count ++;\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

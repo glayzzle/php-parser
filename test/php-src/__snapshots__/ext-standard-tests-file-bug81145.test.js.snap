@@ -1,0 +1,693 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81145 (copy() and stream_copy_to_stream() fail for +4GB files) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "src",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/bug81145_src.bin\\"",
+            "unicode": false,
+            "value": "/bug81145_src.bin",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "dst",
+        },
+        "operator": "=",
+        "right": Bin {
+          "kind": "bin",
+          "left": Magic {
+            "kind": "magic",
+            "raw": "__DIR__",
+            "value": "__DIR__",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"/bug81145_dst.bin\\"",
+            "unicode": false,
+            "value": "/bug81145_dst.bin",
+          },
+          "type": ".",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'SIZE_4G'",
+            "unicode": false,
+            "value": "SIZE_4G",
+          },
+          Number {
+            "kind": "number",
+            "value": "0x100000000",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "define",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"fsutil file createnew \\"",
+                        "unicode": false,
+                        "value": "fsutil file createnew ",
+                      },
+                      "right": Call {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "src",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "escapeshellarg",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\" \\"",
+                      "unicode": false,
+                      "value": " ",
+                    },
+                    "type": ".",
+                  },
+                  "right": Bin {
+                    "kind": "bin",
+                    "left": Name {
+                      "kind": "name",
+                      "name": "SIZE_4G",
+                      "resolution": "uqn",
+                    },
+                    "parenthesizedExpression": true,
+                    "right": Number {
+                      "kind": "number",
+                      "value": "0x100",
+                    },
+                    "type": "-",
+                  },
+                  "type": ".",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "exec",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\"fallocate -l \\"",
+                        "unicode": false,
+                        "value": "fallocate -l ",
+                      },
+                      "right": Bin {
+                        "kind": "bin",
+                        "left": Name {
+                          "kind": "name",
+                          "name": "SIZE_4G",
+                          "resolution": "uqn",
+                        },
+                        "parenthesizedExpression": true,
+                        "right": Number {
+                          "kind": "number",
+                          "value": "0x100",
+                        },
+                        "type": "-",
+                      },
+                      "type": ".",
+                    },
+                    "right": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\" \\"",
+                      "unicode": false,
+                      "value": " ",
+                    },
+                    "type": ".",
+                  },
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "src",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "escapeshellarg",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "type": ".",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "exec",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Name {
+          "kind": "name",
+          "name": "PHP_OS_FAMILY",
+          "resolution": "uqn",
+        },
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Windows\\"",
+          "unicode": false,
+          "value": "Windows",
+        },
+        "type": "!==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "fp",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "src",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"ab\\"",
+              "unicode": false,
+              "value": "ab",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+          Call {
+            "arguments": Array [
+              Number {
+                "kind": "number",
+                "value": "0x200",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "random_bytes",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fwrite",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "fp",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "src",
+          },
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "dst",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "copy",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Exit {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Files have different sizes!\\"",
+                "unicode": false,
+                "value": "Files have different sizes!",
+              },
+              "kind": "exit",
+              "useDie": true,
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "src",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "filesize",
+            "resolution": "uqn",
+          },
+        },
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "dst",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "filesize",
+            "resolution": "uqn",
+          },
+        },
+        "type": "!==",
+      },
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "src",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'rb'",
+                "unicode": false,
+                "value": "rb",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "fopen",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"src open failed\\"",
+            "unicode": false,
+            "value": "src open failed",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Assign {
+          "kind": "assign",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f2",
+          },
+          "operator": "=",
+          "right": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "dst",
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'rb'",
+                "unicode": false,
+                "value": "rb",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "fopen",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "right": Exit {
+          "expression": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"dst open failed\\"",
+            "unicode": false,
+            "value": "dst open failed",
+          },
+          "kind": "exit",
+          "useDie": true,
+        },
+        "type": "or",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Name {
+              "kind": "name",
+              "name": "SIZE_4G",
+              "resolution": "uqn",
+            },
+            "right": Number {
+              "kind": "number",
+              "value": "0x100",
+            },
+            "type": "-",
+          },
+          Name {
+            "kind": "name",
+            "name": "SEEK_SET",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fseek",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f2",
+          },
+          Bin {
+            "kind": "bin",
+            "left": Name {
+              "kind": "name",
+              "name": "SIZE_4G",
+              "resolution": "uqn",
+            },
+            "right": Number {
+              "kind": "number",
+              "value": "0x100",
+            },
+            "type": "-",
+          },
+          Name {
+            "kind": "name",
+            "name": "SEEK_SET",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fseek",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        RetIf {
+          "falseExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Copy failed\\"",
+            "unicode": false,
+            "value": "Copy failed",
+          },
+          "kind": "retif",
+          "parenthesizedExpression": true,
+          "test": Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "f1",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0x200",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fread",
+                "resolution": "uqn",
+              },
+            },
+            "right": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "f2",
+                },
+                Number {
+                  "kind": "number",
+                  "value": "0x200",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fread",
+                "resolution": "uqn",
+              },
+            },
+            "type": "===",
+          },
+          "trueExpr": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"Identical\\"",
+            "unicode": false,
+            "value": "Identical",
+          },
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f1",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "f2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "fclose",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

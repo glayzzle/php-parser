@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/soap/tests/interop/Round4/GroupH/r4_groupH_complex_doclit_008w.phpt
+  it("SOAP Interop Round4 GroupH Complex Doc Lit 008 (php/wsdl): echoMultipleFaults2(2)", function () {
+    expect(parser.parseCode("<?php\nclass SOAPStruct {\n    function __construct($s, $i, $f) {\n        $this->varString = $s;\n        $this->varInt = $i;\n        $this->varFloat = $f;\n    }\n}\nclass BaseStruct {\n    function __construct($f, $s) {\n        $this->structMessage = $f;\n        $this->shortMessage = $s;\n    }\n}\nclass ExtendedStruct extends BaseStruct {\n    function __construct($f, $s, $x1, $x2, $x3) {\n        parent::__construct($f,$s);\n        $this->stringMessage = $x1;\n        $this->intMessage = $x2;\n        $this->anotherIntMessage = $x3;\n    }\n}\nclass MoreExtendedStruct extends ExtendedStruct {\n    function __construct($f, $s, $x1, $x2, $x3, $b) {\n        parent::__construct($f, $s, $x1, $x2, $x3);\n        $this->booleanMessage = $b;\n    }\n}\n$s1 = new BaseStruct(new SOAPStruct(\"s1\",1,1.1),1);\n$s2 = new ExtendedStruct(new SOAPStruct(\"s2\",2,2.2),2,\"arg\",-3,5);\n$s3 = new MoreExtendedStruct(new SOAPStruct(\"s3\",3,3.3),3,\"arg\",-3,5,true);\n$client = new SoapClient(__DIR__.\"/round4_groupH_complex_doclit.wsdl\",array(\"trace\"=>1,\"exceptions\"=>0));\n$client->echoMultipleFaults2(array(\"whichFault\" => 2,\n                                   \"param1\"     => $s1,\n                                   \"param2\"     => $s2,\n                                   \"param3\"     => $s3));\necho $client->__getlastrequest();\n$HTTP_RAW_POST_DATA = $client->__getlastrequest();\ninclude(\"round4_groupH_complex_doclit.inc\");\necho \"ok\\n\";\n?>")).toMatchSnapshot();
+  });
+});

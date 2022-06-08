@@ -1,0 +1,592 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests SOAP typemap 9: SoapServer support for typemap's from_xml() (SoapFault) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'HTTP_RAW_POST_DATA'",
+            "unicode": false,
+            "value": "HTTP_RAW_POST_DATA",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "GLOBALS",
+          },
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"
+<env:Envelope xmlns:env=\\\\\\"http://schemas.xmlsoap.org/soap/envelope/\\\\\\"
+    xmlns:xsi=\\\\\\"http://www.w3.org/2001/XMLSchema-instance\\\\\\"
+    xmlns:xsd=\\\\\\"http://www.w3.org/2001/XMLSchema\\\\\\"
+    xmlns:enc=\\\\\\"http://schemas.xmlsoap.org/soap/encoding/\\\\\\"
+    xmlns:ns1=\\\\\\"http://schemas.nothing.com\\\\\\"
+>
+  <env:Body>
+ <ns1:dotest>
+  <book xsi:type=\\\\\\"ns1:book\\\\\\">
+    <a xsi:type=\\\\\\"xsd:string\\\\\\">foo</a>
+    <b xsi:type=\\\\\\"xsd:string\\\\\\">bar</b>
+</book>
+</ns1:dotest>
+ </env:Body>
+<env:Header/>
+</env:Envelope>\\"",
+          "unicode": false,
+          "value": "
+<env:Envelope xmlns:env=\\"http://schemas.xmlsoap.org/soap/envelope/\\\\\\"
+    xmlns:xsi=\\\\\\"http://www.w3.org/2001/XMLSchema-instance\\\\\\"
+    xmlns:xsd=\\\\\\"http://www.w3.org/2001/XMLSchema\\\\\\"
+    xmlns:enc=\\\\\\"http://schemas.xmlsoap.org/soap/encoding/\\\\\\"
+    xmlns:ns1=\\\\\\"http://schemas.nothing.com\\\\\\"
+>
+  <env:Body>
+ <ns1:dotest>
+  <book xsi:type=\\\\\\"ns1:book\\\\\\">
+    <a xsi:type=\\\\\\"xsd:string\\\\\\">foo</a>
+    <b xsi:type=\\\\\\"xsd:string\\\\\\">bar</b>
+</book>
+</ns1:dotest>
+ </env:Body>
+<env:Header/>
+</env:Envelope>",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "xml",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Throw {
+            "kind": "throw",
+            "what": New {
+              "arguments": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"Server\\"",
+                  "unicode": false,
+                  "value": "Server",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"Conversion Failed\\"",
+                  "unicode": false,
+                  "value": "Conversion Failed",
+                },
+              ],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "SoapFault",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "book_from_xml",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        Method {
+          "arguments": Array [
+            Parameter {
+              "attrGroups": Array [],
+              "byref": false,
+              "flags": 0,
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "book",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": Array [],
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "classname",
+                  },
+                  "operator": "=",
+                  "right": Call {
+                    "arguments": Array [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "book",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "get_class",
+                      "resolution": "uqn",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Return {
+                "expr": Bin {
+                  "kind": "bin",
+                  "left": Bin {
+                    "kind": "bin",
+                    "left": Bin {
+                      "kind": "bin",
+                      "left": Bin {
+                        "kind": "bin",
+                        "left": Bin {
+                          "kind": "bin",
+                          "left": Bin {
+                            "kind": "bin",
+                            "left": String {
+                              "isDoubleQuote": true,
+                              "kind": "string",
+                              "raw": "\\"Object: \\"",
+                              "unicode": false,
+                              "value": "Object: ",
+                            },
+                            "right": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "classname",
+                            },
+                            "type": ".",
+                          },
+                          "right": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"(\\"",
+                            "unicode": false,
+                            "value": "(",
+                          },
+                          "type": ".",
+                        },
+                        "right": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "a",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "book",
+                          },
+                        },
+                        "type": ".",
+                      },
+                      "right": String {
+                        "isDoubleQuote": true,
+                        "kind": "string",
+                        "raw": "\\",\\"",
+                        "unicode": false,
+                        "value": ",",
+                      },
+                      "type": ".",
+                    },
+                    "right": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "b",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "book",
+                      },
+                    },
+                    "type": ".",
+                  },
+                  "right": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\")\\"",
+                    "unicode": false,
+                    "value": ")",
+                  },
+                  "type": ".",
+                },
+                "kind": "return",
+              },
+            ],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "dotest",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "a",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"a\\"",
+                "unicode": false,
+                "value": "a",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "b",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"c\\"",
+                "unicode": false,
+                "value": "c",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "book",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "options",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'actor'",
+                "unicode": false,
+                "value": "actor",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'http://schemas.nothing.com'",
+                "unicode": false,
+                "value": "http://schemas.nothing.com",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'typemap'",
+                "unicode": false,
+                "value": "typemap",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"type_ns\\"",
+                            "unicode": false,
+                            "value": "type_ns",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"http://schemas.nothing.com\\"",
+                            "unicode": false,
+                            "value": "http://schemas.nothing.com",
+                          },
+                        },
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"type_name\\"",
+                            "unicode": false,
+                            "value": "type_name",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"book\\"",
+                            "unicode": false,
+                            "value": "book",
+                          },
+                        },
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"from_xml\\"",
+                            "unicode": false,
+                            "value": "from_xml",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"book_from_xml\\"",
+                            "unicode": false,
+                            "value": "book_from_xml",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": false,
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "server",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"/classmap.wsdl\\"",
+                "unicode": false,
+                "value": "/classmap.wsdl",
+              },
+              "type": ".",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "options",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "SoapServer",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"test\\"",
+            "unicode": false,
+            "value": "test",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "setClass",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "server",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "HTTP_RAW_POST_DATA",
+          },
+        ],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "handle",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "server",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"ok\\\\n\\"",
+          "unicode": false,
+          "value": "ok
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

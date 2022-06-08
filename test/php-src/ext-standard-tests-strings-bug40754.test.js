@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/bug40754.phpt
+  it("Bug #40754 (Overflow checks inside string functions)", function () {
+    expect(parser.parseCode("<?php\n$v = 2147483647;\nvar_dump(substr(\"abcde\", 1, $v));\nvar_dump(substr_replace(\"abcde\", \"x\", $v, $v));\nvar_dump(strspn(\"abcde\", \"abc\", $v, $v));\nvar_dump(strcspn(\"abcde\", \"abc\", $v, $v));\ntry {\n    var_dump(substr_count(\"abcde\", \"abc\", $v, $v));\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    substr_compare(\"abcde\", \"abc\", $v, $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    stripos(\"abcde\", \"abc\", $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    substr_count(\"abcde\", \"abc\", $v, 1);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    substr_count(\"abcde\", \"abc\", 1, $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    strpos(\"abcde\", \"abc\", $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    stripos(\"abcde\", \"abc\", $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    strrpos(\"abcde\", \"abc\", $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    strripos(\"abcde\", \"abc\", $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\ntry {\n    strripos(\"abcde\", \"abc\", $v);\n} catch (ValueError $exception) {\n    echo $exception->getMessage() . \"\\n\";\n}\nvar_dump(strncmp(\"abcde\", \"abc\", $v));\nvar_dump(chunk_split(\"abcde\", $v, \"abc\"));\nvar_dump(substr(\"abcde\", $v, $v));\n?>")).toMatchSnapshot();
+  });
+});

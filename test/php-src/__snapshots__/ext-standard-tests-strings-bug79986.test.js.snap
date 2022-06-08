@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #79986 (str_ireplace bug with diacritics characters) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Name {
+            "kind": "name",
+            "name": "LC_ALL",
+            "resolution": "uqn",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'de_DE.ISO-8859-1'",
+            "unicode": false,
+            "value": "de_DE.ISO-8859-1",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'de-DE'",
+            "unicode": false,
+            "value": "de-DE",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "setlocale",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Bin {
+          "kind": "bin",
+          "left": Call {
+            "arguments": Array [
+              Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\xE4\\"",
+                      "unicode": false,
+                      "value": "ä",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\xF6\\"",
+                      "unicode": false,
+                      "value": "ö",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\\\xFC\\"",
+                      "unicode": false,
+                      "value": "ü",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+              Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'1'",
+                      "unicode": false,
+                      "value": "1",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'2'",
+                      "unicode": false,
+                      "value": "2",
+                    },
+                  },
+                  Entry {
+                    "byRef": false,
+                    "key": null,
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'3'",
+                      "unicode": false,
+                      "value": "3",
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": true,
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\xE4\\\\xC4 \\\\xF6\\\\xD6 \\\\xFC\\\\xDC\\"",
+                "unicode": false,
+                "value": "äÄ öÖ üÜ",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "str_ireplace",
+              "resolution": "uqn",
+            },
+          },
+          "right": Name {
+            "kind": "name",
+            "name": "PHP_EOL",
+            "resolution": "uqn",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

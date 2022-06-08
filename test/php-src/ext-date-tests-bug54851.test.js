@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/date/tests/bug54851.phpt
+  it("Bug #54851 (DateTime::createFromFormat() doesn't interpret \"D\")", function () {
+    expect(parser.parseCode("<?php\n$date = new DateTime(\"2011-05-17T22:14:12\");\n$date2 = DateTime::createFromFormat(\"D H i s\", $date->format(\"D\"). ' 0 00 00');\necho $date->format(\"r\"), \"\\n\";\necho $date2->format(\"r\"), \"\\n\";\nvar_dump($date->format(\"D\") == $date2->format(\"D\"));\n// Verify that our implementation works regardless of position\n$datePre = DateTime::createFromFormat(\"!D d M Y\", \"Fri 17 may 2011\");\n$datePost = DateTime::createFromFormat(\"!d M Y D\", \"17 may 2011 Fri\");\necho $datePre->format(\"r\"), \"\\n\";\necho $datePost->format(\"r\"), \"\\n\";\nvar_dump($datePre->format(\"Y-m-d\") == $datePost->format(\"Y-m-d\"));\n// Verify that our implementation is the same as for the constructor and\n// strtotime\n$date1 = new DateTime(\"Tuesday\");\n$date2 = DateTime::createFromFormat(\"D H i s\", \"Tuesday 0 00 00\");\necho $date1->format('r'), \"\\n\";\necho $date2->format('r'), \"\\n\";\nvar_dump($date1->format('D') == $date2->format('D'));\n// - when the day is not the same as the day on the original date:\n$date1 = DateTime::createFromFormat(\"!D d M Y\", \"Fri 19 November 2011\");\n$date2 = new DateTime(\"Fri 19 November 2011\");\necho $date1->format('r'), \"\\n\";\necho $date2->format('r'), \"\\n\";\nvar_dump($date1->format('Y-m-d') == $date2->format('Y-m-d'));\n// - when the day *is* the same as the day on the original date:\n$date1 = DateTime::createFromFormat(\"!D d M Y\", \"Sat 19 November 2011\");\n$date2 = new DateTime(\"Sat 19 November 2011\");\necho $date1->format('r'), \"\\n\";\necho $date2->format('r'), \"\\n\";\nvar_dump($date1->format('Y-m-d') == $date2->format('Y-m-d'));\n?>")).toMatchSnapshot();
+  });
+});
