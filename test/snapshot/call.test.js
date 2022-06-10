@@ -303,4 +303,13 @@ describe("Test call", function () {
     );
     expect(astErr).toMatchSnapshot();
   });
+  it("handles spread operator at call site", function () {
+    expect(
+      parser.parseEval(`
+        foo(...$bar);
+        foo($bar, ...$baz);
+        foo(...$bar, ...$baz);
+      `)
+    ).toMatchSnapshot();
+  });
 });
