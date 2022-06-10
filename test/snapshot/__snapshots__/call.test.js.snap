@@ -199,6 +199,91 @@ Program {
 }
 `;
 
+exports[`Test call handles spread operator at call site 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          variadic {
+            "kind": "variadic",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "bar",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "bar",
+          },
+          variadic {
+            "kind": "variadic",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "baz",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          variadic {
+            "kind": "variadic",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "bar",
+            },
+          },
+          variadic {
+            "kind": "variadic",
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "baz",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "foo",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
+
 exports[`Test call inside offsetlookup 1`] = `
 Program {
   "children": Array [
