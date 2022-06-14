@@ -114,6 +114,8 @@ const testsThatExpectParseErrors = [
   // that is still invalid (i.e. it generates a fatal error).
   "Zend/tests/enum/case-in-class.phpt",
   "Zend/tests/enum/no-name-property.phpt",
+  "Zend/tests/enum/no-properties.phpt",
+  "Zend/tests/errmsg_001.phpt",
   "Zend/tests/readonly_props/readonly_const.phpt",
   "Zend/tests/readonly_props/readonly_method.phpt",
   "Zend/tests/readonly_props/readonly_method_trait.phpt",
