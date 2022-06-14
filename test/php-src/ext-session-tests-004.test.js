@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/session/tests/004.phpt
-  it("session_set_save_handler test", function () {
-    expect(parser.parseCode("<?php\nerror_reporting(E_ALL);\nob_start();\nclass handler {\n    public $data = 'baz|O:3:\"foo\":2:{s:3:\"bar\";s:2:\"ok\";s:3:\"yes\";i:1;}arr|a:1:{i:3;O:3:\"foo\":2:{s:3:\"bar\";s:2:\"ok\";s:3:\"yes\";i:1;}}';\n    function open($save_path, $session_name): bool\n    {\n        print \"OPEN: $session_name\\n\";\n        return true;\n    }\n    function close(): bool\n    {\n        return true;\n    }\n    function read($key): string|false\n    {\n        print \"READ: $key\\n\";\n        return $GLOBALS[\"hnd\"]->data;\n    }\n    function write($key, $val): bool\n    {\n        print \"WRITE: $key, $val\\n\";\n        $GLOBALS[\"hnd\"]->data = $val;\n        return true;\n    }\n    function destroy($key): bool\n    {\n        print \"DESTROY: $key\\n\";\n        return true;\n    }\n    function gc() { return true; }\n}\n$hnd = new handler;\nclass foo {\n    public $bar = \"ok\";\n    function method() { $this->yes++; }\n}\nsession_set_save_handler(array($hnd, \"open\"), array($hnd, \"close\"), array($hnd, \"read\"), array($hnd, \"write\"), array($hnd, \"destroy\"), array($hnd, \"gc\"));\nsession_id(\"test004\");\nsession_start();\n$_SESSION[\"baz\"]->method();\n$_SESSION[\"arr\"][3]->method();\nvar_dump($_SESSION[\"baz\"]);\nvar_dump($_SESSION[\"arr\"]);\nsession_write_close();\nsession_set_save_handler(array($hnd, \"open\"), array($hnd, \"close\"), array($hnd, \"read\"), array($hnd, \"write\"), array($hnd, \"destroy\"), array($hnd, \"gc\"));\nsession_start();\nvar_dump($_SESSION[\"baz\"]);\nvar_dump($_SESSION[\"arr\"]);\nsession_destroy();\n?>")).toMatchSnapshot();
-  });
-});

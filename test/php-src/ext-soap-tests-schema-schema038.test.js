@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/soap/tests/schema/schema038.phpt
-  it("SOAP XML Schema 38: Structure with attributes (ref)", function () {
-    expect(parser.parseCode("<?php\ninclude \"test_schema.inc\";\n$schema = <<<EOF\n    <complexType name=\"testType\">\n        <sequence>\n            <element name=\"str\" type=\"string\"/>\n        </sequence>\n        <attribute ref=\"tns:int\"/>\n    </complexType>\n    <attribute name=\"int\" type=\"int\"/>\nEOF;\ntest_schema($schema,'type=\"tns:testType\"',(object)array(\"str\"=>\"str\",\"int\"=>123.5));\necho \"ok\";\n?>")).toMatchSnapshot();
-  });
-});

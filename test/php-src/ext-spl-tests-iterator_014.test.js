@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/spl/tests/iterator_014.phpt
-  it("SPL: RecursiveIteratorIterator and beginChildren/endChildren", function () {
-    expect(parser.parseCode("<?php\nclass MyRecursiveArrayIterator extends RecursiveArrayIterator\n{\n    function valid(): bool\n    {\n        if (!parent::valid())\n        {\n            echo __METHOD__ . \" = false\\n\";\n            return false;\n        }\n        else\n        {\n            return true;\n        }\n    }\n    function getChildren(): ?RecursiveArrayIterator\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::getChildren();\n    }\n}\nclass RecursiveArrayIteratorIterator extends RecursiveIteratorIterator\n{\n    function rewind(): void\n    {\n        echo __METHOD__ . \"\\n\";\n        parent::rewind();\n    }\n    function valid(): bool\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::valid();\n    }\n    function current(): mixed\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::current();\n    }\n    function key(): mixed\n    {\n        echo __METHOD__ . \"\\n\";\n        return parent::key();\n    }\n    function next(): void\n    {\n        echo __METHOD__ . \"\\n\";\n        parent::next();\n    }\n    function beginChildren(): void\n    {\n        echo __METHOD__ . \"(\".$this->getDepth().\")\\n\";\n    }\n    function endChildren(): void\n    {\n        echo __METHOD__ . \"(\".$this->getDepth().\")\\n\";\n    }\n}\nforeach(new RecursiveArrayIteratorIterator(new MyRecursiveArrayIterator(array(\"a\", array(\"ba\", array(\"bba\", \"bbb\"), array(array(\"bcaa\"))), array(\"ca\"), \"d\"))) as $k=>$v)\n{\n    echo \"$k=>$v\\n\";\n}\n?>")).toMatchSnapshot();
-  });
-});

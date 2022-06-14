@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/pcre/tests/bug41148.phpt
-  it("Bug #41148 (pcre 7.0 regression)", function () {
-    expect(parser.parseCode("<?php\n    $letexte=\"<br><br>\";\n    $ligne_horizontale = $puce = $debut_intertitre = $fin_intertitre = '';\n    $cherche1 = array(\n        /* 0 */     \"/\\n(----+|____+)/S\",\n        /* 1 */     \"/\\n-- */S\",\n        /* 2 */     \"/\\n- */S\",\n        /* 3 */     \"/\\n_ +/S\",\n        /* 4 */   \"/(^|[^{])[{][{][{]/S\",\n        /* 5 */   \"/[}][}][}]($|[^}])/S\",\n        /* 6 */     \"/(( *)\\n){2,}(<br[[:space:]]*\\/?\".\">)?/S\",\n        /* 7 */     \"/[{][{]/S\",\n        /* 8 */     \"/[}][}]/S\",\n        /* 9 */     \"/[{]/S\",\n        /* 10 */    \"/[}]/S\",\n        /* 11 */    \"/(<br[[:space:]]*\\/?\".\">){2,}/S\",\n        /* 12 */    \"/<p>([\\n]*(<br[[:space:]]*\\/?\".\">)*)*/S\",\n        /* 13 */    \"/<quote>/S\",\n        /* 14 */    \"/<\\/quote>/S\"\n    );\n    $remplace1 = array(\n        /* 0 */     \"\\n\\n$ligne_horizontale\\n\\n\",\n        /* 1 */     \"\\n<br />&mdash;&nbsp;\",\n        /* 2 */     \"\\n<br />$puce&nbsp;\",\n        /* 3 */     \"\\n<br />\",\n        /* 4 */     \"\\$1\\n\\n$debut_intertitre\",\n        /* 5 */     \"$fin_intertitre\\n\\n\\$1\",\n        /* 6 */     \"<p>\",\n        /* 7 */     \"<strong class=\\\"spip\\\">\",\n        /* 8 */     \"</strong>\",\n        /* 9 */     \"<i class=\\\"spip\\\">\",\n        /* 10 */    \"</i>\",\n        /* 11 */    \"<p>\",\n        /* 12 */    \"<p>\",\n        /* 13 */    \"<blockquote class=\\\"spip\\\"><p>\",\n        /* 14 */    \"</blockquote><p>\"\n    );\n    $letexte = preg_replace($cherche1, $remplace1, $letexte);\n    $letexte = preg_replace(\"@^ <br />@S\", \"\", $letexte);\n    print $letexte;\n?>")).toMatchSnapshot();
-  });
-});

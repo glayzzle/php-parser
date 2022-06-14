@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/date/tests/date_time_fractions.phpt
-  it("Fractions with DateTime objects", function () {
-    expect(parser.parseCode("<?php\n/* This will go wrong, once in a million times */\n$ms = date_create()->format('u');\necho ($ms = 0) ? \"microseconds = false\\n\" : \"microseconds = true\\n\";\n/* Normal creation */\necho date_create( \"2016-10-03 12:47:18.819313\" )->format( \"Y-m-d H:i:s.u\" ), \"\\n\\n\";\n/* With modifications */\n$dt = new DateTimeImmutable( \"2016-10-03 12:47:18.819210\" );\necho $dt->modify( \"+1 day\" )->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\n$dt = new DateTimeImmutable( \"2016-10-03 12:47:18.081921\" );\necho $dt->modify( \"-3 months\" )->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\necho \"\\n\";\n/* These should reset the time (and hence fraction) to 0 */\n$dt = new DateTimeImmutable( \"2016-10-03 12:47:18.081921\" );\necho $dt->modify( \"yesterday\" )->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\n$dt = new DateTimeImmutable( \"2016-10-03 12:47:18.081921\" );\necho $dt->modify( \"noon\" )->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\n$dt = new DateTimeImmutable( \"2016-10-03 12:47:18.081921\" );\necho $dt->modify( \"10 weekday\" )->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\n/* Interval containing fractions */\n$dt1 = new DateTimeImmutable( \"2016-10-03 13:20:07.103123\" );\n$dt2 = new DateTimeImmutable( \"2016-10-03 13:20:07.481312\" );\n$diff = $dt1->diff( $dt2 );\nvar_dump( $diff );\n$dt0 = $dt1->sub( $diff );\n$dt3 = $dt2->add( $diff );\n$dt4 = $dt3->add( $diff );\necho $dt0->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\necho $dt1->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\necho $dt2->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\necho $dt3->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\necho $dt4->format( \"Y-m-d H:i:s.u\" ), \"\\n\";\n?>")).toMatchSnapshot();
-  });
-});

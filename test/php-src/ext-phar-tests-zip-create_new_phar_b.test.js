@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/zip/create_new_phar_b.phpt
-  it("Phar: create a completely new zip-based phar", function () {
-    expect(parser.parseCode("<?php\nfile_put_contents('phar://' . __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip/a.php',\n    'brand new!');\ninclude 'phar://' . __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip/a.php';\n?>")).toMatchSnapshot();
-  });
-});

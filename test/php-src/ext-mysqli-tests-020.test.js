@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mysqli/tests/020.phpt
-  it("mysqli bind_param/bind_result date", function () {
-    expect(parser.parseCode("<?php\n    require_once(\"connect.inc\");\n    /*** test mysqli_connect 127.0.0.1 ***/\n    $link = my_mysqli_connect($host, $user, $passwd, $db, $port, $socket);\n    mysqli_select_db($link, $db);\n    mysqli_query($link, \"SET sql_mode=''\");\n    mysqli_query($link,\"DROP TABLE IF EXISTS test_bind_result\");\n    $rc = @mysqli_query($link,\"CREATE TABLE test_bind_result(\n        c1 date,\n        c2 time,\n        c3 timestamp(14),\n        c4 year,\n        c5 datetime,\n        c6 timestamp(4),\n        c7 timestamp(6))\");\n    if (!$rc)\n        $rc = mysqli_query($link,\"CREATE TABLE test_bind_result(\n        c1 date,\n        c2 time,\n        c3 timestamp,\n        c4 year,\n        c5 datetime,\n        c6 timestamp,\n        c7 timestamp)\");\n    $stmt = mysqli_prepare($link, \"INSERT INTO test_bind_result VALUES (?,?,?,?,?,?,?)\");\n    mysqli_stmt_bind_param($stmt, \"sssssss\", $d1, $d2, $d3, $d4, $d5, $d6, $d7);\n    $d1 = \"2002-01-02\";\n    $d2 = \"12:49:00\";\n    $d3 = \"2002-01-02 17:46:59\";\n    $d4 = \"2010\";\n    $d5 = \"2010-07-10\";\n    $d6 = \"2020\";\n    $d7 = \"1999-12-29\";\n    mysqli_stmt_execute($stmt);\n    mysqli_stmt_close($stmt);\n    $stmt = mysqli_prepare($link, \"SELECT c1, c2, c3, c4, c5, c6, c7 FROM test_bind_result\");\n    mysqli_stmt_bind_result($stmt,$c1, $c2, $c3, $c4, $c5, $c6, $c7);\n    mysqli_stmt_execute($stmt);\n    mysqli_stmt_fetch($stmt);\n    $test = array($c1,$c2,$c3,$c4,$c5,$c6,$c7);\n    var_dump($test);\n    mysqli_stmt_close($stmt);\n    mysqli_query($link, \"DROP TABLE IF EXISTS test_bind_result\");\n    mysqli_close($link);\n    print \"done!\";\n?>")).toMatchSnapshot();
-  });
-});

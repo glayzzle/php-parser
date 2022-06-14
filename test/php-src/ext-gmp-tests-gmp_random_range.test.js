@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/gmp/tests/gmp_random_range.phpt
-  it("gmp_random_range() basic tests", function () {
-    expect(parser.parseCode("<?php\n$minusTen = gmp_init(-10);\n$plusTen = gmp_init(10);\n$zero = gmp_init(0);\ntry {\n    var_dump(gmp_random_range(10, -10));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(gmp_random_range($plusTen, $minusTen));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\ntry {\n    var_dump(gmp_random_range($plusTen, $zero));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n// If these error the test fails.\ngmp_random_range(0, 10);\ngmp_random_range(1, 10);\ngmp_random_range(-1, 10);\ngmp_random_range(-10, 0);\ngmp_random_range(-10, -1);\ngmp_random_range(0, $plusTen);\ngmp_random_range(1, $plusTen);\ngmp_random_range(-1, $plusTen);\ngmp_random_range($zero, $plusTen);\ngmp_random_range($minusTen, $plusTen);\n// 0.5 seconds to make sure the numbers stay in range\n$start = microtime(true);\nwhile (1) {\n    for ($i = 0; $i < 5000; $i++) {\n        $result = gmp_random_range(0, 1000);\n        if ($result < 0 || $result > 1000) {\n            print \"RANGE VIOLATION 1\\n\";\n            var_dump($result);\n            break 2;\n        }\n        $result = gmp_random_range(-1000, 0);\n        if ($result < -1000 || $result > 0) {\n            print \"RANGE VIOLATION 2\\n\";\n            var_dump($result);\n            break 2;\n        }\n        $result = gmp_random_range(-500, 500);\n        if ($result < -500 || $result > 500) {\n            print \"RANGE VIOLATION 3\\n\";\n            var_dump($result);\n            break 2;\n        }\n    }\n    if (microtime(true) - $start > 0.5) {\n        break;\n    }\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
-  });
-});

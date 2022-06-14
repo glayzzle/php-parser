@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/oci8/tests/commit_001.phpt
-  it("Test OCI_NO_AUTO_COMMIT constant", function () {
-    expect(parser.parseCode("<?php\nrequire(__DIR__.\"/connect.inc\");\nrequire(__DIR__.'/create_table.inc');\n$insert_sql = \"insert into \".$schema.$table_name.\" (id, value) values (1,1)\";\nif (!($s = oci_parse($c, $insert_sql))) {\n    die(\"oci_parse(insert) failed!\\n\");\n}\n/* check with OCI_NO_AUTO_COMMIT mode  */\nfor ($i = 0; $i<3; $i++) {\n    if (!oci_execute($s, OCI_NO_AUTO_COMMIT)) {\n        die(\"oci_execute(insert) failed!\\n\");\n    }\n}\nfor ($i = 0; $i<3; $i++) {\n    if (!oci_execute($s, OCI_DEFAULT)) {\n        die(\"oci_execute(insert) failed!\\n\");\n    }\n}\nvar_dump(oci_rollback($c));\n$select_sql = \"select * from \".$schema.$table_name.\"\";\nif (!($select = oci_parse($c, $select_sql))) {\n    die(\"oci_parse(select) failed!\\n\");\n}\n/* oci_fetch_all */\nif (!oci_execute($select)) {\n    die(\"oci_execute(select) failed!\\n\");\n}\nvar_dump(oci_fetch_all($select, $all));\nvar_dump($all);\n/* ocifetchstatement */\nif (!oci_execute($s)) {\n    die(\"oci_execute(select) failed!\\n\");\n}\n$insert_sql = \"insert into \".$schema.$table_name.\" (id, value) values (1,1)\";\nif (!($s = oci_parse($c, $insert_sql))) {\n    die(\"oci_parse(insert) failed!\\n\");\n}\nfor ($i = 0; $i<3; $i++) {\n    if (!oci_execute($s, OCI_DEFAULT)) {\n        die(\"oci_execute(insert) failed!\\n\");\n    }\n}\nvar_dump(oci_commit($c));\n/* oci_fetch_all */\nif (!oci_execute($select)) {\n    die(\"oci_execute(select) failed!\\n\");\n}\nvar_dump(oci_fetch_all($select, $all));\nvar_dump($all);\nrequire(__DIR__.'/drop_table.inc');\necho \"Done\\n\";\n?>")).toMatchSnapshot();
-  });
-});

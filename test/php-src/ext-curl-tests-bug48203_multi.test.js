@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/curl/tests/bug48203_multi.phpt
-  it("Variation of bug #48203 with curl_multi_exec (Crash when file pointers passed to curl are closed before calling curl_multi_exec)", function () {
-    expect(parser.parseCode("<?php\ninclude 'server.inc';\nfunction checkForClosedFilePointer($target_url, $curl_option, $description) {\n    $fp = fopen(__DIR__ . '/bug48203.tmp', 'w');\n    $ch1 = curl_init();\n    $ch2 = curl_init();\n    $options = array(\n        CURLOPT_RETURNTRANSFER => 1,\n        $curl_option => $fp,\n        CURLOPT_URL => $target_url,\n    );\n    // we also need to set CURLOPT_VERBOSE to test CURLOPT_STDERR properly\n    if (CURLOPT_STDERR == $curl_option) {\n        $options[CURLOPT_VERBOSE] = 1;\n    }\n    if (CURLOPT_INFILE == $curl_option) {\n        $options[CURLOPT_UPLOAD] = 1;\n    }\n    curl_setopt_array($ch1, $options);\n    curl_setopt_array($ch2, $options);\n    fclose($fp); // <-- premature close of $fp caused a crash!\n    $mh = curl_multi_init();\n    curl_multi_add_handle($mh, $ch1);\n    curl_multi_add_handle($mh, $ch2);\n    $active = 0;\n    do {\n        curl_multi_exec($mh, $active);\n    } while ($active > 0);\n    curl_multi_remove_handle($mh, $ch1);\n    curl_multi_remove_handle($mh, $ch2);\n    curl_multi_close($mh);\n    // Force curl to output results\n    fflush(STDERR);\n    fflush(STDOUT);\n    echo \"Ok for $description\\n\";\n}\n$options_to_check = array(\n    \"CURLOPT_STDERR\", \"CURLOPT_WRITEHEADER\", \"CURLOPT_FILE\", \"CURLOPT_INFILE\"\n);\n$target_url = curl_cli_server_start();\nforeach($options_to_check as $option) {\n    checkForClosedFilePointer($target_url, constant($option), $option);\n}\n?>")).toMatchSnapshot();
-  });
-});

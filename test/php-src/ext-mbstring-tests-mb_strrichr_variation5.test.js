@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mbstring/tests/mb_strrichr_variation5.phpt
-  it("Test mb_strrichr() function : usage variation - multiple needles", function () {
-    expect(parser.parseCode("<?php\necho \"*** Testing mb_strrichr() : basic functionality ***\\n\";\nmb_internal_encoding('UTF-8');\n//ascii mixed case, multiple needles\n$string_ascii = 'abcDef zBcDyx';\n$needle_ascii_upper = \"BCD\";\n$needle_ascii_mixed = \"bCd\";\n$needle_ascii_lower = \"bcd\";\n//Greek string in mixed case UTF-8 with multiple needles\n$string_mb = base64_decode('zrrOu868zr3Ovs6fzqDOoSDOus67zpzOnc6+zr/OoA==');\n$needle_mb_upper = base64_decode('zpzOnc6ezp8=');\n$needle_mb_lower = base64_decode('zrzOvc6+zr8=');\n$needle_mb_mixed = base64_decode('zpzOnc6+zr8=');\necho \"\\n-- ASCII string: needle exists --\\n\";\nvar_dump(bin2hex(mb_strrichr($string_ascii, $needle_ascii_upper, false)));\nvar_dump(bin2hex(mb_strrichr($string_ascii, $needle_ascii_upper, true)));\nvar_dump(bin2hex(mb_strrichr($string_ascii, $needle_ascii_lower, false)));\nvar_dump(bin2hex(mb_strrichr($string_ascii, $needle_ascii_lower, true)));\nvar_dump(bin2hex(mb_strrichr($string_ascii, $needle_ascii_mixed, false)));\nvar_dump(bin2hex(mb_strrichr($string_ascii, $needle_ascii_mixed, true)));\necho \"\\n-- Multibyte string: needle exists --\\n\";\nvar_dump(bin2hex(mb_strrichr($string_mb, $needle_mb_upper, false)));\nvar_dump(bin2hex(mb_strrichr($string_mb, $needle_mb_upper, true)));\nvar_dump(bin2hex(mb_strrichr($string_mb, $needle_mb_lower, false)));\nvar_dump(bin2hex(mb_strrichr($string_mb, $needle_mb_lower, true)));\nvar_dump(bin2hex(mb_strrichr($string_mb, $needle_mb_mixed, false)));\nvar_dump(bin2hex(mb_strrichr($string_mb, $needle_mb_mixed, true)));\n?>")).toMatchSnapshot();
-  });
-});

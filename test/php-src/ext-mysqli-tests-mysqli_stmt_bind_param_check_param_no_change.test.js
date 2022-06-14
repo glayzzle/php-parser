@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mysqli/tests/mysqli_stmt_bind_param_check_param_no_change.phpt
-  it("mysqli_stmt_bind_param() - checking whether the parameters are modified (bug#44390)", function () {
-    expect(parser.parseCode("<?php\n    require('table.inc');\n    $link->set_charset('latin1');\n    class foo {\n      // @var $bar string\n      public $bar;\n    }\n    $foo = new foo;\n    $foo->bar = \"фубар\";\n    echo \"Test 1:\\n\";\n    $stmt = $link->prepare(\"SELECT ? FOO\");\n    var_dump($foo); // here you can see the bar member var being a string\n    $stmt->bind_param(\"s\", $foo->bar);\n    var_dump($foo); // this will show $foo->bar being a reference string\n    $stmt->bind_result($one);\n    $stmt->execute();\n    $stmt->fetch();\n    $stmt->free_result();\n    echo(\"$one\\n\\n\");\n    // it is getting worse. Binding the same var twice with different\n    // types you can get unexpected results (e.g. binary trash for the\n    // string and misc data for the integer. See next 2 tests.\n    echo \"Test 2:\\n\";\n    $stmt = $link->prepare(\"SELECT ? FOO, ? BAR\");\n    var_dump($foo);\n    $stmt->bind_param(\"si\", $foo->bar, $foo->bar);\n    echo \"---\\n\";\n    var_dump($foo);\n    echo \"---\\n\";\n    $stmt->execute();\n    var_dump($foo);\n    echo \"---\\n\";\n    $stmt->bind_result($one, $two);\n    $stmt->fetch();\n    $stmt->free_result();\n    echo(\"$one - $two\\n\\n\");\n    echo \"Test 3:\\n\";\n    $stmt = $link->prepare(\"SELECT ? FOO, ? BAR\");\n    var_dump($foo);\n    $stmt->bind_param(\"is\", $foo->bar, $foo->bar);\n    var_dump($foo);\n    $stmt->bind_result($one, $two);\n    $stmt->execute();\n    $stmt->fetch();\n    $stmt->free_result();\n    echo(\"$one - $two\\n\\n\");\n    echo \"done!\";\n?>")).toMatchSnapshot();
-  });
-});

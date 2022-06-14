@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/soap/tests/server010.phpt
-  it("SOAP Server 10: setclass and setpersistence(SOAP_PERSISTENCE_REQUEST)", function () {
-    expect(parser.parseCode("<?php\nclass foo {\n  private $sum = 0;\n  function Sum($num) {\n    return $this->sum += $num;\n  }\n}\n$server = new soapserver(null,array('uri'=>\"http://testuri.org\"));\n$server->setclass(\"foo\");\n$server->setpersistence(SOAP_PERSISTENCE_REQUEST);\nob_start();\n$HTTP_RAW_POST_DATA = <<<EOF\n<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<SOAP-ENV:Envelope\n  SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:si=\"http://soapinterop.org/xsd\">\n  <SOAP-ENV:Body>\n    <ns1:Sum xmlns:ns1=\"http://testuri.org\">\n      <num xsi:type=\"xsd:int\">5</num>\n    </ns1:Sum>\n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>\nEOF;\n$server->handle($HTTP_RAW_POST_DATA);\nob_clean();\n$HTTP_RAW_POST_DATA = <<<EOF\n<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<SOAP-ENV:Envelope\n  SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"\n  xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\"\n  xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n  xmlns:si=\"http://soapinterop.org/xsd\">\n  <SOAP-ENV:Body>\n    <ns1:Sum xmlns:ns1=\"http://testuri.org\">\n      <num xsi:type=\"xsd:int\">3</num>\n    </ns1:Sum>\n  </SOAP-ENV:Body>\n</SOAP-ENV:Envelope>\nEOF;\n$server->handle($HTTP_RAW_POST_DATA);\nob_end_flush();\necho \"ok\\n\";\n?>")).toMatchSnapshot();
-  });
-});

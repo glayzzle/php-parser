@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/iconv/tests/iconv_mime_decode.phpt
-  it("iconv_mime_decode()", function () {
-    expect(parser.parseCode("<?php\nfunction my_error_handler($errno, $errmsg, $filename, $linenum)\n{\n    echo \"$errno: $errmsg\\n\";\n}\nset_error_handler('my_error_handler');\nfunction do_single_test($header)\n{\n    global $mode;\n    $result = iconv_mime_decode($header, $mode, \"UTF-8\");\n    printf(\"(%d) \\\"%s\\\"\\n\", iconv_strlen($result, \"UTF-8\"), $result);\n}\nfunction do_regression_test()\n{\n    do_single_test(<<< HERE\nSubject: =?ISO-8859-1?Q?Pr=FCfung?=\n    =?ISO-8859-1*de_DE?Q?Pr=FCfung?=\\t\n     =?ISO-8859-2?Q?k=F9=D4=F1=D3let?=\nHERE\n);\n    do_single_test(<<< HERE\nSubject: =?ISO-8859-1?Q?Pr=FCfung?= =?ISO-8859-1*de_DE?Q?=20Pr=FCfung?= \\t  =?ISO-8859-2?Q?k=F9=D4=F1=D3let?=\nHERE\n);\n    do_single_test(<<< HERE\nSubject: =?ISO-8859-1?Q?Pr=FCfung?==?ISO-8859-1*de_DE?Q?Pr=FCfung?==?ISO-8859-2?Q?k=F9=D4=F1=D3let?=\nHERE\n);\n    do_single_test(<<< HERE\nSubject: =?ISO-8859-1?Q?Pr=FCfung?= =?ISO-8859-1*de_DE?Q?Pr=FCfung??   =?ISO-8859-2?X?k=F9=D4=F1=D3let?=\nHERE\n);\n    do_single_test(<<< HERE\nFrom: =?ISO-2022-JP?B?GyRCJTUbKEI=?=\n =?ISO-2022-JP?B?GyRCJXMlVxsoQg==?=\n =?ISO-2022-JP?B?GyRCJWtKOBsoQg==?=\n =?ISO-2022-JP?B?GyRCO3pOcxsoQg==?=\n =?ISO-2022-JP?B?GyRCJTUlcxsoQg==?=\n =?ISO-2022-JP?B?GyRCJVclaxsoQg==?=\n =?ISO-2022-JP?B?GyRCSjg7ehsoQg==?=\n =?ISO-2022-JP?B?GyRCTnNGfBsoQg==?=\n =?ISO-2022-JP?B?GyRCS1w4bBsoQg==?=\n =?ISO-2022-JP?B?GyRCJUYlLRsoQg==?=\n =?ISO-2022-JP?B?GyRCJTklSBsoQg==?=\nHERE\n);\n}\n$mode = 0;\ndo_regression_test();\n$mode = ICONV_MIME_DECODE_STRICT;\ndo_regression_test();\n$mode = ICONV_MIME_DECODE_CONTINUE_ON_ERROR;\ndo_regression_test();\n$mode = ICONV_MIME_DECODE_STRICT | ICONV_MIME_DECODE_CONTINUE_ON_ERROR;\ndo_regression_test();\n?>")).toMatchSnapshot();
-  });
-});

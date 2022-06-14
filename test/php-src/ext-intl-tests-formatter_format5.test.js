@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/intl/tests/formatter_format5.phpt
-  it("numfmt_format() icu >= 54.1 && icu < 56.1", function () {
-    expect(parser.parseCode("<?php\n/*\n * Format a number using misc locales/patterns.\n */\n/*\n * TODO: doesn't pass on ICU 3.6 because 'ru' and 'de' locales changed\n * currency and percent formatting.\n */\nfunction ut_main()\n{\n    $styles = array(\n        NumberFormatter::PATTERN_DECIMAL => '##.#####################',\n        NumberFormatter::DECIMAL => '',\n        NumberFormatter::CURRENCY => '',\n        NumberFormatter::PERCENT => '',\n        NumberFormatter::SCIENTIFIC => '',\n        NumberFormatter::SPELLOUT => '@@@@@@@',\n        NumberFormatter::ORDINAL => '',\n        NumberFormatter::DURATION => '',\n        NumberFormatter::PATTERN_RULEBASED => '#####.###',\n        1234999, // bad one\n    );\n   $integer = array(\n        NumberFormatter::ORDINAL => '',\n        NumberFormatter::DURATION => '',\n   );\n    $locales = array(\n        'en_US',\n        'ru_UA',\n        'de',\n        'fr',\n        'en_UK'\n    );\n    $str_res = '';\n    $number = 1234567.891234567890000;\n    foreach( $locales as $locale )\n    {\n        $str_res .= \"\\nLocale is: $locale\\n\";\n        foreach( $styles as $style => $pattern )\n        {\n            $fmt = ut_nfmt_create( $locale, $style, $pattern );\n            if(!$fmt) {\n                $str_res .= \"Bad formatter!\\n\";\n                continue;\n            }\n            $str_res .= dump( isset($integer[$style])?ut_nfmt_format( $fmt, $number, NumberFormatter::TYPE_INT32):ut_nfmt_format( $fmt, $number ) ) . \"\\n\";\n        }\n    }\n    return $str_res;\n}\ninclude_once( 'ut_common.inc' );\n// Run the test\nut_run();\n?>")).toMatchSnapshot();
-  });
-});

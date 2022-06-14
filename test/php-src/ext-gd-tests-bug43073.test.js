@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/gd/tests/bug43073.phpt
-  it("Bug #43073 (TrueType bounding box is wrong for angle<>0)", function () {
-    expect(parser.parseCode("<?php\n$exp = [\n    [501,400, 611,400, 611,376, 501,376],\n    [492,361, 595,319, 586,296, 483,338],\n    [470,329, 549,251, 531,233, 453,312],\n    [439,307, 481,204, 458,195, 416,297],\n    [400,299, 400,189, 376,189, 376,299],\n    [361,307, 319,204, 296,213, 338,316],\n    [329,329, 251,250, 233,267, 311,346],\n    [307,360, 204,318, 195,341, 297,383],\n    [299,400, 189,400, 189,424, 299,424],\n    [307,438, 204,480, 213,503, 316,461],\n    [329,470, 250,548, 267,566, 346,488],\n    [360,492, 318,595, 341,604, 383,502],\n    [400,501, 400,611, 424,611, 424,501],\n    [438,492, 480,595, 503,586, 461,483],\n    [470,470, 548,549, 566,532, 488,453],\n    [492,439, 595,481, 604,458, 502,416]\n];\n$cwd = __DIR__;\n$font = \"$cwd/Tuffy.ttf\";\n$delta_t = 360.0 / 16; # Make 16 steps around\n$g = imagecreate(800, 800);\n$bgnd  = imagecolorallocate($g, 255, 255, 255);\n$black = imagecolorallocate($g, 0, 0, 0);\n$red = imagecolorallocate($g, 255, 0, 0);\n$x = 100;\n$y = 0;\n$cos_t = cos(deg2rad($delta_t));\n$sin_t = sin(deg2rad($delta_t));\nfor ($angle = 0.0, $i = 0; $angle < 360.0; $angle += $delta_t, $i++) {\n  $bbox = imagettftext($g, 24, (int)$angle, (int)(400+$x), (int)(400+$y), $black, $font, 'ABCDEF');\n  imagepolygon($g, $bbox, $red);\n  printf(\"%2d: \", $i);\n  for ($j = 0; $j < 8; $j++) {\n    if ($bbox[$j] >= $exp[$i][$j] - 1 && $bbox[$j] <= $exp[$i][$j] + 1) {\n        echo '.';\n    } else {\n        echo \"(expected $exp[$i][$j], got $bbox[$j])\";\n    }\n  }\n  echo \"\\n\";\n  $temp = $cos_t * $x + $sin_t * $y;\n  $y    = $cos_t * $y - $sin_t * $x;\n  $x    = $temp;\n}\nimagepng($g, \"$cwd/bug43073.png\");\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mbstring/tests/mb_ereg_variation7.phpt
-  it("Test mb_ereg() function : usage variations - different regex features in $pattern", function () {
-    expect(parser.parseCode("<?php\n/*\n * Testing the following regular expression features match correctly:\n * 1. definite quantifiers\n * 2. Alternation\n * 3. subpatterns in parentheses\n */\necho \"*** Testing mb_ereg() : usage variations ***\\n\";\nif(mb_regex_encoding('utf-8') == true) {\n    echo \"Regex encoding set to utf-8\\n\";\n} else {\n    echo \"Could not set regex encoding to utf-8\\n\";\n}\n$string_ascii = 'This is an English string. 0123456789.';\n$regex_ascii = '([A-Z]\\w{1,4}is( [aeiou]|h)) ?.*\\.\\s[0-9]+(5([6-9][79]){2})[[:punct:]]$';\nvar_dump(mb_ereg($regex_ascii, $string_ascii, $regs_ascii));\nbase64_encode_var_dump($regs_ascii);\n$string_mb = base64_decode('zpHPhc+Ez4wgzrXOr869zrHOuSDOtc67zrvOt869zrnOus+MIM66zrXOr868zrXOvc6/LiAwMTIzNDU2Nzg5Lg==');\n$regex_mb = base64_decode(\"W86RLc6pXShcdysgKSvOtVvOsS3PiVxzXSvOui4qKM+MfM6/KS4qXC5cc1swLTldKyg1KFs2LTldWzc5XSl7Mn0pW1s6cHVuY3Q6XV0k\");\nvar_dump(mb_ereg($regex_mb, $string_mb, $regs_mb));\nbase64_encode_var_dump($regs_mb);\n/**\n * replicate a var dump of an array but outputted string values are base64 encoded\n *\n * @param array $regs\n */\nfunction base64_encode_var_dump($regs) {\n    if ($regs) {\n        echo \"array(\" . count($regs) . \") {\\n\";\n        foreach ($regs as $key => $value) {\n            echo \"  [$key]=>\\n  \";\n            if (is_string($value)) {\n                var_dump(base64_encode($value));\n            } else {\n                var_dump($value);\n            }\n        }\n        echo \"}\\n\";\n    } else {\n        echo \"NULL\\n\";\n    }\n}\necho \"Done\";\n?>")).toMatchSnapshot();
-  });
-});

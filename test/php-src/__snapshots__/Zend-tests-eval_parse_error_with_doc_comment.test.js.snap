@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests eval() parse error on function with doc comment 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Eval {
+        "kind": "eval",
+        "source": Encapsed {
+          "kind": "encapsed",
+          "label": "EOC",
+          "raw": "<<<EOC
+/** doc comment */
+function f() {
+EOC
+",
+          "type": "heredoc",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "/** doc comment */
+function f() {
+",
+                "unicode": false,
+                "value": "/** doc comment */
+function f() {",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

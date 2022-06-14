@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mysqli/tests/bug67839.phpt
-  it("mysqli_float_handling - ensure 4 byte float is handled correctly", function () {
-    expect(parser.parseCode("<?php\n    require('connect.inc');\n    if (!$link = my_mysqli_connect($host, $user, $passwd, $db, $port, $socket)) {\n        printf(\"[001] [%d] %s\\n\", mysqli_connect_errno(), mysqli_connect_error());\n        die();\n    }\n    if (!mysqli_query($link, \"DROP TABLE IF EXISTS test\")) {\n        printf(\"[002] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    if (!mysqli_query($link, \"CREATE TABLE test(id INT PRIMARY KEY, fp4 FLOAT, fp8 DOUBLE) ENGINE = InnoDB\")) {\n        printf(\"[003] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    // Insert via string to make sure the real floating number gets to the DB\n    if (!mysqli_query($link, \"INSERT INTO test(id, fp4, fp8) VALUES (1, 9.9999, 9.9999)\")) {\n        printf(\"[004] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    if (!($stmt = mysqli_prepare($link, \"SELECT id, fp4, fp8 FROM test\"))) {\n        printf(\"[005] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    $id = null;\n    $fp4 = null;\n    $fp8 = null;\n    if (!mysqli_stmt_bind_result($stmt, $id, $fp4, $fp8)) {\n        printf(\"[006] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    if (!mysqli_stmt_execute($stmt)) {\n        printf(\"[007] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    if (!(mysqli_stmt_fetch($stmt))) {\n        printf(\"[008] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n        die();\n    }\n    print $id . \": \" . $fp4 . \": \" . $fp8 . \"\\n\";\n?>")).toMatchSnapshot();
-  });
-});

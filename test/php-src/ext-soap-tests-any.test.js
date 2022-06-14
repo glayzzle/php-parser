@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/soap/tests/any.phpt
-  it("SOAP handling of <any>", function () {
-    expect(parser.parseCode("<?php\nclass SOAPComplexType {\n    function __construct($s, $i, $f) {\n        $this->varString = $s;\n        $this->varInt = $i;\n        $this->varFloat = $f;\n    }\n}\n$struct = new SOAPComplexType('arg',34,325.325);\nfunction echoAnyElement($x) {\n    global $g;\n    $g = $x;\n    $struct = $x->inputAny->any[\"SOAPComplexType\"];\n    if ($struct instanceof SOAPComplexType) {\n        return array(\"return\" => array(\"any\" => array(\"SOAPComplexType\"=>new SoapVar($struct, SOAP_ENC_OBJECT, \"SOAPComplexType\", \"http://soapinterop.org/xsd\", \"SOAPComplexType\", \"http://soapinterop.org/\"))));\n    } else {\n        return \"?\";\n    }\n}\nclass TestSoapClient extends SoapClient {\n  function __construct($wsdl, $options) {\n    parent::__construct($wsdl, $options);\n    $this->server = new SoapServer($wsdl, $options);\n    $this->server->addFunction('echoAnyElement');\n  }\n  function __doRequest($request, $location, $action, $version, $one_way = 0): ?string {\n    ob_start();\n    $this->server->handle($request);\n    $response = ob_get_contents();\n    ob_end_clean();\n    return $response;\n  }\n}\n$client = new TestSoapClient(__DIR__.\"/interop/Round4/GroupI/round4_groupI_xsd.wsdl\",\n                             array(\"trace\"=>1,\"exceptions\"=>0,\n                             'classmap' => array('SOAPComplexType'=>'SOAPComplexType')));\n$ret = $client->echoAnyElement(\n  array(\n    \"inputAny\"=>array(\n       \"any\"=>new SoapVar($struct, SOAP_ENC_OBJECT, \"SOAPComplexType\", \"http://soapinterop.org/xsd\", \"SOAPComplexType\", \"http://soapinterop.org/\")\n     )));\nvar_dump($g);\nvar_dump($ret);\n?>")).toMatchSnapshot();
-  });
-});

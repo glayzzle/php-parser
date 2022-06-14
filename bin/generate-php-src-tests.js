@@ -16,7 +16,6 @@ const testsThatExpectParseErrors = [
   "Zend/tests/bug78454_1.phpt",
   "Zend/tests/bug78454_2.phpt",
   "Zend/tests/ctor_promotion_additional_modifiers.phpt",
-  "Zend/tests/eval_parse_error_with_doc_comment.phpt",
   "Zend/tests/flexible-heredoc-error1.phpt",
   "Zend/tests/flexible-heredoc-error10.phpt",
   "Zend/tests/flexible-heredoc-error11.phpt",
@@ -92,25 +91,7 @@ const testsThatExpectParseErrors = [
   "Zend/tests/type_declarations/typed_properties_025.phpt",
   "Zend/tests/unterminated_comment.phpt",
   "Zend/tests/varSyntax/globalNonSimpleVariableError.phpt",
-  "ext/opcache/tests/preload_parse_error.phpt",
-  "ext/phar/tests/031.phpt",
-  "ext/phar/tests/fatal_error_webphar.phpt",
-  "ext/spl/tests/bug74372.phpt",
   "ext/standard/tests/strings/bug51899.phpt",
-  "ext/tokenizer/tests/parse_errors.phpt",
-  "ext/tokenizer/tests/token_get_all_TOKEN_PARSE_000.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/tokenizer/tests/token_get_all_heredoc_nowdoc.phpt",
-  "ext/zend_test/tests/zend_test_compile_string.phpt",
-  "sapi/cgi/tests/006.phpt",
-  "sapi/cli/tests/011.phpt",
-  "sapi/cli/tests/017.phpt",
   "tests/classes/constants_error_006.phpt",
   "tests/classes/constants_error_007.phpt",
   "tests/lang/019.phpt",
@@ -147,7 +128,9 @@ describe("php-src tests", function () {`;
 const footer = `});
 `;
 
-for (const absolutePath of glob.sync(__dirname + "/../php-src/**/*.phpt")) {
+for (const absolutePath of glob.sync(
+  __dirname + "/../php-src/{tests,Zend,ext/standard}/**/*.phpt"
+)) {
   const relativePath = absolutePath.substring(
     absolutePath.indexOf("php-src") + "php-src/".length
   );

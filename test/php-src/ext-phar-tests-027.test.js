@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/027.phpt
-  it("Phar: phar:// opendir", function () {
-    expect(parser.parseCode("<?php\n$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';\n$pname = 'phar://' . $fname;\n$file = \"<?php __HALT_COMPILER(); ?>\";\n$files = array();\n$files['a.php']   = '<?php echo \"This is a\\n\"; require \\''.$pname.'/b.php\\'; ?>';\n$files['b.php']   = '<?php echo \"This is b\\n\"; require \\''.$pname.'/b/c.php\\'; ?>';\n$files['b/c.php'] = '<?php echo \"This is b/c\\n\"; require \\''.$pname.'/b/d.php\\'; ?>';\n$files['b/d.php'] = '<?php echo \"This is b/d\\n\"; require \\''.$pname.'/e.php\\'; ?>';\n$files['e.php']   = '<?php echo \"This is e\\n\"; ?>';\ninclude 'files/phar_test.inc';\nfunction dump($phar, $base)\n{\n    var_dump(str_replace(__DIR__, '*', $phar) . $base);\n    $dir = opendir($phar . $base);\n    if ($base == '/')\n    {\n        $base = '';\n    }\n    while (false !== ($entry = readdir($dir))) {\n        $entry = $base . '/' . $entry;\n        var_dump($entry);\n        var_dump(is_dir($phar . $entry));\n        if (is_dir($phar . $entry))\n        {\n            dump($phar, $entry);\n        }\n    }\n}\ndump($pname, '/');\n$a = opendir($pname);\n// this may stop working in future versions, but is here for code coverage purposes\necho \"fseek on dir handle\\n\";\nvar_dump(fseek($a, 0, SEEK_END), ftell($a));\nvar_dump(fseek($a, -1), ftell($a));\nvar_dump(fseek($a, 1), ftell($a));\necho \"fwrite on dir handle\\n\";\nvar_dump(fwrite($a, 'hi'));\nvar_dump(fstat($a));\nclosedir($a);\necho \"opendir edge cases\\n\";\nvar_dump(opendir(\"phar://\"));\nvar_dump(opendir(\"phar://foo.phar/hi\"));\n?>")).toMatchSnapshot();
-  });
-});

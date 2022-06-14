@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/oci8/tests/imp_res_lob.phpt
-  it("Oracle Database 12c Implicit Result Sets: LOBs", function () {
-    expect(parser.parseCode("<?php\nrequire(__DIR__.'/connect.inc');\n// Initialization\n$stmtarray = array(\n    \"drop table imp_res_lob_tab\",\n    \"create table imp_res_lob_tab (c1 number, c2 clob, c3 varchar2(10))\",\n    \"insert into imp_res_lob_tab values (1, 'aaaaa', 'a')\",\n    \"insert into imp_res_lob_tab values (2, 'bbbbb', 'b')\",\n    \"insert into imp_res_lob_tab values (3, 'ccccc', 'c')\",\n    \"insert into imp_res_lob_tab values (4, 'ddddd', 'd')\",\n    \"create or replace procedure imp_res_lob_proc as\n      c1 sys_refcursor;\n    begin\n      open c1 for select * from imp_res_lob_tab order by 1;\n      dbms_sql.return_result(c1);\n      open c1 for select * from dual;\n      dbms_sql.return_result(c1);\n      open c1 for select c2 from imp_res_lob_tab order by c1;\n      dbms_sql.return_result(c1);\n   end;\"\n);\noci8_test_sql_execute($c, $stmtarray);\n// Run Test\necho \"Test 1\\n\";\n$s = oci_parse($c, \"begin imp_res_lob_proc(); end;\");\noci_execute($s);\nwhile (($row = oci_fetch_row($s)) != false) {\n    foreach ($row as $item) {\n        if (is_object($item)) {\n            echo \" \" . $item->load();\n        } else {\n            echo \" \" . $item;\n        }\n    }\n    echo \"\\n\";\n}\necho \"\\nTest 2 - don't fetch all rows\\n\";\n$s = oci_parse($c, \"begin imp_res_lob_proc(); end;\");\noci_execute($s);\n$row = oci_fetch_row($s);\nforeach ($row as $item) {\n    if (is_object($item)) {\n        echo \" \" . $item->load();\n    } else {\n        echo \" \" . $item;\n    }\n}\necho \"\\n\";\n// Clean up\n$stmtarray = array(\n    \"drop procedure imp_res_lob_proc\",\n    \"drop table imp_res_lob_tab\",\n);\noci8_test_sql_execute($c, $stmtarray);\n?>")).toMatchSnapshot();
-  });
-});

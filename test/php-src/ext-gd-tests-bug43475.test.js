@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/gd/tests/bug43475.phpt
-  it("Bug #43475 (Thick styled lines have scrambled patterns)", function () {
-    expect(parser.parseCode("<?php\nrequire_once __DIR__ . '/similarity.inc';\nfunction setStyleAndThickness($im, $color, $thickness)\n{\n    $style = array();\n    $i = 0;\n    while ($i < 16 * $thickness) {\n        $style[$i++] = $color;\n    }\n    while ($i < 20 * $thickness) {\n        $style[$i++] = IMG_COLOR_TRANSPARENT;\n    }\n    while ($i < 28 * $thickness) {\n        $style[$i++] = $color;\n    }\n    while ($i < 32 * $thickness) {\n        $style[$i++] = IMG_COLOR_TRANSPARENT;\n    }\n    imagesetstyle($im, $style);\n    imagesetthickness($im, $thickness);\n}\n$im = imagecreate(800, 800);\nimagecolorallocate($im, 255, 255, 255);\n$black = imagecolorallocate($im, 0, 0, 0);\nsetStyleAndThickness($im, $black, 1);\nimageline($im,  50, 250, 550, 250, IMG_COLOR_STYLED);\nimageline($im, 550, 250, 550, 750, IMG_COLOR_STYLED);\nimageline($im, 550, 750,  50, 250, IMG_COLOR_STYLED);\nsetStyleAndThickness($im, $black, 2);\nimageline($im, 100, 200, 600, 200, IMG_COLOR_STYLED);\nimageline($im, 600, 200, 600, 700, IMG_COLOR_STYLED);\nimageline($im, 600, 700, 100, 200, IMG_COLOR_STYLED);\nsetStyleAndThickness($im, $black, 4);\nimageline($im, 150, 150, 650, 150, IMG_COLOR_STYLED);\nimageline($im, 650, 150, 650, 650, IMG_COLOR_STYLED);\nimageline($im, 650, 650, 150, 150, IMG_COLOR_STYLED);\nsetStyleAndThickness($im, $black, 6);\nimageline($im, 200, 100, 700, 100, IMG_COLOR_STYLED);\nimageline($im, 700, 100, 700, 600, IMG_COLOR_STYLED);\nimageline($im, 700, 600, 200, 100, IMG_COLOR_STYLED);\n$ex = imagecreatefrompng(__DIR__ . '/bug43475.png');\nvar_dump(calc_image_dissimilarity($ex, $im) < 1e-5);\n?>")).toMatchSnapshot();
-  });
-});

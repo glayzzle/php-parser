@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mysqli/tests/011.phpt
-  it("mysqli fetch mixed values", function () {
-    expect(parser.parseCode("<?php\n    require_once(\"connect.inc\");\n    /*** test mysqli_connect 127.0.0.1 ***/\n    $link = my_mysqli_connect($host, $user, $passwd, $db, $port, $socket);\n    if (!mysqli_query($link, \"DROP TABLE IF EXISTS test_bind_result\"))\n        printf(\"[001] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    $rc = mysqli_query($link, \"CREATE TABLE test_bind_result(c1 tinyint, c2 smallint,\n                                                        c3 int, c4 bigint,\n                                                        c5 float, c6 double,\n                                                        c7 varbinary(10),\n                                                        c8 varchar(50)) ENGINE=\" . $engine);\n    if (!$rc)\n        printf(\"[002] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    $rc = mysqli_query($link,\"INSERT INTO test_bind_result VALUES(19,2999,3999,4999999,\n                                                              2345.6,5678.89563,\n                                                              'foobar','mysql rulez')\");\n    if (!$rc)\n        printf(\"[003] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    $stmt = mysqli_prepare($link, \"SELECT * FROM test_bind_result\");\n    mysqli_stmt_bind_result($stmt, $c1, $c2, $c3, $c4, $c5, $c6, $c7, $c8);\n    mysqli_stmt_execute($stmt);\n    mysqli_stmt_fetch($stmt);\n    $test = array($c1,$c2,$c3,$c4,$c5,$c6,$c7,$c8);\n    var_dump($test);\n    mysqli_stmt_close($stmt);\n    mysqli_query($link, \"DROP TABLE IF EXISTS test_bind_result\");\n    mysqli_close($link);\n    print \"done!\";\n?>")).toMatchSnapshot();
-  });
-});

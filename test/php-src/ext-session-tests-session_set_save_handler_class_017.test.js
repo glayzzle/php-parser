@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/session/tests/session_set_save_handler_class_017.phpt
-  it("Test session_set_save_handler() function: class with create_sid", function () {
-    expect(parser.parseCode("<?php\nob_start();\necho \"*** Testing session_set_save_handler() function: class with create_sid ***\\n\";\nclass MySession2 extends SessionHandler {\n    public $path;\n    public function open($path, $name): bool {\n        if (!$path) {\n            $path = sys_get_temp_dir();\n        }\n        $this->path = $path . '/u_sess_' . $name;\n        return true;\n    }\n    public function close(): bool {\n        return true;\n    }\n    public function read($id): string|false {\n        return (string)@file_get_contents($this->path . $id);\n    }\n    public function write($id, $data): bool {\n        return (bool)file_put_contents($this->path . $id, $data);\n    }\n    public function destroy($id): bool {\n        @unlink($this->path . $id);\n    }\n    public function gc($maxlifetime): int|false {\n        foreach (glob($this->path . '*') as $filename) {\n            if (filemtime($filename) + $maxlifetime < time()) {\n                @unlink($filename);\n            }\n        }\n        return true;\n    }\n    public function create_sid(): string {\n        return pathinfo(__FILE__)['filename'];\n    }\n}\n$handler = new MySession2;\nsession_set_save_handler($handler);\nsession_start();\n$_SESSION['foo'] = \"hello\";\nvar_dump(session_id(), ini_get('session.save_handler'), $_SESSION);\nsession_write_close();\nsession_unset();\nsession_start();\nvar_dump($_SESSION);")).toMatchSnapshot();
-  });
-});

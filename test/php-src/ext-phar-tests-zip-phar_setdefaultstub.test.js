@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/zip/phar_setdefaultstub.phpt
-  it("Phar: Phar::setDefaultStub() with and without arg, zip-based phar", function () {
-    expect(parser.parseCode("<?php\n$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip';\n$phar = new Phar($fname);\n$phar['a.php'] = '<php echo \"this is a\\n\"; ?>';\n$phar['b.php'] = '<php echo \"this is b\\n\"; ?>';\n$phar->setStub('<?php echo \"Hello World\\n\"; __HALT_COMPILER(); ?>');\nvar_dump($phar->getStub());\necho \"============================================================================\\n\";\necho \"============================================================================\\n\";\ntry {\n    $phar->setDefaultStub();\n    $phar->stopBuffering();\n} catch(Exception $e) {\n    echo $e->getMessage(). \"\\n\";\n}\nvar_dump($phar->getStub());\necho \"============================================================================\\n\";\necho \"============================================================================\\n\";\ntry {\n    $phar->setDefaultStub('my/custom/thingy.php');\n} catch(Error $e) {\n    echo $e->getMessage(). \"\\n\";\n}\ntry {\n    $phar->stopBuffering();\n} catch(Exception $e) {\n    echo $e->getMessage(). \"\\n\";\n}\nvar_dump($phar->getStub());\necho \"============================================================================\\n\";\necho \"============================================================================\\n\";\ntry {\n    $phar->setDefaultStub('my/custom/thingy.php', 'the/web.php');\n} catch(ValueError $e) {\n    echo $e->getMessage(). \"\\n\";\n}\ntry {\n    $phar->stopBuffering();\n} catch(Exception $e) {\n    echo $e->getMessage(). \"\\n\";\n}\nvar_dump($phar->getStub());\n?>")).toMatchSnapshot();
-  });
-});

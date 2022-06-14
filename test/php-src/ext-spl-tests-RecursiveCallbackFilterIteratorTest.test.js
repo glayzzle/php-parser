@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/spl/tests/RecursiveCallbackFilterIteratorTest.phpt
-  it("RecursiveCallbackFilterIterator", function () {
-    expect(parser.parseCode("<?php\nclass A {\n    function test($value, $key, $inner) {\n        return test($value, $key, $inner);\n    }\n}\nclass B {\n    static function test($value, $key, $inner) {\n        return test($value, $key, $inner);\n    }\n}\nfunction test($value, $key, $inner) {\n    if ($inner->hasChildren()) {\n        return true;\n    }\n    printf(\"%s / %s / %d / %d\\n\"\n        , print_r($value, true)\n        , $key\n        , $value == $inner->current()\n        , $key == $inner->key()\n    );\n    return $value === 1 || $value === 4;\n}\n$tests = array(\n    'instance method'    => function() { return array(new A, 'test'); },\n    'static method'      => function() { return array('B', 'test'); },\n    'static method (2)'  => function() { return 'B::test'; },\n    'function'           => function() { return 'test'; },\n    'anonymous function' => function() { return function($value, $key, $inner) { return test($value, $key, $inner); }; },\n);\nforeach($tests as $name => $test) {\n    $callback = $test();\n    $it = new RecursiveArrayIterator(array(1, array(2, 3), array(4, 5)));\n    $it = new RecursiveCallbackFilterIterator($it, $callback);\n    $it = new RecursiveIteratorIterator($it);\n    echo \" = $name =\\n\";\n    foreach($it as $value) {\n        echo \"=> $value\\n\";\n    }\n    // same test, with no reference to callback\n    $it = new RecursiveArrayIterator(array(1, array(2, 3), array(4, 5)));\n    $it = new RecursiveCallbackFilterIterator($it, $test());\n    $it = new RecursiveIteratorIterator($it);\n    unset($callback);\n    foreach($it as $value) {\n        echo \"=> $value\\n\";\n    }\n}\n?>")).toMatchSnapshot();
-  });
-});

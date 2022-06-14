@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/xmlreader/tests/014.phpt
-  it("XMLReader: libxml2 XML Reader, read-only element values can not be modified", function () {
-    expect(parser.parseCode("<?php\n// Set up test data in a new file\n$xmlstring = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<books><book num=\"1\" idx=\"2\">book1</book></books>';\n$filename = __DIR__ . '/_014.xml';\nfile_put_contents($filename, $xmlstring);\n// Load test data into a new XML Reader\n$reader = new XMLReader();\nif (!$reader->open($filename)) {\n    exit('XML could not be read');\n}\n// Parse the data\nwhile ($reader->read()) {\n    if ($reader->nodeType != XMLREADER::END_ELEMENT) {\n        // Find a node to try modifying\n        if ($reader->nodeType == XMLREADER::ELEMENT && $reader->name == 'book') {\n            // Try to set the value of the element from book1 to movie1\n            try {\n                $reader->value = 'movie1';\n            } catch (Error $exception) {\n                echo $exception->getMessage() . \"\\n\";\n            }\n            // Try to set the value of the first \"num\" attribute from \"1\" to \"num attribute 1\"\n            $attr = $reader->moveToFirstAttribute();\n            try {\n                $reader->value = 'num attribute 1';\n            } catch (Error $exception) {\n                echo $exception->getMessage() . \"\\n\";\n            }\n            // Try to set the name of the first attribute from \"num\" to \"number\"\n            try {\n                $reader->name = 'number';\n            } catch (Error $exception) {\n                echo $exception->getMessage() . \"\\n\";\n            }\n        }\n    }\n}\n// clean up\n$reader->close();\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/spl/tests/iterator_047.phpt
-  it("SPL: RecursiveCachingIterator and exception in has/getChildren", function () {
-    expect(parser.parseCode("<?php\nclass MyRecursiveArrayIterator extends RecursiveArrayIterator\n{\n    static public $fail = 0;\n    static function fail($state, $method): void\n    {\n        if (self::$fail == $state)\n        {\n            throw new Exception(\"State $state: $method()\");\n        }\n    }\n    function hasChildren(): bool\n    {\n        echo __METHOD__ . \"()\\n\";\n        self::fail(1, __METHOD__);\n        return parent::hasChildren();\n    }\n    function getChildren(): ?RecursiveArrayIterator\n    {\n        echo __METHOD__ . \"()\\n\";\n        self::fail(2, __METHOD__);\n        return parent::getChildren();\n    }\n}\nclass MyRecursiveCachingIterator extends RecursiveCachingIterator\n{\n    function show()\n    {\n        MyRecursiveArrayIterator::$fail = 0;\n        while(MyRecursiveArrayIterator::$fail < 4)\n        {\n            echo \"===\" . MyRecursiveArrayIterator::$fail . \"===\\n\";\n            try\n            {\n                foreach(new RecursiveIteratorIterator($this) as $k => $v)\n                {\n                    var_dump($k);\n                    var_dump($v);\n                }\n            }\n            catch (Exception $e)\n            {\n                echo \"Exception: \" . $e->getMessage() . \" in \" . $e->getFile() . \" on line \" . $e->getLine() . \"\\n\";\n            }\n            MyRecursiveArrayIterator::$fail++;\n        }\n    }\n}\n$it = new MyRecursiveArrayIterator(array(0, array(10), 2, array(30), 4));\n$it = new MyRecursiveCachingIterator($it);\n$it->show();\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/sodium/tests/crypto_secretstream.phpt
-  it("Check for libsodium secretstream", function () {
-    expect(parser.parseCode("<?php\necho \"secretstream_xchacha20poly1305:\\n\";\n$msg1 = random_bytes(random_int(1, 1000));\n$msg2 = random_bytes(random_int(1, 1000));\n$key = sodium_crypto_secretstream_xchacha20poly1305_keygen();\n$ad = random_bytes(random_int(1, 1000));\n$res = sodium_crypto_secretstream_xchacha20poly1305_init_push($key);\n$stream = $res[0];\n$header = $res[1];\n$c1 = sodium_crypto_secretstream_xchacha20poly1305_push($stream, $msg1, $ad);\n$c2 = sodium_crypto_secretstream_xchacha20poly1305_push($stream, $msg2, '', SODIUM_CRYPTO_SECRETSTREAM_XCHACHA20POLY1305_TAG_FINAL);\n$stream = sodium_crypto_secretstream_xchacha20poly1305_init_pull($header, $key);\n$r1 = sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c1, $ad);\n$r2 = sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c2);\nvar_dump($msg1 === $r1[0]);\nvar_dump($msg2 === $r2[0]);\nvar_dump($r1[1]);\nvar_dump($r2[1]);\nvar_dump(sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c2));\nvar_dump(sodium_crypto_secretstream_xchacha20poly1305_pull($stream, 'x'));\n$stream = sodium_crypto_secretstream_xchacha20poly1305_init_pull($header, $key);\n$r1 = sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c1);\nvar_dump($r1);\n$r1 = sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c1, $ad);\nvar_dump($msg1 === $r1[0]);\n$stream = sodium_crypto_secretstream_xchacha20poly1305_init_pull($header, $key);\nsodium_crypto_secretstream_xchacha20poly1305_rekey($stream);\n$r1 = sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c1, $ad);\nvar_dump($r1);\n$r2 = sodium_crypto_secretstream_xchacha20poly1305_pull($stream, $c2);\nvar_dump($r2);\n?>")).toMatchSnapshot();
-  });
-});

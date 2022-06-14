@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/zip/phar_setsignaturealgo2.phpt
-  it("Phar::setSupportedSignatures() with hash, zip-based", function () {
-    expect(parser.parseCode("<?php\n$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.zip';\n$fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.2.phar.zip';\n$fname3 = __DIR__ . '/' . basename(__FILE__, '.php') . '.3.phar.zip';\n$fname4 = __DIR__ . '/' . basename(__FILE__, '.php') . '.4.phar.zip';\n$fname5 = __DIR__ . '/' . basename(__FILE__, '.php') . '.5.phar.zip';\n$fname6 = __DIR__ . '/' . basename(__FILE__, '.php') . '.6.phar.zip';\n$p = new Phar($fname);\n$p['file1.txt'] = 'hi';\nvar_dump($p->getSignature());\n$p->setSignatureAlgorithm(Phar::MD5);\ncopy($fname, $fname2);\n$p = new Phar($fname2);\nvar_dump($p->getSignature());\n$p->setSignatureAlgorithm(Phar::SHA1);\ncopy($fname2, $fname3);\n$p = new Phar($fname3);\nvar_dump($p->getSignature());\ntry {\n$p->setSignatureAlgorithm(Phar::SHA256);\ncopy($fname3, $fname4);\n$p = new Phar($fname4);\nvar_dump($p->getSignature());\n} catch (Exception $e) {\necho $e->getMessage();\n}\ntry {\n$p->setSignatureAlgorithm(Phar::SHA512);\ncopy($fname4, $fname5);\n$p = new Phar($fname5);\nvar_dump($p->getSignature());\n} catch (Exception $e) {\necho $e->getMessage();\n}\ntry {\n$config = __DIR__ . '/../files/openssl.cnf';\n$config_arg = array('config' => $config);\n$keys=openssl_pkey_new($config_arg);\nopenssl_pkey_export($keys, $privkey, NULL, $config_arg);\n$pubkey=openssl_pkey_get_details($keys);\n$p->setSignatureAlgorithm(Phar::OPENSSL, $privkey);\ncopy($fname5, $fname6);\nfile_put_contents($fname6 . '.pubkey', $pubkey['key']);\n$p = new Phar($fname6);\nvar_dump($p->getSignature());\n} catch (Exception $e) {\necho $e->getMessage();\n}\n?>")).toMatchSnapshot();
-  });
-});

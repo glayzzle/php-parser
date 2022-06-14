@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/sodium/tests/crypto_generichash.phpt
-  it("Check for libsodium generichash", function () {
-    expect(parser.parseCode("<?php\n$q = sodium_crypto_generichash('msg');\nvar_dump(bin2hex($q));\n$q = sodium_crypto_generichash('msg', '0123456789abcdef');\nvar_dump(bin2hex($q));\n$q = sodium_crypto_generichash('msg', '0123456789abcdef', 64);\nvar_dump(bin2hex($q));\n$q = sodium_crypto_generichash('msg', '0123456789abcdef0123456789abcdef', 64);\nvar_dump(bin2hex($q));\n$state = sodium_crypto_generichash_init();\n$q = sodium_crypto_generichash_final($state);\nvar_dump(bin2hex($q));\n$state = sodium_crypto_generichash_init();\nsodium_crypto_generichash_update($state, 'm');\nsodium_crypto_generichash_update($state, 'sg');\n$q = sodium_crypto_generichash_final($state);\nvar_dump(bin2hex($q));\n$state = sodium_crypto_generichash_init('0123456789abcdef');\nsodium_crypto_generichash_update($state, 'm');\nsodium_crypto_generichash_update($state, 'sg');\n$q = sodium_crypto_generichash_final($state);\nvar_dump(bin2hex($q));\n$state = sodium_crypto_generichash_init('0123456789abcdef', 64);\nsodium_crypto_generichash_update($state, 'm');\nsodium_crypto_generichash_update($state, 'sg');\n$state2 = '' . $state;\n$q = sodium_crypto_generichash_final($state, 64);\nvar_dump(bin2hex($q));\nsodium_crypto_generichash_update($state2, '2');\n$q = sodium_crypto_generichash_final($state2, 64);\n$exp = bin2hex($q);\nvar_dump($exp);\n$act = bin2hex(\n    sodium_crypto_generichash('msg2', '0123456789abcdef', 64)\n);\nvar_dump($act);\nvar_dump($exp === $act);\ntry {\n    $hash = sodium_crypto_generichash('test', '', 128);\n} catch (SodiumException $ex) {\n    var_dump(true);\n}\n?>")).toMatchSnapshot();
-  });
-});

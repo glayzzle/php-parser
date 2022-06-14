@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/filter/tests/056.phpt
-  it("filter_var() and FILTER_VALIDATE_DOMAIN", function () {
-    expect(parser.parseCode("<?php\n$values = Array(\n'example.com',\n'www.thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com',\n'toolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolongtoolong.com',\n'eauBcFReEmjLcoZwI0RuONNnwU4H9r151juCaqTI5VeIP5jcYIqhx1lh5vV00l2rTs6y7hOp7rYw42QZiq6VIzjcYrRm8gFRMk9U9Wi1grL8Mr5kLVloYLthHgyA94QK3SaXCATklxgo6XvcbXIqAGG7U0KxTr8hJJU1p2ZQ2mXHmp4DhYP8N9SRuEKzaCPcSIcW7uj21jZqBigsLsNAXEzU8SPXZjmVQVtwQATPWeWyGW4GuJhjP4Q8o0.com',\n'kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.kDTvHt1PPDgX5EiP2MwiXjcoWNOhhTuOVAUWJ3TmpBYCC9QoJV114LMYrV3Zl58.CQ1oT5Uq3jJt6Uhy3VH9u3Gi5YhfZCvZVKgLlaXNFhVKB1zJxvunR7SJa.com.',\n'cont-ains.h-yph-en-s.com',\n'..com',\n'ab..cc.dd',\n'a.-bc.com',\n'ab.cd-.com',\n'-.abc.com',\n'abc.-.abc.com',\n'underscore_.example.com',\n'',\n-1,\narray(),\n'\\r\\n',\n);\nforeach ($values as $value) {\n    var_dump(filter_var($value, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME));\n}\nvar_dump(filter_var('_example.com', FILTER_VALIDATE_DOMAIN));\nvar_dump(filter_var('_example.com', FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME));\nvar_dump(filter_var('test_.example.com', FILTER_VALIDATE_DOMAIN));\nvar_dump(filter_var('test_.example.com', FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME));\nvar_dump(filter_var('te_st.example.com', FILTER_VALIDATE_DOMAIN));\nvar_dump(filter_var('te_st.example.com', FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME));\nvar_dump(filter_var('test._example.com', FILTER_VALIDATE_DOMAIN));\nvar_dump(filter_var('test._example.com', FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME));\necho \"Done\\n\";\n?>")).toMatchSnapshot();
-  });
-});

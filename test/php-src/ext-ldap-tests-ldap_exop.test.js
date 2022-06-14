@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/ldap/tests/ldap_exop.phpt
-  it("ldap_exop() and ldap_parse_exop() - EXOP operations", function () {
-    expect(parser.parseCode("<?php\nrequire \"connect.inc\";\n$link = ldap_connect_and_bind($host, $port, $user, $passwd, $protocol_version);\ninsert_dummy_data($link, $base);\nfunction build_reqdata_passwd($user, $oldpw, $newpw)\n{\n    // This is basic and will only work for small strings\n    $hex = '';\n    if (!empty($user)) {\n        $hex .= '80'.sprintf(\"%'.02x\", strlen($user)).bin2hex($user);\n    }\n    if (!empty($oldpw)) {\n        $hex .= '81'.sprintf(\"%'.02x\", strlen($oldpw)).bin2hex($oldpw);\n    }\n    if (!empty($newpw)) {\n        $hex .= '82'.sprintf(\"%'.02x\", strlen($newpw)).bin2hex($newpw);\n    }\n    return hex2bin('30'.sprintf(\"%'.02x\", strlen($hex)/2).$hex);\n}\nfunction extract_genpw($retdata)\n{\n    // Only works for small strings as well\n    return hex2bin(substr(bin2hex($retdata), 4*2));\n}\n$userAPassword = \"oops\";\nvar_dump(\n    ldap_exop($link, LDAP_EXOP_WHO_AM_I, NULL, NULL, $retdata, $retoid),\n    $retdata,\n    $retoid,\n    ldap_exop($link, LDAP_EXOP_WHO_AM_I, NULL, [['oid' => LDAP_CONTROL_PROXY_AUTHZ, 'value' => \"dn:cn=userA,$base\"]], $retdata),\n    $retdata,\n    $r = ldap_exop($link, LDAP_EXOP_WHO_AM_I),\n    ldap_parse_exop($link, $r, $retdata2),\n    $retdata2,\n    test_bind($host, $port, \"cn=userA,$base\", $userAPassword, $protocol_version),\n    $r = ldap_exop($link, LDAP_EXOP_MODIFY_PASSWD, build_reqdata_passwd(\"cn=userA,$base\", $userAPassword, \"\")),\n    ldap_parse_exop($link, $r, $retpwdata, $retpwoid),\n    $genpw = extract_genpw($retpwdata),\n    $retpwoid,\n    test_bind($host, $port, \"cn=userA,$base\", $genpw, $protocol_version)\n);\n?>")).toMatchSnapshot();
-  });
-});

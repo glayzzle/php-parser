@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/sockets/tests/socket_sentto_recvfrom_ipv4_udp.phpt
-  it("Test if socket_recvfrom() receives data sent by socket_sendto() via IPv4 UDP", function () {
-    expect(parser.parseCode("<?php\n$socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);\nif (!$socket) {\n    die('Unable to create AF_INET socket');\n}\nif (!socket_bind($socket, '127.0.0.1', 0)) {\n    die(sprintf(\n        'An error occurred while binding socket: %s',\n        socket_strerror(socket_last_error($socket))));\n}\nsocket_getsockname($socket, $address, $port);\n$msg = \"Ping!\";\n$len = strlen($msg);\n$sent = socket_sendto($socket, $msg, $len, 0, $address, $port);\nif ($sent === false) {\n    die(sprintf(\n        'An error occurred while sending to the socket: %s',\n        socket_strerror(socket_last_error($socket))));\n} else if ($sent != $len) {\n    die(sprintf(\n        '%d bytes have been sent instead of the %d bytes expected',\n        $sent, $len));\n}\n$wants = $len;\n$recvd = 0;\n$buf   = null;\nwhile ($recvd < $len) {\n    $bytes = socket_recvfrom(\n        $socket, $buffering, $wants, 0, $address, $port);\n    if (($bytes === false) && ($errno = socket_last_error($socket))) {\n        if ($errno = SOCKET_EAGAIN) {\n            socket_clear_error($socket);\n            continue;\n        }\n        die(sprintf(\n            'An error occurred while sending to the socket: %s',\n            socket_strerror($errno)));\n    }\n    $recvd += $bytes;\n    $wants -= $bytes;\n    $buf .= $buffering;\n}\nif ($recvd != $len) {\n    die(sprintf(\n        '%d bytes have been received instead of the %d bytes expected',\n        $recvd, $len));\n}\necho \"Received $buf from remote address $address and remote port $port\" . PHP_EOL;\n?>")).toMatchSnapshot();
-  });
-});

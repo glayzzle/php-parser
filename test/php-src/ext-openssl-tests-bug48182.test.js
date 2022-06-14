@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/openssl/tests/bug48182.phpt
-  it("Bug #48182: ssl handshake fails during asynchronous socket connection", function () {
-    expect(parser.parseCode("<?php\n$certFile = __DIR__ . DIRECTORY_SEPARATOR . 'bug48182.pem.tmp';\n$cacertFile = __DIR__ . DIRECTORY_SEPARATOR . 'bug48182-ca.pem.tmp';\n$serverCode = <<<'CODE'\n    $serverUri = \"ssl://127.0.0.1:64321\";\n    $serverFlags = STREAM_SERVER_BIND | STREAM_SERVER_LISTEN;\n    $serverCtx = stream_context_create(['ssl' => [\n        'local_cert' => '%s'\n    ]]);\n    $server = stream_socket_server($serverUri, $errno, $errstr, $serverFlags, $serverCtx);\n    phpt_notify();\n    $client = @stream_socket_accept($server, 1);\n    $data = \"Sending bug48182\\n\" . fread($client, 8192);\n    fwrite($client, $data);\nCODE;\n$serverCode = sprintf($serverCode, $certFile);\n$peerName = 'bug48182';\n$clientCode = <<<'CODE'\n    $serverUri = \"ssl://127.0.0.1:64321\";\n    $clientFlags = STREAM_CLIENT_CONNECT | STREAM_CLIENT_ASYNC_CONNECT;\n    $clientCtx = stream_context_create(['ssl' => [\n        'cafile' => '%s',\n        'peer_name' => '%s'\n    ]]);\n    phpt_wait();\n    $client = stream_socket_client($serverUri, $errno, $errstr, 10, $clientFlags, $clientCtx);\n    $data = \"Sending data over to SSL server in async mode with contents like Hello World\\n\";\n    fwrite($client, $data);\n    echo fread($client, 1024);\nCODE;\n$clientCode = sprintf($clientCode, $cacertFile, $peerName);\necho \"Running bug48182\\n\";\ninclude 'CertificateGenerator.inc';\n$certificateGenerator = new CertificateGenerator();\n$certificateGenerator->saveCaCert($cacertFile);\n$certificateGenerator->saveNewCertAsFileWithKey($peerName, $certFile);\ninclude 'ServerClientTestCase.inc';\nServerClientTestCase::getInstance()->run($clientCode, $serverCode);\n?>")).toMatchSnapshot();
-  });
-});

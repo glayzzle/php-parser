@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/dba/tests/dba_cdb_read.phpt
-  it("DBA CDB handler test (read only)", function () {
-    expect(parser.parseCode("<?php\n    echo \"database handler: cdb\\n\";\n    $handler = 'cdb';\n    $db_file = __DIR__.'/test.cdb';\n    if (($db_file=dba_open($db_file, \"r\", $handler))!==FALSE) {\n        // read key sequence\n        $a = dba_firstkey($db_file);\n        $count= 0;\n        $keys = $a;\n        while($a) {\n            $a = dba_nextkey($db_file);\n            $keys .= $a;\n            $count++;\n        }\n        // display number of entries and key existence\n        echo $count;\n        for ($i=1; $i<8; $i++) {\n            echo dba_exists($i, $db_file) ? \"Y\" : \"N\";\n        }\n        echo \"\\n=\";\n        echo dba_fetch(1, $db_file);\n        echo dba_fetch(2, $db_file);\n        echo dba_fetch(3, $db_file);\n        echo dba_fetch(4, $db_file);\n        echo \"\\n#\";\n        echo dba_fetch(1, $db_file);\n        echo dba_fetch(1, $db_file);\n        echo dba_fetch(2, $db_file);\n        echo dba_fetch(2, $db_file);\n        echo \"\\n?\".$keys;\n        // with skip = 0 dba_fetch must fetch the first result\n        echo \"\\n#\";\n        $skip = array();\n        for ($i=0; $i < strlen($keys); $i++) {\n            $key = substr($keys, $i, 1);\n            $skip[$key] = 0;\n            echo dba_fetch($key, $db_file);\n        }\n        echo \"\\n=\";\n        for ($i=0; $i < strlen($keys); $i++) {\n            $key = substr($keys, $i, 1);\n            echo dba_fetch($key, $skip[$key], $db_file);\n            $skip[$key]++;\n        }\n        dba_close($db_file);\n    } else {\n        echo \"Error creating database\\n\";\n    }\n?>")).toMatchSnapshot();
-  });
-});

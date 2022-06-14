@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/bcmath/tests/str2num_formatting.phpt
-  it("bcmath lib arguments formatting", function () {
-    expect(parser.parseCode("<?php\necho bcadd(\"1\", \"2\"),\"\\n\";\necho bcadd(\"1.1\", \"2\", 2),\"\\n\";\necho bcadd(\"\", \"2\", 2),\"\\n\";\necho bcadd(\"+0\", \"2\"), \"\\n\";\necho bcadd(\"-0\", \"2\"), \"\\n\";\necho \"\\n\";\ntry {\n    echo bcadd(\" 0\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bcadd(\"1e1\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bcadd(\"1,1\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bcadd(\"Hello\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bcadd(\"1 1\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bcadd(\"1.a\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\necho \"\\n\";\necho bccomp(\"1\", \"2\"),\"\\n\";\necho bccomp(\"1.1\", \"2\", 2),\"\\n\";\necho bccomp(\"\", \"2\"),\"\\n\";\necho bccomp(\"+0\", \"2\"), \"\\n\";\necho bccomp(\"-0\", \"2\"), \"\\n\";\necho \"\\n\";\ntry {\n    echo bccomp(\" 0\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bccomp(\"1e1\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bccomp(\"1,1\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bccomp(\"Hello\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\ntry {\n    echo bccomp(\"1 1\", \"2\");\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . PHP_EOL;\n}\n?>")).toMatchSnapshot();
-  });
-});

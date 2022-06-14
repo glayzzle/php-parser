@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mbstring/tests/big5_encoding.phpt
-  it("Exhaustive test of verification and conversion of Big5 text", function () {
-    expect(parser.parseCode("<?php\ninclude('encoding_tests.inc');\nsrand(1000); // Make results consistent\nmb_substitute_character(0x25); // '%'\nreadConversionTable(__DIR__ . '/data/BIG5.txt', $toUnicode, $fromUnicode);\n// Non-reversible mappings (two different BIG5 codepoints map to same Unicode codepoint)\n$fromUnicode[\"\\x25\\x50\"] = \"\\xA2\\xA4\";\n$fromUnicode[\"\\x25\\x5E\"] = \"\\xA2\\xA5\";\n$fromUnicode[\"\\x25\\x61\"] = \"\\xA2\\xA7\";\n$fromUnicode[\"\\x25\\x6A\"] = \"\\xA2\\xA6\";\n$fromUnicode[\"\\x25\\x6D\"] = \"\\xA2\\x7E\";\n$fromUnicode[\"\\x25\\x6E\"] = \"\\xA2\\xA1\";\n$fromUnicode[\"\\x25\\x6F\"] = \"\\xA2\\xA3\";\n$fromUnicode[\"\\x25\\x70\"] = \"\\xA2\\xA2\";\nfindInvalidChars($toUnicode, $invalid, $truncated);\ntestAllValidChars($toUnicode, 'BIG5', 'UTF-16BE', false);\ntestAllInvalidChars($invalid, $toUnicode, 'BIG5', 'UTF-16BE', \"\\x00%\");\ntestTruncatedChars($truncated, 'BIG5', 'UTF-16BE', \"\\x00%\");\necho \"Tested BIG5 -> UTF-16BE\\n\";\ntestAllValidChars($fromUnicode, 'UTF-16BE', 'BIG5', false);\nfindInvalidChars($fromUnicode, $invalid, $unused, array_fill_keys(range(0,0xFF), 2));\nconvertAllInvalidChars($invalid, $fromUnicode, 'UTF-16BE', 'BIG5', '%');\necho \"Tested UTF-16BE -> BIG5\\n\";\n// Test \"long\" illegal character markers\nmb_substitute_character(\"long\");\nconvertInvalidString(\"\\x80\", \"%\", \"BIG5\", \"UTF-8\");\nconvertInvalidString(\"\\xB0\\x9F\", \"%\", \"BIG5\", \"UTF-8\");\nconvertInvalidString(\"\\xA3\\xED\", \"%\", \"BIG5\", \"UTF-8\");\nconvertInvalidString(\"\\x76\\x54\", \"U+7654\", \"UTF-16BE\", \"BIG5\");\necho \"Done!\\n\";\n?>")).toMatchSnapshot();
-  });
-});

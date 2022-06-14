@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/filter/tests/bug47435.phpt
-  it("Bug #47435 (FILTER_FLAG_NO_PRIV_RANGE and FILTER_FLAG_NO_RES_RANGE don't work with ipv6)", function () {
-    expect(parser.parseCode("<?php\nvar_dump(filter_var(\"FC00::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"FC00::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE));\nvar_dump(filter_var(\"::\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"::\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"fe80:5:6::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"fe80:5:6::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"2001:0db8::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"2001:0db8::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"2001:0010::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"2001:0010::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"240b:0010::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"240b:0010::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"5f::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"5f::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\nvar_dump(filter_var(\"3ff3::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6));\nvar_dump(filter_var(\"3ff3::1\", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_RES_RANGE));\n?>")).toMatchSnapshot();
-  });
-});

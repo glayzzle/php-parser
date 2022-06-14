@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/create_path_error.phpt
-  it("Phar: create with illegal path", function () {
-    expect(parser.parseCode("<?php\n$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';\n$pname = 'phar://' . $fname;\n@unlink($fname);\nfile_put_contents($pname . '/a.php?', \"query\");\nfile_put_contents($pname . '/b.php?bla', \"query\");\nvar_dump(file_get_contents($pname . '/a.php'));\nvar_dump(file_get_contents($pname . '/b.php'));\nfunction error_handler($errno, $errmsg)\n{\n    echo \"Error: $errmsg\";\n}\nset_error_handler('error_handler');\n$count = 0;\n$checks = array(\n    '/', '.', '../', 'a/..', 'a/', 'b//a.php',\n    \"Font\\xE5\\x84\\xB7\\xE9\\xBB\\x91pro.ttf\", //two valid multi-byte characters\n    \"\\xF0\\x9F\\x98\\x8D.ttf\", // valid 4 byte char - smiling face with heart-shaped eyes\n    \"Font\\xE9\\xBBpro.ttf\", //Invalid multi-byte character - missing last byte\n    \"Font\\xBB\\x91pro.ttf\",   //Invalid multi-byte character - missing first byte\n    \"Font\\xC0\\xAFpro.ttf\",   //Invalid multi-byte character - invalid first byte\n    \"Font\\xF0\\x80\\x90\\x90pro.ttf\",   //Invalid multi-byte character - surrogate pair code point\n    \"\\xFC\\x81\\x81\\x81\\x81pro.ttf\", //RFC 3629 limited char points to 0000-10FFFF aka 5 byte utf-8 not valid\n);\nforeach($checks as $check)\n{\n    $count++;\n    echo \"$count:\";\n    file_put_contents($pname . '/' . $check, \"error\");\n    echo \"\\n\";\n}\n$phar = new Phar($fname);\n$checks = array(\"a\\0\");\nforeach($checks as $check)\n{\n    try\n    {\n        $phar[$check] = 'error';\n    }\n    catch (ValueError $e)\n    {\n        echo 'Exception: ' . $e->getMessage() . \"\\n\";\n    }\n}\n?>")).toMatchSnapshot();
-  });
-});

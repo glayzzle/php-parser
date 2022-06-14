@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/spl/tests/spl_autoload_001.phpt
-  it("SPL: spl_autoload() and friends", function () {
-    expect(parser.parseCode("<?php\necho \"===EMPTY===\\n\";\nvar_dump(spl_autoload_extensions());\nspl_autoload(\"TestClass\");\nif (!class_exists(\"TestClass\")) {\n    echo \"Class TestClass could not be loaded\\n\";\n}\n$test_exts = array(NULL, \"1\", \".inc,,.php.inc\", \"\");\nforeach($test_exts as $exts) {\n    echo \"===($exts)===\\n\";\n    spl_autoload(\"TestClass\", $exts);\n    if (!class_exists(\"TestClass\")) {\n        echo \"Class TestClass could not be loaded\\n\";\n    }\n}\nspl_autoload_extensions(\".inc,.php.inc\");\nspl_autoload(\"TestClass\");\nif (!class_exists(\"TestClass\")) {\n    echo \"Class TestClass could not be loaded\\n\";\n}\nfunction TestFunc1($classname)\n{\n    echo __METHOD__ . \"($classname)\\n\";\n}\nfunction TestFunc2($classname)\n{\n    echo __METHOD__ . \"($classname)\\n\";\n}\necho \"===SPL_AUTOLOAD()===\\n\";\nspl_autoload_register();\nvar_dump(spl_autoload_extensions(\".inc\"));\nvar_dump(class_exists(\"TestClass\", true));\necho \"===REGISTER===\\n\";\nspl_autoload_unregister(\"spl_autoload\");\nspl_autoload_register(\"TestFunc1\");\nspl_autoload_register(\"TestFunc2\");\nspl_autoload_register(\"TestFunc2\"); /* 2nd call ignored */\nspl_autoload_extensions(\".inc,.class.inc\"); /* we do not have spl_autoload_registered yet */\nvar_dump(class_exists(\"TestClass\", true));\necho \"===LOAD===\\n\";\nspl_autoload_register(\"spl_autoload\");\nvar_dump(class_exists(\"TestClass\", true));\necho \"===NOFUNCTION===\\n\";\ntry {\n    spl_autoload_register(\"unavailable_autoload_function\");\n} catch(\\TypeError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n?>")).toMatchSnapshot();
-  });
-});

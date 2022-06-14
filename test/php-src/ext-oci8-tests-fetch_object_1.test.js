@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/oci8/tests/fetch_object_1.phpt
-  it("oci_fetch_object()", function () {
-    expect(parser.parseCode("<?php\nrequire(__DIR__.'/connect.inc');\n// Initialization\n$stmtarray = array(\n    \"drop table fetch_object_tab\",\n    \"create table fetch_object_tab (\\\"caseSensitive\\\" number, secondcol varchar2(20), anothercol char(15))\",\n    \"insert into fetch_object_tab values (123, '1st row col2 string', '1 more text')\",\n    \"insert into fetch_object_tab values (456, '2nd row col2 string', '2 more text')\",\n    \"insert into fetch_object_tab values (789, '3rd row col2 string', '3 more text')\",\n);\noci8_test_sql_execute($c, $stmtarray);\n// Run Test\necho \"Test 1\\n\";\nif (!($s = oci_parse($c, 'select * from fetch_object_tab'))) {\n    die(\"oci_parse(select) failed!\\n\");\n}\nif (!oci_execute($s)) {\n    die(\"oci_execute(select) failed!\\n\");\n}\nwhile ($row = oci_fetch_object($s)) {\n    var_dump($row);\n}\necho \"Test 2\\n\";\nif (!($s = oci_parse($c, 'select * from fetch_object_tab'))) {\n    die(\"oci_parse(select) failed!\\n\");\n}\nif (!oci_execute($s)) {\n    die(\"oci_execute(select) failed!\\n\");\n}\nwhile ($row = oci_fetch_object($s)) {\n    echo $row->caseSensitive . \"\\n\";\n    echo $row->SECONDCOL . \"\\n\";\n    echo $row->ANOTHERCOL . \"\\n\";\n}\necho \"Test 3\\n\";\nif (!($s = oci_parse($c, 'select * from fetch_object_tab where rownum < 2 order by \"caseSensitive\"'))) {\n    die(\"oci_parse(select) failed!\\n\");\n}\nif (!oci_execute($s)) {\n    die(\"oci_execute(select) failed!\\n\");\n}\n$row = oci_fetch_object($s);\necho $row->caseSensitive . \"\\n\";\necho $row->CASESENSITIVE . \"\\n\";\n// Clean up\n$stmtarray = array(\n    \"drop table fetch_object_tab\"\n);\noci8_test_sql_execute($c, $stmtarray);\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/spl/tests/iterator_004.phpt
-  it("SPL: SeekableIterator and string keys", function () {
-    expect(parser.parseCode("<?php\nclass NumericArrayIterator implements Iterator\n{\n    protected $a;\n    protected $i;\n    public function __construct($a)\n    {\n        echo __METHOD__ . \"\\n\";\n        $this->a = $a;\n    }\n    public function rewind(): void\n    {\n        echo __METHOD__ . \"\\n\";\n        $this->i = 0;\n    }\n    public function valid(): bool\n    {\n        $ret = $this->i < count($this->a);\n        echo __METHOD__ . '(' . ($ret ? 'true' : 'false') . \")\\n\";\n        return $ret;\n    }\n    public function key(): mixed\n    {\n        echo __METHOD__ . \"\\n\";\n        return $this->i;\n    }\n    public function current(): mixed\n    {\n        echo __METHOD__ . \"\\n\";\n        return $this->a[$this->i];\n    }\n    public function next(): void\n    {\n        echo __METHOD__ . \"\\n\";\n        $this->i++;\n    }\n}\nclass SeekableNumericArrayIterator extends NumericArrayIterator implements SeekableIterator\n{\n    public function seek($index): void\n    {\n        if ($index < count($this->a)) {\n            $this->i = $index;\n        }\n        echo __METHOD__ . '(' . $index . \")\\n\";\n    }\n}\n$a = array(1, 2, 3, 4, 5);\nforeach (new LimitIterator(new NumericArrayIterator($a), 1, 3) as $v)\n{\n    print \"$v\\n\";\n}\necho \"===SEEKABLE===\\n\";\n$a = array(1, 2, 3, 4, 5);\nforeach(new LimitIterator(new SeekableNumericArrayIterator($a), 1, 3) as $v)\n{\n    print \"$v\\n\";\n}\necho \"===SEEKING===\\n\";\n$a = array(1, 2, 3, 4, 5);\n$l = new LimitIterator(new SeekableNumericArrayIterator($a));\nfor($i = 1; $i < 4; $i++)\n{\n    $l->seek($i);\n    print $l->current() . \"\\n\";\n}\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/oci8/tests/conn_attr_2.phpt
-  it("Set and get of connection attributes across persistent connections and sysdba connection.", function () {
-    expect(parser.parseCode("<?php\n$testuser     = 'testuser_attr_2';  // Used in conn_attr.inc\n$testpassword = 'testuser';\nrequire(__DIR__.\"/conn_attr.inc\");\n$attr_array = array('MODULE','ACTION','CLIENT_INFO','CLIENT_IDENTIFIER');\necho\"**Set values using pconnect-1**\\n\";\nvar_dump($pc1 = oci_pconnect($testuser,$testpassword,$dbase));\nforeach($attr_array as $attr) {\n    set_attr($pc1,$attr,100);\n}\n//  using pc1 again\necho\"\\n**Get values using pconnect-2**\\n\";\nvar_dump($pc3 = oci_pconnect($testuser,$testpassword,$dbase));\nforeach($attr_array as $attr) {\n    get_attr($pc3,$attr);\n}\n// Get with different pconnect\necho\"\\n**Get values using pconnect-3**\\n\";\nvar_dump($pc2 = oci_pconnect($testuser,$testpassword,$dbase,'UTF8'));\nforeach($attr_array as $attr) {\n    get_attr($pc2,$attr);\n}\noci_close($pc1);\noci_close($pc2);\noci_close($pc3);\n// Re-open a persistent connection and check for the attr values.\necho \"\\n**Re-open a pconnect()**\\n\";\nvar_dump($pc4 = oci_pconnect($testuser,$testpassword,$dbase));\nforeach($attr_array as $attr) {\n    get_attr($pc4,$attr);\n}\noci_close($pc4);\n// Test with SYSDBA connection.\necho \"\\n**Test with SYSDBA connection**\\n\";\n$sys_c1 = @oci_pconnect($testuser,$testpassword,$dbase,false,OCI_SYSDBA);\nvar_dump($sys_c1);\nif (!$sys_c1) {\n    $e = oci_error();\n    if ($e['code'] != 1031 && $e['code'] != 1017) {\n        var_dump($e);\n    }\n} else {\n    set_attr($sys_c1,'ACTION',10);\n    get_sys_attr($sys_c1,'ACTION');\n    get_attr($sys_c1,'ACTION');\n    oci_close($sys_c1);\n}\nclean_up($c);\necho \"Done\\n\";\n?>")).toMatchSnapshot();
-  });
-});

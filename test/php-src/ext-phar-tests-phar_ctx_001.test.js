@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/phar_ctx_001.phpt
-  it("Phar context", function () {
-    expect(parser.parseCode("<?php\n$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';\n$pname = 'phar://' . $fname;\n$file = '<?php __HALT_COMPILER(); ?>';\n$files = array();\n$files['a'] = 'a';\n$files['b'] = 'b';\n$files['c'] = 'c';\ninclude 'files/phar_test.inc';\n$phar = new Phar($fname);\nvar_dump(file_get_contents($pname . '/a'));\nvar_dump($phar['a']->isCompressed());\nvar_dump(file_get_contents($pname . '/b'));\nvar_dump($phar['b']->isCompressed());\nvar_dump(file_get_contents($pname . '/c'));\nvar_dump($phar['c']->isCompressed());\n$context = stream_context_create(array('phar'=> array('compress'=>Phar::GZ, 'metadata' => array(2, 'hi' => 3))));\n$context2 = stream_context_create(array('phar' => array('metadata' => array(4))));\nfile_put_contents($pname . '/a', 'new a', 0); // no compression\nfile_put_contents($pname . '/b', 'new b', 0, $context);\nfile_put_contents($pname . '/d', 'new d', 0, $context2);\n$phar = new Phar($fname);\nvar_dump(file_get_contents($pname . '/a'));\nvar_dump($phar['a']->isCompressed());\nvar_dump($phar['a']->getMetaData());\nvar_dump(file_get_contents($pname . '/b'));\nvar_dump($phar['b']->isCompressed());\nvar_dump($phar['b']->getMetaData());\nvar_dump(file_get_contents($pname . '/c'));\nvar_dump($phar['c']->isCompressed());\nvar_dump($phar['c']->getMetaData());\nvar_dump(file_get_contents($pname . '/d'));\nvar_dump($phar['d']->isCompressed());\nvar_dump($phar['d']->getMetaData());\n$context2 = stream_context_create(array('phar' => array('metadata' => array(4))));\n$fp = fopen($pname . '/b', 'r+', 0, $context2);\nfclose($fp);\n?>\n==AFTER==\n<?php\nvar_dump(file_get_contents($pname . '/b'));\nvar_dump($phar['b']->isCompressed());\nvar_dump($phar['b']->getMetaData());\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/soap/tests/bugs/bug32941.phpt
-  it("Bug #32941 (Sending structured exception kills a php)", function () {
-    expect(parser.parseCode("<?php\nclass TestSoapClient extends SoapClient {\n  function __doRequest($request, $location, $action, $version, $one_way = 0): ?string {\n    return <<<EOF\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<soapenv:Envelope\nxmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\nxmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\nxmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n    <soapenv:Body>\n        <soapenv:Fault>\n            <faultcode>soapenv:Server.userException</faultcode>\n            <faultstring>service.EchoServiceException</faultstring>\n            <detail>\n                <service.EchoServiceException xsi:type=\"ns1:EchoServiceException\" xmlns:ns1=\"urn:service.EchoService\">\n                    <intParameter xsi:type=\"xsd:int\">105</intParameter>\n                    <parameter xsi:type=\"soapenc:string\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\">string param</parameter>\n                </service.EchoServiceException>\n                <ns2:hostname xmlns:ns2=\"http://xml.apache.org/axis/\">steckovic</ns2:hostname>\n            </detail>\n        </soapenv:Fault>\n    </soapenv:Body>\n</soapenv:Envelope>\nEOF;\n    }\n}\nini_set(\"soap.wsdl_cache_enabled\", 1);\n$client = new TestSoapClient(__DIR__.'/bug32941.wsdl', array(\"trace\" => 1, 'exceptions' => 0));\n$ahoj = $client->echoString('exception');\n$client = new TestSoapClient(__DIR__.'/bug32941.wsdl', array(\"trace\" => 1, 'exceptions' => 0));\n$ahoj = $client->echoString('exception');\necho \"ok\\n\";\n?>")).toMatchSnapshot();
-  });
-});

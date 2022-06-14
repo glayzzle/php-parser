@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mbstring/tests/mb_strripos_empty_needle.phpt
-  it("Test mb_strripos() function : with empty needle", function () {
-    expect(parser.parseCode("<?php\nmb_internal_encoding('UTF-8');\n$string_ascii = 'abc def';\n// Japanese string in UTF-8\n$string_mb = \"日本語テキストです。01234５６７８９。\";\necho \"\\n-- ASCII string without offset --\\n\";\nvar_dump(mb_strripos($string_ascii, ''));\necho \"\\n-- ASCII string with in range positive offset --\\n\";\nvar_dump(mb_strripos($string_ascii, '', 2));\necho \"\\n-- ASCII string with in range negative offset --\\n\";\nvar_dump(mb_strripos($string_ascii, '', -2));\necho \"\\n-- ASCII string with out of bound positive offset --\\n\";\ntry {\n    var_dump(mb_strripos($string_ascii, '', 15));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\necho \"\\n-- ASCII string with out of bound negative offset --\\n\";\ntry {\n    var_dump(mb_strripos($string_ascii, '', -15));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\necho \"\\n-- Multi-byte string without offset --\\n\";\nvar_dump(mb_strripos($string_mb, ''));\necho \"\\n-- Multi-byte string with in range positive offset --\\n\";\nvar_dump(mb_strripos($string_mb, '', 2));\necho \"\\n-- Multi-byte string with in range negative offset --\\n\";\nvar_dump(mb_strripos($string_mb, '', -2));\necho \"\\n-- Multi-byte string with out of bound positive offset --\\n\";\ntry {\n    var_dump(mb_strripos($string_mb, '', 150));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\necho \"\\n-- Multi-byte string with out of bound negative offset --\\n\";\ntry {\n    var_dump(mb_strripos($string_mb, '', -150));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/spl/tests/bug69264.phpt
-  it("Bug #69264 (__debugInfo() ignored while extending SPL classes)", function () {
-    expect(parser.parseCode("<?php\nclass MyFileInfo extends SplFileInfo {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyDoublyLinkedList extends SplDoublyLinkedList {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyObjectStorage extends SplObjectStorage {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyMultipleIterator extends MultipleIterator {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyArrayObject extends ArrayObject {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyArrayIterator extends ArrayIterator {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyMaxHeap extends SplMaxHeap {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nclass MyPriorityQueue extends SplPriorityQueue {\n    public function __debugInfo(): array {\n        return ['child' => 42, 'parent' => count(parent::__debugInfo())];\n    }\n}\nvar_dump(\n    new MyFileInfo(__FILE__),\n    new MyDoublyLinkedList(),\n    new MyObjectStorage(),\n    new MyMultipleIterator(),\n    new MyArrayObject(),\n    new MyArrayIterator(),\n    new MyMaxHeap(),\n    new MyPriorityQueue(),\n);\n?>")).toMatchSnapshot();
-  });
-});

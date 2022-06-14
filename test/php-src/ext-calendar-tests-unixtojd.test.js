@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/calendar/tests/unixtojd.phpt
-  it("unixtojd()", function () {
-    expect(parser.parseCode("<?php\n// this line has no impact on test output on Windows\nputenv('TZ=UTC');\n// getenv('TZ') returns 'UTC' here\n// putenv (basic_functions.c) does call tzset() when the env var being put is 'TZ'\n//      -adding a call direct to GetEnvironmentVariableA just before tzset() is called to check the value of 'TZ' returns 'UTC'\n// putting a call to date_default_timezone_set() here doesn't help\n//\n// on Windows, the only thing that gets this test to pass is to put TZ=UTC in--ENV-- section\n// \t\t-since putenv() is written to call tzset() when env var is TZ, I assume that putenv(\"TZ=UTC\") is intended to work\n//\t\t\tand should work on all platforms(including Windows).\n// easter_date.phpt passes\n//\t\t-doesn't use --ENV-- section\n//\t\t-uses --INI-- section with date.timezone=UTC\n//\t\t-uses putenv('TZ=UTC')\n// date.timezone=UTC\n//\t\t-if omitted from easter_date.phpt, outputs DATE_TZ_ERRMSG warning\n//\t\t\t-easter_date() calls mktime() and localtime()\n//\t\t\t-whereas unixtojd(1000000000) calls localtime(1000000000)\n//\t\t-if omitted from unixtojd.phpt, does NOT output DATE_TZ_ERRMSG\n//\n// unixtojd() calls php_localtime_r() which for Pacific timezone systems, returns a time -8 hours\n//\t\t-this incorrect localtime is passed to the julian date conversion (GregorianToSDN) function which works (probably correctly)\n//\t\t\tbut returns -1 day from expected because its input is -1 from expected\necho unixtojd(). \"\\n\";\necho unixtojd(40000). \"\\n\";\necho unixtojd(1000000000). \"\\n\";\necho unixtojd(1152459009). \"\\n\";\n?>")).toMatchSnapshot();
-  });
-});

@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/date/tests/date_sunset_variation7.phpt
-  it("Test date_sunset() function : usage variation -  Checking sunrise for consecutive days in specific timezone", function () {
-    expect(parser.parseCode("<?php\necho \"*** Testing date_sunset() : usage variation ***\\n\";\n//Timezones with required data for date_sunrise\n$inputs = array (\n        //Timezone with Latitude, Longitude and GMT offset\n        \"Pacific/Samoa\" => array (\"Latitude\" => -14.24, \"Longitude\" => -170.72, \"GMT\" => -11),\n        \"US/Alaska\" => array (\"Latitude\" => 61, \"Longitude\" => -150 , \"GMT\" => -9),\n        \"America/Chicago\" => array (\"Latitude\" => 41.85, \"Longitude\" => -87.65 , \"GMT\" => -5),\n        \"America/Montevideo\" => array (\"Latitude\" => -34.88, \"Longitude\" => -56.18 , \"GMT\" => -3),\n        \"Africa/Casablanca\" => array (\"Latitude\" => 33.65, \"Longitude\" => \"-7.58\", \"GMT\" => 0),\n        \"Europe/Moscow\" => array (\"Latitude\" => 55.75, \"Longitude\" => 37.58, \"GMT\" => 4),\n        \"Asia/Hong_Kong\" => array (\"Latitude\" => 22.28, \"Longitude\" => 114.15 , \"GMT\" => 8),\n        \"Australia/Brisbane\" => array (\"Latitude\" => -27.46, \"Longitude\" => 153.2 , \"GMT\" => 10),\n        \"Pacific/Wallis\" => array (\"Latitude\" => -13.3, \"Longitude\" => -176.16, \"GMT\" => 12),\n);\nforeach($inputs as $timezone => $value) {\n     echo \"\\n--$timezone--\\n\";\n     date_default_timezone_set($timezone);\n     $time = mktime(8, 8, 8, 8, 11, 2008);\n     var_dump( date_sunset($time, SUNFUNCS_RET_STRING, $value[\"Latitude\"], $value[\"Longitude\"], 90, $value[\"GMT\"] ));\n     $time = mktime(8, 8, 8, 8, 12, 2008);\n     var_dump( date_sunset($time, SUNFUNCS_RET_STRING, $value[\"Latitude\"], $value[\"Longitude\"], 90, $value[\"GMT\"]) );\n}\n?>")).toMatchSnapshot();
-  });
-});

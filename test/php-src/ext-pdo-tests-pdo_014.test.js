@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/pdo/tests/pdo_014.phpt
-  it("PDO Common: PDOStatement SPL iterator", function () {
-    expect(parser.parseCode("<?php\nif (getenv('REDIR_TEST_DIR') === false) putenv('REDIR_TEST_DIR='.__DIR__ . '/../../pdo/tests/');\nrequire_once getenv('REDIR_TEST_DIR') . 'pdo_test.inc';\n$db = PDOTest::factory();\n$db->exec('CREATE TABLE test(id int NOT NULL PRIMARY KEY, val VARCHAR(10), grp VARCHAR(10))');\n$db->exec('INSERT INTO test VALUES(1, \\'A\\', \\'Group1\\')');\n$db->exec('INSERT INTO test VALUES(2, \\'B\\', \\'Group2\\')');\n$SELECT = 'SELECT val, grp FROM test';\nclass Test\n{\n    function __construct($name = 'N/A')\n    {\n        echo __METHOD__ . \"($name)\\n\";\n    }\n}\n$stmt = $db->query($SELECT, PDO::FETCH_CLASS, 'Test', array('WOW'));\n$it = new IteratorIterator($stmt); /* check if we can convert that thing */\n/*** HINT: If YOU plan to do so remember not to call rewind() -> see below ***/\nforeach($it as $data)\n{\n    var_dump($data);\n}\n$it->next();              /* must be allowed */\nvar_dump($it->current()); /* must return NULL */\nvar_dump($it->valid());   /* must return false */\nclass PDOStatementAggregate extends PDOStatement implements IteratorAggregate\n{\n    private function __construct()\n    {\n        echo __METHOD__ . \"\\n\";\n        $this->setFetchMode(PDO::FETCH_NUM);\n        /* default fetch mode is BOTH, so we see if the ctor can overwrite that */\n    }\n    function getIterator(): Iterator\n    {\n        echo __METHOD__ . \"\\n\";\n        $this->execute();\n        return new IteratorIterator($this, 'PDOStatement');\n    }\n}\n$stmt = $db->prepare($SELECT, array(PDO::ATTR_STATEMENT_CLASS=>array('PDOStatementAggregate')));\nforeach($stmt as $data)\n{\n    var_dump($data);\n}\n?>")).toMatchSnapshot();
-  });
-});

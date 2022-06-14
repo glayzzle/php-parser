@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/mysqli/tests/006.phpt
-  it("mysqli fetch long values", function () {
-    expect(parser.parseCode("<?php\n    require_once(\"connect.inc\");\n    /*** test mysqli_connect 127.0.0.1 ***/\n    $link = my_mysqli_connect($host, $user, $passwd, $db, $port, $socket);\n    if (!mysqli_query($link, \"SET sql_mode=''\"))\n        printf(\"[001] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    if (!mysqli_query($link,\"DROP TABLE IF EXISTS test_bind_fetch\"))\n        printf(\"[002] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    $rc = mysqli_query($link,\"CREATE TABLE test_bind_fetch(c1 int unsigned,\n                                                    c2 int unsigned,\n                                                    c3 int,\n                                                    c4 int,\n                                                    c5 int,\n                                                    c6 int unsigned,\n                                                    c7 int) ENGINE=\" . $engine);\n    if (!$rc)\n        printf(\"[003] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    if (!mysqli_query($link, \"INSERT INTO test_bind_fetch VALUES (-23,35999,NULL,-500,-9999999,-0,0)\"))\n        printf(\"[004] [%d] %s\\n\", mysqli_errno($link), mysqli_error($link));\n    $stmt = mysqli_prepare($link, \"SELECT * FROM test_bind_fetch\");\n    mysqli_stmt_bind_result($stmt, $c1, $c2, $c3, $c4, $c5, $c6, $c7);\n    mysqli_stmt_execute($stmt);\n    mysqli_stmt_fetch($stmt);\n    $test = array($c1,$c2,$c3,$c4,$c5,$c6,$c7);\n    var_dump($test);\n    mysqli_stmt_close($stmt);\n    mysqli_query($link, \"DROP TABLE IF EXISTS test_bind_fetch\");\n    mysqli_close($link);\n    print \"done!\";\n?>")).toMatchSnapshot();
-  });
-});

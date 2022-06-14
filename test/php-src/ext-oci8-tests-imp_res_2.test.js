@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/oci8/tests/imp_res_2.phpt
-  it("Oracle Database 12c Implicit Result Sets: Zero Rows", function () {
-    expect(parser.parseCode("<?php\nrequire(__DIR__.'/connect.inc');\n// Initialization\n$stmtarray = array(\n    \"create or replace procedure imp_res_2_proc_a as\n      c1 sys_refcursor;\n    begin\n      open c1 for select * from dual where 1 = 0;\n      dbms_sql.return_result(c1);\n    end;\",\n    \"create or replace procedure imp_res_2_proc_b as\n      c1 sys_refcursor;\n    begin\n      open c1 for select * from dual;\n      dbms_sql.return_result(c1);\n      open c1 for select * from dual where 1 = 0;\n      dbms_sql.return_result(c1);\n    end;\",\n    \"create or replace procedure imp_res_2_proc_c as\n      c1 sys_refcursor;\n    begin\n      open c1 for select * from dual where 1 = 0;\n      dbms_sql.return_result(c1);\n      open c1 for select * from dual;\n      dbms_sql.return_result(c1);\n    end;\"\n);\noci8_test_sql_execute($c, $stmtarray);\n// Run Test\necho \"Test 1\\n\";\n$s = oci_parse($c, \"begin imp_res_2_proc_a(); end;\");\noci_execute($s);\nwhile (($row = oci_fetch_row($s)) != false)\n    var_dump($row);\necho \"Test 2\\n\";\n$s = oci_parse($c, \"begin imp_res_2_proc_b(); end;\");\noci_execute($s);\nwhile (($row = oci_fetch_row($s)) != false)\n    var_dump($row);\necho \"Test 2\\n\";\n$s = oci_parse($c, \"begin imp_res_2_proc_c(); end;\");\noci_execute($s);\nwhile (($row = oci_fetch_row($s)) != false)\n    var_dump($row);\n// Clean up\n$stmtarray = array(\n    \"drop procedure imp_res_2_proc_a\",\n    \"drop procedure imp_res_2_proc_b\",\n    \"drop procedure imp_res_2_proc_c\"\n);\noci8_test_sql_execute($c, $stmtarray);\n?>")).toMatchSnapshot();
-  });
-});

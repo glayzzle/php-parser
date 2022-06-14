@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/sockets/tests/mcast_ipv4_send_error.phpt
-  it("Multicast support: IPv4 send options with unusual values", function () {
-    expect(parser.parseCode("<?php\n$domain = AF_INET;\n$level = IPPROTO_IP;\n$s = socket_create($domain, SOCK_DGRAM, SOL_UDP) or die(\"err\");\necho \"Setting IP_MULTICAST_LOOP with 256\\n\";\n//if we had a simple cast to unsigned char, this would be the same as 0\n$r = socket_set_option($s, $level, IP_MULTICAST_LOOP, 256);\nvar_dump($r);\n$r = socket_get_option($s, $level, IP_MULTICAST_LOOP);\nvar_dump($r);\necho \"\\n\";\necho \"Setting IP_MULTICAST_LOOP with false\\n\";\n//should convert to (unsigned char)0\n$r = socket_set_option($s, $level, IP_MULTICAST_LOOP, false);\nvar_dump($r);\n$r = socket_get_option($s, $level, IP_MULTICAST_LOOP);\nvar_dump($r);\necho \"\\n\";\necho \"Setting IP_MULTICAST_TTL with 256\\n\";\n//if we had a simple cast to unsigned char, this would be the same as 0\ntry {\n    $r = socket_set_option($s, $level, IP_MULTICAST_TTL, 256);\n    var_dump($r);\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n$r = socket_get_option($s, $level, IP_MULTICAST_TTL);\nvar_dump($r);\necho \"\\n\";\necho \"Setting IP_MULTICAST_TTL with \\\"254\\\"\\n\";\n$r = socket_set_option($s, $level, IP_MULTICAST_TTL, \"254\");\nvar_dump($r);\n$r = socket_get_option($s, $level, IP_MULTICAST_TTL);\nvar_dump($r);\necho \"\\n\";\necho \"Setting IP_MULTICAST_TTL with -1\\n\";\n//should give error, not be the same as 255\ntry {\n    $r = socket_set_option($s, $level, IP_MULTICAST_TTL, -1);\n    var_dump($r);\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n$r = socket_get_option($s, $level, IP_MULTICAST_TTL);\nvar_dump($r);\necho \"\\n\";\n?>")).toMatchSnapshot();
-  });
-});

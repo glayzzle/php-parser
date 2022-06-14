@@ -1,9 +1,0 @@
-// eslint-disable prettier/prettier
-const parser = require("../main");
-
-describe("php-src tests", function () {
-  // ext/phar/tests/phar_stub.phpt
-  it("Phar::setStub()", function () {
-    expect(parser.parseCode("<?php\n$fname = __DIR__ . '/' . basename(__FILE__, '.php') . '.phar.php';\n$pname = 'phar://' . $fname;\n$file = '<?php echo \"first stub\\n\"; __HALT_COMPILER(); ?>';\n$files = array();\n$files['a'] = 'a';\n$files['b'] = 'b';\n$files['c'] = 'c';\ninclude 'files/phar_test.inc';\n$file = '<?php echo \"first stub\\n\"; __HALT_COMPILER(); ?>';\n$fp = fopen($fname, 'rb');\n//// 1\necho fread($fp, strlen($file)) . \"\\n\";\nfclose($fp);\n$phar = new Phar($fname);\n$file = '<?php echo \"second stub\\n\"; __HALT_COMPILER(); ?>';\n//// 2\n$phar->setStub($file);\n$fp = fopen($fname, 'rb');\necho fread($fp, strlen($file)) . \"\\n\";\nfclose($fp);\n$fname2 = __DIR__ . '/' . basename(__FILE__, '.php') . '.phartmp.php';\n$file = '<?php echo \"third stub\\n\"; __HALT_COMPILER(); ?>';\n$fp = fopen($fname2, 'wb');\nfwrite($fp, $file);\nfclose($fp);\n$fp = fopen($fname2, 'rb');\n//// 3\n$phar->setStub($fp);\nfclose($fp);\n$fp = fopen($fname, 'rb');\necho fread($fp, strlen($file)) . \"\\n\";\nfclose($fp);\n$fp = fopen($fname2, 'ab');\nfwrite($fp, 'booya');\nfclose($fp);\necho file_get_contents($fname2) . \"\\n\";\n$fp = fopen($fname2, 'rb');\n//// 4\n$phar->setStub($fp, strlen($file));\nfclose($fp);\n$fp = fopen($fname, 'rb');\necho fread($fp, strlen($file)) . \"\\n\";\nif (fread($fp, strlen('booya')) == 'booya') {\n    echo 'failed - copied booya';\n}\nfclose($fp);\n$phar['testing'] = 'hi';\n// ensure stub is not overwritten\n$fp = fopen($fname, 'rb');\necho fread($fp, strlen($file)) . \"\\n\";\nif (fread($fp, strlen('booya')) == 'booya') {\n    echo 'failed - copied booya';\n}\nfclose($fp);\n?>")).toMatchSnapshot();
-  });
-});
