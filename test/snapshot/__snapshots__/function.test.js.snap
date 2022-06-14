@@ -1722,88 +1722,11 @@ Program {
 }
 `;
 
-exports[`Function tests test variadic error 1`] = `
-Program {
-  "children": Array [
-    ExpressionStatement {
-      "expression": Assign {
-        "kind": "assign",
-        "left": Variable {
-          "curly": false,
-          "kind": "variable",
-          "name": "b",
-        },
-        "operator": "=",
-        "right": Call {
-          "arguments": Array [
-            variadic {
-              "kind": "variadic",
-              "what": Array {
-                "items": Array [
-                  Entry {
-                    "byRef": false,
-                    "key": null,
-                    "kind": "entry",
-                    "unpack": false,
-                    "value": Number {
-                      "kind": "number",
-                      "value": "1",
-                    },
-                  },
-                  Entry {
-                    "byRef": false,
-                    "key": null,
-                    "kind": "entry",
-                    "unpack": false,
-                    "value": Number {
-                      "kind": "number",
-                      "value": "2",
-                    },
-                  },
-                  Entry {
-                    "byRef": false,
-                    "key": null,
-                    "kind": "entry",
-                    "unpack": false,
-                    "value": Number {
-                      "kind": "number",
-                      "value": "3",
-                    },
-                  },
-                ],
-                "kind": "array",
-                "shortForm": true,
-              },
-            },
-            Variable {
-              "curly": false,
-              "kind": "variable",
-              "name": "a",
-            },
-          ],
-          "kind": "call",
-          "what": Name {
-            "kind": "name",
-            "name": "foo",
-            "resolution": "uqn",
-          },
-        },
-      },
-      "kind": "expressionstatement",
-    },
-  ],
-  "errors": Array [
-    Error {
-      "expected": undefined,
-      "kind": "error",
-      "line": 1,
-      "message": "Unexpected argument after a variadic argument on line 1",
-      "token": undefined,
-    },
-  ],
-  "kind": "program",
-}
-`;
+exports[`Function tests test variadic call error 1`] = `"Unexpected non-variadic argument after a variadic argument on line 1"`;
+
+exports[`Function tests test variadic function error 1 1`] = `"Unexpected parameter after a variadic parameter on line 1"`;
+
+exports[`Function tests test variadic function error 2 1`] = `"Unexpected parameter after a variadic parameter on line 1"`;
 
 exports[`Function tests test without danging comma in closure use-block php 8.0 1`] = `
 Program {

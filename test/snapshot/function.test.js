@@ -100,13 +100,22 @@ describe("Function tests", function () {
     expect(ast).toMatchSnapshot();
   });
 
-  it("test variadic error", function () {
-    const astErr = parser.parseEval(`$b = foo(...[1, 2, 3], $a);`, {
-      parser: {
-        suppressErrors: true,
-      },
-    });
-    expect(astErr).toMatchSnapshot();
+  it("test variadic call error", function () {
+    expect(() =>
+      parser.parseEval(`$b = foo(...[1, 2, 3], $a);`)
+    ).toThrowErrorMatchingSnapshot();
+  });
+
+  it("test variadic function error 1", function () {
+    expect(() =>
+      parser.parseEval(`function foo(...$bar, $baz) {}`)
+    ).toThrowErrorMatchingSnapshot();
+  });
+
+  it("test variadic function error 2", function () {
+    expect(() =>
+      parser.parseEval(`function foo(...$bar, ...$baz) {}`)
+    ).toThrowErrorMatchingSnapshot();
   });
 
   it("test reserved word for function name error", function () {

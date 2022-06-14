@@ -32,6 +32,29 @@ module.exports = {
       }
     }
 
+    // https://github.com/php/php-src/blob/master/Zend/zend_language_scanner.l#L1546
+    if (id === this.tok.T_ENUM) {
+      if (this.version < 801) {
+        return this.tok.T_STRING;
+      }
+      const initial = this.offset;
+      let ch = this.input();
+      while (ch == " ") {
+        ch = this.input();
+      }
+      let isEnum = false;
+      if (this.is_LABEL_START()) {
+        while (this.is_LABEL()) {
+          ch += this.input();
+        }
+        const label = ch.slice(0, -1).toLowerCase();
+        isEnum = label !== "extends" && label !== "implements";
+      }
+
+      this.unput(this.offset - initial);
+      return isEnum ? this.tok.T_ENUM : this.tok.T_STRING;
+    }
+
     if (this.offset < this.size && id !== this.tok.T_YIELD_FROM) {
       // If immediately followed by a backslash, this is a T_NAME_RELATIVE or T_NAME_QUALIFIED.
       let ch = this.input();
