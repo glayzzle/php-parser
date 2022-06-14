@@ -118,6 +118,7 @@ const testsThatExpectParseErrors = [
   "Zend/tests/readonly_props/readonly_method.phpt",
   "Zend/tests/readonly_props/readonly_method_trait.phpt",
   "Zend/tests/static_in_trait_insteadof_list.phpt",
+  "Zend/tests/variadic/only_last_error.phpt",
 ];
 
 const header = `// eslint-disable prettier/prettier
