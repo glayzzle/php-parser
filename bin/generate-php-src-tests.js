@@ -91,7 +91,6 @@ const testsThatExpectParseErrors = [
   "Zend/tests/type_declarations/typed_properties_025.phpt",
   "Zend/tests/unterminated_comment.phpt",
   "Zend/tests/varSyntax/globalNonSimpleVariableError.phpt",
-  "ext/standard/tests/strings/bug51899.phpt",
   "tests/classes/constants_error_006.phpt",
   "tests/classes/constants_error_007.phpt",
   "tests/lang/019.phpt",
