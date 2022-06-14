@@ -15,9 +15,125 @@ Program {
         "right": String {
           "isDoubleQuote": false,
           "kind": "string",
-          "raw": "'ASN1 OID: prime256v1",
+          "raw": "'ASN1 OID: prime256v1
+-----BEGIN EC PARAMETERS-----
+BggqhkjOPQMBBw==
+-----END EC PARAMETERS-----
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILPkqoeyM7XgwYkuSj3077lrsrfWJK5LqMolv+m2oOjZoAoGCCqGSM49
+AwEHoUQDQgAEPq4hbIWHvB51rdWr8ejrjWo4qVNWVugYFtPg/xLQw0mHkIPZ4DvK
+sqOTOnMoezkbSmVVMuwz9flvnqHGmQvmug==
+-----END EC PRIVATE KEY-----'",
           "unicode": false,
-          "value": "ASN1 OID: prime256v",
+          "value": "ASN1 OID: prime256v1
+-----BEGIN EC PARAMETERS-----
+BggqhkjOPQMBBw==
+-----END EC PARAMETERS-----
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILPkqoeyM7XgwYkuSj3077lrsrfWJK5LqMolv+m2oOjZoAoGCCqGSM49
+AwEHoUQDQgAEPq4hbIWHvB51rdWr8ejrjWo4qVNWVugYFtPg/xLQw0mHkIPZ4DvK
+sqOTOnMoezkbSmVVMuwz9flvnqHGmQvmug==
+-----END EC PRIVATE KEY-----",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "key",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "pkey",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_pkey_get_private",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "res",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "data",
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'alpha'",
+                "unicode": false,
+                "value": "alpha",
+              },
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "sign",
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "key",
+            },
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'SHA1'",
+              "unicode": false,
+              "value": "SHA1",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "openssl_sign",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "res",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
         },
       },
       "kind": "expressionstatement",

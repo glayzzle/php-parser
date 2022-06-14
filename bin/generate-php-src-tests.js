@@ -6,12 +6,9 @@ const glob = require("glob");
 // described run-time errors, rather than just parse errors.
 const testsThatExpectParseErrors = [
   "Zend/tests/attributes/019_variable_attribute_name.phpt",
-  "Zend/tests/bug38779.phpt",
-  "Zend/tests/bug38779_1.phpt",
   "Zend/tests/bug43343.phpt",
   "Zend/tests/bug60099.phpt",
   "Zend/tests/bug64660.phpt",
-  "Zend/tests/bug69640.phpt",
   "Zend/tests/bug70430.phpt",
   "Zend/tests/bug76439_2.phpt",
   "Zend/tests/bug77993.phpt",
@@ -135,6 +132,7 @@ const testsThatExpectParseErrors = [
   // These are not parse errors in PHP strictly speaking, but they test syntax
   // that is still invalid (i.e. it generates a fatal error).
   "Zend/tests/enum/case-in-class.phpt",
+  "Zend/tests/enum/no-name-property.phpt",
   "Zend/tests/readonly_props/readonly_const.phpt",
   "Zend/tests/readonly_props/readonly_method.phpt",
   "Zend/tests/readonly_props/readonly_method_trait.phpt",
