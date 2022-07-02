@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/stripos_basic2.phpt
+  it("Test stripos() function : basic functionality - with all arguments", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing stripos() function: basic functionality ***\\n\";\n$heredoc_str = <<<Identifier\nHello, World\nIdentifier;\necho \"-- With all arguments --\\n\";\n//regular string for haystack & needle, with various offsets\nvar_dump( stripos(\"Hello, World\", \"Hello\", 0) );\nvar_dump( stripos(\"Hello, World\", 'Hello', 1) );\nvar_dump( stripos('Hello, World', 'WORLD', 1) );\nvar_dump( stripos('Hello, World', \"WoRld\", 5) );\nvar_dump( stripos('Hello, World', \"WoRld\", -6) );\nvar_dump( stripos('Hello, World', \"WoRld\", -3) );\nvar_dump( stripos('Hello, World', \"WoRld\", -12) );\n//heredoc string for haystack & needle, with various offsets\nvar_dump( stripos($heredoc_str, \"Hello, World\", 0) );\nvar_dump( stripos($heredoc_str, 'Hello', 0) );\nvar_dump( stripos($heredoc_str, 'Hello', 1) );\nvar_dump( stripos($heredoc_str, $heredoc_str, 0) );\nvar_dump( stripos($heredoc_str, $heredoc_str, 1) );\nvar_dump( stripos($heredoc_str, $heredoc_str, -strlen($heredoc_str)) );\nvar_dump( stripos($heredoc_str, $heredoc_str, -strlen($heredoc_str)+1) );\n//various offsets\nvar_dump( stripos(\"Hello, World\", \"o\", 3) );\nvar_dump( stripos(\"Hello, World\", \"O\", 5) );\nvar_dump( stripos(\"Hello, World\", \"o\", 6) );\nvar_dump( stripos(\"Hello, World\", \"o\", 10) );\nvar_dump( stripos(\"Hello, World\", \"o\", -7) );\nvar_dump( stripos(\"Hello, World\", \"o\", -8) );\nvar_dump( stripos(\"Hello, World\", \"o\", -10) );\nvar_dump( stripos(\"Hello, World\", \"o\", -4) );\nvar_dump( stripos(\"Hello, World\", \"o\", -3) );\necho \"*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #54804 (__halt_compiler and imported namespaces) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ExpressionStatement {
+          "expression": Include {
+            "kind": "include",
+            "once": false,
+            "require": true,
+            "target": Bin {
+              "kind": "bin",
+              "left": Magic {
+                "kind": "magic",
+                "raw": "__DIR__",
+                "value": "__DIR__",
+              },
+              "right": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'/bug54804.inc'",
+                "unicode": false,
+                "value": "/bug54804.inc",
+              },
+              "type": ".",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        Echo {
+          "expressions": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'DONE'",
+              "unicode": false,
+              "value": "DONE",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+        Halt {
+          "after": "
+?>",
+          "kind": "halt",
+        },
+      ],
+      "kind": "namespace",
+      "name": "a",
+      "withBrackets": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

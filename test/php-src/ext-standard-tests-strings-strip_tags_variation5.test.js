@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/strip_tags_variation5.phpt
+  it("Test strip_tags() function : usage variations - heredoc strings", function () {
+    expect(parser.parseCode("<?php\n/*\n * testing functionality of strip_tags() by giving heredoc strings as values for $str argument\n*/\necho \"*** Testing strip_tags() : usage variations ***\\n\";\n// null here doc string\n$null_string = <<<EOT\nEOT;\n// heredoc string with blank line\n$blank_line = <<<EOT\nEOT;\n// here doc with multiline string\n$multiline_string = <<<EOT\n<html>hello world</html>\n<p>13 &lt; 25</p>\n<?php 1111 &amp; 0000 = 0000 ?>\n<b>This is a double quoted string</b>\nEOT;\n// here doc with different whitespaces\n$diff_whitespaces = <<<EOT\n<html>hello\\r world\\t\n1111\\t\\t != 2222\\v\\v</html>\n<? heredoc\\ndouble quoted string. with\\vdifferent\\fwhite\\vspaces ?>\nEOT;\n// here doc with numeric values\n$numeric_string = <<<EOT\n<html>11 < 12. 123 >22</html>\n<p>string</p> 1111\\t <b>0000\\t = 0000\\n</b>\nEOT;\n// heredoc with quote chars & slash\n$quote_char_string = <<<EOT\n<html>This's a string with quotes:</html>\n\"strings in double quote\";\n'strings in single quote';\n<html>this\\line is single quoted /with\\slashes </html>\nEOT;\n$res_heredoc_strings = array(\n  //heredoc strings\n  $null_string,\n  $blank_line,\n  $multiline_string,\n  $diff_whitespaces,\n  $numeric_string,\n  $quote_char_string\n);\n// initialize the second argument\n$quotes = \"<html><a><?php\";\n// loop through $res_heredoc_strings element and check the working on strip_tags()\n$count = 1;\nfor($index =0; $index < count($res_heredoc_strings); $index ++) {\n  echo \"-- Iteration $count --\\n\";\n  var_dump( strip_tags($res_heredoc_strings[$index], $quotes) );\n  $count++;\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

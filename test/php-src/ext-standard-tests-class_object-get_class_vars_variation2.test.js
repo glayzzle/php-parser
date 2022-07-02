@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/class_object/get_class_vars_variation2.phpt
+  it("Test get_class_vars() function : testing visibility", function () {
+    expect(parser.parseCode("<?php\nclass Ancestor {\n  function test() {\n    var_dump(get_class_vars(\"Tester\"));\n  }\n  static function testStatic() {\n    var_dump(get_class_vars(\"Tester\"));\n  }\n}\nclass Tester extends Ancestor {\n  public $pub = \"public var\";\n  protected $prot = \"protected var\";\n  private $priv = \"private var\";\n  static public $pubs = \"public static var\";\n  static protected $prots = \"protected static var\";\n  static private $privs = \"private static var\";\n  function test() {\n    var_dump(get_class_vars(\"Tester\"));\n  }\n  static function testStatic() {\n    var_dump(get_class_vars(\"Tester\"));\n  }\n}\nclass Child extends Tester {\n  function test() {\n    var_dump(get_class_vars(\"Tester\"));\n  }\n  static function testStatic() {\n    var_dump(get_class_vars(\"Tester\"));\n  }\n}\necho \"*** Testing get_class_vars() : testing visibility\\n\";\necho \"\\n-- From global context --\\n\";\nvar_dump(get_class_vars(\"Tester\"));\necho \"\\n-- From inside an object instance --\\n\";\n$instance = new Tester();\n$instance->test();\necho \"\\n-- From  a static context --\\n\";\nTester::testStatic();\necho \"\\n-- From inside an  parent object instance --\\n\";\n$parent = new Ancestor();\n$parent->test();\necho \"\\n-- From a parents static context --\\n\";\nAncestor::testStatic();\necho \"\\n-- From inside a child object instance --\\n\";\n$child = new Child();\n$child->test();\necho \"\\n-- From a child's static context --\\n\";\nChild::testStatic();\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests GH-7896 (Environment vars may be mangled on Windows) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'FÖÖ'",
+              "unicode": false,
+              "value": "FÖÖ",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "_SERVER",
+            },
+          },
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'FÖÖ'",
+              "unicode": false,
+              "value": "FÖÖ",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "_ENV",
+            },
+          },
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'FÖÖ'",
+                "unicode": false,
+                "value": "FÖÖ",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "getenv",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

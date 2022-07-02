@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #81684: ??= on $GLOBALS produces an invalid opcode 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": OffsetLookup {
+          "kind": "offsetlookup",
+          "offset": String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'x'",
+            "unicode": false,
+            "value": "x",
+          },
+          "what": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "GLOBALS",
+          },
+        },
+        "operator": "??=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'x'",
+          "unicode": false,
+          "value": "x",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          OffsetLookup {
+            "kind": "offsetlookup",
+            "offset": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'x'",
+              "unicode": false,
+              "value": "x",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "GLOBALS",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done.\\\\n\\"",
+          "unicode": false,
+          "value": "Done.
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

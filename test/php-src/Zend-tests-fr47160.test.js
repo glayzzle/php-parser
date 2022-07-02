@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/fr47160.phpt
+  it("Calling method from array", function () {
+    expect(parser.parseCode("<?php\nclass Hello {\n    public function world($x) {\n        echo \"Hello, $x\\n\";return $this;\n    }\n}\nclass Hello2 {\n    static public function world($x) {\n        echo \"Hello, $x\\n\";\n    }\n}\nclass Magic {\n    public function __call($f, $a) {\n        printf(\"%s called (%s)!\\n\", __METHOD__, $f);\n    }\n}\nclass Magic2 {\n    public static function __callStatic($f, $a) {\n        printf(\"%s called (%s)!\\n\", __METHOD__, $f);\n    }\n}\nclass Magic3 {\n    public static function __callStatic($f, $a) {\n        printf(\"%s called (%s)!\\n\", __METHOD__, $f);\n    }\n    public function __call($f, $a) {\n        printf(\"%s called (%s)!\\n\", __METHOD__, $f);\n    }\n}\n$h= new Hello;\n$f = array($h,'world');\nvar_dump($f('again'));\nvar_dump(call_user_func($f, 'again'));\nprintf(\"-----\\n\");\nfunction bar() {\n    return array(new Hello,'world');\n}\n$f = bar();\nvar_dump($f('there'));\nvar_dump(call_user_func($f, 'there'));\nprintf(\"-----\\n\");\n$x = function ($c,$v) { return array($c, $v); };\n$c = new Hello;\n$m = 'world';\n$f = $x($c, $m);\nvar_dump($f('devs'));\nvar_dump(call_user_func($f, 'devs'));\nprintf(\"-----\\n\");\n$f = array(new Magic, 'foo');\n$f();\ncall_user_func($f);\nprintf(\"-----\\n\");\n$f = array('Magic2', 'foo');\n$f();\ncall_user_func($f);\nprintf(\"-----\\n\");\n$f = array('Magic3', 'foo');\n$f();\ncall_user_func($f);\nprintf(\"-----\\n\");\n$f = array(new Magic3, 'foo');\n$f();\ncall_user_func($f);\nprintf(\"-----\\n\");\n$f = array(new Hello2, 'world');\nvar_dump($f('you'));\nvar_dump(call_user_func($f, 'you'));\n?>")).toMatchSnapshot();
+  });
+});

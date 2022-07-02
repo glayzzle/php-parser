@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/serialize/serialization_objects_002.phpt
+  it("Test serialize() & unserialize() functions: objects (variations)", function () {
+    expect(parser.parseCode("<?php\necho \"\\n--- Testing Variations in objects ---\\n\";\nclass members\n{\n  private $var_private = 10;\n  protected $var_protected = \"string\";\n  public $var_public = array(-100.123, \"string\", TRUE);\n}\nclass nomembers { }\nclass C {\n  var $a, $b, $c, $d, $e, $f, $g, $h;\n  function __construct() {\n    $this->a = 10;\n    $this->b = \"string\";\n    $this->c = TRUE;\n    $this->d = -2.34444;\n    $this->e = array(1, 2.22, \"string\", TRUE, array(),\n                     new members(), null);\n    $this->f = new nomembers();\n    $this->g = NULL;\n    $this->h = NULL;\n  }\n}\nclass D extends C {\n  function __construct( $w, $x, $y, $z ) {\n    $this->a = $w;\n    $this->b = $x;\n    $this->c = $y;\n    $this->d = $z;\n  }\n}\n$variation_obj_arr = array(\n  new C(),\n  new D( 1, 2, 3333, 444444 ),\n  new D( .5, 0.005, -1.345, 10.005e5 ),\n  new D( TRUE, true, FALSE, false ),\n  new D( \"a\", 'a', \"string\", 'string' ),\n  new D( array(),\n         array(1, 2.222, TRUE, FALSE, \"string\"),\n         array(new nomembers(), $file_handle, NULL, \"\"),\n         array(array(1,2,3,array()))\n       ),\n  new D( NULL, null, \"\", \"\\0\" ),\n  new D( new members, new nomembers, $file_handle, NULL),\n);\n/* Testing serialization on all the objects through loop */\nforeach( $variation_obj_arr as $object) {\n  echo \"After Serialization => \";\n  $serialize_data = serialize( $object );\n  var_dump( $serialize_data );\n  echo \"After Unserialization => \";\n  $unserialize_data = unserialize( $serialize_data );\n  var_dump( $unserialize_data );\n}\necho \"\\nDone\";\n?>")).toMatchSnapshot();
+  });
+});

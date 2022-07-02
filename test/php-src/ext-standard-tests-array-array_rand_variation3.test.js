@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/array_rand_variation3.phpt
+  it("Test array_rand() function : usage variation - with MultiDimensional array", function () {
+    expect(parser.parseCode("<?php\n/*\n* Test behaviour of array_rand() function when multi-dimensional array\n* is passed to 'input' argument\n*/\necho \"*** Testing array_rand() : with multi-dimensional array ***\\n\";\n// initialise the multi-dimensional array\n$input = array(\n       // array with int values\n/*1*/  array(1, 2, 0, -0, -1, -2),\n       // array with float values\n       array(1.23, -1.23, 0.34, -0.34, 0e2, 2e-3, -2e2, -40e-2),\n       // array with single quoted strings\n/*3*/  array('one', '123numbers', 'hello\\tworld', 'hello world\\0', '12.34floatnum'),\n       // array with double quoted strings\n       array(\"one\",\"123numbers\", \"hello\\tworld\", \"hello world\\0\", \"12.34floatnum\"),\n       // array with bool values\n/*5*/  array(true, TRUE, FALSE, false, TrUe, FaLsE),\n       // array with hexa values\n       array(0x123, -0x123, 0xabc, 0xABC, 0xab),\n       // array with null values\n/*7*/  array(null, NULL, \"\\0\", Null, NuLl)\n);\n// initialise 'num_req' variable\n$num_req = 3;\n// calling array_rand() function with multi-dimensional array\nvar_dump( array_rand($input, $num_req) );\n// looping to test array_rand() with each sub-array in the multi-dimensional array\necho \"\\n*** Testing array_rand() with arrays having different types of values ***\\n\";\n$counter = 1;\nforeach($input as $arr) {\n  echo \"\\n-- Iteration $counter --\\n\";\n  var_dump( array_rand($arr) );  // with default arguments\n  var_dump( array_rand($arr, 3) );  // with default as well as optional arguments\n  $counter++;\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

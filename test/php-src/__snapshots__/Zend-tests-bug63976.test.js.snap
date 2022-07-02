@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #63976 (Parent class incorrectly using child constant in class property) 1`] = `
+Program {
+  "children": Array [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          Class {
+            "attrGroups": Array [],
+            "body": Array [
+              ClassConstant {
+                "attrGroups": Array [],
+                "constants": Array [
+                  Constant {
+                    "kind": "constant",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "TABLE",
+                    },
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"foo\\"",
+                      "unicode": false,
+                      "value": "foo",
+                    },
+                  },
+                ],
+                "kind": "classconstant",
+                "visibility": "",
+              },
+              PropertyStatement {
+                "isStatic": false,
+                "kind": "propertystatement",
+                "properties": Array [
+                  Property {
+                    "attrGroups": Array [],
+                    "kind": "property",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "table",
+                    },
+                    "nullable": false,
+                    "readonly": false,
+                    "type": null,
+                    "value": StaticLookup {
+                      "kind": "staticlookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "TABLE",
+                      },
+                      "what": SelfReference {
+                        "kind": "selfreference",
+                        "raw": "self",
+                      },
+                    },
+                  },
+                ],
+                "visibility": "public",
+              },
+            ],
+            "extends": null,
+            "implements": null,
+            "isAbstract": false,
+            "isAnonymous": false,
+            "isFinal": false,
+            "kind": "class",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "Foo",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Number {
+        "kind": "number",
+        "value": "1",
+      },
+    },
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": Array [
+          Class {
+            "attrGroups": Array [],
+            "body": Array [
+              ClassConstant {
+                "attrGroups": Array [],
+                "constants": Array [
+                  Constant {
+                    "kind": "constant",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "TABLE",
+                    },
+                    "value": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"bar\\"",
+                      "unicode": false,
+                      "value": "bar",
+                    },
+                  },
+                ],
+                "kind": "classconstant",
+                "visibility": "",
+              },
+            ],
+            "extends": Name {
+              "kind": "name",
+              "name": "Foo",
+              "resolution": "uqn",
+            },
+            "implements": null,
+            "isAbstract": false,
+            "isAnonymous": false,
+            "isFinal": false,
+            "kind": "class",
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "Bar",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Number {
+        "kind": "number",
+        "value": "1",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "bar",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "Bar",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "table",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "bar",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

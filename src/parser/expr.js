@@ -737,7 +737,9 @@ module.exports = {
 
   /*
    * ```ebnf
-   *    new_expr ::= T_NEW (namespace_name function_argument_list) | (T_CLASS ... class declaration)
+   *    new_expr ::=
+   *          T_NEW (namespace_name function_argument_list)
+   *        | (T_CLASS ... class declaration)
    * ```
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
@@ -797,6 +799,10 @@ module.exports = {
       return result;
     } else if (this.is("VARIABLE")) {
       return this.read_variable(true, false);
+    } else if (this.token === "(") {
+      const result = this.read_expr();
+      this.expect(")");
+      return result;
     } else {
       this.expect([this.tok.T_STRING, "VARIABLE"]);
     }
@@ -805,6 +811,7 @@ module.exports = {
     while (this.token !== this.EOF) {
       if (
         this.token === this.tok.T_OBJECT_OPERATOR ||
+        this.token === this.tok.T_NULLSAFE_OBJECT_OPERATOR ||
         this.token === this.tok.T_DOUBLE_COLON
       ) {
         expr = this.recursive_variable_chain_scan(expr, false, false, true);

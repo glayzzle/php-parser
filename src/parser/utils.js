@@ -113,7 +113,7 @@ module.exports = {
    * @return {Reference[]}
    */
   read_name_list: function () {
-    return this.read_list(this.read_namespace_name, ",", false);
+    return this.read_list(this.read_name, ",", false);
   },
 
   /*

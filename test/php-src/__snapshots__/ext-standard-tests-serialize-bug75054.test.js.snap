@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #75054: A Denial of Service Vulnerability was found when performing deserialization 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "poc",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'a:9:{i:0;s:4:\\"0000\\";i:0;s:4:\\"0000\\";i:0;R:2;s:4:\\"5003\\";R:2;s:4:\\"0000\\";R:2;s:4:\\"0000\\";R:2;s:4:\\"'",
+          "unicode": false,
+          "value": "a:9:{i:0;s:4:\\"0000\\";i:0;s:4:\\"0000\\";i:0;R:2;s:4:\\"5003\\";R:2;s:4:\\"0000\\";R:2;s:4:\\"0000\\";R:2;s:4:\\"",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "poc",
+        },
+        "operator": ".=",
+        "right": String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\x06\\"",
+          "unicode": false,
+          "value": "",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "poc",
+        },
+        "operator": ".=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'000\\";R:2;s:4:\\"0000\\";d:0;s:4:\\"0000\\";a:9:{s:4:\\"0000\\";'",
+          "unicode": false,
+          "value": "000\\";R:2;s:4:\\"0000\\";d:0;s:4:\\"0000\\";a:9:{s:4:\\"0000\\";",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "poc",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "unserialize",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

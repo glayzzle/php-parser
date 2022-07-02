@@ -122,7 +122,9 @@ module.exports = {
     items.push(this.read_use_declaration(false));
     if (this.token === ",") {
       items = items.concat(this.next().read_use_declarations(false));
-    } else if (this.token === "{") {
+    } else if (this.token === this.tok.T_NS_SEPARATOR) {
+      this.next();
+      this.expect("{");
       name = items[0].name;
       items = this.next().read_use_declarations(type === null);
       this.expect("}") && this.next();
@@ -131,13 +133,72 @@ module.exports = {
     this.expect(";") && this.next();
     return result;
   },
+  read_class_name: function () {
+    if (this.token === this.tok.T_STATIC) {
+      const result = this.node("staticreference");
+      const raw = this.text();
+      this.next();
+      return result(raw);
+    }
+
+    return this.read_name();
+  },
+  read_name: function () {
+    this.expect([
+      this.tok.T_STRING,
+      this.tok.T_NAME_QUALIFIED,
+      this.tok.T_NAME_FULLY_QUALIFIED,
+      this.tok.T_NAME_RELATIVE,
+    ]);
+
+    const result = this.node();
+    let resolution;
+    let name = this.text();
+    switch (this.token) {
+      case this.tok.T_NAME_RELATIVE:
+        resolution = this.ast.name.RELATIVE_NAME;
+        name = name.replace(/^namespace\\/, "");
+        break;
+      case this.tok.T_NAME_QUALIFIED:
+        resolution = this.ast.name.QUALIFIED_NAME;
+        break;
+      case this.tok.T_NAME_FULLY_QUALIFIED:
+        resolution = this.ast.name.FULL_QUALIFIED_NAME;
+        break;
+      default:
+        resolution = this.ast.name.UNQUALIFIED_NAME;
+        if (!this.expect(this.tok.T_STRING)) {
+          // graceful mode
+          return result("name", "", this.ast.name.FULL_QUALIFIED_NAME);
+        }
+    }
+
+    this.next();
+
+    if (this.token !== "(") {
+      if (name.toLowerCase() === "parent") {
+        return result("parentreference", name);
+      } else if (name.toLowerCase() === "self") {
+        return result("selfreference", name);
+      }
+    }
+
+    return result("name", name, resolution);
+  },
   /*
    *
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
    */
   read_class_name_reference: function () {
-    // resolved as the same
-    return this.read_variable(true, false);
+    if (this.is("CLASS_NAME")) {
+      return this.read_class_name();
+    } else if (this.token === "(") {
+      const result = this.read_expr();
+      this.expect(")");
+      return result;
+    } else {
+      return this.read_variable(true, false);
+    }
   },
   /*
    * Reads a use declaration

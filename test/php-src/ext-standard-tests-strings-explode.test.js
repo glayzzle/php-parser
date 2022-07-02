@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/explode.phpt
+  it("explode() function", function () {
+    expect(parser.parseCode("<?php\n/* From http://bugs.php.net/19865 */\necho var_export(explode(\"\\1\", \"a\". chr(1). \"b\". chr(0). \"d\" . chr(1) . \"f\" . chr(1). \"1\" . chr(1) . \"d\"), TRUE);\necho \"\\n\";\necho md5(var_export(explode(\"\\1\", \"a\". chr(1). \"b\". chr(0). \"d\" . chr(1) . \"f\" . chr(1). \"1\" . chr(1) . \"d\"), TRUE));\necho \"\\n\";\ntry {\n    var_dump(explode(\"\", \"\"));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    var_dump(explode(\"\", NULL));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\ntry {\n    var_dump(explode(NULL, \"\"));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\nvar_dump(explode(\"a\", \"\"));\nvar_dump(explode(\"a\", \"a\"));\nvar_dump(explode(\"a\", NULL));\ntry {\n    var_dump(explode(NULL, \"a\"));\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \"\\n\";\n}\nvar_dump(explode(\"abc\", \"acb\"));\nvar_dump(explode(\"somestring\", \"otherstring\"));\nvar_dump(explode(\"somestring\", \"otherstring\", -1));\nvar_dump(explode(\"a\", \"aaaaaa\"));\nvar_dump(explode(\"==\", str_repeat(\"-=\".ord(0).\"=-\", 10)));\nvar_dump(explode(\"=\", str_repeat(\"-=\".ord(0).\"=-\", 10)));\n//////////////////////////////////////\nvar_dump(explode(\":\",\"a lazy dog:jumps:over:\",-1));\nvar_dump(explode(\":\",\"a lazy dog:jumps:over\", -1));\nvar_dump(explode(\":\",\"a lazy dog:jumps:over\", -2));\nvar_dump(explode(\":\",\"a lazy dog:jumps:over:\",-4));\nvar_dump(explode(\":\",\"a lazy dog:jumps:over:\",-40000000000000));\nvar_dump(explode(\":^:\",\"a lazy dog:^:jumps::over:^:\",-1));\nvar_dump(explode(\":^:\",\"a lazy dog:^:jumps::over:^:\",-2));\n?>")).toMatchSnapshot();
+  });
+});

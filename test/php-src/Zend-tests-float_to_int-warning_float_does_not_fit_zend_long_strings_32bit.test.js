@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/float_to_int/warning_float_does_not_fit_zend_long_strings_32bit.phpt
+  it("Implicit float to int conversions when float too large should warn, string offset variant, 32bit variant", function () {
+    expect(parser.parseCode("<?php\n$float = 10e120;\n$string_float = (string) $float;\nvar_dump((int) $float);\nvar_dump((int) $string_float);\n$string = 'Here is some text for good measure';\necho 'Attempt to read', \\PHP_EOL;\ntry {\n    echo 'Float', \\PHP_EOL;\n    var_dump($string[10e120]);\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\ntry {\n    echo 'Float variable', \\PHP_EOL;\n    var_dump($string[$float]);\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\ntry {\n    echo 'Float casted to string compile', \\PHP_EOL;\n    var_dump($string[(string) 10e120]);\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\ntry {\n    echo 'Float string variable', \\PHP_EOL;\n    var_dump($string[$string_float]);\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\necho 'Attempt to assign', \\PHP_EOL;\ntry {\n    echo 'Float', \\PHP_EOL;\n    $string[10e120] = 'E';\n    var_dump($string);\n    $string = 'Here is some text for good measure';\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\ntry {\n    echo 'Float variable', \\PHP_EOL;\n    $string[$float] = 'E';\n    var_dump($string);\n    $string = 'Here is some text for good measure';\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\ntry {\n    $string[(string) 10e120] = 'E';\n    var_dump($string);\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\nvar_dump($string);\ntry {\n    $string[$string_float] = 'E';\n} catch (\\TypeError) {\n    echo 'TypeError', \\PHP_EOL;\n}\nvar_dump($string);\n?>")).toMatchSnapshot();
+  });
+});

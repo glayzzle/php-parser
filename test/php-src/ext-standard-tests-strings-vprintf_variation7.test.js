@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/vprintf_variation7.phpt
+  it("Test vprintf() function : usage variations - string formats with strings", function () {
+    expect(parser.parseCode("<?php\n/*\n * Test vprintf() when different string formats and string values are passed to\n * the '$format' and '$args' arguments of the function\n*/\necho \"*** Testing vprintf() : string formats with strings ***\\n\";\n// defining different heredoc strings\n$heredoc_string = <<<EOT\nThis is string defined\nusing heredoc.\nEOT;\n/* heredoc string with only numerics */\n$heredoc_numeric_string = <<<EOT\n123456 3993\n4849 string\nEOT;\n/* empty heardoc string */\n$heredoc_empty_string = <<<EOT\nEOT;\n// defining array of string formats\n$formats = array(\n  \"%s\",\n  \"%+s %-s\",\n  \"%ls %4s %-4s\",\n  \"%10.4s %-10.4s %04s %04.4s\",\n  \"%'#2s %'2s %'$2s %'_2s\",\n  \"%% %%s\",\n  '%3$s %4$s %1$s %2$s'\n);\n// Arrays of string values for the format defined in $format.\n// Each sub array contains string values which correspond to each format string in $format\n$args_array = array(\n  array(\" \"),\n  array(\"hello\\0world\", \"hello\\0\"),\n  array(\"@#$%&*\", \"\\x55F\", \"\\001\"),\n  array(\"sunday\", 'monday', \"tuesday\", 'wednesday'),\n  array($heredoc_string, \"abcdef\", $heredoc_numeric_string, $heredoc_empty_string),\n  array(\"one\", \"two\", 'three'),\n  array(\"three\", 'four', 'one', \"two\")\n);\n// looping to test vprintf() with different string formats from the above $format array\n// and with string from the above $args_array array\n$counter = 1;\nforeach($formats as $format) {\n  echo \"\\n-- Iteration $counter --\\n\";\n  $result = vprintf($format, $args_array[$counter-1]);\n  echo \"\\n\";\n  var_dump($result);\n  $counter++;\n}\n?>")).toMatchSnapshot();
+  });
+});

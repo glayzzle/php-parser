@@ -1,0 +1,472 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #78921: When Reflection triggers class load, property visibility is incorrect 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "className",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": null,
+                  "body": Block {
+                    "children": Array [
+                      Class {
+                        "attrGroups": Array [],
+                        "body": Array [
+                          ClassConstant {
+                            "attrGroups": Array [],
+                            "constants": Array [
+                              Constant {
+                                "kind": "constant",
+                                "name": Identifier {
+                                  "kind": "identifier",
+                                  "name": "SOME_CONST",
+                                },
+                                "value": Number {
+                                  "kind": "number",
+                                  "value": "13",
+                                },
+                              },
+                            ],
+                            "kind": "classconstant",
+                            "visibility": "",
+                          },
+                          PropertyStatement {
+                            "isStatic": true,
+                            "kind": "propertystatement",
+                            "properties": Array [
+                              Property {
+                                "attrGroups": Array [],
+                                "kind": "property",
+                                "name": Identifier {
+                                  "kind": "identifier",
+                                  "name": "privateStaticVarArray",
+                                },
+                                "nullable": false,
+                                "readonly": false,
+                                "type": null,
+                                "value": Array {
+                                  "items": Array [
+                                    Entry {
+                                      "byRef": false,
+                                      "key": null,
+                                      "kind": "entry",
+                                      "unpack": false,
+                                      "value": String {
+                                        "isDoubleQuote": false,
+                                        "kind": "string",
+                                        "raw": "'a'",
+                                        "unicode": false,
+                                        "value": "a",
+                                      },
+                                    },
+                                    Entry {
+                                      "byRef": false,
+                                      "key": null,
+                                      "kind": "entry",
+                                      "unpack": false,
+                                      "value": String {
+                                        "isDoubleQuote": false,
+                                        "kind": "string",
+                                        "raw": "'b'",
+                                        "unicode": false,
+                                        "value": "b",
+                                      },
+                                    },
+                                    Entry {
+                                      "byRef": false,
+                                      "key": null,
+                                      "kind": "entry",
+                                      "unpack": false,
+                                      "value": String {
+                                        "isDoubleQuote": false,
+                                        "kind": "string",
+                                        "raw": "'c'",
+                                        "unicode": false,
+                                        "value": "c",
+                                      },
+                                    },
+                                  ],
+                                  "kind": "array",
+                                  "shortForm": true,
+                                },
+                              },
+                            ],
+                            "visibility": "private",
+                          },
+                          PropertyStatement {
+                            "isStatic": true,
+                            "kind": "propertystatement",
+                            "properties": Array [
+                              Property {
+                                "attrGroups": Array [],
+                                "kind": "property",
+                                "name": Identifier {
+                                  "kind": "identifier",
+                                  "name": "otherStatic",
+                                },
+                                "nullable": false,
+                                "readonly": false,
+                                "type": null,
+                                "value": null,
+                              },
+                            ],
+                            "visibility": "private",
+                          },
+                          Method {
+                            "arguments": Array [],
+                            "attrGroups": Array [],
+                            "body": Block {
+                              "children": Array [
+                                ExpressionStatement {
+                                  "expression": Assign {
+                                    "kind": "assign",
+                                    "left": StaticLookup {
+                                      "kind": "staticlookup",
+                                      "offset": Variable {
+                                        "curly": false,
+                                        "kind": "variable",
+                                        "name": "otherStatic",
+                                      },
+                                      "what": SelfReference {
+                                        "kind": "selfreference",
+                                        "raw": "self",
+                                      },
+                                    },
+                                    "operator": "=",
+                                    "right": StaticLookup {
+                                      "kind": "staticlookup",
+                                      "offset": Variable {
+                                        "curly": false,
+                                        "kind": "variable",
+                                        "name": "privateStaticVarArray",
+                                      },
+                                      "what": SelfReference {
+                                        "kind": "selfreference",
+                                        "raw": "self",
+                                      },
+                                    },
+                                  },
+                                  "kind": "expressionstatement",
+                                },
+                              ],
+                              "kind": "block",
+                            },
+                            "byref": false,
+                            "isAbstract": false,
+                            "isFinal": false,
+                            "isStatic": true,
+                            "kind": "method",
+                            "name": Identifier {
+                              "kind": "identifier",
+                              "name": "init",
+                            },
+                            "nullable": false,
+                            "type": null,
+                            "visibility": "public",
+                          },
+                        ],
+                        "extends": null,
+                        "implements": null,
+                        "isAbstract": false,
+                        "isAnonymous": false,
+                        "isFinal": false,
+                        "kind": "class",
+                        "name": Identifier {
+                          "kind": "identifier",
+                          "name": "PrivateStatic",
+                        },
+                      },
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": StaticLookup {
+                            "kind": "staticlookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "init",
+                            },
+                            "what": Name {
+                              "kind": "name",
+                              "name": "PrivateStatic",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Bin {
+                    "kind": "bin",
+                    "left": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "className",
+                    },
+                    "right": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'PrivateStatic'",
+                      "unicode": false,
+                      "value": "PrivateStatic",
+                    },
+                    "type": "==",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Class {
+      "attrGroups": Array [],
+      "body": Array [
+        ClassConstant {
+          "attrGroups": Array [],
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "MY_CONST",
+              },
+              "value": StaticLookup {
+                "kind": "staticlookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "SOME_CONST",
+                },
+                "what": Name {
+                  "kind": "name",
+                  "name": "PrivateStatic",
+                  "resolution": "uqn",
+                },
+              },
+            },
+          ],
+          "kind": "classconstant",
+          "visibility": "",
+        },
+        PropertyStatement {
+          "isStatic": true,
+          "kind": "propertystatement",
+          "properties": Array [
+            Property {
+              "attrGroups": Array [],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "prop",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": null,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'my property'",
+                "unicode": false,
+                "value": "my property",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "OtherClass",
+      },
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "reflectionClass",
+        },
+        "operator": "=",
+        "right": New {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'OtherClass'",
+              "unicode": false,
+              "value": "OtherClass",
+            },
+          ],
+          "kind": "new",
+          "what": Name {
+            "kind": "name",
+            "name": "ReflectionClass",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "reflectionProperty",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'prop'",
+              "unicode": false,
+              "value": "prop",
+            },
+          ],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getProperty",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "reflectionClass",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "value",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [],
+          "kind": "call",
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "getValue",
+            },
+            "what": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "reflectionProperty",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"Value is $value\\\\n\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Value is ",
+                "unicode": false,
+                "value": "Value is ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "value",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\\\n",
+                "unicode": false,
+                "value": "",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

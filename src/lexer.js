@@ -212,6 +212,23 @@ Lexer.prototype.input = function () {
 };
 
 /**
+ * peeks the next non-whitespace character, or null if we
+ * reach the end of the input
+ * @function Lexer#peekNonWhitespace
+ * @memberOf module:php-parser
+ */
+Lexer.prototype.peekNonWhitespace = function () {
+  for (let i = this.offset; i < this._input.length; i++) {
+    const ch = this._input[i];
+    if (ch !== " " && ch !== "\r" && ch !== "\n") {
+      return ch;
+    }
+  }
+
+  return null;
+};
+
+/**
  * revert eating specified size
  * @function Lexer#unput
  * @memberOf module:php-parser

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/arginfo_zpp_mismatch.phpt
+  it("Test that there is no arginfo/zpp mismatch", function () {
+    expect(parser.parseCode("<?php\nrequire __DIR__ . \"/arginfo_zpp_mismatch.inc\";\nfunction test($function) {\n    if (skipFunction($function)) {\n        return;\n    }\n    ob_start();\n    if (is_string($function)) {\n        echo \"Testing $function\\n\";\n    } else {\n        echo \"Testing \" . get_class($function[0]) . \"::$function[1]\\n\";\n    }\n    try {\n        @$function();\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null, null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null, null, null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null, null, null, null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null, null, null, null, null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null, null, null, null, null, null);\n    } catch (Throwable) {\n    }\n    try {\n        @$function(null, null, null, null, null, null, null, null);\n    } catch (Throwable) {\n    }\n    ob_end_clean();\n}\nforeach (get_defined_functions()[\"internal\"] as $function) {\n    test($function);\n}\nforeach (get_declared_classes() as $class) {\n    try {\n        $rc = new ReflectionClass($class);\n        $obj = $rc->newInstanceWithoutConstructor();\n    } catch (Throwable) {\n        continue;\n    }\n    foreach (get_class_methods($class) as $method) {\n        test([$obj, $method]);\n    }\n}\n// var_dump() and debug_zval_dump() print all arguments\n?>\n===DONE===")).toMatchSnapshot();
+  });
+});

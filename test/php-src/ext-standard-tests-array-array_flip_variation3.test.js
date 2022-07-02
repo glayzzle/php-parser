@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/array_flip_variation3.phpt
+  it("Test array_flip() function : usage variations - 'input' argument with different valid values", function () {
+    expect(parser.parseCode("<?php\n/*\n* In 'input' array argument, values are expected to be valid keys i.e. string/integer\n* here testing for all different valid string and integer values\n*/\necho \"*** Testing array_flip() : different valid values in 'input' array argument ***\\n\";\n$empty_heredoc = <<<EOT1\nEOT1;\n$simple_heredoc = <<<EOT4\nsimple\nEOT4;\n$multiline_heredoc = <<<EOT7\nmultiline heredoc with 123 and\nspeci@! ch@r$..checking\\nwith\\talso\nEOT7;\n$input = array(\n  // numeric values\n  'int_value' => 1,\n  'negative_value' => -2,\n  'zero_value' => 0,\n  'octal_value' => 012,\n  'hex_value' => 0x23,\n  // single quoted string value\n  'empty_value1' => '',\n  'space_value1' => ' ',\n  'char_value1' => 'a',\n  'string_value1' => 'string1',\n  'numeric_value1' => '123',\n  'special_char_value1' => '!@#$%',\n  'whitespace1_value1' => '\\t',\n  'whitespace2_value1' => '\\n',\n  'null_char_value1' => '\\0',\n  // double quoted string value\n  'empty_value2' => \"\",\n  'space_value2' => \" \",\n  'char_value2' => \"b\",\n  'string_value2' => \"string2\",\n  'numeric_value2' => \"456\",\n  'special_char_value2' => \"^&*\",\n  'whitespace1_value2' => \"\\t\",\n  'whitespace2_value2' => \"\\n\",\n  'null_char_value2' => \"\\0\",\n  'binary_value' => \"a\".chr(0).\"b\",\n  // heredoc string value\n  'empty_heredoc' => $empty_heredoc,\n  'simple_heredoc' => $simple_heredoc,\n  'multiline_heredoc' => $multiline_heredoc,\n);\nvar_dump( array_flip($input) );\necho \"Done\"\n?>")).toMatchSnapshot();
+  });
+});

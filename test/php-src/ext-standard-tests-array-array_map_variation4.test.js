@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/array_map_variation4.phpt
+  it("Test array_map() function : usage variations - associative array with different keys", function () {
+    expect(parser.parseCode("<?php\n/*\n * Test array_map() by passing associative array with different keys for $arr1 argument\n */\necho \"*** Testing array_map() : associative array with diff. keys for 'arr1' argument ***\\n\";\nfunction callback($a)\n{\n  return ($a);\n}\n// get an unset variable\n$unset_var = 10;\nunset ($unset_var);\n// get a resource variable\n$fp = fopen(__FILE__, \"r\");\n// get a class\nclass classA{\n  public function __toString(){\n    return \"Class A object\";\n  }\n}\n// get a heredoc string\n$heredoc = <<<EOT\nHello world\nEOT;\n// initializing the array\n$arrays = array (\n       // empty array\n/*1*/  array(),\n       // arrays with integer keys\n/*2*/  array(0 => \"0\"),\n       array(1 => \"1\"),\n       array(1 => \"1\", 2 => \"2\", 3 => \"3\", 4 => \"4\"),\n       // arrays with string keys\n       array('\\tHello' => 111, 're\\td' => 'color', '\\v\\fworld' => 2.2, 'pen\\n' => 33),\n/*8*/  array(\"\\tHello\" => 111, \"re\\td\" => \"color\", \"\\v\\fworld\" => 2.2, \"pen\\n\" => 33),\n       array(\"hello\", $heredoc => \"string\"), // heredoc\n       // array with object, unset variable and resource variable\n       array(@$unset_var => \"hello\", $fp => 'resource'),\n       // array with mixed values\n/*11*/ array('hello' => 1, \"fruit\" => 2.2,\n              $fp => 'resource', 133 => \"int\",\n              @$unset_var => \"unset\", $heredoc => \"heredoc\")\n);\n// loop through the various elements of $arrays to test array_map()\n$iterator = 1;\nforeach($arrays as $arr1) {\n  echo \"-- Iteration $iterator --\\n\";\n  var_dump( array_map('callback', $arr1) );\n  $iterator++;\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

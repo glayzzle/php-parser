@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/feof_basic.phpt
+  it("Test feof() function : basic functionality", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing feof() : basic functionality ***\\n\";\n$tmpFile1 = __FILE__.\".tmp1\";\n$h = fopen($tmpFile1, 'wb');\n$count = 10;\nfor ($i = 1; $i <= $count; $i++) {\n   fwrite($h, \"some data $i\\n\");\n}\nfclose($h);\necho \"\\n*** testing reading complete file using feof to stop ***\\n\";\n$h = fopen($tmpFile1, 'rb');\n//feof is not set to true until you try to read past the end of file.\n//so fgets will be called even if we are at the end of the file on\n//last time to set the eof flag but it will fail to read.\n$lastline = \"\";\nwhile (!feof($h)) {\n   $previousLine = $lastline;\n   $lastline = fgets($h);\n}\necho $previousLine;\nvar_dump($lastline); // this should be false\nfclose($h);\n$tmpFile2 = __FILE__.\".tmp2\";\n$h = fopen($tmpFile2, 'wb+');\n$count = 10;\necho \"*** writing $count lines, testing feof ***\\n\";\nfor ($i = 1; $i <=$count; $i++) {\n   fwrite($h, \"some data $i\\n\");\n   var_dump(feof($h));\n}\necho \"*** testing feof on unclosed file after a read ***\\n\";\nfread($h, 100);\nvar_dump(feof($h));\n$eofPointer = ftell($h);\necho \"*** testing feof after a seek to near the beginning ***\\n\";\nfseek($h, 20, SEEK_SET);\nvar_dump(feof($h));\necho \"*** testing feof after a seek to end ***\\n\";\nfseek($h, $eofPointer, SEEK_SET);\nvar_dump(feof($h));\necho \"*** testing feof after a seek passed the end ***\\n\";\nfseek($h, $eofPointer + 1000, SEEK_SET);\nvar_dump(feof($h));\necho \"*** closing file, testing eof ***\\n\";\nfclose($h);\ntry {\n    feof($h);\n} catch (TypeError $e) {\n    echo $e->getMessage(), \"\\n\";\n}\nunlink($tmpFile1);\nunlink($tmpFile2);\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

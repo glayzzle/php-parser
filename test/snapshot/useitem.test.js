@@ -40,6 +40,19 @@ describe("useitem", () => {
       parser.parseEval("use const My\\Full\\CONSTANT as MY_CONST;")
     ).toMatchSnapshot();
   });
+  it("import group", () => {
+    expect(
+      parser.parseEval(
+        `use const namespace\\{
+          FOO,
+          BAR,
+        };
+        use some\\{
+          foo,
+        };`
+      )
+    ).toMatchSnapshot();
+  });
   it("invalid use", () => {
     expect(
       parser.parseEval(

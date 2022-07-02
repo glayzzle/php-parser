@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Class declaration colliding with import (in namespace) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ConstantStatement {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "BAR",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "kind": "constantstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "Foo",
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": null,
+              "kind": "useitem",
+              "name": "Foo\\\\BAR",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": "const",
+        },
+        ConstantStatement {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "BAR",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "24",
+              },
+            },
+          ],
+          "kind": "constantstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "Bazzle",
+      "withBrackets": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fscanf_variation53.phpt
+  it("Test fscanf() function: usage variations - file pointer pointing to EOF", function () {
+    expect(parser.parseCode("<?php\n/* Test fscanf() to read a file when file pointer is pointing to EOF */\n$file_path = __DIR__;\necho \"*** Test fscanf(): to read a file when file pointer is pointing to EOF ***\\n\";\n// various formats\n$formats = array( \"%d\", \"%f\", \"%e\", \"%u\", \" %s\", \"%x\", \"%o\");\n$counter = 1;\n// various read modes\n$modes = array(\"r\", \"rb\", \"rt\", \"r+\", \"r+b\", \"r+t\",\n               \"w+\", \"w+b\", \"w+t\",\n               \"a+\", \"a+b\", \"a+t\"\n         );\n$counter = 1;\n// reading the values from file using different integer formats\nforeach($modes as $mode) {\n  // create an empty file\n  $filename = \"$file_path/fscanf_variation53.tmp\";\n  $file_handle = fopen($filename, \"w\");\n  if($file_handle == false)\n    exit(\"Error:failed to open file $filename\");\n  //writing data to the file\n  @fwrite($file_handle, \"Sample text\\n\");\n  // writing a blank line\n  @fwrite($file_handle, \"\\n\");\n  //closing the file\n  fclose($file_handle);\n  // opening file in $mode mode\n  $file_handle = fopen($filename, $mode);\n  if($file_handle == false) {\n    exit(\"Error:failed to open file $filename\");\n  }\n  echo \"\\n-- iteration $counter --\\n\";\n  // current location\n  var_dump( ftell($file_handle) );\n  // set the file pointer to eof\n  var_dump( fseek($file_handle, 0, SEEK_END) );\n  // current location\n  var_dump( ftell($file_handle) );\n  foreach($formats as $format) {\n    var_dump( fscanf($file_handle,$format) );\n  }\n  $counter++;\n  fclose($file_handle);\n  unlink($filename);\n}\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

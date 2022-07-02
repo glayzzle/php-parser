@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/array_unique_variation3.phpt
+  it("Test array_unique() function : usage variations - associative array with different keys", function () {
+    expect(parser.parseCode("<?php\n/*\n * Testing the functionality of array_unique() by passing different\n * associative arrays having different keys to $input argument.\n*/\necho \"*** Testing array_unique() : assoc. array with diff. keys passed to \\$input argument ***\\n\";\n// get an unset variable\n$unset_var = 10;\nunset ($unset_var);\n// get a resource variable\n$fp = fopen(__FILE__, \"r\");\n// get a class\nclass classA\n{\n  public function __toString(){\n    return \"Class A object\";\n  }\n}\n// get a heredoc string\n$heredoc = <<<EOT\nHello world\nEOT;\n// different associative arrays to be passed to $input argument\n$inputs = array (\n/*1*/  // arrays with integer keys\n       array(0 => \"0\", 1 => \"0\"),\n       array(1 => \"1\", 2 => \"2\", 3 => 1, 4 => \"4\"),\n       // arrays with string keys\n/*5*/  array('\\tHello' => 111, 're\\td' => \"color\", '\\v\\fworld' => 2.2, 'pen\\n' => 111),\n       array(\"\\tHello\" => 111, \"re\\td\" => \"color\", \"\\v\\fworld\" => 2.2, \"pen\\n\" => 111),\n       array(\"hello\", $heredoc => \"string\", \"string\"),\n       // array with object, unset variable and resource variable\n/*8*/ array(@$unset_var => \"hello\", $fp => 'resource', 11, \"hello\"),\n);\n// loop through each sub-array of $inputs to check the behavior of array_unique()\n$iterator = 1;\nforeach($inputs as $input) {\n  echo \"-- Iteration $iterator --\\n\";\n  var_dump( array_unique($input) );\n  $iterator++;\n}\nfclose($fp);\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

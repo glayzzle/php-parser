@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/chunk_split_variation4.phpt
+  it("Test chunk_split() function : usage variations - different heredoc strings as 'str' argument", function () {
+    expect(parser.parseCode("<?php\n/*\n* Passing different heredoc strings as 'str' argument to the chunk_split()\n* with 'chunklen' 4 and default value of 'ending' that is \"\\r\\n\"\n*/\necho \"*** Testing chunk_split() : heredoc strings as 'str' argument ***\\n\";\n// Initializing required variables\n$chunklen = 4;\n// Null heredoc string\n$heredoc_null = <<<EOT1\nEOT1;\n// heredoc string with single character\n$heredoc_char = <<<EOT2\na\nEOT2;\n// simple heredoc string\n$heredoc_str = <<<EOT3\nThis is simple heredoc string\nEOT3;\n// heredoc with special characters\n$heredoc_spchar = <<<EOT4\nThis checks heredoc with $, %, &, chars\nEOT4;\n// blank heredoc string\n$heredoc_blank = <<<EOT5\nEOT5;\n// heredoc with different white space characters\n$heredoc_escchar = <<<EOT6\nThis checks\\t chunk_split()\\nEscape\\rchars\nEOT6;\n// heredoc with multiline\n$heredoc_multiline= <<<EOT7\nThis is to check chunk_split\nfunction with multiline\nheredoc\nEOT7;\n// heredoc with quotes and slashes\n$heredoc_quote_slash = <<<EOT8\n\"To check \" in heredoc\"\nI'm sure it'll work also with \\\nwhich is single slash\nEOT8;\n//different heredoc strings for 'str'\n$heredoc_arr = array(\n  $heredoc_null,\n  $heredoc_blank,\n  $heredoc_char,\n  $heredoc_str,\n  $heredoc_multiline,\n  $heredoc_spchar,\n  $heredoc_escchar,\n  $heredoc_quote_slash\n);\n// loop through each element of the heredoc_arr for 'str'\n$count = 0;\nforeach($heredoc_arr as $str) {\n  echo \"-- Iteration \".($count+1). \" --\\n\";\n  var_dump( chunk_split( $str, $chunklen) );\n  $count++;\n};\necho \"Done\"\n?>")).toMatchSnapshot();
+  });
+});

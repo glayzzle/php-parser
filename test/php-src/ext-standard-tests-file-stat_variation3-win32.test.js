@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/stat_variation3-win32.phpt
+  it("Test stat() functions: usage variations - effects of creating/deleting the dir/file", function () {
+    expect(parser.parseCode("<?php\n/* test the effects of creating & deleting of subdir/file  on the stats of dir/file */\n$file_path = __DIR__;\nrequire \"$file_path/file.inc\";\n/* create temp file and directory */\nmkdir(\"$file_path/stat_variation3/\");  // temp dir\necho \"*** Testing stat(): with creating & deleting subdir/file ***\\n\";\n// creating and deleting subdir and files in the dir\necho \"-- Testing stat() on dir after subdir and file is created in it --\\n\";\n$dirname = \"$file_path/stat_variation3\";\n$old_stat = stat($dirname);\nclearstatcache();\nsleep(1);\nmkdir(\"$dirname/stat_variation3_subdir\");\n$file_handle = fopen(\"$dirname/stat_variation3a.tmp\", \"w\");\nfclose($file_handle);\n$new_stat = stat($dirname);\n// compare self stats\nvar_dump( compare_self_stat($old_stat) );\nvar_dump( compare_self_stat($new_stat) );\n// compare the stats\n$affected_members = array( 9, 'mtime');\nclearstatcache();\nsleep(2);\nvar_dump(compare_stats($old_stat, $new_stat, $affected_members, \"<\"));\nunlink(\"$dirname/stat_variation3a.tmp\");\nrmdir(\"$dirname/stat_variation3_subdir\");\nclearstatcache();\n// comparing stats after the deletion of subdir and file\necho \"-- Testing stat() for comparing stats after the deletion of subdir and file --\\n\";\n$new_stat1 = stat($dirname);\n// compare self stats\nvar_dump( compare_self_stat($new_stat1) );\n// compare the stats\nvar_dump(compare_stats($new_stat, $new_stat1, $affected_members, \"<\"));\nclearstatcache();\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

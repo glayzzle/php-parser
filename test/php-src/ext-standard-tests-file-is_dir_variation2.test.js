@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/is_dir_variation2.phpt
+  it("Test is_dir() function: usage variations - links", function () {
+    expect(parser.parseCode("<?php\n/* Testing is_dir() with dir, soft & hard link to dir,\n     and with file, soft & hard link to file */\n$file_path = __DIR__;\necho \"*** Testing is_dir() with dir and links to dir ***\\n\";\necho \"-- With dir --\\n\";\n$dirname = $file_path.\"/is_dir_variation2\";\nmkdir($dirname);\nvar_dump( is_dir($dirname) );\nclearstatcache();\necho \"-- With symlink --\\n\";\nsymlink($file_path.\"/is_dir_variation2\", $file_path.\"/is_dir_variation2_symlink\");\nvar_dump( is_dir($file_path.\"/is_dir_variation2_symlink\") );  //is_dir() resolves symlinks\nclearstatcache();\necho \"-- With hardlink --\";\nlink($file_path.\"/is_dir_variation2\", $file_path.\"/is_dir_variation2_link\"); //Not permitted to create hard-link to a dir\nvar_dump( is_dir($file_path.\"/is_dir_variation2_link\") );\nclearstatcache();\necho \"\\n*** Testing is_dir() with file and links to a file ***\\n\";\necho \"-- With file --\\n\";\n$filename = $file_path.\"/is_dir_variation2.tmp\";\nfclose( fopen($filename, \"w\") );\nvar_dump( is_dir($filename) );\nclearstatcache();\necho \"-- With symlink --\\n\";\nsymlink($file_path.\"/is_dir_variation2.tmp\", $file_path.\"/is_dir_variation2_symlink.tmp\");\nvar_dump( is_dir($file_path.\"/is_dir_variation2_symlink.tmp\") );\nclearstatcache();\necho \"-- With hardlink --\\n\";\nlink($file_path.\"/is_dir_variation2.tmp\", $file_path.\"/is_dir_variation2_link.tmp\");\nvar_dump( is_dir($file_path.\"/is_dir_variation2_link.tmp\") );\nclearstatcache();\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

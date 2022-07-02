@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests stream context tcp_nodelay fopen 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "ctxt",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Array {
+              "items": Array [
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"socket\\"",
+                    "unicode": false,
+                    "value": "socket",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"tcp_nodelay\\"",
+                          "unicode": false,
+                          "value": "tcp_nodelay",
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Boolean {
+                          "kind": "boolean",
+                          "raw": "true",
+                          "value": true,
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+                Entry {
+                  "byRef": false,
+                  "key": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"http\\"",
+                    "unicode": false,
+                    "value": "http",
+                  },
+                  "kind": "entry",
+                  "unpack": false,
+                  "value": Array {
+                    "items": Array [
+                      Entry {
+                        "byRef": false,
+                        "key": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"follow_location\\"",
+                          "unicode": false,
+                          "value": "follow_location",
+                        },
+                        "kind": "entry",
+                        "unpack": false,
+                        "value": Number {
+                          "kind": "number",
+                          "value": "0",
+                        },
+                      },
+                    ],
+                    "kind": "array",
+                    "shortForm": true,
+                  },
+                },
+              ],
+              "kind": "array",
+              "shortForm": true,
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "stream_context_create",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "stream",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"http://www.php.net\\"",
+              "unicode": false,
+              "value": "http://www.php.net",
+            },
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"r\\"",
+              "unicode": false,
+              "value": "r",
+            },
+            Boolean {
+              "kind": "boolean",
+              "raw": "false",
+              "value": false,
+            },
+            Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "ctxt",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "fopen",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "socket",
+        },
+        "operator": "=",
+        "right": Silent {
+          "expr": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "stream",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "socket_import_stream",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "silent",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Bin {
+            "kind": "bin",
+            "left": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "socket",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "STREAM_IPPROTO_TCP",
+                  "resolution": "uqn",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "TCP_NODELAY",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "socket_get_option",
+                "resolution": "uqn",
+              },
+            },
+            "right": Number {
+              "kind": "number",
+              "value": "0",
+            },
+            "type": ">",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

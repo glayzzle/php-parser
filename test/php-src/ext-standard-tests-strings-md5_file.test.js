@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/md5_file.phpt
+  it("Test md5_file() function with ASCII output and raw binary output", function () {
+    expect(parser.parseCode("<?php\n/* Creating an empty file */\nif (($handle = fopen( \"EmptyFileMD5.txt\", \"w+\")) == FALSE)\nreturn false;\n/* Creating a data file */\nif (($handle2 = fopen( \"DataFileMD5.txt\", \"w+\")) == FALSE)\nreturn false;\n/* Writing into file */\n$filename = \"DataFileMD5.txt\";\n$content = \"Add this to the file\\n\";\nif (is_writable($filename)) {\n  if (fwrite($handle2, $content) === FALSE) {\n    echo \"Cannot write to file ($filename)\";\n    exit;\n  }\n}\n// close the files\nfclose($handle);\nfclose($handle2);\n/* Testing error conditions */\necho \"\\n*** Testing for error conditions ***\\n\";\n/* No filename */\ntry {\n    var_dump( md5_file(\"\") );\n} catch (\\ValueError $e) {\n    echo $e->getMessage() . \\PHP_EOL;\n}\n/* invalid filename */\nvar_dump( md5_file(\"aZrq16u\") );\n/* Scalar value as filename  */\nvar_dump( md5_file(12) );\n/* Hexadecimal Output for Empty file as input */\necho \"\\n*** Hexadecimal Output for Empty file as Argument ***\\n\";\nvar_dump( md5_file(\"EmptyFileMD5.txt\") );\n/* Raw Binary Output for Empty file as input */\necho \"\\n*** Raw Binary Output for Empty file as Argument ***\\n\";\nvar_dump( md5_file(\"EmptyFileMD5.txt\", true) );\n/* Normal operation with hexadecimal output */\necho \"\\n*** Hexadecimal Output for a valid file with some contents ***\\n\";\nvar_dump( md5_file(\"DataFileMD5.txt\") );\n/* Normal operation with raw binary output */\necho \"\\n*** Raw Binary Output for a valid file with some contents ***\\n\";\nvar_dump ( md5_file(\"DataFileMD5.txt\", true) );\n// remove temp files\nunlink(\"DataFileMD5.txt\");\nunlink(\"EmptyFileMD5.txt\");\necho \"\\nDone\";\n?>")).toMatchSnapshot();
+  });
+});

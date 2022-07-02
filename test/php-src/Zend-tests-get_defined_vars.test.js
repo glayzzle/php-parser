@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/get_defined_vars.phpt
+  it("Testing get_defined_vars() Function", function () {
+    expect(parser.parseCode("<?php\n/* Various variables definitions used for testing of the function */\n$number = 22.33; //number\n$string = \"sample string\"; //string\n$array1 = array(1, 1, 2, 3, 5, 8); //simple array\n$assoc_array = array( 'a'=>97, 'c'=>99, 'A'=>65, 'C'=>67, 1=>\"string1\" ); //associative array\n$boolean = TRUE; //boolean\n/* Checking for Class and Objects */\nclass sample {\nvar $number = 233;\nvar $string = \"string2\";\npublic function func() {\n$local_var = 2;\nvar_dump( get_defined_vars() );\n}\n}\n$sample_obj = new sample; //object declaration\nfunction func() {\n$string33 = 22;\nvar_dump( get_defined_vars() );\n}\n$arr = get_defined_vars();\n/* Displaying various variable through the array captured by the get_defined_vars function call */\necho \"\\n*** Displaying various variables through the array captured by the get_defined_vars function call ***\\n\";\nvar_dump( $arr[\"argc\"] );\nvar_dump( $arr[\"number\"] );\nvar_dump( $arr[\"string\"] );\nvar_dump( $arr[\"array1\"] );\nvar_dump( $arr[\"assoc_array\"] );\nvar_dump( $arr[\"boolean\"] );\nvar_dump( $arr[\"sample_obj\"] );\necho \"\\n*** Checking for output when get_defined_vars called in local function ***\\n\";\nfunc();\necho \"\\n*** Checking for output when get_defined_vars called in function of a class ***\\n\";\n$sample_obj->func();\necho \"\\n*** Checking for output when get_defined_vars called in nested functions ***\\n\";\nfunction func1(){\n$func1_var = 2;\nvar_dump( get_defined_vars() );\nfunction func2(){\n$func2_var = 3;\nvar_dump( get_defined_vars() );\n}\nfunc2();\n}\nfunc1();\necho \"\\nDone\";\n?>")).toMatchSnapshot();
+  });
+});

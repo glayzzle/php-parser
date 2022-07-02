@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/krsort_variation3.phpt
+  it("Test krsort() function : usage variations - sort integer/float values", function () {
+    expect(parser.parseCode("<?php\n/*\n * Testing krsort() by providing array of integer/float/mixed values for $array argument\n * with following flag values:\n *  1.flag value as default\n *  2.SORT_REGULAR - compare items normally\n *  3.SORT_NUMERIC - compare items numerically\n*/\necho \"*** Testing krsort() : usage variations ***\\n\";\n// diff. associative arrays to sort\n$various_arrays = array(\n  // negative/positive integer key value array\n  array(1 => 11, -2 => -11, 3 => 21, -4 => -21, 5 => 31, -6 => -31, 7 => 0, 8 => 41, -10 =>-41),\n  // mixed value array with different types of keys\n  array(1 => .0001, 2 => .0021, -3 => -.01, 4 => -1, 5 => 0, 6 => .09, 7 => 2, -8 => -.9, 9 => 10.6E-2,\n        -10 => -10.6E-2, 11 => 33)\n);\n// set of possible flag values\n$flags = array(\"SORT_REGULAR\" => SORT_REGULAR, \"SORT_NUMERIC\" => SORT_NUMERIC);\n$count = 1;\necho \"\\n-- Testing krsort() by supplying various integer/float arrays --\\n\";\n// loop through to test krsort() with different arrays\nforeach ($various_arrays as $array) {\n  echo \"\\n-- Iteration $count --\\n\";\n  echo \"- With default sort flag -\\n\";\n  $temp_array = $array;\n  var_dump(krsort($temp_array) );\n  var_dump($temp_array);\n  // loop through $flags array and call krsort() with all possible sort flag values\n  foreach($flags as $key => $flag){\n    echo \"- Sort flag = $key -\\n\";\n    $temp_array = $array;\n    var_dump(krsort($temp_array, $flag) );\n    var_dump($temp_array);\n  }\n  $count++;\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

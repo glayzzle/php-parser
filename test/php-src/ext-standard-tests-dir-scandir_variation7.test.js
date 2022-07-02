@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/dir/scandir_variation7.phpt
+  it("Test scandir() function : usage variations - different directory permissions", function () {
+    expect(parser.parseCode("<?php\n/*\n * Create directories with different permissions to test whether scandir() can access them\n */\necho \"*** Testing scandir() : usage variations ***\\n\";\n// create the temporary directory\n$dir_path = __DIR__ . \"/scandir_variation7\";\nmkdir($dir_path);\n// different values for directory permissions\n$permission_values = array(\n/*1*/  0477,  // owner has read only, other and group has rwx\n       0677,  // owner has rw only, other and group has rwx\n/*3*/  0444,  // all have read only\n       0666,  // all have rw only\n/*5*/  0400,  // owner has read only, group and others have no permission\n       0600,   // owner has rw only, group and others have no permission\n/*7*/  0470,  // owner has read only, group has rwx & others have no permission\n       0407,  // owner has read only, other has rwx & group has no permission\n/*9*/  0670,  // owner has rw only, group has rwx & others have no permission\n/*10*/ 0607   // owner has rw only, group has no permission and others have rwx\n);\n$iterator = 1;\nforeach ($permission_values as $perm) {\n    echo \"\\n-- Iteration $iterator --\\n\";\n    // Remove the directory if already exists\n    if (is_dir($dir_path)){\n        chmod ($dir_path, 0777); // change dir permission to allow all operation\n        rmdir ($dir_path);\n    }\n    mkdir($dir_path);\n    // change the dir permission to test dir on it\n    var_dump( chmod($dir_path, $perm) );\n    var_dump(scandir($dir_path));\n    $iterator++;\n}\n?>")).toMatchSnapshot();
+  });
+});

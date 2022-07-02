@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fopen_variation19.phpt
+  it("Test fopen() function : variation: test opening linked files", function () {
+    expect(parser.parseCode("<?php\n$tmpDir = 'fopenVar19.Dir';\n$realFilename = __FILE__.'.real';\n$sortFilename = __FILE__.'.soft';\n$hardFilename = __FILE__.'.hard';\n$linkOfLink = __FILE__.'.soft2';\necho \"*** Testing fopen() : variation ***\\n\";\n// start the test\nmkdir($tmpDir);\nchdir($tmpDir);\n$h = fopen($realFilename, \"w\");\nfwrite($h, \"Hello World\");\nfclose($h);\nsymlink($realFilename, $sortFilename);\nsymlink($sortFilename, $linkOfLink);\nlink($realFilename, $hardFilename);\necho \"*** testing reading of links ***\\n\";\necho \"soft link:\";\nreadFile2($sortFilename);\necho \"hard link:\";\nreadFile2($hardFilename);\necho \"link of link:\";\nreadFile2($linkOfLink);\necho \"*** test appending to links ***\\n\";\necho \"soft link:\";\nappendFile($sortFilename);\necho \"hard link:\";\nappendFile($hardFilename);\necho \"link of link:\";\nappendFile($linkOfLink);\necho \"*** test overwriting links ***\\n\";\necho \"soft link:\";\nwriteFile($sortFilename);\necho \"hard link:\";\nwriteFile($hardFilename);\necho \"link of link:\";\nwriteFile($linkOfLink);\nunlink($linkOfLink);\nunlink($sortFilename);\nunlink($hardFilename);\nunlink($realFilename);\nchdir(\"..\");\nrmdir($tmpDir);\nfunction readFile2($file) {\n   $h = fopen($file, 'r');\n   fpassthru($h);\n   fclose($h);\n   echo \"\\n\";\n}\nfunction appendFile($file) {\n   $h = fopen($file, 'a+');\n   fwrite($h, ' again!');\n   fseek($h, 0);\n   fpassthru($h);\n   fclose($h);\n   echo \"\\n\";\n}\nfunction writeFile($file) {\n   $h = fopen($file, 'w');\n   fwrite($h, 'Goodbye World');\n   fclose($h);\n   readFile2($file);\n}\n?>")).toMatchSnapshot();
+  });
+});

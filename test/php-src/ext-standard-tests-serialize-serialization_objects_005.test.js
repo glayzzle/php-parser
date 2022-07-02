@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/serialize/serialization_objects_005.phpt
+  it("Check behaviour of incomplete class", function () {
+    expect(parser.parseCode("<?php\n$serialized = 'O:1:\"C\":1:{s:1:\"p\";i:1;}';\n$incomplete = unserialize($serialized);\neval('Class C {}');\n$complete   = unserialize($serialized);\necho \"\\n\\n---> Various types of access on complete class:\\n\" ;\nvar_dump($complete);\nvar_dump(is_object($complete));\nvar_dump($complete->p);\n$ref1 = \"ref1.original\";\n$complete->p = &$ref1;\nvar_dump($complete->p);\n$ref1 = \"ref1.changed\";\nvar_dump($complete->p);\n$complete->p = \"p.changed\";\nvar_dump($ref1);\nvar_dump(isset($complete->x));\n$complete->x = \"x.new\";\nvar_dump(isset($complete->x));\nunset($complete->x);\nvar_dump($complete->x);\necho \"\\n\\n---> Same types of access on incomplete class:\\n\" ;\nvar_dump($incomplete);\nvar_dump(is_object($incomplete));\nvar_dump($incomplete->p);\ntry {\n    $ref2 = \"ref1.original\";\n    $incomplete->p = &$ref2;\n} catch (Error $e) {\n    echo $e->getMessage(), \"\\n\";\n}\nvar_dump($incomplete->p);\n$ref2 = \"ref1.changed\";\nvar_dump($incomplete->p);\ntry {\n    $incomplete->p = \"p.changed\";\n} catch (Error $e) {\n    echo $e->getMessage(), \"\\n\";\n}\nvar_dump($ref1);\nvar_dump(isset($incomplete->x));\ntry {\n    $incomplete->x = \"x.new\";\n} catch (Error $e) {\n    echo $e->getMessage(), \"\\n\";\n}\nvar_dump(isset($incomplete->x));\ntry {\n    unset($incomplete->x);\n} catch (Error $e) {\n    echo $e->getMessage(), \"\\n\";\n}\nvar_dump($incomplete->x);\ntry {\n    $incomplete->f();\n} catch (Error $e) {\n    echo $e->getMessage(), \"\\n\";\n}\necho \"Done\";\n?>")).toMatchSnapshot();
+  });
+});

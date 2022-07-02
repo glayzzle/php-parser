@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // tests/lang/foreachLoop.002.phpt
+  it("Foreach loop tests - modifying the array during the loop.", function () {
+    expect(parser.parseCode("<?php\necho \"\\nDirectly changing array values.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\nforeach ($a as $k=>$v) {\n    $a[$k]=\"changed.$k\";\n    var_dump($v);\n}\nvar_dump($a);\necho \"\\nModifying the foreach \\$value.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\nforeach ($a as $k=>$v) {\n    $v=\"changed.$k\";\n}\nvar_dump($a);\necho \"\\nModifying the foreach &\\$value.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\nforeach ($a as $k=>&$v) {\n    $v=\"changed.$k\";\n}\nvar_dump($a);\necho \"\\nPushing elements onto an unreferenced array.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\n$counter=0;\nforeach ($a as $v) {\n    array_push($a, \"new.$counter\");\n    //avoid infinite loop if test is failing\n    if ($counter++>10) {\n        echo \"Loop detected\\n\";\n        break;\n    }\n}\nvar_dump($a);\necho \"\\nPushing elements onto an unreferenced array, using &\\$value.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\n$counter=0;\nforeach ($a as &$v) {\n    array_push($a, \"new.$counter\");\n    //avoid infinite loop if test is failing\n    if ($counter++>10) {\n        echo \"Loop detected\\n\";\n        break;\n    }\n}\nvar_dump($a);\necho \"\\nPopping elements off an unreferenced array.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\nforeach ($a as $v) {\n    array_pop($a);\n    var_dump($v);\n}\nvar_dump($a);\necho \"\\nPopping elements off an unreferenced array, using &\\$value.\\n\";\n$a = array(\"original.1\",\"original.2\",\"original.3\");\nforeach ($a as &$v) {\n    array_pop($a);\n    var_dump($v);\n}\nvar_dump($a);\n?>")).toMatchSnapshot();
+  });
+});

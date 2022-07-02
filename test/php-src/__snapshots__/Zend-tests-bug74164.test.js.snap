@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #74164 (PHP hangs when an invalid value is dynamically passed to typehinted by-ref arg) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Closure {
+                "arguments": Array [
+                  Parameter {
+                    "attrGroups": Array [],
+                    "byref": false,
+                    "flags": 0,
+                    "kind": "parameter",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "type",
+                    },
+                    "nullable": false,
+                    "readonly": false,
+                    "type": null,
+                    "value": null,
+                    "variadic": false,
+                  },
+                  Parameter {
+                    "attrGroups": Array [],
+                    "byref": false,
+                    "flags": 0,
+                    "kind": "parameter",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "msg",
+                    },
+                    "nullable": false,
+                    "readonly": false,
+                    "type": null,
+                    "value": null,
+                    "variadic": false,
+                  },
+                ],
+                "attrGroups": Array [],
+                "body": Block {
+                  "children": Array [
+                    Throw {
+                      "kind": "throw",
+                      "what": New {
+                        "arguments": Array [
+                          Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "msg",
+                          },
+                        ],
+                        "kind": "new",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "\\\\Exception",
+                          "resolution": "fqn",
+                        },
+                      },
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "byref": false,
+                "isStatic": false,
+                "kind": "closure",
+                "nullable": false,
+                "type": null,
+                "uses": Array [],
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "set_error_handler",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Closure {
+                "arguments": Array [
+                  Parameter {
+                    "attrGroups": Array [],
+                    "byref": true,
+                    "flags": 0,
+                    "kind": "parameter",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "ref",
+                    },
+                    "nullable": false,
+                    "readonly": false,
+                    "type": TypeReference {
+                      "kind": "typereference",
+                      "name": "array",
+                      "raw": "array",
+                    },
+                    "value": null,
+                    "variadic": false,
+                  },
+                ],
+                "attrGroups": Array [],
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Call {
+                        "arguments": Array [
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"xxx\\"",
+                            "unicode": false,
+                            "value": "xxx",
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "var_dump",
+                          "resolution": "uqn",
+                        },
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "byref": false,
+                "isStatic": false,
+                "kind": "closure",
+                "nullable": false,
+                "type": null,
+                "uses": Array [],
+              },
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'not_an_array_variable'",
+                "unicode": false,
+                "value": "not_an_array_variable",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "call_user_func",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "Foo",
+      "withBrackets": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

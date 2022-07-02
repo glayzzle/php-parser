@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // tests/security/open_basedir_file.phpt
+  it("Test open_basedir configuration", function () {
+    expect(parser.parseCode("<?php\nrequire_once \"open_basedir.inc\";\n$initdir = getcwd();\ntest_open_basedir_before(\"file\");\ntest_open_basedir_error(\"file\");\nvar_dump(file(\"ok.txt\"));\nvar_dump(file(\"../ok/ok.txt\"));\nvar_dump(file($initdir.\"/test/ok/ok.txt\"));\nvar_dump(file($initdir.\"/test/ok/../ok/ok.txt\"));\ntest_open_basedir_after(\"file\");\n?>")).toMatchSnapshot();
+  });
+});

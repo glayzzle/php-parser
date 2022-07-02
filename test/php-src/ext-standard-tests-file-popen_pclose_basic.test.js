@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/popen_pclose_basic.phpt
+  it("Test popen() and pclose function: basic functionality", function () {
+    expect(parser.parseCode("<?php\n$file_path = __DIR__;\nrequire($file_path.\"/file.inc\");\necho \"*** Testing popen() and pclose() with different processes ***\\n\";\necho \"-- Testing popen(): reading from the pipe --\\n\";\n$dirpath = $file_path.\"/popen_basic\";\nmkdir($dirpath);\ntouch($dirpath.\"/popen_basic.tmp\");\ndefine('CMD', \"ls $dirpath\");\n$file_handle = popen(CMD, 'r');\nfpassthru($file_handle);\npclose($file_handle);\necho \"-- Testing popen(): reading from a file using 'cat' command --\\n\";\ncreate_files($dirpath, 1, \"text_with_new_line\", 0755, 100, \"w\", \"popen_basic\", 1, \"bytes\");\n$filename = $dirpath.\"/popen_basic1.tmp\";\n$command = \"cat $filename\";\n$file_handle = popen($command, \"r\");\n$return_value =  fpassthru($file_handle);\necho \"\\n\";\nvar_dump($return_value);\npclose($file_handle);\ndelete_files($dirpath, 1);\necho \"*** Testing popen(): writing to the pipe ***\\n\";\n$arr = array(\"ggg\", \"ddd\", \"aaa\", \"sss\");\n$file_handle = popen(\"sort\", \"w\");\n$counter = 0;\n$newline = \"\\n\";\nforeach($arr as $str) {\n  fwrite($file_handle, $str);\n  fwrite($file_handle, $newline);\n}\npclose($file_handle);\necho \"*** Testing for return type of popen() and pclose() functions ***\\n\";\n$string = \"Test String\";\n$return_value_popen = popen(\"echo $string\", \"r\");\nvar_dump( is_resource($return_value_popen) );\nfpassthru($return_value_popen);\n$return_value_pclose = pclose($return_value_popen);\nvar_dump( is_int($return_value_pclose) );\necho \"\\n--- Done ---\";\n?>")).toMatchSnapshot();
+  });
+});

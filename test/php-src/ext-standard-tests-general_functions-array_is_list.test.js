@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/general_functions/array_is_list.phpt
+  it("Test array_is_list() function", function () {
+    expect(parser.parseCode("<?php\nfunction test_is_list(string $desc, $val) : void {\n    try {\n        printf(\"%s: %s\\n\", $desc, json_encode(array_is_list($val)));\n    } catch (TypeError $e) {\n        printf(\"%s: threw %s\\n\", $desc, $e->getMessage());\n    }\n}\ntest_is_list(\"empty\", []);\ntest_is_list(\"one\", [1]);\ntest_is_list(\"two\", [1,2]);\ntest_is_list(\"three\", [1,2,3]);\ntest_is_list(\"four\", [1,2,3,4]);\ntest_is_list(\"ten\", range(0, 10));\ntest_is_list(\"null\", null);\ntest_is_list(\"int\", 123);\ntest_is_list(\"float\", 1.23);\ntest_is_list(\"string\", \"string\");\ntest_is_list(\"object\", new stdClass());\ntest_is_list(\"true\", true);\ntest_is_list(\"false\", false);\ntest_is_list(\"string key\", [\"a\" => 1]);\ntest_is_list(\"mixed keys\", [0 => 0, \"a\" => 1]);\ntest_is_list(\"ordered keys\", [0 => 0, 1 => 1]);\ntest_is_list(\"shuffled keys\", [1 => 0, 0 => 1]);\ntest_is_list(\"skipped keys\", [0 => 0, 2 => 2]);\n$arr = [1, 2, 3];\nunset($arr[0]);\ntest_is_list(\"unset first\", $arr);\n$arr = [1, 2, 3];\nunset($arr[1]);\ntest_is_list(\"unset middle\", $arr);\n$arr = [1, 2, 3];\nunset($arr[2]);\ntest_is_list(\"unset end\", $arr);\n$arr = [1, \"a\" => \"a\", 2];\nunset($arr[\"a\"]);\ntest_is_list(\"unset string key\", $arr);\n$arr = [1 => 1, 0 => 0];\nunset($arr[1]);\ntest_is_list(\"unset into order\", $arr);\n$arr = [\"a\" => 1];\nunset($arr[\"a\"]);\ntest_is_list(\"unset to empty\", $arr);\n$arr = [1, 2, 3];\n$arr[] = 4;\ntest_is_list(\"append implicit\", $arr);\n$arr = [1, 2, 3];\n$arr[3] = 4;\ntest_is_list(\"append explicit\", $arr);\n$arr = [1, 2, 3];\n$arr[4] = 5;\ntest_is_list(\"append with gap\", $arr);")).toMatchSnapshot();
+  });
+});

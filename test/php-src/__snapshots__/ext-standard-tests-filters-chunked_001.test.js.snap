@@ -1,0 +1,283 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Chunked encoding 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "streams",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,0\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,0
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,2\\\\r\\\\nte\\\\r\\\\n2\\\\r\\\\nst\\\\r\\\\n0\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,2
+te
+2
+st
+0
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,2\\\\nte\\\\n2\\\\nst\\\\n0\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,2
+te
+2
+st
+0
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,2;a=1\\\\nte\\\\n2;a=2;b=3\\\\r\\\\nst\\\\n0\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,2;a=1
+te
+2;a=2;b=3
+st
+0
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,2\\\\nte\\\\n2\\\\nst\\\\n0\\\\na=b\\\\r\\\\nc=d\\\\n\\\\r\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,2
+te
+2
+st
+0
+a=b
+c=d
+
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,1f\\\\n0123456789abcdef0123456789abcde\\\\n1\\\\nf\\\\n0\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,1f
+0123456789abcdef0123456789abcde
+1
+f
+0
+",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"data://text/plain,1E\\\\n0123456789abcdef0123456789abcd\\\\n2\\\\nef\\\\n0\\\\n\\"",
+                "unicode": false,
+                "value": "data://text/plain,1E
+0123456789abcdef0123456789abcd
+2
+ef
+0
+",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "fp",
+              },
+              "operator": "=",
+              "right": Call {
+                "arguments": Array [
+                  Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "name",
+                  },
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"r\\"",
+                    "unicode": false,
+                    "value": "r",
+                  },
+                ],
+                "kind": "call",
+                "what": Name {
+                  "kind": "name",
+                  "name": "fopen",
+                  "resolution": "uqn",
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "fp",
+                },
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"dechunk\\"",
+                  "unicode": false,
+                  "value": "dechunk",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "STREAM_FILTER_READ",
+                  "resolution": "uqn",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "stream_filter_append",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "fp",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "stream_get_contents",
+                    "resolution": "uqn",
+                  },
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "var_dump",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "fp",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "fclose",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "streams",
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "name",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

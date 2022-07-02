@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/usort_variation5.phpt
+  it("Test usort() function : usage variations - string data", function () {
+    expect(parser.parseCode("<?php\n/*\n * Pass arrays of string data to usort() to test how it is re-ordered\n */\necho \"*** Testing usort() : usage variation ***\\n\";\nfunction cmp_function($value1, $value2)\n{\n  if($value1 == $value2) {\n    return 0;\n  }\n  else if($value1 > $value2) {\n    return 1;\n  }\n  else {\n    return -1;\n  }\n}\n// Different heredoc strings to be sorted\n$empty_heredoc =<<<EOT\nEOT;\n$simple_heredoc1 =<<<EOT\nHeredoc\nEOT;\n$simple_heredoc2 =<<<EOT\nHEREDOC\nEOT;\n$multiline_heredoc =<<<EOT\nheredoc string\\twith!@# and 123\nTest this!!!\nEOT;\n// Single quoted strings\n$single_quoted_values = array(\n  0 => ' ',  1 => 'test', 3 => 'Hello', 4 => 'HELLO',\n  5 => '',   6 => '\\t',   7 => '0',     8 => '123Hello',\n  9 => '\\'', 10 => '@#$%'\n);\necho \"\\n-- Sorting Single Quoted String values --\\n\";\nvar_dump( usort($single_quoted_values, 'cmp_function') );\nvar_dump($single_quoted_values);\n// Double quoted strings\n$double_quoted_values = array(\n  0 => \" \",  1 => \"test\", 3 => \"Hello\", 4 => \"HELLO\",\n  5 => \"\",   6 => \"\\t\",   7 => \"0\",     8 => \"123Hello\",\n  9 => \"\\\"\", 10 => \"@#$%\"\n);\necho \"\\n-- Sorting Double Quoted String values --\\n\";\nvar_dump( usort($double_quoted_values, 'cmp_function') );\nvar_dump($double_quoted_values);\n// Heredoc strings\n$heredoc_values = array(0 => $empty_heredoc,   1 => $simple_heredoc1,\n                        2 => $simple_heredoc2, 3 => $multiline_heredoc);\necho \"\\n-- Sorting Heredoc String values --\\n\";\nvar_dump( usort($heredoc_values, 'cmp_function') );\nvar_dump($heredoc_values);\n?>")).toMatchSnapshot();
+  });
+});

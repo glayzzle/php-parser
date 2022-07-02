@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/network/shutdown.phpt
+  it("stream_socket_shutdown() test on IPv4 TCP Loopback", function () {
+    expect(parser.parseCode("<?php\n  for ($i=0; $i<100; $i++) {\n    $port = rand(10000, 65000);\n    /* Setup socket server */\n    $server = @stream_socket_server(\"tcp://127.0.0.1:$port\");\n    if ($server) {\n      break;\n    }\n  }\nif (!$server) {\n        die('Unable to create AF_INET socket [server]');\n    }\n    /* Connect and send request 1 */\n    $client1 = stream_socket_client(\"tcp://127.0.0.1:$port\");\n    if (!$client1) {\n        die('Unable to create AF_INET socket [client]');\n    }\n    @fwrite($client1, \"Client 1\\n\");\n    stream_socket_shutdown($client1, STREAM_SHUT_WR);\n    @fwrite($client1, \"Error 1\\n\");\n    /* Connect and send request 2 */\n    $client2 = stream_socket_client(\"tcp://127.0.0.1:$port\");\n    if (!$client2) {\n        die('Unable to create AF_INET socket [client]');\n    }\n    @fwrite($client2, \"Client 2\\n\");\n    stream_socket_shutdown($client2, STREAM_SHUT_WR);\n    @fwrite($client2, \"Error 2\\n\");\n    /* Accept connection 1 */\n    $socket = stream_socket_accept($server);\n    if (!$socket) {\n        die('Unable to accept connection');\n    }\n    @fwrite($socket, fgets($socket));\n    @fwrite($socket, fgets($socket));\n    fclose($socket);\n    /* Read Response 1 */\n    echo fgets($client1);\n    echo fgets($client1);\n    /* Accept connection 2 */\n    $socket = stream_socket_accept($server);\n    if (!$socket) {\n        die('Unable to accept connection');\n    }\n    @fwrite($socket, fgets($socket));\n    @fwrite($socket, fgets($socket));\n    fclose($socket);\n    /* Read Response 2 */\n    echo fgets($client2);\n    echo fgets($client2);\n    fclose($client1);\n    fclose($client2);\n    fclose($server);\n?>")).toMatchSnapshot();
+  });
+});

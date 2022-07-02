@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #80194: Assertion failure during block assembly of unreachable free with leading nop 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "x",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Switch {
+            "body": Block {
+              "children": Array [
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      Throw {
+                        "kind": "throw",
+                        "what": New {
+                          "arguments": Array [],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "Exception",
+                            "resolution": "uqn",
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": null,
+                },
+                Case {
+                  "body": Block {
+                    "children": Array [
+                      Return {
+                        "expr": New {
+                          "arguments": Array [],
+                          "kind": "new",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "stdClass",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "return",
+                      },
+                      Break {
+                        "kind": "break",
+                        "level": null,
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "case",
+                  "test": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "'foobar'",
+                    "unicode": false,
+                    "value": "foobar",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "switch",
+            "shortForm": false,
+            "test": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "y",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "x",
+        },
+        "operator": "=",
+        "right": Cast {
+          "expr": Array {
+            "items": Array [
+              Entry {
+                "byRef": false,
+                "key": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'y'",
+                  "unicode": false,
+                  "value": "y",
+                },
+                "kind": "entry",
+                "unpack": false,
+                "value": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'foobar'",
+                  "unicode": false,
+                  "value": "foobar",
+                },
+              },
+            ],
+            "kind": "array",
+            "shortForm": true,
+          },
+          "kind": "cast",
+          "raw": "(object)",
+          "type": "object",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "x",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "test",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

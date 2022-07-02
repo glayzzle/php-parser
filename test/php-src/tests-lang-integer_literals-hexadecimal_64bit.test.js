@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // tests/lang/integer_literals/hexadecimal_64bit.phpt
+  it("Hexadecimal integer strings (64bit)", function () {
+    expect(parser.parseCode("<?php\n/* Using hexadecimal prefix notation lowercase */\n/* Maximum value representable as integer */\n$hex = 0x7FFFFFFFFFFFFFFF;\nvar_dump($hex);\nvar_dump(PHP_INT_MAX);\n/* Floating number */\n$hex = 0x45FFFABCDE0000000;\nvar_dump($hex);\n/* Integer */\n$hex = 0x1C;\nvar_dump($hex);\n/* underscore separator */\n$hex = 0x1_C;\nvar_dump($hex);\n/* Ignore leading 0 and _ */\n$hex = 0x0_01C;\nvar_dump($hex);\n$hex = 0x0_1C;\nvar_dump($hex);\n/* Overflow to infinity */\n$hex = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;\nvar_dump($hex);\n/* Using hexadecimal prefix notation uppercase */\n/* Maximum value representable as integer */\n$hex = 0X7FFFFFFFFFFFFFFF;\nvar_dump($hex);\nvar_dump(PHP_INT_MAX);\n/* Floating number */\n$hex = 0X45FFFABCDE0000000;\nvar_dump($hex);\n/* Integer */\n$hex = 0X1C;\nvar_dump($hex);\n/* underscore separator */\n$hex = 0X1_C;\nvar_dump($hex);\n/* Ignore leading 0 and _ */\n$hex = 0X0_01C;\nvar_dump($hex);\n$hex = 0X0_1C;\nvar_dump($hex);\n/* Overflow to infinity */\n$hex = 0XFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;\nvar_dump($hex);\n?>")).toMatchSnapshot();
+  });
+});

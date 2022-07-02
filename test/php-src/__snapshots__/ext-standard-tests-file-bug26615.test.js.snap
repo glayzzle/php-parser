@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #26615 (exec crash on long input lines) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "out",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "status",
+        },
+        "operator": "=",
+        "right": Unary {
+          "kind": "unary",
+          "type": "-",
+          "what": Number {
+            "kind": "number",
+            "value": "1",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'TEST_PHP_EXECUTABLE'",
+                      "unicode": false,
+                      "value": "TEST_PHP_EXECUTABLE",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "_ENV",
+                    },
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "' -n -r \\"for($i=1;$i<=5000;$i++) echo $i,\\\\' \\\\';\\"'",
+                    "unicode": false,
+                    "value": " -n -r \\"for($i=1;$i<=5000;$i++) echo $i,' ';\\"",
+                  },
+                  "type": ".",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "out",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "status",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "exec",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Bin {
+                  "kind": "bin",
+                  "left": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'TEST_PHP_EXECUTABLE'",
+                      "unicode": false,
+                      "value": "TEST_PHP_EXECUTABLE",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "_ENV",
+                    },
+                  },
+                  "right": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "' -n -r \\\\'for($i=1;$i<=5000;$i++) print \\"$i\\\\n\\";\\\\' | tr \\\\'\\\\n\\\\' \\\\' \\\\''",
+                    "unicode": false,
+                    "value": " -n -r 'for($i=1;$i<=5000;$i++) print \\"$i\\\\n\\";' | tr '\\\\n' ' '",
+                  },
+                  "type": ".",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "out",
+                },
+                Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "status",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "exec",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Call {
+          "arguments": Array [
+            Name {
+              "kind": "name",
+              "name": "PHP_OS",
+              "resolution": "uqn",
+            },
+            Number {
+              "kind": "number",
+              "value": "0",
+            },
+            Number {
+              "kind": "number",
+              "value": "3",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "substr",
+            "resolution": "uqn",
+          },
+        },
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'WIN'",
+          "unicode": false,
+          "value": "WIN",
+        },
+        "type": "!=",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "out",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "print_r",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -64,9 +64,8 @@ module.exports = {
             ? this.tok.T_NAME_RELATIVE
             : this.tok.T_NAME_QUALIFIED;
         do {
-          if (this._input[this.offset] === "{") {
+          if (this.peekNonWhitespace() === "{") {
             // e.g. when using group use statements, the last '\\' is followed by a '{'
-            this.input();
             break;
           }
 
@@ -125,9 +124,8 @@ module.exports = {
         if (this.is_LABEL_START()) {
           let ch;
           do {
-            if (this._input[this.offset] === "{") {
+            if (this.peekNonWhitespace() === "{") {
               // e.g. when using group use statements, the last '\\' is followed by a '{'
-              this.input();
               break;
             }
 

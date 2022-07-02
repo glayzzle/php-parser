@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/general_functions/callbacks_001.phpt
+  it("ZE2 Callbacks of static functions", function () {
+    expect(parser.parseCode("<?php\nclass A {\n    public static function who() {\n        echo \"A\\n\";\n    }\n    public static function who2() {\n        echo \"A\\n\";\n    }\n}\nclass B extends A {\n    public static function who() {\n        echo \"B\\n\";\n    }\n}\nclass C extends B {\n    public function call($cb) {\n        echo join('|', $cb) . \"\\n\";\n        call_user_func($cb);\n    }\n    public function test() {\n        $this->call(array('parent', 'who'));\n        $this->call(array('C', 'parent::who'));\n        $this->call(array('B', 'parent::who'));\n        $this->call(array('E', 'parent::who'));\n        $this->call(array('A', 'who'));\n        $this->call(array('C', 'who'));\n        $this->call(array('B', 'who2'));\n    }\n}\nclass D {\n    public static function who() {\n        echo \"D\\n\";\n    }\n}\nclass E extends D {\n    public static function who() {\n        echo \"E\\n\";\n    }\n}\n$o = new C;\n$o->test();\nclass O {\n    public function who() {\n        echo \"O\\n\";\n    }\n}\nclass P extends O {\n    function __toString() {\n        return '$this';\n    }\n    public function who() {\n        echo \"P\\n\";\n    }\n    public function call($cb) {\n        echo join('|', $cb) . \"\\n\";\n        call_user_func($cb);\n    }\n    public function test() {\n        $this->call(array('parent', 'who'));\n        $this->call(array('P', 'parent::who'));\n        $this->call(array($this, 'O::who'));\n        try {\n            $this->call(array($this, 'B::who'));\n        } catch (TypeError $e) {\n            echo $e->getMessage(), \"\\n\";\n        }\n    }\n}\necho \"===FOREIGN===\\n\";\n$o = new P;\n$o->test();\n?>")).toMatchSnapshot();
+  });
+});

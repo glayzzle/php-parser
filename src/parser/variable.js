@@ -45,7 +45,7 @@ module.exports = {
       ])
     ) {
       result = this.node();
-      const name = this.read_namespace_name();
+      const name = this.read_name();
       if (
         this.token != this.tok.T_DOUBLE_COLON &&
         this.token != "(" &&

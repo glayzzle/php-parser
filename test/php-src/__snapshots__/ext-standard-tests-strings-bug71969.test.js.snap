@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71969 (str_replace returns an incorrect resulting array after a foreach by reference) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Array {
+                "items": Array [
+                  Entry {
+                    "byRef": false,
+                    "key": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"one\\"",
+                      "unicode": false,
+                      "value": "one",
+                    },
+                    "kind": "entry",
+                    "unpack": false,
+                    "value": Array {
+                      "items": Array [
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"a\\"",
+                            "unicode": false,
+                            "value": "a",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"0000\\"",
+                            "unicode": false,
+                            "value": "0000",
+                          },
+                        },
+                        Entry {
+                          "byRef": false,
+                          "key": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"b\\"",
+                            "unicode": false,
+                            "value": "b",
+                          },
+                          "kind": "entry",
+                          "unpack": false,
+                          "value": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"1111\\"",
+                            "unicode": false,
+                            "value": "1111",
+                          },
+                        },
+                      ],
+                      "kind": "array",
+                      "shortForm": false,
+                    },
+                  },
+                ],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"a\\"",
+                  "unicode": false,
+                  "value": "a",
+                },
+                "what": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"one\\"",
+                    "unicode": false,
+                    "value": "one",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "record",
+                  },
+                },
+              },
+              "operator": "=",
+              "right": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2222\\"",
+                "unicode": false,
+                "value": "2222",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "a",
+      },
+      "value": Variable {
+        "byref": true,
+        "curly": false,
+        "kind": "variable",
+        "name": "record",
+      },
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"2\\"",
+                "unicode": false,
+                "value": "2",
+              },
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"3\\"",
+                "unicode": false,
+                "value": "3",
+              },
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "a",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "str_replace",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

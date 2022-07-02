@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/stat_basic-win32.phpt
+  it("Test stat() function: basic functionality", function () {
+    expect(parser.parseCode("<?php\n$file_path = __DIR__;\nrequire(\"$file_path/file.inc\");\necho \"*** Testing stat() : basic functionality ***\\n\";\n/* creating temp directory and file */\n// creating dir\n$dirname = \"$file_path/stat_basic\";\nmkdir($dirname);\n// stat of the dir created\n$dir_stat = stat($dirname);\nclearstatcache();\nsleep(2);\n// creating file\n$filename = \"$dirname/stat_basic.tmp\";\n$file_handle = fopen($filename, \"w\");\nfclose($file_handle);\n// stat of the file created\n$file_stat = stat($filename);\nsleep(1);\n// now new stat of the dir after file is created\n$new_dir_stat = stat($dirname);\nclearstatcache();\n// stat contains 13 different values stored twice, can be accessed using\n// numeric and named keys, compare them to see they are same\necho \"*** Testing stat(): validating the values stored in stat ***\\n\";\n// Initial stat values\nvar_dump( compare_self_stat($file_stat) ); //expect true\nvar_dump( compare_self_stat($dir_stat) );  //expect true\n// New stat values taken after creation of file\nvar_dump( compare_self_stat($new_dir_stat) );  // expect true\n// compare the two stat values, initial stat and stat recorded after\n// creating file, also dump the value of stats\necho \"*** Testing stat(): comparing stats (recorded before and after file creation) ***\\n\";\necho \"-- comparing difference in dir stats before and after creating file in it --\\n\";\n$affected_elements = array( 9, 'mtime' );\nvar_dump( compare_stats($dir_stat, $new_dir_stat, $affected_elements, '!=', true) ); // expect true\necho \"*** Testing stat(): for the return value ***\\n\";\nvar_dump( is_array( stat($filename) ) );\necho \"\\n---Done---\";\n?>")).toMatchSnapshot();
+  });
+});

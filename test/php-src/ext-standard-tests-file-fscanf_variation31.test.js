@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fscanf_variation31.phpt
+  it("Test fscanf() function: usage variations - octal formats with strings", function () {
+    expect(parser.parseCode("<?php\n/* Test fscanf() to scan strings using different octal format types */\n$file_path = __DIR__;\necho \"*** Test fscanf(): different octal format types with strings ***\\n\";\n// create a file\n$filename = \"$file_path/fscanf_variation31.tmp\";\n$file_handle = fopen($filename, \"w\");\nif($file_handle == false)\n  exit(\"Error:failed to open file $filename\");\n// array of strings\n$strings = array (\n  \"\",\n  '',\n  \"0\",\n  '0',\n  \"1\",\n  '1',\n  \"\\x01\",\n  '\\x01',\n  \"\\01\",\n  '\\01',\n  'string',\n  \"string\",\n  \"true\",\n  \"FALSE\",\n  'false',\n  'TRUE',\n  \"NULL\",\n  'null'\n);\n$octal_formats = array( \"%o\", \"%ho\", \"%lo\", \"%Lo\", \" %o\", \"%o \", \"% o\", \"\\t%o\", \"\\n%o\", \"%4o\", \"%30o\", \"%[0-9]\", \"%*o\");\n$counter = 1;\n// writing to the file\nforeach($strings as $string) {\n  @fprintf($file_handle, $string);\n  @fprintf($file_handle, \"\\n\");\n}\n// closing the file\nfclose($file_handle);\n// opening the file for reading\n$file_handle = fopen($filename, \"r\");\nif($file_handle == false) {\n  exit(\"Error:failed to open file $filename\");\n}\n$counter = 1;\n// reading the values from file using different octal formats\nforeach($octal_formats as $octal_format) {\n  // rewind the file so that for every foreach iteration the file pointer starts from bof\n  rewind($file_handle);\n  echo \"\\n-- iteration $counter --\\n\";\n  while( !feof($file_handle) ) {\n    try {\n      var_dump(fscanf($file_handle,$octal_format));\n    } catch (ValueError $exception) {\n      echo $exception->getMessage() . \"\\n\";\n    }\n  }\n  $counter++;\n}\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

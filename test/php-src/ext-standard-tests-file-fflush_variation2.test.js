@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fflush_variation2.phpt
+  it("Test fflush() function: usage variations - links as resource", function () {
+    expect(parser.parseCode("<?php\n/* test fflush() with handle to symbollic link */\n$file_path = __DIR__;\nrequire $file_path.'/file.inc';\necho \"*** Testing fflush(): with soft links to files opened in diff modes ***\\n\";\n$file_types = array(\"empty\", \"numeric\", \"text\", \"text_with_new_line\", \"alphanumeric\");\n$file_modes = array(\"w\", \"wb\", \"wt\", \"w+\", \"w+b\", \"w+t\",\n                    \"a\", \"ab\", \"at\", \"a+\",\"a+b\", \"a+t\");\n$file_name = \"$file_path/fflush_variation2.tmp\";\n$symlink_name = \"$file_path/symlnk_fflush_variation2.tmp\";\n$count = 1;\nforeach( $file_types as $type ) {\n  echo \"-- Iteration $count with file containing $type data --\\n\";\n  foreach( $file_modes as $mode ) {\n    echo \"-- link opened in $mode mode --\\n\";\n    //creating the file\n    $file_handle = fopen($file_name, \"w\");\n    if($file_handle == false)\n      exit(\"Error:failed to open file $file_name\");\n    //fill the file with some data if mode is append mode\n    if( substr($mode, 0, 1) == \"a\" )\n      fill_file($file_handle, $type, 10);\n    //close the file\n    fclose($file_handle);\n    // creating the sym link\n    var_dump( symlink($file_name, $symlink_name) );\n    $file_handle = fopen($symlink_name, $mode);\n    if($file_handle == false)\n      exit(\"Error:failed to open link $symlink_name\");\n    // filling data into the file\n    var_dump( fill_file($file_handle, $type, 50) );\n    var_dump( fflush($file_handle) );\n    fclose($file_handle);\n    // reading the data from the file\n    var_dump( readfile($symlink_name) );\n    unlink($symlink_name);\n    unlink($file_name);\n  }\n  $count++;\n}\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

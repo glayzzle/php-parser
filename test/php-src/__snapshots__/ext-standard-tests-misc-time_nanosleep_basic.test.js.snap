@@ -1,0 +1,276 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests time_nanosleep — Delay for a number of seconds and nanoseconds 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "nano",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            Number {
+              "kind": "number",
+              "value": "2",
+            },
+            Number {
+              "kind": "number",
+              "value": "100000",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "time_nanosleep",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    If {
+      "alternate": If {
+        "alternate": If {
+          "alternate": null,
+          "body": Block {
+            "children": Array [
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "seconds",
+                  },
+                  "operator": "=",
+                  "right": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'seconds'",
+                      "unicode": false,
+                      "value": "seconds",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "nano",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              ExpressionStatement {
+                "expression": Assign {
+                  "kind": "assign",
+                  "left": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "nanoseconds",
+                  },
+                  "operator": "=",
+                  "right": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'nanoseconds'",
+                      "unicode": false,
+                      "value": "nanoseconds",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "nano",
+                    },
+                  },
+                },
+                "kind": "expressionstatement",
+              },
+              Echo {
+                "expressions": Array [
+                  String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"Interrupted by a signal.\\\\n\\"",
+                    "unicode": false,
+                    "value": "Interrupted by a signal.
+",
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+              Echo {
+                "expressions": Array [
+                  Encapsed {
+                    "kind": "encapsed",
+                    "raw": "\\"Time remaining: $seconds seconds, $nanoseconds nanoseconds.\\"",
+                    "type": "string",
+                    "value": Array [
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": "Time remaining: ",
+                          "unicode": false,
+                          "value": "Time remaining: ",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "seconds",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": " seconds, ",
+                          "unicode": false,
+                          "value": " seconds, ",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "nanoseconds",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": " nanoseconds.",
+                          "unicode": false,
+                          "value": " nanoseconds.",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                    ],
+                  },
+                ],
+                "kind": "echo",
+                "shortForm": false,
+              },
+            ],
+            "kind": "block",
+          },
+          "kind": "if",
+          "shortForm": false,
+          "test": Call {
+            "arguments": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "nano",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "is_array",
+              "resolution": "uqn",
+            },
+          },
+        },
+        "body": Block {
+          "children": Array [
+            Echo {
+              "expressions": Array [
+                String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"Sleeping failed.\\\\n\\"",
+                  "unicode": false,
+                  "value": "Sleeping failed.
+",
+                },
+              ],
+              "kind": "echo",
+              "shortForm": false,
+            },
+          ],
+          "kind": "block",
+        },
+        "kind": "if",
+        "shortForm": false,
+        "test": Bin {
+          "kind": "bin",
+          "left": Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "nano",
+          },
+          "right": Boolean {
+            "kind": "boolean",
+            "raw": "false",
+            "value": false,
+          },
+          "type": "===",
+        },
+      },
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"Slept for 2 seconds, 100 milliseconds.\\\\n\\"",
+                "unicode": false,
+                "value": "Slept for 2 seconds, 100 milliseconds.
+",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": false,
+      "test": Bin {
+        "kind": "bin",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "nano",
+        },
+        "right": Boolean {
+          "kind": "boolean",
+          "raw": "true",
+          "value": true,
+        },
+        "type": "===",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #70213: Unserialize context shared on double class lookup 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'unserialize_callback_func'",
+            "unicode": false,
+            "value": "unserialize_callback_func",
+          },
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'evil'",
+            "unicode": false,
+            "value": "evil",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "ini_set",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Call {
+              "arguments": Array [
+                Closure {
+                  "arguments": Array [
+                    Parameter {
+                      "attrGroups": Array [],
+                      "byref": false,
+                      "flags": 0,
+                      "kind": "parameter",
+                      "name": Identifier {
+                        "kind": "identifier",
+                        "name": "arg",
+                      },
+                      "nullable": false,
+                      "readonly": false,
+                      "type": null,
+                      "value": null,
+                      "variadic": false,
+                    },
+                  ],
+                  "attrGroups": Array [],
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            Call {
+                              "arguments": Array [
+                                String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "'R:1;'",
+                                  "unicode": false,
+                                  "value": "R:1;",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "unserialize",
+                                "resolution": "uqn",
+                              },
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "var_dump",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isStatic": false,
+                  "kind": "closure",
+                  "nullable": false,
+                  "type": null,
+                  "uses": Array [],
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "spl_autoload_register",
+                "resolution": "uqn",
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "evil",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Call {
+            "arguments": Array [
+              String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'a:2:{i:0;i:42;i:1;O:4:\\"evil\\":0:{}}'",
+                "unicode": false,
+                "value": "a:2:{i:0;i:42;i:1;O:4:\\"evil\\":0:{}}",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "unserialize",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

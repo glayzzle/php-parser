@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/isset_str_offset.phpt
+  it("Testing isset with string offsets", function () {
+    expect(parser.parseCode("<?php\nprint \"- isset ---\\n\";\n$str = \"test0123\";\nvar_dump(isset($str[-1]));\nvar_dump(isset($str[-10]));\nvar_dump(isset($str[0]));\nvar_dump(isset($str[1]));\nvar_dump(isset($str[4])); // 0\nvar_dump(isset($str[5])); // 1\nvar_dump(isset($str[8]));\nvar_dump(isset($str[10000]));\n// non-numeric offsets\nprint \"- string literal ---\\n\";\nvar_dump(isset($str['-1'])); // 3\nvar_dump(isset($str['-10']));\nvar_dump(isset($str['0']));\nvar_dump(isset($str['1']));\nvar_dump(isset($str['4'])); // 0\nvar_dump(isset($str['1.5']));\nvar_dump(isset($str['good']));\nvar_dump(isset($str['3 and a half']));\nprint \"- string variable ---\\n\";\nvar_dump(isset($str[$key = '-1'])); // 3\nvar_dump(isset($str[$key = '-10']));\nvar_dump(isset($str[$key = '0']));\nvar_dump(isset($str[$key = '1']));\nvar_dump(isset($str[$key = '4'])); // 0\nvar_dump(isset($str[$key = '1.5']));\nvar_dump(isset($str[$key = 'good']));\nvar_dump(isset($str[$key = '3 and a half']));\nprint \"- bool ---\\n\";\nvar_dump(isset($str[true]));\nvar_dump(isset($str[false]));\nvar_dump(isset($str[false][true]));\nprint \"- null ---\\n\";\nvar_dump(isset($str[null]));\nprint \"- double ---\\n\";\nvar_dump(isset($str[-1.1]));\nvar_dump(isset($str[-10.5]));\nvar_dump(isset($str[-0.8]));\nvar_dump(isset($str[-0.1]));\nvar_dump(isset($str[0.2]));\nvar_dump(isset($str[0.9]));\nvar_dump(isset($str[M_PI]));\nvar_dump(isset($str[100.5001]));\nprint \"- array ---\\n\";\nvar_dump(isset($str[array()]));\nvar_dump(isset($str[array(1,2,3)]));\nprint \"- object ---\\n\";\nvar_dump(isset($str[new stdClass()]));\nprint \"- resource ---\\n\";\n$f = fopen(__FILE__, 'r');\nvar_dump(isset($str[$f]));\nprint \"done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

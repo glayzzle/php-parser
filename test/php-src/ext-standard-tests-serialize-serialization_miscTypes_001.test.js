@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/serialize/serialization_miscTypes_001.phpt
+  it("Test serialize() & unserialize() functions: many types", function () {
+    expect(parser.parseCode("<?php\necho \"--- Testing Various Types ---\\n\";\n/* unset variable */\n$unset_var = 10;\nunset($unset_var);\n/* array declaration */\n$arr_var = array(0, 1, -2, 3.333333, \"a\", array(), array(NULL));\n$Variation_arr = array(\n   /* Integers */\n   2147483647,\n   -2147483647,\n   2147483648,\n   -2147483648,\n   0xFF00123,  // hex integers\n   -0xFF00123,\n   0x7FFFFFFF,\n   -0x7FFFFFFF,\n   0x80000000,\n   -0x80000000,\n   01234567,  // octal integers\n   -01234567,\n   /* arrays */\n   array(),  // zero elements\n   array(1, 2, 3, 12345666, -2344),\n   array(0, 1, 2, 3.333, -4, -5.555, TRUE, FALSE, NULL, \"\", '', \" \",\n         array(), array(1,2,array()), \"string\", new stdclass\n        ),\n   &$arr_var,  // Reference to an array\n  /* nulls */\n   NULL,\n   null,\n  /* strings */\n   \"\",\n   '',\n   \" \",\n   ' ',\n   \"a\",\n   \"string\",\n   'string',\n   \"hello\\0\",\n   'hello\\0',\n   \"123\",\n   '123',\n   '\\t',\n   \"\\t\",\n   /* booleans */\n   TRUE,\n   true,\n   FALSE,\n   false,\n   /* Mixed types */\n   \"TRUE123\",\n   \"123string\",\n   \"string123\",\n   \"NULLstring\",\n   /* unset/undefined  vars */\n   @$unset_var,\n   @$undefined_var,\n);\n/* Loop through to test each element in the above array */\nfor( $i = 0; $i < count($Variation_arr); $i++ ) {\n  echo \"\\n-- Iteration $i --\\n\";\n  echo \"after serialization => \";\n  $serialize_data = serialize($Variation_arr[$i]);\n  var_dump( $serialize_data );\n  echo \"after unserialization => \";\n  $unserialize_data = unserialize($serialize_data);\n  var_dump( $unserialize_data );\n}\necho \"\\nDone\";\n?>")).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #55086 (Namespace alias does not work inside trait's use block) 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        Trait {
+          "body": Array [
+            Method {
+              "arguments": Array [],
+              "attrGroups": Array [],
+              "body": Block {
+                "children": Array [
+                  Return {
+                    "expr": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'hello from t1'",
+                      "unicode": false,
+                      "value": "hello from t1",
+                    },
+                    "kind": "return",
+                  },
+                ],
+                "kind": "block",
+              },
+              "byref": false,
+              "isAbstract": false,
+              "isFinal": false,
+              "isStatic": false,
+              "kind": "method",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "hello",
+              },
+              "nullable": false,
+              "type": null,
+              "visibility": "public",
+            },
+          ],
+          "kind": "trait",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "T1",
+          },
+        },
+        Trait {
+          "body": Array [
+            Method {
+              "arguments": Array [],
+              "attrGroups": Array [],
+              "body": Block {
+                "children": Array [
+                  Return {
+                    "expr": String {
+                      "isDoubleQuote": false,
+                      "kind": "string",
+                      "raw": "'hello from t2'",
+                      "unicode": false,
+                      "value": "hello from t2",
+                    },
+                    "kind": "return",
+                  },
+                ],
+                "kind": "block",
+              },
+              "byref": false,
+              "isAbstract": false,
+              "isFinal": false,
+              "isStatic": false,
+              "kind": "method",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "hello",
+              },
+              "nullable": false,
+              "type": null,
+              "visibility": "public",
+            },
+          ],
+          "kind": "trait",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "T2",
+          },
+        },
+      ],
+      "kind": "namespace",
+      "name": "N1",
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": null,
+              "kind": "useitem",
+              "name": "N1\\\\T1",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": null,
+        },
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": null,
+              "kind": "useitem",
+              "name": "N1\\\\T2",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": null,
+        },
+        Class {
+          "attrGroups": Array [],
+          "body": Array [
+            TraitUse {
+              "adaptations": Array [
+                TraitPrecedence {
+                  "instead": Array [
+                    Name {
+                      "kind": "name",
+                      "name": "T2",
+                      "resolution": "uqn",
+                    },
+                  ],
+                  "kind": "traitprecedence",
+                  "method": Identifier {
+                    "kind": "identifier",
+                    "name": "hello",
+                  },
+                  "trait": Name {
+                    "kind": "name",
+                    "name": "T1",
+                    "resolution": "uqn",
+                  },
+                },
+                TraitAlias {
+                  "as": Identifier {
+                    "kind": "identifier",
+                    "name": "foo",
+                  },
+                  "kind": "traitalias",
+                  "method": Identifier {
+                    "kind": "identifier",
+                    "name": "hello",
+                  },
+                  "trait": Name {
+                    "kind": "name",
+                    "name": "T1",
+                    "resolution": "uqn",
+                  },
+                  "visibility": "",
+                },
+              ],
+              "kind": "traituse",
+              "traits": Array [
+                Name {
+                  "kind": "name",
+                  "name": "T1",
+                  "resolution": "uqn",
+                },
+                Name {
+                  "kind": "name",
+                  "name": "T2",
+                  "resolution": "uqn",
+                },
+              ],
+            },
+          ],
+          "extends": null,
+          "implements": null,
+          "isAbstract": false,
+          "isAnonymous": false,
+          "isFinal": false,
+          "kind": "class",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "A",
+          },
+        },
+        ExpressionStatement {
+          "expression": Assign {
+            "kind": "assign",
+            "left": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "a",
+            },
+            "operator": "=",
+            "right": New {
+              "arguments": Array [],
+              "kind": "new",
+              "what": Name {
+                "kind": "name",
+                "name": "A",
+                "resolution": "uqn",
+              },
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        Echo {
+          "expressions": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "hello",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+            },
+            Name {
+              "kind": "name",
+              "name": "PHP_EOL",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+        Echo {
+          "expressions": Array [
+            Call {
+              "arguments": Array [],
+              "kind": "call",
+              "what": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "foo",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "a",
+                },
+              },
+            },
+            Name {
+              "kind": "name",
+              "name": "PHP_EOL",
+              "resolution": "uqn",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+        Try {
+          "always": null,
+          "body": Block {
+            "children": Array [],
+            "kind": "block",
+          },
+          "catches": Array [
+            Catch {
+              "body": Block {
+                "children": Array [],
+                "kind": "block",
+              },
+              "kind": "catch",
+              "variable": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "e",
+              },
+              "what": Array [
+                Name {
+                  "kind": "name",
+                  "name": "Foo",
+                  "resolution": "rn",
+                },
+              ],
+            },
+          ],
+          "kind": "try",
+        },
+      ],
+      "kind": "namespace",
+      "name": "N2",
+      "withBrackets": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // Zend/tests/bug37632.phpt
+  it("Bug #37632 (Protected method access problem)", function () {
+    expect(parser.parseCode("<?php\nclass A1\n{\n    protected function test()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nclass B1 extends A1\n{\n    public function doTest(A1 $obj)\n    {\n        echo __METHOD__ . \"\\n\";\n        $obj->test();\n    }\n}\nclass C1 extends A1\n{\n    protected function test()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\n$b = new B1;\n$b->doTest(new C1);\nclass A2\n{\n    static protected function test()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nclass B2 extends A2\n{\n    static public function doTest(A2 $obj)\n    {\n        echo __METHOD__ . \"\\n\";\n        $obj->test();\n    }\n}\nclass C2 extends A2\n{\n    static protected function test()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nB2::doTest(new C2);\n/* Right now Ctor's cannot be made protected when defined in a ctor. That is\n * we cannot decrease visibility.\n *\ninterface Ctor\n{\n    function __construct($x);\n}\nclass A3 implements Ctor\n{\n    protected function __construct()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nclass B3 extends A3\n{\n    static public function doTest()\n    {\n        echo __METHOD__ . \"\\n\";\n        new C3;\n    }\n}\nclass C3 extends A3\n{\n    protected function __construct()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nB3::doTest();\n*/\nclass A4\n{\n    protected function __construct()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nclass B4 extends A4\n{\n    static public function doTest()\n    {\n        echo __METHOD__ . \"\\n\";\n        new C4;\n    }\n}\nclass C4 extends A4\n{\n    protected function __construct()\n    {\n        echo __METHOD__ . \"\\n\";\n    }\n}\nB4::doTest();\n?>\n===DONE===")).toMatchSnapshot();
+  });
+});

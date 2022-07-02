@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/bug60120.phpt
+  it("Bug #60120 (proc_open hangs when data in stdin/out/err is getting larger or equal to 2048)", function () {
+    expect(parser.parseCode("<?php\nerror_reporting(E_ALL);\n$php = getenv('TEST_PHP_EXECUTABLE');\nif (!$php) {\n    die(\"No php executable defined\\n\");\n}\n$cmd = 'php -r \"fwrite(STDOUT, $in = file_get_contents(\\'php://stdin\\')); fwrite(STDERR, $in);\"';\n$descriptors = array(array('pipe', 'r'), array('pipe', 'w'), array('pipe', 'w'));\n$stdin = str_repeat('*', 2049 );\n$options = array_merge(array('suppress_errors' => true, 'bypass_shell' => false));\n$process = proc_open($cmd, $descriptors, $pipes, getcwd(), array(), $options);\nforeach ($pipes as $pipe) {\n    stream_set_blocking($pipe, false);\n}\n$writePipes = array($pipes[0]);\n$stdinLen = strlen($stdin);\n$stdinOffset = 0;\nunset($pipes[0]);\nwhile ($pipes || $writePipes) {\n    $r = $pipes;\n    $w = $writePipes;\n    $e = null;\n    $n = stream_select($r, $w, $e, 60);\n    if (false === $n) {\n        break;\n    } elseif ($n === 0) {\n        proc_terminate($process);\n    }\n    if ($w) {\n        $written = fwrite($writePipes[0], substr($stdin, $stdinOffset), 8192);\n        if (false !== $written) {\n            $stdinOffset += $written;\n        }\n        if ($stdinOffset >= $stdinLen) {\n            fclose($writePipes[0]);\n            $writePipes = null;\n        }\n    }\n    foreach ($r as $pipe) {\n        $type = array_search($pipe, $pipes);\n        $data = fread($pipe, 8192);\n        if (false === $data || feof($pipe)) {\n            fclose($pipe);\n            unset($pipes[$type]);\n        }\n    }\n}\necho \"OK.\";\n?>")).toMatchSnapshot();
+  });
+});

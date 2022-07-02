@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/pathinfo_basic.phpt
+  it("Test pathinfo() function: basic functionality", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing basic functions of pathinfo() ***\\n\";\n$file_path = __DIR__;\n$paths = array (\n  /* Testing basic file notation */\n  \"$file_path/foo/symlink.link\",\n  \"www.example.co.in\",\n  \"/var/www/html/example.html\",\n  \"/dir/test.tar.gz\",\n  /* Testing a file with trailing slash */\n  \"$file_path/foo/symlink.link/\",\n  /* Testing file with double slashes */\n  \"$file_path/foo//symlink.link\",\n  \"$file_path/foo//symlink.link\",\n  \"$file_path/foo//symlink.link//\",\n  /* Testing file with trailing double slashes */\n  \"$file_path/foo/symlink.link//\",\n  /* Testing Binary safe files */\n  \"$file_path/foo\".chr(47).\"symlink.link\",\n  \"$file_path\".chr(47).\"foo/symlink.link\",\n  \"$file_path\".chr(47).\"foo\".chr(47).\"symlink.link\",\n  \"$file_path/foo/symlink.link\",\n  /* Testing directories */\n  \".\",  // current directory\n  \"$file_path/foo/\",\n  \"$file_path/foo//\",\n  \"$file_path/../foo/\",\n  \"../foo/bar\",\n  \"./foo/bar\",\n  \"//foo//bar//\",\n  /* Testing with homedir notation */\n  \"~/PHP/php5.2.0/\",\n  /* Testing normal directory notation */\n  \"/home/example/test/\",\n  \"http://httpd.apache.org/core.html#acceptpathinfo\"\n);\n$counter = 1;\n/* loop through $paths to test each $path in the above array */\nforeach($paths as $path) {\n  echo \"-- Iteration $counter --\\n\";\n  var_dump( pathinfo($path, PATHINFO_DIRNAME) );\n  var_dump( pathinfo($path, PATHINFO_BASENAME) );\n  var_dump( pathinfo($path, PATHINFO_EXTENSION) );\n  var_dump( pathinfo($path, PATHINFO_FILENAME) );\n  var_dump( pathinfo($path) );\n  $counter++;\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

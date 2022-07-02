@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/serialize/bug65806.phpt
+  it("Bug #65806 (unserialize fails with object which is referenced multiple times)", function () {
+    expect(parser.parseCode("<?php\nclass myObjA {}\nclass myObjB {\n    public $attrA;\n    public $attrB;\n}\nclass myObjC {\n    public $attrC;\n    public $attrD;\n}\nclass myList {\n    private $_serialized;\n    private $_obj;\n    public function __construct($obj)\n    {\n        $this->_obj = $obj;\n        $this->_serialized = serialize($this->_obj);\n    }\n    public function get()\n    {\n        return $this->_obj;\n    }\n    public function __sleep()\n    {\n        $this->_serialized = serialize($this->_obj);\n        return array(\n            \"\\0\" . __CLASS__ . \"\\0_serialized\",\n        );\n    }\n    public function __wakeup()\n    {\n        $this->_obj = unserialize($this->_serialized);\n    }\n}\necho \"SCRIPT START\" . PHP_EOL;\n$objA = new myObjA();\n$objB = new myObjB();\n$objC = new myObjC();\n$objB->attrA = new ArrayIterator();\n$objB->attrB = $objA;\n$objC->attrC = $objB;\n$objC->attrD = $objA;\n$list = new myList($objC);\necho 'check ' . check($list->get()) . PHP_EOL;\necho \"start serialize/unserialize\" . PHP_EOL;\n$newList = unserialize(serialize($list));\necho \"finish serialize/unserialize\" . PHP_EOL;\n//after unserialize the property myObjC::attrD is null instead of expected object\necho 'check ' . check($newList->get()) . PHP_EOL;\necho \"SCRIPT END\" . PHP_EOL ;\nfunction check(myObjC $obj) {\n    if (!is_object($obj->attrC)) {\n        return 'failed (myObjC::attrC => ' . var_export($obj->attrC, true) . ')';\n    }\n    if (!is_object($obj->attrD)) {\n        return 'failed (myObjC::attrD => ' . var_export($obj->attrD, true) . ')';\n    }\n    return 'successful';\n}\n?>")).toMatchSnapshot();
+  });
+});

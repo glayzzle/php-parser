@@ -1,0 +1,712 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests yield from on multiple trees needing merge, with intermediary nodes having only one child 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "levels",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Foreach {
+            "body": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Yield {
+                    "key": null,
+                    "kind": "yield",
+                    "value": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "v",
+                    },
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "key": null,
+            "kind": "foreach",
+            "shortForm": false,
+            "source": Call {
+              "arguments": Array [
+                Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                Bin {
+                  "kind": "bin",
+                  "left": Number {
+                    "kind": "number",
+                    "value": "2",
+                  },
+                  "right": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "levels",
+                  },
+                  "type": "<<",
+                },
+              ],
+              "kind": "call",
+              "what": Name {
+                "kind": "name",
+                "name": "range",
+                "resolution": "uqn",
+              },
+            },
+            "value": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "v",
+            },
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "from",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "gen",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "level",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": YieldFrom {
+              "kind": "yieldfrom",
+              "value": Call {
+                "arguments": Array [],
+                "kind": "call",
+                "what": Closure {
+                  "arguments": Array [],
+                  "attrGroups": Array [],
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": YieldFrom {
+                          "kind": "yieldfrom",
+                          "value": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "gen",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isStatic": false,
+                  "kind": "closure",
+                  "nullable": false,
+                  "parenthesizedExpression": true,
+                  "type": null,
+                  "uses": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "gen",
+                    },
+                  ],
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "gen",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    Foreach {
+      "body": Block {
+        "children": Array [
+          ExpressionStatement {
+            "expression": Print {
+              "expression": Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": Encapsed {
+                    "kind": "encapsed",
+                    "raw": "\\"$levels level\\"",
+                    "type": "string",
+                    "value": Array [
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "levels",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": "simple",
+                      },
+                      EncapsedPart {
+                        "curly": false,
+                        "expression": String {
+                          "isDoubleQuote": false,
+                          "kind": "string",
+                          "raw": " level",
+                          "unicode": false,
+                          "value": " level",
+                        },
+                        "kind": "encapsedpart",
+                        "syntax": null,
+                      },
+                    ],
+                  },
+                  "right": RetIf {
+                    "falseExpr": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"s\\"",
+                      "unicode": false,
+                      "value": "s",
+                    },
+                    "kind": "retif",
+                    "parenthesizedExpression": true,
+                    "test": Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "levels",
+                      },
+                      "right": Number {
+                        "kind": "number",
+                        "value": "1",
+                      },
+                      "type": "==",
+                    },
+                    "trueExpr": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"\\"",
+                      "unicode": false,
+                      "value": "",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"\\\\n\\\\n\\"",
+                  "unicode": false,
+                  "value": "
+
+",
+                },
+                "type": ".",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "all",
+              },
+              "operator": "=",
+              "right": Array {
+                "items": Array [],
+                "kind": "array",
+                "shortForm": false,
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          ExpressionStatement {
+            "expression": Assign {
+              "kind": "assign",
+              "left": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": false,
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "all",
+                },
+              },
+              "operator": "=",
+              "right": Assign {
+                "kind": "assign",
+                "left": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "what": OffsetLookup {
+                    "kind": "offsetlookup",
+                    "offset": Number {
+                      "kind": "number",
+                      "value": "0",
+                    },
+                    "what": Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "gens",
+                    },
+                  },
+                },
+                "operator": "=",
+                "right": Call {
+                  "arguments": Array [
+                    Variable {
+                      "curly": false,
+                      "kind": "variable",
+                      "name": "levels",
+                    },
+                  ],
+                  "kind": "call",
+                  "what": Name {
+                    "kind": "name",
+                    "name": "from",
+                    "resolution": "uqn",
+                  },
+                },
+              },
+            },
+            "kind": "expressionstatement",
+          },
+          For {
+            "body": Block {
+              "children": Array [
+                For {
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": OffsetLookup {
+                            "kind": "offsetlookup",
+                            "offset": false,
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "all",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Assign {
+                            "kind": "assign",
+                            "left": OffsetLookup {
+                              "kind": "offsetlookup",
+                              "offset": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "i",
+                              },
+                              "what": OffsetLookup {
+                                "kind": "offsetlookup",
+                                "offset": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "level",
+                                },
+                                "what": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "gens",
+                                },
+                              },
+                            },
+                            "operator": "=",
+                            "right": Call {
+                              "arguments": Array [
+                                OffsetLookup {
+                                  "kind": "offsetlookup",
+                                  "offset": Bin {
+                                    "kind": "bin",
+                                    "left": Variable {
+                                      "curly": false,
+                                      "kind": "variable",
+                                      "name": "i",
+                                    },
+                                    "right": Number {
+                                      "kind": "number",
+                                      "value": "1",
+                                    },
+                                    "type": ">>",
+                                  },
+                                  "what": OffsetLookup {
+                                    "kind": "offsetlookup",
+                                    "offset": Bin {
+                                      "kind": "bin",
+                                      "left": Variable {
+                                        "curly": false,
+                                        "kind": "variable",
+                                        "name": "level",
+                                      },
+                                      "right": Number {
+                                        "kind": "number",
+                                        "value": "1",
+                                      },
+                                      "type": "-",
+                                    },
+                                    "what": Variable {
+                                      "curly": false,
+                                      "kind": "variable",
+                                      "name": "gens",
+                                    },
+                                  },
+                                },
+                                Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "level",
+                                },
+                              ],
+                              "kind": "call",
+                              "what": Name {
+                                "kind": "name",
+                                "name": "gen",
+                                "resolution": "uqn",
+                              },
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "increment": Array [
+                    Post {
+                      "kind": "post",
+                      "type": "+",
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                    },
+                  ],
+                  "init": Array [
+                    Assign {
+                      "kind": "assign",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                      "operator": "=",
+                      "right": Number {
+                        "kind": "number",
+                        "value": "0",
+                      },
+                    },
+                  ],
+                  "kind": "for",
+                  "shortForm": false,
+                  "test": Array [
+                    Bin {
+                      "kind": "bin",
+                      "left": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "i",
+                      },
+                      "right": Bin {
+                        "kind": "bin",
+                        "left": Number {
+                          "kind": "number",
+                          "value": "1",
+                        },
+                        "parenthesizedExpression": true,
+                        "right": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "level",
+                        },
+                        "type": "<<",
+                      },
+                      "type": "<",
+                    },
+                  ],
+                },
+              ],
+              "kind": "block",
+            },
+            "increment": Array [
+              Post {
+                "kind": "post",
+                "type": "+",
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "level",
+                },
+              },
+            ],
+            "init": Array [
+              Assign {
+                "kind": "assign",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "level",
+                },
+                "operator": "=",
+                "right": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+              },
+            ],
+            "kind": "for",
+            "shortForm": false,
+            "test": Array [
+              Bin {
+                "kind": "bin",
+                "left": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "level",
+                },
+                "right": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "levels",
+                },
+                "type": "<",
+              },
+            ],
+          },
+          While {
+            "body": Block {
+              "children": Array [
+                Foreach {
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [
+                            Call {
+                              "arguments": Array [],
+                              "kind": "call",
+                              "what": PropertyLookup {
+                                "kind": "propertylookup",
+                                "offset": Identifier {
+                                  "kind": "identifier",
+                                  "name": "current",
+                                },
+                                "what": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "gen",
+                                },
+                              },
+                            },
+                          ],
+                          "kind": "call",
+                          "what": Name {
+                            "kind": "name",
+                            "name": "var_dump",
+                            "resolution": "uqn",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      ExpressionStatement {
+                        "expression": Call {
+                          "arguments": Array [],
+                          "kind": "call",
+                          "what": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "next",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "gen",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      If {
+                        "alternate": null,
+                        "body": Block {
+                          "children": Array [
+                            Break {
+                              "kind": "break",
+                              "level": Number {
+                                "kind": "number",
+                                "value": "2",
+                              },
+                            },
+                          ],
+                          "kind": "block",
+                        },
+                        "kind": "if",
+                        "shortForm": false,
+                        "test": Unary {
+                          "kind": "unary",
+                          "type": "!",
+                          "what": Call {
+                            "arguments": Array [],
+                            "kind": "call",
+                            "what": PropertyLookup {
+                              "kind": "propertylookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "valid",
+                              },
+                              "what": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "gen",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "key": null,
+                  "kind": "foreach",
+                  "shortForm": false,
+                  "source": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "all",
+                  },
+                  "value": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "gen",
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "kind": "while",
+            "shortForm": false,
+            "test": Number {
+              "kind": "number",
+              "value": "1",
+            },
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"\\\\n\\\\n\\"",
+                "unicode": false,
+                "value": "
+
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "key": null,
+      "kind": "foreach",
+      "shortForm": false,
+      "source": Call {
+        "arguments": Array [
+          Number {
+            "kind": "number",
+            "value": "0",
+          },
+          Number {
+            "kind": "number",
+            "value": "6",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "range",
+          "resolution": "uqn",
+        },
+      },
+      "value": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "levels",
+      },
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

@@ -1,0 +1,469 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Constant scalar expressions with autoloading and classes 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "classlist",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": Array [
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'A'",
+                "unicode": false,
+                "value": "A",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'class A { const HW = \\"this is A\\"; }'",
+                "unicode": false,
+                "value": "class A { const HW = \\"this is A\\"; }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'B'",
+                "unicode": false,
+                "value": "B",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'class B extends A { const HW = parent::HW.\\" extended by B\\"; }'",
+                "unicode": false,
+                "value": "class B extends A { const HW = parent::HW.\\" extended by B\\"; }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'space1\\\\C'",
+                "unicode": false,
+                "value": "space1\\\\C",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'namespace space1; class C { const HW = \\"this is space1\\\\C\\"; }'",
+                "unicode": false,
+                "value": "namespace space1; class C { const HW = \\"this is space1\\\\C\\"; }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'D'",
+                "unicode": false,
+                "value": "D",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'class D  { const HW = \\\\space1\\\\C::HW.\\" extended by D\\"; }'",
+                "unicode": false,
+                "value": "class D  { const HW = \\\\space1\\\\C::HW.\\" extended by D\\"; }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'trE'",
+                "unicode": false,
+                "value": "trE",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'trait trE { public static function getHW() { return parent::HW; } }'",
+                "unicode": false,
+                "value": "trait trE { public static function getHW() { return parent::HW; } }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'E'",
+                "unicode": false,
+                "value": "E",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'class E extends B { use trE; }'",
+                "unicode": false,
+                "value": "class E extends B { use trE; }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'F'",
+                "unicode": false,
+                "value": "F",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'class F { const XX = \\"this is F\\"; }'",
+                "unicode": false,
+                "value": "class F { const XX = \\"this is F\\"; }",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'G'",
+                "unicode": false,
+                "value": "G",
+              },
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'class G extends F { const XX = parent::XX.\\" extended by G\\"; public static function get_me($x = \\"got \\".self::XX) { return $x; } }'",
+                "unicode": false,
+                "value": "class G extends F { const XX = parent::XX.\\" extended by G\\"; public static function get_me($x = \\"got \\".self::XX) { return $x; } }",
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": true,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Closure {
+            "arguments": Array [
+              Parameter {
+                "attrGroups": Array [],
+                "byref": false,
+                "flags": 0,
+                "kind": "parameter",
+                "name": Identifier {
+                  "kind": "identifier",
+                  "name": "class",
+                },
+                "nullable": false,
+                "readonly": false,
+                "type": null,
+                "value": null,
+                "variadic": false,
+              },
+            ],
+            "attrGroups": Array [],
+            "body": Block {
+              "children": Array [
+                If {
+                  "alternate": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Exit {
+                          "expression": Encapsed {
+                            "kind": "encapsed",
+                            "raw": "\\"Cannot autoload $class\\\\n\\"",
+                            "type": "string",
+                            "value": Array [
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "Cannot autoload ",
+                                  "unicode": false,
+                                  "value": "Cannot autoload ",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": null,
+                              },
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": Variable {
+                                  "curly": false,
+                                  "kind": "variable",
+                                  "name": "class",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": "simple",
+                              },
+                              EncapsedPart {
+                                "curly": false,
+                                "expression": String {
+                                  "isDoubleQuote": false,
+                                  "kind": "string",
+                                  "raw": "\\\\n",
+                                  "unicode": false,
+                                  "value": "",
+                                },
+                                "kind": "encapsedpart",
+                                "syntax": null,
+                              },
+                            ],
+                          },
+                          "kind": "exit",
+                          "useDie": true,
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Eval {
+                          "kind": "eval",
+                          "source": OffsetLookup {
+                            "kind": "offsetlookup",
+                            "offset": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "class",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "classlist",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "if",
+                  "shortForm": false,
+                  "test": Isset {
+                    "kind": "isset",
+                    "variables": Array [
+                      OffsetLookup {
+                        "kind": "offsetlookup",
+                        "offset": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "class",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "classlist",
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+              "kind": "block",
+            },
+            "byref": false,
+            "isStatic": false,
+            "kind": "closure",
+            "nullable": false,
+            "type": null,
+            "uses": Array [
+              Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "classlist",
+              },
+            ],
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "spl_autoload_register",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"B::HW = %s\\\\n\\"",
+            "unicode": false,
+            "value": "B::HW = %s
+",
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "HW",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "B",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"D::HW = %s\\\\n\\"",
+            "unicode": false,
+            "value": "D::HW = %s
+",
+          },
+          StaticLookup {
+            "kind": "staticlookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "HW",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "D",
+              "resolution": "uqn",
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"E::getHW() = %s\\\\n\\"",
+            "unicode": false,
+            "value": "E::getHW() = %s
+",
+          },
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "getHW",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "E",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": "\\"G::get_me() = %s\\\\n\\"",
+            "unicode": false,
+            "value": "G::get_me() = %s
+",
+          },
+          Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": StaticLookup {
+              "kind": "staticlookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "get_me",
+              },
+              "what": Name {
+                "kind": "name",
+                "name": "G",
+                "resolution": "uqn",
+              },
+            },
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "printf",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

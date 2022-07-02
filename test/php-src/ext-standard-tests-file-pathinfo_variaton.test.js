@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/pathinfo_variaton.phpt
+  it("Test pathinfo() function: usage variations", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing pathinfo() with miscellaneous input arguments ***\\n\";\nclass object_temp {\n  public $url_var = \"www.foo.com\";\n  var $html_var = \"/var/html/testdir/example.html\";\n  var $dir_var = \"/testdir/foo/test/\";\n  public $file_var = \"/foo//symlink.link\";\n  var $number = 12345;\n}\n$obj = new object_temp();\n$path_arr = array (\n  \"www.example.com\",\n  \"/testdir/foo//test/\",\n  \"../foo/test.link\",\n  \"./test/work/scratch/mydir/yourdir/ourdir/test1/test2/test3/test4/test5/test6/test.tmp\",\n  2.345\n);\n$paths = array (\n  /* pathname containing numeric string */\n  0,\n  1234,\n  -1234,\n  2.3456,\n  /* pathname as boolean */\n  TRUE,\n  FALSE,\n  /* pathname as an array */\n  \"./array(1, 2)\",\n  \"array( array(), null)\",\n  /* pathname as spaces */\n  \" \",\n  ' ',\n  /* empty pathname */\n  \"\",\n  '',\n  /* pathname as members of object */\n  $obj->url_var,\n  $obj->html_var,\n  $obj->dir_var,\n  $obj->file_var,\n  $obj->number,\n  /* pathname as member of array */\n  $path_arr[0],\n  $path_arr[1],\n  $path_arr[2],\n  $path_arr[3],\n  $path_arr[4]\n);\n$counter = 1;\n/* loop through $paths to test each $path in the above array */\nforeach($paths as $path) {\n  echo \"-- Iteration $counter --\\n\";\n  var_dump( pathinfo($path) );\n  var_dump( pathinfo($path, PATHINFO_DIRNAME) );\n  var_dump( pathinfo($path, PATHINFO_BASENAME) );\n  var_dump( pathinfo($path, PATHINFO_EXTENSION) );\n  var_dump( pathinfo($path, PATHINFO_FILENAME) );\n  $counter++;\n}\necho \"Done\\n\";\n?>")).toMatchSnapshot();
+  });
+});

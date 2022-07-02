@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/strval_variation1.phpt
+  it("Test strval() function : usage variations  - Pass different data types as strval", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing strval() : usage variations ***\\n\";\n//get an unset variable\n$unset_var = 10;\nunset ($unset_var);\n//getting the resource\n$file_handle = fopen(__FILE__, \"r\");\nclass MyClass\n{\n  function __toString() {\n    return \"MyClass\";\n  }\n}\n//array of values to iterate over\n$values = array(\n          //Decimal values\n/*1*/\t  0,\n          1,\n          12345,\n          -12345,\n          //Octal values\n/*5*/\t  02,\n          010,\n          030071,\n          -030071,\n          //Hexadecimal values\n/*9*/\t  0x0,\n          0x1,\n          0xABCD,\n          -0xABCD,\n          // float data\n/*13*/    100.5,\n          -100.5,\n          100.1234567e10,\n          100.7654321E-10,\n          .5,\n          // array data\n/*18*/    array(),\n          array('color' => 'red', 'item' => 'pen'),\n          // null data\n/*20*/    NULL,\n          null,\n          // boolean data\n/*22*/    true,\n          false,\n          TRUE,\n          FALSE,\n          // empty data\n/*26*/    \"\",\n          '',\n          // object data\n/*28*/    new MyClass(),\n          // resource\n/*29*/    $file_handle,\n          // undefined data\n/*30*/    @$undefined_var,\n          // unset data\n/*31*/    @$unset_var,\n);\n// loop through each element of the array for strval\n$iterator = 1;\nforeach($values as $value) {\n      echo \"\\n-- Iteration $iterator --\\n\";\n      var_dump( strval($value) );\n      $iterator++;\n};\n?>")).toMatchSnapshot();
+  });
+});

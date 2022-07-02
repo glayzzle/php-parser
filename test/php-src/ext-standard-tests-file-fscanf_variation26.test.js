@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fscanf_variation26.phpt
+  it("Test fscanf() function: usage variations - char formats with chars", function () {
+    expect(parser.parseCode("<?php\n/* Test fscanf() to scan different chars using different char format types */\n$file_path = __DIR__;\necho \"*** Test fscanf(): different char format types with chars ***\\n\";\n// create a file\n$filename = \"$file_path/fscanf_variation26.tmp\";\n$file_handle = fopen($filename, \"w\");\nif($file_handle == false)\n  exit(\"Error:failed to open file $filename\");\n// array of chars\n$char_types = array( 'a', \"a\", 67, -67, 99 );\n$char_formats = array( \"%c\",\n               \"%hc\", \"%lc\", \"%Lc\",\n               \" %c\", \"%c \", \"% c\",\n               \"\\t%c\", \"\\n%c\", \"%4c\",\n               \"%30c\", \"%[a-zA-Z@#$&0-9]\", \"%*c\");\n$counter = 1;\n// writing to the file\nforeach($char_types as $char) {\n  @fprintf($file_handle, $char);\n  @fprintf($file_handle, \"\\n\");\n}\n// closing the file\nfclose($file_handle);\n// opening the file for reading\n$file_handle = fopen($filename, \"r\");\nif($file_handle == false) {\n  exit(\"Error:failed to open file $filename\");\n}\n$counter = 1;\n// reading the values from file using different char formats\nforeach($char_formats as $char_format) {\n  // rewind the file so that for every foreach iteration the file pointer starts from bof\n  rewind($file_handle);\n  echo \"\\n-- iteration $counter --\\n\";\n  while( !feof($file_handle) ) {\n    try {\n      var_dump(fscanf($file_handle,$char_format));\n    } catch (ValueError $exception) {\n      echo $exception->getMessage() . \"\\n\";\n    }\n  }\n  $counter++;\n}\necho \"\\n*** Done ***\";\n?>")).toMatchSnapshot();
+  });
+});

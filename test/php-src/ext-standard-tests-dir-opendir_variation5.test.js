@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/dir/opendir_variation5.phpt
+  it("Test opendir() function : usage variations - directories with restricted permissions", function () {
+    expect(parser.parseCode("<?php\n/*\n * remove the execute permission from the parent dir and test opendir() on child dir\n *   1) remove write & execute permission from the 1st parent and test opendir()\n *   2) remove execute permission from 2nd parent and test opendir()\n */\necho \"*** Testing opendir() : usage variations ***\\n\";\n/* create the temporary directory :\n * opendir_variation5  ( parent )\n *  |-> sub_dir    ( sub parent )\n *      |-> child_dir  ( child dir)\n */\n$parent_dir_path = __DIR__ . \"/opendir_variation5\";\nmkdir($parent_dir_path);\nchmod($parent_dir_path, 0777);\n// create sub_dir\n$sub_dir_path = $parent_dir_path . \"/sub_dir\";\nmkdir($sub_dir_path);\nchmod($sub_dir_path, 0777);\n//create sub_sub_dir\n$child_dir_path = $sub_dir_path.\"/child_dir\";\nmkdir($child_dir_path);\n// remove the write and execute permission from sub parent\nchmod($sub_dir_path, 0444);\necho \"\\n-- After restricting 1st level parent directory --\\n\";\n$dir_handle1 = opendir($child_dir_path);\nvar_dump( $dir_handle1 );\n// remove the execute permission from parent dir, allowing all permission for sub dir\nchmod($sub_dir_path, 0777); // all permission to sub dir\nchmod($parent_dir_path, 0666); // restricting parent directory\necho \"\\n-- After restricting parent directory --\\n\";\n$dir_handle2 = opendir($child_dir_path); // try to open, expected failure\nvar_dump( $dir_handle2 ); // dump it\nif (is_resource($dir_handle1)) {\n    closedir($dir_handle1);\n}\nif (is_resource($dir_handle2)) {\n    closedir($dir_handle2);\n}\n?>")).toMatchSnapshot();
+  });
+});

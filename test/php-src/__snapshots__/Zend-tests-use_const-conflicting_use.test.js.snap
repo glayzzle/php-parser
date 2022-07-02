@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests use const statements with conflicting names 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ConstantStatement {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "baz",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "kind": "constantstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "foo",
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        ConstantStatement {
+          "constants": Array [
+            Constant {
+              "kind": "constant",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "baz",
+              },
+              "value": Number {
+                "kind": "number",
+                "value": "42",
+              },
+            },
+          ],
+          "kind": "constantstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": "bar",
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": null,
+              "kind": "useitem",
+              "name": "foo\\\\baz",
+              "type": null,
+            },
+            UseItem {
+              "alias": null,
+              "kind": "useitem",
+              "name": "bar\\\\baz",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": "const",
+        },
+        Echo {
+          "expressions": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"Done\\\\n\\"",
+              "unicode": false,
+              "value": "Done
+",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+      ],
+      "kind": "namespace",
+      "name": Array [
+        "",
+      ],
+      "withBrackets": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

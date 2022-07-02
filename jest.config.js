@@ -25,6 +25,8 @@ module.exports = {
       testPathIgnorePatterns: [
         "<rootDir>/node_modules/",
         "<rootDir>/coverage/",
+        "<rootDir>/php-src/",
+        "<rootDir>/test/php-src/",
       ],
     },
   ],

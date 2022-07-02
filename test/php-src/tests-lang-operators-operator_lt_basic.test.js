@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // tests/lang/operators/operator_lt_basic.phpt
+  it("Test < operator : different types", function () {
+    expect(parser.parseCode("<?php\n$valid_true = array(1, \"1\", \"true\", 1.0, array(1));\n$valid_false = array(0, \"\", 0.0, array(), NULL);\n$int1 = 677;\n$int2 = -67837;\n$valid_int1 = array(\"678\", \"678abc\", \" 678\", \"678  \", 678.0, 6.789E2, \"+678\", +678);\n$valid_int2 = array(\"-67836\", \" -67836\", -67835.0001, -6.78351E4, \"-67836  \");\n$invalid_int1 = array(676, \"676\");\n$invalid_int2 = array(-67837, \"-67837\", \"-67836abc\");\n$float1 = 57385.45835;\n$float2 = -67345.76567;\n$valid_float1 = array(\"57385.45836\",  \"57385.45836aaa\", \"  57385.45836\", 5.738545836e4);\n$valid_float2 = array(\"-67345.76566\", \"  -67345.76566\", -6.734576566E4);\n$invalid_float1 = array(57385.45835, 5.738545835e4);\n$invalid_float2 = array(-67345.76567, -6.734576567E4, \"-67345.76566aaa\");\n$toCompare = array(\n  false, $valid_true, $valid_false,\n  $int1, $valid_int1, $invalid_int1,\n  $int2, $valid_int2, $invalid_int2,\n  $float1, $valid_float1, $invalid_float1,\n  $float2, $valid_float2, $invalid_float2\n);\n$failed = false;\nfor ($i = 0; $i < count($toCompare); $i +=3) {\n   $typeToTest = $toCompare[$i];\n   $valid_compares = $toCompare[$i + 1];\n   $invalid_compares = $toCompare[$i + 2];\n   foreach($valid_compares as $compareVal) {\n      if ($typeToTest < $compareVal) {\n         // do nothing\n      }\n      else {\n         echo \"FAILED: '$typeToTest' >= '$compareVal'\\n\";\n         $failed = true;\n      }\n   }\n   foreach($invalid_compares as $compareVal) {\n      if ($typeToTest < $compareVal) {\n         echo \"FAILED: '$typeToTest' < '$compareVal'\\n\";\n         $failed = true;\n      }\n   }\n}\nif ($failed == false) {\n   echo \"Test Passed\\n\";\n}\n?>")).toMatchSnapshot();
+  });
+});

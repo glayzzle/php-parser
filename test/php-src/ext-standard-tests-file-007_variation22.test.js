@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/007_variation22.phpt
+  it("Test fopen and fclose() functions - usage variations - \"a+b\" mode", function () {
+    expect(parser.parseCode("<?php\n/* Test fopen() and fclose(): Opening the file in \"a+b\" mode,\n   checking for the file creation, write & read operations,\n   checking for the file pointer position,\n   and fclose function\n*/\n$file_path = __DIR__;\nrequire($file_path.\"/file.inc\");\ncreate_files($file_path, 1, \"text_with_new_line\", 0755, 20, \"w\", \"007_variation\", 22, \"bytes\");\n$file = $file_path.\"/007_variation22.tmp\";\n$string = \"abcdefghij\\nmnopqrst\\tuvwxyz\\n0123456789\";\necho \"*** Test fopen() & fclose() functions:  with 'a+b' mode ***\\n\";\n$file_handle = fopen($file, \"a+b\");  //opening the file \"a+b\" mode\nvar_dump($file_handle);  //Check for the content of handle\nvar_dump( get_resource_type($file_handle) );  //Check for the type of resource\nvar_dump( fwrite($file_handle, $string) );  //Check for write operation; passes; expected:size of the $string\nrewind($file_handle);\nvar_dump( fread($file_handle, 100) );  //Check for read operation; passes; expected: content of file\nvar_dump( ftell($file_handle) );  //File pointer position after read operation, expected at the end of the file\nvar_dump( fclose($file_handle) );  //Check for close operation on the file handle\nvar_dump( get_resource_type($file_handle) );  //Check whether resource is lost after close operation\nunlink($file);  //Deleting the file\nfclose( fopen($file, \"a+b\") );  //Opening the non-existing file in \"a+b\" mode, which will be created\nvar_dump( file_exists($file) );  //Check for the existence of file\necho \"*** Done ***\\n\";")).toMatchSnapshot();
+  });
+});

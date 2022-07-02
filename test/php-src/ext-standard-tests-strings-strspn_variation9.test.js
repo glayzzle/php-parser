@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/strings/strspn_variation9.phpt
+  it("Test strspn() function : usage variations - different strings with default start and len args", function () {
+    expect(parser.parseCode("<?php\n/* Prototype  : proto int strspn(string str, string mask [, int start [, int len]])\n * Description: Finds length of initial segment consisting entirely of characters found in mask.\n                If start or/and length is provided works like strspn(substr($s,$start,$len),$good_chars)\n * Source code: ext/standard/string.c\n * Alias to functions: none\n*/\n/*\n* Testing strspn() : with different strings as str argument and default start and len args\n*/\necho \"*** Testing strspn() : with different str and default start and len args ***\\n\";\n// initialing required variables\n// defining different strings\n$strings = array(\n                   \"\",\n           '',\n           \"\\n\",\n           '\\n',\n           \"hello\\tworld\\nhello\\nworld\\n\",\n           'hello\\tworld\\nhello\\nworld\\n',\n           \"1234hello45world\\t123\",\n           '1234hello45world\\t123',\n           \"hello\\0world\\012\",\n           'hello\\0world\\012',\n           chr(0).chr(0),\n           chr(0).\"hello\\0world\".chr(0),\n           chr(0).'hello\\0world'.chr(0),\n           \"hello\".chr(0).\"world\",\n           'hello'.chr(0).'world',\n           \"hello\\0\\100\\xaaaworld\",\n           'hello\\0\\100\\xaaaworld'\n                   );\n$mask = \"sfth12\\ne34lw56r78d90\\0\\xaa\\100o\";\n// loop through each element of the array for str argument\nforeach($strings as $str) {\n      echo \"\\n-- Iteration with str value \\\"$str\\\" --\\n\";\n      //calling strspn() with default arguments\n      var_dump( strspn($str,$mask) );\n};\necho \"Done\"\n?>")).toMatchSnapshot();
+  });
+});

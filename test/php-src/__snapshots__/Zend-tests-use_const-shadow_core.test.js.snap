@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests shadowing a global core constant with a local version 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Include {
+        "kind": "include",
+        "once": false,
+        "require": true,
+        "target": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'includes/foo_php_version.inc'",
+          "unicode": false,
+          "value": "includes/foo_php_version.inc",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    UseGroup {
+      "items": Array [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "foo\\\\PHP_VERSION",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": null,
+      "type": "const",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Name {
+            "kind": "name",
+            "name": "PHP_VERSION",
+            "resolution": "uqn",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"Done\\\\n\\"",
+          "unicode": false,
+          "value": "Done
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

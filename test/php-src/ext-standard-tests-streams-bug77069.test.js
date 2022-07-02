@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/streams/bug77069.phpt
+  it("Bug #77069 (stream filter loses final block of data)", function () {
+    expect(parser.parseCode("<?php\nclass MyFilter extends php_user_filter {\n    private $data = '';\n    public function filter($in, $out, &$consumed, $closing): int {\n        $return = PSFS_FEED_ME;\n        // While input data is available, continue to read it.\n        while ($bucket_in = stream_bucket_make_writeable($in)) {\n            $this->data .= $bucket_in->data;\n            $consumed   += $bucket_in->datalen;\n            // Process whole lines.\n            while (preg_match('/(.*?)[\\r\\n]+(.*)/s', $this->data, $match) === 1) {\n                list(, $data, $this->data) = $match;\n                // Send this record output.\n                $data       = strrev($data) . PHP_EOL;\n                $bucket_out = stream_bucket_new($this->stream, $data);\n                $return     = PSFS_PASS_ON;\n                stream_bucket_append($out, $bucket_out);\n            }\n        }\n        // Process the final line.\n        if ($closing && $this->data !== '') {\n            $data       = strrev($this->data) . PHP_EOL;\n            $bucket_out = stream_bucket_new($this->stream, $data);\n            $return     = PSFS_PASS_ON;\n            stream_bucket_append($out, $bucket_out);\n        }\n        return $return;\n    }\n}\nstream_filter_register('my-filter', 'MyFilter');\n$input = \"Line one\\nLine two\\nLine three\";\n$stream = fopen('data://text/plain,' . $input, 'r');\nstream_filter_append($stream, 'my-filter');\n$output = '';\nwhile (!feof($stream)) {\n    $output .= fread($stream, 16);\n}\nfclose($stream);\necho $output;\n?>")).toMatchSnapshot();
+  });
+});

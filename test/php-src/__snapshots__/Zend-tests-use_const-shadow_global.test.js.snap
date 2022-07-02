@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests shadowing a global constant with a local version 1`] = `
+Program {
+  "children": Array [
+    Namespace {
+      "children": Array [
+        ExpressionStatement {
+          "expression": Include {
+            "kind": "include",
+            "once": false,
+            "require": true,
+            "target": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'includes/global_bar.inc'",
+              "unicode": false,
+              "value": "includes/global_bar.inc",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        ExpressionStatement {
+          "expression": Include {
+            "kind": "include",
+            "once": false,
+            "require": true,
+            "target": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "'includes/foo_bar.inc'",
+              "unicode": false,
+              "value": "includes/foo_bar.inc",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": Array [
+        "",
+      ],
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "bar",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+      ],
+      "kind": "namespace",
+      "name": Array [
+        "",
+      ],
+      "withBrackets": true,
+    },
+    Namespace {
+      "children": Array [
+        UseGroup {
+          "items": Array [
+            UseItem {
+              "alias": null,
+              "kind": "useitem",
+              "name": "foo\\\\bar",
+              "type": null,
+            },
+          ],
+          "kind": "usegroup",
+          "name": null,
+          "type": "const",
+        },
+        ExpressionStatement {
+          "expression": Call {
+            "arguments": Array [
+              Name {
+                "kind": "name",
+                "name": "bar",
+                "resolution": "uqn",
+              },
+            ],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "var_dump",
+              "resolution": "uqn",
+            },
+          },
+          "kind": "expressionstatement",
+        },
+        Echo {
+          "expressions": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"Done\\\\n\\"",
+              "unicode": false,
+              "value": "Done
+",
+            },
+          ],
+          "kind": "echo",
+          "shortForm": false,
+        },
+      ],
+      "kind": "namespace",
+      "name": Array [
+        "",
+      ],
+      "withBrackets": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

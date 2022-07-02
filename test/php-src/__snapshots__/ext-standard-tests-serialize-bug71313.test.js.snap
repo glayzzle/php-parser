@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71311 Use-after-free vulnerability in SPL(SplObjectStorage, unserialize) 1`] = `
+Program {
+  "children": Array [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "data",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": Array [
+            String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": "\\"C:16:\\\\\\"SplObjectStorage\\\\\\":113:{x:i:2;O:8:\\\\\\"stdClass\\\\\\":0:{},a:2:{s:4:\\\\\\"prev\\\\\\";i:2;s:4:\\\\\\"next\\\\\\";O:8:\\\\\\"stdClass\\\\\\":0:{}};r:7;,R:2;s:4:\\\\\\"next\\\\\\";;r:3;};m:a:0:{}}\\"",
+              "unicode": false,
+              "value": "C:16:\\"SplObjectStorage\\\\\\":113:{x:i:2;O:8:\\\\\\"stdClass\\\\\\":0:{},a:2:{s:4:\\\\\\"prev\\\\\\";i:2;s:4:\\\\\\"next\\\\\\";O:8:\\\\\\"stdClass\\\\\\":0:{}};r:7;,R:2;s:4:\\\\\\"next\\\\\\";;r:3;};m:a:0:{}}",
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "unserialize",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          Variable {
+            "curly": false,
+            "kind": "variable",
+            "name": "data",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "var_dump",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

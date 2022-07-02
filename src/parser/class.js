@@ -79,6 +79,10 @@ module.exports = {
         continue;
       }
 
+      if (this.token === this.tok.T_ATTRIBUTE) {
+        attrs = this.read_attr_list();
+      }
+
       // check enum cases
       if (allow_enum_cases && this.token === this.tok.T_CASE) {
         const enumcase = this.read_enum_case();
@@ -87,10 +91,6 @@ module.exports = {
         }
         result = result.concat(enumcase);
         continue;
-      }
-
-      if (this.token === this.tok.T_ATTRIBUTE) {
-        attrs = this.read_attr_list();
       }
 
       const locStart = this.position();

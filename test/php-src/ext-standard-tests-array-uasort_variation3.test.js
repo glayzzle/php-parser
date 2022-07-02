@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/array/uasort_variation3.phpt
+  it("Test uasort() function : usage variations - sort array with all possible keys", function () {
+    expect(parser.parseCode("<?php\n/*\n* Testing uasort() with 'array_arg' having different keys\n*/\necho \"*** Testing uasort() : Sorting array with all possible keys ***\\n\";\n//comparison function\nfunction cmp_function($value1, $value2)\n{\n  if($value1 == $value2) {\n    return 0;\n  }\n  else if($value1 > $value2) {\n    return -1;\n  }\n  else {\n    return 1;\n  }\n}\n// different heredoc strings\n//empty heredoc string\n$empty_heredoc = <<<EOT1\nEOT1;\n// single line heredoc string\n$simple_heredoc = <<<EOT2\nsimple\nEOT2;\n// multiline heredoc string\n$multiline_heredoc = <<<EOT3\nmultiline heredoc with 123\nand speci@! ch@r..\\ncheck\\talso\nEOT3;\n$array_arg = array(\n  // default key\n  1,  //expecting: default key 0, value will be replaced by 'FALSE'\n  // numeric keys\n  1 => 10, // expecting: value will be replaced by 'TRUE'\n  -2 => 9,\n  012 => 7,\n  0x34 => 6,\n  // string keys\n  'key' => 5,  //single quoted key\n  \"two\" => 4,  //double quoted key\n  '' => 3,\n  \"\" => 2,\n  \" \" => 0,  // space as key\n  // bool keys\n  true => 15,\n  false => 5,\n  TRUE => 100,\n  FALSE => 25,\n  // null keys\n  null => 20,  // expecting: value will be replaced by 'NULL'\n  NULL => 35,\n  // binary key\n  \"a\".chr(0).\"b\" => 45,\n  b\"binary\" => 30,\n  //heredoc keys\n  $empty_heredoc => 90,\n  $simple_heredoc => 75,\n  $multiline_heredoc => 200,\n);\nvar_dump( uasort($array_arg, 'cmp_function') );\necho \"-- Sorted array after uasort() function call --\\n\";\nvar_dump($array_arg);\necho \"Done\"\n?>")).toMatchSnapshot();
+  });
+});

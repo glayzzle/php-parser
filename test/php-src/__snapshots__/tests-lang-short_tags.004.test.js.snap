@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests short_open_tag: Off 1`] = `
+Program {
+  "children": Array [
+    Inline {
+      "kind": "inline",
+      "raw": "<%= 'so should this' %>
+",
+      "value": "<%= 'so should this' %>
+",
+    },
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'This gets echoed twice'",
+          "unicode": false,
+          "value": "This gets echoed twice",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": true,
+    },
+    Inline {
+      "kind": "inline",
+      "raw": "
+<%= $a%>
+<? $b=3; ?>
+",
+      "value": "<%= $a%>
+<? $b=3; ?>
+",
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$b}\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    Echo {
+      "expressions": Array [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": "\\"{$b}\\"",
+          "type": "string",
+          "value": Array [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "b",
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": true,
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

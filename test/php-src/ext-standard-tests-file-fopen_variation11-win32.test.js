@@ -1,0 +1,9 @@
+// eslint-disable prettier/prettier
+const parser = require("../main");
+
+describe("php-src tests", function () {
+  // ext/standard/tests/file/fopen_variation11-win32.phpt
+  it("Test fopen() function : variation: interesting paths, use include path = true", function () {
+    expect(parser.parseCode("<?php\necho \"*** Testing fopen() : variation ***\\n\";\n// fopen with interesting windows paths.\n$testdir = __DIR__.'/fopen11.tmpDir';\n$rootdir = 'fopen11.tmpdirTwo';\nmkdir($testdir);\nmkdir('c:\\\\'.$rootdir);\n$unixifiedDir = '/'.substr(str_replace('\\\\','/',$testdir),3);\n$paths = array('c:\\\\',\n               'c:',\n               'c',\n               '\\\\',\n               '/',\n               'c:'.$rootdir,\n               'c:adir',\n               'c:\\\\/',\n               'c:\\\\'.$rootdir.'\\\\/',\n               'c:\\\\'.$rootdir.'\\\\',\n               'c:\\\\'.$rootdir.'/',\n               $unixifiedDir,\n               '/sortout');\n$file = \"fopen_variation11.tmp\";\n$firstfile = 'c:\\\\'.$rootdir.'\\\\'.$file;\n$secondfile = $testdir.'\\\\'.$file;\n$thirdfile = 'c:\\\\'.$file;\n$h = fopen($firstfile, 'w');\nfwrite($h, \"file in $rootdir\");\nfclose($h);\n$h = fopen($secondfile, 'w');\nfwrite($h, \"file in fopen11.tmpDir\");\nfclose($h);\n$h = fopen($thirdfile, 'w');\nfwrite($h, \"file in root\");\nfclose($h);\nforeach($paths as $path) {\n      echo \"\\n--$path--\\n\";\n      $toFind = $path.'\\\\'.$file;\n         $h = fopen($toFind, 'r', true);\n         if ($h === false) {\n            echo \"file not opened for read\\n\";\n         }\n         else {\n            fpassthru($h);\n            fclose($h);\n            echo \"\\n\";\n         }\n};\nunlink($firstfile);\nunlink($secondfile);\nunlink($thirdfile);\nrmdir($testdir);\nrmdir('c:\\\\'.$rootdir);\n?>")).toMatchSnapshot();
+  });
+});

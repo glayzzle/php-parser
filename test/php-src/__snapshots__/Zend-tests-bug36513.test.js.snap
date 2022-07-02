@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #36513 (comment will be outputed in last line) 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [
+        Parameter {
+          "attrGroups": Array [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "s",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Echo {
+            "expressions": Array [
+              Bin {
+                "kind": "bin",
+                "left": Bin {
+                  "kind": "bin",
+                  "left": String {
+                    "isDoubleQuote": true,
+                    "kind": "string",
+                    "raw": "\\"'\\"",
+                    "unicode": false,
+                    "value": "'",
+                  },
+                  "right": Call {
+                    "arguments": Array [
+                      Call {
+                        "arguments": Array [
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"&nbsp;\\"",
+                            "unicode": false,
+                            "value": "&nbsp;",
+                          },
+                          String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\" \\"",
+                            "unicode": false,
+                            "value": " ",
+                          },
+                          Call {
+                            "arguments": Array [
+                              Call {
+                                "arguments": Array [
+                                  Call {
+                                    "arguments": Array [
+                                      Variable {
+                                        "curly": false,
+                                        "kind": "variable",
+                                        "name": "s",
+                                      },
+                                      Number {
+                                        "kind": "number",
+                                        "value": "1",
+                                      },
+                                    ],
+                                    "kind": "call",
+                                    "what": Name {
+                                      "kind": "name",
+                                      "name": "highlight_string",
+                                      "resolution": "uqn",
+                                    },
+                                  },
+                                ],
+                                "kind": "call",
+                                "what": Name {
+                                  "kind": "name",
+                                  "name": "strip_tags",
+                                  "resolution": "uqn",
+                                },
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "htmlspecialchars_decode",
+                              "resolution": "uqn",
+                            },
+                          },
+                        ],
+                        "kind": "call",
+                        "what": Name {
+                          "kind": "name",
+                          "name": "str_replace",
+                          "resolution": "uqn",
+                        },
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "trim",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "type": ".",
+                },
+                "right": String {
+                  "isDoubleQuote": true,
+                  "kind": "string",
+                  "raw": "\\"'\\\\n\\"",
+                  "unicode": false,
+                  "value": "'
+",
+                },
+                "type": ".",
+              },
+            ],
+            "kind": "echo",
+            "shortForm": false,
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Eval {
+        "kind": "eval",
+        "source": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'echo \\"1\\";//2'",
+          "unicode": false,
+          "value": "echo \\"1\\";//2",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Eval {
+        "kind": "eval",
+        "source": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "'echo 3; //{ 4?>5'",
+          "unicode": false,
+          "value": "echo 3; //{ 4?>5",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    Echo {
+      "expressions": Array [
+        String {
+          "isDoubleQuote": true,
+          "kind": "string",
+          "raw": "\\"\\\\n\\"",
+          "unicode": false,
+          "value": "
+",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php echo \\"1\\";//2'",
+            "unicode": false,
+            "value": "<?php echo \\"1\\";//2",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php echo \\"1\\";//22'",
+            "unicode": false,
+            "value": "<?php echo \\"1\\";//22",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [
+          String {
+            "isDoubleQuote": false,
+            "kind": "string",
+            "raw": "'<?php echo 3; // 4 ?>5'",
+            "unicode": false,
+            "value": "<?php echo 3; // 4 ?>5",
+          },
+        ],
+        "kind": "call",
+        "what": Name {
+          "kind": "name",
+          "name": "test",
+          "resolution": "uqn",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;

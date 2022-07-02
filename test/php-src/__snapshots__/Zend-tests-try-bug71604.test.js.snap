@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`php-src tests Bug #71604: Aborted Generators continue after nested finally 1`] = `
+Program {
+  "children": Array [
+    _Function {
+      "arguments": Array [],
+      "attrGroups": Array [],
+      "body": Block {
+        "children": Array [
+          Try {
+            "always": Block {
+              "children": Array [
+                ExpressionStatement {
+                  "expression": Print {
+                    "expression": String {
+                      "isDoubleQuote": true,
+                      "kind": "string",
+                      "raw": "\\"OUTER\\\\n\\"",
+                      "unicode": false,
+                      "value": "OUTER
+",
+                    },
+                    "kind": "print",
+                  },
+                  "kind": "expressionstatement",
+                },
+              ],
+              "kind": "block",
+            },
+            "body": Block {
+              "children": Array [
+                Try {
+                  "always": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Print {
+                          "expression": String {
+                            "isDoubleQuote": true,
+                            "kind": "string",
+                            "raw": "\\"INNER\\\\n\\"",
+                            "unicode": false,
+                            "value": "INNER
+",
+                          },
+                          "kind": "print",
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "body": Block {
+                    "children": Array [
+                      ExpressionStatement {
+                        "expression": Yield {
+                          "key": null,
+                          "kind": "yield",
+                          "value": null,
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "catches": Array [],
+                  "kind": "try",
+                },
+              ],
+              "kind": "block",
+            },
+            "catches": Array [
+              Catch {
+                "body": Block {
+                  "children": Array [
+                    ExpressionStatement {
+                      "expression": Print {
+                        "expression": String {
+                          "isDoubleQuote": true,
+                          "kind": "string",
+                          "raw": "\\"EX\\\\n\\"",
+                          "unicode": false,
+                          "value": "EX
+",
+                        },
+                        "kind": "print",
+                      },
+                      "kind": "expressionstatement",
+                    },
+                  ],
+                  "kind": "block",
+                },
+                "kind": "catch",
+                "variable": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "e",
+                },
+                "what": Array [
+                  Name {
+                    "kind": "name",
+                    "name": "Exception",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+            "kind": "try",
+          },
+          ExpressionStatement {
+            "expression": Print {
+              "expression": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": "\\"NOTREACHED\\\\n\\"",
+                "unicode": false,
+                "value": "NOTREACHED
+",
+              },
+              "kind": "print",
+            },
+            "kind": "expressionstatement",
+          },
+        ],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "gen",
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Call {
+        "arguments": Array [],
+        "kind": "call",
+        "what": PropertyLookup {
+          "kind": "propertylookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "current",
+          },
+          "what": Call {
+            "arguments": Array [],
+            "kind": "call",
+            "what": Name {
+              "kind": "name",
+              "name": "gen",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": Array [],
+  "kind": "program",
+}
+`;
