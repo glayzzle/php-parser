@@ -17,6 +17,8 @@ describe("Test scalar statements", function () {
     ["test dereferencable_scalar", "$var = array(1);"],
     ["test dereferencable_scalar #2", "$var = [1];"],
     ["test dereferencable_scalar #3", '$var = "test";'],
+    ["php 8.1 explicit octal", "$var = 0o123 + 0o001_234;"],
+    ["implicit octal", "$var = 0123;"],
   ])("%s", function (_, code) {
     expect(parser.parseEval(code)).toMatchSnapshot();
   });

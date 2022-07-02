@@ -35,7 +35,13 @@ module.exports = {
         } else {
           this.unput(ch ? 2 : 1);
         }
-        // @fixme check octal notation ? not usefull
+      } else if (ch === "o" || ch === "O") {
+        ch = this.input();
+        if (ch !== "_" && this.is_OCTAL()) {
+          return this.consume_ONUM();
+        } else {
+          this.unput(ch ? 2 : 1);
+        }
       } else if (!this.is_NUM()) {
         if (ch) this.unput(1);
       }
@@ -145,6 +151,17 @@ module.exports = {
     while (this.offset < this.size) {
       ch = this.input();
       if (ch !== "0" && ch !== "1" && ch !== "_") {
+        if (ch) this.unput(1);
+        break;
+      }
+    }
+    return this.tok.T_LNUMBER;
+  },
+  // read an octal number
+  consume_ONUM: function () {
+    while (this.offset < this.size) {
+      const ch = this.input();
+      if (!this.is_OCTAL()) {
         if (ch) this.unput(1);
         break;
       }
