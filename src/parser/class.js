@@ -126,11 +126,14 @@ module.exports = {
           // support https://wiki.php.net/rfc/typed_properties_v2
           (this.version >= 704 &&
             (this.token === "?" ||
-              this.token === this.tok.T_CALLABLE ||
               this.token === this.tok.T_ARRAY ||
+              this.token === this.tok.T_CALLABLE ||
+              this.token === this.tok.T_NAMESPACE ||
+              this.token === this.tok.T_NAME_FULLY_QUALIFIED ||
+              this.token === this.tok.T_NAME_QUALIFIED ||
+              this.token === this.tok.T_NAME_RELATIVE ||
               this.token === this.tok.T_NS_SEPARATOR ||
-              this.token === this.tok.T_STRING ||
-              this.token === this.tok.T_NAMESPACE)))
+              this.token === this.tok.T_STRING)))
       ) {
         // reads a variable
         const variables = this.read_variable_list(flags, attrs);

@@ -255,4 +255,14 @@ class b {
       "public static function a()"
     );
   });
+
+  it("handles property types with a leading \\", function () {
+    expect(
+      parser.parseEval(`
+      class Foo {
+        public \\Bar $baz;
+      }
+    `)
+    ).toMatchSnapshot();
+  });
 });
