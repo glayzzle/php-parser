@@ -280,7 +280,7 @@ declare module "php-parser" {
      * @property type - Defines the type of encapsed string (shell, heredoc, string)
      * @property label - The heredoc label, defined only when the type is heredoc
      */
-    class Encapsed extends Literal {
+    class Encapsed extends Literal<EncapsedPart[]> {
         /**
          * The node is a double quote string :
          * ```php
@@ -502,9 +502,9 @@ declare module "php-parser" {
     /**
      * Defines an array structure
      */
-    class Literal extends Expression {
+    class Literal<T = Node | string | number | boolean | null> extends Expression {
         raw: string;
-        value: Node | string | number | boolean | null;
+        value: T;
     }
     /**
      * Defines the location of the node (with it's source contents as string)
