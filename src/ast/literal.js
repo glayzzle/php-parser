@@ -14,7 +14,7 @@ const KIND = "literal";
  * @memberOf module:php-parser
  * @extends {Expression}
  * @property {string} raw
- * @property {Node|string|number|boolean|null} value
+ * @property {EncapsedPart[]|Node|string|number|boolean|null} value
  */
 module.exports = Expression.extends(
   KIND,

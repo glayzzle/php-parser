@@ -454,7 +454,7 @@ declare module "php-parser" {
         byref: boolean;
         nullable: boolean;
         body: Block | null;
-        attrGroups: AttrGroups[];
+        attrGroups: AttrGroup[];
     }
     /**
      * Imports a variable from the global scope
@@ -544,7 +544,7 @@ declare module "php-parser" {
      */
     class Literal extends Expression {
         raw: string;
-        value: Node | string | number | boolean | null;
+        value: EncapsedPart[] | Node | string | number | boolean | null;
     }
     /**
      * Defines the location of the node (with it's source contents as string)
@@ -716,6 +716,9 @@ declare module "php-parser" {
      */
     class Operation extends Expression {
     }
+    type MODIFIER_PUBLIC = 1;
+    type MODIFIER_PROTECTED = 2;
+    type MODIFIER_PRIVATE = 4;
     /**
      * Defines a function parameter
      */
@@ -726,7 +729,7 @@ declare module "php-parser" {
         variadic: boolean;
         readonly: boolean;
         nullable: boolean;
-        attrGroups: AttrGroups[];
+        attrGroups: AttrGroup[];
         flags: MODIFIER_PUBLIC | MODIFIER_PROTECTED | MODIFIER_PRIVATE;
     }
     /**

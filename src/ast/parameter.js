@@ -8,13 +8,18 @@
 const Declaration = require("./declaration");
 const KIND = "parameter";
 
-// eslint-disable-next-line no-unused-vars
-const MODIFIER_PUBLIC = 1;
-// eslint-disable-next-line no-unused-vars
-const MODIFIER_PROTECTED = 2;
-// eslint-disable-next-line no-unused-vars
-const MODIFIER_PRIVATE = 4;
-
+/**
+ * @memberOf module:php-parser
+ * @typedef {1} MODIFIER_PUBLIC
+ **/
+/**
+ * @memberOf module:php-parser
+ * @typedef {2} MODIFIER_PROTECTED
+ **/
+/**
+ * @memberOf module:php-parser
+ * @typedef {4} MODIFIER_PRIVATE
+ **/
 /**
  * Defines a function parameter
  * @constructor Parameter
@@ -26,7 +31,7 @@ const MODIFIER_PRIVATE = 4;
  * @property {boolean} variadic
  * @property {boolean} readonly
  * @property {boolean} nullable
- * @property {AttrGroups[]} attrGroups
+ * @property {AttrGroup[]} attrGroups
  * @property {MODIFIER_PUBLIC|MODIFIER_PROTECTED|MODIFIER_PRIVATE} flags
  */
 module.exports = Declaration.extends(

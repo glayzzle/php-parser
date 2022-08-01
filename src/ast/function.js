@@ -18,7 +18,7 @@ const KIND = "function";
  * @property {boolean} byref
  * @property {boolean} nullable
  * @property {Block|null} body
- * @property {AttrGroups[]} attrGroups
+ * @property {AttrGroup[]} attrGroups
  */
 module.exports = Declaration.extends(
   KIND,
