@@ -10,6 +10,7 @@ const KIND = "intersectiontype";
 
 /**
  * A union of types
+ * @memberOf module:php-parser
  * @constructor IntersectionType
  * @extends {Declaration}
  * @property {TypeReference[]} types

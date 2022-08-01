@@ -10,6 +10,7 @@ const KIND = "attrgroup";
 
 /**
  * Attribute group
+ * @memberOf module:php-parser
  * @constructor AttrGroup
  * @extends {Node}
  * @property {Attribute[]} attrs

@@ -14,7 +14,7 @@ const KIND = "call";
  * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Identifier|Variable} what
- * @property {Variable[]} arguments
+ * @property {Expression[]} arguments
  */
 module.exports = Expression.extends(
   KIND,

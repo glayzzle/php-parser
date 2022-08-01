@@ -10,12 +10,13 @@ const KIND = "nullsafepropertylookup";
 
 /**
  * Lookup to an object property
- * @constructor PropertyLookup
+ * @memberOf module:php-parser
+ * @constructor NullSafePropertyLookup
  * @extends {Lookup}
  */
 module.exports = Lookup.extends(
   KIND,
-  function PropertyLookup(what, offset, docs, location) {
+  function NullSafePropertyLookup(what, offset, docs, location) {
     Lookup.apply(this, [KIND, what, offset, docs, location]);
   }
 );

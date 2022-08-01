@@ -13,9 +13,9 @@ const KIND = "catch";
  * @constructor Catch
  * @memberOf module:php-parser
  * @extends {Statement}
- * @property {Identifier[]} what
- * @property {Variable|null} variable
- * @property {Statement} body
+ * @property {Name[]} what
+ * @property {Variable} variable
+ * @property {Block} body
  * @see http://php.net/manual/en/language.exceptions.php
  */
 module.exports = Statement.extends(

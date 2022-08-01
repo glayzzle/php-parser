@@ -19,6 +19,8 @@ const IS_PRIVATE = "private";
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Property[]} properties
+ * @property {string|null} visibility
+ * @property {boolean} isStatic
  */
 const PropertyStatement = Statement.extends(
   KIND,

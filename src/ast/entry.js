@@ -10,8 +10,8 @@ const KIND = "entry";
 
 /**
  * An array entry - see [Array](#array)
- * @constructor Entry
  * @memberOf module:php-parser
+ * @constructor Entry
  * @extends {Expression}
  * @property {Node|null} key The entry key/offset
  * @property {Node} value The entry value

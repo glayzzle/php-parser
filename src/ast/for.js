@@ -16,7 +16,7 @@ const KIND = "for";
  * @property {Expression[]} init
  * @property {Expression[]} test
  * @property {Expression[]} increment
- * @property {Statement} body
+ * @property {Block | null} body
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.for.php
  */

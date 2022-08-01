@@ -13,6 +13,7 @@ const KIND = "boolean";
  * @constructor Boolean
  * @memberOf module:php-parser
  * @extends {Literal}
+ * @property {boolean} value
  */
 module.exports = Literal.extends(
   KIND,

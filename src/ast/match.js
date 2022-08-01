@@ -10,6 +10,7 @@ const KIND = "match";
 
 /**
  * Defines a match expression
+ * @memberOf module:php-parser
  * @constructor Match
  * @extends {Expression}
  * @property {Expression} cond Condition expression to match against

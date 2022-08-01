@@ -10,6 +10,7 @@ const KIND = "namedargument";
 
 /**
  * Named arguments.
+ * @memberOf module:php-parser
  * @constructor namedargument
  * @extends {Expression}
  * @property {String} name

@@ -13,6 +13,7 @@ const KIND = "inline";
  * @constructor Inline
  * @memberOf module:php-parser
  * @extends {Literal}
+ * @property {string} value
  */
 module.exports = Literal.extends(
   KIND,

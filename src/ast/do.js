@@ -14,7 +14,7 @@ const KIND = "do";
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
- * @property {Statement} body
+ * @property {Block | null} body
  */
 module.exports = Statement.extends(
   KIND,
