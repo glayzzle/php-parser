@@ -13,6 +13,7 @@ const KIND = "echo";
  * @constructor Echo
  * @memberOf module:php-parser
  * @property {boolean} shortForm
+ * @property {Expression[]} expressions
  * @extends {Statement}
  */
 module.exports = Statement.extends(

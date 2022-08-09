@@ -16,6 +16,7 @@ const KIND = "string";
  * @property {boolean} unicode
  * @property {boolean} isDoubleQuote
  * @see {Encapsed}
+ * @property {string} value
  */
 module.exports = Literal.extends(
   KIND,

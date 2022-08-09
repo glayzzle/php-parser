@@ -16,7 +16,7 @@ const KIND = "foreach";
  * @property {Expression} source
  * @property {Expression|null} key
  * @property {Expression} value
- * @property {Statement} body
+ * @property {Block | null} body
  * @property {boolean} shortForm
  * @see http://php.net/manual/en/control-structures.foreach.php
  */

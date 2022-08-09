@@ -14,12 +14,12 @@ const KIND = "class";
  * @memberOf module:php-parser
  * @extends {Declaration}
  * @property {Identifier|null} extends
- * @property {Identifier[]} implements
+ * @property {Identifier[]|null} implements
  * @property {Declaration[]} body
- * @property {AttrGroup[]} attrGroups
  * @property {boolean} isAnonymous
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
+ * @property {AttrGroup[]} attrGroups
  */
 module.exports = Declaration.extends(
   KIND,

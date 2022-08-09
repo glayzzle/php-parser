@@ -400,6 +400,8 @@ Parser.prototype.error = function (expect) {
 /**
  * Create a position node from the lexers position
  *
+ * @function Parser#position
+ * @memberOf module:php-parser
  * @return {Position}
  */
 Parser.prototype.position = function () {
@@ -633,7 +635,9 @@ Parser.prototype.next = function () {
 
 /**
  * Peek at the next token.
- * @returns string|number Next Token
+ * @function Parser#peek
+ * @memberOf module:php-parser
+ * @returns {string|number} Next Token
  */
 Parser.prototype.peek = function () {
   const lexerState = this.lexer.getState();

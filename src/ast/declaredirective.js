@@ -13,7 +13,7 @@ const KIND = "declaredirective";
  * @constructor DeclareDirective
  * @memberOf module:php-parser
  * @extends {Node}
- * @property {Identifier} name
+ * @property {Identifier} key
  * @property {Node|string|number|boolean|null} value
  */
 module.exports = Node.extends(

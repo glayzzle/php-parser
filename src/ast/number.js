@@ -13,6 +13,7 @@ const KIND = "number";
  * @constructor Number
  * @memberOf module:php-parser
  * @extends {Literal}
+ * @property {number} value
  */
 module.exports = Literal.extends(
   KIND,

@@ -24,6 +24,13 @@ jobs:
         yarn
         yarn test
 
+    - name: type check
+      run: |
+        npm i -g typescript
+        yarn build-types
+        [ $(git diff types.d.ts | wc -l) -gt 0 ] && echo 'Diff exists in types.d.ts. Please change jsdoc.' && exit 1
+        tsc --noEmit types.d.ts
+
     - name: install valgrind
       run: sudo apt-get install -y valgrind
 

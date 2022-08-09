@@ -14,6 +14,7 @@ const KIND = "list";
  * @memberOf module:php-parser
  * @extends {Expression}
  * @property {boolean} shortForm
+ * @property {Entry[]} items
  */
 module.exports = Expression.extends(
   KIND,

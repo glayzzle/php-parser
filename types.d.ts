@@ -60,6 +60,19 @@ declare module "php-parser" {
         operator: string;
     }
     /**
+     * Attribute group
+     */
+    class AttrGroup extends Node {
+        attrs: Attribute[];
+    }
+    /**
+     * Attribute Value
+     */
+    class Attribute extends Node {
+        name: string;
+        args: Parameter[];
+    }
+    /**
      * Binary operations
      */
     class Bin extends Operation {
@@ -135,6 +148,7 @@ declare module "php-parser" {
         isAnonymous: boolean;
         isAbstract: boolean;
         isFinal: boolean;
+        attrGroups: AttrGroup[];
     }
     /**
      * Defines a class/interface/trait constant
@@ -145,6 +159,7 @@ declare module "php-parser" {
          */
         parseFlags(flags: (number | null)[]): void;
         visibility: string;
+        attrGroups: AttrGroup[];
     }
     /**
      * Defines a clone call
@@ -163,6 +178,7 @@ declare module "php-parser" {
         nullable: boolean;
         body: Block | null;
         isStatic: boolean;
+        attrGroups: AttrGroup[];
     }
     /**
      * Abstract documentation node (ComentLine or CommentBlock)
@@ -331,7 +347,7 @@ declare module "php-parser" {
      */
     class EncapsedPart extends Expression {
         expression: Expression;
-        syntax: string; // TODO: limit possiblities
+        syntax: string;
         curly: boolean;
     }
     /**
@@ -358,6 +374,22 @@ declare module "php-parser" {
          * Argument unpacking
         */
         unpack: boolean;
+    }
+    /**
+     * A enum definition
+     */
+    class Enum extends Declaration {
+        valueType: Identifier | null;
+        implements: Identifier[];
+        body: Declaration[];
+        attrGroups: AttrGroup[];
+    }
+    /**
+     * Declares a cases into the current scope
+     */
+    class EnumCase extends Node {
+        name: string;
+        value: string | number | null;
     }
     /**
      * Defines an error node (used only on silentMode)
@@ -422,6 +454,7 @@ declare module "php-parser" {
         byref: boolean;
         nullable: boolean;
         body: Block | null;
+        attrGroups: AttrGroup[];
     }
     /**
      * Imports a variable from the global scope
@@ -480,6 +513,13 @@ declare module "php-parser" {
     class Interface extends Declaration {
         extends: Identifier[];
         body: Declaration[];
+        attrGroups: AttrGroup[];
+    }
+    /**
+     * A union of types
+     */
+    class IntersectionType extends Declaration {
+        types: TypeReference[];
     }
     /**
      * Defines an isset call
@@ -504,7 +544,7 @@ declare module "php-parser" {
      */
     class Literal extends Expression {
         raw: string;
-        value: Node | string | number | boolean | null;
+        value: EncapsedPart[] | Node | string | number | boolean | null;
     }
     /**
      * Defines the location of the node (with it's source contents as string)
@@ -525,6 +565,36 @@ declare module "php-parser" {
      * Defines magic constant
      */
     class Magic extends Literal {
+    }
+    /**
+     * Defines a match expression
+     * @property cond - Condition expression to match against
+     * @property arms - Arms for comparison
+     */
+    class Match extends Expression {
+        /**
+         * Condition expression to match against
+        */
+        cond: Expression;
+        /**
+         * Arms for comparison
+        */
+        arms: MatchArm[];
+    }
+    /**
+     * An array entry - see [Array](#array)
+     * @property conds - The match condition expression list - null indicates default arm
+     * @property body - The return value expression
+     */
+    class MatchArm extends Expression {
+        /**
+         * The match condition expression list - null indicates default arm
+        */
+        conds: Expression[] | null;
+        /**
+         * The return value expression
+        */
+        body: Expression;
     }
     /**
      * Defines a class/interface/trait method
@@ -559,6 +629,13 @@ declare module "php-parser" {
         readonly RELATIVE_NAME: string;
         name: string;
         resolution: string;
+    }
+    /**
+     * Named arguments.
+     */
+    class namedargument extends Expression {
+        name: string;
+        value: Expression;
     }
     /**
      * The main program node
@@ -619,6 +696,11 @@ declare module "php-parser" {
     class NullKeyword extends Node {
     }
     /**
+     * Lookup to an object property
+     */
+    class NullSafePropertyLookup extends Lookup {
+    }
+    /**
      * Defines a numeric value
      */
     class Number extends Literal {
@@ -634,6 +716,9 @@ declare module "php-parser" {
      */
     class Operation extends Expression {
     }
+    type MODIFIER_PUBLIC = 1;
+    type MODIFIER_PROTECTED = 2;
+    type MODIFIER_PRIVATE = 4;
     /**
      * Defines a function parameter
      */
@@ -642,7 +727,10 @@ declare module "php-parser" {
         value: Node | null;
         byref: boolean;
         variadic: boolean;
+        readonly: boolean;
         nullable: boolean;
+        attrGroups: AttrGroup[];
+        flags: MODIFIER_PUBLIC | MODIFIER_PROTECTED | MODIFIER_PRIVATE;
     }
     /**
      * Defines a class reference node
@@ -690,9 +778,10 @@ declare module "php-parser" {
     class Property extends Statement {
         name: string;
         value: Node | null;
-        readonly : boolean;
+        readonly: boolean;
         nullable: boolean;
         type: Identifier | Identifier[] | null;
+        attrGroups: AttrGroup[];
     }
     /**
      * Lookup to an object property
@@ -708,7 +797,7 @@ declare module "php-parser" {
          */
         parseFlags(flags: (number | null)[]): void;
         properties: Property[];
-        visibility: string|null;
+        visibility: string | null;
         isStatic: boolean;
     }
     /**
@@ -843,6 +932,12 @@ declare module "php-parser" {
         what: Expression;
     }
     /**
+     * A union of types
+     */
+    class UnionType extends Declaration {
+        types: TypeReference[];
+    }
+    /**
      * Deletes references to a list of variables
      */
     class Unset extends Statement {
@@ -909,6 +1004,11 @@ declare module "php-parser" {
      */
     class Variadic extends Expression {
         what: any[] | Expression;
+    }
+    /**
+     * Defines a variadic placeholder (the ellipsis in PHP 8.1+'s first-class callable syntax)
+     */
+    class VariadicPlaceholder extends Node {
     }
     /**
      * Defines a while statement
@@ -1133,6 +1233,10 @@ declare module "php-parser" {
          */
         error(): void;
         /**
+         * Create a position node from the lexers position
+         */
+        position(): Position;
+        /**
          * Creates a new AST node
          */
         node(): void;
@@ -1158,6 +1262,11 @@ declare module "php-parser" {
          * consume the next token
          */
         next(): void;
+        /**
+         * Peek at the next token.
+         * @returns Next Token
+         */
+        peek(): string | number;
         /**
          * Eating a token
          */
@@ -1330,7 +1439,15 @@ declare module "php-parser" {
         T_POW_EQUAL = 232,
         T_SPACESHIP = 233,
         T_COALESCE_EQUAL = 234,
-        T_FN = 235
+        T_FN = 235,
+        T_NULLSAFE_OBJECT_OPERATOR = 236,
+        T_MATCH = 237,
+        T_ATTRIBUTE = 238,
+        T_ENUM = 239,
+        T_READ_ONLY = 240,
+        T_NAME_RELATIVE = 241,
+        T_NAME_QUALIFIED = 242,
+        T_NAME_FULLY_QUALIFIED = 243
     }
     /**
      * PHP AST Tokens

@@ -10,6 +10,7 @@ const KIND = "attribute";
 
 /**
  * Attribute Value
+ * @memberOf module:php-parser
  * @constructor Attribute
  * @extends {Node}
  * @property {String} name

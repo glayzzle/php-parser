@@ -15,6 +15,7 @@ const KIND = "encapsed";
  * @extends {Literal}
  * @property {String} type - Defines the type of encapsed string (shell, heredoc, string)
  * @property {String|Null} label - The heredoc label, defined only when the type is heredoc
+ * @property {EncapsedPart[]} value
  */
 const Encapsed = Literal.extends(
   KIND,

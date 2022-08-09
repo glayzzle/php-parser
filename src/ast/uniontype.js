@@ -10,6 +10,7 @@ const KIND = "uniontype";
 
 /**
  * A union of types
+ * @memberOf module:php-parser
  * @constructor UnionType
  * @extends {Declaration}
  * @property {TypeReference[]} types

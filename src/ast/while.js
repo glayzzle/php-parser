@@ -14,7 +14,7 @@ const KIND = "while";
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Expression} test
- * @property {Statement} body
+ * @property {Block | null} body
  * @property {boolean} shortForm
  */
 module.exports = Statement.extends(

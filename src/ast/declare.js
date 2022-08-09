@@ -13,8 +13,8 @@ const KIND = "declare";
  * @constructor Declare
  * @memberOf module:php-parser
  * @extends {Block}
- * @property {Array[]} directives
- * @property {String} mode
+ * @property {DeclareDirective[]} directives
+ * @property {string} mode
  * @see http://php.net/manual/en/control-structures.declare.php
  */
 const Declare = Block.extends(
