@@ -257,9 +257,25 @@ module.exports = {
     let readonly = false;
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
-    const flags = this.read_promoted();
 
     if (this.version >= 801 && this.token === this.tok.T_READ_ONLY) {
+      if (is_class_constructor) {
+        this.next();
+        readonly = true;
+      } else {
+        this.raiseError(
+          "readonly properties can be used only on class constructor"
+        );
+      }
+    }
+
+    const flags = this.read_promoted();
+
+    if (
+      !readonly &&
+      this.version >= 801 &&
+      this.token === this.tok.T_READ_ONLY
+    ) {
       if (is_class_constructor) {
         this.next();
         readonly = true;

@@ -167,7 +167,11 @@ describe("Test classes", function () {
       `
       class Bob {
         public function __construct(public readonly int $id) {}
-      }`,
+      }
+      class Bob2 {
+        public function __construct(readonly public int $id) {}
+      }
+`,
       {
         parser: {
           version: "8.1",
