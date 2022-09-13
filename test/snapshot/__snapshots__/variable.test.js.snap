@@ -2,7 +2,7 @@
 
 exports[`Test variables Chained encapsed vars 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -14,9 +14,9 @@ Program {
         "operator": "=",
         "right": Encapsed {
           "kind": "encapsed",
-          "raw": "\\"{$a->foo()[$bar[$foo]]}\\"",
+          "raw": ""{$a->foo()[$bar[$foo]]}"",
           "type": "string",
-          "value": Array [
+          "value": [
             EncapsedPart {
               "curly": false,
               "expression": OffsetLookup {
@@ -35,7 +35,7 @@ Program {
                   },
                 },
                 "what": Call {
-                  "arguments": Array [],
+                  "arguments": [],
                   "kind": "call",
                   "what": PropertyLookup {
                     "kind": "propertylookup",
@@ -60,14 +60,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables Check errors should be ? 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -86,9 +86,9 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [
+  "errors": [
     Error {
-      "expected": Array [
+      "expected": [
         "{",
         "$",
         222,
@@ -105,7 +105,7 @@ Program {
 
 exports[`Test variables Check errors should fail $foo->bar::! 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": StaticLookup {
         "kind": "staticlookup",
@@ -129,9 +129,9 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [
+  "errors": [
     Error {
-      "expected": Array [
+      "expected": [
         105,
         222,
         "$",
@@ -149,7 +149,7 @@ Program {
 
 exports[`Test variables Check errors should fail foo::bar::baz 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": StaticLookup {
         "kind": "staticlookup",
@@ -173,7 +173,7 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [
+  "errors": [
     Error {
       "expected": undefined,
       "kind": "error",
@@ -188,7 +188,7 @@ Program {
 
 exports[`Test variables Check errors should fail on double static lookup 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": StaticLookup {
         "kind": "staticlookup",
@@ -219,7 +219,7 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [
+  "errors": [
     Error {
       "expected": undefined,
       "kind": "error",
@@ -234,7 +234,7 @@ Program {
 
 exports[`Test variables Check errors should fail on property lookup on static lookup 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": PropertyLookup {
         "kind": "propertylookup",
@@ -265,7 +265,7 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [
+  "errors": [
     Error {
       "expected": undefined,
       "kind": "error",
@@ -280,10 +280,10 @@ Program {
 
 exports[`Test variables Class constants 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Call {
-        "arguments": Array [],
+        "arguments": [],
         "kind": "call",
         "what": StaticLookup {
           "kind": "staticlookup",
@@ -301,7 +301,7 @@ Program {
     },
     ExpressionStatement {
       "expression": Call {
-        "arguments": Array [],
+        "arguments": [],
         "kind": "call",
         "what": StaticLookup {
           "kind": "staticlookup",
@@ -319,7 +319,7 @@ Program {
     },
     ExpressionStatement {
       "expression": Call {
-        "arguments": Array [],
+        "arguments": [],
         "kind": "call",
         "what": StaticLookup {
           "kind": "staticlookup",
@@ -352,7 +352,7 @@ Program {
     },
     ExpressionStatement {
       "expression": Call {
-        "arguments": Array [],
+        "arguments": [],
         "kind": "call",
         "what": PropertyLookup {
           "kind": "propertylookup",
@@ -387,7 +387,7 @@ Program {
     },
     ExpressionStatement {
       "expression": Call {
-        "arguments": Array [],
+        "arguments": [],
         "kind": "call",
         "what": StaticLookup {
           "kind": "staticlookup",
@@ -400,7 +400,7 @@ Program {
             "offset": String {
               "isDoubleQuote": true,
               "kind": "string",
-              "raw": "\\"baz\\"",
+              "raw": ""baz"",
               "unicode": false,
               "value": "baz",
             },
@@ -429,14 +429,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables Dynamic variables 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -453,7 +453,7 @@ Program {
         "right": String {
           "isDoubleQuote": true,
           "kind": "string",
-          "raw": "\\"bar\\"",
+          "raw": ""bar"",
           "unicode": false,
           "value": "bar",
         },
@@ -480,7 +480,7 @@ Program {
         "right": String {
           "isDoubleQuote": true,
           "kind": "string",
-          "raw": "\\"bar\\"",
+          "raw": ""bar"",
           "unicode": false,
           "value": "bar",
         },
@@ -503,7 +503,7 @@ Program {
             "right": String {
               "isDoubleQuote": true,
               "kind": "string",
-              "raw": "\\"bar\\"",
+              "raw": ""bar"",
               "unicode": false,
               "value": "bar",
             },
@@ -514,7 +514,7 @@ Program {
         "right": String {
           "isDoubleQuote": true,
           "kind": "string",
-          "raw": "\\"bar\\"",
+          "raw": ""bar"",
           "unicode": false,
           "value": "bar",
         },
@@ -536,7 +536,7 @@ Program {
             "right": String {
               "isDoubleQuote": true,
               "kind": "string",
-              "raw": "\\"bar\\"",
+              "raw": ""bar"",
               "unicode": false,
               "value": "bar",
             },
@@ -552,7 +552,7 @@ Program {
         "right": String {
           "isDoubleQuote": true,
           "kind": "string",
-          "raw": "\\"bar\\"",
+          "raw": ""bar"",
           "unicode": false,
           "value": "bar",
         },
@@ -560,14 +560,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables Encaps var offset 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -579,9 +579,9 @@ Program {
         "operator": "=",
         "right": Encapsed {
           "kind": "encapsed",
-          "raw": "\\"{$a[1]}\\"",
+          "raw": ""{$a[1]}"",
           "type": "string",
-          "value": Array [
+          "value": [
             EncapsedPart {
               "curly": false,
               "expression": OffsetLookup {
@@ -615,9 +615,9 @@ Program {
         "operator": "=",
         "right": Encapsed {
           "kind": "encapsed",
-          "raw": "\\"{$a[\\"a\\"]}\\"",
+          "raw": ""{$a["a"]}"",
           "type": "string",
-          "value": Array [
+          "value": [
             EncapsedPart {
               "curly": false,
               "expression": OffsetLookup {
@@ -625,7 +625,7 @@ Program {
                 "offset": String {
                   "isDoubleQuote": true,
                   "kind": "string",
-                  "raw": "\\"a\\"",
+                  "raw": ""a"",
                   "unicode": false,
                   "value": "a",
                 },
@@ -654,9 +654,9 @@ Program {
         "operator": "=",
         "right": Encapsed {
           "kind": "encapsed",
-          "raw": "\\"{$a[$b]}\\"",
+          "raw": ""{$a[$b]}"",
           "type": "string",
-          "value": Array [
+          "value": [
             EncapsedPart {
               "curly": false,
               "expression": OffsetLookup {
@@ -681,14 +681,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables Variable chains 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": OffsetLookup {
         "kind": "offsetlookup",
@@ -720,19 +720,19 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables array destructuring 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
         "left": List {
-          "items": Array [
+          "items": [
             Entry {
               "byRef": false,
               "key": null,
@@ -776,14 +776,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables default variables 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -796,7 +796,7 @@ Program {
         "right": String {
           "isDoubleQuote": true,
           "kind": "string",
-          "raw": "\\"foo\\"",
+          "raw": ""foo"",
           "unicode": false,
           "value": "foo",
         },
@@ -844,14 +844,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables fix #167 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -862,7 +862,7 @@ Program {
         },
         "operator": "=",
         "right": Call {
-          "arguments": Array [],
+          "arguments": [],
           "kind": "call",
           "what": StaticLookup {
             "kind": "staticlookup",
@@ -896,7 +896,7 @@ Program {
     },
     ExpressionStatement {
       "expression": Call {
-        "arguments": Array [],
+        "arguments": [],
         "kind": "call",
         "what": OffsetLookup {
           "kind": "offsetlookup",
@@ -925,14 +925,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables fix #185 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -1099,7 +1099,7 @@ Program {
             "name": "bar",
           },
           "what": New {
-            "arguments": Array [],
+            "arguments": [],
             "kind": "new",
             "parenthesizedExpression": true,
             "what": Name {
@@ -1121,7 +1121,7 @@ Program {
           "name": "wrap",
         },
         "what": Call {
-          "arguments": Array [
+          "arguments": [
             PropertyLookup {
               "kind": "propertylookup",
               "offset": Identifier {
@@ -1146,14 +1146,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables fix 248 - broken ast for \`$$$$$\` 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": StaticLookup {
         "kind": "staticlookup",
@@ -1235,14 +1235,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables fix 248 - test curly 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": PropertyLookup {
         "kind": "propertylookup",
@@ -1315,16 +1315,16 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables fix 253 - can't be parsed \`global\` with multiple \`$\` 1`] = `
 Program {
-  "children": Array [
+  "children": [
     Global {
-      "items": Array [
+      "items": [
         Variable {
           "curly": false,
           "kind": "variable",
@@ -1338,14 +1338,14 @@ Program {
       "kind": "global",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables simple variable #2 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -1368,14 +1368,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables simple variable #3 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -1409,14 +1409,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables simple variable #4 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -1443,14 +1443,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables simple variable 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": Assign {
         "kind": "assign",
@@ -1469,14 +1469,14 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
 
 exports[`Test variables valid offset lookup 1`] = `
 Program {
-  "children": Array [
+  "children": [
     ExpressionStatement {
       "expression": StaticLookup {
         "kind": "staticlookup",
@@ -1502,7 +1502,7 @@ Program {
           },
         },
         "what": Call {
-          "arguments": Array [
+          "arguments": [
             Variable {
               "curly": false,
               "kind": "variable",
@@ -1520,7 +1520,7 @@ Program {
       "kind": "expressionstatement",
     },
   ],
-  "errors": Array [],
+  "errors": [],
   "kind": "program",
 }
 `;
