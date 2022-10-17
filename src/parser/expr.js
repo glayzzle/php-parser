@@ -745,6 +745,16 @@ module.exports = {
     const result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     let args = [];
+    if (this.token === "(") {
+      this.next();
+      const newExp = this.read_expr();
+      this.expect(")");
+      this.next();
+      if (this.token === "(") {
+        args = this.read_argument_list();
+      }
+      return result(newExp, args);
+    }
     const attrs = this.read_attr_list();
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
