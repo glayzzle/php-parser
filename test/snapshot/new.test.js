@@ -79,4 +79,10 @@ describe("new", function () {
       )
     ).toMatchSnapshot();
   });
+  it("result from function", function () {
+    expect(parser.parseEval("$a = new (b('c')('d'));")).toMatchSnapshot();
+  });
+  it("result from function with arguments", function () {
+    expect(parser.parseEval("$a = new (b('c')('d'))('e');")).toMatchSnapshot();
+  });
 });
