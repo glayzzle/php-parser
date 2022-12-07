@@ -36,21 +36,29 @@ module.exports = {
   },
 
   read_class_modifiers: function () {
-    return [0, 0, this.read_class_modifier()];
+    const modifier = this.read_class_modifier({
+      readonly: 0,
+      final_or_abstract: 0,
+    });
+    return [0, 0, modifier.final_or_abstract, modifier.readonly];
   },
 
-  read_class_modifier: function () {
-    const result = 0;
-
-    if (this.token === this.tok.T_ABSTRACT) {
+  read_class_modifier: function (rec) {
+    if (this.token === this.tok.T_READ_ONLY) {
       this.next();
-      return 1;
+      rec.readonly = 1;
+      rec = this.read_class_modifier(rec);
+    } else if (this.token === this.tok.T_ABSTRACT) {
+      this.next();
+      rec.final_or_abstract = 1;
+      rec = this.read_class_modifier(rec);
     } else if (this.token === this.tok.T_FINAL) {
       this.next();
-      return 2;
+      rec.final_or_abstract = 2;
+      rec = this.read_class_modifier(rec);
     }
 
-    return result;
+    return rec;
   },
 
   /*

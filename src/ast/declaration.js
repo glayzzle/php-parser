@@ -39,6 +39,7 @@ const Declaration = Statement.extends(
 Declaration.prototype.parseFlags = function (flags) {
   this.isAbstract = flags[2] === 1;
   this.isFinal = flags[2] === 2;
+  this.isReadonly = flags[3] === 1;
   if (this.kind !== "class") {
     if (flags[0] === -1) {
       this.visibility = IS_UNDEFINED;

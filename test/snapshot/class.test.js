@@ -213,6 +213,25 @@ describe("Test classes", function () {
     expect(ast).toMatchSnapshot();
   });
 
+  describe("readonly class in PHP8.2", function () {
+    [
+      "readonly",
+      "readonly abstract",
+      "abstract readonly",
+      "final readonly",
+      "readonly final",
+    ].forEach(function (token) {
+      it("should support " + token, function () {
+        expect(
+          parser.parseEval(`
+      ${token} class Foo {
+      }
+    `)
+        ).toMatchSnapshot();
+      });
+    });
+  });
+
   it("empty", function () {
     expect(parser.parseEval("class Foo {}")).toMatchSnapshot();
   });
