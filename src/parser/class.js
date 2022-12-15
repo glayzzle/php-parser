@@ -43,22 +43,28 @@ module.exports = {
     return [0, 0, modifier.final_or_abstract, modifier.readonly];
   },
 
-  read_class_modifier: function (rec) {
+  read_class_modifier: function (memo) {
     if (this.token === this.tok.T_READ_ONLY) {
       this.next();
-      rec.readonly = 1;
-      rec = this.read_class_modifier(rec);
-    } else if (this.token === this.tok.T_ABSTRACT) {
+      memo.readonly = 1;
+      memo = this.read_class_modifier(memo);
+    } else if (
+      memo.final_or_abstract === 0 &&
+      this.token === this.tok.T_ABSTRACT
+    ) {
       this.next();
-      rec.final_or_abstract = 1;
-      rec = this.read_class_modifier(rec);
-    } else if (this.token === this.tok.T_FINAL) {
+      memo.final_or_abstract = 1;
+      memo = this.read_class_modifier(memo);
+    } else if (
+      memo.final_or_abstract === 0 &&
+      this.token === this.tok.T_FINAL
+    ) {
       this.next();
-      rec.final_or_abstract = 2;
-      rec = this.read_class_modifier(rec);
+      memo.final_or_abstract = 2;
+      memo = this.read_class_modifier(memo);
     }
 
-    return rec;
+    return memo;
   },
 
   /*

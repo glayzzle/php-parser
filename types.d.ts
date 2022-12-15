@@ -148,6 +148,7 @@ declare module "php-parser" {
         isAnonymous: boolean;
         isAbstract: boolean;
         isFinal: boolean;
+        isReadonly: boolean;
         attrGroups: AttrGroup[];
     }
     /**
