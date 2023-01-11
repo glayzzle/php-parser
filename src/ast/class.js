@@ -19,6 +19,7 @@ const KIND = "class";
  * @property {boolean} isAnonymous
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
+ * @property {boolean} isReadonly
  * @property {AttrGroup[]} attrGroups
  */
 module.exports = Declaration.extends(
