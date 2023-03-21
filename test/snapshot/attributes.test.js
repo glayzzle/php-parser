@@ -108,6 +108,40 @@ describe("Parse Attributes", () => {
       )
     ).toMatchSnapshot();
   });
+  it("can parse params with string concatenation", () => {
+    expect(
+      parser.parseEval(
+        `
+        #[Att1(Att1::FOO . Att1::BAR)]
+        #[Att1(Att1::FOO.Att1::BAR)]
+        #[Att2("a" . "b")]
+        #[Att2("a"."b")]
+        #[Att2('a' . "b")]
+        #[Att2('a'."b")]
+        #[Att2("a" . 'b')]
+        #[Att2("a".'b')]
+        #[Att2('a' . 'b')]
+        #[Att2('a'.'b')]
+        #[Att1(Att1::FOO . "b")]
+        #[Att1(Att1::FOO."b")]
+        #[Att1(Att1::FOO . 'b')]
+        #[Att1(Att1::FOO.'b')]
+        #[Att1("a" . Att1::BAR)]
+        #[Att1("a".Att1::BAR)]
+        #[Att1('a' . Att1::BAR)]
+        #[Att1('a'.Att1::BAR)]
+        #[Att1(Att1::FOO
+          .Att1::BAR
+        )]
+        #[Att1(Att1::FOO.
+          Att1::BAR
+        )]
+        class A {}
+        `,
+        { parser: { extractDoc: true } }
+      )
+    ).toMatchSnapshot();
+  });
   it("can parse params with end characters", () => {
     expect(
       parser.parseEval(`
