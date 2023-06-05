@@ -30,4 +30,11 @@ describe("classconstant", () => {
       parser.parseEval('class Foo { private const CONSTANT = "Hello world!"; }')
     ).toMatchSnapshot();
   });
+  it("final", () => {
+    expect(
+      parser.parseEval(
+        'class Foo { final public const CONSTANT = "Hello world!"; }'
+      )
+    ).toMatchSnapshot();
+  });
 });

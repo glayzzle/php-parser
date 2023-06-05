@@ -19,6 +19,7 @@ const IS_PRIVATE = "private";
  * @memberOf module:php-parser
  * @extends {ConstantStatement}
  * @property {string} visibility
+ * @property {bool} final
  * @property {AttrGroup[]} attrGroups
  */
 const ClassConstant = ConstantStatement.extends(
@@ -51,6 +52,7 @@ ClassConstant.prototype.parseFlags = function (flags) {
   } else if (flags[0] === 2) {
     this.visibility = IS_PRIVATE;
   }
+  this.final = flags[2] === 2;
 };
 
 module.exports = ClassConstant;
