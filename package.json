@@ -20,7 +20,7 @@
     "build": "webpack --config webpack.config.js",
     "-postbuild": "yarpm run build-docs",
     "build-docs": "jsdoc -c .jsdoc.json",
-    "build-types": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d .",
+    "build-types": "jsdoc -t node_modules/tsd-jsdoc/dist -r src -d . && prettier -w types.d.ts",
     "publish-docs": "git subtree push --prefix docs origin gh-pages",
     "benchmark": "node test/benchmark.js"
   },
@@ -81,5 +81,6 @@
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1",
     "yarpm": "^1.2.0"
-  }
+  },
+  "dependencies": {}
 }
