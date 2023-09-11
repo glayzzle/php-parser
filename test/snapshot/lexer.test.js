@@ -81,4 +81,8 @@ describe("Test lexer", function () {
   it("test #148 - sensitive lexer", function () {
     expect(parser.tokenGetAll("<?php $this-> list;")).toMatchSnapshot();
   });
+
+  it("test #1003 - null-safe operator with reserved keyword", function () {
+    expect(parser.parseCode("<?php $a?->class;")).toMatchSnapshot();
+  });
 });

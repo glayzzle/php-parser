@@ -238,7 +238,8 @@ module.exports = {
         this._input[this.offset] === "-" &&
         this._input[this.offset + 1] === ">"
       ) {
-        this.consume(2);
+        this.consume(1);
+        this.begin("ST_LOOKING_FOR_PROPERTY").input();
         return this.tok.T_NULLSAFE_OBJECT_OPERATOR;
       }
       return "?";
