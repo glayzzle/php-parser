@@ -226,13 +226,17 @@ module.exports = {
   /*
    * Reads constant list
    * ```ebnf
-   *  constant_list ::= T_CONST (constant_declaration ',')* constant_declaration
+   *  constant_list ::= T_CONST [type] (constant_declaration ',')* constant_declaration
    * ```
    */
   read_constant_list: function (flags, attrs) {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
+
+    const [nullable, type] =
+      this.version >= 830 ? this.read_optional_type() : [false, null];
+
     const result = this.node("classconstant");
     const items = this.read_list(
       /*
@@ -266,7 +270,7 @@ module.exports = {
       ","
     );
 
-    return result(null, items, flags, attrs || []);
+    return result(null, items, flags, nullable, type, attrs || []);
   },
   /*
    * Read member flags
