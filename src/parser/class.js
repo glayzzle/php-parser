@@ -356,9 +356,8 @@ module.exports = {
    * ;
    */
   read_optional_type: function () {
-    let nullable = false;
-    if (this.token === "?") {
-      nullable = true;
+    const nullable = this.token === "?";
+    if (nullable) {
       this.next();
     }
     let type = this.read_types();
