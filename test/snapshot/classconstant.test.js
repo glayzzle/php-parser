@@ -37,4 +37,20 @@ describe("classconstant", () => {
       )
     ).toMatchSnapshot();
   });
+  it("type hinted (supported)", () => {
+    expect(
+      parser.parseEval(
+        'class Foo { public const string CONSTANT = "Hello world!"; }',
+        { parser: { version: 830 } }
+      )
+    ).toMatchSnapshot();
+  });
+  it("type hinted (unsupported)", () => {
+    expect(() =>
+      parser.parseEval(
+        'class Foo { public const string CONSTANT = "Hello world!"; }',
+        { parser: { version: 820 } }
+      )
+    ).toThrowErrorMatchingSnapshot();
+  });
 });
