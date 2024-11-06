@@ -312,11 +312,11 @@ module.exports = {
             break;
         }
         if (asInterface) {
-          if (idx == 0 && val == 2) {
+          if (idx === 0 && val === 2) {
             // an interface can't be private
             this.expect([this.tok.T_PUBLIC, this.tok.T_PROTECTED]);
             val = -1;
-          } else if (idx == 2 && val == 1) {
+          } else if (idx === 2 && val === 1) {
             // an interface cant be abstract
             this.error();
             val = -1;
@@ -331,8 +331,8 @@ module.exports = {
       } while (this.next().is("T_MEMBER_FLAGS"));
     }
 
-    if (result[1] == -1) result[1] = 0;
-    if (result[2] == -1) result[2] = 0;
+    if (result[1] === -1) result[1] = 0;
+    if (result[2] === -1) result[2] = 0;
     return result;
   },
 
@@ -360,9 +360,8 @@ module.exports = {
    * ;
    */
   read_optional_type: function () {
-    let nullable = false;
-    if (this.token === "?") {
-      nullable = true;
+    const nullable = this.token === "?";
+    if (nullable) {
       this.next();
     }
     let type = this.read_types();
@@ -440,7 +439,7 @@ module.exports = {
       const flags = this.read_member_flags(true);
 
       // check constant
-      if (this.token == this.tok.T_CONST) {
+      if (this.token === this.tok.T_CONST) {
         const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();

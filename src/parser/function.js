@@ -320,7 +320,7 @@ module.exports = {
     if (attrs) result.attrGroups = attrs;
     return result;
   },
-  read_types() {
+  read_types: function () {
     const MODE_UNSET = "unset";
     const MODE_UNION = "union";
     const MODE_INTERSECTION = "intersection";
@@ -374,7 +374,7 @@ module.exports = {
         : this.node("uniontype")(types);
     }
   },
-  read_promoted() {
+  read_promoted: function () {
     const MODIFIER_PUBLIC = 1;
     const MODIFIER_PROTECTED = 2;
     const MODIFIER_PRIVATE = 4;
