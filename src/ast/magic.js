@@ -18,5 +18,5 @@ module.exports = Literal.extends(
   KIND,
   function Magic(value, raw, docs, location) {
     Literal.apply(this, [KIND, value, raw, docs, location]);
-  }
+  },
 );

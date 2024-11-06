@@ -22,7 +22,7 @@ const Name = Reference.extends(
     Reference.apply(this, [KIND, docs, location]);
     this.name = name.replace(/\\$/, "");
     this.resolution = resolution;
-  }
+  },
 );
 
 /**

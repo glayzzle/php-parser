@@ -11,7 +11,7 @@ describe("return", function () {
     expect(
       parser.parseEval("return", {
         parser: { suppressErrors: true },
-      })
+      }),
     ).toMatchSnapshot();
   });
 });

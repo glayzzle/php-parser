@@ -18,5 +18,5 @@ module.exports = Lookup.extends(
   KIND,
   function NullSafePropertyLookup(what, offset, docs, location) {
     Lookup.apply(this, [KIND, what, offset, docs, location]);
-  }
+  },
 );

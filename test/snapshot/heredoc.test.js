@@ -9,7 +9,7 @@ Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -21,7 +21,7 @@ Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -33,7 +33,7 @@ Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -45,7 +45,7 @@ My name is "$name". I am printing some $foo->foo.
 Now, I am printing some {$foo->bar[1]}.
 This should print a capital 'A': \x41
 EOT;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -56,7 +56,7 @@ var_dump(array(<<<EOD
 foobar!
 EOD
 ));
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -69,7 +69,7 @@ function foo()
 Nothing in here...
 LABEL;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -85,7 +85,7 @@ FOOBAR;
 Property example
 FOOBAR;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -94,7 +94,7 @@ FOOBAR;
       parser.parseEval(`
 echo <<<TEST
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -104,7 +104,7 @@ TEST;
 echo <<<TEST
 
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -116,7 +116,7 @@ echo <<<   TEST
  b
 c
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -128,7 +128,7 @@ echo <<<\tTEST
  b
 c
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -140,7 +140,7 @@ TEST;
      b
     c
     END;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -153,7 +153,7 @@ TEST;
      b
     c
     END;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -170,8 +170,8 @@ c
         {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -186,8 +186,8 @@ c
         {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -202,8 +202,8 @@ c
         {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -218,8 +218,8 @@ a
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -232,8 +232,8 @@ stringManipulator(<<<END
   b
  c
 END);
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -249,8 +249,8 @@ END);
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -263,8 +263,8 @@ a
 b
 c
 END, 'd e f'];
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -280,8 +280,8 @@ END, 'd e f'];
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -294,8 +294,8 @@ a
 b
 c
 END          , 'd e f'];
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -311,8 +311,8 @@ END          , 'd e f'];
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -328,8 +328,8 @@ $values = <<<END
     c
 
     END;
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -342,8 +342,8 @@ $values = <<<END
 
     c
     END;
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -357,8 +357,8 @@ $values = <<<END
     c
   
     END;
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -376,8 +376,8 @@ $values = <<<END
         {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
 
     // check that it still breaks in old versions
@@ -396,8 +396,8 @@ $values = <<<END
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -414,8 +414,8 @@ $values = <<<END
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -433,8 +433,8 @@ $values = <<<END
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -452,8 +452,8 @@ $values = <<<END
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -467,8 +467,8 @@ $b = "{$x}\ntest";
 $c = <<< TOE
   a
   TOE;
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
 
     expect(
@@ -484,8 +484,8 @@ $c = <<<TOE
         {
           parser: { version: 702, suppressErrors: true, debug: false },
           lexer: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -501,8 +501,8 @@ $a = <<<'EOT'
 $b = <<<'EOT'
   b
   EOT;
-`
-      )
+`,
+      ),
     ).toMatchSnapshot();
   });
 });

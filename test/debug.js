@@ -34,6 +34,6 @@ function foo() {
       withPositions: true,
       withSource: true,
     },
-  }
+  },
 );
 console.log(util.inspect(ast, false, 10, true));

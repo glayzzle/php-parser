@@ -24,5 +24,5 @@ module.exports = Statement.extends(
     this.body = body;
     this.catches = catches;
     this.always = always;
-  }
+  },
 );

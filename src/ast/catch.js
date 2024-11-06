@@ -25,5 +25,5 @@ module.exports = Statement.extends(
     this.body = body;
     this.what = what;
     this.variable = variable;
-  }
+  },
 );

@@ -8,7 +8,7 @@ describe("Test lexer", function () {
           lexer: {
             short_tags: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -27,7 +27,7 @@ describe("Test lexer", function () {
             short_tags: true,
             asp_tags: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -38,7 +38,7 @@ describe("Test lexer", function () {
             short_tags: true,
             asp_tags: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });
@@ -65,8 +65,8 @@ describe("Test lexer", function () {
             extractDoc: true,
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 

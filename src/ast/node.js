@@ -43,14 +43,14 @@ Node.prototype.destroy = function (node) {
   if (!node) {
     /* istanbul ignore next */
     throw new Error(
-      "Node already initialized, you must swap with another node"
+      "Node already initialized, you must swap with another node",
     );
   }
   if (this.leadingComments) {
     if (node.leadingComments) {
       node.leadingComments = Array.concat(
         this.leadingComments,
-        node.leadingComments
+        node.leadingComments,
       );
     } else {
       node.leadingComments = this.leadingComments;
@@ -60,7 +60,7 @@ Node.prototype.destroy = function (node) {
     if (node.trailingComments) {
       node.trailingComments = Array.concat(
         this.trailingComments,
-        node.trailingComments
+        node.trailingComments,
       );
     } else {
       node.trailingComments = this.trailingComments;
@@ -85,7 +85,7 @@ Node.prototype.includeToken = function (parser) {
     if (parser.ast.withSource) {
       this.loc.source = parser.lexer._input.substring(
         this.loc.start.offset,
-        parser.lexer.offset
+        parser.lexer.offset,
       );
     }
   }

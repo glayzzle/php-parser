@@ -17,8 +17,8 @@ describe("Test graceful mode", function () {
             "$foo = ", // 3. <-- missing expr
             "}", // 4.
             "}", // 5. <-- extra '}' token here
-          ].join("\n")
-        )
+          ].join("\n"),
+        ),
       ).toMatchSnapshot();
     });
 
@@ -35,7 +35,7 @@ describe("Test graceful mode", function () {
         test.parseEval(`
         final final interface foo {
           abstract function func()
-      `)
+      `),
       ).toMatchSnapshot();
     });
 
@@ -44,7 +44,7 @@ describe("Test graceful mode", function () {
         test.parseEval(`
         final final class foo {
           abstract function func()
-      `)
+      `),
       ).toMatchSnapshot();
     });
 
@@ -53,19 +53,19 @@ describe("Test graceful mode", function () {
         test.parseEval(`
         final final trait foo {
           abstract function func()
-      `)
+      `),
       ).toMatchSnapshot();
     });
 
     it("interface", function () {
       expect(
-        test.parseEval("interface foo implement baz {}")
+        test.parseEval("interface foo implement baz {}"),
       ).toMatchSnapshot();
     });
 
     it("trait", function () {
       expect(
-        test.parseEval("trait foo extends bar implement baz {}")
+        test.parseEval("trait foo extends bar implement baz {}"),
       ).toMatchSnapshot();
     });
 
@@ -74,7 +74,7 @@ describe("Test graceful mode", function () {
         test.parseEval(`
         $foo->bar($arg, );
         $foo = new bar($baz, ,$foo);
-      `)
+      `),
       ).toMatchSnapshot();
     });
 
@@ -83,7 +83,7 @@ describe("Test graceful mode", function () {
         test.parseEval(`
         $controller->expects($this->once())
         ->
-      `)
+      `),
       ).toMatchSnapshot();
     });
 

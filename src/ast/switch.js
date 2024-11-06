@@ -24,5 +24,5 @@ module.exports = Statement.extends(
     this.test = test;
     this.body = body;
     this.shortForm = shortForm;
-  }
+  },
 );

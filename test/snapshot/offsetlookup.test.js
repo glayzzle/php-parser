@@ -33,7 +33,7 @@ $foo->bzr_['string'];
 $foo->bzr_[$baz];
 $foo->bzr_[$baz->foo];
 $foo->bzr_[$var ? 'one' : 'two'];
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("inside propertylookup (curly)", function () {
@@ -44,7 +44,7 @@ $foo->bzr_{'string'};
 $foo->bzr_{$baz};
 $foo->bzr_{$baz->foo};
 $foo->bzr_{$var ? 'one' : 'two'};
-    `)
+    `),
     ).toMatchSnapshot();
   });
 });

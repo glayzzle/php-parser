@@ -18,5 +18,5 @@ module.exports = Comment.extends(
   KIND,
   function CommentLine(value, docs, location) {
     Comment.apply(this, [KIND, value, docs, location]);
-  }
+  },
 );

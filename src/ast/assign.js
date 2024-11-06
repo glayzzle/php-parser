@@ -24,5 +24,5 @@ module.exports = Expression.extends(
     this.left = left;
     this.right = right;
     this.operator = operator;
-  }
+  },
 );

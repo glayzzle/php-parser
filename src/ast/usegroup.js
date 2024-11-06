@@ -26,5 +26,5 @@ module.exports = Statement.extends(
     this.name = name;
     this.type = type;
     this.items = items;
-  }
+  },
 );

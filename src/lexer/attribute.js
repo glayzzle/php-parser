@@ -79,7 +79,7 @@ module.exports = {
 
     /* istanbul ignore next */
     throw new Error(
-      `Bad terminal sequence "${ch}" at line ${this.yylineno} (offset ${this.offset})`
+      `Bad terminal sequence "${ch}" at line ${this.yylineno} (offset ${this.offset})`,
     );
   },
 };

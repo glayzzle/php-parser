@@ -19,5 +19,5 @@ module.exports = Expression.extends(
   function Isset(variables, docs, location) {
     Expression.apply(this, [KIND, docs, location]);
     this.variables = variables;
-  }
+  },
 );

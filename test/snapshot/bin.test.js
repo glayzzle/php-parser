@@ -96,7 +96,7 @@ describe("bin", () => {
   });
   it("multiple instanceof static", () => {
     expect(
-      parser.parseEval("$foo instanceof static && $bar instanceof self;")
+      parser.parseEval("$foo instanceof static && $bar instanceof self;"),
     ).toMatchSnapshot();
   });
 

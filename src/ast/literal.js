@@ -24,5 +24,5 @@ module.exports = Expression.extends(
     if (raw) {
       this.raw = raw;
     }
-  }
+  },
 );

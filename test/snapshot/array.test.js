@@ -4,14 +4,14 @@ describe("Array without keys", () => {
   it("deference array", () => {
     expect(
       parser.parseEval(
-        ["$a = [", '"a", "b"', "]($foo)[$foo->bar()[1]]->foo()"].join("\r")
-      )
+        ["$a = [", '"a", "b"', "]($foo)[$foo->bar()[1]]->foo()"].join("\r"),
+      ),
     ).toMatchSnapshot();
   });
 
   it("of strings", () => {
     expect(
-      parser.parseEval('array("item1", "item2", "item3")')
+      parser.parseEval('array("item1", "item2", "item3")'),
     ).toMatchSnapshot();
   });
 
@@ -29,7 +29,7 @@ describe("Array without keys", () => {
 
   it("of objects", () => {
     expect(
-      parser.parseEval("[new foo(), new stdClass(), new bar()]")
+      parser.parseEval("[new foo(), new stdClass(), new bar()]"),
     ).toMatchSnapshot();
   });
 
@@ -40,7 +40,7 @@ describe("Array without keys", () => {
           array("item1", "item2"),
           array("item3", "item4"),
           array("item5", "item6")
-        )`)
+        )`),
     ).toMatchSnapshot();
   });
 
@@ -50,7 +50,7 @@ describe("Array without keys", () => {
     });
     it("test short form / keys", function () {
       expect(
-        parser.parseEval('[0 => &$foo, $bar => "foobar"];')
+        parser.parseEval('[0 => &$foo, $bar => "foobar"];'),
       ).toMatchSnapshot();
     });
   });
@@ -106,8 +106,8 @@ describe("Array without keys", () => {
   it("non empty array", () => {
     expect(
       parser.parseEval(
-        "$var = [true, 1, 1.1, 'test', \"test\", [1, 2, 3], new Foo(), call(), null];"
-      )
+        "$var = [true, 1, 1.1, 'test', \"test\", [1, 2, 3], new Foo(), call(), null];",
+      ),
     ).toMatchSnapshot();
   });
 
@@ -121,7 +121,7 @@ $var = array(...$arr1, ...$arr2, 111);
 $var = [...$arr1, ...$arr1];
 $var = [...getArr(), 'c'];
 $var = [...new ArrayIterator(['a', 'b', 'c'])];
-`)
+`),
     ).toMatchSnapshot();
   });
 
@@ -138,7 +138,7 @@ $var = [...new ArrayIterator(['a', 'b', 'c'])];
     expect(
       parser.parseEval(`
 $var = [1, 'test', &$var, 'test' => &$var];
-`)
+`),
     ).toMatchSnapshot();
   });
 });

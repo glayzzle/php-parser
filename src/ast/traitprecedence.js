@@ -24,5 +24,5 @@ module.exports = Node.extends(
     this.trait = trait;
     this.method = method;
     this.instead = instead;
-  }
+  },
 );

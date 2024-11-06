@@ -169,7 +169,7 @@ const TokenNames = {
 const tokens = {
   values: Object.entries(TokenNames).reduce(
     (result, [key, value]) => ({ ...result, [value]: key }),
-    {}
+    {},
   ),
   names: TokenNames,
 };

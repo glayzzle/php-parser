@@ -15,7 +15,7 @@ describe("yield", function () {
   });
   it("assign (key and value)", function () {
     expect(
-      parser.parseEval("$data = (yield $key => $value);")
+      parser.parseEval("$data = (yield $key => $value);"),
     ).toMatchSnapshot();
   });
   it("inside function", function () {
@@ -23,7 +23,7 @@ describe("yield", function () {
   });
   it("expression as generator key", function () {
     expect(
-      parser.parseEval('function foo() { yield "bar {$test}" => 123; }')
+      parser.parseEval('function foo() { yield "bar {$test}" => 123; }'),
     ).toMatchSnapshot();
   });
   it("null", function () {

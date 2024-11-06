@@ -19,5 +19,5 @@ module.exports = Statement.extends(
   function Unset(variables, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.variables = variables;
-  }
+  },
 );

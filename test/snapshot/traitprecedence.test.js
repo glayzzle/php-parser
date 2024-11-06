@@ -11,8 +11,8 @@ class MyHelloWorld extends Base {
         A::bigTalk insteadof B;
     }
 }
-        `
-      )
+        `,
+      ),
     ).toMatchSnapshot();
   });
 });

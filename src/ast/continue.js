@@ -20,5 +20,5 @@ module.exports = Statement.extends(
   function Continue(level, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.level = level;
-  }
+  },
 );

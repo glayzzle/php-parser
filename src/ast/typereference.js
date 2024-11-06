@@ -21,7 +21,7 @@ const TypeReference = Reference.extends(
     Reference.apply(this, [KIND, docs, location]);
     this.name = name;
     this.raw = raw;
-  }
+  },
 );
 
 TypeReference.types = [

@@ -20,5 +20,5 @@ module.exports = Statement.extends(
   function Block(kind, children, docs, location) {
     Statement.apply(this, [kind || KIND, docs, location]);
     this.children = children.filter(Boolean);
-  }
+  },
 );

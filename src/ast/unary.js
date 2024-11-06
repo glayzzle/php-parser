@@ -22,5 +22,5 @@ module.exports = Operation.extends(
     Operation.apply(this, [KIND, docs, location]);
     this.type = type;
     this.what = what;
-  }
+  },
 );

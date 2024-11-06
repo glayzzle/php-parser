@@ -23,5 +23,5 @@ module.exports = Expression.extends(
     Expression.apply(this, [KIND, docs, location]);
     this.left = left;
     this.right = right;
-  }
+  },
 );

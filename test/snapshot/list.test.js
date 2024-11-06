@@ -18,8 +18,8 @@ describe("Test list expressions", function () {
           ast: {
             withPositions: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -47,8 +47,8 @@ describe("Test list expressions", function () {
         "[/*a*/$a/*b*/, /*c*/ [/*d*/$b/*e*/, /*f*/$c/*g*/]/*h*/]/*i*/ = [1,[2,3]] /*j*/",
         {
           parser: { extractDoc: true },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -82,19 +82,19 @@ describe("Test list expressions", function () {
 
   it("array with empty values", () => {
     expect(
-      parser.parseEval("[,,,'foo',,, 'bar',,,'baz'] = $a")
+      parser.parseEval("[,,,'foo',,, 'bar',,,'baz'] = $a"),
     ).toMatchSnapshot();
   });
 
   it("array with empty values #2", () => {
     expect(
-      parser.parseEval("[,,,'foo',,, 'bar',,,'baz',] = $a")
+      parser.parseEval("[,,,'foo',,, 'bar',,,'baz',] = $a"),
     ).toMatchSnapshot();
   });
 
   it("array with empty values #3", () => {
     expect(
-      parser.parseEval("[,,,'foo',,, 'bar',,,'baz',,] = $a")
+      parser.parseEval("[,,,'foo',,, 'bar',,,'baz',,] = $a"),
     ).toMatchSnapshot();
   });
 });

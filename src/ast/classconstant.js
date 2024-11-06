@@ -34,14 +34,14 @@ const ClassConstant = ConstantStatement.extends(
     type,
     attrGroups,
     docs,
-    location
+    location,
   ) {
     ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
     this.parseFlags(flags);
     this.nullable = nullable;
     this.type = type;
     this.attrGroups = attrGroups;
-  }
+  },
 );
 
 /**

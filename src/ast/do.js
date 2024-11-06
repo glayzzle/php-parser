@@ -22,5 +22,5 @@ module.exports = Statement.extends(
     Statement.apply(this, [KIND, docs, location]);
     this.test = test;
     this.body = body;
-  }
+  },
 );

@@ -26,5 +26,5 @@ module.exports = Expression.extends(
     this.value = value;
     this.byRef = byRef;
     this.unpack = unpack;
-  }
+  },
 );

@@ -9,27 +9,27 @@ describe("useitem", () => {
   });
   it("with type", () => {
     expect(
-      parser.parseEval("use My\\Full\\Classname as Another;")
+      parser.parseEval("use My\\Full\\Classname as Another;"),
     ).toMatchSnapshot();
   });
   it("importing a function", () => {
     expect(
-      parser.parseEval("use function My\\Full\\functionName;")
+      parser.parseEval("use function My\\Full\\functionName;"),
     ).toMatchSnapshot();
   });
   it("importing a function with type", () => {
     expect(
-      parser.parseEval("use function My\\Full\\functionName as func;")
+      parser.parseEval("use function My\\Full\\functionName as func;"),
     ).toMatchSnapshot();
   });
   it("importing a class", () => {
     expect(
-      parser.parseEval("use some\\my_namespace\\ClassC;")
+      parser.parseEval("use some\\my_namespace\\ClassC;"),
     ).toMatchSnapshot();
   });
   it("importing a class with type", () => {
     expect(
-      parser.parseEval("use some\\my_namespace\\ClassC as C;")
+      parser.parseEval("use some\\my_namespace\\ClassC as C;"),
     ).toMatchSnapshot();
   });
   it("importing a constant", () => {
@@ -37,7 +37,7 @@ describe("useitem", () => {
   });
   it("importing a constant with type", () => {
     expect(
-      parser.parseEval("use const My\\Full\\CONSTANT as MY_CONST;")
+      parser.parseEval("use const My\\Full\\CONSTANT as MY_CONST;"),
     ).toMatchSnapshot();
   });
   it("invalid use", () => {
@@ -55,8 +55,8 @@ describe("useitem", () => {
         };`,
         {
           parser: { suppressErrors: true },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

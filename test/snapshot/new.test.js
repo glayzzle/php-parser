@@ -7,7 +7,7 @@ describe("new", function () {
         parser: {
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
   it("simple", function () {
@@ -39,12 +39,12 @@ describe("new", function () {
   });
   it("anonymous with multiple argument", function () {
     expect(
-      parser.parseEval("new class($one, $two, $three) {};")
+      parser.parseEval("new class($one, $two, $three) {};"),
     ).toMatchSnapshot();
   });
   it("static array", () => {
     expect(
-      parser.parseEval("return new self::$mapping[$map]();")
+      parser.parseEval("return new self::$mapping[$map]();"),
     ).toMatchSnapshot();
   });
   it("parent", function () {
@@ -58,12 +58,12 @@ describe("new", function () {
   });
   it("with arguments", function () {
     expect(
-      parser.parseEval('new Foo("constructor", "bar");')
+      parser.parseEval('new Foo("constructor", "bar");'),
     ).toMatchSnapshot();
   });
   it("trailing comma", function () {
     expect(
-      parser.parseEval('new Foo("constructor", "bar",);')
+      parser.parseEval('new Foo("constructor", "bar",);'),
     ).toMatchSnapshot();
   });
   it("anonymous class", function () {
@@ -75,8 +75,8 @@ describe("new", function () {
   it("anonymous class #3", function () {
     expect(
       parser.parseEval(
-        "$var = new class($var) extends SomeClass implements SomeInterface {};"
-      )
+        "$var = new class($var) extends SomeClass implements SomeInterface {};",
+      ),
     ).toMatchSnapshot();
   });
   it("result from function", function () {

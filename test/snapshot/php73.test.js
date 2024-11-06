@@ -8,7 +8,7 @@ describe("Test syntax parsing with PHP 73 support", function () {
         parser: {
           version: "7.3",
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -44,7 +44,7 @@ describe("Test syntax parsing with PHP 73 support", function () {
         parser: {
           version: "7.3",
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -69,7 +69,7 @@ describe("Test syntax parsing with PHP 73 support", function () {
           version: "7.3",
           suppressErrors: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });

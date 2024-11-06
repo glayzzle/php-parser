@@ -20,5 +20,5 @@ module.exports = Declaration.extends(
   function UnionType(types, docs, location) {
     Declaration.apply(this, [KIND, null, docs, location]);
     this.types = types;
-  }
+  },
 );

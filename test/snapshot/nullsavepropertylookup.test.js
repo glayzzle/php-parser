@@ -12,7 +12,7 @@ describe("nullsavepropertylookup", function () {
   });
   it("multiple", function () {
     expect(
-      parser.parseEval("$obj?->property_1?->property_2;")
+      parser.parseEval("$obj?->property_1?->property_2;"),
     ).toMatchSnapshot();
   });
 });

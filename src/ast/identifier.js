@@ -20,7 +20,7 @@ const Identifier = Node.extends(
   function Identifier(name, docs, location) {
     Node.apply(this, [KIND, docs, location]);
     this.name = name;
-  }
+  },
 );
 
 module.exports = Identifier;

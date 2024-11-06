@@ -40,5 +40,5 @@ module.exports = Node.extends(
         this.visibility = IS_PRIVATE;
       }
     }
-  }
+  },
 );

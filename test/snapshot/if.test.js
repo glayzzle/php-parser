@@ -16,7 +16,7 @@ describe("Test IF statements", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -34,7 +34,7 @@ describe("Test IF statements", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -57,7 +57,7 @@ describe("Test IF statements", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -71,7 +71,7 @@ describe("Test IF statements", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -85,7 +85,7 @@ describe("Test IF statements", function () {
           withPositions: true,
           withSource: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
 
@@ -98,7 +98,7 @@ describe("Test IF statements", function () {
           withPositions: true,
           withSource: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
 
@@ -111,7 +111,7 @@ describe("Test IF statements", function () {
           withPositions: true,
           withSource: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });

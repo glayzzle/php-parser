@@ -24,7 +24,7 @@ describe("break", () => {
     expect(
       parser.parseEval("break", {
         parser: { suppressErrors: true },
-      })
+      }),
     ).toMatchSnapshot();
   });
 });

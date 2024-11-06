@@ -7,7 +7,7 @@ describe("Test statements", function () {
       start:
         $i++;
       goto start;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -17,7 +17,7 @@ describe("Test statements", function () {
       function foo() {
         global $a, $b;
       }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -32,8 +32,8 @@ describe("Test statements", function () {
       `,
           {
             parser: { debug: false },
-          }
-        )
+          },
+        ),
       ).toMatchSnapshot();
     });
 
@@ -58,8 +58,8 @@ describe("Test statements", function () {
       `,
           {
             parser: { suppressErrors: true },
-          }
-        )
+          },
+        ),
       ).toMatchSnapshot();
     });
   });
@@ -75,8 +75,8 @@ describe("Test statements", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -98,8 +98,8 @@ describe("Test statements", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -118,8 +118,8 @@ describe("Test statements", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -138,8 +138,8 @@ describe("Test statements", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

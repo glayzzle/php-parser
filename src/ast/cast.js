@@ -24,5 +24,5 @@ module.exports = Operation.extends(
     this.type = type;
     this.raw = raw;
     this.expr = expr;
-  }
+  },
 );

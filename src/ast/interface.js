@@ -24,5 +24,5 @@ module.exports = Declaration.extends(
     this.extends = ext;
     this.body = body;
     this.attrGroups = attrGroups;
-  }
+  },
 );

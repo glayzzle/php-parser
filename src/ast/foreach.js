@@ -29,5 +29,5 @@ module.exports = Statement.extends(
     this.value = value;
     this.shortForm = shortForm;
     this.body = body;
-  }
+  },
 );

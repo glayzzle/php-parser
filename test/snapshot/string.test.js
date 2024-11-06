@@ -3,7 +3,7 @@ const parser = require("../main");
 describe("Test strings", function () {
   it("fix #251", function () {
     expect(
-      parser.parseEval("$var = \"string ${juices['FOO']} string\";")
+      parser.parseEval("$var = \"string ${juices['FOO']} string\";"),
     ).toMatchSnapshot();
   });
 
@@ -27,15 +27,15 @@ describe("Test strings", function () {
 
   it("fix #124", function () {
     expect(
-      parser.parseEval('$string = "He drank some $juices[koolaid1] juice.";')
+      parser.parseEval('$string = "He drank some $juices[koolaid1] juice.";'),
     ).toMatchSnapshot();
   });
 
   it("fix #123", function () {
     expect(
       parser.parseEval(
-        "$string = 'Avoid converting \n chars, but \\' or \\\\ is ok.';"
-      )
+        "$string = 'Avoid converting \n chars, but \\' or \\\\ is ok.';",
+      ),
     ).toMatchSnapshot();
   });
 
@@ -49,7 +49,7 @@ describe("Test strings", function () {
 
   it("test binary with double quotes", function () {
     expect(
-      parser.parseEval(`echo b"\\colors contains >$colors<\\n";`)
+      parser.parseEval(`echo b"\\colors contains >$colors<\\n";`),
     ).toMatchSnapshot();
   });
 
@@ -59,7 +59,7 @@ describe("Test strings", function () {
         parser.parseEval(`echo "$`, {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -68,7 +68,7 @@ describe("Test strings", function () {
         parser.parseEval("echo `$", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -77,7 +77,7 @@ describe("Test strings", function () {
         parser.parseEval("echo ` -> $", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });
@@ -88,7 +88,7 @@ describe("Test strings", function () {
         parser.parseEval(`echo "{`, {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -97,7 +97,7 @@ describe("Test strings", function () {
         parser.parseEval("echo `{", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -106,7 +106,7 @@ describe("Test strings", function () {
         parser.parseEval("echo ` -> {", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });
@@ -117,7 +117,7 @@ describe("Test strings", function () {
         parser.parseEval('echo "${', {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -126,7 +126,7 @@ describe("Test strings", function () {
         parser.parseEval("echo `${", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -135,7 +135,7 @@ describe("Test strings", function () {
         parser.parseEval("echo ` -> ${", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });
@@ -146,7 +146,7 @@ describe("Test strings", function () {
         parser.parseEval('echo "{$', {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -155,7 +155,7 @@ describe("Test strings", function () {
         parser.parseEval("echo `{$", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -164,14 +164,14 @@ describe("Test strings", function () {
         parser.parseEval("echo ` -> {$", {
           parser: { suppressErrors: true, debug: false },
           lexer: { debug: false },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });
 
   it.skip("binary cast", function () {
     expect(
-      parser.parseEval(`echo (binary)"\\colors[1] contains >$colors[1]<\\n";`)
+      parser.parseEval(`echo (binary)"\\colors[1] contains >$colors[1]<\\n";`),
     ).toMatchSnapshot();
   });
 
@@ -181,7 +181,7 @@ describe("Test strings", function () {
       echo "Hello $obj->name !";
       echo "Hello $obj->foo->bar !";
       echo "Hello $obj[1]->foo !";
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -221,8 +221,8 @@ describe("Test strings", function () {
           parser: {
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -260,8 +260,8 @@ describe("Test strings", function () {
           parser: {
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -271,7 +271,7 @@ describe("Test strings", function () {
         parser: {
           debug: false,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -283,7 +283,7 @@ describe("Test strings", function () {
       \\$catalogue%s->addFallbackCatalogue(\\$catalogue%s);
       EOF2
       )
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -302,8 +302,8 @@ describe("Test strings", function () {
           parser: {
             suppressErrors: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -313,7 +313,7 @@ describe("Test strings", function () {
         parser: {
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -323,7 +323,7 @@ describe("Test strings", function () {
         parser: {
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -343,8 +343,8 @@ describe("Test strings", function () {
           "$a = `-{`;",
           "$a = `-$`;",
           "$a = `$`;",
-        ].join("\r")
-      )
+        ].join("\r"),
+      ),
     ).toMatchSnapshot();
   });
 
@@ -364,7 +364,7 @@ $var = '\\'foo';
 $var = 'foo\\'';
 $var = 'foo\\'foo';
 $var = '\\\\\\'';
-`)
+`),
     ).toMatchSnapshot();
   });
   it("double quotes", function () {
@@ -396,7 +396,7 @@ $var = "🌟";
 $var = "'";
 $var = "\\'";
 $var = "\\n | \\r | \\t | \\v | \\e | \\f | \\\\ | \\$ | \\" | \\141 | \\x61 | \\u{0061}";
-`)
+`),
     ).toMatchSnapshot();
   });
 });

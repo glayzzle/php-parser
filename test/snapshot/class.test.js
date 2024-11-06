@@ -13,7 +13,7 @@ describe("Test classes", function () {
         $this->fooBaz();
       }
     }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -24,7 +24,7 @@ describe("Test classes", function () {
       public ?int $prop = null;
       protected static float|string $y;
     }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -40,8 +40,8 @@ describe("Test classes", function () {
           parser: {
             version: "8.1",
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -77,7 +77,7 @@ describe("Test classes", function () {
          * Some informations
          */
         abstract protected function &foo() : bar;
-      }`)
+      }`),
     ).toMatchSnapshot();
   });
 
@@ -112,8 +112,8 @@ describe("Test classes", function () {
     `,
         {
           parser: { extractDoc: true },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -127,8 +127,8 @@ describe("Test classes", function () {
       }`,
         {
           parser: { suppressErrors: true },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -142,7 +142,7 @@ describe("Test classes", function () {
           $this->constructor = null;
           self::$constructor = null;
         }
-      }`)
+      }`),
     ).toMatchSnapshot();
   });
 
@@ -157,7 +157,7 @@ describe("Test classes", function () {
           version: "8.0",
           suppressErrors: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -176,7 +176,7 @@ describe("Test classes", function () {
         parser: {
           version: "8.1",
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -192,7 +192,7 @@ describe("Test classes", function () {
           version: "8.1",
           suppressErrors: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -208,7 +208,7 @@ describe("Test classes", function () {
           version: "8.0",
           suppressErrors: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -226,7 +226,7 @@ describe("Test classes", function () {
           parser.parseEval(`
       ${token} class Foo {
       }
-    `)
+    `),
         ).toMatchSnapshot();
       });
     });
@@ -244,7 +244,7 @@ describe("Test classes", function () {
     expect(
       parser.parseEval(`final abstract class foo {}`, {
         parser: { suppressErrors: true },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -252,7 +252,7 @@ describe("Test classes", function () {
     expect(
       parser.parseEval(`abstract final class foo {}`, {
         parser: { suppressErrors: true },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -272,10 +272,10 @@ class b {
     const funcStart = ast.children[0].body[0].loc.start.offset;
     const funcEnd = ast.children[0].body[0].loc.end.offset;
     expect(phpCode.substr(funcStart, funcEnd - funcStart)).toEqual(
-      "public static function a() {}"
+      "public static function a() {}",
     );
     expect(ast.children[0].body[0].loc.source).toEqual(
-      "public static function a()"
+      "public static function a()",
     );
   });
 
@@ -285,7 +285,7 @@ class b {
       class Foo {
         public \\Bar $baz;
       }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 });

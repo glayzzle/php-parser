@@ -23,5 +23,5 @@ module.exports = Expression.extends(
     Expression.apply(this, [KIND, docs, location]);
     this.value = value;
     this.key = key;
-  }
+  },
 );

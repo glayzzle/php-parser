@@ -5,7 +5,7 @@ describe("Test variables", function () {
     expect(
       parser.parseEval(`
       global $$foo;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -16,7 +16,7 @@ describe("Test variables", function () {
       $foo::\${$property};
       $bar->$$property;
       $bar->\${$property};
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -26,7 +26,7 @@ describe("Test variables", function () {
       $bar->{$property->foo};
       $bar->\${$property};
       $bar->foo_{$property};
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -39,7 +39,7 @@ describe("Test variables", function () {
       parser.parseEval(`
       $a = "foo";
       $b = &$c;
-      $a->b = true;`)
+      $a->b = true;`),
     ).toMatchSnapshot();
   });
 
@@ -49,13 +49,13 @@ describe("Test variables", function () {
 
   it("fix #167", function () {
     expect(
-      parser.parseEval("$var = Foo::{$bar['baz']}();Foo::$bar['baz']();")
+      parser.parseEval("$var = Foo::{$bar['baz']}();Foo::$bar['baz']();"),
     ).toMatchSnapshot();
   });
 
   it("valid offset lookup", function () {
     expect(
-      parser.parseEval("get_class($var)::$$$$$property;")
+      parser.parseEval("get_class($var)::$$$$$property;"),
     ).toMatchSnapshot();
   });
 
@@ -68,7 +68,7 @@ describe("Test variables", function () {
     $var = (($var[0])[1])::foo;
     $var = (new Foo())::bar;
     get_class($this->resource)::$wrap;    
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -81,7 +81,7 @@ describe("Test variables", function () {
       foo::class;
       $this->foo();
       foo::$bar;
-      $this->foo::bar["baz"]::qux();`)
+      $this->foo::bar["baz"]::qux();`),
     ).toMatchSnapshot();
   });
 
@@ -90,7 +90,7 @@ describe("Test variables", function () {
       parser.parseEval(`
       $a = "{$a[1]}";
       $a = "{$a["a"]}";
-      $a = "{$a[$b]}";`)
+      $a = "{$a[$b]}";`),
     ).toMatchSnapshot();
   });
 
@@ -99,8 +99,8 @@ describe("Test variables", function () {
       parser.parseEval(
         `
       $a = "{$a->foo()[$bar[$foo]]}";
-    `
-      )
+    `,
+      ),
     ).toMatchSnapshot();
   });
 
@@ -111,7 +111,7 @@ describe("Test variables", function () {
       $$$a = "bar";
       \${$a."bar"} = "bar";
       $foo{$a."bar"} = "bar";
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -122,7 +122,7 @@ describe("Test variables", function () {
           parser: {
             suppressErrors: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -132,7 +132,7 @@ describe("Test variables", function () {
           parser: {
             suppressErrors: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -142,7 +142,7 @@ describe("Test variables", function () {
           parser: {
             suppressErrors: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -152,7 +152,7 @@ describe("Test variables", function () {
           parser: {
             suppressErrors: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -162,7 +162,7 @@ describe("Test variables", function () {
           parser: {
             suppressErrors: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });

@@ -8,7 +8,7 @@ describe("Test loops statements (for, while)", function () {
         while(true) {
           echo "go";
         }
-      `)
+      `),
       ).toMatchSnapshot();
     });
 
@@ -18,7 +18,7 @@ describe("Test loops statements (for, while)", function () {
         while(true):
           echo "short";
         endwhile;
-      `)
+      `),
       ).toMatchSnapshot();
     });
   });
@@ -33,8 +33,8 @@ describe("Test loops statements (for, while)", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -52,8 +52,8 @@ describe("Test loops statements (for, while)", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -73,8 +73,8 @@ describe("Test loops statements (for, while)", function () {
     `,
         {
           parser: { debug: false },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
   it("fix #122", function () {
@@ -87,8 +87,8 @@ describe("Test loops statements (for, while)", function () {
     `,
         {
           parser: { suppressErrors: true },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
     expect(
       parser.parseEval(
@@ -98,8 +98,8 @@ describe("Test loops statements (for, while)", function () {
     `,
         {
           parser: { suppressErrors: true },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

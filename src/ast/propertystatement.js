@@ -28,7 +28,7 @@ const PropertyStatement = Statement.extends(
     Statement.apply(this, [KIND, docs, location]);
     this.properties = properties;
     this.parseFlags(flags);
-  }
+  },
 );
 
 /**

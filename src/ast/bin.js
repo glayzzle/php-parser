@@ -23,5 +23,5 @@ module.exports = Operation.extends(
     this.type = type;
     this.left = left;
     this.right = right;
-  }
+  },
 );

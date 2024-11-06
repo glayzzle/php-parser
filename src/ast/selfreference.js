@@ -19,6 +19,6 @@ const SelfReference = Reference.extends(
   function SelfReference(raw, docs, location) {
     Reference.apply(this, [KIND, docs, location]);
     this.raw = raw;
-  }
+  },
 );
 module.exports = SelfReference;

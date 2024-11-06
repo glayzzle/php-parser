@@ -16,12 +16,12 @@ describe("byref", () => {
         parser: {
           version: "5.6",
         },
-      })
+      }),
     ).toMatchSnapshot();
     expect(() => {
       parser.parseEval("$a =& new foo();");
     }).toThrow(
-      "Parse Error : syntax error, unexpected 'new' (T_NEW) on line 1"
+      "Parse Error : syntax error, unexpected 'new' (T_NEW) on line 1",
     );
   });
   it("call result", () => {
@@ -41,12 +41,12 @@ describe("byref", () => {
   });
   it("foreach (key/value)", () => {
     expect(
-      parser.parseEval("foreach ($arr as $key => &$val) { }")
+      parser.parseEval("foreach ($arr as $key => &$val) { }"),
     ).toMatchSnapshot();
   });
   it("closure", () => {
     expect(
-      parser.parseEval("$var = function () use (&$message) { };")
+      parser.parseEval("$var = function () use (&$message) { };"),
     ).toMatchSnapshot();
   });
   // https://github.com/php/php-src/blob/php-7.4.0beta4/Zend/zend_language_parser.y#L1165
@@ -95,12 +95,12 @@ describe("byref", () => {
   });
   it("staticlookup #7", () => {
     expect(
-      parser.parseEval("$var = &parent::getElementByPath();")
+      parser.parseEval("$var = &parent::getElementByPath();"),
     ).toMatchSnapshot();
   });
   it("staticlookup #8", () => {
     expect(
-      parser.parseEval(" $var = &self::getElementByPath();")
+      parser.parseEval(" $var = &self::getElementByPath();"),
     ).toMatchSnapshot();
   });
   // https://github.com/php/php-src/blob/php-7.4.0beta4/Zend/zend_language_parser.y#L1169

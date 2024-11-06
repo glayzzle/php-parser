@@ -16,7 +16,7 @@ function filterKey(fn, obj) {
           ...result,
           [key]: filterKey(fn, obj[key]),
         }),
-        {}
+        {},
       );
   }
 
@@ -26,7 +26,7 @@ function filterKey(fn, obj) {
 function shouldBeSame(a, b) {
   const fn = (key) => key !== "parenthesizedExpression";
   expect(filterKey(fn, parser.parseEval(a))).toEqual(
-    filterKey(fn, parser.parseEval(b))
+    filterKey(fn, parser.parseEval(b)),
   );
 }
 
@@ -36,13 +36,13 @@ describe("Test infrastructure", function () {
   it("should filter parenthesizedExpression prop", function () {
     const fn = (key) => key !== "parenthesizedExpression";
     expect(
-      filterKey(fn, { foo: "bar", parenthesizedExpression: true })
+      filterKey(fn, { foo: "bar", parenthesizedExpression: true }),
     ).toEqual({ foo: "bar" });
     expect(
-      filterKey(fn, { x: { foo: "bar", parenthesizedExpression: true } })
+      filterKey(fn, { x: { foo: "bar", parenthesizedExpression: true } }),
     ).toEqual({ x: { foo: "bar" } });
     expect(
-      filterKey(fn, [{ foo: "bar", parenthesizedExpression: true }])
+      filterKey(fn, [{ foo: "bar", parenthesizedExpression: true }]),
     ).toEqual([{ foo: "bar" }]);
   });
 });
@@ -130,7 +130,7 @@ describe("Test precedence", function () {
   it("test retif", function () {
     shouldBeSame(
       "$a ? 1 : $b ? 2 : $c ? 3 : 4",
-      "(($a ? 1 : $b) ? 2 : $c) ? 3 : 4"
+      "(($a ? 1 : $b) ? 2 : $c) ? 3 : 4",
     );
   });
   it("test + / *", function () {
@@ -161,13 +161,13 @@ describe("Test precedence", function () {
   it("test silent node / ret if", function () {
     shouldBeSame(
       "@$i == true ? @$foo : @$bar;",
-      "@($i) == true ? @($foo) : @($bar);"
+      "@($i) == true ? @($foo) : @($bar);",
     );
   });
   it("test silent node - bugfix #355", function () {
     shouldBeSame(
       "echo 'pre' . (@$_GET['foo'] === 'bar' ? 'ok' : 'ko') . 'post'",
-      "echo 'pre' . (@($_GET['foo']) === 'bar' ? 'ok' : 'ko') . 'post'"
+      "echo 'pre' . (@($_GET['foo']) === 'bar' ? 'ok' : 'ko') . 'post'",
     );
   });
   it("test silent node - bugfix #356", function () {

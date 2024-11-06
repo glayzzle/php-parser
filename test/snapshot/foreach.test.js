@@ -7,7 +7,7 @@ describe("foreach", function () {
 foreach ($array as $var) {
     echo $a;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -17,7 +17,7 @@ foreach ($array as $var) {
 foreach ($array as &$var) {
     echo $a;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -27,7 +27,7 @@ foreach ($array as &$var) {
 foreach ($array as list($a, $b)) {
     echo $a;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -37,7 +37,7 @@ foreach ($array as list($a, $b)) {
 foreach ($array as [$a, $b]) {
     echo $a;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -47,7 +47,7 @@ foreach ($array as [$a, $b]) {
 foreach ($array as $v => list($a, $b)) {
     echo $v;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ foreach ($array as $v => list($a, $b)) {
 foreach ($array as $v => [$a, $b]) {
     echo $v;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -67,7 +67,7 @@ foreach ($array as $v => [$a, $b]) {
 foreach ([...$var, 2, 3, 4] as $value) {
    print_r($value);
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -77,7 +77,7 @@ foreach ([...$var, 2, 3, 4] as $value) {
 foreach (array(...$var, 2, 3, 4) as $value) {
    print_r($value);
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -87,7 +87,7 @@ foreach (array(...$var, 2, 3, 4) as $value) {
 foreach ([[...$var], 2, 3, 4] as $value) {
    print_r($value);
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -97,7 +97,7 @@ foreach ([[...$var], 2, 3, 4] as $value) {
 foreach (array(array(...$var), 2, 3, 4) as $value) {
    print_r($value);
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 });

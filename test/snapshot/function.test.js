@@ -9,7 +9,7 @@ describe("Function tests", function () {
         return true;
       };
       $b = foo(...[1, null, 1, 2, 3]);
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -18,7 +18,7 @@ describe("Function tests", function () {
     const ast = parser.parseEval(
       `
       function foo(int|float $a = 1, Foo|Bar $b) : string|int {}
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -27,7 +27,7 @@ describe("Function tests", function () {
     const ast = parser.parseEval(
       `
       fn (int|float $a = 1, Foo|Bar $b) : string|int => "";
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -36,7 +36,7 @@ describe("Function tests", function () {
     const ast = parser.parseEval(
       `
       function foo(int&float $a = 1, Foo&Bar $b) : string&int {}
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -45,7 +45,7 @@ describe("Function tests", function () {
     const ast = parser.parseEval(
       `
       fn (int&float $a = 1, Foo&Bar $b) : string&int => "";
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -57,8 +57,8 @@ describe("Function tests", function () {
       function foo(array &$params)  {
         // inner comment
       }
-      `
-      )
+      `,
+      ),
     ).toMatchSnapshot();
   });
 
@@ -69,8 +69,8 @@ describe("Function tests", function () {
       function &foo(array &$params) {
         // inner comment
       }
-      `
-      )
+      `,
+      ),
     ).toMatchSnapshot();
   });
 
@@ -81,8 +81,8 @@ describe("Function tests", function () {
       function &foo(int $a = 1, float $b = 1, bool $c = 1, string $d, callable $e, int\\bar $f, ?array &...$params) : ?object {
         // inner comment
       }
-      `
-      )
+      `,
+      ),
     ).toMatchSnapshot();
   });
 
@@ -95,26 +95,26 @@ describe("Function tests", function () {
         parser: {
           extractDoc: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("test variadic call error", function () {
     expect(() =>
-      parser.parseEval(`$b = foo(...[1, 2, 3], $a);`)
+      parser.parseEval(`$b = foo(...[1, 2, 3], $a);`),
     ).toThrowErrorMatchingSnapshot();
   });
 
   it("test variadic function error 1", function () {
     expect(() =>
-      parser.parseEval(`function foo(...$bar, $baz) {}`)
+      parser.parseEval(`function foo(...$bar, $baz) {}`),
     ).toThrowErrorMatchingSnapshot();
   });
 
   it("test variadic function error 2", function () {
     expect(() =>
-      parser.parseEval(`function foo(...$bar, ...$baz) {}`)
+      parser.parseEval(`function foo(...$bar, ...$baz) {}`),
     ).toThrowErrorMatchingSnapshot();
   });
 
@@ -154,7 +154,7 @@ describe("Function tests", function () {
         parser: {
           version: "8.0",
         },
-      }
+      },
     );
     expect(astErr).toMatchSnapshot();
   });
@@ -211,7 +211,7 @@ describe("Function tests", function () {
         parser: {
           version: "8.0",
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -236,7 +236,7 @@ describe("Function tests", function () {
           version: "8.1",
           suppressErrors: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -254,8 +254,8 @@ describe("Function tests", function () {
           parser: {
             version: "8.1",
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -270,8 +270,8 @@ describe("Function tests", function () {
             suppressErrors: true,
             version: "8.0",
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

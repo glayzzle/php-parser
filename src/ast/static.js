@@ -20,5 +20,5 @@ module.exports = Statement.extends(
   function Static(variables, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.variables = variables;
-  }
+  },
 );

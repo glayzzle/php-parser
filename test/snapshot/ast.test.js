@@ -29,8 +29,8 @@ describe("Test AST structure", function () {
             withPositions: true,
             withSource: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -48,7 +48,7 @@ describe("Test AST structure", function () {
   });
   it("test inline", function () {
     expect(
-      parser.parseCode("Hello <?php echo 'World'; ?>\n !")
+      parser.parseCode("Hello <?php echo 'World'; ?>\n !"),
     ).toMatchSnapshot();
   });
 
@@ -60,7 +60,7 @@ describe("Test AST structure", function () {
     expect(
       parser.parseCode("<?php \\$var = 1; ?>\r\n !", {
         parser: { suppressErrors: true },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -81,7 +81,7 @@ describe("Test AST structure", function () {
         isset($foo, $bar);
         unset($var);
         empty($var);
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -97,7 +97,7 @@ describe("Test AST structure", function () {
       parser.parseEval(`
         die("bye");
         exit(-1);
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -112,7 +112,7 @@ describe("Test AST structure", function () {
         include_once (PATH . "/file.php");
         require "req.php";
         require_once "file.php";
-      `)
+      `),
     ).toMatchSnapshot();
   });
 });
