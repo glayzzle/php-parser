@@ -26,5 +26,5 @@ module.exports = Declaration.extends(
     this.implements = impl;
     this.body = body;
     this.attrGroups = [];
-  }
+  },
 );

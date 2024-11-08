@@ -123,7 +123,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_VAR,
         this.tok.T_WHILE,
         this.tok.T_YIELD,
-      ].map(mapIt)
+      ].map(mapIt),
     ),
     VARIABLE: new Map(
       [
@@ -136,7 +136,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_NAME_FULLY_QUALIFIED,
         this.tok.T_NAMESPACE,
         this.tok.T_STATIC,
-      ].map(mapIt)
+      ].map(mapIt),
     ),
     SCALAR: new Map(
       [
@@ -159,7 +159,7 @@ const Parser = function (lexer, ast) {
         'B"',
         "-",
         this.tok.T_NS_SEPARATOR,
-      ].map(mapIt)
+      ].map(mapIt),
     ),
     T_MAGIC_CONST: new Map(
       [
@@ -171,7 +171,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_FILE,
         this.tok.T_DIR,
         this.tok.T_NS_C,
-      ].map(mapIt)
+      ].map(mapIt),
     ),
     T_MEMBER_FLAGS: new Map(
       [
@@ -181,7 +181,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_STATIC,
         this.tok.T_ABSTRACT,
         this.tok.T_FINAL,
-      ].map(mapIt)
+      ].map(mapIt),
     ),
     EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
     EXPR: new Map(
@@ -248,7 +248,7 @@ const Parser = function (lexer, ast) {
         'B"',
         "-",
         this.tok.T_NS_SEPARATOR,
-      ].map(mapIt)
+      ].map(mapIt),
     ),
   };
 };
@@ -326,7 +326,7 @@ Parser.prototype.parse = function (code, filename) {
             "Node at line " +
               error.position.line +
               ", column " +
-              error.position.column
+              error.position.column,
           );
         }
         // eslint-disable-next-line no-console
@@ -349,7 +349,7 @@ Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
     const err = new SyntaxError(
       message,
       this.filename,
-      this.lexer.yylloc.first_line
+      this.lexer.yylloc.first_line,
     );
     err.lineNumber = this.lexer.yylloc.first_line;
     err.fileName = this.filename;
@@ -361,7 +361,7 @@ Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
     message,
     token,
     this.lexer.yylloc.first_line,
-    expect
+    expect,
   );
   this._errors.push(node);
   return node;
@@ -408,7 +408,7 @@ Parser.prototype.position = function () {
   return new Position(
     this.lexer.yylloc.first_line,
     this.lexer.yylloc.first_column,
-    this.lexer.yylloc.first_offset
+    this.lexer.yylloc.first_offset,
   );
 };
 
@@ -474,7 +474,7 @@ Parser.prototype.node = function (name) {
           if (max > this._docIndex) {
             // inject trailing comment on child node
             this._lastNode.setTrailingComments(
-              this._docs.slice(this._docIndex, max)
+              this._docs.slice(this._docIndex, max),
             );
             this._docIndex = max;
           }
@@ -547,7 +547,7 @@ Parser.prototype.showlog = function () {
       this.lexer.yytext +
       "<" +
       " @-->" +
-      line
+      line,
   );
   return this;
 };
@@ -662,7 +662,7 @@ Parser.prototype.lex = function () {
       if (
         Object.prototype.hasOwnProperty.call(
           this.lexer.engine.tokens.values,
-          this.token
+          this.token,
         )
       ) {
         entry = [

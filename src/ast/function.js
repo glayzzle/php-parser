@@ -30,5 +30,5 @@ module.exports = Declaration.extends(
     this.nullable = nullable;
     this.body = null;
     this.attrGroups = [];
-  }
+  },
 );

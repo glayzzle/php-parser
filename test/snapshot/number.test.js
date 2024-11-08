@@ -15,7 +15,7 @@ describe("Test numbers", function () {
       $f = 0123;
       $g = 1.2e3;
       $h = 7E-10;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 

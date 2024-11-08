@@ -20,5 +20,5 @@ module.exports = Expression.extends(
   function Silent(expr, docs, location) {
     Expression.apply(this, [KIND, docs, location]);
     this.expr = expr;
-  }
+  },
 );

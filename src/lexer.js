@@ -533,7 +533,7 @@ Lexer.prototype.next = function () {
         this.yylloc.last_column +
         '\t"' +
         this.yytext +
-        '"'
+        '"',
     );
     // eslint-disable-next-line no-console
     console.error(e.stack);

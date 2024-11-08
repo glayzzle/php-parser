@@ -9,7 +9,7 @@ describe("declare", function () {
   });
   it("encoding", function () {
     expect(
-      parser.parseEval("declare(encoding='ISO-8859-1');")
+      parser.parseEval("declare(encoding='ISO-8859-1');"),
     ).toMatchSnapshot();
   });
   it("nested", function () {
@@ -17,7 +17,7 @@ describe("declare", function () {
   });
   it("mode short", function () {
     expect(
-      parser.parseEval('declare(ticks=1): echo "something"; enddeclare;')
+      parser.parseEval('declare(ticks=1): echo "something"; enddeclare;'),
     ).toMatchSnapshot();
   });
   it("multiple", function () {

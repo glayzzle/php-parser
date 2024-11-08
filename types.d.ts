@@ -161,6 +161,8 @@ declare module "php-parser" {
     parseFlags(flags: (number | null)[]): void;
     visibility: string;
     final: boolean;
+    nullable: boolean;
+    type: TypeReference | IntersectionType | UnionType | null;
     attrGroups: AttrGroup[];
   }
   /**
@@ -668,7 +670,7 @@ declare module "php-parser" {
      */
     static extends(
       type: string,
-      constructor: (...params: any[]) => any
+      constructor: (...params: any[]) => any,
     ): (...params: any[]) => any;
     loc: Location | null;
     leadingComments: CommentBlock[] | Comment[] | null;

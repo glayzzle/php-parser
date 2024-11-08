@@ -22,5 +22,5 @@ module.exports = Block.extends(
     Block.apply(this, [KIND, children, docs, location]);
     this.name = name;
     this.withBrackets = withBrackets || false;
-  }
+  },
 );

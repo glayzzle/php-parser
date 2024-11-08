@@ -184,7 +184,7 @@ AST.prototype.swapLocations = function (target, first, last, parser) {
     if (this.withSource) {
       target.loc.source = parser.lexer._input.substring(
         target.loc.start.offset,
-        target.loc.end.offset
+        target.loc.end.offset,
       );
     }
   }
@@ -208,7 +208,7 @@ AST.prototype.resolveLocations = function (target, first, last, parser) {
     if (this.withSource) {
       target.loc.source = parser.lexer._input.substring(
         target.loc.start.offset,
-        target.loc.end.offset
+        target.loc.end.offset,
       );
     }
   }
@@ -376,7 +376,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
       location = new Location(
         src,
         start,
-        new Position(parser.prev[0], parser.prev[1], parser.prev[2])
+        new Position(parser.prev[0], parser.prev[1], parser.prev[2]),
       );
       // last argument is always the location
       args.push(location);

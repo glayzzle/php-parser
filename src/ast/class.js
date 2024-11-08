@@ -32,5 +32,5 @@ module.exports = Declaration.extends(
     this.body = body;
     this.attrGroups = [];
     this.parseFlags(flags);
-  }
+  },
 );

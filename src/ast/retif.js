@@ -24,5 +24,5 @@ module.exports = Expression.extends(
     this.test = test;
     this.trueExpr = trueExpr;
     this.falseExpr = falseExpr;
-  }
+  },
 );

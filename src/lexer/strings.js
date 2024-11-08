@@ -130,7 +130,7 @@ module.exports = {
       if (this.yytext.length > 2) {
         this.appendToken(
           this.tok.T_ENCAPSED_AND_WHITESPACE,
-          this.yytext.length - prefix
+          this.yytext.length - prefix,
         );
       }
       this.unput(this.yytext.length - prefix);
@@ -182,7 +182,7 @@ module.exports = {
     if (
       this._input.substring(
         offset - 1,
-        offset - 1 + this.heredoc_label.length
+        offset - 1 + this.heredoc_label.length,
       ) === this.heredoc_label.label
     ) {
       const ch = this._input[offset - 1 + this.heredoc_label.length];
@@ -201,7 +201,7 @@ module.exports = {
                 this.yylineno +
                 " (offset " +
                 this.offset +
-                ")"
+                ")",
             );
           }
         } else {

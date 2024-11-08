@@ -20,5 +20,5 @@ module.exports = Declaration.extends(
   function Trait(name, body, docs, location) {
     Declaration.apply(this, [KIND, name, docs, location]);
     this.body = body;
-  }
+  },
 );

@@ -24,5 +24,5 @@ module.exports = Literal.extends(
     Literal.apply(this, [KIND, value, raw, docs, location]);
     this.unicode = unicode;
     this.isDoubleQuote = isDoubleQuote;
-  }
+  },
 );

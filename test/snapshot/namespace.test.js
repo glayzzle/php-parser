@@ -5,7 +5,7 @@ describe("Test namespace statements", function () {
     expect(
       parser.parseEval(`
       $obj = new \\Foo();
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("allow trailing comma for grouped namespaces #177", function () {
@@ -15,7 +15,7 @@ describe("Test namespace statements", function () {
       Foo,
       Bar,
       Baz,
-    };`)
+    };`),
     ).toMatchSnapshot();
   });
   it("test single namespace", function () {
@@ -43,8 +43,8 @@ describe("Test namespace statements", function () {
           parser: {
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -63,8 +63,8 @@ describe("Test namespace statements", function () {
           parser: {
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -79,8 +79,8 @@ describe("Test namespace statements", function () {
           parser: {
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -97,8 +97,8 @@ describe("Test namespace statements", function () {
           parser: {
             debug: false,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -108,7 +108,7 @@ describe("Test namespace statements", function () {
         parser: {
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -123,8 +123,8 @@ describe("Test namespace statements", function () {
             debug: false,
             suppressErrors: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -151,8 +151,8 @@ describe("Test namespace statements", function () {
             debug: false,
             suppressErrors: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -162,7 +162,7 @@ describe("Test namespace statements", function () {
       declare(strict_types=1);
       namespace foo;
       class bar {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -195,7 +195,7 @@ describe("Test namespace statements", function () {
           ast: {
             withPositions: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
 
@@ -208,7 +208,7 @@ describe("Test namespace statements", function () {
           parser: {
             extractDoc: true,
           },
-        })
+        }),
       ).toMatchSnapshot();
     });
   });

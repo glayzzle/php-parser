@@ -121,7 +121,7 @@ module.exports = {
         }
       },
       ",",
-      false
+      false,
     );
   },
   /*
@@ -180,7 +180,7 @@ module.exports = {
         return this.read_enum_declaration_statement();
       case this.tok.T_HALT_COMPILER: {
         this.raiseError(
-          "__HALT_COMPILER() can only be used from the outermost scope"
+          "__HALT_COMPILER() can only be used from the outermost scope",
         );
         // fallback : returns a node but does not stop the parsing
         let node = this.node("halt");
@@ -238,7 +238,7 @@ module.exports = {
       case this.tok.T_BREAK:
       case this.tok.T_CONTINUE: {
         const result = this.node(
-          this.token === this.tok.T_CONTINUE ? "continue" : "break"
+          this.token === this.tok.T_CONTINUE ? "continue" : "break",
         );
         this.next();
         const level = this.read_optional_expr(";");

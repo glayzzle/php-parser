@@ -30,7 +30,7 @@ module.exports = Statement.extends(
     type,
     attrGroups,
     docs,
-    location
+    location,
   ) {
     Statement.apply(this, [KIND, docs, location]);
     this.name = name;
@@ -39,5 +39,5 @@ module.exports = Statement.extends(
     this.nullable = nullable;
     this.type = type;
     this.attrGroups = attrGroups;
-  }
+  },
 );

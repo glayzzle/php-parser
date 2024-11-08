@@ -20,5 +20,5 @@ module.exports = Statement.extends(
   function ExpressionStatement(expr, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.expression = expr;
-  }
+  },
 );

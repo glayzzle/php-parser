@@ -9,7 +9,7 @@ describe("yieldfrom", function () {
   });
   it("new", function () {
     expect(
-      parser.parseEval("yield from new ArrayIterator([5, 6]);")
+      parser.parseEval("yield from new ArrayIterator([5, 6]);"),
     ).toMatchSnapshot();
   });
   it("return", function () {

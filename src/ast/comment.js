@@ -19,5 +19,5 @@ module.exports = Node.extends(
   function Comment(kind, value, docs, location) {
     Node.apply(this, [kind, docs, location]);
     this.value = value;
-  }
+  },
 );

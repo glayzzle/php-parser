@@ -9,7 +9,7 @@ Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -21,7 +21,7 @@ Example of string
 spanning multiple lines
 using heredoc syntax.
 EOD;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -33,7 +33,7 @@ My name is "$name". I am printing some $foo->foo.
 Now, I am printing some {$foo->bar[1]}.
 This should print a capital 'A': \x41
 EOT;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -44,7 +44,7 @@ var_dump(array(<<<'EOD'
 foobar!
 EOD
 ));
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -57,7 +57,7 @@ function foo()
 Nothing in here...
 LABEL;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -73,7 +73,7 @@ FOOBAR;
 Property example
 FOOBAR;
 }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -82,7 +82,7 @@ FOOBAR;
       parser.parseEval(`
 echo <<<'TEST'
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -92,7 +92,7 @@ TEST;
 echo <<<'TEST'
 
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -104,7 +104,7 @@ echo <<<   'TEST'
  b
 c
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -116,7 +116,7 @@ echo <<<\t'TEST'
  b
 c
 TEST;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -128,7 +128,7 @@ TEST;
      b
     c
     END;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -141,7 +141,7 @@ TEST;
      b
     c
     END;
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -153,7 +153,7 @@ TEST;
       NOWDOC;
 
       $y = "_$z";
-    `)
+    `),
     ).toMatchSnapshot();
   });
 });

@@ -20,5 +20,5 @@ module.exports = Expression.extends(
   function Eval(source, docs, location) {
     Expression.apply(this, [KIND, docs, location]);
     this.source = source;
-  }
+  },
 );

@@ -46,7 +46,7 @@ module.exports = Declaration.extends(
     nullable,
     flags,
     docs,
-    location
+    location,
   ) {
     Declaration.apply(this, [KIND, name, docs, location]);
     this.value = value;
@@ -57,5 +57,5 @@ module.exports = Declaration.extends(
     this.nullable = nullable;
     this.flags = flags || 0;
     this.attrGroups = [];
-  }
+  },
 );

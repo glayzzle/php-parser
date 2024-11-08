@@ -215,7 +215,7 @@ string";`,
           withPositions: true,
           withSource: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 
@@ -226,7 +226,7 @@ string";`,
           withPositions: true,
           withSource: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 });

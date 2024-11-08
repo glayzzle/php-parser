@@ -21,5 +21,5 @@ module.exports = Expression.extends(
   function YieldFrom(value, docs, location) {
     Expression.apply(this, [KIND, docs, location]);
     this.value = value;
-  }
+  },
 );

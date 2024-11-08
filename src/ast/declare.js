@@ -23,7 +23,7 @@ const Declare = Block.extends(
     Block.apply(this, [KIND, body, docs, location]);
     this.directives = directives;
     this.mode = mode;
-  }
+  },
 );
 
 /**

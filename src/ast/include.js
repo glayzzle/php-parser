@@ -24,5 +24,5 @@ module.exports = Expression.extends(
     this.once = once;
     this.require = require;
     this.target = target;
-  }
+  },
 );

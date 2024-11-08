@@ -22,5 +22,5 @@ module.exports = Expression.extends(
     Expression.apply(this, [KIND, docs, location]);
     this.cond = cond;
     this.arms = arms;
-  }
+  },
 );

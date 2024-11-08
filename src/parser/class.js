@@ -211,14 +211,14 @@ module.exports = {
             readonly,
             nullable,
             type,
-            attrs || []
+            attrs || [],
           );
         } else {
           this.expect([",", ";", "="]);
           return result(propName, null, nullable, type, attrs || []);
         }
       },
-      ","
+      ",",
     );
 
     return result(null, properties, flags);
@@ -267,7 +267,7 @@ module.exports = {
         }
         return result(constName, value);
       },
-      ","
+      ",",
     );
 
     return result(null, items, flags, nullable, type, attrs || []);
@@ -367,7 +367,7 @@ module.exports = {
     let type = this.read_types();
     if (nullable && !type) {
       this.raiseError(
-        "Expecting a type definition combined with nullable operator"
+        "Expecting a type definition combined with nullable operator",
       );
     }
     if (!nullable && !type) {
@@ -452,7 +452,7 @@ module.exports = {
           2,
           flags,
           attrs,
-          locStart
+          locStart,
         );
         method.parseFlags(flags);
         result.push(method);
@@ -574,7 +574,7 @@ module.exports = {
         "traitprecedence",
         trait,
         method,
-        this.next().read_name_list()
+        this.next().read_name_list(),
       );
     } else if (this.token === this.tok.T_AS) {
       // handle trait alias

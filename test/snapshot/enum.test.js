@@ -14,7 +14,7 @@ describe("Test enums", function () {
           case Clubs;
           case Spades;
         }
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -27,7 +27,7 @@ describe("Test enums", function () {
           case Clubs = 'C';
           case Spades = 'S';
         }
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -38,7 +38,7 @@ describe("Test enums", function () {
           case Bar;
           public const Baz = self::Bar;
         }
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -46,7 +46,7 @@ describe("Test enums", function () {
     expect(
       parser.parseEval(`
         enum Foo implements Bar, Baz {}
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -60,7 +60,7 @@ describe("Test enums", function () {
           }
           use Bax;
         }
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -76,7 +76,7 @@ describe("Test enums", function () {
             echo self::MyCase->value;
           }
         }
-      `)
+      `),
     ).toMatchSnapshot();
   });
 
@@ -102,7 +102,7 @@ describe("Test enums", function () {
       class Enum implements Foo {}
       class Enum exTends Foo {}
       enum extendsFoo {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
 

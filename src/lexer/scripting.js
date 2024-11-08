@@ -96,7 +96,7 @@ module.exports = {
         this.yylineno +
         " (offset " +
         this.offset +
-        ")"
+        ")",
     );
   },
 

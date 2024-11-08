@@ -16,7 +16,7 @@ describe("Test expressions", function () {
       1 ** 3;
       1 << 3;
       1 >> 3;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -39,7 +39,7 @@ describe("Test expressions", function () {
       $a <= $b;
       $a <=> $b;
       $a instanceof $b;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -60,7 +60,7 @@ describe("Test expressions", function () {
       $a ^= $b;
       $a <<= $b;
       $a >>= $b;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -71,7 +71,7 @@ describe("Test expressions", function () {
         $a ?? false;
         $a > 5 ? true : false;
         $a ?: false;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -89,7 +89,7 @@ describe("Test expressions", function () {
         yield from foo(); // keys 0-2
         yield 1 => $a; // key 1
       }
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -101,7 +101,7 @@ describe("Test expressions", function () {
         ~$var;
         !$var;
         -$var;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -121,7 +121,7 @@ describe("Test expressions", function () {
         (array)$var;
         (object)$var;
         (unset)$var;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -152,7 +152,7 @@ describe("Test expressions", function () {
             return expr;
           },
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -163,7 +163,7 @@ describe("Test expressions", function () {
         exit(1);
         die();
         exit;
-      `
+      `,
     );
     expect(ast).toMatchSnapshot();
   });
@@ -180,7 +180,7 @@ describe("Test expressions", function () {
         ast: {
           withPositions: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -216,7 +216,7 @@ describe("Test expressions", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -228,8 +228,8 @@ describe("Test expressions", function () {
       new foo;
       $a = (new foo)[0];
     `,
-        { parser: { debug: false } }
-      )
+        { parser: { debug: false } },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -246,8 +246,8 @@ describe("Test expressions", function () {
     new static();
     new parent();
     `,
-        { parser: { debug: false } }
-      )
+        { parser: { debug: false } },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -260,8 +260,8 @@ describe("Test expressions", function () {
     new static();
     new parent();
     `,
-        { parser: { debug: false } }
-      )
+        { parser: { debug: false } },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -271,8 +271,8 @@ describe("Test expressions", function () {
         `
       $a = new foo[0];
     `,
-        { parser: { suppressErrors: true } }
-      )
+        { parser: { suppressErrors: true } },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -286,18 +286,18 @@ describe("Test expressions", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("chaining calls (derefenceable)", function () {
     expect(
-      parser.parseEval(`($a->b)::call()->foo[10]->bar;`)
+      parser.parseEval(`($a->b)::call()->foo[10]->bar;`),
     ).toMatchSnapshot();
     expect(parser.parseEval(`array(1, 2, 3)[0]->foo;`)).toMatchSnapshot();
     expect(
-      parser.parseEval(`($a++)($foo)->bar{$baz}::foo();`)
+      parser.parseEval(`($a++)($foo)->bar{$baz}::foo();`),
     ).toMatchSnapshot();
     // expect error :
     expect(
@@ -305,7 +305,7 @@ describe("Test expressions", function () {
         parser: {
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
     // should pass
     expect(parser.parseEval(`bar()::foo()::baz();`)).toMatchSnapshot();

@@ -24,5 +24,5 @@ module.exports = Expression.extends(
     this.expression = expression;
     this.syntax = syntax;
     this.curly = curly;
-  }
+  },
 );

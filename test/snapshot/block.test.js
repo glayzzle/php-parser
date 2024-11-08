@@ -39,7 +39,7 @@ describe("block", () => {
         parser: {
           extractDoc: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
   it("check empty php blocks", function () {
@@ -58,8 +58,8 @@ SOME HTML OUTPUT
           parser: {
             extractDoc: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -76,8 +76,8 @@ SOME HTML OUTPUT
           parser: {
             extractDoc: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

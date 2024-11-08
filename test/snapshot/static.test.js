@@ -9,7 +9,7 @@ describe("static", function () {
   });
   it("multiple", function () {
     expect(
-      parser.parseEval("static $foo = 1, $bar = 2, $baz = 3;")
+      parser.parseEval("static $foo = 1, $bar = 2, $baz = 3;"),
     ).toMatchSnapshot();
   });
 });

@@ -19,5 +19,5 @@ module.exports = Literal.extends(
   KIND,
   function Number(value, raw, docs, location) {
     Literal.apply(this, [KIND, value, raw, docs, location]);
-  }
+  },
 );

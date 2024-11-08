@@ -21,5 +21,5 @@ module.exports = Expression.extends(
   function variadic(what, docs, location) {
     Expression.apply(this, [KIND, docs, location]);
     this.what = what;
-  }
+  },
 );

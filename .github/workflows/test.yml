@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [14.x, 16.x, 18.x, 20.x]
+        node-version: [18.x, 20.x, 22.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +26,6 @@ jobs:
 
       - name: type check
         run: |
-          npm i -g typescript
           yarn build-types
           [ $(git diff types.d.ts | wc -l) -gt 0 ] && echo 'Diff exists in types.d.ts. Please change jsdoc.' && exit 1
           tsc --noEmit types.d.ts

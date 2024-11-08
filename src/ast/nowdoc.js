@@ -22,5 +22,5 @@ module.exports = Literal.extends(
   function Nowdoc(value, raw, label, docs, location) {
     Literal.apply(this, [KIND, value, raw, docs, location]);
     this.label = label;
-  }
+  },
 );

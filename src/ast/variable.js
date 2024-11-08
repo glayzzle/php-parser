@@ -32,5 +32,5 @@ module.exports = Expression.extends(
     Expression.apply(this, [KIND, docs, location]);
     this.name = name;
     this.curly = curly || false;
-  }
+  },
 );

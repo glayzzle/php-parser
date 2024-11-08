@@ -63,22 +63,22 @@ describe("typereference", function () {
   });
   it("callable (argument)", function () {
     expect(
-      parser.parseEval("function foo(callable $arg) {}")
+      parser.parseEval("function foo(callable $arg) {}"),
     ).toMatchSnapshot();
   });
   it("callable (argument) (uppercase)", function () {
     expect(
-      parser.parseEval("function foo(CALLABLE $arg) {}")
+      parser.parseEval("function foo(CALLABLE $arg) {}"),
     ).toMatchSnapshot();
   });
   it("callable (return type declarations)", function () {
     expect(
-      parser.parseEval("function foo($arg): callable {}")
+      parser.parseEval("function foo($arg): callable {}"),
     ).toMatchSnapshot();
   });
   it("callable (return type declarations) (uppercase)", function () {
     expect(
-      parser.parseEval("function foo($arg): CALLABLE  {}")
+      parser.parseEval("function foo($arg): CALLABLE  {}"),
     ).toMatchSnapshot();
   });
   it("object (argument)", function () {
@@ -95,22 +95,22 @@ describe("typereference", function () {
   });
   it("iterable (argument)", function () {
     expect(
-      parser.parseEval("function foo(iterable $arg) {}")
+      parser.parseEval("function foo(iterable $arg) {}"),
     ).toMatchSnapshot();
   });
   it("iterable (argument) (uppercase)", function () {
     expect(
-      parser.parseEval("function foo(ITERABLE $arg) {}")
+      parser.parseEval("function foo(ITERABLE $arg) {}"),
     ).toMatchSnapshot();
   });
   it("iterable (return type declarations)", function () {
     expect(
-      parser.parseEval("function foo($arg): iterable {}")
+      parser.parseEval("function foo($arg): iterable {}"),
     ).toMatchSnapshot();
   });
   it("iterable (return type declarations) (uppercase)", function () {
     expect(
-      parser.parseEval("function foo($arg): ITERABLE {}")
+      parser.parseEval("function foo($arg): ITERABLE {}"),
     ).toMatchSnapshot();
   });
   it("void (argument)", function () {
@@ -130,7 +130,7 @@ describe("typereference", function () {
   });
   it("class (2)", function () {
     expect(
-      parser.parseEval("function foo(Foo\\Foo $arg) {}")
+      parser.parseEval("function foo(Foo\\Foo $arg) {}"),
     ).toMatchSnapshot();
   });
   it("class (3)", function () {
@@ -138,7 +138,7 @@ describe("typereference", function () {
   });
   it("class (4)", function () {
     expect(
-      parser.parseEval("function foo($arg): Foo\\Foo {}")
+      parser.parseEval("function foo($arg): Foo\\Foo {}"),
     ).toMatchSnapshot();
   });
 });

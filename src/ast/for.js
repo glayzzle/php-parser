@@ -29,5 +29,5 @@ module.exports = Statement.extends(
     this.increment = increment;
     this.shortForm = shortForm;
     this.body = body;
-  }
+  },
 );

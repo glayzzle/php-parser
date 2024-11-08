@@ -20,5 +20,5 @@ module.exports = Statement.extends(
   function ConstantStatement(kind, constants, docs, location) {
     Statement.apply(this, [kind || KIND, docs, location]);
     this.constants = constants;
-  }
+  },
 );

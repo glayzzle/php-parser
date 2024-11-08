@@ -22,5 +22,5 @@ module.exports = Node.extends(
     Node.apply(this, [KIND, docs, location]);
     this.traits = traits;
     this.adaptations = adaptations;
-  }
+  },
 );

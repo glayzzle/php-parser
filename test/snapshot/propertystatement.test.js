@@ -9,12 +9,12 @@ describe("propertystatement", () => {
   });
   it("multiple", () => {
     expect(
-      parser.parseEval("class Foo { public $dsn, $username, $password; }")
+      parser.parseEval("class Foo { public $dsn, $username, $password; }"),
     ).toMatchSnapshot();
   });
   it("multiple (var)", () => {
     expect(
-      parser.parseEval("class Foo { var $dsn, $username, $password; }")
+      parser.parseEval("class Foo { var $dsn, $username, $password; }"),
     ).toMatchSnapshot();
   });
 });

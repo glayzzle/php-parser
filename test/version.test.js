@@ -23,7 +23,7 @@ describe("Test versions", function () {
         parser: {
           version: [701],
         },
-      })
+      }),
     ).toThrow(new Error("Expecting a number for version"));
   });
   it("fail to parse bad version numbers", function () {
@@ -32,7 +32,7 @@ describe("Test versions", function () {
         parser: {
           version: "x.y.z",
         },
-      })
+      }),
     ).toThrow(new Error("Bad version number : x.y.z"));
   });
   it("unhandled version", function () {
@@ -41,14 +41,14 @@ describe("Test versions", function () {
         parser: {
           version: "4.9",
         },
-      })
+      }),
     ).toThrow(new Error("Can only handle versions between 5.x to 8.x"));
     expect(
       parser.create.bind(null, {
         parser: {
           version: "9.9",
         },
-      })
+      }),
     ).toThrow(new Error("Can only handle versions between 5.x to 8.x"));
   });
 });

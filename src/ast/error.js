@@ -26,5 +26,5 @@ module.exports = Node.extends(
     this.token = token;
     this.line = line;
     this.expected = expected;
-  }
+  },
 );

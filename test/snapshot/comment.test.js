@@ -21,8 +21,8 @@ bar() /* inner */ ;
               withPositions: true,
               withSource: true,
             },
-          }
-        )
+          },
+        ),
       ).toMatchSnapshot();
     });
 
@@ -42,8 +42,8 @@ call(array // comment
               withPositions: true,
               withSource: true,
             },
-          }
-        )
+          },
+        ),
       ).toMatchSnapshot();
     });
 
@@ -64,7 +64,7 @@ call(array // comment
           parser: {
             extractDoc: true,
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -82,7 +82,7 @@ call(array // comment
             extractDoc: true,
             // debug: true
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -101,7 +101,7 @@ call(array // comment
             extractDoc: true,
             // debug: true
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -120,7 +120,7 @@ call(array // comment
             extractDoc: true,
             // debug: true
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -164,7 +164,7 @@ class FooClass
             extractDoc: true,
             // debug: true
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -183,7 +183,7 @@ class FooClass
             extractDoc: true,
             // debug: true
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -201,7 +201,7 @@ class FooClass
         parser: {
           extractDoc: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -222,7 +222,7 @@ class FooClass
           parser: {
             extractDoc: true,
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -244,7 +244,7 @@ class FooClass
           parser: {
             extractDoc: true,
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -263,7 +263,7 @@ class FooClass
           parser: {
             extractDoc: true,
           },
-        }
+        },
       );
       expect(ast).toMatchSnapshot();
     });
@@ -292,7 +292,7 @@ class FooClass
         parser: {
           extractDoc: true,
         },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });

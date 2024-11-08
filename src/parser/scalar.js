@@ -39,7 +39,7 @@ module.exports = {
           } else {
             return String.fromCodePoint(parseInt(p1, 8));
           }
-        }
+        },
       );
   },
 
@@ -54,7 +54,7 @@ module.exports = {
     text,
     indentation,
     indentation_uses_spaces,
-    first_encaps_node
+    first_encaps_node,
   ) {
     if (indentation === 0) {
       return text;
@@ -64,16 +64,16 @@ module.exports = {
       text,
       indentation,
       indentation_uses_spaces,
-      first_encaps_node
+      first_encaps_node,
     );
 
     const matchedChar = indentation_uses_spaces ? " " : "\t";
     const removementRegExp = new RegExp(
       `\\n${matchedChar}{${indentation}}`,
-      "g"
+      "g",
     );
     const removementFirstEncapsNodeRegExp = new RegExp(
-      `^${matchedChar}{${indentation}}`
+      `^${matchedChar}{${indentation}}`,
     );
 
     // Rough replace, need more check
@@ -97,7 +97,7 @@ module.exports = {
     text,
     indentation,
     indentation_uses_spaces,
-    first_encaps_node
+    first_encaps_node,
   ) {
     const textSize = text.length;
     let offset = 0;
@@ -135,7 +135,7 @@ module.exports = {
         leadingWhitespaceCharCount < indentation
       ) {
         this.raiseError(
-          `Invalid body indentation level (expecting an indentation at least ${indentation})`
+          `Invalid body indentation level (expecting an indentation at least ${indentation})`,
         );
       } else {
         inCheckState = false;
@@ -169,13 +169,13 @@ module.exports = {
           this.next();
           const textValue = this.resolve_special_chars(
             text.substring(offset + 1, text.length - 1),
-            isDoubleQuote
+            isDoubleQuote,
           );
           value = value(
             isDoubleQuote,
             textValue,
             offset === 1, // unicode flag
-            text
+            text,
           );
           if (this.token === this.tok.T_DOUBLE_COLON) {
             // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1151
@@ -231,7 +231,7 @@ module.exports = {
             if (this.lexer.heredoc_label.indentation > 0) {
               value = value.substring(
                 0,
-                value.length - this.lexer.heredoc_label.indentation
+                value.length - this.lexer.heredoc_label.indentation,
               );
             }
             const lastCh = value[value.length - 1];
@@ -251,17 +251,17 @@ module.exports = {
             this.expect(this.tok.T_END_HEREDOC) && this.next();
             const raw = this.lexer._input.substring(
               start,
-              this.lexer.yylloc.first_offset
+              this.lexer.yylloc.first_offset,
             );
             node = node(
               this.remove_heredoc_leading_whitespace_chars(
                 value,
                 this.lexer.heredoc_label.indentation,
                 this.lexer.heredoc_label.indentation_uses_spaces,
-                this.lexer.heredoc_label.first_encaps_node
+                this.lexer.heredoc_label.first_encaps_node,
               ),
               raw,
-              this.lexer.heredoc_label.label
+              this.lexer.heredoc_label.label,
             );
             this.lexer.heredoc_label.finished = true;
             return node;
@@ -346,11 +346,11 @@ module.exports = {
               this.resolve_special_chars(text, isDoubleQuote),
               this.lexer.heredoc_label.indentation,
               this.lexer.heredoc_label.indentation_uses_spaces,
-              this.lexer.heredoc_label.first_encaps_node
+              this.lexer.heredoc_label.first_encaps_node,
             )
           : text,
         false,
-        text
+        text,
       );
     } else if (this.token === this.tok.T_DOLLAR_OPEN_CURLY_BRACES) {
       syntax = "simple";
@@ -470,7 +470,7 @@ module.exports = {
     this.expect(expect) && this.next();
     const raw = this.lexer._input.substring(
       type === "heredoc" ? labelStart : start - 1,
-      this.lexer.yylloc.first_offset
+      this.lexer.yylloc.first_offset,
     );
     node = node(value, raw, type);
 

@@ -46,7 +46,7 @@ module.exports = {
         return self.read_array_pair(shortForm);
       },
       ",",
-      true
+      true,
     );
   },
   /*

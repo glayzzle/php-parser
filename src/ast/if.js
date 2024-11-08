@@ -26,5 +26,5 @@ module.exports = Statement.extends(
     this.body = body;
     this.alternate = alternate;
     this.shortForm = shortForm;
-  }
+  },
 );

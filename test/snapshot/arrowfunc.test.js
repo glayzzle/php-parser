@@ -18,7 +18,7 @@ describe("arrow function", () => {
         parser: {
           version: "7.3", // disable the php 7.4 support
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
   it("error / fn fails on php7.4", () => {
@@ -28,7 +28,7 @@ describe("arrow function", () => {
           version: "7.4", // enable the php 7.4 support
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
   it("error / empty not allowed", () => {
@@ -37,7 +37,7 @@ describe("arrow function", () => {
         parser: {
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
   it("error / arrow functions before PHP 7.4", () => {
@@ -47,7 +47,7 @@ describe("arrow function", () => {
           version: "7.3",
           suppressErrors: true,
         },
-      })
+      }),
     ).toMatchSnapshot();
   });
 });

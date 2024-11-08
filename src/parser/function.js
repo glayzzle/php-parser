@@ -37,7 +37,7 @@ module.exports = {
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1,
       attrs || [],
-      locStart
+      locStart,
     );
     if (flag && flag[2] == 1) {
       // abstract function :
@@ -140,7 +140,7 @@ module.exports = {
         if (node.loc.source) {
           node.loc.source = this.lexer._input.substr(
             node.loc.start.offset,
-            node.loc.end.offset - node.loc.start.offset
+            node.loc.end.offset - node.loc.start.offset,
           );
         }
       }
@@ -150,11 +150,11 @@ module.exports = {
     if (type === 1) {
       // closure
       return apply_attrgroup_location(
-        result(params, isRef, use, returnType, nullable, isStatic)
+        result(params, isRef, use, returnType, nullable, isStatic),
       );
     }
     return apply_attrgroup_location(
-      result(name, params, isRef, returnType, nullable)
+      result(name, params, isRef, returnType, nullable),
     );
   },
 
@@ -227,7 +227,7 @@ module.exports = {
             // variadic parameters can only be defined at the end of the parameter list
             if (wasVariadic) {
               this.raiseError(
-                "Unexpected parameter after a variadic parameter"
+                "Unexpected parameter after a variadic parameter",
               );
             }
             if (parameter.variadic) {
@@ -236,7 +236,7 @@ module.exports = {
           }
           return parameter;
         }.bind(this),
-        ","
+        ",",
       );
     }
 
@@ -264,7 +264,7 @@ module.exports = {
         readonly = true;
       } else {
         this.raiseError(
-          "readonly properties can be used only on class constructor"
+          "readonly properties can be used only on class constructor",
         );
       }
     }
@@ -281,7 +281,7 @@ module.exports = {
         readonly = true;
       } else {
         this.raiseError(
-          "readonly properties can be used only on class constructor"
+          "readonly properties can be used only on class constructor",
         );
       }
     }
@@ -293,7 +293,7 @@ module.exports = {
     types = this.read_types();
     if (nullable && !types) {
       this.raiseError(
-        "Expecting a type definition combined with nullable operator"
+        "Expecting a type definition combined with nullable operator",
       );
     }
     const isRef = this.is_reference();
@@ -315,7 +315,7 @@ module.exports = {
       isVariadic,
       readonly,
       nullable,
-      flags
+      flags,
     );
     if (attrs) result.attrGroups = attrs;
     return result;
@@ -358,7 +358,7 @@ module.exports = {
           (mode === MODE_INTERSECTION && this.token !== "&")
         ) {
           this.raiseError(
-            'Unexpect token "' + this.token + '", "|" and "&" can not be mixed'
+            'Unexpect token "' + this.token + '", "|" and "&" can not be mixed',
           );
         }
       }
@@ -426,7 +426,7 @@ module.exports = {
           // variadic arguments can only be followed by other variadic arguments
           if (wasVariadic && !isVariadic) {
             this.raiseError(
-              "Unexpected non-variadic argument after a variadic argument"
+              "Unexpected non-variadic argument after a variadic argument",
             );
           }
           if (isVariadic) {
@@ -435,7 +435,7 @@ module.exports = {
         }
         return argument;
       }.bind(this),
-      ","
+      ",",
     );
   },
   /*
@@ -458,7 +458,7 @@ module.exports = {
         }
         return this.node("namedargument")(
           this.text(),
-          this.next().next().read_expr()
+          this.next().next().read_expr(),
         );
       }
     }

@@ -33,154 +33,154 @@ describe("switch statements", function () {
 
   it("colon and one case", function () {
     const ast = parser.parseEval(
-      'switch (true): case 1: return "1"; endswitch;'
+      'switch (true): case 1: return "1"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and one case #2", function () {
     const ast = parser.parseEval(
-      'switch (true):; case 1: return "1"; endswitch;'
+      'switch (true):; case 1: return "1"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple difference cases", function () {
     const ast = parser.parseEval(
-      'switch (true) { case 1: return "1"; case 2: return "2"; case 3: return "3"; }'
+      'switch (true) { case 1: return "1"; case 2: return "2"; case 3: return "3"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple difference cases #2", function () {
     const ast = parser.parseEval(
-      'switch (true) {; case 1: return "1"; case 2: return "2"; case 3: return "3"; }'
+      'switch (true) {; case 1: return "1"; case 2: return "2"; case 3: return "3"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple difference cases", function () {
     const ast = parser.parseEval(
-      'switch (true): case 1: return "1"; case 2: return "2"; case 3: return "3"; endswitch;'
+      'switch (true): case 1: return "1"; case 2: return "2"; case 3: return "3"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple difference cases #2", function () {
     const ast = parser.parseEval(
-      'switch (true):; case 1: return "1"; case 2: return "2"; case 3: return "3"; endswitch;'
+      'switch (true):; case 1: return "1"; case 2: return "2"; case 3: return "3"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple same cases", function () {
     const ast = parser.parseEval(
-      'switch (true) { case 1: case 2: case 3: return "3"; }'
+      'switch (true) { case 1: case 2: case 3: return "3"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple same cases #2", function () {
     const ast = parser.parseEval(
-      'switch (true) {; case 1: case 2: case 3: return "3"; }'
+      'switch (true) {; case 1: case 2: case 3: return "3"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple same cases", function () {
     const ast = parser.parseEval(
-      'switch (true): case 1: case 2: case 3: return "3"; endswitch;'
+      'switch (true): case 1: case 2: case 3: return "3"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple same cases #2", function () {
     const ast = parser.parseEval(
-      'switch (true):; case 1: case 2: case 3: return "3"; endswitch;'
+      'switch (true):; case 1: case 2: case 3: return "3"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple difference cases with default", function () {
     const ast = parser.parseEval(
-      'switch (true) { case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; }'
+      'switch (true) { case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple difference cases with default #2", function () {
     const ast = parser.parseEval(
-      'switch (true) {; case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; }'
+      'switch (true) {; case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple difference cases with default", function () {
     const ast = parser.parseEval(
-      'switch (true): case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; endswitch;'
+      'switch (true): case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple difference cases with default #2", function () {
     const ast = parser.parseEval(
-      'switch (true):; case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; endswitch;'
+      'switch (true):; case 1: return "1"; case 2: return "2"; case 3: return "3"; default: return "5"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple same cases with default", function () {
     const ast = parser.parseEval(
-      'switch (true) { case 1: case 2: case 3: return "3"; default: return "5"; }'
+      'switch (true) { case 1: case 2: case 3: return "3"; default: return "5"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and multiple same cases with default #2", function () {
     const ast = parser.parseEval(
-      'switch (true) {; case 1: case 2: case 3: return "3"; default: return "5"; }'
+      'switch (true) {; case 1: case 2: case 3: return "3"; default: return "5"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple same cases with default", function () {
     const ast = parser.parseEval(
-      'switch (true): case 1: case 2: case 3: return "3"; default: return "5"; endswitch;'
+      'switch (true): case 1: case 2: case 3: return "3"; default: return "5"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and multiple same cases with default #2", function () {
     const ast = parser.parseEval(
-      'switch (true):; case 1: case 2: case 3: return "3"; default: return "5"; endswitch;'
+      'switch (true):; case 1: case 2: case 3: return "3"; default: return "5"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and ';' separator", function () {
     const ast = parser.parseEval(
-      'switch (true) { case 1; case 2; case 3; return "3"; default; return "5"; }'
+      'switch (true) { case 1; case 2; case 3; return "3"; default; return "5"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("curly and ';' separator #2", function () {
     const ast = parser.parseEval(
-      'switch (true) {; case 1; case 2; case 3; return "3"; default; return "5"; }'
+      'switch (true) {; case 1; case 2; case 3; return "3"; default; return "5"; }',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and ';' separator", function () {
     const ast = parser.parseEval(
-      'switch (true): case 1; case 2; case 3; return "3"; default; return "5"; endswitch;'
+      'switch (true): case 1; case 2; case 3; return "3"; default; return "5"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
 
   it("colon and ';' separator #2", function () {
     const ast = parser.parseEval(
-      'switch (true):; case 1; case 2; case 3; return "3"; default; return "5"; endswitch;'
+      'switch (true):; case 1; case 2; case 3; return "3"; default; return "5"; endswitch;',
     );
     expect(ast).toMatchSnapshot();
   });
@@ -206,7 +206,7 @@ describe("switch statements", function () {
       `,
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -222,7 +222,7 @@ describe("switch statements", function () {
       `,
       {
         parser: { suppressErrors: true },
-      }
+      },
     );
     expect(errAst).toMatchSnapshot();
     expect(errAst.errors.length).not.toBe(0);

@@ -30,7 +30,7 @@ module.exports = Expression.extends(
     nullable,
     isStatic,
     docs,
-    location
+    location,
   ) {
     Expression.apply(this, [KIND, docs, location]);
     this.arguments = args;
@@ -39,5 +39,5 @@ module.exports = Expression.extends(
     this.type = type;
     this.nullable = nullable;
     this.isStatic = isStatic || false;
-  }
+  },
 );

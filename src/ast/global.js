@@ -20,5 +20,5 @@ module.exports = Statement.extends(
   function Global(items, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.items = items;
-  }
+  },
 );

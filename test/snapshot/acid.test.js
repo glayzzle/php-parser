@@ -170,8 +170,8 @@ THE END ...
           parser: {
             extractDoc: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 });

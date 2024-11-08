@@ -14,7 +14,7 @@ module.exports = {
     let result = this.ast.prepare(
       text.substring(0, 2) === "/*" ? "commentblock" : "commentline",
       null,
-      this
+      this,
     );
     const offset = this.lexer.yylloc.first_offset;
     // handle location on comment

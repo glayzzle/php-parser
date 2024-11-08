@@ -84,7 +84,7 @@ describe("Test call", function () {
       "class Foo { function foo() { parent::call(); } }",
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -93,7 +93,7 @@ describe("Test call", function () {
       "class Foo { function foo() { self::call(); } }",
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -102,7 +102,7 @@ describe("Test call", function () {
       "class Foo { function foo() { static::call(); } }",
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -177,7 +177,7 @@ describe("Test call", function () {
       "get_class($obj)::$property::$property::$property;",
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -198,7 +198,7 @@ describe("Test call", function () {
       "get_class($var)::${$property}::${$property}::${$property};",
       {
         parser: { debug: false },
-      }
+      },
     );
     expect(ast).toMatchSnapshot();
   });
@@ -260,7 +260,7 @@ describe("Test call", function () {
           version: "7.2",
           debug: false,
         },
-      })
+      }),
     ).toThrow("PHP 8+ is required to use named arguments");
   });
   it("doesnt confused static methods with named arguments", function () {
@@ -299,7 +299,7 @@ describe("Test call", function () {
           extractDoc: true,
           debug: false,
         },
-      }
+      },
     );
     expect(astErr).toMatchSnapshot();
   });
@@ -309,7 +309,7 @@ describe("Test call", function () {
         foo(...$bar);
         foo($bar, ...$baz);
         foo(...$bar, ...$baz);
-      `)
+      `),
     ).toMatchSnapshot();
   });
 });

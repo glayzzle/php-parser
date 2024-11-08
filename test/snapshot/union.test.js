@@ -27,13 +27,13 @@ describe("Test unions", function () {
 
   it("union with three types", function () {
     expect(
-      parser.parseEval("function(foo|bar|baz $test) {}")
+      parser.parseEval("function(foo|bar|baz $test) {}"),
     ).toMatchSnapshot();
   });
 
   it("intersection with three types", function () {
     expect(
-      parser.parseEval("function(foo&bar&baz $test) {}")
+      parser.parseEval("function(foo&bar&baz $test) {}"),
     ).toMatchSnapshot();
   });
 

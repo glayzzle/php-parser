@@ -22,5 +22,5 @@ module.exports = Node.extends(
     Node.apply(this, [KIND, docs, location]);
     this.name = name;
     this.args = args;
-  }
+  },
 );

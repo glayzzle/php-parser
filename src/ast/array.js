@@ -40,5 +40,5 @@ module.exports = Expr.extends(
     Expr.apply(this, [KIND, docs, location]);
     this.items = items;
     this.shortForm = shortForm;
-  }
+  },
 );

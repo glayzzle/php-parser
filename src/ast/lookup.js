@@ -22,5 +22,5 @@ module.exports = Expr.extends(
     Expr.apply(this, [kind || KIND, docs, location]);
     this.what = what;
     this.offset = offset;
-  }
+  },
 );

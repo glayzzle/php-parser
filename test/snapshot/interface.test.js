@@ -14,7 +14,7 @@ describe("interface", function () {
     expect(
       parser.parseEval("interface A { private const B = 1; }", {
         parser: { suppressErrors: true },
-      })
+      }),
     ).toMatchSnapshot();
   });
 });

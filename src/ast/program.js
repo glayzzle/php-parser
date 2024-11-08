@@ -28,5 +28,5 @@ module.exports = Block.extends(
     if (tokens) {
       this.tokens = tokens;
     }
-  }
+  },
 );

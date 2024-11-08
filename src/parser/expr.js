@@ -102,7 +102,7 @@ module.exports = {
         "bin",
         "instanceof",
         expr,
-        this.next().read_class_name_reference()
+        this.next().read_class_name_reference(),
       );
       if (
         this.token !== ";" &&
@@ -311,7 +311,7 @@ module.exports = {
         /* istanbul ignore next */
         this.raiseError(
           "Fatal Error :  Cannot use empty list on line " +
-            this.lexer.yylloc.first_line
+            this.lexer.yylloc.first_line,
         );
       }
 
@@ -322,7 +322,7 @@ module.exports = {
           return assign(
             result(assignList, false),
             this.next().read_expr(),
-            "="
+            "=",
           );
         } else {
           // error fallback : list($a, $b);
@@ -371,7 +371,7 @@ module.exports = {
 
       case this.tok.T_STRING_CAST:
         return this.read_expr_cast(
-          this.text().indexOf("binary") !== -1 ? "binary" : "string"
+          this.text().indexOf("binary") !== -1 ? "binary" : "string",
         );
 
       case this.tok.T_ARRAY_CAST:
@@ -651,7 +651,7 @@ module.exports = {
       body,
       returnType,
       nullable,
-      flags ? true : false
+      flags ? true : false,
     );
     result.attrGroups = attrs;
     return result;

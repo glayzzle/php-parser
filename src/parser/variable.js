@@ -27,7 +27,7 @@ module.exports = {
     // check the byref flag
     if (this.token === "&") {
       return this.read_byref(
-        this.read_variable.bind(this, read_only, encapsed)
+        this.read_variable.bind(this, read_only, encapsed),
       );
     }
 

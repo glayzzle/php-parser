@@ -7,7 +7,7 @@ describe("Parse Attributes", () => {
     #[Deprecated]
     #[replace("use NewClass")]
     class DepClass {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse method attributes", () => {
@@ -17,7 +17,7 @@ describe("Parse Attributes", () => {
       #[Pure]
       function m() {}
     }
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse param attributes", () => {
@@ -26,7 +26,7 @@ describe("Parse Attributes", () => {
     function f(
     #[Unsigned]
      int $n) {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse params with comments", () => {
@@ -45,8 +45,8 @@ describe("Parse Attributes", () => {
           parser: {
             extractDoc: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
   it("can parse parms with array values", () => {
@@ -54,7 +54,7 @@ describe("Parse Attributes", () => {
       parser.parseEval(`
     #[List(["a"=>1, 'b' => Test::class, 'c'=>[]])]
     function a() {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse params with argument labels", () => {
@@ -62,7 +62,7 @@ describe("Parse Attributes", () => {
       parser.parseEval(`
     #[MyAttribute(value: 1234)]
     function a() {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse params with mathematical expressions", () => {
@@ -72,8 +72,8 @@ describe("Parse Attributes", () => {
         #[Att1(-20 * (+10 / 5) % 2 + 8 ** 2 - +-2)]
         class A {}
         `,
-        { parser: { extractDoc: true } }
-      )
+        { parser: { extractDoc: true } },
+      ),
     ).toMatchSnapshot();
   });
   it("can parse params with bitwise operations", () => {
@@ -88,8 +88,8 @@ describe("Parse Attributes", () => {
         #[Att6(Att6::BAR << 1)]
         class A {}
         `,
-        { parser: { extractDoc: true } }
-      )
+        { parser: { extractDoc: true } },
+      ),
     ).toMatchSnapshot();
   });
   it("can parse params with logical operations", () => {
@@ -104,8 +104,8 @@ describe("Parse Attributes", () => {
         #[Att6(!Att6::FOO)]
         class A {}
         `,
-        { parser: { extractDoc: true } }
-      )
+        { parser: { extractDoc: true } },
+      ),
     ).toMatchSnapshot();
   });
   it("can parse params with string concatenation", () => {
@@ -138,8 +138,8 @@ describe("Parse Attributes", () => {
         )]
         class A {}
         `,
-        { parser: { extractDoc: true } }
-      )
+        { parser: { extractDoc: true } },
+      ),
     ).toMatchSnapshot();
   });
   it("can parse params with end characters", () => {
@@ -147,7 +147,7 @@ describe("Parse Attributes", () => {
       parser.parseEval(`
     #[End(["])}>"])]
     class End {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse multi-line attributes", () => {
@@ -160,7 +160,7 @@ describe("Parse Attributes", () => {
     ]
     #[Four]
     class Multi {}
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse anonymous function attributes", () => {
@@ -168,7 +168,7 @@ describe("Parse Attributes", () => {
       parser.parseEval(`
     $a = #[Pure] fn() => true;
     $b = #[A] function() {};
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can't parse anonymous function attributes in PHP < 8", () => {
@@ -181,8 +181,8 @@ describe("Parse Attributes", () => {
           parser: {
             version: "7.4",
           },
-        }
-      )
+        },
+      ),
     ).toThrow(SyntaxError);
   });
   it("can parse class property attributes", () => {
@@ -196,7 +196,7 @@ describe("Parse Attributes", () => {
         #[D]
         protected $d;
       }
-      `)
+      `),
     ).toMatchSnapshot();
   });
   it("can parse class const attributes", () => {
@@ -206,7 +206,7 @@ describe("Parse Attributes", () => {
         #[B]
         const B = 1;
       }
-      `)
+      `),
     ).toMatchSnapshot();
   });
   it("can parse anon-class attributes", () => {
@@ -218,7 +218,7 @@ describe("Parse Attributes", () => {
         parser: {
           version: "7.4",
         },
-      })
+      }),
     ).toThrow(SyntaxError);
   });
   it("can parse interface attributes", () => {
@@ -231,7 +231,7 @@ describe("Parse Attributes", () => {
       #[E]
       public function f();
     }
-    `)
+    `),
     ).toMatchSnapshot();
   });
   it("can parse attributes in inner statements", () => {
@@ -241,7 +241,7 @@ describe("Parse Attributes", () => {
       function b() {
         return #[C] fn() => #[Pure] function() {};
       }
-    }`)
+    }`),
     ).toMatchSnapshot();
   });
   it("can parse attributes with namespace", () => {
@@ -249,7 +249,7 @@ describe("Parse Attributes", () => {
       parser.parseEval(`
       #[\\JetBrains\\PhpStorm\\Pure]
       function b() {} 
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -262,7 +262,7 @@ describe("Parse Attributes", () => {
         function c(){}
         function d(){}
         }
-    `)
+    `),
     ).toMatchSnapshot();
   });
 
@@ -281,8 +281,8 @@ describe("Parse Attributes", () => {
             version: "7.4",
             extractDoc: true,
           },
-        }
-      )
+        },
+      ),
     ).toMatchSnapshot();
   });
 
@@ -299,8 +299,8 @@ describe("Parse Attributes", () => {
                 Assert\\Length(max: 255, groups: ['foo']),
             ]
             public ?string $value = null;
-        }`
-      )
+        }`,
+      ),
     ).toMatchSnapshot();
   });
 
@@ -311,8 +311,8 @@ describe("Parse Attributes", () => {
         #[Att1]
         $a = 1;
         `,
-        { parser: { extractDoc: true } }
-      )
+        { parser: { extractDoc: true } },
+      ),
     ).toMatchSnapshot();
   });
 });

@@ -20,5 +20,5 @@ module.exports = Node.extends(
   KIND,
   function VariadicPlaceholder(docs, location) {
     Node.apply(this, [KIND, docs, location]);
-  }
+  },
 );

@@ -15,7 +15,7 @@ describe("classreference", function () {
   });
   it("argument type (2)", function () {
     expect(
-      parser.parseEval("function foo(Foo\\Foo $arg) {}")
+      parser.parseEval("function foo(Foo\\Foo $arg) {}"),
     ).toMatchSnapshot();
   });
 });
