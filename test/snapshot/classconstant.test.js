@@ -43,15 +43,15 @@ describe("classconstant", () => {
     expect(
       parser.parseEval(
         'class Foo { public const string CONSTANT = "Hello world!"; }',
-        { parser: { version: 830 } },
+        { parser: { version: 803 } },
       ),
     ).toMatchSnapshot();
   });
   it("type hinted (unsupported)", () => {
     expect(() =>
       parser.parseEval(
-        'class Foo { public const string CONSTANT = "Hello world!"; }',
-        { parser: { version: 820 } },
+        'class Foo { public const  DDCONSTANT = "Hello world!"; public const string CONSTANT = "Hello world!"; }',
+        { parser: { version: 802 } },
       ),
     ).toThrowErrorMatchingSnapshot();
   });

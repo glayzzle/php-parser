@@ -235,7 +235,7 @@ module.exports = {
     }
 
     const [nullable, type] =
-      this.version >= 830 ? this.read_optional_type() : [false, null];
+      this.version >= 803 ? this.read_optional_type() : [false, null];
 
     const result = this.node("classconstant");
     const items = this.read_list(
