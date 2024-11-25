@@ -54,6 +54,7 @@ describe("classconstant", () => {
       ),
     ).toMatchSnapshot();
   });
+
   it("type hinted (unsupported)", () => {
     expect(() =>
       parser.parseEval(

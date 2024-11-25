@@ -254,8 +254,9 @@ module.exports = {
         let value = null;
 
         if (
-          (type.kind === "typereference" || type.kind === "uniontype") &&
-          this.version >= 803
+          this.version >= 803 &&
+          type &&
+          (type.kind === "typereference" || type.kind === "uniontype")
         ) {
           constName = this.node("identifier");
           name = this.text();
@@ -263,7 +264,7 @@ module.exports = {
           this.next();
           this.expect("=");
           value = this.next().read_expr();
-        } else if (type.kind === "name") {
+        } else if (type && type.kind === "name") {
           constName = this.node("identifier");
           constName = constName(type.name);
           type = null;
