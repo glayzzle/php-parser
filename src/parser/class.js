@@ -234,9 +234,6 @@ module.exports = {
       this.next();
     }
 
-    const [nullable, type] =
-      this.version >= 803 ? this.read_optional_type() : [false, null];
-
     const result = this.node("classconstant");
     const items = this.read_list(
       /*
@@ -249,28 +246,35 @@ module.exports = {
        */
       function read_constant_declaration() {
         const result = this.node("constant");
+        const nullable = false;
+
+        let type = this.read_types();
         let constName = null;
+        let name = null;
         let value = null;
+
         if (
-          this.token === this.tok.T_STRING ||
-          (this.version >= 700 && this.is("IDENTIFIER"))
+          (type.kind === "typereference" || type.kind === "uniontype") &&
+          this.version >= 803
         ) {
           constName = this.node("identifier");
-          const name = this.text();
-          this.next();
+          name = this.text();
           constName = constName(name);
-        } else {
-          this.expect("IDENTIFIER");
-        }
-        if (this.expect("=")) {
+          this.next();
+          this.expect("=");
+          value = this.next().read_expr();
+        } else if (type.kind === "name") {
+          constName = this.node("identifier");
+          constName = constName(type.name);
+          type = null;
           value = this.next().read_expr();
         }
-        return result(constName, value);
+        return result(constName, value, nullable, type);
       },
       ",",
     );
 
-    return result(null, items, flags, nullable, type, attrs || []);
+    return result(null, items, flags, attrs || []);
   },
   /*
    * Read member flags

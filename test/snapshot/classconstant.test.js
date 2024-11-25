@@ -42,7 +42,14 @@ describe("classconstant", () => {
   it("type hinted (supported)", () => {
     expect(
       parser.parseEval(
-        'class Foo { public const string CONSTANT = "Hello world!"; }',
+        `class Foo {
+              public const CON_1 = "Hello world!";
+              const CON_2 = "Hello world!";
+              const string CON_3 = "Hello world!";
+              public const string CON_4 = "Hello world!";
+              public const string|int CON_5 = "Hello world!";
+              const string|int CON_6 = "Hello world!";
+              }`,
         { parser: { version: 803 } },
       ),
     ).toMatchSnapshot();
