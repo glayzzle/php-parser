@@ -253,23 +253,26 @@ module.exports = {
         let name = null;
         let value = null;
 
-        if (
-          this.version >= 803 &&
-          type &&
-          (type.kind === "typereference" || type.kind === "uniontype")
-        ) {
+        if (type && type.kind === "name") {
+          constName = this.node("identifier");
+          constName = constName(type.name);
+          type = null;
+          value = this.next().read_expr();
+        } else {
           constName = this.node("identifier");
           name = this.text();
           constName = constName(name);
           this.next();
           this.expect("=");
           value = this.next().read_expr();
-        } else if (type && type.kind === "name") {
-          constName = this.node("identifier");
-          constName = constName(type.name);
-          type = null;
-          value = this.next().read_expr();
         }
+
+        if (this.version < 803 && type !== null) {
+          this.raiseError(
+            "Parse Error: Typed Class Constants requires PHP 8.3+",
+          );
+        }
+
         return result(constName, value, nullable, type);
       },
       ",",

@@ -63,4 +63,15 @@ describe("classconstant", () => {
       ),
     ).toThrowErrorMatchingSnapshot();
   });
+
+  it("accept the constant name 'list'", () => {
+    expect(
+      parser.parseEval(
+        `class Foo {
+              const list = "Hello world!";
+              }`,
+        { parser: { version: 803 } },
+      ),
+    ).toMatchSnapshot();
+  });
 });
