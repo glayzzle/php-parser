@@ -161,8 +161,6 @@ declare module "php-parser" {
     parseFlags(flags: (number | null)[]): void;
     visibility: string;
     final: boolean;
-    nullable: boolean;
-    type: TypeReference | IntersectionType | UnionType | null;
     attrGroups: AttrGroup[];
   }
   /**
@@ -204,6 +202,8 @@ declare module "php-parser" {
   class Constant extends Node {
     name: string;
     value: Node | string | number | boolean | null;
+    nullable: boolean;
+    type: TypeReference | IntersectionType | UnionType | null;
   }
   /**
    * Declares a constants into the current scope
