@@ -234,7 +234,7 @@ module.exports = {
       this.next();
     }
 
-    const class_constant = this.node("classconstant");
+    const class_constant_node = this.node("classconstant");
     const items = this.read_list(
       /*
        * Reads a constant declaration
@@ -245,38 +245,33 @@ module.exports = {
        * @return {Constant} [:link:](AST.md#constant)
        */
       function read_constant_declaration() {
-        const constant = this.node("constant");
-        const nullable = false;
+        const constant_node = this.node("constant");
 
-        let type = this.read_types();
-        let constName = null;
-        let name = null;
+        // eslint-disable-next-line prefer-const
+        let [nullable, type] = this.read_optional_type();
+        let propName = this.node("identifier");
         let value = null;
 
         if (type && type.kind === "name") {
-          constName = this.node("identifier");
-          constName = constName(type.name);
+          propName = propName(type.name);
           type = null;
-          value = this.next().read_expr();
         } else {
-          constName = this.node("identifier");
-          name = this.text();
-          constName = constName(name);
+          propName = propName(this.text());
           this.next();
-          this.expect("=");
-          value = this.next().read_expr();
         }
+        this.expect("=");
+        value = this.next().read_expr();
 
         if (this.version < 803 && type !== null) {
           this.raiseError(
             "Parse Error: Typed Class Constants requires PHP 8.3+",
           );
         }
-        return constant(constName, value, nullable, type);
+        return constant_node(propName, value, nullable, type);
       },
       ",",
     );
-    return class_constant(null, items, flags, attrs || []);
+    return class_constant_node(null, items, flags, attrs || []);
   },
   /*
    * Read member flags
