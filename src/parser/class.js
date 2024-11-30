@@ -234,8 +234,7 @@ module.exports = {
       this.next();
     }
 
-    const result = this.node("classconstant");
-    const items = this.read_list(
+    return this.read_list(
       /*
        * Reads a constant declaration
        *
@@ -245,7 +244,9 @@ module.exports = {
        * @return {Constant} [:link:](AST.md#constant)
        */
       function read_constant_declaration() {
-        const result = this.node("constant");
+        const class_constant = this.node("classconstant");
+
+        const constant = this.node("constant");
         const nullable = false;
 
         let type = this.read_types();
@@ -273,12 +274,17 @@ module.exports = {
           );
         }
 
-        return result(constName, value, nullable, type);
+        return class_constant(
+          null,
+          [constant(constName, value)],
+          flags,
+          nullable,
+          type,
+          attrs || [],
+        );
       },
       ",",
     );
-
-    return result(null, items, flags, attrs || []);
   },
   /*
    * Read member flags

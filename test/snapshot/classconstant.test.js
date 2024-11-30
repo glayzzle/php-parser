@@ -55,6 +55,19 @@ describe("classconstant", () => {
     ).toMatchSnapshot();
   });
 
+  it("type hinted list of constant with mixed type", () => {
+    expect(
+      parser.parseEval(
+        `class Foo {
+                  public const string PUB1 = 'bar', PUB2 = 'bar2', int PUB3 = 1;
+                  private const PRI1 = 'baz', string PRI2 = 'baz2';
+                  private const string BOB = 'baz2';
+                }`,
+        { parser: { version: 803 } },
+      ),
+    ).toMatchSnapshot();
+  });
+
   it("type hinted (unsupported)", () => {
     expect(() =>
       parser.parseEval(
