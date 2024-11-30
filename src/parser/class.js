@@ -210,7 +210,7 @@ module.exports = {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
           value = this.next().read_expr();
         } else {
-          this.expect([",", ";", "="]);
+          this.expect([",", ";"]);
         }
         return result(propName, value, readonly, nullable, type, attrs || []);
       },
