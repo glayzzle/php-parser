@@ -204,13 +204,10 @@ module.exports = {
 
         let value = null;
 
-        if (this.token === ";" || this.token === ",") {
-          // no-op
-        } else if (this.token === "=") {
+        this.expect([",", ";", "="]);
+        if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
           value = this.next().read_expr();
-        } else {
-          this.expect([",", ";"]);
         }
         return result(propName, value, readonly, nullable, type, attrs || []);
       },
