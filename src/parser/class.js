@@ -234,7 +234,8 @@ module.exports = {
       this.next();
     }
 
-    return this.read_list(
+    const class_constant = this.node("classconstant");
+    const items = this.read_list(
       /*
        * Reads a constant declaration
        *
@@ -244,8 +245,6 @@ module.exports = {
        * @return {Constant} [:link:](AST.md#constant)
        */
       function read_constant_declaration() {
-        const class_constant = this.node("classconstant");
-
         const constant = this.node("constant");
         const nullable = false;
 
@@ -273,18 +272,11 @@ module.exports = {
             "Parse Error: Typed Class Constants requires PHP 8.3+",
           );
         }
-
-        return class_constant(
-          null,
-          [constant(constName, value)],
-          flags,
-          nullable,
-          type,
-          attrs || [],
-        );
+        return constant(constName, value, nullable, type);
       },
       ",",
     );
+    return class_constant(null, items, flags, attrs || []);
   },
   /*
    * Read member flags

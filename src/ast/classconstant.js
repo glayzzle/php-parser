@@ -20,26 +20,13 @@ const IS_PRIVATE = "private";
  * @extends {ConstantStatement}
  * @property {string} visibility
  * @property {boolean} final
- * @property {boolean} nullable
- * @property {TypeReference|IntersectionType|UnionType|null} type
  * @property {AttrGroup[]} attrGroups
  */
 const ClassConstant = ConstantStatement.extends(
   KIND,
-  function ClassConstant(
-    kind,
-    constants,
-    flags,
-    nullable,
-    type,
-    attrGroups,
-    docs,
-    location,
-  ) {
+  function ClassConstant(kind, constants, flags, attrGroups, docs, location) {
     ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
     this.parseFlags(flags);
-    this.nullable = nullable;
-    this.type = type;
     this.attrGroups = attrGroups;
   },
 );
