@@ -24,29 +24,45 @@ describe("classpropertyhooks", () => {
     }).toThrowErrorMatchingSnapshot();
   });
 
-  it("getter arrow function", () => {
-    expect(
-      test_parser.parseEval(
-        `class BookViewModel {
+  describe("getter", () => {
+    it("arrow function", () => {
+      expect(
+        test_parser.parseEval(
+          `class BookViewModel {
             public string $credits {
               get => 'mailto:' . $this->email;
             }
         }`,
-      ),
-    ).toMatchSnapshot();
-  });
+        ),
+      ).toMatchSnapshot();
+    });
 
-  it("getter block", () => {
-    expect(
-      test_parser.parseEval(
-        `class BookViewModel {
+    it("block", () => {
+      expect(
+        test_parser.parseEval(
+          `class BookViewModel {
           public string $credits {
             get {
               'mailto:' . $this->email;
             }
           }
         }`,
-      ),
-    ).toMatchSnapshot();
+        ),
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe("setter", () => {
+    it("expression form with implicit $value", () => {
+      expect(
+        test_parser.parseEval(
+          `class BookViewModel {
+          public string $credits {
+            set => $this->credits = $value;
+          }
+        }`,
+        ),
+      ).toMatchSnapshot();
+    });
   });
 });

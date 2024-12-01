@@ -252,7 +252,7 @@ module.exports = {
     }
 
     const hooks = this.read_list(function read_property_hook() {
-      const property_hooks = this.node("propertyhooks");
+      const property_hooks = this.node("propertyhook");
       const method_name = this.text();
       if (method_name !== "get" && method_name !== "set") {
         this.raiseError(
@@ -261,7 +261,9 @@ module.exports = {
       }
       this.next();
       const body =
-        method_name === "get" ? this.read_property_hook_getter() : null;
+        method_name === "get"
+          ? this.read_property_hook_getter()
+          : this.read_property_hook_setter();
 
       // this.next();
       return property_hooks(method_name, body);
@@ -285,6 +287,18 @@ module.exports = {
     } else if (this.token === "{") {
       body = this.read_code_block();
     }
+    return body;
+  },
+
+  read_property_hook_setter: function () {
+    let body = null;
+    this.expect([this.tok.T_DOUBLE_ARROW, "{"]);
+    if (this.token === this.tok.T_DOUBLE_ARROW) {
+      this.next();
+      body = this.read_expr();
+      this.next();
+    }
+
     return body;
   },
 

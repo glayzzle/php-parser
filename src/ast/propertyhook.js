@@ -6,11 +6,11 @@
 "use strict";
 
 const Statement = require("./statement");
-const KIND = "propertyhooks";
+const KIND = "propertyhook";
 
 /**
  * Defines a class property getter & setts
- * @constructor PropertyHooks
+ * @constructor PropertyHook
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name

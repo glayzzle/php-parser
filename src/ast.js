@@ -106,7 +106,7 @@ const Position = require("./ast/position");
  *       - [Namespace](#namespace)
  *     - [PropertyStatement](#propertystatement)
  *     - [Property](#property)
- *       - [PropertyHooks](#propertyhooks)
+ *       - [PropertyHook](#propertyhook)
  *     - [Declaration](#declaration)
  *       - [Class](#class)
  *       - [Interface](#interface)
@@ -553,7 +553,7 @@ AST.prototype.checkNodes = function () {
   require("./ast/print"),
   require("./ast/program"),
   require("./ast/property"),
-  require("./ast/propertyhooks"),
+  require("./ast/propertyhook"),
   require("./ast/propertylookup"),
   require("./ast/propertystatement"),
   require("./ast/reference"),
