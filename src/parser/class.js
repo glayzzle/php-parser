@@ -297,6 +297,8 @@ module.exports = {
       this.next();
       body = this.read_expr();
       this.next();
+    } else if (this.token === "{") {
+      body = this.read_code_block();
     }
 
     return body;

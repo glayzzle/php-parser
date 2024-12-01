@@ -64,5 +64,20 @@ describe("classpropertyhooks", () => {
         ),
       ).toMatchSnapshot();
     });
+
+    it("block form with implicit $value", () => {
+      expect(
+        test_parser.parseEval(
+          `class BookViewModel {
+          public string $credits {
+            set {
+                $tmp = $this->credits + 1;
+              $this->propertyName = $value + $tmp;
+            }
+          }
+        }`,
+        ),
+      ).toMatchSnapshot();
+    });
   });
 });

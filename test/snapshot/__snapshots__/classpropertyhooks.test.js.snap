@@ -164,6 +164,130 @@ Program {
 
 exports[`classpropertyhooks not supported in php < 8.4 1`] = `"Parse Error: Typed Class Constants requires PHP 8.4+ on line 3"`;
 
+exports[`classpropertyhooks setter block form with implicit $value 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": Block {
+                    "children": [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "tmp",
+                          },
+                          "operator": "=",
+                          "right": Bin {
+                            "kind": "bin",
+                            "left": PropertyLookup {
+                              "kind": "propertylookup",
+                              "offset": Identifier {
+                                "kind": "identifier",
+                                "name": "credits",
+                              },
+                              "what": Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "this",
+                              },
+                            },
+                            "right": Number {
+                              "kind": "number",
+                              "value": "1",
+                            },
+                            "type": "+",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "propertyName",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Bin {
+                            "kind": "bin",
+                            "left": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "value",
+                            },
+                            "right": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "tmp",
+                            },
+                            "type": "+",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "propertyhook",
+                  "name": "set",
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "credits",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "BookViewModel",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`classpropertyhooks setter expression form with implicit $value 1`] = `
 Program {
   "children": [
