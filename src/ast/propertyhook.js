@@ -9,18 +9,21 @@ const Statement = require("./statement");
 const KIND = "propertyhook";
 
 /**
- * Defines a class property getter & setts
+ * Defines a class property hook getter & setter
+ *
  * @constructor PropertyHook
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
+ * @property {Parameter|null} parameter
  * @property {Block|Statement} body
  */
 module.exports = Statement.extends(
   KIND,
-  function PropertyHook(name, body, docs, location) {
+  function PropertyHook(name, parameter, body, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.name = name;
+    this.parameter = parameter;
     this.body = body;
   },
 );

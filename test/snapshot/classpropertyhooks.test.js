@@ -53,22 +53,49 @@ describe("classpropertyhooks", () => {
   });
 
   describe("setter", () => {
-    it("expression form with implicit $value", () => {
-      expect(
-        test_parser.parseEval(
-          `class BookViewModel {
+    describe("expression form", () => {
+      it("with implicit $value", () => {
+        expect(
+          test_parser.parseEval(
+            `class BookViewModel {
           public string $credits {
             set => $this->credits = $value;
           }
         }`,
-        ),
-      ).toMatchSnapshot();
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it("with explicit untyped $value", () => {
+        expect(
+          test_parser.parseEval(
+            `class Person {
+            public $name {
+              set($new_name) => $this->name = strtolower($new_name);
+            }
+          }`,
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it("with explicit typed $value", () => {
+        expect(
+          test_parser.parseEval(
+            `class Person {
+            public string $name {
+              set(string $new_name) => $this->name = strtolower($new_name);
+            }
+          }`,
+          ),
+        ).toMatchSnapshot();
+      });
     });
 
-    it("block form with implicit $value", () => {
-      expect(
-        test_parser.parseEval(
-          `class BookViewModel {
+    describe("block form", () => {
+      it("with implicit $value", () => {
+        expect(
+          test_parser.parseEval(
+            `class BookViewModel {
           public string $credits {
             set {
                 $tmp = $this->credits + 1;
@@ -76,8 +103,39 @@ describe("classpropertyhooks", () => {
             }
           }
         }`,
-        ),
-      ).toMatchSnapshot();
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it("with explicit untyped $value", () => {
+        expect(
+          test_parser.parseEval(
+            `class BookViewModel {
+          public $credits {
+            set ($value) {
+                $tmp = $this->credits + 1;
+              $this->propertyName = $value + $tmp;
+            }
+          }
+        }`,
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it("with explicit typed $value", () => {
+        expect(
+          test_parser.parseEval(
+            `class BookViewModel {
+          public int $credits {
+            set (int $value) {
+                $tmp = $this->credits + 1;
+              $this->propertyName = $value + $tmp;
+            }
+          }
+        }`,
+          ),
+        ).toMatchSnapshot();
+      });
     });
   });
 });

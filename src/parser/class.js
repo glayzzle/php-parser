@@ -260,48 +260,34 @@ module.exports = {
         );
       }
       this.next();
-      const body =
-        method_name === "get"
-          ? this.read_property_hook_getter()
-          : this.read_property_hook_setter();
 
-      // this.next();
-      return property_hooks(method_name, body);
+      let parameter = null;
+      let body = null;
+      this.expect([this.tok.T_DOUBLE_ARROW, "{", "("]);
+
+      if (this.token === "(") {
+        this.next();
+        parameter = this.read_parameter(false);
+        this.expect(")");
+        this.next();
+      }
+
+      if (this.token === this.tok.T_DOUBLE_ARROW) {
+        this.next();
+        body = this.read_expr();
+        this.next();
+      } else if (this.token === "{") {
+        body = this.read_code_block();
+      }
+
+      return property_hooks(method_name, parameter, body);
     }, ",");
 
-    this.expect("}");
     if (this.token === "}") {
       this.next();
       return hooks;
     }
     return null;
-  },
-
-  read_property_hook_getter: function () {
-    let body = null;
-    this.expect([this.tok.T_DOUBLE_ARROW, "{"]);
-    if (this.token === this.tok.T_DOUBLE_ARROW) {
-      this.next();
-      body = this.read_expr();
-      this.next();
-    } else if (this.token === "{") {
-      body = this.read_code_block();
-    }
-    return body;
-  },
-
-  read_property_hook_setter: function () {
-    let body = null;
-    this.expect([this.tok.T_DOUBLE_ARROW, "{"]);
-    if (this.token === this.tok.T_DOUBLE_ARROW) {
-      this.next();
-      body = this.read_expr();
-      this.next();
-    } else if (this.token === "{") {
-      body = this.read_code_block();
-    }
-
-    return body;
   },
 
   /*
