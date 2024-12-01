@@ -150,4 +150,41 @@ describe("classpropertyhooks", () => {
       ),
     ).toMatchSnapshot();
   });
+
+  [
+    `class Example {
+    private bool $modified = false;
+    public string $foo = 'default value' {
+        get => $this->foo . ($this->modified ? ' (modified)' : '');
+        set(string $value) {
+            $this->foo = strtolower($value);
+            $this->modified = true;
+        }
+    }
+}`,
+    `class Example
+{
+    private bool $modified = false;
+
+    public string $foo = 'default value' {
+        get => $this->foo . ($this->modified ? ' (modified)' : '');
+
+        set {
+            $this->foo = strtolower($value);
+            $this->modified = true;
+        }
+    }
+}`,
+    `class Example
+{
+    public string $foo = 'default value' {
+        get => $this->foo . ($this->modified ? ' (modified)' : '');
+        set => strtolower($value);
+    }
+}`,
+  ].forEach((code) => {
+    it("support setter + getter", () => {
+      expect(test_parser.parseEval(code)).toMatchSnapshot();
+    });
+  });
 });

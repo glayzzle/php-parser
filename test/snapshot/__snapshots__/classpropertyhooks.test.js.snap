@@ -917,3 +917,554 @@ Program {
   "kind": "program",
 }
 `;
+
+exports[`classpropertyhooks support setter + getter 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": null,
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "modified",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "bool",
+                "raw": "bool",
+              },
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": Bin {
+                    "kind": "bin",
+                    "left": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "foo",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                    "right": RetIf {
+                      "falseExpr": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "''",
+                        "unicode": false,
+                        "value": "",
+                      },
+                      "kind": "retif",
+                      "parenthesizedExpression": true,
+                      "test": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "modified",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "this",
+                        },
+                      },
+                      "trueExpr": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' (modified)'",
+                        "unicode": false,
+                        "value": " (modified)",
+                      },
+                    },
+                    "type": ".",
+                  },
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+                PropertyHook {
+                  "body": Block {
+                    "children": [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "foo",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "value",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "strtolower",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "modified",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Boolean {
+                            "kind": "boolean",
+                            "raw": "true",
+                            "value": true,
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": Parameter {
+                    "attrGroups": [],
+                    "byref": false,
+                    "flags": 0,
+                    "kind": "parameter",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "value",
+                    },
+                    "nullable": false,
+                    "readonly": false,
+                    "type": TypeReference {
+                      "kind": "typereference",
+                      "name": "string",
+                      "raw": "string",
+                    },
+                    "value": null,
+                    "variadic": false,
+                  },
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'default value'",
+                "unicode": false,
+                "value": "default value",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Example",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks support setter + getter 2`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": null,
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "modified",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "bool",
+                "raw": "bool",
+              },
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "false",
+                "value": false,
+              },
+            },
+          ],
+          "visibility": "private",
+        },
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": Bin {
+                    "kind": "bin",
+                    "left": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "foo",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                    "right": RetIf {
+                      "falseExpr": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "''",
+                        "unicode": false,
+                        "value": "",
+                      },
+                      "kind": "retif",
+                      "parenthesizedExpression": true,
+                      "test": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "modified",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "this",
+                        },
+                      },
+                      "trueExpr": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' (modified)'",
+                        "unicode": false,
+                        "value": " (modified)",
+                      },
+                    },
+                    "type": ".",
+                  },
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+                PropertyHook {
+                  "body": Block {
+                    "children": [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "foo",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "value",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "strtolower",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "modified",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Boolean {
+                            "kind": "boolean",
+                            "raw": "true",
+                            "value": true,
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'default value'",
+                "unicode": false,
+                "value": "default value",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Example",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks support setter + getter 3`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": Bin {
+                    "kind": "bin",
+                    "left": PropertyLookup {
+                      "kind": "propertylookup",
+                      "offset": Identifier {
+                        "kind": "identifier",
+                        "name": "foo",
+                      },
+                      "what": Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "this",
+                      },
+                    },
+                    "right": RetIf {
+                      "falseExpr": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "''",
+                        "unicode": false,
+                        "value": "",
+                      },
+                      "kind": "retif",
+                      "parenthesizedExpression": true,
+                      "test": PropertyLookup {
+                        "kind": "propertylookup",
+                        "offset": Identifier {
+                          "kind": "identifier",
+                          "name": "modified",
+                        },
+                        "what": Variable {
+                          "curly": false,
+                          "kind": "variable",
+                          "name": "this",
+                        },
+                      },
+                      "trueExpr": String {
+                        "isDoubleQuote": false,
+                        "kind": "string",
+                        "raw": "' (modified)'",
+                        "unicode": false,
+                        "value": " (modified)",
+                      },
+                    },
+                    "type": ".",
+                  },
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+                PropertyHook {
+                  "body": Call {
+                    "arguments": [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "value",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "strtolower",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'default value'",
+                "unicode": false,
+                "value": "default value",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Example",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;

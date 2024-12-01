@@ -242,52 +242,60 @@ module.exports = {
     }
     return property_statement;
   },
+
   /**
-   * Reads a property hooks
-   * @returns {[null,null]}
+   * Reads property hooks
+   *
+   * @returns {PropertyHook[]}
    */
   read_property_hooks: function () {
     if (this.version < 804) {
       this.raiseError("Parse Error: Typed Class Constants requires PHP 8.4+");
     }
 
-    const hooks = this.read_list(function read_property_hook() {
-      const property_hooks = this.node("propertyhook");
-      const method_name = this.text();
-      if (method_name !== "get" && method_name !== "set") {
-        this.raiseError(
-          "Parse Error: Property hooks must be either 'get' or 'set'",
-        );
-      }
-      this.next();
+    const hooks = [];
 
-      let parameter = null;
-      let body = null;
-      this.expect([this.tok.T_DOUBLE_ARROW, "{", "("]);
-
-      if (this.token === "(") {
-        this.next();
-        parameter = this.read_parameter(false);
-        this.expect(")");
-        this.next();
-      }
-
-      if (this.token === this.tok.T_DOUBLE_ARROW) {
-        this.next();
-        body = this.read_expr();
-        this.next();
-      } else if (this.token === "{") {
-        body = this.read_code_block();
-      }
-
-      return property_hooks(method_name, parameter, body);
-    }, ",");
+    while (this.token !== "}") {
+      hooks.push(this.read_property_hook());
+    }
 
     if (this.token === "}") {
       this.next();
       return hooks;
     }
     return null;
+  },
+
+  read_property_hook: function () {
+    const property_hooks = this.node("propertyhook");
+    const method_name = this.text();
+    if (method_name !== "get" && method_name !== "set") {
+      this.raiseError(
+        "Parse Error: Property hooks must be either 'get' or 'set'",
+      );
+    }
+    this.next();
+
+    let parameter = null;
+    let body = null;
+    this.expect([this.tok.T_DOUBLE_ARROW, "{", "("]);
+
+    if (this.token === "(") {
+      this.next();
+      parameter = this.read_parameter(false);
+      this.expect(")");
+      this.next();
+    }
+
+    if (this.token === this.tok.T_DOUBLE_ARROW) {
+      this.next();
+      body = this.read_expr();
+      this.next();
+    } else if (this.token === "{") {
+      body = this.read_code_block();
+    }
+
+    return property_hooks(method_name, parameter, body);
   },
 
   /*
