@@ -152,8 +152,6 @@ module.exports = {
         // reads a variable
         const variables = this.read_variable_list(flags, attrs);
         attrs = [];
-        this.expect(";");
-        this.next();
         result = result.concat(variables);
       } else {
         // raise an error
@@ -178,7 +176,7 @@ module.exports = {
    * ```
    */
   read_variable_list: function (flags, attrs) {
-    const result = this.node("propertystatement");
+    let property_statement = this.node("propertystatement");
 
     const properties = this.read_list(
       /*
@@ -203,19 +201,82 @@ module.exports = {
         propName = propName(name);
 
         let value = null;
+        let property_hooks = null;
 
-        this.expect([",", ";", "="]);
+        this.expect([",", ";", "=", "{"]);
+
+        // Property has a value
         if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
           value = this.next().read_expr();
         }
-        return result(propName, value, readonly, nullable, type, attrs || []);
+
+        // Property is using a hook to define getter/setters
+        else if (this.token === "{") {
+          this.next();
+          property_hooks = this.read_property_hooks();
+        } else {
+          this.expect([";", ","]);
+        }
+
+        return result(
+          propName,
+          value,
+          readonly,
+          nullable,
+          type,
+          property_hooks,
+          attrs || [],
+        );
       },
       ",",
     );
 
-    return result(null, properties, flags);
+    property_statement = property_statement(null, properties, flags);
+
+    // semicolons are found only for regular properties definitions.
+    // Property hooks are terminated by a closing curly brace, }.
+    // property_statement is instanciated before this check to avoid including the semicolon in the AST end location of the property.
+    if (this.token === ";") {
+      this.next();
+    }
+    return property_statement;
   },
+  /**
+   * Reads a property hooks
+   * @returns {[null,null]}
+   */
+  read_property_hooks: function () {
+    if (this.version < 804) {
+      this.raiseError("Parse Error: Typed Class Constants requires PHP 8.4+");
+    }
+
+    const hooks = this.read_list(function read_property_hook() {
+      const property_hooks = this.node("propertyhooks");
+      const method_name = this.text();
+      let body = null;
+      this.next();
+      this.expect([this.tok.T_DOUBLE_ARROW, "{"]);
+      if (this.token === this.tok.T_DOUBLE_ARROW) {
+        this.next();
+        body = this.read_expr();
+        this.next();
+      } else if (this.token === "{") {
+        body = this.read_code_block();
+        // this.next();
+      }
+      return property_hooks(method_name, body);
+    }, ",");
+
+    // this.next();
+    this.expect("}");
+    if (this.token === "}") {
+      this.next();
+      return hooks;
+    }
+    return null;
+  },
+
   /*
    * Reads constant list
    * ```ebnf
