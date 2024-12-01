@@ -15,14 +15,16 @@ const KIND = "propertyhook";
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
+ * @property {Boolean} byref
  * @property {Parameter|null} parameter
  * @property {Block|Statement} body
  */
 module.exports = Statement.extends(
   KIND,
-  function PropertyHook(name, parameter, body, docs, location) {
+  function PropertyHook(name, byref, parameter, body, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.name = name;
+    this.byref = byref;
     this.parameter = parameter;
     this.body = body;
   },

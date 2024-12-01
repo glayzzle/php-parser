@@ -187,4 +187,20 @@ describe("classpropertyhooks", () => {
       expect(test_parser.parseEval(code)).toMatchSnapshot();
     });
   });
+
+  it("can be access by reference", () => {
+    expect(
+      test_parser.parseEval(`class Foo
+{
+    private string $_baz;
+
+    public string $baz {
+        &get => $this->_baz;
+        set {
+            $this->_baz = strtoupper($value);
+        }
+    }
+}`),
+    ).toMatchSnapshot();
+  });
 });
