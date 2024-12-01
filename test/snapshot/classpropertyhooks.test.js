@@ -1,17 +1,20 @@
 const parser = require("../main");
 //
 describe("classpropertyhooks", () => {
+  const test_parser = parser.create({
+    parser: {
+      version: "8.4",
+    },
+  });
+
   it("not supported in php < 8.4", () => {
     expect(() => {
       parser.parseEval(
-        `
-        class BookViewModel
-        {
+        `class BookViewModel {
             public string $credits {
               get => 'mailto:' . $this->email;
             }
-        }
-        `,
+        }`,
         {
           parser: {
             version: "8.3",
@@ -23,42 +26,26 @@ describe("classpropertyhooks", () => {
 
   it("getter arrow function", () => {
     expect(
-      parser.parseEval(
-        `
-        class BookViewModel
-        {
+      test_parser.parseEval(
+        `class BookViewModel {
             public string $credits {
               get => 'mailto:' . $this->email;
             }
-        }
-        `,
-        {
-          parser: {
-            version: "8.4",
-          },
-        },
+        }`,
       ),
     ).toMatchSnapshot();
   });
 
   it("getter block", () => {
     expect(
-      parser.parseEval(
-        `
-        class BookViewModel
-        {
+      test_parser.parseEval(
+        `class BookViewModel {
           public string $credits {
             get {
               'mailto:' . $this->email;
             }
           }
-        }
-        `,
-        {
-          parser: {
-            version: "8.4",
-          },
-        },
+        }`,
       ),
     ).toMatchSnapshot();
   });
