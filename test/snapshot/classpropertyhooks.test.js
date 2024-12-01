@@ -203,4 +203,20 @@ describe("classpropertyhooks", () => {
 }`),
     ).toMatchSnapshot();
   });
+
+  it("support final on the hook itself", () => {
+    expect(
+      test_parser.parseEval(`class StandardUser
+{
+    public string $email {
+        final set {
+           if (! filter_var($value, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE)) {
+               throw new InvalidArgumentException('Invalid email');
+           }
+           $this->email = $value;
+        }
+    }
+}`),
+    ).toMatchSnapshot();
+  });
 });

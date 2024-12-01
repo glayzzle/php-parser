@@ -21,11 +21,12 @@ const KIND = "propertyhook";
  */
 module.exports = Statement.extends(
   KIND,
-  function PropertyHook(name, byref, parameter, body, docs, location) {
+  function PropertyHook(name, isFinal, byref, parameter, body, docs, location) {
     Statement.apply(this, [KIND, docs, location]);
     this.name = name;
     this.byref = byref;
     this.parameter = parameter;
     this.body = body;
+    this.isFinal = isFinal;
   },
 );

@@ -269,6 +269,9 @@ module.exports = {
   read_property_hook: function () {
     const property_hooks = this.node("propertyhook");
 
+    const is_final = this.token === this.tok.T_FINAL;
+    if (is_final) this.next();
+
     const is_reference = this.token === "&";
     if (is_reference) this.next();
 
@@ -276,8 +279,7 @@ module.exports = {
 
     if (method_name !== "get" && method_name !== "set") {
       this.raiseError(
-        "Parse Error: Property hooks must be either 'get' or 'set'" +
-          this.token,
+        "Parse Error: Property hooks must be either 'get' or 'set'",
       );
     }
     this.next();
@@ -301,7 +303,7 @@ module.exports = {
       body = this.read_code_block();
     }
 
-    return property_hooks(method_name, is_reference, parameter, body);
+    return property_hooks(method_name, is_final, is_reference, parameter, body);
   },
 
   /*
