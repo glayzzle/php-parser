@@ -138,4 +138,16 @@ describe("classpropertyhooks", () => {
       });
     });
   });
+
+  it("support default value", () => {
+    expect(
+      test_parser.parseEval(
+        `class Example {
+    public string $foo = 'default value' {
+        get => $this->foo ;
+    }
+}`,
+      ),
+    ).toMatchSnapshot();
+  });
 });

@@ -212,7 +212,7 @@ module.exports = {
         }
 
         // Property is using a hook to define getter/setters
-        else if (this.token === "{") {
+        if (this.token === "{") {
           this.next();
           property_hooks = this.read_property_hooks();
         } else {
