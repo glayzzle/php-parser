@@ -204,9 +204,10 @@ describe("classpropertyhooks", () => {
     ).toMatchSnapshot();
   });
 
-  it("support final on the hook itself", () => {
-    expect(
-      test_parser.parseEval(`class StandardUser
+  describe("final", () => {
+    it("on the hook itself", () => {
+      expect(
+        test_parser.parseEval(`class StandardUser
 {
     public string $email {
         final set {
@@ -217,6 +218,37 @@ describe("classpropertyhooks", () => {
         }
     }
 }`),
-    ).toMatchSnapshot();
+      ).toMatchSnapshot();
+    });
+
+    it("on the property", () => {
+      const code = `class User {
+    // Child classes may not add hooks of any kind to this property.
+    public final string $name;
+ 
+    // Child classes may not add any hooks or override set,
+    // but this set will still apply.
+    public final string $username {
+        set => strtolower($value);
+    }
+}`;
+      expect(test_parser.parseEval(code)).toMatchSnapshot();
+    });
+  });
+
+  describe("abstract", () => {
+    [
+      ["get", `abstract class User { abstract public string $email { get; } }`],
+      ["set", `abstract class User { abstract public string $email { set; } }`],
+      [
+        "get + set",
+        `abstract class User { abstract public string $email { get; set; } }`,
+      ],
+    ].forEach(([name, code]) => {
+      // eslint-disable-next-line jest/valid-title
+      it(name, () => {
+        expect(test_parser.parseEval(code)).toMatchSnapshot();
+      });
+    });
   });
 });

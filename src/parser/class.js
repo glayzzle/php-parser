@@ -286,7 +286,12 @@ module.exports = {
 
     let parameter = null;
     let body = null;
-    this.expect([this.tok.T_DOUBLE_ARROW, "{", "("]);
+    this.expect([this.tok.T_DOUBLE_ARROW, "{", "(", ";"]);
+
+    // interface or abstract definition
+    if (this.token === ";") {
+      this.next();
+    }
 
     if (this.token === "(") {
       this.next();

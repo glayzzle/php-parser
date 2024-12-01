@@ -15,6 +15,7 @@ const KIND = "propertyhook";
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {string} name
+ * @property {Boolean} isFinal
  * @property {Boolean} byref
  * @property {Parameter|null} parameter
  * @property {Block|Statement} body
