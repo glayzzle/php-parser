@@ -778,6 +778,16 @@ declare module "php-parser" {
     attrGroups: AttrGroup[];
   }
   /**
+   * Defines a class property hook getter & setter
+   */
+  class PropertyHook extends Statement {
+    name: string;
+    isFinal: boolean;
+    byref: boolean;
+    parameter: Parameter | null;
+    body: Block | Statement;
+  }
+  /**
    * Lookup to an object property
    */
   class PropertyLookup extends Lookup {}
