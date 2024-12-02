@@ -213,7 +213,6 @@ module.exports = {
 
         // Property is using a hook to define getter/setters
         if (this.token === "{") {
-          this.next();
           property_hooks = this.read_property_hooks();
         } else {
           this.expect([";", ","]);
@@ -252,6 +251,8 @@ module.exports = {
     if (this.version < 804) {
       this.raiseError("Parse Error: Typed Class Constants requires PHP 8.4+");
     }
+    this.expect("{");
+    this.next();
 
     const hooks = [];
 
@@ -548,9 +549,11 @@ module.exports = {
           this.next();
         }
         attrs = [];
+      } else if (this.token === this.tok.T_STRING) {
+        result.push(this.read_variable_list(flags, attrs));
       } else {
         // raise an error
-        this.error([this.tok.T_CONST, this.tok.T_FUNCTION]);
+        this.error([this.tok.T_CONST, this.tok.T_FUNCTION, this.tok.T_STRING]);
         this.next();
       }
     }
