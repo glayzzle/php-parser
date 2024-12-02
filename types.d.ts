@@ -780,7 +780,7 @@ declare module "php-parser" {
   /**
    * Defines a class property hook getter & setter
    */
-  class PropertyHook extends Statement {
+  class PropertyHook extends Node {
     name: string;
     isFinal: boolean;
     byref: boolean;

@@ -5,7 +5,7 @@
  */
 "use strict";
 
-const Statement = require("./statement");
+const Node = require("./node");
 const KIND = "propertyhook";
 
 /**
@@ -13,17 +13,17 @@ const KIND = "propertyhook";
  *
  * @constructor PropertyHook
  * @memberOf module:php-parser
- * @extends {Statement}
+ * @extends {Node}
  * @property {string} name
  * @property {Boolean} isFinal
  * @property {Boolean} byref
  * @property {Parameter|null} parameter
  * @property {Block|Statement} body
  */
-module.exports = Statement.extends(
+module.exports = Node.extends(
   KIND,
   function PropertyHook(name, isFinal, byref, parameter, body, docs, location) {
-    Statement.apply(this, [KIND, docs, location]);
+    Node.apply(this, [KIND, docs, location]);
     this.name = name;
     this.byref = byref;
     this.parameter = parameter;
