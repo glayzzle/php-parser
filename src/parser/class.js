@@ -201,22 +201,15 @@ module.exports = {
         const name = this.text().substring(1); // ignore $
         this.next();
         propName = propName(name);
-        if (this.token === ";" || this.token === ",") {
-          return result(propName, null, readonly, nullable, type, attrs || []);
-        } else if (this.token === "=") {
+
+        let value = null;
+
+        this.expect([",", ";", "="]);
+        if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-          return result(
-            propName,
-            this.next().read_expr(),
-            readonly,
-            nullable,
-            type,
-            attrs || [],
-          );
-        } else {
-          this.expect([",", ";", "="]);
-          return result(propName, null, nullable, type, attrs || []);
+          value = this.next().read_expr();
         }
+        return result(propName, value, readonly, nullable, type, attrs || []);
       },
       ",",
     );
