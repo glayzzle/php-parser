@@ -152,8 +152,6 @@ module.exports = {
         // reads a variable
         const variables = this.read_variable_list(flags, attrs);
         attrs = [];
-        this.expect(";");
-        this.next();
         result = result.concat(variables);
       } else {
         // raise an error
@@ -178,7 +176,7 @@ module.exports = {
    * ```
    */
   read_variable_list: function (flags, attrs) {
-    const result = this.node("propertystatement");
+    let property_statement = this.node("propertystatement");
 
     const properties = this.read_list(
       /*
@@ -201,28 +199,119 @@ module.exports = {
         const name = this.text().substring(1); // ignore $
         this.next();
         propName = propName(name);
-        if (this.token === ";" || this.token === ",") {
-          return result(propName, null, readonly, nullable, type, attrs || []);
-        } else if (this.token === "=") {
+
+        let value = null;
+        let property_hooks = [];
+
+        this.expect([",", ";", "=", "{"]);
+
+        // Property has a value
+        if (this.token === "=") {
           // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L815
-          return result(
-            propName,
-            this.next().read_expr(),
-            readonly,
-            nullable,
-            type,
-            attrs || [],
-          );
-        } else {
-          this.expect([",", ";", "="]);
-          return result(propName, null, nullable, type, attrs || []);
+          value = this.next().read_expr();
         }
+
+        // Property is using a hook to define getter/setters
+        if (this.token === "{") {
+          property_hooks = this.read_property_hooks();
+        } else {
+          this.expect([";", ","]);
+        }
+
+        return result(
+          propName,
+          value,
+          readonly,
+          nullable,
+          type,
+          property_hooks,
+          attrs || [],
+        );
       },
       ",",
     );
 
-    return result(null, properties, flags);
+    property_statement = property_statement(null, properties, flags);
+
+    // semicolons are found only for regular properties definitions.
+    // Property hooks are terminated by a closing curly brace, }.
+    // property_statement is instanciated before this check to avoid including the semicolon in the AST end location of the property.
+    if (this.token === ";") {
+      this.next();
+    }
+    return property_statement;
   },
+
+  /**
+   * Reads property hooks
+   *
+   * @returns {PropertyHook[]}
+   */
+  read_property_hooks: function () {
+    if (this.version < 804) {
+      this.raiseError("Parse Error: Typed Class Constants requires PHP 8.4+");
+    }
+    this.expect("{");
+    this.next();
+
+    const hooks = [];
+
+    while (this.token !== "}") {
+      hooks.push(this.read_property_hook());
+    }
+
+    if (this.token === "}") {
+      this.next();
+      return hooks;
+    }
+    return [];
+  },
+
+  read_property_hook: function () {
+    const property_hooks = this.node("propertyhook");
+
+    const is_final = this.token === this.tok.T_FINAL;
+    if (is_final) this.next();
+
+    const is_reference = this.token === "&";
+    if (is_reference) this.next();
+
+    const method_name = this.text();
+
+    if (method_name !== "get" && method_name !== "set") {
+      this.raiseError(
+        "Parse Error: Property hooks must be either 'get' or 'set'",
+      );
+    }
+    this.next();
+
+    let parameter = null;
+    let body = null;
+    this.expect([this.tok.T_DOUBLE_ARROW, "{", "(", ";"]);
+
+    // interface or abstract definition
+    if (this.token === ";") {
+      this.next();
+    }
+
+    if (this.token === "(") {
+      this.next();
+      parameter = this.read_parameter(false);
+      this.expect(")");
+      this.next();
+    }
+
+    if (this.token === this.tok.T_DOUBLE_ARROW) {
+      this.next();
+      body = this.read_expr();
+      this.next();
+    } else if (this.token === "{") {
+      body = this.read_code_block();
+    }
+
+    return property_hooks(method_name, is_final, is_reference, parameter, body);
+  },
+
   /*
    * Reads constant list
    * ```ebnf
@@ -460,9 +549,11 @@ module.exports = {
           this.next();
         }
         attrs = [];
+      } else if (this.token === this.tok.T_STRING) {
+        result.push(this.read_variable_list(flags, attrs));
       } else {
         // raise an error
-        this.error([this.tok.T_CONST, this.tok.T_FUNCTION]);
+        this.error([this.tok.T_CONST, this.tok.T_FUNCTION, this.tok.T_STRING]);
         this.next();
       }
     }
