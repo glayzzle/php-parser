@@ -8,11 +8,6 @@
 const ConstantStatement = require("./constantstatement");
 const KIND = "classconstant";
 
-const IS_UNDEFINED = "";
-const IS_PUBLIC = "public";
-const IS_PROTECTED = "protected";
-const IS_PRIVATE = "private";
-
 /**
  * Defines a class/interface/trait constant
  * @constructor ClassConstant
@@ -37,35 +32,12 @@ const ClassConstant = ConstantStatement.extends(
     location,
   ) {
     ConstantStatement.apply(this, [kind || KIND, constants, docs, location]);
-    this.parseFlags(flags);
     this.nullable = nullable;
     this.type = type;
     this.attrGroups = attrGroups;
+    this.visibility = flags.compute_visibility;
+    this.final = flags.isFinal;
   },
 );
-
-/**
- * Generic flags parser
- * @function
- * @name ClassConstant#parseFlags
- * @memberOf module:php-parser
- * @param {Array<number|null>} flags
- * @return {void}
- */
-ClassConstant.prototype.parseFlags = function (flags) {
-  if (flags[0] === -1) {
-    this.visibility = IS_UNDEFINED;
-  } else if (flags[0] === null) {
-    /* istanbul ignore next */
-    this.visibility = null;
-  } else if (flags[0] === 0) {
-    this.visibility = IS_PUBLIC;
-  } else if (flags[0] === 1) {
-    this.visibility = IS_PROTECTED;
-  } else if (flags[0] === 2) {
-    this.visibility = IS_PRIVATE;
-  }
-  this.final = flags[2] === 2;
-};
 
 module.exports = ClassConstant;
