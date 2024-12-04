@@ -6,6 +6,14 @@ describe("classconstant", () => {
       parser.parseEval('class Foo { const CONSTANT = "Hello world!"; }'),
     ).toMatchSnapshot();
   });
+  it("simple using 8.3", () => {
+    expect(
+      parser.parseEval(`class Foo { const CONSTANT = "Hello world!"; }`, {
+        parser: { version: 803 },
+      }),
+    ).toMatchSnapshot();
+  });
+
   it("multiple", () => {
     expect(
       parser.parseEval(
@@ -13,6 +21,18 @@ describe("classconstant", () => {
       ),
     ).toMatchSnapshot();
   });
+
+  it("multiple 8.3", () => {
+    expect(
+      parser.parseEval(
+        'class Foo { const NAME_1 = "Hello world!", NAME_2 = "Other hello world!"; }',
+        {
+          parser: { version: 803 },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
   it("public", () => {
     expect(
       parser.parseEval('class Foo { public const CONSTANT = "Hello world!"; }'),
@@ -43,7 +63,7 @@ describe("classconstant", () => {
     expect(
       parser.parseEval(
         'class Foo { public const string CONSTANT = "Hello world!"; }',
-        { parser: { version: 830 } },
+        { parser: { version: 803 } },
       ),
     ).toMatchSnapshot();
   });
@@ -51,7 +71,7 @@ describe("classconstant", () => {
     expect(() =>
       parser.parseEval(
         'class Foo { public const string CONSTANT = "Hello world!"; }',
-        { parser: { version: 820 } },
+        { parser: { version: 802 } },
       ),
     ).toThrowErrorMatchingSnapshot();
   });
