@@ -201,7 +201,7 @@ module.exports = {
         propName = propName(name);
 
         let value = null;
-        let property_hooks = null;
+        let property_hooks = [];
 
         this.expect([",", ";", "=", "{"]);
 
@@ -264,7 +264,7 @@ module.exports = {
       this.next();
       return hooks;
     }
-    return null;
+    return [];
   },
 
   read_property_hook: function () {
