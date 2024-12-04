@@ -228,7 +228,7 @@ module.exports = {
     }
 
     const [nullable, type] =
-      this.version >= 830 ? this.read_optional_type() : [false, null];
+      this.version >= 803 ? this.read_optional_type() : [false, null];
 
     const result = this.node("classconstant");
     const items = this.read_list(
@@ -357,6 +357,11 @@ module.exports = {
     if (nullable) {
       this.next();
     }
+
+    if (this.peek() === "=") {
+      return [false, null];
+    }
+
     let type = this.read_types();
     if (nullable && !type) {
       this.raiseError(
