@@ -183,6 +183,9 @@ const Parser = function (lexer, ast) {
         this.tok.T_FINAL,
       ].map(mapIt),
     ),
+    T_VISIBILITY_FLAGS: new Map(
+      [this.tok.T_PUBLIC, this.tok.T_PRIVATE, this.tok.T_PROTECTED].map(mapIt),
+    ),
     EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
     EXPR: new Map(
       [
@@ -706,14 +709,27 @@ Parser.prototype.lex = function () {
 
 /**
  * Check if token is of specified type
+ * @function Parser#_is
+ * @memberOf module:php-parser
+ */
+Parser.prototype._is = function (token, type) {
+  if (Array.isArray(type)) {
+    return type.indexOf(token) !== -1;
+  }
+  return this.entries[type].has(token);
+};
+
+/**
+ * Check if token is of specified type
  * @function Parser#is
  * @memberOf module:php-parser
  */
 Parser.prototype.is = function (type) {
-  if (Array.isArray(type)) {
-    return type.indexOf(this.token) !== -1;
-  }
-  return this.entries[type].has(this.token);
+  return this._is(this.token, type);
+};
+
+Parser.prototype.peek_is = function (type) {
+  return this._is(this.peek(), type);
 };
 
 // extends the parser with syntax files

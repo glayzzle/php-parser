@@ -5,6 +5,8 @@
  */
 "use strict";
 
+const MemberFlags = require("./utils").MemberFlags;
+
 module.exports = {
   /*
    * reading a class
@@ -36,35 +38,28 @@ module.exports = {
   },
 
   read_class_modifiers: function () {
-    const modifier = this.read_class_modifier({
-      readonly: 0,
-      final_or_abstract: 0,
-    });
-    return [0, 0, modifier.final_or_abstract, modifier.readonly];
+    const flags = new MemberFlags();
+    this.read_class_modifier(flags);
+    if (flags.isFinal && flags.isAbstract) {
+      this.raiseError("A class can not be final and abstract");
+    }
+    return flags;
   },
 
-  read_class_modifier: function (memo) {
+  read_class_modifier: function (flags) {
     if (this.token === this.tok.T_READ_ONLY) {
       this.next();
-      memo.readonly = 1;
-      memo = this.read_class_modifier(memo);
-    } else if (
-      memo.final_or_abstract === 0 &&
-      this.token === this.tok.T_ABSTRACT
-    ) {
+      flags.isReadonly = true;
+      this.read_class_modifier(flags);
+    } else if (this.token === this.tok.T_ABSTRACT) {
       this.next();
-      memo.final_or_abstract = 1;
-      memo = this.read_class_modifier(memo);
-    } else if (
-      memo.final_or_abstract === 0 &&
-      this.token === this.tok.T_FINAL
-    ) {
+      flags.isAbstract = true;
+      this.read_class_modifier(flags);
+    } else if (this.token === this.tok.T_FINAL) {
       this.next();
-      memo.final_or_abstract = 2;
-      memo = this.read_class_modifier(memo);
+      flags.isFinal = true;
+      this.read_class_modifier(flags);
     }
-
-    return memo;
   },
 
   /*
@@ -267,66 +262,66 @@ module.exports = {
   },
   /*
    * Read member flags
-   * @return array
-   *  1st index : 0 => public, 1 => protected, 2 => private
-   *  2nd index : 0 => instance member, 1 => static member
-   *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
+   * @return MemberFlags
    */
   read_member_flags: function (asInterface) {
-    const result = [-1, -1, -1];
+    const flags = new MemberFlags();
+
     if (this.is("T_MEMBER_FLAGS")) {
-      let idx = 0,
-        val = 0;
       do {
         switch (this.token) {
-          case this.tok.T_PUBLIC:
-            idx = 0;
-            val = 0;
-            break;
-          case this.tok.T_PROTECTED:
-            idx = 0;
-            val = 1;
-            break;
-          case this.tok.T_PRIVATE:
-            idx = 0;
-            val = 2;
-            break;
           case this.tok.T_STATIC:
-            idx = 1;
-            val = 1;
+            flags.isStatic = true;
             break;
           case this.tok.T_ABSTRACT:
-            idx = 2;
-            val = 1;
+            flags.isAbstract = true;
             break;
           case this.tok.T_FINAL:
-            idx = 2;
-            val = 2;
+            flags.isFinal = true;
             break;
         }
-        if (asInterface) {
-          if (idx === 0 && val === 2) {
-            // an interface can't be private
-            this.expect([this.tok.T_PUBLIC, this.tok.T_PROTECTED]);
-            val = -1;
-          } else if (idx === 2 && val === 1) {
-            // an interface cant be abstract
-            this.error();
-            val = -1;
+
+        if (this.is("T_VISIBILITY_FLAGS")) {
+          if (this.peek_is("T_VISIBILITY_FLAGS")) {
+            flags.read_visibility = this.token;
+            this.next();
+          }
+          if (this.version >= 804 && this.peek() === "(") {
+            const visibility_token = this.token;
+            this.next();
+            this.next();
+            if (this.text() !== "set") {
+              this.raiseError("Expecting set keyword");
+            }
+            this.next();
+            this.expect(")");
+            flags.write_visibility = visibility_token;
+          } else {
+            flags.visibility = this.token;
+            // this.next();
           }
         }
-        if (result[idx] !== -1) {
-          // already defined flag
+
+        if (flags.isAbstract && flags.isFinal) {
           this.error();
-        } else if (val !== -1) {
-          result[idx] = val;
+        }
+
+        if (asInterface) {
+          if (flags.isAbstract) {
+            // an interface cant be abstract
+            this.error();
+            flags.isAbstract = false;
+          }
+          // an interface can't be private
+          if (flags.isPrivate) {
+            this.expect([this.tok.T_PUBLIC, this.tok.T_PROTECTED]);
+            flags.visibility = null;
+          }
         }
       } while (this.next().is("T_MEMBER_FLAGS"));
     }
 
-    if (result[1] === -1) result[1] = 0;
-    if (result[2] === -1) result[2] = 0;
-    return result;
+    return flags;
   },
 
   /*
