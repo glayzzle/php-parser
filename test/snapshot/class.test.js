@@ -256,6 +256,23 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("8.4 allow new without parenthesis", () => {
+    const code = `new People()->name();`;
+    const test_parser = parser.create({
+      parser: {
+        version: "8.4",
+      },
+    });
+    expect(test_parser.parseEval(code)).toMatchSnapshot();
+  });
+
+  it("new without parenthesis throw errors in PHP < 8.4", () => {
+    const code = `new People()->name();`;
+    expect(() => {
+      parser.parseEval(code);
+    }).toThrowErrorMatchingSnapshot();
+  });
+
   it("knows where a function definiton starts", function () {
     const phpCode = `
 class b { 
