@@ -87,11 +87,11 @@ describe("classconstant", () => {
           // comment 3
           CONSTANT 
           // comment 4
-          = 
+          =
           // comment 5
           "Hello world!"; 
         }`,
-        { parser: { version: 803 } },
+        { parser: { version: 803, extractDoc: true } },
       ),
     ).toMatchSnapshot();
   });
