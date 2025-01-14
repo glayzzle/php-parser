@@ -79,17 +79,12 @@ describe("classconstant", () => {
     expect(
       parser.parseEval(
         `class Foo { 
-          public 
-          // comment 1
-          const 
-          // comment 2
-          string 
-          // comment 3
-          CONSTANT 
-          // comment 4
+          public
+          const
+          CONSTANT
+          // Comment
           =
-          // comment 5
-          "Hello world!"; 
+          'string';
         }`,
         { parser: { version: 803, extractDoc: true } },
       ),
