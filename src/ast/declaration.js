@@ -8,11 +8,6 @@
 const Statement = require("./statement");
 const KIND = "declaration";
 
-const IS_UNDEFINED = "";
-const IS_PUBLIC = "public";
-const IS_PROTECTED = "protected";
-const IS_PRIVATE = "private";
-
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
@@ -33,27 +28,16 @@ const Declaration = Statement.extends(
  * @function
  * @name Declaration#parseFlags
  * @memberOf module:php-parser
- * @param {Array<number|null>} flags
+ * @param {MemberFlags} flags
  * @return {void}
  */
 Declaration.prototype.parseFlags = function (flags) {
-  this.isAbstract = flags[2] === 1;
-  this.isFinal = flags[2] === 2;
-  this.isReadonly = flags[3] === 1;
+  this.isAbstract = flags.isAbstract;
+  this.isFinal = flags.isFinal;
+  this.isReadonly = flags.isReadonly;
   if (this.kind !== "class") {
-    if (flags[0] === -1) {
-      this.visibility = IS_UNDEFINED;
-    } else if (flags[0] === null) {
-      /* istanbul ignore next */
-      this.visibility = null;
-    } else if (flags[0] === 0) {
-      this.visibility = IS_PUBLIC;
-    } else if (flags[0] === 1) {
-      this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
-      this.visibility = IS_PRIVATE;
-    }
-    this.isStatic = flags[1] === 1;
+    this.visibility = flags.compute_visibility;
+    this.isStatic = flags.isStatic;
   }
 };
 

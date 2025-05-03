@@ -5,7 +5,58 @@
  */
 "use strict";
 
+class MemberFlags {
+  constructor() {
+    this.visibility = null;
+    this.read_visibility = null;
+    this.write_visibility = null;
+    this.isStatic = false;
+    this.isAbstract = false;
+    this.isFinal = false;
+    this.isReadonly = false;
+  }
+
+  get isPrivate() {
+    return this.visibility === 197;
+  }
+
+  get compute_visibility() {
+    if (this.visibility !== null) {
+      return this.#visibility_token_to_string(this.visibility);
+    }
+    if (this.read_visibility === null && this.write_visibility) {
+      return this.#visibility_token_to_string(this.write_visibility) + "(set)";
+    }
+    if (this.read_visibility && this.write_visibility) {
+      return (
+        this.#visibility_token_to_string(this.read_visibility) +
+        " " +
+        this.#visibility_token_to_string(this.write_visibility) +
+        "(set)"
+      );
+    }
+    return "";
+  }
+  visibilibty_append(what) {
+    this.visibility += what;
+  }
+  get is_visibility_defined() {
+    return this.visibility !== "";
+  }
+
+  #visibility_token_to_string(token) {
+    if (token === 195) {
+      return "public";
+    }
+    if (token === 196) {
+      return "protected";
+    }
+    return "private";
+  }
+}
+
 module.exports = {
+  MemberFlags: MemberFlags,
   /*
    * Reads a short form of tokens
    * @param {Number} token - The ending token

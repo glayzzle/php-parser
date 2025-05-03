@@ -5,6 +5,7 @@
  */
 "use strict";
 
+const { MemberFlags } = require("./utils");
 module.exports = {
   read_expr: function (expr) {
     const result = this.node();
@@ -777,7 +778,14 @@ module.exports = {
       if (this.expect("{")) {
         body = this.next().read_class_body(true, false);
       }
-      const whatNode = what(null, propExtends, propImplements, body, [0, 0, 0]);
+
+      const whatNode = what(
+        null,
+        propExtends,
+        propImplements,
+        body,
+        new MemberFlags(),
+      );
       whatNode.attrGroups = attrs;
       return result(whatNode, args);
     }
