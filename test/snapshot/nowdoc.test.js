@@ -120,6 +120,38 @@ TEST;
     ).toMatchSnapshot();
   });
 
+  it("Flexible nowdoc syntax: errors in PHP 7.2", function () {
+    expect(() =>
+      parser.parseEval(
+        `
+echo <<<END
+
+END."";`,
+        { parser: { version: "7.2" } },
+      ),
+    ).toThrow();
+  });
+
+  it("Flexible nowdoc syntax: concatenation right after nowdoc", function () {
+    expect(
+      parser.parseEval(`
+echo <<<END
+
+END."";
+`),
+    ).toMatchSnapshot();
+  });
+
+  it("Flexible nowdoc syntax: equals right after nowdoc", function () {
+    expect(
+      parser.parseEval(`
+echo <<<END
+
+END=="";
+`),
+    ).toMatchSnapshot();
+  });
+
   it("Flexible nowdoc syntax: 4 spaces of indentation", function () {
     expect(
       parser.parseEval(`
