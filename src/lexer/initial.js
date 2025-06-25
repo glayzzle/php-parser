@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  nextINITIAL: function () {
+  nextINITIAL() {
     if (
       this.conditionStack.length > 1 &&
       this.conditionStack[this.conditionStack.length - 1] === "INITIAL"
@@ -18,7 +18,7 @@ module.exports = {
     }
     return this;
   },
-  matchINITIAL: function () {
+  matchINITIAL() {
     while (this.offset < this.size) {
       let ch = this.input();
       if (ch == "<") {

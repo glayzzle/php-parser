@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  matchST_IN_SCRIPTING: function () {
+  matchST_IN_SCRIPTING() {
     let ch = this.input();
     switch (ch) {
       case " ":
@@ -100,7 +100,7 @@ module.exports = {
     );
   },
 
-  T_WHITESPACE: function () {
+  T_WHITESPACE() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (ch === " " || ch === "\t" || ch === "\n" || ch === "\r") {

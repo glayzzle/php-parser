@@ -144,7 +144,7 @@ describe("Test expressions", function () {
       `,
       {
         parser: {
-          read_expr_cast: function (cast) {
+          read_expr_cast(cast) {
             const rawCast = this.text();
             const expr = this.next().read_expr();
             expr.cast = cast;

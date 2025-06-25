@@ -31,6 +31,7 @@ export default [
     rules: {
       "prefer-const": "error",
       "no-var": "error",
+      "object-shorthand": "error",
       curly: ["error", "multi-line"],
     },
   },

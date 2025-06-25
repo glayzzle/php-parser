@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-  read_expr: function (expr) {
+  read_expr(expr) {
     const result = this.node();
     if (this.token === "@") {
       if (!expr) {
@@ -148,28 +148,28 @@ module.exports = {
   /*
    * Reads a cast expression
    */
-  read_expr_cast: function (type) {
+  read_expr_cast(type) {
     return this.node("cast")(type, this.text(), this.next().read_expr());
   },
 
   /*
    * Read a isset variable
    */
-  read_isset_variable: function () {
+  read_isset_variable() {
     return this.read_expr();
   },
 
   /*
    * Reads isset variables
    */
-  read_isset_variables: function () {
+  read_isset_variables() {
     return this.read_function_list(this.read_isset_variable, ",");
   },
 
   /*
    * Reads internal PHP functions
    */
-  read_internal_functions_in_yacc: function () {
+  read_internal_functions_in_yacc() {
     let result = null;
     switch (this.token) {
       case this.tok.T_ISSET:
@@ -231,7 +231,7 @@ module.exports = {
   /*
    * Reads optional expression
    */
-  read_optional_expr: function (stopToken) {
+  read_optional_expr(stopToken) {
     if (this.token !== stopToken) {
       return this.read_expr();
     }
@@ -242,7 +242,7 @@ module.exports = {
   /*
    * Reads exit expression
    */
-  read_exit_expr: function () {
+  read_exit_expr() {
     let expression = null;
 
     if (this.token === "(") {
@@ -260,7 +260,7 @@ module.exports = {
    *  expr ::= @todo
    * ```
    */
-  read_expr_item: function () {
+  read_expr_item() {
     let result,
       expr,
       attrs = [];
@@ -571,7 +571,7 @@ module.exports = {
   /*
    * Recursively convert nested array to nested list.
    */
-  convertToList: function (array) {
+  convertToList(array) {
     const convertedItems = array.items.map((entry) => {
       if (
         entry.value &&
@@ -593,7 +593,7 @@ module.exports = {
    * Reads assignment
    * @param {*} left
    */
-  read_assignref: function (result, left) {
+  read_assignref(result, left) {
     this.next();
     let right;
     if (this.token === this.tok.T_NEW) {
@@ -623,7 +623,7 @@ module.exports = {
    * 				  ((zend_ast_decl *) $$)->lex_pos = $10;
    * 				  CG(extra_fn_flags) = $9; }   *
    */
-  read_inline_function: function (flags, attrs) {
+  read_inline_function(flags, attrs) {
     if (this.token === this.tok.T_FUNCTION) {
       const result = this.read_function(true, flags, attrs);
       result.attrGroups = attrs;
@@ -666,7 +666,7 @@ module.exports = {
     return result;
   },
 
-  read_match_expression: function () {
+  read_match_expression() {
     const node = this.node("match");
     this.expect(this.tok.T_MATCH) && this.next();
     if (this.version < 800) {
@@ -683,18 +683,18 @@ module.exports = {
     return node(cond, arms);
   },
 
-  read_match_arms: function () {
+  read_match_arms() {
     return this.read_list(() => this.read_match_arm(), ",", true);
   },
 
-  read_match_arm: function () {
+  read_match_arm() {
     if (this.token === "}") {
       return;
     }
     return this.node("matcharm")(this.read_match_arm_conds(), this.read_expr());
   },
 
-  read_match_arm_conds: function () {
+  read_match_arm_conds() {
     let conds = [];
     if (this.token === this.tok.T_DEFAULT) {
       conds = null;
@@ -750,7 +750,7 @@ module.exports = {
    * ```
    * https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L850
    */
-  read_new_expr: function () {
+  read_new_expr() {
     const result = this.node("new");
     this.expect(this.tok.T_NEW) && this.next();
     let args = [];
@@ -800,7 +800,7 @@ module.exports = {
    * read_new_class_name ::= namespace_name | variable
    * ```
    */
-  read_new_class_name: function () {
+  read_new_class_name() {
     if (
       this.token === this.tok.T_NS_SEPARATOR ||
       this.token === this.tok.T_NAME_RELATIVE ||
@@ -820,7 +820,7 @@ module.exports = {
       this.expect([this.tok.T_STRING, "VARIABLE"]);
     }
   },
-  handleDereferencable: function (expr) {
+  handleDereferencable(expr) {
     while (this.token !== this.EOF) {
       if (
         this.token === this.tok.T_OBJECT_OPERATOR ||

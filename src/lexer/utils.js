@@ -9,19 +9,19 @@ const tokens = ";:,.\\[]()|^&+-/*=%!~$<>?@";
 
 module.exports = {
   // check if the char can be a numeric
-  is_NUM: function () {
+  is_NUM() {
     const ch = this._input.charCodeAt(this.offset - 1);
     return (ch > 47 && ch < 58) || ch === 95;
   },
 
   // check if the char can be a numeric
-  is_NUM_START: function () {
+  is_NUM_START() {
     const ch = this._input.charCodeAt(this.offset - 1);
     return ch > 47 && ch < 58;
   },
 
   // check if current char can be a label
-  is_LABEL: function () {
+  is_LABEL() {
     const ch = this._input.charCodeAt(this.offset - 1);
     return (
       (ch > 96 && ch < 123) ||
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   // check if current char can be a label
-  is_LABEL_START: function () {
+  is_LABEL_START() {
     const ch = this._input.charCodeAt(this.offset - 1);
     // A - Z
     if (ch > 64 && ch < 91) return true;
@@ -48,7 +48,7 @@ module.exports = {
   },
 
   // reads each char of the label
-  consume_LABEL: function () {
+  consume_LABEL() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_LABEL()) {
@@ -60,22 +60,22 @@ module.exports = {
   },
 
   // check if current char is a token char
-  is_TOKEN: function () {
+  is_TOKEN() {
     const ch = this._input[this.offset - 1];
     return tokens.indexOf(ch) !== -1;
   },
   // check if current char is a whitespace
-  is_WHITESPACE: function () {
+  is_WHITESPACE() {
     const ch = this._input[this.offset - 1];
     return ch === " " || ch === "\t" || ch === "\n" || ch === "\r";
   },
   // check if current char is a whitespace (without newlines)
-  is_TABSPACE: function () {
+  is_TABSPACE() {
     const ch = this._input[this.offset - 1];
     return ch === " " || ch === "\t";
   },
   // consume all whitespaces (excluding newlines)
-  consume_TABSPACE: function () {
+  consume_TABSPACE() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_TABSPACE()) {
@@ -86,7 +86,7 @@ module.exports = {
     return this;
   },
   // check if current char can be a hexadecimal number
-  is_HEX: function () {
+  is_HEX() {
     const ch = this._input.charCodeAt(this.offset - 1);
     // 0 - 9
     if (ch > 47 && ch < 58) return true;
@@ -100,7 +100,7 @@ module.exports = {
     return false;
   },
   // check if current char can be an octal number
-  is_OCTAL: function () {
+  is_OCTAL() {
     const ch = this._input.charCodeAt(this.offset - 1);
     // 0 - 7
     if (ch > 47 && ch < 56) return true;

@@ -9,7 +9,7 @@ module.exports = {
   /*
    *  Comments with // or # or / * ... * /
    */
-  read_comment: function () {
+  read_comment() {
     const text = this.text();
     let result = this.ast.prepare(
       text.substring(0, 2) === "/*" ? "commentblock" : "commentline",
@@ -33,7 +33,7 @@ module.exports = {
   /*
    * Comments with / ** ... * /
    */
-  read_doc_comment: function () {
+  read_doc_comment() {
     let result = this.ast.prepare("commentblock", null, this);
     const offset = this.lexer.yylloc.first_offset;
     const text = this.text();

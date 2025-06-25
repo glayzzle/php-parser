@@ -180,7 +180,7 @@ Lexer.prototype.setInput = function (input) {
     first_encaps_node: false,
     // for backward compatible
     /* istanbul ignore next */
-    toString: function () {
+    toString() {
       this.label;
     },
   };

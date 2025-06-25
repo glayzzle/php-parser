@@ -14,7 +14,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L587
    * @return {While}
    */
-  read_while: function () {
+  read_while() {
     const result = this.node("while");
     this.expect(this.tok.T_WHILE) && this.next();
     let test = null;
@@ -39,7 +39,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L423
    * @return {Do}
    */
-  read_do: function () {
+  read_do() {
     const result = this.node("do");
     this.expect(this.tok.T_DO) && this.next();
     let test = null;
@@ -63,7 +63,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L425
    * @return {For}
    */
-  read_for: function () {
+  read_for() {
     const result = this.node("for");
     this.expect(this.tok.T_FOR) && this.next();
     let init = [];
@@ -106,7 +106,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L438
    * @return {Foreach}
    */
-  read_foreach: function () {
+  read_foreach() {
     const result = this.node("foreach");
     this.expect(this.tok.T_FOREACH) && this.next();
     let source = null;
@@ -152,7 +152,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L544
    * @return {Expression}
    */
-  read_foreach_variable: function () {
+  read_foreach_variable() {
     if (this.token === this.tok.T_LIST || this.token === "[") {
       const isShort = this.token === "[";
       const result = this.node("list");

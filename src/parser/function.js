@@ -9,7 +9,7 @@ module.exports = {
   /*
    * checks if current token is a reference keyword
    */
-  is_reference: function () {
+  is_reference() {
     if (this.token === "&") {
       this.next();
       return true;
@@ -19,7 +19,7 @@ module.exports = {
   /*
    * checks if current token is a variadic keyword
    */
-  is_variadic: function () {
+  is_variadic() {
     if (this.token === this.tok.T_ELLIPSIS) {
       this.next();
       return true;
@@ -32,7 +32,7 @@ module.exports = {
    * function ::= function_declaration code_block
    * ```
    */
-  read_function: function (closure, flag, attrs, locStart) {
+  read_function(closure, flag, attrs, locStart) {
     const result = this.read_function_declaration(
       closure ? 1 : flag ? 2 : 0,
       flag && flag[1] === 1,
@@ -64,7 +64,7 @@ module.exports = {
    * function_declaration ::= T_FUNCTION '&'?  T_STRING '(' parameter_list ')'
    * ```
    */
-  read_function_declaration: function (type, isStatic, attrs, locStart) {
+  read_function_declaration(type, isStatic, attrs, locStart) {
     let nodeName = "function";
     if (type === 1) {
       nodeName = "closure";
@@ -158,7 +158,7 @@ module.exports = {
     );
   },
 
-  read_lexical_vars: function () {
+  read_lexical_vars() {
     let result = [];
 
     if (this.token === this.tok.T_USE) {
@@ -171,7 +171,7 @@ module.exports = {
     return result;
   },
 
-  read_list_with_dangling_comma: function (item) {
+  read_list_with_dangling_comma(item) {
     const result = [];
 
     while (this.token != this.EOF) {
@@ -191,7 +191,7 @@ module.exports = {
     return result;
   },
 
-  read_lexical_var_list: function () {
+  read_lexical_var_list() {
     return this.read_list_with_dangling_comma(this.read_lexical_var.bind(this));
   },
 
@@ -200,7 +200,7 @@ module.exports = {
    * lexical_var ::= '&'? T_VARIABLE
    * ```
    */
-  read_lexical_var: function () {
+  read_lexical_var() {
     if (this.token === "&") {
       return this.read_byref(this.read_lexical_var.bind(this));
     }
@@ -216,7 +216,7 @@ module.exports = {
    *  parameter_list ::= (parameter ',')* parameter?
    * ```
    */
-  read_parameter_list: function (is_class_constructor) {
+  read_parameter_list(is_class_constructor) {
     if (this.token !== ")") {
       let wasVariadic = false;
 
@@ -248,7 +248,7 @@ module.exports = {
    * ```
    * @see https://github.com/php/php-src/blob/493524454d66adde84e00d249d607ecd540de99f/Zend/zend_language_parser.y#L640
    */
-  read_parameter: function (is_class_constructor) {
+  read_parameter(is_class_constructor) {
     const node = this.node("parameter");
     let parameterName = null;
     let value = null;
@@ -320,7 +320,7 @@ module.exports = {
     if (attrs) result.attrGroups = attrs;
     return result;
   },
-  read_types: function () {
+  read_types() {
     const MODE_UNSET = "unset";
     const MODE_UNION = "union";
     const MODE_INTERSECTION = "intersection";
@@ -374,7 +374,7 @@ module.exports = {
         : this.node("uniontype")(types);
     }
   },
-  read_promoted: function () {
+  read_promoted() {
     const MODIFIER_PUBLIC = 1;
     const MODIFIER_PROTECTED = 2;
     const MODIFIER_PRIVATE = 4;
@@ -396,7 +396,7 @@ module.exports = {
    *  function_argument_list ::= '(' (argument_list (',' argument_list)*)? ')'
    * ```
    */
-  read_argument_list: function () {
+  read_argument_list() {
     let result = [];
     this.expect("(") && this.next();
     if (
@@ -415,7 +415,7 @@ module.exports = {
   /*
    * Reads non empty argument list
    */
-  read_non_empty_argument_list: function () {
+  read_non_empty_argument_list() {
     let wasVariadic = false;
 
     return this.read_function_list(
@@ -443,7 +443,7 @@ module.exports = {
    *    argument_list ::= T_STRING ':' expr | T_ELLIPSIS? expr
    * ```
    */
-  read_argument: function () {
+  read_argument() {
     if (this.token === this.tok.T_ELLIPSIS) {
       return this.node("variadic")(this.next().read_expr());
     }
@@ -470,7 +470,7 @@ module.exports = {
    *  type ::= T_ARRAY | T_CALLABLE | namespace_name
    * ```
    */
-  read_type: function () {
+  read_type() {
     const result = this.node();
     if (this.token === this.tok.T_ARRAY || this.token === this.tok.T_CALLABLE) {
       const type = this.text();

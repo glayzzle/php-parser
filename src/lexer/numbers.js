@@ -14,7 +14,7 @@ if (process.arch == "x64") {
 }
 
 module.exports = {
-  consume_NUM: function () {
+  consume_NUM() {
     let ch = this.yytext[0];
     let hasPoint = ch === ".";
     if (ch === "0") {
@@ -124,7 +124,7 @@ module.exports = {
     }
   },
   // read hexa
-  consume_HNUM: function () {
+  consume_HNUM() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_HEX()) {
@@ -135,7 +135,7 @@ module.exports = {
     return this.tok.T_LNUMBER;
   },
   // read a generic number
-  consume_LNUM: function () {
+  consume_LNUM() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_NUM()) {
@@ -146,7 +146,7 @@ module.exports = {
     return this.tok.T_LNUMBER;
   },
   // read binary
-  consume_BNUM: function () {
+  consume_BNUM() {
     let ch;
     while (this.offset < this.size) {
       ch = this.input();
@@ -158,7 +158,7 @@ module.exports = {
     return this.tok.T_LNUMBER;
   },
   // read an octal number
-  consume_ONUM: function () {
+  consume_ONUM() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_OCTAL()) {

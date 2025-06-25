@@ -11,7 +11,7 @@ module.exports = {
    * @param {Number} token - The ending token
    * @return {Block}
    */
-  read_short_form: function (token) {
+  read_short_form(token) {
     const body = this.node("block");
     const items = [];
     /* istanbul ignore next */
@@ -37,7 +37,7 @@ module.exports = {
    * @param {*} item
    * @param {*} separator
    */
-  read_function_list: function (item, separator) {
+  read_function_list(item, separator) {
     const result = [];
     do {
       if (this.token == separator && this.version >= 703 && result.length > 0) {
@@ -61,7 +61,7 @@ module.exports = {
    * list ::= separator? ( item separator )* item
    * ```
    */
-  read_list: function (item, separator, preserveFirstSeparator) {
+  read_list(item, separator, preserveFirstSeparator) {
     const result = [];
 
     if (this.token == separator) {
@@ -112,7 +112,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L726
    * @return {Reference[]}
    */
-  read_name_list: function () {
+  read_name_list() {
     return this.read_list(this.read_namespace_name, ",", false);
   },
 
@@ -120,7 +120,7 @@ module.exports = {
    * Reads the byref token and assign it to the specified node
    * @param {*} cb
    */
-  read_byref: function (cb) {
+  read_byref(cb) {
     let byref = this.node("byref");
     this.next();
     byref = byref(null);
@@ -147,7 +147,7 @@ module.exports = {
    * @return {StaticVariable[]} Returns an array composed by a list of variables, or
    * assign values
    */
-  read_variable_declarations: function () {
+  read_variable_declarations() {
     return this.read_list(function () {
       const node = this.node("staticvariable");
       let variable = this.node("variable");
@@ -171,7 +171,7 @@ module.exports = {
   /*
    * Reads class extends
    */
-  read_extends_from: function () {
+  read_extends_from() {
     if (this.token === this.tok.T_EXTENDS) {
       return this.next().read_namespace_name();
     }
@@ -182,7 +182,7 @@ module.exports = {
   /*
    * Reads interface extends list
    */
-  read_interface_extends_list: function () {
+  read_interface_extends_list() {
     if (this.token === this.tok.T_EXTENDS) {
       return this.next().read_name_list();
     }
@@ -193,7 +193,7 @@ module.exports = {
   /*
    * Reads implements list
    */
-  read_implements_list: function () {
+  read_implements_list() {
     if (this.token === this.tok.T_IMPLEMENTS) {
       return this.next().read_name_list();
     }
