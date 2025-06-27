@@ -16,6 +16,7 @@ const valid_after_heredoc_73 = valid_after_heredoc.concat([
   "/",
   "=",
   "!",
+  ".",
 ]);
 
 module.exports = {
