@@ -358,7 +358,7 @@ module.exports = {
       this.next();
     }
 
-    if (this.peek() === "=") {
+    if (this.peekSkipComments() === "=") {
       return [false, null];
     }
 
@@ -384,6 +384,21 @@ module.exports = {
       } while (this.token === "|");
     }
     return [nullable, type];
+  },
+
+  peekSkipComments: function () {
+    const lexerState = this.lexer.getState();
+    let nextToken;
+
+    do {
+      nextToken = this.lexer.lex();
+    } while (
+      nextToken === this.tok.T_COMMENT ||
+      nextToken === this.tok.T_WHITESPACE
+    );
+
+    this.lexer.setState(lexerState);
+    return nextToken;
   },
 
   /*

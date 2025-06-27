@@ -75,4 +75,19 @@ describe("classconstant", () => {
       ),
     ).toThrowErrorMatchingSnapshot();
   });
+  it("multiline declaration with comment", () => {
+    expect(
+      parser.parseEval(
+        `class Foo { 
+          public
+          const
+          CONSTANT
+          // Comment
+          =
+          'string';
+        }`,
+        { parser: { version: 803, extractDoc: true } },
+      ),
+    ).toMatchSnapshot();
+  });
 });
