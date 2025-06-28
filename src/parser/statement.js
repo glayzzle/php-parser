@@ -12,7 +12,7 @@ module.exports = {
    *  top_statements ::= top_statement*
    * ```
    */
-  read_top_statements: function () {
+  read_top_statements() {
     let result = [];
     while (this.token !== this.EOF && this.token !== "}") {
       const statement = this.read_top_statement();
@@ -36,7 +36,7 @@ module.exports = {
    *       | statement
    * ```
    */
-  read_top_statement: function () {
+  read_top_statement() {
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) {
       attrs = this.read_attr_list();
@@ -84,7 +84,7 @@ module.exports = {
    *  inner_statements ::= inner_statement*
    * ```
    */
-  read_inner_statements: function () {
+  read_inner_statements() {
     let result = [];
     while (this.token != this.EOF && this.token !== "}") {
       const statement = this.read_inner_statement();
@@ -104,7 +104,7 @@ module.exports = {
    *   const_list ::= T_CONST T_STRING '=' expr (',' T_STRING '=' expr)* ';'
    * ```
    */
-  read_const_list: function () {
+  read_const_list() {
     return this.read_list(
       function () {
         this.expect(this.tok.T_STRING);
@@ -131,7 +131,7 @@ module.exports = {
    * ```
    * @retrurn {Array}
    */
-  read_declare_list: function () {
+  read_declare_list() {
     const result = [];
     while (this.token != this.EOF && this.token !== ")") {
       this.expect(this.tok.T_STRING);
@@ -156,7 +156,7 @@ module.exports = {
    *  inner_statement ::= '{' inner_statements '}' | token
    * ```
    */
-  read_inner_statement: function () {
+  read_inner_statement() {
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) {
       attrs = this.read_attr_list();
@@ -197,7 +197,7 @@ module.exports = {
   /*
    * Reads statements
    */
-  read_statement: function () {
+  read_statement() {
     switch (this.token) {
       case "{":
         return this.read_code_block(false);
@@ -425,7 +425,7 @@ module.exports = {
    *  code_block ::= '{' (inner_statements | top_statements) '}'
    * ```
    */
-  read_code_block: function (top) {
+  read_code_block(top) {
     const result = this.node("block");
     this.expect("{") && this.next();
     const body = top

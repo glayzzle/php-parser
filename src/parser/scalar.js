@@ -20,7 +20,7 @@ module.exports = {
   /*
    * Unescape special chars
    */
-  resolve_special_chars: function (text, doubleQuote) {
+  resolve_special_chars(text, doubleQuote) {
     if (!doubleQuote) {
       // single quote fix
       return text.replace(/\\\\/g, "\\").replace(/\\'/g, "'");
@@ -50,7 +50,7 @@ module.exports = {
    * @param {boolean} indentation_uses_spaces
    * @param {boolean} first_encaps_node if it is behind a variable, the first N spaces should not be removed
    */
-  remove_heredoc_leading_whitespace_chars: function (
+  remove_heredoc_leading_whitespace_chars(
     text,
     indentation,
     indentation_uses_spaces,
@@ -93,7 +93,7 @@ module.exports = {
    * @param {boolean} indentation_uses_spaces
    * @param {boolean} first_encaps_node if it is behind a variable, the first N spaces should not be removed
    */
-  check_heredoc_indentation_level: function (
+  check_heredoc_indentation_level(
     text,
     indentation,
     indentation_uses_spaces,
@@ -153,7 +153,7 @@ module.exports = {
   /*
    * Reads dereferencable scalar
    */
-  read_dereferencable_scalar: function () {
+  read_dereferencable_scalar() {
     let result = null;
 
     switch (this.token) {
@@ -207,7 +207,7 @@ module.exports = {
    *       | namespace_name (T_DOUBLE_COLON T_STRING)?
    * ```
    */
-  read_scalar: function () {
+  read_scalar() {
     if (this.is("T_MAGIC_CONST")) {
       return this.get_magic_constant();
     } else {
@@ -294,7 +294,7 @@ module.exports = {
   /*
    * Handles the dereferencing
    */
-  read_dereferencable: function (expr) {
+  read_dereferencable(expr) {
     let result, offset;
     const node = this.node("offsetlookup");
     if (this.token === "[") {
@@ -322,7 +322,7 @@ module.exports = {
    * @return {String|Variable|Expr|Lookup}
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1219
    */
-  read_encapsed_string_item: function (isDoubleQuote) {
+  read_encapsed_string_item(isDoubleQuote) {
     const encapsedPart = this.node("encapsedpart");
     let syntax = null;
     let curly = false;
@@ -427,7 +427,7 @@ module.exports = {
   /*
    * Reads an encapsed string
    */
-  read_encapsed_string: function (expect, isBinary = false) {
+  read_encapsed_string(expect, isBinary = false) {
     const labelStart = this.lexer.yylloc.first_offset;
     let node = this.node("encapsed");
     this.next();
@@ -483,7 +483,7 @@ module.exports = {
   /*
    * Constant token
    */
-  get_magic_constant: function () {
+  get_magic_constant() {
     const result = this.node("magic");
     const name = this.text();
     this.next();

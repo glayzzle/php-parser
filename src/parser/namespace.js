@@ -17,7 +17,7 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.php
    * @return {Namespace}
    */
-  read_namespace: function () {
+  read_namespace() {
     const result = this.node("namespace");
     let body;
     this.expect(this.tok.T_NAMESPACE) && this.next();
@@ -66,7 +66,7 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.rules.php
    * @return {Reference}
    */
-  read_namespace_name: function (resolveReference) {
+  read_namespace_name(resolveReference) {
     const result = this.node();
     let resolution;
     let name = this.text();
@@ -113,7 +113,7 @@ module.exports = {
    * @see http://php.net/manual/en/language.namespaces.importing.php
    * @return {UseGroup}
    */
-  read_use_statement: function () {
+  read_use_statement() {
     let result = this.node("usegroup");
     let items = [];
     let name = null;
@@ -135,7 +135,7 @@ module.exports = {
    *
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1045
    */
-  read_class_name_reference: function () {
+  read_class_name_reference() {
     // resolved as the same
     return this.read_variable(true, false);
   },
@@ -147,7 +147,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
    * @return {UseItem}
    */
-  read_use_declaration: function (typed) {
+  read_use_declaration(typed) {
     const result = this.node("useitem");
     let type = null;
     if (typed) type = this.read_use_type();
@@ -163,7 +163,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L380
    * @return {UseItem[]}
    */
-  read_use_declarations: function (typed) {
+  read_use_declarations(typed) {
     const result = [this.read_use_declaration(typed)];
     while (this.token === ",") {
       this.next();
@@ -198,7 +198,7 @@ module.exports = {
    * ```
    * @return {String|null}
    */
-  read_use_alias: function () {
+  read_use_alias() {
     let result = null;
     if (this.token === this.tok.T_AS) {
       if (this.next().expect(this.tok.T_STRING)) {
@@ -218,7 +218,7 @@ module.exports = {
    * @see https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L335
    * @return {String|null} Possible values : function, const
    */
-  read_use_type: function () {
+  read_use_type() {
     if (this.token === this.tok.T_FUNCTION) {
       this.next();
       return this.ast.useitem.TYPE_FUNCTION;

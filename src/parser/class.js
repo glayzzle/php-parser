@@ -12,7 +12,7 @@ module.exports = {
    * class ::= class_scope? T_CLASS T_STRING (T_EXTENDS NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' CLASS_BODY '}'
    * ```
    */
-  read_class_declaration_statement: function (attrs) {
+  read_class_declaration_statement(attrs) {
     const result = this.node("class");
     const flag = this.read_class_modifiers();
     // graceful mode : ignore token & go next
@@ -35,7 +35,7 @@ module.exports = {
     return node;
   },
 
-  read_class_modifiers: function () {
+  read_class_modifiers() {
     const modifier = this.read_class_modifier({
       readonly: 0,
       final_or_abstract: 0,
@@ -43,7 +43,7 @@ module.exports = {
     return [0, 0, modifier.final_or_abstract, modifier.readonly];
   },
 
-  read_class_modifier: function (memo) {
+  read_class_modifier(memo) {
     if (this.token === this.tok.T_READ_ONLY) {
       this.next();
       memo.readonly = 1;
@@ -73,7 +73,7 @@ module.exports = {
    *   class_body ::= (member_flags? (T_VAR | T_STRING | T_FUNCTION))*
    * ```
    */
-  read_class_body: function (allow_variables, allow_enum_cases) {
+  read_class_body(allow_variables, allow_enum_cases) {
     let result = [];
     let attrs = [];
     while (this.token !== this.EOF && this.token !== "}") {
@@ -177,7 +177,7 @@ module.exports = {
    *  variable_list ::= (variable_declaration ',')* variable_declaration
    * ```
    */
-  read_variable_list: function (flags, attrs) {
+  read_variable_list(flags, attrs) {
     const result = this.node("propertystatement");
 
     const properties = this.read_list(
@@ -222,7 +222,7 @@ module.exports = {
    *  constant_list ::= T_CONST [type] (constant_declaration ',')* constant_declaration
    * ```
    */
-  read_constant_list: function (flags, attrs) {
+  read_constant_list(flags, attrs) {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
@@ -272,7 +272,7 @@ module.exports = {
    *  2nd index : 0 => instance member, 1 => static member
    *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
    */
-  read_member_flags: function (asInterface) {
+  read_member_flags(asInterface) {
     const result = [-1, -1, -1];
     if (this.is("T_MEMBER_FLAGS")) {
       let idx = 0,
@@ -352,7 +352,7 @@ module.exports = {
    * 	|	union_type '|' type { $$ = zend_ast_list_add($1, $3); }
    * ;
    */
-  read_optional_type: function () {
+  read_optional_type() {
     const nullable = this.token === "?";
     if (nullable) {
       this.next();
@@ -407,7 +407,7 @@ module.exports = {
    * interface ::= T_INTERFACE T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' INTERFACE_BODY '}'
    * ```
    */
-  read_interface_declaration_statement: function (attrs) {
+  read_interface_declaration_statement(attrs) {
     const result = this.node("interface");
     if (this.token !== this.tok.T_INTERFACE) {
       this.error(this.tok.T_INTERFACE);
@@ -430,7 +430,7 @@ module.exports = {
    *   interface_body ::= (member_flags? (T_CONST | T_FUNCTION))*
    * ```
    */
-  read_interface_body: function () {
+  read_interface_body() {
     let result = [],
       attrs = [];
 
@@ -490,7 +490,7 @@ module.exports = {
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
    * ```
    */
-  read_trait_declaration_statement: function () {
+  read_trait_declaration_statement() {
     const result = this.node("trait");
     // graceful mode : ignore token & go next
     if (this.token !== this.tok.T_TRAIT) {
@@ -513,7 +513,7 @@ module.exports = {
    * trait_use_statement ::= namespace_name (',' namespace_name)* ('{' trait_use_alias '}')?
    * ```
    */
-  read_trait_use_statement: function () {
+  read_trait_use_statement() {
     // defines use statements
     const node = this.node("traituse");
     this.expect(this.tok.T_USE) && this.next();
@@ -548,7 +548,7 @@ module.exports = {
    * name list : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L303
    * trait adaptation : https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L742
    */
-  read_trait_use_alias: function () {
+  read_trait_use_alias() {
     const node = this.node();
     let trait = null;
     let method;

@@ -13,7 +13,7 @@ module.exports = {
    *  if ::= T_IF '(' expr ')' ':' ...
    * ```
    */
-  read_if: function () {
+  read_if() {
     const result = this.node("if");
     const test = this.next().read_if_expr();
     let body = null;
@@ -51,7 +51,7 @@ module.exports = {
   /*
    * reads an if expression : '(' expr ')'
    */
-  read_if_expr: function () {
+  read_if_expr() {
     this.expect("(") && this.next();
     const result = this.read_expr();
     this.expect(")") && this.next();
@@ -60,7 +60,7 @@ module.exports = {
   /*
    * reads an elseif (expr): statements
    */
-  read_elseif_short: function () {
+  read_elseif_short() {
     let alternate = null;
     const result = this.node("if");
     const test = this.next().read_if_expr();
@@ -82,7 +82,7 @@ module.exports = {
   /*
    *
    */
-  read_else_short: function () {
+  read_else_short() {
     if (this.next().expect(":")) this.next();
     const body = this.node("block");
     const items = [];

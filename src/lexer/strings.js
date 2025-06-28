@@ -20,7 +20,7 @@ const valid_after_heredoc_73 = valid_after_heredoc.concat([
 ]);
 
 module.exports = {
-  T_CONSTANT_ENCAPSED_STRING: function () {
+  T_CONSTANT_ENCAPSED_STRING() {
     let ch;
     while (this.offset < this.size) {
       ch = this.input();
@@ -33,7 +33,7 @@ module.exports = {
     return this.tok.T_CONSTANT_ENCAPSED_STRING;
   },
   // check if matching a HEREDOC state
-  is_HEREDOC: function () {
+  is_HEREDOC() {
     const revert = this.offset;
     if (
       this._input[this.offset - 1] === "<" &&
@@ -97,7 +97,7 @@ module.exports = {
     this.offset = revert;
     return false;
   },
-  ST_DOUBLE_QUOTES: function () {
+  ST_DOUBLE_QUOTES() {
     let ch;
     while (this.offset < this.size) {
       ch = this.input();
@@ -141,7 +141,7 @@ module.exports = {
   },
 
   // check if its a DOC end sequence
-  isDOC_MATCH: function (offset, consumeLeadingSpaces) {
+  isDOC_MATCH(offset, consumeLeadingSpaces) {
     // @fixme : check if out of text limits
 
     // consumeLeadingSpaces is false happen DOC prematch END HEREDOC stage.
@@ -222,7 +222,7 @@ module.exports = {
    * Prematch the end of HEREDOC/NOWDOC end tag to preset the
    * context of this.heredoc_label
    */
-  prematch_ENDOFDOC: function () {
+  prematch_ENDOFDOC() {
     // reset heredoc
     this.heredoc_label.indentation_uses_spaces = false;
     this.heredoc_label.indentation = 0;
@@ -249,7 +249,7 @@ module.exports = {
     }
   },
 
-  matchST_NOWDOC: function () {
+  matchST_NOWDOC() {
     // edge case : empty now doc
     if (this.isDOC_MATCH(this.offset, true)) {
       // @fixme : never reached (may be caused by quotes)
@@ -275,7 +275,7 @@ module.exports = {
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
 
-  matchST_HEREDOC: function () {
+  matchST_HEREDOC() {
     // edge case : empty here doc
     let ch = this.input();
     if (this.isDOC_MATCH(this.offset, true)) {
@@ -347,7 +347,7 @@ module.exports = {
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
 
-  consume_VARIABLE: function () {
+  consume_VARIABLE() {
     this.consume_LABEL();
     const ch = this.input();
     if (ch == "[") {
@@ -371,7 +371,7 @@ module.exports = {
     return this.tok.T_VARIABLE;
   },
   // HANDLES BACKQUOTES
-  matchST_BACKQUOTE: function () {
+  matchST_BACKQUOTE() {
     let ch = this.input();
     if (ch === "$") {
       ch = this.input();
@@ -446,7 +446,7 @@ module.exports = {
     return this.tok.T_ENCAPSED_AND_WHITESPACE;
   },
 
-  matchST_DOUBLE_QUOTES: function () {
+  matchST_DOUBLE_QUOTES() {
     let ch = this.input();
     if (ch === "$") {
       ch = this.input();

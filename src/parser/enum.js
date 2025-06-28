@@ -12,7 +12,7 @@ module.exports = {
    * enum ::= enum_scope? T_ENUM T_STRING (':' NAMESPACE_NAME)? (T_IMPLEMENTS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' ENUM_BODY '}'
    * ```
    */
-  read_enum_declaration_statement: function (attrs) {
+  read_enum_declaration_statement(attrs) {
     const result = this.node("enum");
     // graceful mode : ignore token & go next
     if (!this.expect(this.tok.T_ENUM)) {
@@ -32,7 +32,7 @@ module.exports = {
     return node;
   },
 
-  read_enum_value_type: function () {
+  read_enum_value_type() {
     if (this.token === ":") {
       return this.next().read_namespace_name();
     }
@@ -40,7 +40,7 @@ module.exports = {
     return null;
   },
 
-  read_enum_case: function () {
+  read_enum_case() {
     this.expect(this.tok.T_CASE);
     const result = this.node("enumcase");
     let caseName = this.node("identifier");

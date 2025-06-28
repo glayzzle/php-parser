@@ -8,7 +8,7 @@
 module.exports = {
   attributeIndex: 0,
   attributeListDepth: {},
-  matchST_ATTRIBUTE: function () {
+  matchST_ATTRIBUTE() {
     let ch = this.input();
     if (this.is_WHITESPACE()) {
       do {
