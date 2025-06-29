@@ -216,8 +216,15 @@ module.exports = {
             this.error();
           }
 
+          // Handle special "::class" static keyword
+          let classKeyword = null;
+          if (this.peek() === this.tok.T_CLASS) {
+              this.next();
+              classKeyword = this.node("identifier")(this.text());
+              this.next();
+          }
           node = this.node("staticlookup");
-          result = node(result, this.read_what(true));
+          result = node(result, classKeyword ?? this.read_what(true));
 
           // fix 185
           // static lookup dereferencables are limited to staticlookup over functions
