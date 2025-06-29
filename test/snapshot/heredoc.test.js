@@ -505,4 +505,16 @@ $b = <<<'EOT'
       ),
     ).toMatchSnapshot();
   });
+
+  it("Can parse HEREDOC with escaped characters #1130", () => {
+    expect(
+      parser.parseEval(`
+ if (true) {
+    echo <<<STR
+    \na
+    STR;
+}   
+    `)
+    ).toMatchSnapshot();
+  });
 });
