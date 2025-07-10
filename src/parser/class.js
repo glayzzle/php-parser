@@ -386,7 +386,7 @@ module.exports = {
     return [nullable, type];
   },
 
-  peekSkipComments: function () {
+  peekSkipComments() {
     const lexerState = this.lexer.getState();
     let nextToken;
 

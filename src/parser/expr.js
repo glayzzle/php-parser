@@ -97,14 +97,6 @@ module.exports = {
     if (this.token === this.tok.T_SPACESHIP) {
       return result("bin", "<=>", expr, this.next().read_expr());
     }
-    if (this.token === this.tok.T_OBJECT_OPERATOR) {
-      if (this.version < 804) {
-        this.raiseError(
-          "New without parenthesis is not allowed before PHP 8.4",
-        );
-      }
-      return result("bin", "->", expr, this.next().read_expr());
-    }
 
     if (this.token === this.tok.T_INSTANCEOF) {
       expr = result(
@@ -359,7 +351,13 @@ module.exports = {
         return this.node("pre")("-", this.next().read_variable(false, false));
 
       case this.tok.T_NEW:
-        return this.read_new_expr();
+        expr = this.read_new_expr();
+        if (this.token === this.tok.T_OBJECT_OPERATOR && this.version < 804) {
+          this.raiseError(
+            "New without parenthesis is not allowed before PHP 8.4",
+          );
+        }
+        return this.handleDereferencable(expr);
 
       case this.tok.T_ISSET:
       case this.tok.T_EMPTY:
