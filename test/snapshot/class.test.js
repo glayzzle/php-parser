@@ -266,10 +266,25 @@ describe("Test classes", function () {
     expect(test_parser.parseEval(code)).toMatchSnapshot();
   });
 
+  it("8.4 new without parenthesis with array lookup", () => {
+    const code = `new People()[0];`;
+    const test_parser = parser.create({
+      parser: {
+        version: "8.4",
+      },
+    });
+    expect(test_parser.parseEval(code)).toMatchSnapshot();
+  });
+
   it("new without parenthesis throw errors in PHP < 8.4", () => {
     const code = `new People()->name();`;
+    const test_parser = parser.create({
+      parser: {
+        version: "8.3",
+      },
+    });
     expect(() => {
-      parser.parseEval(code);
+      test_parser.parseEval(code);
     }).toThrowErrorMatchingSnapshot();
   });
 
