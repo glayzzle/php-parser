@@ -10,6 +10,8 @@ const parser = require("./parser");
 const tokens = require("./tokens");
 const AST = require("./ast");
 
+const DEFAULT_PHP_VERSION = "8.4";
+
 /**
  * @private
  */
@@ -43,10 +45,10 @@ function combine(src, to) {
  * @example
  * var parser = require('php-parser');
  * var instance = new parser({
+ *   version: 704 // or '7.4'
  *   parser: {
  *     extractDoc: true,
  *     suppressErrors: true,
- *     version: 704 // or '7.4'
  *   },
  *   ast: {
  *     withPositions: true
@@ -81,29 +83,39 @@ const Engine = function (options) {
       if (!options.lexer) {
         options.lexer = {};
       }
-      if (options.parser.version) {
-        if (typeof options.parser.version === "string") {
-          let version = options.parser.version.split(".");
-          version = parseInt(version[0]) * 100 + parseInt(version[1]);
-          if (isNaN(version)) {
-            throw new Error("Bad version number : " + options.parser.version);
-          } else {
-            options.parser.version = version;
-          }
-        } else if (typeof options.parser.version !== "number") {
-          throw new Error("Expecting a number for version");
-        }
-        if (options.parser.version < 500 || options.parser.version > 900) {
-          throw new Error("Can only handle versions between 5.x to 8.x");
-        }
-      }
     }
     combine(options, this);
-
-    // same version flags based on parser options
-    this.lexer.version = this.parser.version;
   }
+
+  // options.parser.version is deprecated, use options.version instead
+  const versionString = options?.version ?? options?.parser?.version;
+  this.version = normalizeVersion(versionString ?? DEFAULT_PHP_VERSION);
 };
+
+/**
+ * Validate and normalize a version (string or number) to a version number
+ * @private
+ * @param {String|Number} versionString - The version string or number to
+ * validate and normalize, e.g., "7.4", or 704
+ * @return {Number} - The normalized version number, e.g. 704
+ * @throws {Error} - If the version is not a valid number or out of range
+ */
+function normalizeVersion(versionString) {
+  let version = versionString;
+  if (typeof version === "string") {
+    const versionParts = version.split(".");
+    version = parseInt(versionParts[0]) * 100 + parseInt(versionParts[1]);
+    if (isNaN(version)) {
+      throw new Error("Bad version number : " + versionString);
+    }
+  } else if (typeof version !== "number") {
+    throw new Error("Expecting a string or number for version");
+  }
+  if (version < 500 || version > 900) {
+    throw new Error("Can only handle versions between 5.x to 8.x");
+  }
+  return version;
+}
 
 /**
  * Check if the inpyt is a buffer or a string
