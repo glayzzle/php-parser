@@ -94,7 +94,7 @@ module.exports = {
     } else if (
       this.token === this.tok.T_STRING ||
       this.token === this.tok.T_CLASS ||
-      (this.version >= 700 && this.is("IDENTIFIER"))
+      (this.engine.version >= 700 && this.is("IDENTIFIER"))
     ) {
       offset = this.node("identifier");
       name = this.text();

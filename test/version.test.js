@@ -1,54 +1,22 @@
 const parser = require("./main");
 
 describe("Test versions", function () {
-  it("unserialize a version string", function () {
-    const test = parser.create({
-      parser: {
-        version: "7.3",
-      },
-    });
-    expect(test.parser.version).toEqual(703);
+  it.each([
+    { version: "7.3", expected: 703 },
+    { version: "7.3.5", expected: 703 },
+  ])("parse version number $version", ({ version, expected }) => {
+    const test = parser.create({ version });
+    expect(test.version).toEqual(expected);
   });
-  it("unserialize a version string - with bugfix ignored", function () {
-    const test = parser.create({
-      parser: {
-        version: "7.3.5",
-      },
-    });
-    expect(test.parser.version).toEqual(703);
-  });
-  it("fail to parse array", function () {
-    expect(
-      parser.create.bind(null, {
-        parser: {
-          version: [701],
-        },
-      }),
-    ).toThrow(new Error("Expecting a number for version"));
-  });
-  it("fail to parse bad version numbers", function () {
-    expect(
-      parser.create.bind(null, {
-        parser: {
-          version: "x.y.z",
-        },
-      }),
-    ).toThrow(new Error("Bad version number : x.y.z"));
-  });
-  it("unhandled version", function () {
-    expect(
-      parser.create.bind(null, {
-        parser: {
-          version: "4.9",
-        },
-      }),
-    ).toThrow(new Error("Can only handle versions between 5.x to 8.x"));
-    expect(
-      parser.create.bind(null, {
-        parser: {
-          version: "9.9",
-        },
-      }),
-    ).toThrow(new Error("Can only handle versions between 5.x to 8.x"));
+
+  it.each([
+    { version: [701], expected: "Expecting a string or number for version" },
+    { version: "x.y.z", expected: "Bad version number : x.y.z" },
+    { version: "4.9", expected: "Can only handle versions between 5.x to 8.x" },
+    { version: "9.9", expected: "Can only handle versions between 5.x to 8.x" },
+  ])("fail to parse version $version", ({ version, expected }) => {
+    expect(() => {
+      parser.create({ version });
+    }).toThrow(new Error(expected));
   });
 });

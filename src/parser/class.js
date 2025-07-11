@@ -136,9 +136,9 @@ module.exports = {
       } else if (
         allow_variables &&
         (this.token === this.tok.T_VARIABLE ||
-          (this.version >= 801 && this.token === this.tok.T_READ_ONLY) ||
+          (this.engine.version >= 801 && this.token === this.tok.T_READ_ONLY) ||
           // support https://wiki.php.net/rfc/typed_properties_v2
-          (this.version >= 704 &&
+          (this.engine.version >= 704 &&
             (this.token === "?" ||
               this.token === this.tok.T_ARRAY ||
               this.token === this.tok.T_CALLABLE ||
@@ -228,7 +228,7 @@ module.exports = {
     }
 
     const [nullable, type] =
-      this.version >= 803 ? this.read_optional_type() : [false, null];
+      this.engine.version >= 803 ? this.read_optional_type() : [false, null];
 
     const result = this.node("classconstant");
     const items = this.read_list(
@@ -246,7 +246,7 @@ module.exports = {
         let value = null;
         if (
           this.token === this.tok.T_STRING ||
-          (this.version >= 700 && this.is("IDENTIFIER"))
+          (this.engine.version >= 700 && this.is("IDENTIFIER"))
         ) {
           constName = this.node("identifier");
           const name = this.text();
@@ -565,7 +565,7 @@ module.exports = {
         this.next();
         if (
           this.token === this.tok.T_STRING ||
-          (this.version >= 700 && this.is("IDENTIFIER"))
+          (this.engine.version >= 700 && this.is("IDENTIFIER"))
         ) {
           trait = method;
           method = this.node("identifier");
@@ -599,7 +599,7 @@ module.exports = {
 
       if (
         this.token === this.tok.T_STRING ||
-        (this.version >= 700 && this.is("IDENTIFIER"))
+        (this.engine.version >= 700 && this.is("IDENTIFIER"))
       ) {
         alias = this.node("identifier");
         const name = this.text();

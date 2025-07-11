@@ -30,7 +30,6 @@ const Lexer = function (engine) {
   this.mode_eval = false;
   this.asp_tags = false;
   this.short_tags = false;
-  this.version = 803;
   this.yyprevcol = 0;
   this.keywords = {
     __class__: this.tok.T_CLASS_C,
@@ -150,7 +149,7 @@ Lexer.prototype.setInput = function (input) {
     last_column: 0,
   };
   this.tokens = [];
-  if (this.version > 703) {
+  if (this.engine.version > 703) {
     this.keywords.fn = this.tok.T_FN;
   } else {
     delete this.keywords.fn;
