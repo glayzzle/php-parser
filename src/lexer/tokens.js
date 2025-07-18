@@ -342,6 +342,9 @@ module.exports = {
       } else if (nchar === "|") {
         this.input();
         return this.tok.T_BOOLEAN_OR;
+      } else if (nchar === ">") {
+        this.input();
+        return this.tok.T_PIPE;
       }
       return "|";
     },
