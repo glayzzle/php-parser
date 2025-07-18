@@ -1434,6 +1434,7 @@ declare module "php-parser" {
     T_NAME_RELATIVE = 241,
     T_NAME_QUALIFIED = 242,
     T_NAME_FULLY_QUALIFIED = 243,
+    T_PIPE = 244,
   }
   /**
    * PHP AST Tokens
