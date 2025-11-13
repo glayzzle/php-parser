@@ -42,6 +42,20 @@ describe("new", function () {
       parser.parseEval("new class($one, $two, $three) {};"),
     ).toMatchSnapshot();
   });
+  it("anonymous readonly", function () {
+    expect(parser.parseEval("new readonly class() {};")).toMatchSnapshot();
+  });
+  it("anonymous readonly no parens", function () {
+    expect(parser.parseEval("new readonly class {};")).toMatchSnapshot();
+  });
+  it("anonymous readonly with argument", function () {
+    expect(parser.parseEval("new readonly class($var) {};")).toMatchSnapshot();
+  });
+  it("anonymous readonly with multiple argument", function () {
+    expect(
+      parser.parseEval("new readonly class($one, $two, $three) {};"),
+    ).toMatchSnapshot();
+  });
   it("static array", () => {
     expect(
       parser.parseEval("return new self::$mapping[$map]();"),
