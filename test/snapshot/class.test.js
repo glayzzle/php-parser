@@ -182,19 +182,19 @@ describe("Test classes", function () {
   });
 
   it("Test that readonly method parameters are throwing errors", function () {
-    const ast = parser.parseEval(
-      `
+    expect(() => {
+      parser.parseEval(
+        `
       class Bob {
         public function foo(public readonly int $id) {}
       }`,
-      {
-        parser: {
-          version: "8.1",
-          suppressErrors: true,
+        {
+          parser: {
+            version: "8.1",
+          },
         },
-      },
-    );
-    expect(ast).toMatchSnapshot();
+      );
+    }).toThrowErrorMatchingSnapshot();
   });
 
   it("Test promoted nullable properties php 8", function () {

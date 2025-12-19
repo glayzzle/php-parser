@@ -18,6 +18,7 @@ const KIND = "property";
  * @property {boolean} readonly
  * @property {boolean} nullable
  * @property {Identifier|Array<Identifier>|null} type
+ * @propert {PropertyHook[]} hooks
  * @property {AttrGroup[]} attrGroups
  */
 module.exports = Statement.extends(
@@ -28,6 +29,7 @@ module.exports = Statement.extends(
     readonly,
     nullable,
     type,
+    hooks,
     attrGroups,
     docs,
     location,
@@ -38,6 +40,7 @@ module.exports = Statement.extends(
     this.readonly = readonly;
     this.nullable = nullable;
     this.type = type;
+    this.hooks = hooks;
     this.attrGroups = attrGroups;
   },
 );
