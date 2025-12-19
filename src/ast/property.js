@@ -18,7 +18,7 @@ const KIND = "property";
  * @property {boolean} readonly
  * @property {boolean} nullable
  * @property {Identifier|Array<Identifier>|null} type
- * @propert {PropertyHook[]} hooks
+ * @property {PropertyHook[]} hooks
  * @property {AttrGroup[]} attrGroups
  */
 module.exports = Statement.extends(
