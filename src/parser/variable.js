@@ -137,6 +137,15 @@ module.exports = {
         this.next();
         what = what(name, false);
         break;
+      case this.tok.T_CLASS:
+        if (!is_static_lookup) {
+          this.error();
+        }
+        what = this.node("identifier");
+        name = this.text();
+        this.next();
+        what = what(name, false);
+        break;
       case "$":
         what = this.node();
         this.next().expect(["$", "{", this.tok.T_VARIABLE]);
