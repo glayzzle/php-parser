@@ -111,4 +111,15 @@ describe("Test enums", function () {
       parser.parseEval("enum Foo {}", { parser: { version: "8.0" } });
     }).toThrowErrorMatchingSnapshot();
   });
+
+  it("Dynamic enum case fetch", function () {
+    expect(
+      parser.parseEval(
+        `
+          Suit::{'Hearts'};
+          Suit::{$var};
+          Suit::{Hearts};`,
+      ),
+    ).toMatchSnapshot();
+  });
 });
