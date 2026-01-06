@@ -105,7 +105,6 @@ module.exports = {
       name = this.next().read_expr();
       this.expect("}") && this.next();
       offset = offset("literal", name, null);
-      this.expect("(");
     } else {
       this.error([this.tok.T_VARIABLE, this.tok.T_STRING]);
       // graceful mode : set getter as error node and continue
