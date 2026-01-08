@@ -114,6 +114,11 @@ module.exports = {
       }
     }
 
+    if (this.token === this.tok.T_NULLSAFE_OBJECT_OPERATOR) {
+      expr = result("nullsafepropertylookup", expr, this.read_what());
+      expr = this.recursive_variable_chain_scan(expr, false, true);
+    }
+
     // extra operations :
     // $username = $_GET['user'] ?? 'nobody';
     if (this.token === this.tok.T_COALESCE) {
@@ -842,7 +847,8 @@ module.exports = {
     while (this.token !== this.EOF) {
       if (
         this.token === this.tok.T_OBJECT_OPERATOR ||
-        this.token === this.tok.T_DOUBLE_COLON
+        this.token === this.tok.T_DOUBLE_COLON ||
+        this.token === this.tok.T_NULLSAFE_OBJECT_OPERATOR
       ) {
         expr = this.recursive_variable_chain_scan(expr, false, false, true);
       } else if (this.token === this.tok.T_CURLY_OPEN || this.token === "[") {

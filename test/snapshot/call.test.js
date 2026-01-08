@@ -49,14 +49,44 @@ describe("Test call", function () {
     });
     expect(ast).toMatchSnapshot();
   });
-  it("nullsafepropertylookup", function () {
+  it("nullsafepropertylookup (1)", function () {
     const ast = parser.parseEval("$obj?->call();", {
       parser: { debug: false },
     });
     expect(ast).toMatchSnapshot();
   });
   it("nullsafepropertylookup (2)", function () {
+    const ast = parser.parseEval("$obj?->prop;", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (3)", function () {
+    const ast = parser.parseEval("($obj)?->property;", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (4)", function () {
     const ast = parser.parseEval("$obj?->property?->call();", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (5)", function () {
+    const ast = parser.parseEval("($obj)?->cal($parameter);", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (6)", function () {
+    const ast = parser.parseEval("($obj)?->cal($parameter)?->parameter();", {
+      parser: { debug: false },
+    });
+    expect(ast).toMatchSnapshot();
+  });
+  it("nullsafepropertylookup (7)", function () {
+    const ast = parser.parseEval("($obj)?->cal !== null;", {
       parser: { debug: false },
     });
     expect(ast).toMatchSnapshot();
