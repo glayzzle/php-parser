@@ -764,10 +764,15 @@ module.exports = {
     }
     const attrs = this.read_attr_list();
     const isReadonly = this.token === this.tok.T_READ_ONLY;
-    if (
-      this.token === this.tok.T_CLASS ||
-      (isReadonly && this.next().token === this.tok.T_CLASS)
-    ) {
+    if (isReadonly) {
+      if (this.version < 803) {
+        this.raiseError(
+          "Anonymous readonly classes are not allowed before PHP 8.3",
+        );
+      }
+      this.next();
+    }
+    if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
       if (this.next().token === "(") {

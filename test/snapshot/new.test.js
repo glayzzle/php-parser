@@ -56,6 +56,15 @@ describe("new", function () {
       parser.parseEval("new readonly class($one, $two, $three) {};"),
     ).toMatchSnapshot();
   });
+  it("anonymous readonly class throws errors in PHP < 8.3", () => {
+    expect(() =>
+      parser.parseEval("new readonly class() {};", {
+        parser: {
+          version: "8.2",
+        },
+      }),
+    ).toThrow("Anonymous readonly classes are not allowed before PHP 8.3");
+  });
   it("static array", () => {
     expect(
       parser.parseEval("return new self::$mapping[$map]();"),
