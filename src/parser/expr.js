@@ -763,6 +763,15 @@ module.exports = {
       return result(newExp, args);
     }
     const attrs = this.read_attr_list();
+    const isReadonly = this.token === this.tok.T_READ_ONLY;
+    if (isReadonly) {
+      if (this.version < 803) {
+        this.raiseError(
+          "Anonymous readonly classes are not allowed before PHP 8.3",
+        );
+      }
+      this.next();
+    }
     if (this.token === this.tok.T_CLASS) {
       const what = this.node("class");
       // Annonymous class declaration
@@ -775,7 +784,12 @@ module.exports = {
       if (this.expect("{")) {
         body = this.next().read_class_body(true, false);
       }
-      const whatNode = what(null, propExtends, propImplements, body, [0, 0, 0]);
+      const whatNode = what(null, propExtends, propImplements, body, [
+        0,
+        0,
+        0,
+        isReadonly ? 1 : 0,
+      ]);
       whatNode.attrGroups = attrs;
       return result(whatNode, args);
     }
