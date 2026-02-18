@@ -364,7 +364,6 @@ AST.prototype.prepare = function (kind, docs, parser) {
   const self = this;
   // returns the node
   const result = function () {
-    let location = null;
     const args = Array.prototype.slice.call(arguments);
     args.push(docs);
     if (self.withPositions || self.withSource) {
@@ -373,7 +372,7 @@ AST.prototype.prepare = function (kind, docs, parser) {
         src = parser.lexer._input.substring(start.offset, parser.prev[2]);
       }
       // if with source, need location on swapLocations function
-      location = new Location(
+      const location = new Location(
         src,
         start,
         new Position(parser.prev[0], parser.prev[1], parser.prev[2]),

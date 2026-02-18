@@ -431,8 +431,8 @@ module.exports = {
    * ```
    */
   read_interface_body() {
-    let result = [],
-      attrs = [];
+    let result = [];
+    let attrs;
 
     while (this.token !== this.EOF && this.token !== "}") {
       if (this.token === this.tok.T_COMMENT) {
@@ -458,7 +458,6 @@ module.exports = {
           this.next();
         }
         result = result.concat(constants);
-        attrs = [];
       } else if (this.token === this.tok.T_FUNCTION) {
         // reads a function
         const method = this.read_function_declaration(
@@ -472,7 +471,6 @@ module.exports = {
         if (this.expect(";")) {
           this.next();
         }
-        attrs = [];
       } else {
         // raise an error
         this.error([this.tok.T_CONST, this.tok.T_FUNCTION]);

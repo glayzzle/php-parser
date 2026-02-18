@@ -118,8 +118,8 @@ module.exports = {
   },
 
   read_what(is_static_lookup = false) {
-    let what = null;
-    let name = null;
+    let what;
+    let name;
     switch (this.next().token) {
       case this.tok.T_STRING:
         what = this.node("identifier");

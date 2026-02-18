@@ -14,7 +14,7 @@ module.exports = {
    * ```
    */
   read_array() {
-    let expect = null;
+    let expect;
     let shortForm = false;
     const result = this.node("array");
 
@@ -74,7 +74,7 @@ module.exports = {
     const entry = this.node("entry");
 
     let key = null;
-    let value = null;
+    let value;
     let byRef = false;
     let unpack = false;
 

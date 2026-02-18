@@ -16,7 +16,7 @@ module.exports = {
   read_if() {
     const result = this.node("if");
     const test = this.next().read_if_expr();
-    let body = null;
+    let body;
     let alternate = null;
     let shortForm = false;
 

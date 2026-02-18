@@ -678,13 +678,11 @@ module.exports = {
     if (this.version < 800) {
       this.raiseError("Match statements are not allowed before PHP 8");
     }
-    let cond = null;
-    let arms = [];
     if (this.expect("(")) this.next();
-    cond = this.read_expr();
+    const cond = this.read_expr();
     if (this.expect(")")) this.next();
     if (this.expect("{")) this.next();
-    arms = this.read_match_arms();
+    const arms = this.read_match_arms();
     if (this.expect("}")) this.next();
     return node(cond, arms);
   },

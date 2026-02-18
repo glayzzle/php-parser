@@ -252,7 +252,6 @@ module.exports = {
     const node = this.node("parameter");
     let parameterName = null;
     let value = null;
-    let types = null;
     let nullable = false;
     let readonly = false;
     let attrs = [];
@@ -290,7 +289,7 @@ module.exports = {
       this.next();
       nullable = true;
     }
-    types = this.read_types();
+    const types = this.read_types();
     if (nullable && !types) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator",
