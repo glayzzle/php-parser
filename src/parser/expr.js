@@ -119,6 +119,14 @@ module.exports = {
     if (this.token === this.tok.T_COALESCE) {
       return result("bin", "??", expr, this.next().read_expr());
     }
+    // extra operations :
+    // $a = "Hi" |> strtoupper(...);
+    if (this.token === this.tok.T_PIPE) {
+      if (this.version < 805) {
+        this.raiseError("PHP 8.5+ is required to use pipe operator");
+      }
+      return result("bin", "|>", expr, this.next().read_expr());
+    }
 
     // extra operations :
     // $username = $_GET['user'] ? true : false;
