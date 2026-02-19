@@ -9,10 +9,10 @@ module.exports = {
   attributeIndex: 0,
   attributeListDepth: {},
   matchST_ATTRIBUTE() {
-    let ch = this.input();
+    const ch = this.input();
     if (this.is_WHITESPACE()) {
       do {
-        ch = this.input();
+        this.input();
       } while (this.is_WHITESPACE());
       this.unput(1);
       return null;

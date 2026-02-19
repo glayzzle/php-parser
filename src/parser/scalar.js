@@ -357,7 +357,6 @@ module.exports = {
       curly = true;
       // dynamic variable name
       // https://github.com/php/php-src/blob/master/Zend/zend_language_parser.y#L1239
-      name = null;
       if (this.next().token === this.tok.T_STRING_VARNAME) {
         name = this.node("variable");
         const varName = this.text();
@@ -433,7 +432,7 @@ module.exports = {
     this.next();
     const start = this.lexer.yylloc.prev_offset - (isBinary ? 1 : 0);
     const value = [];
-    let type = null;
+    let type;
 
     if (expect === "`") {
       type = this.ast.encapsed.TYPE_SHELL;

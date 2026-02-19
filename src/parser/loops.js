@@ -17,11 +17,10 @@ module.exports = {
   read_while() {
     const result = this.node("while");
     this.expect(this.tok.T_WHILE) && this.next();
-    let test = null;
-    let body = null;
+    let body;
     let shortForm = false;
     if (this.expect("(")) this.next();
-    test = this.read_expr();
+    const test = this.read_expr();
     if (this.expect(")")) this.next();
     if (this.token === ":") {
       shortForm = true;
@@ -43,8 +42,7 @@ module.exports = {
     const result = this.node("do");
     this.expect(this.tok.T_DO) && this.next();
     let test = null;
-    let body = null;
-    body = this.read_statement();
+    const body = this.read_statement();
     if (this.expect(this.tok.T_WHILE)) {
       if (this.next().expect("(")) this.next();
       test = this.read_expr();
@@ -69,7 +67,7 @@ module.exports = {
     let init = [];
     let test = [];
     let increment = [];
-    let body = null;
+    let body;
     let shortForm = false;
     if (this.expect("(")) this.next();
     if (this.token !== ";") {
@@ -109,13 +107,12 @@ module.exports = {
   read_foreach() {
     const result = this.node("foreach");
     this.expect(this.tok.T_FOREACH) && this.next();
-    let source = null;
     let key = null;
     let value = null;
-    let body = null;
+    let body;
     let shortForm = false;
     if (this.expect("(")) this.next();
-    source = this.read_expr();
+    const source = this.read_expr();
     if (this.expect(this.tok.T_AS)) {
       this.next();
       value = this.read_foreach_variable();
