@@ -179,4 +179,12 @@ describe("Test variables", function () {
   it("simple variable #4", function () {
     expect(parser.parseEval("$var = $$$var;")).toMatchSnapshot();
   });
+  it("class keyword on variables", function () {
+    expect(
+      parser.parseEval(
+        `$classVariable->classProp::class;
+        $arrayVariable[0]::class;`,
+      ),
+    ).toMatchSnapshot();
+  });
 });
