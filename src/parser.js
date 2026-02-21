@@ -30,13 +30,13 @@ function isNumber(n) {
  */
 const Parser = function (lexer, ast) {
   this.lexer = lexer;
+  this.engine = lexer.engine;
   this.ast = ast;
   this.tok = lexer.tok;
   this.EOF = lexer.EOF;
   this.token = null;
   this.prev = null;
   this.debug = false;
-  this.version = 803;
   this.extractDoc = false;
   this.extractTokens = false;
   this.suppressErrors = false;

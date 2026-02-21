@@ -1037,10 +1037,10 @@ declare module "php-parser" {
    * @example
    * var parser = require('php-parser');
    * var instance = new parser({
+   *   version: 704 // or '7.4'
    *   parser: {
    *     extractDoc: true,
    *     suppressErrors: true,
-   *     version: 704 // or '7.4'
    *   },
    *   ast: {
    *     withPositions: true

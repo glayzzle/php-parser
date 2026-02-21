@@ -16,7 +16,7 @@ module.exports = {
       case "\r\n":
         return this.T_WHITESPACE();
       case "#":
-        if (this.version >= 800 && this._input[this.offset] === "[") {
+        if (this.engine.version >= 800 && this._input[this.offset] === "[") {
           this.input();
           this.attributeListDepth[++this.attributeIndex] = 0;
           this.begin("ST_ATTRIBUTE");

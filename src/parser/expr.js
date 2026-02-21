@@ -365,7 +365,10 @@ module.exports = {
 
       case this.tok.T_NEW:
         expr = this.read_new_expr();
-        if (this.token === this.tok.T_OBJECT_OPERATOR && this.version < 804) {
+        if (
+          this.token === this.tok.T_OBJECT_OPERATOR &&
+          this.engine.version < 804
+        ) {
           this.raiseError(
             "New without parenthesis is not allowed before PHP 8.4",
           );
@@ -407,7 +410,7 @@ module.exports = {
         return this.read_expr_cast("unset");
 
       case this.tok.T_THROW: {
-        if (this.version < 800) {
+        if (this.engine.version < 800) {
           this.raiseError("PHP 8+ is required to use throw as an expression");
         }
         const result = this.node("throw");
@@ -457,7 +460,7 @@ module.exports = {
         this.next();
         if (
           this.token === this.tok.T_FUNCTION ||
-          (this.version >= 704 && this.token === this.tok.T_FN)
+          (this.engine.version >= 704 && this.token === this.tok.T_FN)
         ) {
           // handles static function
           return this.read_inline_function([0, 1, 0], attrs);
@@ -608,7 +611,7 @@ module.exports = {
     this.next();
     let right;
     if (this.token === this.tok.T_NEW) {
-      if (this.version >= 700) {
+      if (this.engine.version >= 700) {
         this.error();
       }
       right = this.read_new_expr();
@@ -641,7 +644,7 @@ module.exports = {
       return result;
     }
     // introduced in PHP 7.4
-    if (!this.version >= 704) {
+    if (!this.engine.version >= 704) {
       this.raiseError("Arrow Functions are not allowed");
     }
     // as an arrowfunc
@@ -680,7 +683,7 @@ module.exports = {
   read_match_expression() {
     const node = this.node("match");
     this.expect(this.tok.T_MATCH) && this.next();
-    if (this.version < 800) {
+    if (this.engine.version < 800) {
       this.raiseError("Match statements are not allowed before PHP 8");
     }
     if (this.expect("(")) this.next();
