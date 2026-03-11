@@ -13,6 +13,7 @@ const KIND = "print";
  * @constructor Print
  * @memberOf module:php-parser
  * @extends {Expression}
+ * @property {Expression} expression
  */
 module.exports = Expression.extends(
   KIND,
