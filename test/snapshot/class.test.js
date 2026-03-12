@@ -320,4 +320,21 @@ class b {
     `),
     ).toMatchSnapshot();
   });
+
+  it("comments and doc-comments inside class body", function () {
+    expect(
+      parser.parseEval(
+        `
+      class Foo {
+        // inline comment between members
+        /** @var int */
+        public $x;
+        /* block comment */
+        public function bar() {}
+      }
+    `,
+        { parser: { extractDoc: true } },
+      ),
+    ).toMatchSnapshot();
+  });
 });
