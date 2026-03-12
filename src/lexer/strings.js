@@ -159,7 +159,7 @@ module.exports = {
     let indentation = 0;
     let leading_ch = this._input[offset - 1];
 
-    if (this.version >= 703) {
+    if (this.engine.version >= 703) {
       while (leading_ch === "\t" || leading_ch === " ") {
         if (leading_ch === " ") {
           indentation_uses_spaces = true;
@@ -188,7 +188,7 @@ module.exports = {
     ) {
       const ch = this._input[offset - 1 + this.heredoc_label.length];
       if (
-        (this.version >= 703
+        (this.engine.version >= 703
           ? valid_after_heredoc_73
           : valid_after_heredoc
         ).includes(ch)

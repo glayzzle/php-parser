@@ -84,11 +84,11 @@ module.exports = {
     if (type !== 1) {
       const nameNode = this.node("identifier");
       if (type === 2) {
-        if (this.version >= 700) {
+        if (this.engine.version >= 700) {
           if (this.token === this.tok.T_STRING || this.is("IDENTIFIER")) {
             name = this.text();
             this.next();
-          } else if (this.version < 704) {
+          } else if (this.engine.version < 704) {
             this.error("IDENTIFIER");
           }
         } else if (this.token === this.tok.T_STRING) {
@@ -98,11 +98,11 @@ module.exports = {
           this.error("IDENTIFIER");
         }
       } else {
-        if (this.version >= 700) {
+        if (this.engine.version >= 700) {
           if (this.token === this.tok.T_STRING) {
             name = this.text();
             this.next();
-          } else if (this.version >= 704) {
+          } else if (this.engine.version >= 704) {
             if (!this.expect("(")) {
               this.next();
             }
@@ -178,7 +178,7 @@ module.exports = {
       result.push(item());
       if (this.token == ",") {
         this.next();
-        if (this.version >= 800 && this.token === ")") {
+        if (this.engine.version >= 800 && this.token === ")") {
           return result;
         }
       } else if (this.token == ")") {
@@ -257,7 +257,7 @@ module.exports = {
     let attrs = [];
     if (this.token === this.tok.T_ATTRIBUTE) attrs = this.read_attr_list();
 
-    if (this.version >= 801 && this.token === this.tok.T_READ_ONLY) {
+    if (this.engine.version >= 801 && this.token === this.tok.T_READ_ONLY) {
       if (is_class_constructor) {
         this.next();
         readonly = true;
@@ -272,7 +272,7 @@ module.exports = {
 
     if (
       !readonly &&
-      this.version >= 801 &&
+      this.engine.version >= 801 &&
       this.token === this.tok.T_READ_ONLY
     ) {
       if (is_class_constructor) {
@@ -335,7 +335,10 @@ module.exports = {
     // is the current token a:
     // - | for union type
     // - & for intersection type (> php 8.1)
-    while (this.token === "|" || (this.version >= 801 && this.token === "&")) {
+    while (
+      this.token === "|" ||
+      (this.engine.version >= 801 && this.token === "&")
+    ) {
       const nextToken = this.peek();
 
       if (
@@ -399,7 +402,7 @@ module.exports = {
     let result = [];
     this.expect("(") && this.next();
     if (
-      this.version >= 801 &&
+      this.engine.version >= 801 &&
       this.token === this.tok.T_ELLIPSIS &&
       this.peek() === ")"
     ) {
@@ -452,7 +455,7 @@ module.exports = {
     ) {
       const nextToken = this.peek();
       if (nextToken === ":") {
-        if (this.version < 800) {
+        if (this.engine.version < 800) {
           this.raiseError("PHP 8+ is required to use named arguments");
         }
         return this.node("namedargument")(

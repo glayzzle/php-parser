@@ -25,6 +25,7 @@ const engine = require("php-parser");
 // initialize a new parser instance
 const parser = new engine({
   // some options :
+  version: "8.4", // specify the PHP version to parse
   parser: {
     extractDoc: true,
     php7: true,
