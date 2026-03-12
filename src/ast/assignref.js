@@ -15,7 +15,6 @@ const KIND = "assignref";
  * @extends {Expression}
  * @property {Expression} left
  * @property {Expression} right
- * @property {String} operator
  */
 module.exports = Expression.extends(
   KIND,

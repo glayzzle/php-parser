@@ -57,7 +57,6 @@ declare module "php-parser" {
   class AssignRef extends Expression {
     left: Expression;
     right: Expression;
-    operator: string;
   }
   /**
    * Attribute group
@@ -291,7 +290,9 @@ declare module "php-parser" {
   /**
    * Defines an empty check call
    */
-  class Empty extends Expression {}
+  class Empty extends Expression {
+    expression: Expression;
+  }
   /**
    * Defines an encapsed string (contains expressions)
    * @property type - Defines the type of encapsed string (shell, heredoc, string)
@@ -524,7 +525,9 @@ declare module "php-parser" {
   /**
    * Defines an isset call
    */
-  class Isset extends Expression {}
+  class Isset extends Expression {
+    variables: Expression[];
+  }
   /**
    * A label statement (referenced by goto)
    */
@@ -757,7 +760,9 @@ declare module "php-parser" {
   /**
    * Outputs
    */
-  class Print extends Expression {}
+  class Print extends Expression {
+    expression: Expression;
+  }
   /**
    * The main program node
    */
@@ -939,7 +944,7 @@ declare module "php-parser" {
      * Possible value : function, const
      */
     type: string | null;
-    item: UseItem[];
+    items: UseItem[];
   }
   /**
    * Defines a use statement (from namespace)
