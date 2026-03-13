@@ -835,6 +835,7 @@ module.exports = {
       let result = this.read_namespace_name(true);
       if (this.token === this.tok.T_DOUBLE_COLON) {
         result = this.read_static_getter(result);
+        return this.recursive_variable_chain_scan(result, true, false);
       }
       return result;
     } else if (this.is("VARIABLE")) {
