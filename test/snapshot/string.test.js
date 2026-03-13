@@ -169,7 +169,7 @@ describe("Test strings", function () {
     });
   });
 
-  it.skip("binary cast", function () {
+  it("binary cast", function () {
     expect(
       parser.parseEval(`echo (binary)"\\colors[1] contains >$colors[1]<\\n";`),
     ).toMatchSnapshot();
@@ -275,14 +275,13 @@ describe("Test strings", function () {
     ).toMatchSnapshot();
   });
 
-  it.skip("heredoc ...", function () {
+  it("heredoc ...", function () {
     expect(
       parser.parseEval(`
       $fallbackContent .= sprintf(<<<EOF2
       \\$catalogue%s = new MessageCatalogue('%s', %s);
       \\$catalogue%s->addFallbackCatalogue(\\$catalogue%s);
-      EOF2
-      )
+      EOF2)
     `),
     ).toMatchSnapshot();
   });
@@ -397,6 +396,12 @@ $var = "'";
 $var = "\\'";
 $var = "\\n | \\r | \\t | \\v | \\e | \\f | \\\\ | \\$ | \\" | \\141 | \\x61 | \\u{0061}";
 `),
+    ).toMatchSnapshot();
+  });
+
+  it("multiple escaped double quotes", function () {
+    expect(
+      parser.parseEval(`$var = "say \\"hello\\" and \\"bye\\"";`),
     ).toMatchSnapshot();
   });
 });

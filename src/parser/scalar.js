@@ -26,7 +26,7 @@ module.exports = {
       return text.replace(/\\\\/g, "\\").replace(/\\'/g, "'");
     }
     return text
-      .replace(/\\"/, '"')
+      .replace(/\\"/g, '"')
       .replace(
         /\\([\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3}|u{([0-9a-fA-F]+)})/g,
         ($match, p1, p2) => {
@@ -342,13 +342,16 @@ module.exports = {
         "string",
         false,
         this.version >= 703 && !this.lexer.heredoc_label.finished
-          ? this.remove_heredoc_leading_whitespace_chars(
-              this.resolve_special_chars(text, isDoubleQuote),
-              this.lexer.heredoc_label.indentation,
-              this.lexer.heredoc_label.indentation_uses_spaces,
-              this.lexer.heredoc_label.first_encaps_node,
+          ? this.resolve_special_chars(
+              this.remove_heredoc_leading_whitespace_chars(
+                text,
+                this.lexer.heredoc_label.indentation,
+                this.lexer.heredoc_label.indentation_uses_spaces,
+                this.lexer.heredoc_label.first_encaps_node,
+              ),
+              isDoubleQuote,
             )
-          : text,
+          : this.resolve_special_chars(text, isDoubleQuote),
         false,
         text,
       );
@@ -447,6 +450,7 @@ module.exports = {
       value.push(this.read_encapsed_string_item(true));
     }
     if (
+      type === this.ast.encapsed.TYPE_HEREDOC &&
       value.length > 0 &&
       value[value.length - 1].kind === "encapsedpart" &&
       value[value.length - 1].expression.kind === "string"
