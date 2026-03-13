@@ -190,8 +190,8 @@ module.exports = {
        */
       function read_variable_declaration() {
         const result = this.node("property");
-        let readonly = false;
-        if (this.token === this.tok.T_READ_ONLY) {
+        let readonly = flags[3] === 1;
+        if (!readonly && this.token === this.tok.T_READ_ONLY) {
           readonly = true;
           this.next();
         }
@@ -273,7 +273,7 @@ module.exports = {
    *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
    */
   read_member_flags(asInterface) {
-    const result = [-1, -1, -1];
+    const result = [-1, -1, -1, -1];
     if (this.is("T_MEMBER_FLAGS")) {
       let idx = 0,
         val = 0;
@@ -303,6 +303,10 @@ module.exports = {
             idx = 2;
             val = 2;
             break;
+          case this.tok.T_READ_ONLY:
+            idx = 3;
+            val = 1;
+            break;
         }
         if (asInterface) {
           if (idx === 0 && val === 2) {
@@ -326,6 +330,7 @@ module.exports = {
 
     if (result[1] === -1) result[1] = 0;
     if (result[2] === -1) result[2] = 0;
+    if (result[3] === -1) result[3] = 0;
     return result;
   },
 
