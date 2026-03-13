@@ -108,4 +108,16 @@ describe("new", function () {
   it("result from function with arguments", function () {
     expect(parser.parseEval("$a = new (b('c')('d'))('e');")).toMatchSnapshot();
   });
+  it("#1177 - static property chain as class name", function () {
+    expect(parser.parseEval("new Foo::$bar->baz();")).toMatchSnapshot();
+  });
+  it("#1177 - explicit parens equivalent", function () {
+    expect(parser.parseEval("new (Foo::$bar->baz)();")).toMatchSnapshot();
+  });
+  it("#1177 - nullsafe operator in chain", function () {
+    expect(parser.parseEval("new Foo::$bar?->baz();")).toMatchSnapshot();
+  });
+  it("#1177 - longer chain", function () {
+    expect(parser.parseEval("new Foo::$bar->baz->qux();")).toMatchSnapshot();
+  });
 });
