@@ -357,12 +357,21 @@ Parser.prototype.raiseError = function (message, msgExpect, expect, token) {
     throw err;
   }
   // Error node :
+  // Temporarily set prev to the current token's end so the error node
+  // spans from the current token's start to its end (not the previous token's end).
+  const savedPrev = this.prev;
+  this.prev = [
+    this.lexer.yylloc.last_line,
+    this.lexer.yylloc.last_column,
+    this.lexer.offset,
+  ];
   const node = this.ast.prepare("error", null, this)(
     message,
     token,
     this.lexer.yylloc.first_line,
     expect,
   );
+  this.prev = savedPrev;
   this._errors.push(node);
   return node;
 };

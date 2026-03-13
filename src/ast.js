@@ -179,6 +179,9 @@ AST.prototype.isRightAssociative = function (operator) {
  */
 AST.prototype.swapLocations = function (target, first, last, parser) {
   if (this.withPositions) {
+    if (!target || !target.loc || !first || !first.loc || !last || !last.loc) {
+      return;
+    }
     target.loc.start = first.loc.start;
     target.loc.end = last.loc.end;
     if (this.withSource) {
@@ -198,6 +201,9 @@ AST.prototype.swapLocations = function (target, first, last, parser) {
  */
 AST.prototype.resolveLocations = function (target, first, last, parser) {
   if (this.withPositions) {
+    if (!target || !target.loc || !first || !first.loc || !last || !last.loc) {
+      return;
+    }
     if (target.loc.start.offset > first.loc.start.offset) {
       target.loc.start = first.loc.start;
     }
