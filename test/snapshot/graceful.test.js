@@ -1,6 +1,25 @@
 const parser = require("../main");
 
 describe("Test graceful mode", function () {
+  describe("suppressErrors with withPositions", function () {
+    const test = parser.create({
+      parser: {
+        suppressErrors: true,
+      },
+      ast: {
+        withPositions: true,
+      },
+    });
+
+    it("should not throw on call-like expression followed by block (issue #1185)", function () {
+      expect(test.parseCode("<?php f(){$a;}")).toMatchSnapshot();
+    });
+
+    it("should not throw on silent expression with incomplete binary (issue #1185)", function () {
+      expect(test.parseCode("<?php @$a -;")).toMatchSnapshot();
+    });
+  });
+
   describe("to suppress errors", function () {
     const test = parser.create({
       parser: {
