@@ -45,6 +45,23 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("Implement readonly property with readonly before visibility", function () {
+    expect(
+      parser.parseEval(
+        `
+    class Test {
+      readonly public int $test;
+    }
+    `,
+        {
+          parser: {
+            version: "8.1",
+          },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
   it("Validate usual declarations", function () {
     expect(
       parser.parseEval(`
