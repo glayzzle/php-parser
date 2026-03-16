@@ -242,10 +242,8 @@ module.exports = {
     return property_statement;
   },
 
-  /**
+  /*
    * Reads property hooks
-   *
-   * @returns {PropertyHook[]}
    */
   read_property_hooks() {
     if (this.version < 804) {
@@ -256,19 +254,22 @@ module.exports = {
 
     const hooks = [];
 
-    while (this.token !== "}") {
+    while (this.token !== this.EOF && this.token !== "}") {
       hooks.push(this.read_property_hook());
     }
 
-    if (this.token === "}") {
-      this.next();
-      return hooks;
-    }
-    return [];
+    this.expect("}");
+    this.next();
+    return hooks;
   },
 
   read_property_hook() {
     const property_hooks = this.node("propertyhook");
+
+    let attrs = [];
+    if (this.token === this.tok.T_ATTRIBUTE) {
+      attrs = this.read_attr_list();
+    }
 
     const is_final = this.token === this.tok.T_FINAL;
     if (is_final) this.next();
@@ -292,6 +293,14 @@ module.exports = {
     // interface or abstract definition
     if (this.token === ";") {
       this.next();
+      return property_hooks(
+        method_name,
+        is_final,
+        is_reference,
+        parameter,
+        body,
+        attrs,
+      );
     }
 
     if (this.token === "(") {
@@ -309,7 +318,14 @@ module.exports = {
       body = this.read_code_block();
     }
 
-    return property_hooks(method_name, is_final, is_reference, parameter, body);
+    return property_hooks(
+      method_name,
+      is_final,
+      is_reference,
+      parameter,
+      body,
+      attrs,
+    );
   },
 
   /*

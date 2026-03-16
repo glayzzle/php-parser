@@ -182,6 +182,26 @@ describe("classpropertyhooks", () => {
         set => strtolower($value);
     }
 }`,
+    `class Example
+{
+    public string $foo = 'default value' {
+        get {
+            return $this->foo;
+        }
+        set => strtolower($value);
+    }
+}`,
+    `class Example
+{
+    public string $foo = 'default value' {
+        get {
+            return $this->foo;
+        }
+        set {
+            $this->foo = strtolower($value);
+        }
+    }
+}`,
   ].forEach((code) => {
     it("support setter + getter", () => {
       expect(test_parser.parseEval(code)).toMatchSnapshot();
@@ -249,6 +269,107 @@ describe("classpropertyhooks", () => {
       it(name, () => {
         expect(test_parser.parseEval(code)).toMatchSnapshot();
       });
+    });
+  });
+
+  describe("constructor promotion with hooks", () => {
+    it("arrow set", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name { set => strtolower($value); }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("block set", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name {
+      set { $this->name = strtolower($value); }
+    }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("with default value", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name = 'default' { set => strtolower($value); }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe("attributes on hooks", () => {
+    it("attribute on get hook", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public string $x {
+    #[SomeAttr]
+    get => 1;
+  }
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("attribute on set hook with parameter attribute", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public int $x {
+    #[SetHook]
+    set(#[SensitiveParameter] int $value) {
+      $this->x = $value;
+    }
+  }
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+  });
+
+  describe("graceful mode", () => {
+    const graceful_parser = parser.create({
+      parser: {
+        version: "8.4",
+        suppressErrors: true,
+      },
+    });
+
+    it("invalid hook name", () => {
+      expect(
+        graceful_parser.parseEval(
+          `class Foo { public string $bar { delete => 1; } }`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("missing closing brace", () => {
+      expect(
+        graceful_parser.parseEval(
+          `class Foo { public string $bar { get => 1; }`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("missing hook body", () => {
+      expect(
+        graceful_parser.parseEval(`class Foo { public string $bar { get } }`),
+      ).toMatchSnapshot();
     });
   });
 });

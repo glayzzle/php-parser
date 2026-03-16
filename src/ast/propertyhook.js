@@ -18,16 +18,27 @@ const KIND = "propertyhook";
  * @property {Boolean} isFinal
  * @property {Boolean} byref
  * @property {Parameter|null} parameter
- * @property {Block|Statement} body
+ * @property {Block|Expression|null} body
+ * @property {AttrGroup[]} attrGroups
  */
 module.exports = Node.extends(
   KIND,
-  function PropertyHook(name, isFinal, byref, parameter, body, docs, location) {
+  function PropertyHook(
+    name,
+    isFinal,
+    byref,
+    parameter,
+    body,
+    attrGroups,
+    docs,
+    location,
+  ) {
     Node.apply(this, [KIND, docs, location]);
     this.name = name;
+    this.isFinal = isFinal;
     this.byref = byref;
     this.parameter = parameter;
     this.body = body;
-    this.isFinal = isFinal;
+    this.attrGroups = attrGroups || [];
   },
 );

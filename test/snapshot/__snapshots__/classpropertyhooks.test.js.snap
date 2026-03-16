@@ -16,6 +16,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": null,
                   "byref": false,
                   "isFinal": false,
@@ -24,6 +25,7 @@ Program {
                   "parameter": null,
                 },
                 PropertyHook {
+                  "attrGroups": [],
                   "body": null,
                   "byref": false,
                   "isFinal": false,
@@ -84,6 +86,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": null,
                   "byref": false,
                   "isFinal": false,
@@ -144,6 +147,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": null,
                   "byref": false,
                   "isFinal": false,
@@ -180,6 +184,211 @@ Program {
       "name": Identifier {
         "kind": "identifier",
         "name": "User",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks attributes on hooks attribute on get hook 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [
+                    AttrGroup {
+                      "attrs": [
+                        Attribute {
+                          "args": [],
+                          "kind": "attribute",
+                          "name": "SomeAttr",
+                        },
+                      ],
+                      "kind": "attrgroup",
+                    },
+                  ],
+                  "body": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "x",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks attributes on hooks attribute on set hook with parameter attribute 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [
+                    AttrGroup {
+                      "attrs": [
+                        Attribute {
+                          "args": [],
+                          "kind": "attribute",
+                          "name": "SetHook",
+                        },
+                      ],
+                      "kind": "attrgroup",
+                    },
+                  ],
+                  "body": Block {
+                    "children": [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "x",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "value",
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": Parameter {
+                    "attrGroups": [
+                      AttrGroup {
+                        "attrs": [
+                          Attribute {
+                            "args": [],
+                            "kind": "attribute",
+                            "name": "SensitiveParameter",
+                          },
+                        ],
+                        "kind": "attrgroup",
+                      },
+                    ],
+                    "byref": false,
+                    "flags": 0,
+                    "hooks": [],
+                    "kind": "parameter",
+                    "name": Identifier {
+                      "kind": "identifier",
+                      "name": "value",
+                    },
+                    "nullable": false,
+                    "readonly": false,
+                    "type": TypeReference {
+                      "kind": "typereference",
+                      "name": "int",
+                      "raw": "int",
+                    },
+                    "value": null,
+                    "variadic": false,
+                  },
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "x",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
       },
     },
   ],
@@ -230,6 +439,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": PropertyLookup {
                     "kind": "propertylookup",
                     "offset": Identifier {
@@ -249,6 +459,7 @@ Program {
                   "parameter": null,
                 },
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -331,6 +542,309 @@ Program {
 }
 `;
 
+exports[`classpropertyhooks constructor promotion with hooks arrow set 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        Method {
+          "arguments": [
+            Parameter {
+              "attrGroups": [],
+              "byref": false,
+              "flags": 1,
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Call {
+                    "arguments": [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "value",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "strtolower",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "name",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": [],
+          "body": Block {
+            "children": [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isReadonly": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks constructor promotion with hooks block set 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        Method {
+          "arguments": [
+            Parameter {
+              "attrGroups": [],
+              "byref": false,
+              "flags": 1,
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Block {
+                    "children": [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "name",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "value",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "strtolower",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "name",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+              "variadic": false,
+            },
+          ],
+          "attrGroups": [],
+          "body": Block {
+            "children": [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isReadonly": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks constructor promotion with hooks with default value 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        Method {
+          "arguments": [
+            Parameter {
+              "attrGroups": [],
+              "byref": false,
+              "flags": 1,
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Call {
+                    "arguments": [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "value",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "strtolower",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "parameter",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "name",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'default'",
+                "unicode": false,
+                "value": "default",
+              },
+              "variadic": false,
+            },
+          ],
+          "attrGroups": [],
+          "body": Block {
+            "children": [],
+            "kind": "block",
+          },
+          "byref": false,
+          "isAbstract": false,
+          "isFinal": false,
+          "isReadonly": false,
+          "isStatic": false,
+          "kind": "method",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "__construct",
+          },
+          "nullable": false,
+          "type": null,
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`classpropertyhooks final on the hook itself 1`] = `
 Program {
   "children": [
@@ -347,6 +861,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       If {
@@ -520,6 +1035,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Call {
                     "arguments": [
                       Variable {
@@ -594,6 +1110,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Bin {
                     "kind": "bin",
                     "left": String {
@@ -676,6 +1193,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -750,6 +1268,224 @@ Program {
 }
 `;
 
+exports[`classpropertyhooks graceful mode invalid hook name 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "delete",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [
+    Error {
+      "expected": undefined,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error: Property hooks must be either 'get' or 'set' on line 1",
+      "token": undefined,
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks graceful mode missing closing brace 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Number {
+                    "kind": "number",
+                    "value": "1",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [
+    Error {
+      "expected": "}",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, expecting '}' on line 1",
+      "token": "the end of file (EOF)",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks graceful mode missing hook body 1`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": null,
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "bar",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Foo",
+      },
+    },
+  ],
+  "errors": [
+    Error {
+      "expected": [
+        183,
+        "{",
+        "(",
+        ";",
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '}' on line 1",
+      "token": "'}'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
 exports[`classpropertyhooks not supported in php < 8.4 1`] = `"Parse Error: Property hooks require PHP 8.4+ on line 2"`;
 
 exports[`classpropertyhooks setter block form with explicit typed $value 1`] = `
@@ -768,6 +1504,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -846,6 +1583,7 @@ Program {
                     "attrGroups": [],
                     "byref": false,
                     "flags": 0,
+                    "hooks": [],
                     "kind": "parameter",
                     "name": Identifier {
                       "kind": "identifier",
@@ -915,6 +1653,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -993,6 +1732,7 @@ Program {
                     "attrGroups": [],
                     "byref": false,
                     "flags": 0,
+                    "hooks": [],
                     "kind": "parameter",
                     "name": Identifier {
                       "kind": "identifier",
@@ -1054,6 +1794,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -1183,6 +1924,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Assign {
                     "kind": "assign",
                     "left": PropertyLookup {
@@ -1222,6 +1964,7 @@ Program {
                     "attrGroups": [],
                     "byref": false,
                     "flags": 0,
+                    "hooks": [],
                     "kind": "parameter",
                     "name": Identifier {
                       "kind": "identifier",
@@ -1291,6 +2034,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Assign {
                     "kind": "assign",
                     "left": PropertyLookup {
@@ -1330,6 +2074,7 @@ Program {
                     "attrGroups": [],
                     "byref": false,
                     "flags": 0,
+                    "hooks": [],
                     "kind": "parameter",
                     "name": Identifier {
                       "kind": "identifier",
@@ -1391,6 +2136,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Assign {
                     "kind": "assign",
                     "left": PropertyLookup {
@@ -1471,6 +2217,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": PropertyLookup {
                     "kind": "propertylookup",
                     "offset": Identifier {
@@ -1578,6 +2325,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Bin {
                     "kind": "bin",
                     "left": PropertyLookup {
@@ -1631,6 +2379,7 @@ Program {
                   "parameter": null,
                 },
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -1702,6 +2451,7 @@ Program {
                     "attrGroups": [],
                     "byref": false,
                     "flags": 0,
+                    "hooks": [],
                     "kind": "parameter",
                     "name": Identifier {
                       "kind": "identifier",
@@ -1807,6 +2557,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Bin {
                     "kind": "bin",
                     "left": PropertyLookup {
@@ -1860,6 +2611,7 @@ Program {
                   "parameter": null,
                 },
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Block {
                     "children": [
                       ExpressionStatement {
@@ -1988,6 +2740,7 @@ Program {
               "attrGroups": [],
               "hooks": [
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Bin {
                     "kind": "bin",
                     "left": PropertyLookup {
@@ -2041,6 +2794,7 @@ Program {
                   "parameter": null,
                 },
                 PropertyHook {
+                  "attrGroups": [],
                   "body": Call {
                     "arguments": [
                       Variable {
@@ -2055,6 +2809,248 @@ Program {
                       "name": "strtolower",
                       "resolution": "uqn",
                     },
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'default value'",
+                "unicode": false,
+                "value": "default value",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Example",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks support setter + getter 4`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Block {
+                    "children": [
+                      Return {
+                        "expr": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "foo",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "this",
+                          },
+                        },
+                        "kind": "return",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Call {
+                    "arguments": [
+                      Variable {
+                        "curly": false,
+                        "kind": "variable",
+                        "name": "value",
+                      },
+                    ],
+                    "kind": "call",
+                    "what": Name {
+                      "kind": "name",
+                      "name": "strtolower",
+                      "resolution": "uqn",
+                    },
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "foo",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "string",
+                "raw": "string",
+              },
+              "value": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "'default value'",
+                "unicode": false,
+                "value": "default value",
+              },
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "implements": null,
+      "isAbstract": false,
+      "isAnonymous": false,
+      "isFinal": false,
+      "isReadonly": false,
+      "kind": "class",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "Example",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`classpropertyhooks support setter + getter 5`] = `
+Program {
+  "children": [
+    Class {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Block {
+                    "children": [
+                      Return {
+                        "expr": PropertyLookup {
+                          "kind": "propertylookup",
+                          "offset": Identifier {
+                            "kind": "identifier",
+                            "name": "foo",
+                          },
+                          "what": Variable {
+                            "curly": false,
+                            "kind": "variable",
+                            "name": "this",
+                          },
+                        },
+                        "kind": "return",
+                      },
+                    ],
+                    "kind": "block",
+                  },
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+                PropertyHook {
+                  "attrGroups": [],
+                  "body": Block {
+                    "children": [
+                      ExpressionStatement {
+                        "expression": Assign {
+                          "kind": "assign",
+                          "left": PropertyLookup {
+                            "kind": "propertylookup",
+                            "offset": Identifier {
+                              "kind": "identifier",
+                              "name": "foo",
+                            },
+                            "what": Variable {
+                              "curly": false,
+                              "kind": "variable",
+                              "name": "this",
+                            },
+                          },
+                          "operator": "=",
+                          "right": Call {
+                            "arguments": [
+                              Variable {
+                                "curly": false,
+                                "kind": "variable",
+                                "name": "value",
+                              },
+                            ],
+                            "kind": "call",
+                            "what": Name {
+                              "kind": "name",
+                              "name": "strtolower",
+                              "resolution": "uqn",
+                            },
+                          },
+                        },
+                        "kind": "expressionstatement",
+                      },
+                    ],
+                    "kind": "block",
                   },
                   "byref": false,
                   "isFinal": false,

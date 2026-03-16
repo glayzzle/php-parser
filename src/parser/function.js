@@ -306,6 +306,10 @@ module.exports = {
     if (this.token == "=") {
       value = this.next().read_expr();
     }
+    let hooks = [];
+    if (this.version >= 804 && flags && this.token === "{") {
+      hooks = this.read_property_hooks();
+    }
     const result = node(
       parameterName,
       types,
@@ -315,6 +319,7 @@ module.exports = {
       readonly,
       nullable,
       flags,
+      hooks,
     );
     if (attrs) result.attrGroups = attrs;
     return result;
