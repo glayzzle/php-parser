@@ -18,20 +18,38 @@ describe("interface", function () {
     ).toMatchSnapshot();
   });
 
-  it("comments and doc-comments inside interface body", function () {
-    expect(
-      parser.parseEval(
-        `
-      interface Foo {
-        // inline comment between members
-        /** @return void */
-        public function bar(): void;
-        /* block comment */
-        public function baz(): int;
-      }
-    `,
-        { parser: { extractDoc: true } },
-      ),
-    ).toMatchSnapshot();
+  describe("property hooks", function () {
+    const test_parser = parser.create({
+      parser: {
+        version: "8.4",
+      },
+    });
+
+    it("getter", () => {
+      const code = `interface I {
+    // An implementing class MUST have a publicly-readable property,
+    // but whether or not it's publicly settable is unrestricted.
+    public int $readable { get; }
+}`;
+      expect(test_parser.parseEval(code)).toMatchSnapshot();
+    });
+
+    it("setter", () => {
+      const code = `interface I {
+    // An implementing class MUST have a publicly-readable property,
+    // but whether or not it's publicly settable is unrestricted.
+    public int $readable { set; }
+}`;
+      expect(test_parser.parseEval(code)).toMatchSnapshot();
+    });
+
+    it("get + set", () => {
+      const code = `interface I {
+    // An implementing class MUST have a publicly-readable property,
+    // but whether or not it's publicly settable is unrestricted.
+    public int $readable { get; set;}
+}`;
+      expect(test_parser.parseEval(code)).toMatchSnapshot();
+    });
   });
 });

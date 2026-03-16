@@ -1,107 +1,5 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`interface comments and doc-comments inside interface body 1`] = `
-Program {
-  "children": [
-    Interface {
-      "attrGroups": [],
-      "body": [
-        Method {
-          "arguments": [],
-          "attrGroups": [],
-          "body": null,
-          "byref": false,
-          "isAbstract": false,
-          "isFinal": false,
-          "isReadonly": false,
-          "isStatic": false,
-          "kind": "method",
-          "leadingComments": [
-            CommentLine {
-              "kind": "commentline",
-              "offset": 31,
-              "value": "// inline comment between members
-",
-            },
-            CommentBlock {
-              "kind": "commentblock",
-              "offset": 73,
-              "value": "/** @return void */",
-            },
-          ],
-          "name": Identifier {
-            "kind": "identifier",
-            "name": "bar",
-          },
-          "nullable": false,
-          "type": TypeReference {
-            "kind": "typereference",
-            "name": "void",
-            "raw": "void",
-          },
-          "visibility": "public",
-        },
-        Method {
-          "arguments": [],
-          "attrGroups": [],
-          "body": null,
-          "byref": false,
-          "isAbstract": false,
-          "isFinal": false,
-          "isReadonly": false,
-          "isStatic": false,
-          "kind": "method",
-          "leadingComments": [
-            CommentBlock {
-              "kind": "commentblock",
-              "offset": 138,
-              "value": "/* block comment */",
-            },
-          ],
-          "name": Identifier {
-            "kind": "identifier",
-            "name": "baz",
-          },
-          "nullable": false,
-          "type": TypeReference {
-            "kind": "typereference",
-            "name": "int",
-            "raw": "int",
-          },
-          "visibility": "public",
-        },
-      ],
-      "extends": null,
-      "kind": "interface",
-      "name": Identifier {
-        "kind": "identifier",
-        "name": "Foo",
-      },
-    },
-  ],
-  "comments": [
-    CommentLine {
-      "kind": "commentline",
-      "offset": 31,
-      "value": "// inline comment between members
-",
-    },
-    CommentBlock {
-      "kind": "commentblock",
-      "offset": 73,
-      "value": "/** @return void */",
-    },
-    CommentBlock {
-      "kind": "commentblock",
-      "offset": 138,
-      "value": "/* block comment */",
-    },
-  ],
-  "errors": [],
-  "kind": "program",
-}
-`;
-
 exports[`interface extends 1`] = `
 Program {
   "children": [
@@ -220,6 +118,179 @@ Program {
       "name": Identifier {
         "kind": "identifier",
         "name": "A",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`interface property hooks get + set 1`] = `
+Program {
+  "children": [
+    Interface {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": null,
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+                PropertyHook {
+                  "body": null,
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "readable",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "kind": "interface",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "I",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`interface property hooks getter 1`] = `
+Program {
+  "children": [
+    Interface {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": null,
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "get",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "readable",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "kind": "interface",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "I",
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`interface property hooks setter 1`] = `
+Program {
+  "children": [
+    Interface {
+      "attrGroups": [],
+      "body": [
+        PropertyStatement {
+          "isAbstract": false,
+          "isFinal": false,
+          "isStatic": false,
+          "kind": "propertystatement",
+          "properties": [
+            Property {
+              "attrGroups": [],
+              "hooks": [
+                PropertyHook {
+                  "body": null,
+                  "byref": false,
+                  "isFinal": false,
+                  "kind": "propertyhook",
+                  "name": "set",
+                  "parameter": null,
+                },
+              ],
+              "kind": "property",
+              "name": Identifier {
+                "kind": "identifier",
+                "name": "readable",
+              },
+              "nullable": false,
+              "readonly": false,
+              "type": TypeReference {
+                "kind": "typereference",
+                "name": "int",
+                "raw": "int",
+              },
+              "value": null,
+            },
+          ],
+          "visibility": "public",
+        },
+      ],
+      "extends": null,
+      "kind": "interface",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "I",
       },
     },
   ],

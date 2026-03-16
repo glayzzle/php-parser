@@ -52,6 +52,8 @@ PropertyStatement.prototype.parseFlags = function (flags) {
   }
 
   this.isStatic = flags[1] === 1;
+  this.isAbstract = flags[2] === 1;
+  this.isFinal = flags[2] === 2;
 };
 
 module.exports = PropertyStatement;
