@@ -17,4 +17,21 @@ describe("interface", function () {
       }),
     ).toMatchSnapshot();
   });
+
+  it("comments and doc-comments inside interface body", function () {
+    expect(
+      parser.parseEval(
+        `
+      interface Foo {
+        // inline comment between members
+        /** @return void */
+        public function bar(): void;
+        /* block comment */
+        public function baz(): int;
+      }
+    `,
+        { parser: { extractDoc: true } },
+      ),
+    ).toMatchSnapshot();
+  });
 });
