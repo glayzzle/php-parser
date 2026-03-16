@@ -612,6 +612,10 @@ module.exports = {
         this.error();
       }
       right = this.read_new_expr();
+    } else if (this.token === "(") {
+      right = this.next().read_expr();
+      this.expect(")") && this.next();
+      right = this.recursive_variable_chain_scan(right, false, false);
     } else {
       right = this.read_variable(false, false);
     }

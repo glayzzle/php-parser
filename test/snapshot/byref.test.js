@@ -107,8 +107,23 @@ describe("byref", () => {
   it("propertylookup", () => {
     expect(parser.parseEval("$var = &$var->test;")).toMatchSnapshot();
   });
-  it.skip("propertylookup #2", () => {
+  it("propertylookup #2", () => {
     expect(parser.parseEval("$var = &($var)->test;")).toMatchSnapshot();
+  });
+  it("propertylookup #3 - method call", () => {
+    expect(parser.parseEval("$var = &($var)->method();")).toMatchSnapshot();
+  });
+  it("propertylookup #4 - chained", () => {
+    expect(parser.parseEval("$var = &($var)->prop->nested;")).toMatchSnapshot();
+  });
+  it("propertylookup #5 - offset lookup", () => {
+    expect(parser.parseEval("$var = &($var)[$key];")).toMatchSnapshot();
+  });
+  it("propertylookup #6 - static property", () => {
+    expect(parser.parseEval("$var = &($var)::$prop;")).toMatchSnapshot();
+  });
+  it("propertylookup #7 - expr in parens", () => {
+    expect(parser.parseEval("$var = &($obj->prop)->test;")).toMatchSnapshot();
   });
   it("with bin", () => {
     expect(parser.parseEval("$foo = &$bar || $bar;")).toMatchSnapshot();
