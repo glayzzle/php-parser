@@ -14,6 +14,10 @@ export default [
     rules: {
       ...jest.configs["flat/recommended"].rules,
       "no-console": "off",
+      "jest/expect-expect": [
+        "warn",
+        { assertFunctionNames: ["expect", "shouldBeSame"] },
+      ],
     },
     languageOptions: {
       globals: jest.environments.globals.globals,
