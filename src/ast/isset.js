@@ -13,6 +13,7 @@ const KIND = "isset";
  * @constructor Isset
  * @memberOf module:php-parser
  * @extends {Expression}
+ * @property {Expression[]} variables
  */
 module.exports = Expression.extends(
   KIND,
