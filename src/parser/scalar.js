@@ -341,7 +341,7 @@ module.exports = {
       result = result(
         "string",
         false,
-        this.version >= 703 && !this.lexer.heredoc_label.finished
+        this.engine.version >= 703 && !this.lexer.heredoc_label.finished
           ? this.remove_heredoc_leading_whitespace_chars(
               this.resolve_special_chars(text, isDoubleQuote),
               this.lexer.heredoc_label.indentation,

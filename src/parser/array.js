@@ -82,7 +82,10 @@ module.exports = {
       this.next();
       byRef = true;
       value = this.read_variable(true, false);
-    } else if (this.token === this.tok.T_ELLIPSIS && this.version >= 704) {
+    } else if (
+      this.token === this.tok.T_ELLIPSIS &&
+      this.engine.version >= 704
+    ) {
       this.next();
       if (this.token === "&") {
         this.error();
