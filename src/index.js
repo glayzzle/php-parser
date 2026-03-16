@@ -18,6 +18,9 @@ function combine(src, to) {
   let i = keys.length;
   while (i--) {
     const k = keys[i];
+    if (k === "__proto__" || k === "constructor" || k === "prototype") {
+      continue;
+    }
     const val = src[k];
     if (val === null) {
       delete to[k];
