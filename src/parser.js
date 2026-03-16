@@ -181,6 +181,7 @@ const Parser = function (lexer, ast) {
         this.tok.T_STATIC,
         this.tok.T_ABSTRACT,
         this.tok.T_FINAL,
+        this.tok.T_READ_ONLY,
       ].map(mapIt),
     ),
     EOS: new Map([";", this.EOF, this.tok.T_INLINE_HTML].map(mapIt)),
