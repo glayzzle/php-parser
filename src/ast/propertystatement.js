@@ -21,6 +21,8 @@ const IS_PRIVATE = "private";
  * @property {Property[]} properties
  * @property {string|null} visibility
  * @property {boolean} isStatic
+ * @property {boolean} isAbstract
+ * @property {boolean} isFinal
  */
 const PropertyStatement = Statement.extends(
   KIND,

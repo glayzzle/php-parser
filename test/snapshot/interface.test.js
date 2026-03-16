@@ -27,8 +27,7 @@ describe("interface", function () {
 
     it("getter", () => {
       const code = `interface I {
-    // An implementing class MUST have a publicly-readable property,
-    // but whether or not it's publicly settable is unrestricted.
+
     public int $readable { get; }
 }`;
       expect(test_parser.parseEval(code)).toMatchSnapshot();
@@ -36,8 +35,7 @@ describe("interface", function () {
 
     it("setter", () => {
       const code = `interface I {
-    // An implementing class MUST have a publicly-readable property,
-    // but whether or not it's publicly settable is unrestricted.
+
     public int $readable { set; }
 }`;
       expect(test_parser.parseEval(code)).toMatchSnapshot();
@@ -45,8 +43,7 @@ describe("interface", function () {
 
     it("get + set", () => {
       const code = `interface I {
-    // An implementing class MUST have a publicly-readable property,
-    // but whether or not it's publicly settable is unrestricted.
+
     public int $readable { get; set;}
 }`;
       expect(test_parser.parseEval(code)).toMatchSnapshot();
