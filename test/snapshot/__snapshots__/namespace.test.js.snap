@@ -89,6 +89,98 @@ Program {
 }
 `;
 
+exports[`Test namespace statements check use 1`] = `
+Program {
+  "children": [
+    UseGroup {
+      "items": [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "Foo\\Bar",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": null,
+      "type": null,
+    },
+    UseGroup {
+      "items": [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "Foo\\A",
+          "type": null,
+        },
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "Foo\\B",
+          "type": null,
+        },
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "Foo\\C",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": null,
+      "type": null,
+    },
+    UseGroup {
+      "items": [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "strlen",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": null,
+      "type": "function",
+    },
+    UseGroup {
+      "items": [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "PHP_INT_MAX",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": null,
+      "type": "const",
+    },
+    UseGroup {
+      "items": [
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "SubA\\ClassA",
+          "type": null,
+        },
+        UseItem {
+          "alias": null,
+          "kind": "useitem",
+          "name": "SubB\\ClassB",
+          "type": null,
+        },
+      ],
+      "kind": "usegroup",
+      "name": "Vendor\\Package",
+      "type": null,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`Test namespace statements fix #246 - doesn't work properly for \`FULL_QUALIFIED_NAME\` 1`] = `
 Program {
   "children": [
@@ -1580,6 +1672,21 @@ Program {
       "kind": "namespace",
       "name": "foo",
       "withBrackets": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test namespace statements test single namespace 2`] = `
+Program {
+  "children": [
+    Namespace {
+      "children": [],
+      "kind": "namespace",
+      "name": "Foo",
+      "withBrackets": true,
     },
   ],
   "errors": [],

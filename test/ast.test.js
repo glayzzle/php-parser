@@ -30,7 +30,8 @@ describe("Test AST class (edge cases)", function () {
         debug: true,
       },
     });
-    test.parseEval("1 + 1;");
+    const ast = test.parseEval("1 + 1;");
+    expect(ast).toBeDefined();
   });
   it("test debug mode / errors", function () {
     const test = parser.create({

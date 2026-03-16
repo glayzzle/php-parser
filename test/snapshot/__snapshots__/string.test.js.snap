@@ -2014,6 +2014,811 @@ Program {
 }
 `;
 
+exports[`Test strings string test: $a = b'\\t\\ra'; 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "a",
+        },
+        "operator": "=",
+        "right": String {
+          "isDoubleQuote": false,
+          "kind": "string",
+          "raw": "b'\\t\\ra'",
+          "unicode": true,
+          "value": "\\t\\ra",
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: $foo = array("v1.09azAZ-._~!$", true); 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "foo",
+        },
+        "operator": "=",
+        "right": Array {
+          "items": [
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": String {
+                "isDoubleQuote": true,
+                "kind": "string",
+                "raw": ""v1.09azAZ-._~!$"",
+                "unicode": false,
+                "value": "v1.09azAZ-._~!$",
+              },
+            },
+            Entry {
+              "byRef": false,
+              "key": null,
+              "kind": "entry",
+              "unpack": false,
+              "value": Boolean {
+                "kind": "boolean",
+                "raw": "true",
+                "value": true,
+              },
+            },
+          ],
+          "kind": "array",
+          "shortForm": false,
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: $text = "$text at line $line"; 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "text",
+        },
+        "operator": "=",
+        "right": Encapsed {
+          "kind": "encapsed",
+          "raw": ""$text at line $line"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "text",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " at line ",
+                "unicode": false,
+                "value": " at line ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "line",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+          ],
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: $v = strtolower("$i.$j.$k-$rel"); 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Assign {
+        "kind": "assign",
+        "left": Variable {
+          "curly": false,
+          "kind": "variable",
+          "name": "v",
+        },
+        "operator": "=",
+        "right": Call {
+          "arguments": [
+            Encapsed {
+              "kind": "encapsed",
+              "raw": ""$i.$j.$k-$rel"",
+              "type": "string",
+              "value": [
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "i",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": ".",
+                    "unicode": false,
+                    "value": ".",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "j",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": ".",
+                    "unicode": false,
+                    "value": ".",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "k",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": String {
+                    "isDoubleQuote": false,
+                    "kind": "string",
+                    "raw": "-",
+                    "unicode": false,
+                    "value": "-",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": null,
+                },
+                EncapsedPart {
+                  "curly": false,
+                  "expression": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "rel",
+                  },
+                  "kind": "encapsedpart",
+                  "syntax": "simple",
+                },
+              ],
+            },
+          ],
+          "kind": "call",
+          "what": Name {
+            "kind": "name",
+            "name": "strtolower",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo "\\"$parts[0]\\"\\n"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": ""\\"$parts[0]\\"\\n"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\"",
+                "unicode": false,
+                "value": """,
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "0",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "parts",
+                },
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\"\\n",
+                "unicode": false,
+                "value": ""
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo "\\colors[1] contains >$colors [1]<\\n"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": ""\\colors[1] contains >$colors [1]<\\n"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\colors[1] contains >",
+                "unicode": false,
+                "value": "\\colors[1] contains >",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "colors",
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " [1]<\\n",
+                "unicode": false,
+                "value": " [1]<
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo "~'.{{$expectedLength}}'\\$~s"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": ""~'.{{$expectedLength}}'\\$~s"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "~'.{",
+                "unicode": false,
+                "value": "~'.{",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "expectedLength",
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "}'\\$~s",
+                "unicode": false,
+                "value": "}'$~s",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo "Hello {".$obj->name."} !"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Bin {
+          "kind": "bin",
+          "left": Bin {
+            "kind": "bin",
+            "left": String {
+              "isDoubleQuote": true,
+              "kind": "string",
+              "raw": ""Hello {"",
+              "unicode": false,
+              "value": "Hello {",
+            },
+            "right": PropertyLookup {
+              "kind": "propertylookup",
+              "offset": Identifier {
+                "kind": "identifier",
+                "name": "name",
+              },
+              "what": Variable {
+                "curly": false,
+                "kind": "variable",
+                "name": "obj",
+              },
+            },
+            "type": ".",
+          },
+          "right": String {
+            "isDoubleQuote": true,
+            "kind": "string",
+            "raw": ""} !"",
+            "unicode": false,
+            "value": "} !",
+          },
+          "type": ".",
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo "Hello {$obj->name} !"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": ""Hello {$obj->name} !"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "Hello ",
+                "unicode": false,
+                "value": "Hello ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": PropertyLookup {
+                "kind": "propertylookup",
+                "offset": Identifier {
+                  "kind": "identifier",
+                  "name": "name",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "obj",
+                },
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": " !",
+                "unicode": false,
+                "value": " !",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo "yo : {$feeds[0]['title[0][value]']}"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": ""yo : {$feeds[0]['title[0][value]']}"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "yo : ",
+                "unicode": false,
+                "value": "yo : ",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": String {
+                  "isDoubleQuote": false,
+                  "kind": "string",
+                  "raw": "'title[0][value]'",
+                  "unicode": false,
+                  "value": "title[0][value]",
+                },
+                "what": OffsetLookup {
+                  "kind": "offsetlookup",
+                  "offset": Number {
+                    "kind": "number",
+                    "value": "0",
+                  },
+                  "what": Variable {
+                    "curly": false,
+                    "kind": "variable",
+                    "name": "feeds",
+                  },
+                },
+              },
+              "kind": "encapsedpart",
+              "syntax": "complex",
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: echo B"\\colors[1] contains >$colors[1]<\\n"; 1`] = `
+Program {
+  "children": [
+    Echo {
+      "expressions": [
+        Encapsed {
+          "kind": "encapsed",
+          "raw": "B"\\colors[1] contains >$colors[1]<\\n"",
+          "type": "string",
+          "value": [
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "\\colors[1] contains >",
+                "unicode": false,
+                "value": "\\colors[1] contains >",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": OffsetLookup {
+                "kind": "offsetlookup",
+                "offset": Number {
+                  "kind": "number",
+                  "value": "1",
+                },
+                "what": Variable {
+                  "curly": false,
+                  "kind": "variable",
+                  "name": "colors",
+                },
+              },
+              "kind": "encapsedpart",
+              "syntax": "simple",
+            },
+            EncapsedPart {
+              "curly": false,
+              "expression": String {
+                "isDoubleQuote": false,
+                "kind": "string",
+                "raw": "<\\n",
+                "unicode": false,
+                "value": "<
+",
+              },
+              "kind": "encapsedpart",
+              "syntax": null,
+            },
+          ],
+        },
+      ],
+      "kind": "echo",
+      "shortForm": false,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: return "\\x1B[{$color}m{$str}\\x1B[0m"; 1`] = `
+Program {
+  "children": [
+    Return {
+      "expr": Encapsed {
+        "kind": "encapsed",
+        "raw": ""\\x1B[{$color}m{$str}\\x1B[0m"",
+        "type": "string",
+        "value": [
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "\\x1B[",
+              "unicode": false,
+              "value": "[",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "color",
+            },
+            "kind": "encapsedpart",
+            "syntax": "complex",
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "m",
+              "unicode": false,
+              "value": "m",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "str",
+            },
+            "kind": "encapsedpart",
+            "syntax": "complex",
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "\\x1B[0m",
+              "unicode": false,
+              "value": "[0m",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+        ],
+      },
+      "kind": "return",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test strings string test: return "Class.create('$package$className',{"; 1`] = `
+Program {
+  "children": [
+    Return {
+      "expr": Encapsed {
+        "kind": "encapsed",
+        "raw": ""Class.create('$package$className',{"",
+        "type": "string",
+        "value": [
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "Class.create('",
+              "unicode": false,
+              "value": "Class.create('",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "package",
+            },
+            "kind": "encapsedpart",
+            "syntax": "simple",
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": Variable {
+              "curly": false,
+              "kind": "variable",
+              "name": "className",
+            },
+            "kind": "encapsedpart",
+            "syntax": "simple",
+          },
+          EncapsedPart {
+            "curly": false,
+            "expression": String {
+              "isDoubleQuote": false,
+              "kind": "string",
+              "raw": "',{",
+              "unicode": false,
+              "value": "',{",
+            },
+            "kind": "encapsedpart",
+            "syntax": null,
+          },
+        ],
+      },
+      "kind": "return",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`Test strings test backquotes 1`] = `
 Program {
   "children": [

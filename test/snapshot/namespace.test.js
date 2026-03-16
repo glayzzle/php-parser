@@ -46,6 +46,11 @@ describe("Test namespace statements", function () {
         },
       ),
     ).toMatchSnapshot();
+    expect(
+      parser.parseEval(`
+      namespace Foo {}
+    `),
+    ).toMatchSnapshot();
   });
 
   it("test multiple namespace", function () {
@@ -128,16 +133,16 @@ describe("Test namespace statements", function () {
     ).toMatchSnapshot();
   });
 
-  it("check namespace", function () {
-    // @todo
-  });
-
   it("check use", function () {
-    // @todo
-  });
-
-  it("check resolution", function () {
-    // @todo
+    expect(
+      parser.parseEval(`
+      use Foo\\Bar;
+      use Foo\\A, Foo\\B, Foo\\C;
+      use function strlen;
+      use const PHP_INT_MAX;
+      use Vendor\\Package\\{SubA\\ClassA, SubB\\ClassB};
+    `),
+    ).toMatchSnapshot();
   });
 
   it("check silent mode", function () {

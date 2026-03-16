@@ -241,7 +241,7 @@ describe("Test strings", function () {
     'echo "Hello {".$obj->name."} !";',
     'echo "Hello {$obj->name} !";',
   ])("string test: %s", function (code) {
-    parser.parseEval(code);
+    expect(parser.parseEval(code)).toMatchSnapshot();
   });
 
   it("test encapsed elements", function () {
