@@ -430,16 +430,16 @@ Program {
               "name": "a",
             },
             "kind": "expressionstatement",
+            "leadingComments": [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 10,
+                "value": "/* pre */",
+              },
+            ],
           },
         ],
         "kind": "block",
-        "leadingComments": [
-          CommentBlock {
-            "kind": "commentblock",
-            "offset": 10,
-            "value": "/* pre */",
-          },
-        ],
         "trailingComments": [
           CommentBlock {
             "kind": "commentblock",
@@ -492,18 +492,18 @@ Program {
     If {
       "alternate": If {
         "alternate": Block {
-          "children": [],
-          "kind": "block",
-          "leadingComments": [
-            CommentBlock {
-              "kind": "commentblock",
-              "offset": 50,
-              "value": "/* bar */",
+          "children": [
+            Noop {
+              "kind": "noop",
+              "leadingComments": [
+                CommentBlock {
+                  "kind": "commentblock",
+                  "offset": 50,
+                  "value": "/* bar */",
+                },
+              ],
             },
           ],
-        },
-        "body": Block {
-          "children": [],
           "kind": "block",
           "leadingComments": [
             CommentBlock {
@@ -513,7 +513,18 @@ Program {
             },
           ],
         },
+        "body": Block {
+          "children": [],
+          "kind": "block",
+        },
         "kind": "if",
+        "leadingComments": [
+          CommentBlock {
+            "kind": "commentblock",
+            "offset": 10,
+            "value": "/* foo */",
+          },
+        ],
         "shortForm": true,
         "test": Variable {
           "curly": false,
@@ -524,13 +535,6 @@ Program {
       "body": Block {
         "children": [],
         "kind": "block",
-        "leadingComments": [
-          CommentBlock {
-            "kind": "commentblock",
-            "offset": 10,
-            "value": "/* foo */",
-          },
-        ],
       },
       "kind": "if",
       "shortForm": true,
@@ -610,15 +614,19 @@ Program {
     If {
       "alternate": null,
       "body": Block {
-        "children": [],
-        "kind": "block",
-        "leadingComments": [
-          CommentBlock {
-            "kind": "commentblock",
-            "offset": 10,
-            "value": "/* foo */",
+        "children": [
+          Noop {
+            "kind": "noop",
+            "leadingComments": [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 10,
+                "value": "/* foo */",
+              },
+            ],
           },
         ],
+        "kind": "block",
       },
       "kind": "if",
       "shortForm": true,

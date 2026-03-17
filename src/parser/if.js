@@ -22,8 +22,8 @@ module.exports = {
 
     if (this.token === ":") {
       shortForm = true;
-      this.next();
       body = this.node("block");
+      this.next();
       const items = [];
       while (this.token !== this.EOF && this.token !== this.tok.T_ENDIF) {
         if (this.token === this.tok.T_ELSEIF) {
@@ -34,6 +34,13 @@ module.exports = {
           break;
         }
         items.push(this.read_inner_statement());
+      }
+      if (
+        items.length === 0 &&
+        this.extractDoc &&
+        this._docs.length > this._docIndex
+      ) {
+        items.push(this.node("noop")());
       }
       body = body(null, items);
       this.expect(this.tok.T_ENDIF) && this.next();
@@ -64,8 +71,8 @@ module.exports = {
     let alternate = null;
     const result = this.node("if");
     const test = this.next().read_if_expr();
-    if (this.expect(":")) this.next();
     const body = this.node("block");
+    if (this.expect(":")) this.next();
     const items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       if (this.token === this.tok.T_ELSEIF) {
@@ -77,17 +84,32 @@ module.exports = {
       }
       items.push(this.read_inner_statement());
     }
+    if (
+      items.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      items.push(this.node("noop")());
+    }
     return result(test, body(null, items), alternate, true);
   },
   /*
    *
    */
   read_else_short() {
-    if (this.next().expect(":")) this.next();
+    this.next();
     const body = this.node("block");
+    if (this.expect(":")) this.next();
     const items = [];
     while (this.token != this.EOF && this.token !== this.tok.T_ENDIF) {
       items.push(this.read_inner_statement());
+    }
+    if (
+      items.length === 0 &&
+      this.extractDoc &&
+      this._docs.length > this._docIndex
+    ) {
+      items.push(this.node("noop")());
     }
     return body(null, items);
   },
