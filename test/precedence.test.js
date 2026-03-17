@@ -119,7 +119,7 @@ describe("Test precedence", function () {
     shouldBeSame("5 AND 4 + 3", "5 AND (4 + 3)");
   });
   it("test unary : !", function () {
-    shouldBeSame("!$a instanceof $b", "(!$a) instanceof $b");
+    shouldBeSame("!$a instanceof $b", "!($a instanceof $b)");
     shouldBeSame("!$a + $b instanceof $c", "(!$a) + ($b instanceof $c)");
     shouldBeSame("6 + !4 + 5", "6 + (!4) + 5");
     shouldBeSame("if($a && !$b) {}", "if($a && (!$b)) {}");

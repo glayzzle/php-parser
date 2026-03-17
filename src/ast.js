@@ -297,14 +297,17 @@ AST.prototype.resolvePrecedence = function (result, parser) {
   } else if (result.kind === "unary") {
     // https://github.com/glayzzle/php-parser/issues/75
     if (result.what && !result.what.parenthesizedExpression) {
-      // unary precedence is always lower
       if (result.what.kind === "bin") {
-        buffer = result.what;
-        result.what = result.what.left;
-        this.swapLocations(result, result, result.what, parser);
-        buffer.left = this.resolvePrecedence(result, parser);
-        this.swapLocations(buffer, buffer.left, buffer.right, parser);
-        result = buffer;
+        lLevel = AST.precedence[result.type];
+        rLevel = AST.precedence[result.what.type];
+        if (lLevel && rLevel && rLevel < lLevel) {
+          buffer = result.what;
+          result.what = result.what.left;
+          this.swapLocations(result, result, result.what, parser);
+          buffer.left = this.resolvePrecedence(result, parser);
+          this.swapLocations(buffer, buffer.left, buffer.right, parser);
+          result = buffer;
+        }
       } else if (result.what.kind === "retif") {
         buffer = result.what;
         result.what = result.what.test;
