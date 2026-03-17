@@ -326,12 +326,8 @@ module.exports = {
 
     const types = [];
     let mode = MODE_UNSET;
-    const node = this.node();
     const type = this.read_type();
-    if (!type) {
-      node.destroy();
-      return null;
-    }
+    if (!type) return null;
 
     // we have matched a single type
     types.push(type);
@@ -370,12 +366,11 @@ module.exports = {
       types.push(this.read_type());
     }
     if (types.length === 1) {
-      node.destroy();
       return types[0];
     } else {
       return mode === MODE_INTERSECTION
-        ? node("intersectiontype", types)
-        : node("uniontype", types);
+        ? this.node("intersectiontype")(types)
+        : this.node("uniontype")(types);
     }
   },
   read_promoted() {
