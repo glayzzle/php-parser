@@ -28,6 +28,12 @@ describe("Test classes", function () {
     ).toMatchSnapshot();
   });
 
+  it("static property with nullable type is marked as static", function () {
+    expect(
+      parser.parseEval(`class Test { protected static ?string $test = null; }`),
+    ).toMatchSnapshot();
+  });
+
   it("Implement readonly property", function () {
     expect(
       parser.parseEval(
