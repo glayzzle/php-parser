@@ -151,6 +151,28 @@ describe("classpropertyhooks", () => {
     ).toMatchSnapshot();
   });
 
+  it("union type with hooks", () => {
+    expect(
+      test_parser.parseEval(`class Foo {
+    public int|string $value {
+        get => $this->value;
+        set(int|string $v) => $this->value = $v;
+    }
+}`),
+    ).toMatchSnapshot();
+  });
+
+  it("nullable type with hooks", () => {
+    expect(
+      test_parser.parseEval(`class Foo {
+    public ?string $name {
+        get => $this->name;
+        set => strtolower($value);
+    }
+}`),
+    ).toMatchSnapshot();
+  });
+
   [
     `class Example {
     private bool $modified = false;
@@ -256,6 +278,28 @@ describe("classpropertyhooks", () => {
     });
   });
 
+  it("reference on set hook", () => {
+    expect(
+      test_parser.parseEval(`class Foo {
+    public array $items {
+        &set(array $value) {
+            $this->items = $value;
+        }
+    }
+}`),
+    ).toMatchSnapshot();
+  });
+
+  it("final with reference", () => {
+    expect(
+      test_parser.parseEval(`class Foo {
+    public string $bar {
+        final &get => $this->_bar;
+    }
+}`),
+    ).toMatchSnapshot();
+  });
+
   describe("abstract", () => {
     [
       ["get", `abstract class User { abstract public string $email { get; } }`],
@@ -310,9 +354,79 @@ describe("classpropertyhooks", () => {
         ),
       ).toMatchSnapshot();
     });
+
+    it("get hook", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name { get => strtoupper($this->name); }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("get + set hooks", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name {
+      get => strtoupper($this->name);
+      set => strtolower($value);
+    }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("with attributes on hooks", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name {
+      #[SomeAttr]
+      set => strtolower($value);
+    }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("with final hook", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public function __construct(
+    public string $name {
+      final set => strtolower($value);
+    }
+  ) {}
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
   });
 
   describe("attributes on hooks", () => {
+    it("multiple attributes on hook", () => {
+      expect(
+        test_parser.parseEval(
+          `class Foo {
+  public string $x {
+    #[AttrOne]
+    #[AttrTwo]
+    get => 1;
+  }
+}`,
+        ),
+      ).toMatchSnapshot();
+    });
+
     it("attribute on get hook", () => {
       expect(
         test_parser.parseEval(
@@ -338,6 +452,39 @@ describe("classpropertyhooks", () => {
   }
 }`,
         ),
+      ).toMatchSnapshot();
+    });
+  });
+
+  it("empty hook body", () => {
+    expect(
+      test_parser.parseEval(`class Foo {
+    public string $bar {
+        get {}
+    }
+}`),
+    ).toMatchSnapshot();
+  });
+
+  describe("trait property hooks", () => {
+    it("getter in trait", () => {
+      expect(
+        test_parser.parseEval(`trait HasFullName {
+    public string $fullName {
+        get => $this->first . ' ' . $this->last;
+    }
+}`),
+      ).toMatchSnapshot();
+    });
+
+    it("get + set in trait", () => {
+      expect(
+        test_parser.parseEval(`trait HasName {
+    public string $name {
+        get => strtoupper($this->name);
+        set => strtolower($value);
+    }
+}`),
       ).toMatchSnapshot();
     });
   });
@@ -369,6 +516,22 @@ describe("classpropertyhooks", () => {
     it("missing hook body", () => {
       expect(
         graceful_parser.parseEval(`class Foo { public string $bar { get } }`),
+      ).toMatchSnapshot();
+    });
+
+    it("missing closing paren after parameter", () => {
+      expect(
+        graceful_parser.parseEval(
+          `class Foo { public string $bar { set(string $v => $v; } }`,
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it("missing arrow or brace after hook name", () => {
+      expect(
+        graceful_parser.parseEval(
+          `class Foo { public string $bar { get + 1; } }`,
+        ),
       ).toMatchSnapshot();
     });
   });
