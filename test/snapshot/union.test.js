@@ -58,4 +58,30 @@ describe("Test unions", function () {
 
     expect(astErr).toMatchSnapshot();
   });
+
+  it("dnf type: (A&B)|null", function () {
+    expect(parser.parseEval("function((A&B)|null $test) {}")).toMatchSnapshot();
+  });
+
+  it("dnf type: null|(A&B)", function () {
+    expect(parser.parseEval("function(null|(A&B) $test) {}")).toMatchSnapshot();
+  });
+
+  it("dnf type: (A&B)|(C&D)", function () {
+    expect(
+      parser.parseEval("function((A&B)|(C&D) $test) {}"),
+    ).toMatchSnapshot();
+  });
+
+  it("dnf type: return type", function () {
+    expect(parser.parseEval("function foo(): (A&B)|null {}")).toMatchSnapshot();
+  });
+
+  it("dnf type not supported before 8.2", function () {
+    expect(
+      parser.parseEval("function((A&B)|null $test) {}", {
+        parser: { version: "8.1", suppressErrors: true },
+      }),
+    ).toMatchSnapshot();
+  });
 });
