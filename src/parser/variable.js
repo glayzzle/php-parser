@@ -216,14 +216,6 @@ module.exports = {
           break;
         }
         case this.tok.T_DOUBLE_COLON:
-          // @see https://github.com/glayzzle/php-parser/issues/107#issuecomment-354104574
-          if (
-            result.kind === "staticlookup" &&
-            result.offset.kind === "identifier"
-          ) {
-            this.error();
-          }
-
           node = this.node("staticlookup");
           result = node(result, this.read_what(true));
 
