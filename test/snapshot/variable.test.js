@@ -126,14 +126,8 @@ describe("Test variables", function () {
       ).toMatchSnapshot();
     });
 
-    it("should fail on double static lookup", function () {
-      expect(
-        parser.parseEval(["this->foo::bar::baz;"].join("\n"), {
-          parser: {
-            suppressErrors: true,
-          },
-        }),
-      ).toMatchSnapshot();
+    it("chained static lookup on property lookup", function () {
+      expect(parser.parseEval("this->foo::bar::baz;")).toMatchSnapshot();
     });
 
     it("should fail on property lookup on static lookup", function () {
@@ -156,14 +150,8 @@ describe("Test variables", function () {
       ).toMatchSnapshot();
     });
 
-    it("should fail foo::bar::baz", function () {
-      expect(
-        parser.parseEval("foo::bar::baz", {
-          parser: {
-            suppressErrors: true,
-          },
-        }),
-      ).toMatchSnapshot();
+    it("chained static lookup foo::bar::baz", function () {
+      expect(parser.parseEval("foo::bar::baz")).toMatchSnapshot();
     });
   });
 
