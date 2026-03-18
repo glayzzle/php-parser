@@ -223,14 +223,13 @@ module.exports = {
    * ```
    */
   read_constant_list(flags, attrs) {
+    const result = this.node("classconstant");
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
 
     const [nullable, type] =
       this.version >= 803 ? this.read_optional_type() : [false, null];
-
-    const result = this.node("classconstant");
     const items = this.read_list(
       /*
        * Reads a constant declaration
