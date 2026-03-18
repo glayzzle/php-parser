@@ -53,6 +53,25 @@ describe("Test namespace statements", function () {
     ).toMatchSnapshot();
   });
 
+  it("test multiple semicolon-style namespaces are siblings", function () {
+    expect(
+      parser.parseEval(
+        `
+      namespace MyProject;
+        const TASK_DATE = '';
+
+      namespace Another;
+        echo TASK_DATE;
+    `,
+        {
+          parser: {
+            debug: false,
+          },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
   it("test multiple namespace", function () {
     expect(
       parser.parseEval(
