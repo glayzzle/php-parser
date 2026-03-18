@@ -299,7 +299,7 @@ describe("Test expressions", function () {
     expect(
       parser.parseEval(`($a++)($foo)->bar{$baz}::foo();`),
     ).toMatchSnapshot();
-    // expect error :
+    // expect error: `bar` is not a valid continuation after `($a++)`
     expect(
       parser.parseEval(`($a++)bar::foo::baz;`, {
         parser: {

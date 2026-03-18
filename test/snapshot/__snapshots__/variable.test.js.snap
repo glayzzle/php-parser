@@ -65,6 +65,75 @@ Program {
 }
 `;
 
+exports[`Test variables Check errors chained static lookup foo::bar::baz 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "baz",
+        },
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": Name {
+            "kind": "name",
+            "name": "foo",
+            "resolution": "uqn",
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test variables Check errors chained static lookup on property lookup 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": StaticLookup {
+        "kind": "staticlookup",
+        "offset": Identifier {
+          "kind": "identifier",
+          "name": "baz",
+        },
+        "what": StaticLookup {
+          "kind": "staticlookup",
+          "offset": Identifier {
+            "kind": "identifier",
+            "name": "bar",
+          },
+          "what": PropertyLookup {
+            "kind": "propertylookup",
+            "offset": Identifier {
+              "kind": "identifier",
+              "name": "foo",
+            },
+            "what": Name {
+              "kind": "name",
+              "name": "this",
+              "resolution": "uqn",
+            },
+          },
+        },
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`Test variables Check errors should be ? 1`] = `
 Program {
   "children": [
@@ -147,74 +216,6 @@ Program {
 }
 `;
 
-exports[`Test variables Check errors should fail foo::bar::baz 1`] = `
-Program {
-  "children": [
-    ExpressionStatement {
-      "expression": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Identifier {
-          "kind": "identifier",
-          "name": "baz",
-        },
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": Identifier {
-            "kind": "identifier",
-            "name": "bar",
-          },
-          "what": Name {
-            "kind": "name",
-            "name": "foo",
-            "resolution": "uqn",
-          },
-        },
-      },
-      "kind": "expressionstatement",
-    },
-  ],
-  "errors": [],
-  "kind": "program",
-}
-`;
-
-exports[`Test variables Check errors should fail on double static lookup 1`] = `
-Program {
-  "children": [
-    ExpressionStatement {
-      "expression": StaticLookup {
-        "kind": "staticlookup",
-        "offset": Identifier {
-          "kind": "identifier",
-          "name": "baz",
-        },
-        "what": StaticLookup {
-          "kind": "staticlookup",
-          "offset": Identifier {
-            "kind": "identifier",
-            "name": "bar",
-          },
-          "what": PropertyLookup {
-            "kind": "propertylookup",
-            "offset": Identifier {
-              "kind": "identifier",
-              "name": "foo",
-            },
-            "what": Name {
-              "kind": "name",
-              "name": "this",
-              "resolution": "uqn",
-            },
-          },
-        },
-      },
-      "kind": "expressionstatement",
-    },
-  ],
-  "errors": [],
-  "kind": "program",
-}
-`;
 
 exports[`Test variables Check errors should fail on property lookup on static lookup 1`] = `
 Program {
