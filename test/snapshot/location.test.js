@@ -179,6 +179,20 @@ string";`,
         `,
     ],
     [
+      "nullsafepropertylookup",
+      `
+        $var = $var
+          // Comment
+          ?->each() // Comment
+          // Comment
+          ?->map() // Comment
+          // Comment
+          ?->first() // Comment
+          // Comment
+          ?->dump();
+        `,
+    ],
+    [
       "staticlookup",
       `
         $var = $var
