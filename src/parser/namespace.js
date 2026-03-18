@@ -34,8 +34,7 @@ module.exports = {
 
     if (this.token === ";") {
       this.currentNamespace = name;
-      body = this.next().read_top_statements();
-      this.expect(this.EOF);
+      body = this.next().read_top_statements(true);
       return result(name.name, body, false);
     } else if (this.token === "{") {
       this.currentNamespace = name;

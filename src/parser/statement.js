@@ -12,9 +12,10 @@ module.exports = {
    *  top_statements ::= top_statement*
    * ```
    */
-  read_top_statements() {
+  read_top_statements(stopAtNamespace) {
     let result = [];
     while (this.token !== this.EOF && this.token !== "}") {
+      if (stopAtNamespace && this.token === this.tok.T_NAMESPACE) break;
       const statement = this.read_top_statement();
       if (statement) {
         if (Array.isArray(statement)) {
