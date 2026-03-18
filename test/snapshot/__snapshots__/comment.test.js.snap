@@ -1,5 +1,59 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`Test comments issues doc comment on function inside if/endif attaches to function not block 1`] = `
+Program {
+  "children": [
+    If {
+      "alternate": null,
+      "body": Block {
+        "children": [
+          _Function {
+            "arguments": [],
+            "attrGroups": [],
+            "body": Block {
+              "children": [],
+              "kind": "block",
+            },
+            "byref": false,
+            "kind": "function",
+            "leadingComments": [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 11,
+                "value": "/** @since 1.0 */",
+              },
+            ],
+            "name": Identifier {
+              "kind": "identifier",
+              "name": "foo",
+            },
+            "nullable": false,
+            "type": null,
+          },
+        ],
+        "kind": "block",
+      },
+      "kind": "if",
+      "shortForm": true,
+      "test": Boolean {
+        "kind": "boolean",
+        "raw": "true",
+        "value": true,
+      },
+    },
+  ],
+  "comments": [
+    CommentBlock {
+      "kind": "commentblock",
+      "offset": 11,
+      "value": "/** @since 1.0 */",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`Test comments issues fix #55 1`] = `
 Program {
   "children": [
@@ -10,16 +64,20 @@ Program {
           If {
             "alternate": null,
             "body": Block {
-              "children": [],
-              "kind": "block",
-              "leadingComments": [
-                CommentLine {
-                  "kind": "commentline",
-                  "offset": 51,
-                  "value": "// inner statements
+              "children": [
+                Noop {
+                  "kind": "noop",
+                  "leadingComments": [
+                    CommentLine {
+                      "kind": "commentline",
+                      "offset": 51,
+                      "value": "// inner statements
 ",
+                    },
+                  ],
                 },
               ],
+              "kind": "block",
             },
             "kind": "if",
             "shortForm": true,
@@ -1448,22 +1506,28 @@ Program {
     If {
       "alternate": null,
       "body": Block {
-        "children": [],
+        "children": [
+          Noop {
+            "kind": "noop",
+            "leadingComments": [
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 430,
+                "value": "/* ignore */",
+              },
+              CommentBlock {
+                "kind": "commentblock",
+                "offset": 451,
+                "value": "/* ignore */",
+              },
+            ],
+          },
+        ],
         "kind": "block",
         "leadingComments": [
           CommentBlock {
             "kind": "commentblock",
             "offset": 415,
-            "value": "/* ignore */",
-          },
-          CommentBlock {
-            "kind": "commentblock",
-            "offset": 430,
-            "value": "/* ignore */",
-          },
-          CommentBlock {
-            "kind": "commentblock",
-            "offset": 451,
             "value": "/* ignore */",
           },
         ],

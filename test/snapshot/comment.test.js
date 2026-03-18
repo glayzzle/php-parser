@@ -87,6 +87,14 @@ call(array // comment
       expect(ast).toMatchSnapshot();
     });
 
+    it("doc comment on function inside if/endif attaches to function not block", function () {
+      const ast = parser.parseEval(
+        `if (true): /** @since 1.0 */ function foo() {} endif;`,
+        { parser: { extractDoc: true } },
+      );
+      expect(ast).toMatchSnapshot();
+    });
+
     it("fix #189", function () {
       const ast = parser.parseEval(
         `
