@@ -234,6 +234,7 @@ AST.prototype.resolvePrecedence = function (result, parser) {
     this.resolveLocations(result, result.what, result, parser);
   } else if (
     result.kind === "propertylookup" ||
+    result.kind === "nullsafepropertylookup" ||
     result.kind === "staticlookup" ||
     (result.kind === "offsetlookup" && result.offset)
   ) {
