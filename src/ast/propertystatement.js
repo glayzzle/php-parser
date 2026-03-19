@@ -13,6 +13,12 @@ const IS_PUBLIC = "public";
 const IS_PROTECTED = "protected";
 const IS_PRIVATE = "private";
 
+const SET_VISIBILITY_MAP = {
+  0: IS_PUBLIC,
+  1: IS_PROTECTED,
+  2: IS_PRIVATE,
+};
+
 /**
  * Declares a properties into the current scope
  * @constructor PropertyStatement
@@ -20,6 +26,7 @@ const IS_PRIVATE = "private";
  * @extends {Statement}
  * @property {Property[]} properties
  * @property {string|null} visibility
+ * @property {string|null} visibilitySet
  * @property {boolean} isStatic
  * @property {boolean} isAbstract
  * @property {boolean} isFinal
@@ -56,6 +63,10 @@ PropertyStatement.prototype.parseFlags = function (flags) {
   this.isStatic = flags[1] === 1;
   this.isAbstract = flags[2] === 1;
   this.isFinal = flags[2] === 2;
+  this.visibilitySet =
+    flags[4] !== undefined && flags[4] !== -1
+      ? SET_VISIBILITY_MAP[flags[4]]
+      : null;
 };
 
 module.exports = PropertyStatement;
