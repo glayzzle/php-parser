@@ -125,6 +125,33 @@ describe("typereference", function () {
   it("void (return type declarations) (uppercase)", function () {
     expect(parser.parseEval("function foo($arg): VOID {}")).toMatchSnapshot();
   });
+  it("null (argument)", function () {
+    expect(parser.parseEval("function foo(null $arg) {}")).toMatchSnapshot();
+  });
+  it("null (return type declarations)", function () {
+    expect(parser.parseEval("function foo($arg): null {}")).toMatchSnapshot();
+  });
+  it("never (return type declarations)", function () {
+    expect(parser.parseEval("function foo($arg): never {}")).toMatchSnapshot();
+  });
+  it("mixed (argument)", function () {
+    expect(parser.parseEval("function foo(mixed $arg) {}")).toMatchSnapshot();
+  });
+  it("mixed (return type declarations)", function () {
+    expect(parser.parseEval("function foo($arg): mixed {}")).toMatchSnapshot();
+  });
+  it("true (argument)", function () {
+    expect(parser.parseEval("function foo(true $arg) {}")).toMatchSnapshot();
+  });
+  it("true (return type declarations)", function () {
+    expect(parser.parseEval("function foo($arg): true {}")).toMatchSnapshot();
+  });
+  it("false (argument)", function () {
+    expect(parser.parseEval("function foo(false $arg) {}")).toMatchSnapshot();
+  });
+  it("false (return type declarations)", function () {
+    expect(parser.parseEval("function foo($arg): false {}")).toMatchSnapshot();
+  });
   it("class", function () {
     expect(parser.parseEval("function foo(Foo $arg) {}")).toMatchSnapshot();
   });

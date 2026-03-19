@@ -503,6 +503,24 @@ module.exports = {
         result.destroy();
         return this.read_namespace_name();
       }
+    } else if (this.version >= 802 && this.token === "(") {
+      // DNF type (PHP 8.2+): parenthesized intersection type, e.g. (A&B)|null
+      this.next(); // consume (
+      const innerTypes = [];
+      innerTypes.push(this.read_type());
+      while (this.token === "&") {
+        const nextToken = this.peek();
+        if (
+          nextToken === this.tok.T_ELLIPSIS ||
+          nextToken === this.tok.T_VARIABLE
+        ) {
+          break;
+        }
+        this.next();
+        innerTypes.push(this.read_type());
+      }
+      this.expect(")") && this.next(); // consume )
+      return result("intersectiontype", innerTypes);
     }
     // fix : destroy not consumed node (release comments)
     result.destroy();

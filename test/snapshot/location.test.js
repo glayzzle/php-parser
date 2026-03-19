@@ -227,6 +227,7 @@ string";`,
     ["union type return", "function foo(): string|int { return 1; }"],
     ["intersection type return", "function foo(): A&B { return 1; }"],
     ["union type parameter", "function foo(string|int $bar) {}"],
+    ["dnf type parameter", "function foo((A&B)|null $bar) {}"],
   ])("test %s", (_, code) => {
     expect(
       parser.parseEval(code, {

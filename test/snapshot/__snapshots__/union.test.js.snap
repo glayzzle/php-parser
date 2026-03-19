@@ -1,5 +1,405 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`Test unions dnf type not supported before 8.2 1`] = `
+Program {
+  "children": [
+    _Function {
+      "arguments": [
+        Parameter {
+          "attrGroups": [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": null,
+          "nullable": false,
+          "readonly": false,
+          "type": null,
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": [],
+      "body": null,
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": false,
+      },
+      "nullable": false,
+      "type": null,
+    },
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Name {
+            "kind": "name",
+            "name": "A",
+            "resolution": "uqn",
+          },
+          "parenthesizedExpression": true,
+          "right": Name {
+            "kind": "name",
+            "name": "B",
+            "resolution": "uqn",
+          },
+          "type": "&",
+        },
+        "right": NullKeyword {
+          "kind": "nullkeyword",
+          "raw": "null",
+        },
+        "type": "|",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": Variable {
+        "curly": false,
+        "kind": "variable",
+        "name": "test",
+      },
+      "kind": "expressionstatement",
+    },
+    ExpressionStatement {
+      "expression": undefined,
+      "kind": "expressionstatement",
+    },
+    Block {
+      "children": [],
+      "kind": "block",
+    },
+  ],
+  "errors": [
+    Error {
+      "expected": 222,
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '(', expecting T_VARIABLE on line 1",
+      "token": "'('",
+    },
+    Error {
+      "expected": [
+        ",",
+        ")",
+      ],
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '(' on line 1",
+      "token": "'('",
+    },
+    Error {
+      "expected": ")",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '(', expecting ')' on line 1",
+      "token": "'('",
+    },
+    Error {
+      "expected": "{",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '(', expecting '{' on line 1",
+      "token": "'('",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '$test' (T_VARIABLE), expecting ';' on line 1",
+      "token": "'$test' (T_VARIABLE)",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ')', expecting ';' on line 1",
+      "token": "')'",
+    },
+    Error {
+      "expected": "EXPR",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected ')' on line 1",
+      "token": "')'",
+    },
+    Error {
+      "expected": ";",
+      "kind": "error",
+      "line": 1,
+      "message": "Parse Error : syntax error, unexpected '{', expecting ';' on line 1",
+      "token": "'{'",
+    },
+  ],
+  "kind": "program",
+}
+`;
+
+exports[`Test unions dnf type: (A&B)|(C&D) 1`] = `
+Program {
+  "children": [
+    _Function {
+      "arguments": [
+        Parameter {
+          "attrGroups": [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": UnionType {
+            "kind": "uniontype",
+            "name": null,
+            "types": [
+              IntersectionType {
+                "kind": "intersectiontype",
+                "name": null,
+                "types": [
+                  Name {
+                    "kind": "name",
+                    "name": "A",
+                    "resolution": "uqn",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "B",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+              IntersectionType {
+                "kind": "intersectiontype",
+                "name": null,
+                "types": [
+                  Name {
+                    "kind": "name",
+                    "name": "C",
+                    "resolution": "uqn",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "D",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": [],
+      "body": Block {
+        "children": [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": false,
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unions dnf type: (A&B)|null 1`] = `
+Program {
+  "children": [
+    _Function {
+      "arguments": [
+        Parameter {
+          "attrGroups": [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": UnionType {
+            "kind": "uniontype",
+            "name": null,
+            "types": [
+              IntersectionType {
+                "kind": "intersectiontype",
+                "name": null,
+                "types": [
+                  Name {
+                    "kind": "name",
+                    "name": "A",
+                    "resolution": "uqn",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "B",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+              TypeReference {
+                "kind": "typereference",
+                "name": "null",
+                "raw": "null",
+              },
+            ],
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": [],
+      "body": Block {
+        "children": [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": false,
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unions dnf type: null|(A&B) 1`] = `
+Program {
+  "children": [
+    _Function {
+      "arguments": [
+        Parameter {
+          "attrGroups": [],
+          "byref": false,
+          "flags": 0,
+          "kind": "parameter",
+          "name": Identifier {
+            "kind": "identifier",
+            "name": "test",
+          },
+          "nullable": false,
+          "readonly": false,
+          "type": UnionType {
+            "kind": "uniontype",
+            "name": null,
+            "types": [
+              TypeReference {
+                "kind": "typereference",
+                "name": "null",
+                "raw": "null",
+              },
+              IntersectionType {
+                "kind": "intersectiontype",
+                "name": null,
+                "types": [
+                  Name {
+                    "kind": "name",
+                    "name": "A",
+                    "resolution": "uqn",
+                  },
+                  Name {
+                    "kind": "name",
+                    "name": "B",
+                    "resolution": "uqn",
+                  },
+                ],
+              },
+            ],
+          },
+          "value": null,
+          "variadic": false,
+        },
+      ],
+      "attrGroups": [],
+      "body": Block {
+        "children": [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": false,
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unions dnf type: return type 1`] = `
+Program {
+  "children": [
+    _Function {
+      "arguments": [],
+      "attrGroups": [],
+      "body": Block {
+        "children": [],
+        "kind": "block",
+      },
+      "byref": false,
+      "kind": "function",
+      "name": Identifier {
+        "kind": "identifier",
+        "name": "foo",
+      },
+      "nullable": false,
+      "type": UnionType {
+        "kind": "uniontype",
+        "name": null,
+        "types": [
+          IntersectionType {
+            "kind": "intersectiontype",
+            "name": null,
+            "types": [
+              Name {
+                "kind": "name",
+                "name": "A",
+                "resolution": "uqn",
+              },
+              Name {
+                "kind": "name",
+                "name": "B",
+                "resolution": "uqn",
+              },
+            ],
+          },
+          TypeReference {
+            "kind": "typereference",
+            "name": "null",
+            "raw": "null",
+          },
+        ],
+      },
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`Test unions intersection mixed with union 1`] = `
 Program {
   "children": [
