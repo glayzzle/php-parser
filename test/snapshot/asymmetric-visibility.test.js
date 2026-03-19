@@ -74,4 +74,64 @@ describe("asymmetric visibility", () => {
       ),
     ).toMatchSnapshot();
   });
+  it("constructor promotion public public(set)", () => {
+    expect(
+      parser.parseEval(
+        "class Foo { public function __construct(public public(set) string $name) {} }",
+        opts,
+      ),
+    ).toMatchSnapshot();
+  });
+  it("duplicate set modifier", () => {
+    expect(
+      parser.parseEval(
+        "class Foo { public private(set) protected(set) string $name; }",
+        { parser: { version: 804, suppressErrors: true } },
+      ),
+    ).toMatchSnapshot();
+  });
+  it("duplicate visibility", () => {
+    expect(
+      parser.parseEval("class Foo { public public string $name; }", {
+        parser: { version: 804, suppressErrors: true },
+      }),
+    ).toMatchSnapshot();
+  });
+  it("duplicate static flag", () => {
+    expect(
+      parser.parseEval("class Foo { static static string $name; }", {
+        parser: { version: 804, suppressErrors: true },
+      }),
+    ).toMatchSnapshot();
+  });
+  it("malformed set keyword in property", () => {
+    expect(
+      parser.parseEval("class Foo { public private(foo) string $name; }", {
+        parser: { version: 804, suppressErrors: true },
+      }),
+    ).toMatchSnapshot();
+  });
+  it("constructor promotion malformed set keyword shorthand", () => {
+    expect(
+      parser.parseEval(
+        "class Foo { public function __construct(private(foo) string $name) {} }",
+        { parser: { version: 804, suppressErrors: true } },
+      ),
+    ).toMatchSnapshot();
+  });
+  it("constructor promotion malformed set keyword explicit", () => {
+    expect(
+      parser.parseEval(
+        "class Foo { public function __construct(public private(foo) string $name) {} }",
+        { parser: { version: 804, suppressErrors: true } },
+      ),
+    ).toMatchSnapshot();
+  });
+  it("ignored below PHP 8.4", () => {
+    expect(
+      parser.parseEval("class Foo { public private(set) string $name; }", {
+        parser: { version: 803, suppressErrors: true },
+      }),
+    ).toMatchSnapshot();
+  });
 });
