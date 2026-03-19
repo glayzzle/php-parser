@@ -35,6 +35,11 @@ TypeReference.types = [
   "iterable",
   "void",
   "static",
+  "null",
+  "never",
+  "mixed",
+  "true",
+  "false",
 ];
 
 module.exports = TypeReference;
