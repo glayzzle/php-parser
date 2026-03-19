@@ -730,28 +730,29 @@ module.exports = {
   },
 
   read_attribute() {
+    const node = this.node("attribute");
     const name = this.text();
     let args = [];
     this.next();
     if (this.token === "(") {
       args = this.read_argument_list();
     }
-    return this.node("attribute")(name, args);
+    return node(name, args);
   },
   read_attr_list() {
     const list = [];
     if (this.token === this.tok.T_ATTRIBUTE) {
       do {
-        const attrGr = this.node("attrgroup")([]);
+        const node = this.node("attrgroup");
         this.next();
-        attrGr.attrs.push(this.read_attribute());
+        const attrs = [this.read_attribute()];
         while (this.token === ",") {
           this.next();
-          if (this.token !== "]") attrGr.attrs.push(this.read_attribute());
+          if (this.token !== "]") attrs.push(this.read_attribute());
         }
-        list.push(attrGr);
         this.expect("]");
         this.next();
+        list.push(node(attrs));
       } while (this.token === this.tok.T_ATTRIBUTE);
     }
     return list;

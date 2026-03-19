@@ -228,6 +228,8 @@ string";`,
     ["intersection type return", "function foo(): A&B { return 1; }"],
     ["union type parameter", "function foo(string|int $bar) {}"],
     ["dnf type parameter", "function foo((A&B)|null $bar) {}"],
+    ["attribute", "#[Deprecated(reason: 'since 5.2')] function foo() {}"],
+    ["attrgroup", "#[Pure] #[Deprecated] function foo() {}"],
   ])("test %s", (_, code) => {
     expect(
       parser.parseEval(code, {
