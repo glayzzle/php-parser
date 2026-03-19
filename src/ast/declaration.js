@@ -13,6 +13,12 @@ const IS_PUBLIC = "public";
 const IS_PROTECTED = "protected";
 const IS_PRIVATE = "private";
 
+const SET_VISIBILITY_MAP = {
+  0: IS_PUBLIC,
+  1: IS_PROTECTED,
+  2: IS_PRIVATE,
+};
+
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
@@ -54,6 +60,10 @@ Declaration.prototype.parseFlags = function (flags) {
       this.visibility = IS_PRIVATE;
     }
     this.isStatic = flags[1] === 1;
+    this.visibilitySet =
+      flags[4] !== undefined && flags[4] !== -1
+        ? SET_VISIBILITY_MAP[flags[4]]
+        : null;
   }
 };
 

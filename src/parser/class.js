@@ -388,69 +388,94 @@ module.exports = {
   /*
    * Read member flags
    * @return array
-   *  1st index : 0 => public, 1 => protected, 2 => private
+   *  1st index : -1 => no visibility, 0 => public, 1 => protected, 2 => private
    *  2nd index : 0 => instance member, 1 => static member
    *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
+   *  4th index : 0 => no readonly, 1 => readonly
+   *  5th index : -1 => no set modifier, 0 => public(set), 1 => protected(set), 2 => private(set)
    */
   read_member_flags(asInterface) {
-    const result = [-1, -1, -1, -1];
-    if (this.is("T_MEMBER_FLAGS")) {
-      let idx = 0,
-        val = 0;
-      do {
-        switch (this.token) {
-          case this.tok.T_PUBLIC:
-            idx = 0;
-            val = 0;
-            break;
-          case this.tok.T_PROTECTED:
-            idx = 0;
-            val = 1;
-            break;
-          case this.tok.T_PRIVATE:
-            idx = 0;
-            val = 2;
-            break;
-          case this.tok.T_STATIC:
-            idx = 1;
-            val = 1;
-            break;
-          case this.tok.T_ABSTRACT:
-            idx = 2;
-            val = 1;
-            break;
-          case this.tok.T_FINAL:
-            idx = 2;
-            val = 2;
-            break;
-          case this.tok.T_READ_ONLY:
-            idx = 3;
-            val = 1;
-            break;
-        }
-        if (asInterface) {
-          if (idx === 0 && val === 2) {
+    const result = [-1, 0, 0, 0, -1];
+    const seen = new Set();
+    while (this.is("T_MEMBER_FLAGS")) {
+      let idx = -1,
+        val = -1;
+      switch (this.token) {
+        case this.tok.T_PUBLIC:
+        case this.tok.T_PROTECTED:
+        case this.tok.T_PRIVATE: {
+          idx = 0;
+          val =
+            this.token === this.tok.T_PUBLIC
+              ? 0
+              : this.token === this.tok.T_PROTECTED
+                ? 1
+                : 2;
+          if (asInterface && val === 2) {
             // an interface can't be private
             this.expect([this.tok.T_PUBLIC, this.tok.T_PROTECTED]);
             val = -1;
-          } else if (idx === 2 && val === 1) {
-            // an interface cant be abstract
-            this.error();
-            val = -1;
           }
+          this.next(); // consume the visibility keyword
+          if (this.version >= 804 && this.token === "(") {
+            // visibility(set) modifier: e.g. private(set)
+            this.next(); // consume '('
+            if (this.token !== this.tok.T_STRING || this.text() !== "set") {
+              this.error("set");
+            } else {
+              this.next(); // consume 'set'
+            }
+            if (this.expect(")")) {
+              this.next(); // consume ')'
+            }
+            if (seen.has(4)) {
+              this.error(); // set modifier already defined
+            } else if (val !== -1) {
+              seen.add(4);
+              result[4] = val;
+            }
+            continue;
+          }
+          if (seen.has(idx)) {
+            this.error();
+          } else if (val !== -1) {
+            seen.add(idx);
+            result[idx] = val;
+          }
+          continue;
         }
-        if (result[idx] !== -1) {
-          // already defined flag
-          this.error();
-        } else if (val !== -1) {
-          result[idx] = val;
-        }
-      } while (this.next().is("T_MEMBER_FLAGS"));
+        case this.tok.T_STATIC:
+          idx = 1;
+          val = 1;
+          break;
+        case this.tok.T_ABSTRACT:
+          idx = 2;
+          val = 1;
+          break;
+        case this.tok.T_FINAL:
+          idx = 2;
+          val = 2;
+          break;
+        case this.tok.T_READ_ONLY:
+          idx = 3;
+          val = 1;
+          break;
+      }
+      if (asInterface && idx === 2 && val === 1) {
+        // an interface can't be abstract
+        this.error();
+        val = -1;
+      }
+      if (seen.has(idx)) {
+        // already defined flag
+        this.error();
+      } else if (val !== -1) {
+        seen.add(idx);
+        result[idx] = val;
+      }
+      this.next();
     }
 
-    if (result[1] === -1) result[1] = 0;
-    if (result[2] === -1) result[2] = 0;
-    if (result[3] === -1) result[3] = 0;
     return result;
   },
 

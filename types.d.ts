@@ -226,6 +226,7 @@ declare module "php-parser" {
      */
     parseFlags(flags: (number | null)[]): void;
     name: Identifier | string;
+    visibilitySet: string | null;
   }
   /**
    * The declare construct is used to set execution directives for a block of code
@@ -732,6 +733,7 @@ declare module "php-parser" {
     attrGroups: AttrGroup[];
     flags: MODIFIER_PUBLIC | MODIFIER_PROTECTED | MODIFIER_PRIVATE;
     hooks: PropertyHook[];
+    flagsSet: MODIFIER_PUBLIC | MODIFIER_PROTECTED | MODIFIER_PRIVATE;
   }
   /**
    * Defines a class reference node
@@ -810,6 +812,7 @@ declare module "php-parser" {
     parseFlags(flags: (number | null)[]): void;
     properties: Property[];
     visibility: string | null;
+    visibilitySet: string | null;
     isStatic: boolean;
     isAbstract: boolean;
     isFinal: boolean;
