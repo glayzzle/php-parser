@@ -25,6 +25,7 @@ const SET_VISIBILITY_MAP = {
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier|string} name
+ * @property {string|null} visibilitySet
  */
 const Declaration = Statement.extends(
   KIND,
