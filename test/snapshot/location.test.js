@@ -238,6 +238,22 @@ string";`,
     ).toMatchSnapshot();
   });
 
+  it("noop in comment-only body has correct start/end order", function () {
+    expect(
+      parser.parseEval(
+        `function test()
+{
+    /* comment */
+    # $m[] = 'declare';
+}`,
+        {
+          parser: { extractDoc: true },
+          ast: { withPositions: true, withSource: true },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
   it("#164 : expr should avoid ?>", function () {
     expect(
       parser.parseCode("<?php $a = $b + 1 ?>", {

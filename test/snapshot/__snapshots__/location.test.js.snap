@@ -125,6 +125,190 @@ Program {
 }
 `;
 
+exports[`Test locations noop in comment-only body has correct start/end order 1`] = `
+Program {
+  "children": [
+    _Function {
+      "arguments": [],
+      "attrGroups": [],
+      "body": Block {
+        "children": [
+          Noop {
+            "kind": "noop",
+            "leadingComments": [
+              CommentBlock {
+                "kind": "commentblock",
+                "loc": Location {
+                  "end": Position {
+                    "column": 17,
+                    "line": 3,
+                    "offset": 35,
+                  },
+                  "source": "/* comment */",
+                  "start": Position {
+                    "column": 4,
+                    "line": 3,
+                    "offset": 22,
+                  },
+                },
+                "offset": 22,
+                "value": "/* comment */",
+              },
+              CommentLine {
+                "kind": "commentline",
+                "loc": Location {
+                  "end": Position {
+                    "column": 0,
+                    "line": 5,
+                    "offset": 60,
+                  },
+                  "source": "# $m[] = 'declare';
+",
+                  "start": Position {
+                    "column": 4,
+                    "line": 4,
+                    "offset": 40,
+                  },
+                },
+                "offset": 40,
+                "value": "# $m[] = 'declare';
+",
+              },
+            ],
+            "loc": Location {
+              "end": Position {
+                "column": 0,
+                "line": 5,
+                "offset": 60,
+              },
+              "source": "
+    /* comment */
+    # $m[] = 'declare';
+",
+              "start": Position {
+                "column": 1,
+                "line": 2,
+                "offset": 17,
+              },
+            },
+          },
+        ],
+        "kind": "block",
+        "loc": Location {
+          "end": Position {
+            "column": 1,
+            "line": 5,
+            "offset": 61,
+          },
+          "source": "{
+    /* comment */
+    # $m[] = 'declare';
+}",
+          "start": Position {
+            "column": 0,
+            "line": 2,
+            "offset": 16,
+          },
+        },
+      },
+      "byref": false,
+      "kind": "function",
+      "loc": Location {
+        "end": Position {
+          "column": 1,
+          "line": 5,
+          "offset": 61,
+        },
+        "source": "function test()",
+        "start": Position {
+          "column": 0,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "name": Identifier {
+        "kind": "identifier",
+        "loc": Location {
+          "end": Position {
+            "column": 13,
+            "line": 1,
+            "offset": 13,
+          },
+          "source": "test",
+          "start": Position {
+            "column": 9,
+            "line": 1,
+            "offset": 9,
+          },
+        },
+        "name": "test",
+      },
+      "nullable": false,
+      "type": null,
+    },
+  ],
+  "comments": [
+    CommentBlock {
+      "kind": "commentblock",
+      "loc": Location {
+        "end": Position {
+          "column": 17,
+          "line": 3,
+          "offset": 35,
+        },
+        "source": "/* comment */",
+        "start": Position {
+          "column": 4,
+          "line": 3,
+          "offset": 22,
+        },
+      },
+      "offset": 22,
+      "value": "/* comment */",
+    },
+    CommentLine {
+      "kind": "commentline",
+      "loc": Location {
+        "end": Position {
+          "column": 0,
+          "line": 5,
+          "offset": 60,
+        },
+        "source": "# $m[] = 'declare';
+",
+        "start": Position {
+          "column": 4,
+          "line": 4,
+          "offset": 40,
+        },
+      },
+      "offset": 40,
+      "value": "# $m[] = 'declare';
+",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+  "loc": Location {
+    "end": Position {
+      "column": 1,
+      "line": 5,
+      "offset": 61,
+    },
+    "source": "function test()
+{
+    /* comment */
+    # $m[] = 'declare';
+}",
+    "start": Position {
+      "column": 0,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+}
+`;
+
 exports[`Test locations test #164 : expr must include ; 1`] = `
 Program {
   "children": [

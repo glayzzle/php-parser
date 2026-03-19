@@ -377,16 +377,25 @@ AST.prototype.prepare = function (kind, docs, parser) {
     const args = Array.prototype.slice.call(arguments);
     args.push(docs);
     if (self.withPositions || self.withSource) {
+      let nodeStart = start;
+      let nodeEnd = new Position(
+        parser.prev[0],
+        parser.prev[1],
+        parser.prev[2],
+      );
+      // Fix swapped positions when no tokens are consumed between node() and ()
+      // (e.g. noop node in an empty block that contains only comments)
+      if (nodeStart.offset > nodeEnd.offset) {
+        const tmp = nodeStart;
+        nodeStart = nodeEnd;
+        nodeEnd = tmp;
+      }
       let src = null;
       if (self.withSource) {
-        src = parser.lexer._input.substring(start.offset, parser.prev[2]);
+        src = parser.lexer._input.substring(nodeStart.offset, nodeEnd.offset);
       }
       // if with source, need location on swapLocations function
-      const location = new Location(
-        src,
-        start,
-        new Position(parser.prev[0], parser.prev[1], parser.prev[2]),
-      );
+      const location = new Location(src, nodeStart, nodeEnd);
       // last argument is always the location
       args.push(location);
     }
