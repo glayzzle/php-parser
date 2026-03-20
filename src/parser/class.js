@@ -77,16 +77,6 @@ module.exports = {
     let result = [];
     let attrs = [];
     while (this.token !== this.EOF && this.token !== "}") {
-      if (this.token === this.tok.T_COMMENT) {
-        result.push(this.read_comment());
-        continue;
-      }
-
-      if (this.token === this.tok.T_DOC_COMMENT) {
-        result.push(this.read_doc_comment());
-        continue;
-      }
-
       // check T_USE trait
       if (this.token === this.tok.T_USE) {
         result = result.concat(this.read_trait_use_statement());
@@ -366,7 +356,7 @@ module.exports = {
       return [false, null];
     }
 
-    let type = this.read_types();
+    const type = this.read_types();
     if (nullable && !type) {
       this.raiseError(
         "Expecting a type definition combined with nullable operator",
@@ -374,18 +364,6 @@ module.exports = {
     }
     if (!nullable && !type) {
       return [false, null];
-    }
-    if (this.token === "|") {
-      type = [type];
-      do {
-        this.next();
-        const variant = this.read_type();
-        if (!variant) {
-          this.raiseError("Expecting a type definition");
-          break;
-        }
-        type.push(variant);
-      } while (this.token === "|");
     }
     return [nullable, type];
   },
@@ -439,16 +417,6 @@ module.exports = {
     let attrs;
 
     while (this.token !== this.EOF && this.token !== "}") {
-      if (this.token === this.tok.T_COMMENT) {
-        result.push(this.read_comment());
-        continue;
-      }
-
-      if (this.token === this.tok.T_DOC_COMMENT) {
-        result.push(this.read_doc_comment());
-        continue;
-      }
-
       const locStart = this.position();
 
       attrs = this.read_attr_list();
