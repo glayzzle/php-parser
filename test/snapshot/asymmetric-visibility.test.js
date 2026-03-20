@@ -127,6 +127,13 @@ describe("asymmetric visibility", () => {
       ),
     ).toMatchSnapshot();
   });
+  it("asymmetric visibility on constant", () => {
+    expect(
+      parser.parseEval("class Foo { public private(set) const BAR = 1; }", {
+        parser: { version: 804, suppressErrors: true },
+      }),
+    ).toMatchSnapshot();
+  });
   it("ignored below PHP 8.4", () => {
     expect(
       parser.parseEval("class Foo { public private(set) string $name; }", {
