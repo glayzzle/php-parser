@@ -115,6 +115,9 @@ module.exports = {
 
       // check constant
       if (this.token === this.tok.T_CONST) {
+        if (flags[0][1] !== -1) {
+          this.raiseError("Cannot use asymmetric visibility on constants");
+        }
         const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();
@@ -126,7 +129,7 @@ module.exports = {
       // jump over T_VAR then land on T_VARIABLE
       if (allow_variables && this.token === this.tok.T_VAR) {
         this.next().expect(this.tok.T_VARIABLE);
-        flags[0] = null; // public (as null)
+        flags[0][0] = null; // public (as null)
         flags[1] = 0; // non static var
       }
 
@@ -388,14 +391,14 @@ module.exports = {
   /*
    * Read member flags
    * @return array
-   *  1st index : -1 => no visibility, 0 => public, 1 => protected, 2 => private
+   *  1st index : [get, set] visibility tuple
+   *    get/set: -1 => no visibility, 0 => public, 1 => protected, 2 => private
    *  2nd index : 0 => instance member, 1 => static member
    *  3rd index : 0 => normal, 1 => abstract member, 2 => final member
    *  4th index : 0 => no readonly, 1 => readonly
-   *  5th index : -1 => no set modifier, 0 => public(set), 1 => protected(set), 2 => private(set)
    */
   read_member_flags(asInterface) {
-    const result = [-1, 0, 0, 0, -1];
+    const result = [[-1, -1], 0, 0, 0];
     const seen = new Set();
     while (this.is("T_MEMBER_FLAGS")) {
       let idx = -1,
@@ -428,11 +431,11 @@ module.exports = {
             if (this.expect(")")) {
               this.next(); // consume ')'
             }
-            if (seen.has(4)) {
+            if (seen.has("set")) {
               this.error(); // set modifier already defined
             } else if (val !== -1) {
-              seen.add(4);
-              result[4] = val;
+              seen.add("set");
+              result[0][1] = val;
             }
             continue;
           }
@@ -440,7 +443,7 @@ module.exports = {
             this.error();
           } else if (val !== -1) {
             seen.add(idx);
-            result[idx] = val;
+            result[0][0] = val;
           }
           continue;
         }
@@ -606,6 +609,9 @@ module.exports = {
 
       // check constant
       if (this.token === this.tok.T_CONST) {
+        if (flags[0][1] !== -1) {
+          this.raiseError("Cannot use asymmetric visibility on constants");
+        }
         const constants = this.read_constant_list(flags, attrs);
         if (this.expect(";")) {
           this.next();

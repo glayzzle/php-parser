@@ -157,7 +157,7 @@ declare module "php-parser" {
     /**
      * Generic flags parser
      */
-    parseFlags(flags: (number | null)[]): void;
+    parseFlags(flags: [[number | null, number], number, number, number]): void;
     visibility: string;
     final: boolean;
     nullable: boolean;
@@ -224,7 +224,7 @@ declare module "php-parser" {
     /**
      * Generic flags parser
      */
-    parseFlags(flags: (number | null)[]): void;
+    parseFlags(flags: [[number | null, number], number, number, number]): void;
     name: Identifier | string;
     visibilitySet: string | null;
   }
@@ -809,7 +809,7 @@ declare module "php-parser" {
     /**
      * Generic flags parser
      */
-    parseFlags(flags: (number | null)[]): void;
+    parseFlags(flags: [[number | null, number], number, number, number]): void;
     properties: Property[];
     visibility: string | null;
     visibilitySet: string | null;
