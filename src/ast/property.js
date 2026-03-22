@@ -19,6 +19,7 @@ const KIND = "property";
  * @property {boolean} nullable
  * @property {Identifier|Array<Identifier>|null} type
  * @property {AttrGroup[]} attrGroups
+ * @property {PropertyHook[]} hooks
  */
 module.exports = Statement.extends(
   KIND,
@@ -29,6 +30,7 @@ module.exports = Statement.extends(
     nullable,
     type,
     attrGroups,
+    hooks,
     docs,
     location,
   ) {
@@ -39,5 +41,6 @@ module.exports = Statement.extends(
     this.nullable = nullable;
     this.type = type;
     this.attrGroups = attrGroups;
+    this.hooks = hooks || [];
   },
 );

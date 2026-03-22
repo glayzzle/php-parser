@@ -21,6 +21,8 @@ const IS_PRIVATE = "private";
  * @property {Property[]} properties
  * @property {string|null} visibility
  * @property {boolean} isStatic
+ * @property {boolean} isAbstract
+ * @property {boolean} isFinal
  */
 const PropertyStatement = Statement.extends(
   KIND,
@@ -52,6 +54,8 @@ PropertyStatement.prototype.parseFlags = function (flags) {
   }
 
   this.isStatic = flags[1] === 1;
+  this.isAbstract = flags[2] === 1;
+  this.isFinal = flags[2] === 2;
 };
 
 module.exports = PropertyStatement;

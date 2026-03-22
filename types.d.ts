@@ -730,6 +730,7 @@ declare module "php-parser" {
     nullable: boolean;
     attrGroups: AttrGroup[];
     flags: MODIFIER_PUBLIC | MODIFIER_PROTECTED | MODIFIER_PRIVATE;
+    hooks: PropertyHook[];
   }
   /**
    * Defines a class reference node
@@ -781,6 +782,18 @@ declare module "php-parser" {
     nullable: boolean;
     type: Identifier | Identifier[] | null;
     attrGroups: AttrGroup[];
+    hooks: PropertyHook[];
+  }
+  /**
+   * Defines a class property hook getter & setter
+   */
+  class PropertyHook extends Node {
+    name: string;
+    isFinal: boolean;
+    byref: boolean;
+    parameter: Parameter | null;
+    body: Block | Expression | null;
+    attrGroups: AttrGroup[];
   }
   /**
    * Lookup to an object property
@@ -797,6 +810,8 @@ declare module "php-parser" {
     properties: Property[];
     visibility: string | null;
     isStatic: boolean;
+    isAbstract: boolean;
+    isFinal: boolean;
   }
   /**
    * Defines a reference node
