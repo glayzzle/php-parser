@@ -71,6 +71,13 @@ describe("boolean", () => {
       ),
     ).toMatchSnapshot();
   });
+  it("leading pipe in catch should throw", () => {
+    expect(() =>
+      parser.parseEval(
+        "try { call(); } catch (| Exception $e) { do_something(); }",
+      ),
+    ).toThrow(SyntaxError);
+  });
   it("multiple catch #2", () => {
     expect(
       parser.parseEval(
