@@ -339,6 +339,10 @@ module.exports = {
     if (this.expect(this.tok.T_CONST)) {
       this.next();
     }
+    // static, abstract, and readonly are never valid on class constants
+    if (flags[1] === 1 || flags[2] === 1 || flags[3] === 1) {
+      this.error();
+    }
 
     const [nullable, type] =
       this.version >= 803 ? this.read_optional_type() : [false, null];

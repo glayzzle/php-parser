@@ -67,6 +67,21 @@ describe("classconstant", () => {
       ),
     ).toMatchSnapshot();
   });
+  it("static should throw", () => {
+    expect(() =>
+      parser.parseEval("class Foo { static const CONSTANT = 1; }"),
+    ).toThrow(SyntaxError);
+  });
+  it("abstract should throw", () => {
+    expect(() =>
+      parser.parseEval("class Foo { abstract const CONSTANT = 1; }"),
+    ).toThrow(SyntaxError);
+  });
+  it("readonly should throw", () => {
+    expect(() =>
+      parser.parseEval("class Foo { readonly const CONSTANT = 1; }"),
+    ).toThrow(SyntaxError);
+  });
   it("type hinted (unsupported)", () => {
     expect(() =>
       parser.parseEval(
