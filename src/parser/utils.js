@@ -67,8 +67,11 @@ module.exports = {
     if (this.token == separator) {
       if (preserveFirstSeparator) {
         result.push(typeof item === "function" ? this.node("noop")() : null);
+        this.next();
+      } else {
+        this.error();
+        return result;
       }
-      this.next();
     }
 
     if (typeof item === "function") {
