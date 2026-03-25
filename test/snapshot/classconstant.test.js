@@ -59,6 +59,13 @@ describe("classconstant", () => {
       ),
     ).toMatchSnapshot();
   });
+  it("final should throw before PHP 8.1", () => {
+    expect(() =>
+      parser.parseEval("class Foo { final const CONSTANT = 1; }", {
+        parser: { version: 800 },
+      }),
+    ).toThrow(SyntaxError);
+  });
   it("type hinted (supported)", () => {
     expect(
       parser.parseEval(

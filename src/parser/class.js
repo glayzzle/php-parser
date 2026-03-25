@@ -343,6 +343,10 @@ module.exports = {
     if (flags[1] === 1 || flags[2] === 1 || flags[3] === 1) {
       this.error();
     }
+    // final class constants require PHP 8.1+
+    if (flags[2] === 2 && this.version < 801) {
+      this.raiseError("Final class constants are not allowed before PHP 8.1");
+    }
 
     const [nullable, type] =
       this.version >= 803 ? this.read_optional_type() : [false, null];
