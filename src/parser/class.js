@@ -725,7 +725,7 @@ module.exports = {
         const name = this.text();
         this.next();
         alias = alias(name);
-      } else if (flags === false) {
+      } else if (flags === null) {
         // no visibility flags and no name => too bad
         this.expect(this.tok.T_STRING);
       }
