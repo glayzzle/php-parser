@@ -54,7 +54,7 @@ module.exports = {
       case this.tok.T_INTERFACE:
         return this.read_interface_declaration_statement(attrs);
       case this.tok.T_TRAIT:
-        return this.read_trait_declaration_statement();
+        return this.read_trait_declaration_statement(attrs);
       case this.tok.T_ENUM:
         return this.read_enum_declaration_statement(attrs);
       case this.tok.T_USE:
@@ -176,9 +176,9 @@ module.exports = {
       case this.tok.T_INTERFACE:
         return this.read_interface_declaration_statement();
       case this.tok.T_TRAIT:
-        return this.read_trait_declaration_statement();
+        return this.read_trait_declaration_statement(attrs);
       case this.tok.T_ENUM:
-        return this.read_enum_declaration_statement();
+        return this.read_enum_declaration_statement(attrs);
       case this.tok.T_HALT_COMPILER: {
         this.raiseError(
           "__HALT_COMPILER() can only be used from the outermost scope",

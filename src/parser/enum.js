@@ -40,7 +40,7 @@ module.exports = {
     return null;
   },
 
-  read_enum_case() {
+  read_enum_case(attrs) {
     this.expect(this.tok.T_CASE);
     const result = this.node("enumcase");
     let caseName = this.node("identifier");
@@ -51,6 +51,8 @@ module.exports = {
     const value = this.token === "=" ? this.next().read_expr() : null;
     this.expect(";");
 
-    return result(caseName, value);
+    const node = result(caseName, value);
+    if (attrs && attrs.length > 0) node.attrGroups = attrs;
+    return node;
   },
 };
