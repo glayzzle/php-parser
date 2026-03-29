@@ -103,10 +103,10 @@ module.exports = {
     let offset = 0;
     let leadingWhitespaceCharCount = 0;
     /*
-     * @var inCoutingState {boolean} reset to true after a new line
+     * @var inCountingState {boolean} reset to true after a new line
      * @private
      */
-    let inCoutingState = true;
+    let inCountingState = true;
     const chToCheck = indentation_uses_spaces ? " " : "\t";
     let inCheckState = false;
     if (!first_encaps_node) {
@@ -119,14 +119,12 @@ module.exports = {
       offset++;
     }
     while (offset < textSize) {
-      if (inCoutingState) {
+      if (inCountingState) {
         if (text[offset] === chToCheck) {
           leadingWhitespaceCharCount++;
         } else {
           inCheckState = true;
         }
-      } else {
-        inCoutingState = false;
       }
 
       if (
@@ -143,7 +141,7 @@ module.exports = {
 
       if (text[offset] === "\n") {
         // Reset counting state
-        inCoutingState = true;
+        inCountingState = true;
         leadingWhitespaceCharCount = 0;
       }
       offset++;
