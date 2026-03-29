@@ -572,7 +572,10 @@ module.exports = {
 
       const locStart = this.position();
 
-      attrs = this.read_attr_list();
+      attrs = [];
+      if (this.token === this.tok.T_ATTRIBUTE) {
+        attrs = this.read_attr_list();
+      }
       // read member flags
       const flags = this.read_member_flags(true);
 
