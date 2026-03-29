@@ -93,18 +93,19 @@ module.exports = {
         continue;
       }
 
+      if (this.token === this.tok.T_ATTRIBUTE) {
+        attrs = this.read_attr_list();
+      }
+
       // check enum cases
       if (allow_enum_cases && this.token === this.tok.T_CASE) {
-        const enumcase = this.read_enum_case();
+        const enumcase = this.read_enum_case(attrs);
+        attrs = [];
         if (this.expect(";")) {
           this.next();
         }
         result = result.concat(enumcase);
         continue;
-      }
-
-      if (this.token === this.tok.T_ATTRIBUTE) {
-        attrs = this.read_attr_list();
       }
 
       const locStart = this.position();
@@ -610,7 +611,7 @@ module.exports = {
    * trait ::= T_TRAIT T_STRING (T_EXTENDS (NAMESPACE_NAME ',')* NAMESPACE_NAME)? '{' FUNCTION* '}'
    * ```
    */
-  read_trait_declaration_statement() {
+  read_trait_declaration_statement(attrs) {
     const result = this.node("trait");
     // graceful mode : ignore token & go next
     if (this.token !== this.tok.T_TRAIT) {
@@ -625,7 +626,9 @@ module.exports = {
     propName = propName(name);
     this.expect("{");
     const body = this.next().read_class_body(true, false);
-    return result(propName, body);
+    const node = result(propName, body);
+    if (attrs) node.attrGroups = attrs;
+    return node;
   },
   /*
    * reading a use statement

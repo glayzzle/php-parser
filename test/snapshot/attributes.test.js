@@ -315,4 +315,28 @@ describe("Parse Attributes", () => {
       ),
     ).toMatchSnapshot();
   });
+
+  it("can parse trait attributes", () => {
+    expect(
+      parser.parseEval(`
+    #[A]
+    trait Foo {}
+    `),
+    ).toMatchSnapshot();
+  });
+
+  it("can parse enum attributes", () => {
+    expect(
+      parser.parseEval(
+        `
+    #[A]
+    enum Suit: string {
+      #[B]
+      case Hearts = 'H';
+    }
+    `,
+        { parser: { version: "8.1" } },
+      ),
+    ).toMatchSnapshot();
+  });
 });
