@@ -645,7 +645,7 @@ module.exports = {
       return result;
     }
     // introduced in PHP 7.4
-    if (!this.version >= 704) {
+    if (this.version < 704) {
       this.raiseError("Arrow Functions are not allowed");
     }
     // as an arrowfunc
