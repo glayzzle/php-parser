@@ -28,6 +28,11 @@ describe("Test unary", function () {
     ["parens (8)", "(~$var);"],
     ["parens (9)", "(-100);"],
     ["parens (10)", "-(100);"],
+    ["precedence over mul", "-20 * 5;"],
+    ["precedence over add", "-20 + 5;"],
+    ["precedence over mul and add", "-20 * 5 + 10;"],
+    ["precedence with plus", "+20 * 5;"],
+    ["precedence with tilde", "~20 * 5;"],
   ])("%s", function (_, code) {
     expect(parser.parseEval(code)).toMatchSnapshot();
   });
