@@ -267,4 +267,55 @@ string";`,
       }),
     ).toMatchSnapshot();
   });
+
+  it("test clone with in PHP 8.5", function () {
+    expect(
+      parser.parseEval(
+        `$var = clone($obj, ["name" => $name, "id" => getId(...)]);`,
+        {
+          parser: {
+            version: "8.5",
+          },
+          ast: {
+            withPositions: true,
+            withSource: true,
+          },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it("test pipe with parenthesized arrow function in PHP 8.5", function () {
+    expect(
+      parser.parseEval(
+        `$c = $a |> (fn ($s) => explode(",", $s)) |> array_filter(...);`,
+        {
+          parser: {
+            version: "8.5",
+          },
+          ast: {
+            withPositions: true,
+            withSource: true,
+          },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it("test closures in attribute constant expressions in PHP 8.5", function () {
+    expect(
+      parser.parseEval(
+        `#[A(static function () { return 1; })] function a() {}`,
+        {
+          parser: {
+            version: "8.5",
+          },
+          ast: {
+            withPositions: true,
+            withSource: true,
+          },
+        },
+      ),
+    ).toMatchSnapshot();
+  });
 });
