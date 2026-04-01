@@ -353,7 +353,19 @@ module.exports = {
     }
 
     if (this.token === this.tok.T_CLONE) {
-      return this.node("clone")(this.next().read_expr());
+      const node = this.node("clone");
+      this.next();
+      if (this.version >= 805 && this.token === "(") {
+        this.next();
+        const what = this.read_expr();
+        let properties = null;
+        if (this.token === ",") {
+          properties = this.next().read_expr();
+        }
+        this.expect(")") && this.next();
+        return node(what, properties);
+      }
+      return node(this.read_expr(), null);
     }
 
     switch (this.token) {
