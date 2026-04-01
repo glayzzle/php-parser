@@ -16,15 +16,13 @@ const KIND = "clone";
  * @property {Expression} what
  * @property {Expression|null} properties
  */
-module.exports = Expression.extends(KIND, function Clone(
-  what,
-  properties,
-  docs,
-  location,
-) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.what = what;
-  if (properties) {
-    this.properties = properties;
-  }
-});
+module.exports = Expression.extends(
+  KIND,
+  function Clone(what, properties, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.what = what;
+    if (properties) {
+      this.properties = properties;
+    }
+  },
+);

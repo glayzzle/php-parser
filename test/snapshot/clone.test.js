@@ -10,7 +10,7 @@ describe("clone", function () {
   it("with property overrides", function () {
     expect(
       parser.parseEval(
-        "$var = clone($obj, [\"name\" => $name, \"id\" => getId(...)]);",
+        '$var = clone($obj, ["name" => $name, "id" => getId(...)]);',
         {
           parser: {
             version: "8.5",
