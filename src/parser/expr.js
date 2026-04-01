@@ -130,7 +130,13 @@ module.exports = {
       if (this.version < 805) {
         this.raiseError("PHP 8.5+ is required to use pipe operator");
       }
-      return result("bin", "|>", expr, this.next().read_expr());
+      const right = this.next().read_expr();
+      if (right.kind === "arrowfunc" && !right.parenthesizedExpression) {
+        this.raiseError(
+          "Arrow functions in a pipe chain must be wrapped in parentheses",
+        );
+      }
+      return result("bin", "|>", expr, right);
     }
 
     // extra operations :
