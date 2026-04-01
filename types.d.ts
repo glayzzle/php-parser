@@ -1,27 +1,27 @@
 declare module "php-parser" {
   /**
-   * Defines an array structure
-   * @example
-   * // PHP code :
-   * [1, 'foo' => 'bar', 3]
-   *
-   * // AST structure :
-   * {
-   *  "kind": "array",
-   *  "shortForm": true
-   *  "items": [
-   *    {"kind": "number", "value": "1"},
-   *    {
-   *      "kind": "entry",
-   *      "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
-   *      "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
-   *    },
-   *    {"kind": "number", "value": "3"}
-   *  ]
-   * }
-   * @property items - List of array items
-   * @property shortForm - Indicate if the short array syntax is used, ex `[]` instead `array()`
-   */
+     * Defines an array structure
+     * @example
+     * // PHP code :
+    [1, 'foo' => 'bar', 3]
+    
+    // AST structure :
+    {
+     "kind": "array",
+     "shortForm": true
+     "items": [
+       {"kind": "number", "value": "1"},
+       {
+         "kind": "entry",
+         "key": {"kind": "string", "value": "foo", "isDoubleQuote": false},
+         "value": {"kind": "string", "value": "bar", "isDoubleQuote": false}
+       },
+       {"kind": "number", "value": "3"}
+     ]
+    }
+     * @property items - List of array items
+     * @property shortForm - Indicate if the short array syntax is used, ex `[]` instead `array()`
+     */
   class Array extends Expression {
     /**
      * List of array items
@@ -169,7 +169,7 @@ declare module "php-parser" {
    */
   class Clone extends Expression {
     what: Expression;
-    properties?: Expression | null;
+    properties: Expression | null;
   }
   /**
    * Defines a closure
@@ -232,37 +232,37 @@ declare module "php-parser" {
    */
   class Declare extends Block {
     /**
-     * The node is declared as a short tag syntax :
-     * ```php
-     * <?php
-     * declare(ticks=1):
-     * // some statements
-     * enddeclare;
-     * ```
-     */
+         * The node is declared as a short tag syntax :
+        ```php
+        <?php
+        declare(ticks=1):
+        // some statements
+        enddeclare;
+        ```
+         */
     readonly MODE_SHORT: string;
     /**
-     * The node is declared bracket enclosed code :
-     * ```php
-     * <?php
-     * declare(ticks=1) {
-     * // some statements
-     * }
-     * ```
-     */
+         * The node is declared bracket enclosed code :
+        ```php
+        <?php
+        declare(ticks=1) {
+        // some statements
+        }
+        ```
+         */
     readonly MODE_BLOCK: string;
     /**
-     * The node is declared as a simple statement. In order to make things simpler
-     * children of the node are automatically collected until the next
-     * declare statement.
-     * ```php
-     * <?php
-     * declare(ticks=1);
-     * // some statements
-     * declare(ticks=2);
-     * // some statements
-     * ```
-     */
+         * The node is declared as a simple statement. In order to make things simpler
+        children of the node are automatically collected until the next
+        declare statement.
+        ```php
+        <?php
+        declare(ticks=1);
+        // some statements
+        declare(ticks=2);
+        // some statements
+        ```
+         */
     readonly MODE_NONE: string;
     directives: DeclareDirective[];
     mode: string;
@@ -301,39 +301,39 @@ declare module "php-parser" {
    */
   class Encapsed extends Literal {
     /**
-     * The node is a double quote string :
-     * ```php
-     * <?php
-     * echo "hello $world";
-     * ```
-     */
+         * The node is a double quote string :
+        ```php
+        <?php
+        echo "hello $world";
+        ```
+         */
     readonly TYPE_STRING: string;
     /**
-     * The node is a shell execute string :
-     * ```php
-     * <?php
-     * echo `ls -larth $path`;
-     * ```
-     */
+         * The node is a shell execute string :
+        ```php
+        <?php
+        echo `ls -larth $path`;
+        ```
+         */
     readonly TYPE_SHELL: string;
     /**
-     * The node is a shell execute string :
-     * ```php
-     * <?php
-     * echo <<<STR
-     *  Hello $world
-     * STR
-     * ;
-     * ```
-     */
+         * The node is a shell execute string :
+        ```php
+        <?php
+        echo <<<STR
+         Hello $world
+        STR
+        ;
+        ```
+         */
     readonly TYPE_HEREDOC: string;
     /**
-     * The node contains a list of constref / variables / expr :
-     * ```php
-     * <?php
-     * echo $foo->bar_$baz;
-     * ```
-     */
+         * The node contains a list of constref / variables / expr :
+        ```php
+        <?php
+        echo $foo->bar_$baz;
+        ```
+         */
     readonly TYPE_OFFSET: string;
     /**
      * Defines the type of encapsed string (shell, heredoc, string)
@@ -417,9 +417,9 @@ declare module "php-parser" {
     useDie: boolean;
   }
   /**
-   * Any expression node. Since the left-hand side of an assignment may
-   * be any expression in general, an expression can also be a pattern.
-   */
+     * Any expression node. Since the left-hand side of an assignment may
+    be any expression in general, an expression can also be a pattern.
+     */
   class Expression extends Node {}
   /**
    * Defines an expression based statement
@@ -620,10 +620,10 @@ declare module "php-parser" {
      */
     readonly QUALIFIED_NAME: string;
     /**
-     * This is an identifier with a namespace separator that begins with
-     * a namespace separator, such as \Foo\Bar. The namespace \Foo is also
-     * a fully qualified name.
-     */
+         * This is an identifier with a namespace separator that begins with
+        a namespace separator, such as \Foo\Bar. The namespace \Foo is also
+        a fully qualified name.
+         */
     readonly FULL_QUALIFIED_NAME: string;
     /**
      * This is an identifier starting with namespace, such as namespace\Foo\Bar.
@@ -682,9 +682,9 @@ declare module "php-parser" {
     kind: string;
   }
   /**
-   * Ignore this node, it implies a no operation block, for example :
-   * [$foo, $bar, /* here a noop node * /]
-   */
+     * Ignore this node, it implies a no operation block, for example :
+    [$foo, $bar, /* here a noop node * /]
+     */
   class Noop extends Node {}
   /**
    * Defines a nowdoc string
@@ -983,20 +983,20 @@ declare module "php-parser" {
     alias: Identifier | null;
   }
   /**
-   * Any expression node. Since the left-hand side of an assignment may
-   * be any expression in general, an expression can also be a pattern.
-   * @example
-   * // PHP code :
-   * $foo
-   * // AST output
-   * {
-   *  "kind": "variable",
-   *  "name": "foo",
-   *  "curly": false
-   * }
-   * @property name - The variable name (can be a complex expression when the name is resolved dynamically)
-   * @property curly - Indicate if the name is defined between curlies, ex `${foo}`
-   */
+     * Any expression node. Since the left-hand side of an assignment may
+    be any expression in general, an expression can also be a pattern.
+     * @example
+     * // PHP code :
+    $foo
+    // AST output
+    {
+     "kind": "variable",
+     "name": "foo",
+     "curly": false
+    }
+     * @property name - The variable name (can be a complex expression when the name is resolved dynamically)
+     * @property curly - Indicate if the name is defined between curlies, ex `${foo}`
+     */
   class Variable extends Expression {
     /**
      * The variable name (can be a complex expression when the name is resolved dynamically)
@@ -1054,29 +1054,29 @@ declare module "php-parser" {
     withSource: boolean;
   }
   /**
-   * Initialise a new parser instance with the specified options
-   * @example
-   * var parser = require('php-parser');
-   * var instance = new parser({
-   *   parser: {
-   *     extractDoc: true,
-   *     suppressErrors: true,
-   *     version: 704 // or '7.4'
-   *   },
-   *   ast: {
-   *     withPositions: true
-   *   },
-   *   lexer: {
-   *     short_tags: true,
-   *     asp_tags: true
-   *   }
-   * });
-   *
-   * var evalAST = instance.parseEval('some php code');
-   * var codeAST = instance.parseCode('<?php some php code', 'foo.php');
-   * var tokens = instance.tokenGetAll('<?php some php code');
-   * @param options - List of options
-   */
+     * Initialise a new parser instance with the specified options
+     * @example
+     * var parser = require('php-parser');
+    var instance = new parser({
+      parser: {
+        extractDoc: true,
+        suppressErrors: true,
+        version: 704 // or '7.4'
+      },
+      ast: {
+        withPositions: true
+      },
+      lexer: {
+        short_tags: true,
+        asp_tags: true
+      }
+    });
+    
+    var evalAST = instance.parseEval('some php code');
+    var codeAST = instance.parseCode('<?php some php code', 'foo.php');
+    var tokens = instance.tokenGetAll('<?php some php code');
+     * @param options - List of options
+     */
   class Engine {
     constructor(options: any);
     /**
@@ -1084,30 +1084,30 @@ declare module "php-parser" {
      */
     parseEval(buffer: string): Program;
     /**
-     * Function that parse a php code with open/close tags
-     *
-     * Sample code :
-     * ```php
-     * <?php $x = 1;
-     * ```
-     *
-     * Usage :
-     * ```js
-     * var parser = require('php-parser');
-     * var phpParser = new parser({
-     *   // some options
-     * });
-     * var ast = phpParser.parseCode('...php code...', 'foo.php');
-     * ```
-     * @param buffer - The code to be parsed
-     * @param filename - Filename
-     */
+         * Function that parse a php code with open/close tags
+        
+        Sample code :
+        ```php
+        <?php $x = 1;
+        ```
+        
+        Usage :
+        ```js
+        var parser = require('php-parser');
+        var phpParser = new parser({
+          // some options
+        });
+        var ast = phpParser.parseCode('...php code...', 'foo.php');
+        ```
+         * @param buffer - The code to be parsed
+         * @param filename - Filename
+         */
     parseCode(buffer: string, filename: string): Program;
     /**
-     * Extract tokens from the specified buffer.
-     * > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
-     * @returns - Each item can be a string or an array with following informations [token_name, text, line_number]
-     */
+         * Extract tokens from the specified buffer.
+        > Note that the output tokens are *STRICLY* similar to PHP function `token_get_all`
+         * @returns - Each item can be a string or an array with following informations [token_name, text, line_number]
+         */
     tokenGetAll(buffer: string): (string | string[])[];
     lexer: Lexer;
     parser: Parser;
@@ -1115,16 +1115,16 @@ declare module "php-parser" {
     tokens: any;
   }
   /**
-   * This is the php lexer. It will tokenize the string for helping the
-   * parser to build the AST from its grammar.
-   * @property all_tokens - defines if all tokens must be retrieved (used by token_get_all only)
-   * @property comment_tokens - extracts comments tokens
-   * @property mode_eval - enables the evald mode (ignore opening tags)
-   * @property asp_tags - disables by default asp tags mode
-   * @property short_tags - enables by default short tags mode
-   * @property keywords - List of php keyword
-   * @property castKeywords - List of php keywords for type casting
-   */
+     * This is the php lexer. It will tokenize the string for helping the
+    parser to build the AST from its grammar.
+     * @property all_tokens - defines if all tokens must be retrieved (used by token_get_all only)
+     * @property comment_tokens - extracts comments tokens
+     * @property mode_eval - enables the evald mode (ignore opening tags)
+     * @property asp_tags - disables by default asp tags mode
+     * @property short_tags - enables by default short tags mode
+     * @property keywords - List of php keyword
+     * @property castKeywords - List of php keywords for type casting
+     */
   class Lexer {
     /**
      * Initialize the lexer with the specified input
@@ -1252,14 +1252,14 @@ declare module "php-parser" {
      */
     expectEndOfStatement(): boolean;
     /**
-     * Force the parser to check the current token.
-     *
-     * If the current token does not match to expected token,
-     * the an error will be raised.
-     *
-     * If the suppressError mode is activated, then the error will
-     * be added to the program error stack and this function will return `false`.
-     */
+         * Force the parser to check the current token.
+        
+        If the current token does not match to expected token,
+        the an error will be raised.
+        
+        If the suppressError mode is activated, then the error will
+        be added to the program error stack and this function will return `false`.
+         */
     expect(token: string | number): boolean;
     /**
      * Returns the current token contents
