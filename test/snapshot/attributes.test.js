@@ -339,4 +339,16 @@ describe("Parse Attributes", () => {
       ),
     ).toMatchSnapshot();
   });
+
+  it("can parse closures in attribute constant expressions in PHP 8.5", () => {
+    expect(
+      parser.parseEval(
+        `
+    #[A(static function () { return 1; })]
+    function a() {}
+    `,
+        { parser: { version: "8.5" } },
+      ),
+    ).toMatchSnapshot();
+  });
 });
