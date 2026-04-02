@@ -19,6 +19,16 @@ describe("Test numbers", function () {
     ).toMatchSnapshot();
   });
 
+  it("test underscore separators in hex/binary/octal", function () {
+    expect(
+      parser.parseEval(`
+      $a = 0x1_A2_B3;
+      $b = 0b1010_0101;
+      $c = 0o7_6_5;
+    `),
+    ).toMatchSnapshot();
+  });
+
   it.each([
     ["hexa without hex", "$a = 0xx;"],
     ["binary with 2", "$b = 0b2;"],
@@ -33,6 +43,12 @@ describe("Test numbers", function () {
     ["underscore #3", "$e = 7_.0;"],
     ["underscore #4", "$e = 7e_0;"],
     ["underscore #5", "$e = 7_e0;"],
+    ["hex consecutive underscores", "$e = 0x1__2;"],
+    ["hex trailing underscore", "$e = 0x1_ + 1;"],
+    ["binary consecutive underscores", "$e = 0b1__0;"],
+    ["binary trailing underscore", "$e = 0b1_ + 1;"],
+    ["octal consecutive underscores", "$e = 0o7__1;"],
+    ["octal trailing underscore", "$e = 0o7_ + 1;"],
   ])("%s", function (_, code) {
     const ast = parser.parseEval(code, {
       parser: {
