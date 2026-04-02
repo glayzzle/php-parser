@@ -130,7 +130,13 @@ module.exports = {
       if (this.version < 805) {
         this.raiseError("PHP 8.5+ is required to use pipe operator");
       }
-      return result("bin", "|>", expr, this.next().read_expr());
+      const right = this.next().read_expr();
+      if (right.kind === "arrowfunc" && !right.parenthesizedExpression) {
+        this.raiseError(
+          "Arrow functions in a pipe chain must be wrapped in parentheses",
+        );
+      }
+      return result("bin", "|>", expr, right);
     }
 
     // extra operations :
@@ -353,7 +359,19 @@ module.exports = {
     }
 
     if (this.token === this.tok.T_CLONE) {
-      return this.node("clone")(this.next().read_expr());
+      const node = this.node("clone");
+      this.next();
+      if (this.version >= 805 && this.token === "(") {
+        this.next();
+        const what = this.read_expr();
+        let properties = null;
+        if (this.token === ",") {
+          properties = this.next().read_expr();
+        }
+        this.expect(")") && this.next();
+        return node(what, properties);
+      }
+      return node(this.read_expr(), null);
     }
 
     switch (this.token) {

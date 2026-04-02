@@ -169,6 +169,7 @@ declare module "php-parser" {
    */
   class Clone extends Expression {
     what: Expression;
+    properties: Expression | null;
   }
   /**
    * Defines a closure

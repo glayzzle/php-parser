@@ -14,8 +14,15 @@ const KIND = "clone";
  * @memberOf module:php-parser
  * @extends {Expression}
  * @property {Expression} what
+ * @property {Expression|null} properties
  */
-module.exports = Expression.extends(KIND, function Clone(what, docs, location) {
-  Expression.apply(this, [KIND, docs, location]);
-  this.what = what;
-});
+module.exports = Expression.extends(
+  KIND,
+  function Clone(what, properties, docs, location) {
+    Expression.apply(this, [KIND, docs, location]);
+    this.what = what;
+    if (properties) {
+      this.properties = properties;
+    }
+  },
+);

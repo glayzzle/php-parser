@@ -32,6 +32,7 @@ module.exports = {
       case ")":
       case ":":
       case "=":
+      case ";":
       case "|":
       case "&":
       case "^":
@@ -44,6 +45,9 @@ module.exports = {
       case ">":
       case "!":
       case ".":
+      case "{":
+      case "}":
+      case "$":
         return this.consume_TOKEN();
       case "[":
         this.attributeListDepth[this.attributeIndex]++;
