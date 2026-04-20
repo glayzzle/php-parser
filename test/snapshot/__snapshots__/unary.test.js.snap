@@ -479,6 +479,154 @@ Program {
 }
 `;
 
+exports[`Test unary precedence over add 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Unary {
+          "kind": "unary",
+          "type": "-",
+          "what": Number {
+            "kind": "number",
+            "value": "20",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "5",
+        },
+        "type": "+",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unary precedence over mul 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Unary {
+          "kind": "unary",
+          "type": "-",
+          "what": Number {
+            "kind": "number",
+            "value": "20",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "5",
+        },
+        "type": "*",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unary precedence over mul and add 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Bin {
+          "kind": "bin",
+          "left": Unary {
+            "kind": "unary",
+            "type": "-",
+            "what": Number {
+              "kind": "number",
+              "value": "20",
+            },
+          },
+          "right": Number {
+            "kind": "number",
+            "value": "5",
+          },
+          "type": "*",
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "10",
+        },
+        "type": "+",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unary precedence with plus 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Unary {
+          "kind": "unary",
+          "type": "+",
+          "what": Number {
+            "kind": "number",
+            "value": "20",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "5",
+        },
+        "type": "*",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
+exports[`Test unary precedence with tilde 1`] = `
+Program {
+  "children": [
+    ExpressionStatement {
+      "expression": Bin {
+        "kind": "bin",
+        "left": Unary {
+          "kind": "unary",
+          "type": "~",
+          "what": Number {
+            "kind": "number",
+            "value": "20",
+          },
+        },
+        "right": Number {
+          "kind": "number",
+          "value": "5",
+        },
+        "type": "*",
+      },
+      "kind": "expressionstatement",
+    },
+  ],
+  "errors": [],
+  "kind": "program",
+}
+`;
+
 exports[`Test unary simple 1`] = `
 Program {
   "children": [
