@@ -34,6 +34,7 @@ const KIND = "parameter";
  * @property {AttrGroup[]} attrGroups
  * @property {MODIFIER_PUBLIC|MODIFIER_PROTECTED|MODIFIER_PRIVATE} flags
  * @property {PropertyHook[]} hooks
+ * @property {MODIFIER_PUBLIC|MODIFIER_PROTECTED|MODIFIER_PRIVATE} flagsSet
  */
 module.exports = Declaration.extends(
   KIND,
@@ -47,6 +48,7 @@ module.exports = Declaration.extends(
     nullable,
     flags,
     hooks,
+    flagsSet,
     docs,
     location,
   ) {
@@ -59,6 +61,7 @@ module.exports = Declaration.extends(
     this.nullable = nullable;
     this.flags = flags || 0;
     this.hooks = hooks || [];
+    this.flagsSet = flagsSet || 0;
     this.attrGroups = [];
   },
 );

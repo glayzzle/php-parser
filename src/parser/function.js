@@ -268,7 +268,7 @@ module.exports = {
       }
     }
 
-    const flags = this.read_promoted();
+    const [flags, flagsSet] = this.read_promoted();
 
     if (
       !readonly &&
@@ -320,6 +320,7 @@ module.exports = {
       nullable,
       flags,
       hooks,
+      flagsSet,
     );
     if (attrs) result.attrGroups = attrs;
     return result;
@@ -387,17 +388,67 @@ module.exports = {
     const MODIFIER_PUBLIC = 1;
     const MODIFIER_PROTECTED = 2;
     const MODIFIER_PRIVATE = 4;
+
+    let firstModifier;
     if (this.token === this.tok.T_PUBLIC) {
       this.next();
-      return MODIFIER_PUBLIC;
+      firstModifier = MODIFIER_PUBLIC;
     } else if (this.token === this.tok.T_PROTECTED) {
       this.next();
-      return MODIFIER_PROTECTED;
+      firstModifier = MODIFIER_PROTECTED;
     } else if (this.token === this.tok.T_PRIVATE) {
       this.next();
-      return MODIFIER_PRIVATE;
+      firstModifier = MODIFIER_PRIVATE;
+    } else {
+      return [0, 0];
     }
-    return 0;
+
+    // PHP 8.4+ asymmetric visibility
+    if (this.version >= 804) {
+      if (this.token === "(") {
+        // shorthand: visibility(set) — firstModifier is the set modifier, read visibility is implicit
+        this.next(); // consume '('
+        if (this.token !== this.tok.T_STRING || this.text() !== "set") {
+          this.error("set");
+        } else {
+          this.next(); // consume 'set'
+        }
+        if (this.expect(")")) {
+          this.next(); // consume ')'
+        }
+        return [0, firstModifier]; // no explicit read visibility, set = firstModifier
+      }
+
+      // Check for explicit form: readVisibility setVisibility(set)
+      let setModifier = 0;
+      if (this.token === this.tok.T_PUBLIC) {
+        this.next();
+        setModifier = MODIFIER_PUBLIC;
+      } else if (this.token === this.tok.T_PROTECTED) {
+        this.next();
+        setModifier = MODIFIER_PROTECTED;
+      } else if (this.token === this.tok.T_PRIVATE) {
+        this.next();
+        setModifier = MODIFIER_PRIVATE;
+      }
+
+      if (setModifier > 0) {
+        if (this.expect("(")) {
+          this.next(); // consume '('
+        }
+        if (this.token !== this.tok.T_STRING || this.text() !== "set") {
+          this.error("set");
+        } else {
+          this.next(); // consume 'set'
+        }
+        if (this.expect(")")) {
+          this.next(); // consume ')'
+        }
+        return [firstModifier, setModifier];
+      }
+    }
+
+    return [firstModifier, 0];
   },
   /*
    * Reads a list of arguments

@@ -32,11 +32,12 @@ module.exports = Node.extends(
     this.as = as;
     this.visibility = IS_UNDEFINED;
     if (flags) {
-      if (flags[0] === 0) {
+      const getVis = flags[0][0];
+      if (getVis === 0) {
         this.visibility = IS_PUBLIC;
-      } else if (flags[0] === 1) {
+      } else if (getVis === 1) {
         this.visibility = IS_PROTECTED;
-      } else if (flags[0] === 2) {
+      } else if (getVis === 2) {
         this.visibility = IS_PRIVATE;
       }
     }
