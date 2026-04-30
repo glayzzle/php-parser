@@ -93,6 +93,8 @@ module.exports = {
         continue;
       }
 
+      const locStart = this.position();
+
       if (this.token === this.tok.T_ATTRIBUTE) {
         attrs = this.read_attr_list();
       }
@@ -108,14 +110,12 @@ module.exports = {
         continue;
       }
 
-      const locStart = this.position();
-
       // read member flags
       const flags = this.read_member_flags(false);
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-        const constants = this.read_constant_list(flags, attrs);
+        const constants = this.read_constant_list(flags, attrs, locStart);
         if (this.expect(";")) {
           this.next();
         }
@@ -151,7 +151,7 @@ module.exports = {
               this.token === this.tok.T_STRING)))
       ) {
         // reads a variable
-        const variables = this.read_variable_list(flags, attrs);
+        const variables = this.read_variable_list(flags, attrs, locStart);
         attrs = [];
         result = result.concat(variables);
       } else {
@@ -176,7 +176,7 @@ module.exports = {
    *  variable_list ::= (variable_declaration ',')* variable_declaration
    * ```
    */
-  read_variable_list(flags, attrs) {
+  read_variable_list(flags, attrs, locStart) {
     let property_statement = this.node("propertystatement");
 
     const properties = this.read_list(
@@ -233,6 +233,16 @@ module.exports = {
     );
 
     property_statement = property_statement(null, properties, flags);
+    if (locStart && property_statement.loc) {
+      property_statement.loc.start = locStart;
+      if (property_statement.loc.source) {
+        property_statement.loc.source = this.lexer._input.substr(
+          property_statement.loc.start.offset,
+          property_statement.loc.end.offset -
+            property_statement.loc.start.offset,
+        );
+      }
+    }
 
     // semicolons are found only for regular properties definitions.
     // Property hooks are terminated by a closing curly brace, }.
@@ -335,7 +345,7 @@ module.exports = {
    *  constant_list ::= T_CONST [type] (constant_declaration ',')* constant_declaration
    * ```
    */
-  read_constant_list(flags, attrs) {
+  read_constant_list(flags, attrs, locStart) {
     const result = this.node("classconstant");
     if (this.expect(this.tok.T_CONST)) {
       this.next();
@@ -383,7 +393,17 @@ module.exports = {
       ",",
     );
 
-    return result(null, items, flags, nullable, type, attrs || []);
+    const node = result(null, items, flags, nullable, type, attrs || []);
+    if (locStart && node.loc) {
+      node.loc.start = locStart;
+      if (node.loc.source) {
+        node.loc.source = this.lexer._input.substr(
+          node.loc.start.offset,
+          node.loc.end.offset - node.loc.start.offset,
+        );
+      }
+    }
+    return node;
   },
   /*
    * Read member flags
@@ -581,7 +601,7 @@ module.exports = {
 
       // check constant
       if (this.token === this.tok.T_CONST) {
-        const constants = this.read_constant_list(flags, attrs);
+        const constants = this.read_constant_list(flags, attrs, locStart);
         if (this.expect(";")) {
           this.next();
         }
@@ -600,7 +620,7 @@ module.exports = {
           this.next();
         }
       } else if (this.token === this.tok.T_STRING) {
-        result.push(this.read_variable_list(flags, attrs));
+        result.push(this.read_variable_list(flags, attrs, locStart));
       } else {
         // raise an error
         this.error([this.tok.T_CONST, this.tok.T_FUNCTION, this.tok.T_STRING]);
