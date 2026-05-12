@@ -413,8 +413,9 @@ module.exports = {
       this.token === this.tok.T_ELLIPSIS &&
       this.peek() === ")"
     ) {
-      result.push(this.node("variadicplaceholder")());
+      const variadicNode = this.node("variadicplaceholder");
       this.next();
+      result.push(variadicNode());
     } else if (this.token !== ")") {
       result = this.read_non_empty_argument_list();
     }
