@@ -230,6 +230,14 @@ string";`,
     ["dnf type parameter", "function foo((A&B)|null $bar) {}"],
     ["attribute", "#[Deprecated(reason: 'since 5.2')] function foo() {}"],
     ["attrgroup", "#[Pure] #[Deprecated] function foo() {}"],
+    [
+      "classconstant attribute loc includes attrgroup",
+      "class C { #[Deprecated] public const FOO = 1; public $bar = 2; }",
+    ],
+    [
+      "propertystatement attribute loc includes attrgroup",
+      "class C { #[Pure] protected $foo = 1; public $bar = 2; }",
+    ],
   ])("test %s", (_, code) => {
     expect(
       parser.parseEval(code, {
