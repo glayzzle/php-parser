@@ -147,10 +147,11 @@ AST.precedence = {};
   ["==", "!=", "===", "!==", /* '<>', */ "<=>"],
   ["<", "<=", ">", ">="],
   ["<<", ">>"],
-  ["instanceof"],
   ["+", "-", "."],
   ["*", "/", "%"],
-  ["!", "u-", "u+", "u~"], // u- etc. are unary variants; higher than * so -20*5 parses as (-20)*5
+  ["!"],
+  ["instanceof"],
+  ["u-", "u+", "u~"],
   ["cast", "silent"],
   ["**"],
   // TODO: [ (array)

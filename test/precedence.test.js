@@ -61,6 +61,11 @@ describe("Test precedence", function () {
   });
   it("test instanceof", function () {
     shouldBeSame("$a instanceof $b && $c", "($a instanceof $b) && $c");
+    shouldBeSame("$a + $b instanceof $c", "$a + ($b instanceof $c)");
+    shouldBeSame("$a * $b instanceof $c", "$a * ($b instanceof $c)");
+    shouldBeSame("-$a instanceof $b", "(-$a) instanceof $b");
+    shouldBeSame("+$a instanceof $b", "(+$a) instanceof $b");
+    shouldBeSame("~$a instanceof $b", "(~$a) instanceof $b");
   });
   it("test <<", function () {
     shouldBeSame("1 + 3 << 5", "(1 + 3) << 5");
@@ -119,10 +124,14 @@ describe("Test precedence", function () {
     shouldBeSame("5 AND 4 + 3", "5 AND (4 + 3)");
   });
   it("test unary : !", function () {
-    shouldBeSame("!$a instanceof $b", "(!$a) instanceof $b");
-    shouldBeSame("!$a + $b instanceof $c", "((!$a) + $b) instanceof $c");
+    shouldBeSame("!$a instanceof $b", "!($a instanceof $b)");
+    shouldBeSame("!$a + $b instanceof $c", "(!$a) + ($b instanceof $c)");
     shouldBeSame("6 + !4 + 5", "6 + (!4) + 5");
     shouldBeSame("if($a && !$b) {}", "if($a && (!$b)) {}");
+  });
+  it("test unary : - (prettier/plugin-php#2501)", function () {
+    shouldBeSame("5 * -1 + 2", "(5 * (-1)) + 2");
+    shouldBeSame('5 * -1 . "foo"', '(5 * (-1)) . "foo"');
   });
   it("test concat", function () {
     shouldBeSame('"a"."b"."c"."d"', '((("a"."b")."c")."d")');
