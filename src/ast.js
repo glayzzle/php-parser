@@ -151,6 +151,7 @@ AST.precedence = {};
   ["*", "/", "%"],
   ["!"],
   ["instanceof"],
+  ["u-", "u+", "u~"],
   ["cast", "silent"],
   ["**"],
   // TODO: [ (array)
@@ -300,7 +301,9 @@ AST.prototype.resolvePrecedence = function (result, parser) {
     // https://github.com/glayzzle/php-parser/issues/75
     if (result.what && !result.what.parenthesizedExpression) {
       if (result.what.kind === "bin") {
-        lLevel = AST.precedence[result.type];
+        // use the unary-specific precedence (u-, u+, u~) which is higher than binary - and +
+        lLevel =
+          AST.precedence["u" + result.type] || AST.precedence[result.type];
         rLevel = AST.precedence[result.what.type];
         if (lLevel && rLevel && rLevel < lLevel) {
           buffer = result.what;
