@@ -5,6 +5,14 @@ describe("trait", function () {
     expect(parser.parseEval("trait A {}")).toMatchSnapshot();
   });
 
+  it("trait alias with visibility", function () {
+    expect(
+      parser.parseEval(
+        "class A { use B { foo as public bar; foo as protected; } }",
+      ),
+    ).toMatchSnapshot();
+  });
+
   it("trait alias with no visibility and no alias raises an error", function () {
     const test = parser.create({ parser: { suppressErrors: true } });
     expect(test.parseEval("class A { use Foo { foo as; } }")).toMatchSnapshot();

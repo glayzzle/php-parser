@@ -53,16 +53,17 @@ const ClassConstant = ConstantStatement.extends(
  * @return {void}
  */
 ClassConstant.prototype.parseFlags = function (flags) {
-  if (flags[0] === -1) {
+  const getVis = flags[0][0];
+  if (getVis === -1) {
     this.visibility = IS_UNDEFINED;
-  } else if (flags[0] === null) {
+  } else if (getVis === null) {
     /* istanbul ignore next */
     this.visibility = null;
-  } else if (flags[0] === 0) {
+  } else if (getVis === 0) {
     this.visibility = IS_PUBLIC;
-  } else if (flags[0] === 1) {
+  } else if (getVis === 1) {
     this.visibility = IS_PROTECTED;
-  } else if (flags[0] === 2) {
+  } else if (getVis === 2) {
     this.visibility = IS_PRIVATE;
   }
   this.final = flags[2] === 2;

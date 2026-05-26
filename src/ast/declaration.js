@@ -13,12 +13,15 @@ const IS_PUBLIC = "public";
 const IS_PROTECTED = "protected";
 const IS_PRIVATE = "private";
 
+const VISIBILITY_MAP = [IS_PUBLIC, IS_PROTECTED, IS_PRIVATE];
+
 /**
  * A declaration statement (function, class, interface...)
  * @constructor Declaration
  * @memberOf module:php-parser
  * @extends {Statement}
  * @property {Identifier|string} name
+ * @property {string|null} visibilitySet
  */
 const Declaration = Statement.extends(
   KIND,
@@ -41,19 +44,17 @@ Declaration.prototype.parseFlags = function (flags) {
   this.isFinal = flags[2] === 2;
   this.isReadonly = flags[3] === 1;
   if (this.kind !== "class") {
-    if (flags[0] === -1) {
+    const [getVis, setVis] = flags[0];
+    if (getVis === -1) {
       this.visibility = IS_UNDEFINED;
-    } else if (flags[0] === null) {
+    } else if (getVis === null) {
       /* istanbul ignore next */
       this.visibility = null;
-    } else if (flags[0] === 0) {
-      this.visibility = IS_PUBLIC;
-    } else if (flags[0] === 1) {
-      this.visibility = IS_PROTECTED;
-    } else if (flags[0] === 2) {
-      this.visibility = IS_PRIVATE;
+    } else {
+      this.visibility = VISIBILITY_MAP[getVis];
     }
     this.isStatic = flags[1] === 1;
+    this.visibilitySet = setVis !== -1 ? VISIBILITY_MAP[setVis] : null;
   }
 };
 
