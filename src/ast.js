@@ -155,7 +155,7 @@ AST.precedence = {};
   ["cast", "silent"],
   ["**"],
   // TODO: [ (array)
-  // TODO: clone, new
+  // TODO: new
 ].forEach(function (list, index) {
   list.forEach(function (operator) {
     AST.precedence[operator] = index + 1;

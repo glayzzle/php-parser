@@ -363,7 +363,8 @@ module.exports = {
       this.next();
       if (this.version >= 805 && this.token === "(") {
         this.next();
-        const what = this.read_expr();
+        let what = this.read_variable(false, false);
+        what = this.handleDereferencable(what);
         let properties = null;
         if (this.token === ",") {
           properties = this.next().read_expr();
@@ -371,7 +372,9 @@ module.exports = {
         this.expect(")") && this.next();
         return node(what, properties);
       }
-      return node(this.read_expr(), null);
+      let what = this.read_variable(false, false);
+      what = this.handleDereferencable(what);
+      return node(what, null);
     }
 
     switch (this.token) {
