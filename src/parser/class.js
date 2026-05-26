@@ -442,6 +442,10 @@ module.exports = {
           this.next(); // consume the visibility keyword
           if (this.version >= 804 && this.token === "(") {
             // visibility(set) modifier: e.g. private(set)
+            // For shorthand, default get visibility to public if not already set
+            if (result[0][0] === -1) {
+              result[0][0] = 0;
+            }
             this.next(); // consume '('
             if (this.token !== this.tok.T_STRING || this.text() !== "set") {
               this.error("set");
