@@ -23,7 +23,7 @@ module.exports = {
       if (ch === "x" || ch === "X") {
         ch = this.input();
         if (ch !== "_" && this.is_HEX()) {
-          return this.consume_HNUM();
+          return this.consume_hexadecimal();
         } else {
           this.unput(ch ? 2 : 1);
         }
@@ -31,14 +31,14 @@ module.exports = {
       } else if (ch === "b" || ch === "B") {
         ch = this.input();
         if ((ch !== "_" && ch === "0") || ch === "1") {
-          return this.consume_BNUM();
+          return this.consume_binary();
         } else {
           this.unput(ch ? 2 : 1);
         }
       } else if (ch === "o" || ch === "O") {
         ch = this.input();
         if (ch !== "_" && this.is_OCTAL()) {
-          return this.consume_ONUM();
+          return this.consume_octal();
         } else {
           this.unput(ch ? 2 : 1);
         }
@@ -94,7 +94,7 @@ module.exports = {
           ch = this.input();
         }
         if (this.is_NUM_START()) {
-          this.consume_LNUM();
+          this.consume_decimal_digits();
           return this.tok.T_DNUMBER;
         }
         this.unput(ch ? undo : undo - 1); // keep only 1
@@ -123,19 +123,28 @@ module.exports = {
       return this.tok.T_DNUMBER;
     }
   },
-  // read hexa
-  consume_HNUM() {
+  consume_prefixed_digits(isValid) {
+    let prev = this._input[this.offset - 1];
     while (this.offset < this.size) {
       const ch = this.input();
-      if (!this.is_HEX()) {
+      if (!isValid.call(this)) {
         if (ch) this.unput(1);
         break;
       }
+      if (ch === "_" && prev === "_") {
+        this.unput(2);
+        prev = null;
+        break;
+      }
+      prev = ch;
     }
+    if (prev === "_") this.unput(1);
     return this.tok.T_LNUMBER;
   },
-  // read a generic number
-  consume_LNUM() {
+  consume_hexadecimal() {
+    return this.consume_prefixed_digits(this.is_HEX);
+  },
+  consume_decimal_digits() {
     while (this.offset < this.size) {
       const ch = this.input();
       if (!this.is_NUM()) {
@@ -145,27 +154,13 @@ module.exports = {
     }
     return this.tok.T_LNUMBER;
   },
-  // read binary
-  consume_BNUM() {
-    let ch;
-    while (this.offset < this.size) {
-      ch = this.input();
-      if (ch !== "0" && ch !== "1" && ch !== "_") {
-        if (ch) this.unput(1);
-        break;
-      }
-    }
-    return this.tok.T_LNUMBER;
+  consume_binary() {
+    return this.consume_prefixed_digits(function () {
+      const ch = this._input[this.offset - 1];
+      return ch === "0" || ch === "1" || ch === "_";
+    });
   },
-  // read an octal number
-  consume_ONUM() {
-    while (this.offset < this.size) {
-      const ch = this.input();
-      if (!this.is_OCTAL()) {
-        if (ch) this.unput(1);
-        break;
-      }
-    }
-    return this.tok.T_LNUMBER;
+  consume_octal() {
+    return this.consume_prefixed_digits(this.is_OCTAL);
   },
 };
