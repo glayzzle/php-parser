@@ -171,10 +171,11 @@ module.exports = {
       // optional flags
       case this.tok.T_ABSTRACT:
       case this.tok.T_FINAL:
+      case this.tok.T_READ_ONLY:
       case this.tok.T_CLASS:
-        return this.read_class_declaration_statement();
+        return this.read_class_declaration_statement(attrs);
       case this.tok.T_INTERFACE:
-        return this.read_interface_declaration_statement();
+        return this.read_interface_declaration_statement(attrs);
       case this.tok.T_TRAIT:
         return this.read_trait_declaration_statement(attrs);
       case this.tok.T_ENUM:

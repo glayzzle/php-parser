@@ -283,6 +283,32 @@ describe("Parse Attributes", () => {
     expect(f.attrGroups).toEqual([]);
   });
 
+  it("can parse attributes on declarations in inner statements", () => {
+    const ast = parser.parseEval(`
+      if (true) {
+        #[A]
+        class B {}
+        #[C]
+        final class D {}
+        #[E]
+        interface F {}
+        #[G]
+        readonly class H {}
+      }
+    `);
+    expect(
+      ast.children[0].body.children.map((node) => [
+        node.kind,
+        node.attrGroups.map((group) => group.attrs[0].name),
+      ]),
+    ).toEqual([
+      ["class", ["A"]],
+      ["class", ["C"]],
+      ["interface", ["E"]],
+      ["class", ["G"]],
+    ]);
+  });
+
   it("parses attributes as comments for PHP < 8", () => {
     expect(
       parser.parseEval(
