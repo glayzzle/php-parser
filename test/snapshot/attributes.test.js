@@ -266,6 +266,49 @@ describe("Parse Attributes", () => {
     ).toMatchSnapshot();
   });
 
+  it("doesnt repeat attributes from a previous class constant", () => {
+    const ast = parser.parseEval(`
+      class A {
+        #[B]
+        const C = 1;
+        const D = 2;
+        public $e;
+        function f() {}
+      }
+    `);
+    const [c, d, e, f] = ast.children[0].body;
+    expect(c.attrGroups).toHaveLength(1);
+    expect(d.attrGroups).toEqual([]);
+    expect(e.properties[0].attrGroups).toEqual([]);
+    expect(f.attrGroups).toEqual([]);
+  });
+
+  it("can parse attributes on declarations in inner statements", () => {
+    const ast = parser.parseEval(`
+      if (true) {
+        #[A]
+        class B {}
+        #[C]
+        final class D {}
+        #[E]
+        interface F {}
+        #[G]
+        readonly class H {}
+      }
+    `);
+    expect(
+      ast.children[0].body.children.map((node) => [
+        node.kind,
+        node.attrGroups.map((group) => group.attrs[0].name),
+      ]),
+    ).toEqual([
+      ["class", ["A"]],
+      ["class", ["C"]],
+      ["interface", ["E"]],
+      ["class", ["G"]],
+    ]);
+  });
+
   it("parses attributes as comments for PHP < 8", () => {
     expect(
       parser.parseEval(
