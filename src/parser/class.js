@@ -119,6 +119,7 @@ module.exports = {
           this.raiseError("Cannot use asymmetric visibility on constants");
         }
         const constants = this.read_constant_list(flags, attrs, locStart);
+        attrs = [];
         if (this.expect(";")) {
           this.next();
         }
