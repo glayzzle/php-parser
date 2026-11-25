@@ -34,6 +34,31 @@ describe("clone", function () {
   it("assign", function () {
     expect(parser.parseEval("$var = clone $obj;")).toMatchSnapshot();
   });
+  it.each(["8.4", "8.5"])("groups the clone operand in PHP %s", (version) => {
+    const { children } = parser.parseEval(
+      "clone ($a ?? $b)->child ?? $fallback;",
+      { parser: { version } },
+    );
+    expect(children[0].expression).toMatchObject({
+      kind: "bin",
+      type: "??",
+      left: {
+        kind: "clone",
+        what: { kind: "propertylookup", what: { kind: "bin", type: "??" } },
+      },
+    });
+  });
+  it("accepts an expression before property overrides in PHP 8.5", () => {
+    const { children } = parser.parseEval(
+      "clone($flag ? $a : $b, ['id' => 1]);",
+      { parser: { version: "8.5" } },
+    );
+    expect(children[0].expression).toMatchObject({
+      kind: "clone",
+      what: { kind: "retif" },
+      properties: { kind: "array" },
+    });
+  });
   it("with property overrides", function () {
     expect(
       parser.parseEval(

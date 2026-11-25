@@ -361,15 +361,17 @@ module.exports = {
     if (this.token === this.tok.T_CLONE) {
       const node = this.node("clone");
       this.next();
-      if (this.version >= 805 && this.token === "(") {
-        this.next();
-        let what = this.read_variable(false, false);
-        what = this.handleDereferencable(what);
+      if (this.token === "(") {
+        let what = this.next().read_expr();
         let properties = null;
-        if (this.token === ",") {
+        if (this.version >= 805 && this.token === ",") {
           properties = this.next().read_expr();
         }
         this.expect(")") && this.next();
+        if (!properties) {
+          // In `clone ($a ?? $b)->child`, the lookup is part of the operand.
+          what = this.handleDereferencable(what);
+        }
         return node(what, properties);
       }
       let what = this.read_variable(false, false);
